@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="zhezhizhonghua"
+config/description="游乐场"
+config/version="1.0.1"
+run/main_scene="res://scenes/login.tscn"
+config/features=PackedStringArray("4.2", "GL Compatibility")
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/image="res://asset/lobby/bj.png"
+config/icon="res://asset/bg/img_gg.png"
+
+[autoload]
+
+Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
+Transitions="*res://addons/transitions/Transitions.gd"
+FancyFade="*res://addons/transitions/FancyFade.gd"
+TransitionsPlugin="*res://addons/transitions/transitions_plugin.gd"
+FadeScene="*res://addons/transitions/FadeScene.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/transitions/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

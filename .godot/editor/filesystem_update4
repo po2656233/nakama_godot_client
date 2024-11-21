@@ -1,0 +1,12 @@
+res://scenes/login.tscn
+res://theme/btn.tres
+res://scripts/login.gd
+res://scenes/lobby.tscn
+res://scenes/register.tscn
+res://scripts/register.gd
+res://addons/transitions/FancyFade.gd
+res://scripts/lobby.gd
+res://addons/transitions/Transitions.gd
+res://scenes/home.tscn
+res://scenes/userinfo.tscn
+res://addons/com.heroiclabs.nakama/Nakama.gd
