@@ -140,6 +140,7 @@ layout_mode = 2
 [node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainerRead"]
 layout_mode = 2
 theme = SubResource("Theme_ua8jr")
+button_pressed = true
 
 [node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainerRead"]
 layout_mode = 2

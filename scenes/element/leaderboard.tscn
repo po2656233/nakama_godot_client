@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3 uid="uid://riqfmggkqpfd"]
+
+[ext_resource type="Script" path="res://scripts/unify/leaderboard.gd" id="1_w6k3d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lrv6"]
+bg_color = Color(0.501961, 0.6, 0.796078, 1)
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w6k3d")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5lrv6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "排行榜"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+tab_alignment = 1
+
+[node name="日排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/日排行"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="周排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/周排行"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="月排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/月排行"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="季度排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/季度排行"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="年中排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/年中排行"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="年终排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/年终排行"]
+layout_mode = 2
+size_flags_horizontal = 3

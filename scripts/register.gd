@@ -1,6 +1,14 @@
 extends Control
 var login_scene = load("res://scenes/login.tscn")
 
+
+@onready var usernameEdit = $Panel/VBoxContainer/HBoxContainerUser/LineEdit
+@onready var passwordEdit = $Panel/VBoxContainer/HBoxContainerPsw/LineEdit
+@onready var qrpasswordEdit = $Panel/VBoxContainer/HBoxContainerQrPsw2/LineEdit
+@onready var phoneEdit = $Panel/VBoxContainer/HBoxContainerPhone/LineEdit
+@onready var vcodeEdit = $Panel/VBoxContainer/HBoxContainerVcode/LineEdit
+@onready var checkbox = $Panel/VBoxContainer/HBoxContainerRead/CheckBox
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -13,6 +21,52 @@ func _process(_delta: float) -> void:
 
 
 func _on_tb_return_pressed() -> void:
-	# const DISSOLVE_IMAGE = preload('res://addons/transitions/images/blurry-noise.png')
 	FancyFade.wipe_left(login_scene.instantiate(),0.5)
 	pass # Replace with function body.
+
+
+func _on_btn_register_pressed() -> void:
+	print("register")
+	if usernameEdit.text == "" or usernameEdit.text.length() > 8:
+		PopupManager.show_message("请填写用户名,字符数限制为1-8位")
+		return
+	if passwordEdit.text.length() < 8 or passwordEdit.text.length() > 16:
+		PopupManager.show_message("请填写密码,字符数限制为8-16位")
+		return
+	if qrpasswordEdit.text == "":
+		PopupManager.show_message("请填写确认密码")
+		return
+	if passwordEdit.text!= qrpasswordEdit.text:
+		PopupManager.show_message("两次密码输入不一致")
+		return
+	if phoneEdit.text == "":
+		PopupManager.show_message("请填写手机号码")
+		return
+	if phoneEdit.text.length() != 11:
+		PopupManager.show_message("手机号必须是11位")
+		return	
+	if not is_valid_phone_number(phoneEdit.text):
+		PopupManager.show_messag("请输入有效的手机号码")
+		return
+	if vcodeEdit.text == "":
+		PopupManager.show_message("请填写验证码")
+		return
+	if not checkbox.is_pressed():
+			PopupManager.show_message("请阅读并同意用户协议")
+			return
+	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text,"",true):
+		ProjectSettings.set("username",usernameEdit.text)
+		# ProjectSettings.set("password",passwordEdit.text)
+		PopupManager.show_confirm("注册成功", Callable(self,"_on_register_success"))
+	else:
+		PopupManager.show_message("注册失败")
+	pass # Replace with function body.
+
+func _on_register_success():
+	FancyFade.wipe_conical(login_scene.instantiate(),0.5)
+
+
+func is_valid_phone_number(phone: String) -> bool:
+	var regex = RegEx.new()
+	regex.compile("^1[3-9]\\d{9}$")
+	return regex.search(phone) != null

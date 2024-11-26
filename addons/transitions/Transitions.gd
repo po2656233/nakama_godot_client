@@ -48,7 +48,11 @@ func change_scene_to_instance(new_scene, fade_type, fade_time_seconds:float = 1.
 	
 	if fade_type == FadeType.Blend and shader_image == null:
 		push_error("You need to specify a shader image for blending!")
-	
+		
+	var viewport_width = get_viewport().get_visible_rect().size.x
+	var viewport_height = get_viewport().get_visible_rect().size.y
+	ProjectSettings.set("display/window/size/viewport_width",viewport_width)
+	ProjectSettings.set("display/window/size/viewport_height",viewport_height)
 	var data = _common_pre_fade(fade_type, fade_time_seconds, shader_image)
 	_set_scene(new_scene)
 	emit_signal("pre_transition")

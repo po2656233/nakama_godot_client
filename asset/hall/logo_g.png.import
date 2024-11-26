@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxml4xjbdofev"
-path="res://.godot/imported/ico_fangka.png-f4f292a68304b6ffd59e5d42b96ac9e1.ctex"
+uid="uid://ckr2snwe7pi7h"
+path="res://.godot/imported/logo_g.png-23c82be93dd485e949943e3d9234153b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/currency/ico_fangka.png"
-dest_files=["res://.godot/imported/ico_fangka.png-f4f292a68304b6ffd59e5d42b96ac9e1.ctex"]
+source_file="res://asset/hall/logo_g.png"
+dest_files=["res://.godot/imported/logo_g.png-23c82be93dd485e949943e3d9234153b.ctex"]
 
 [params]
 

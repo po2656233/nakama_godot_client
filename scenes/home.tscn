@@ -1,4 +1,53 @@
-[gd_scene format=3 uid="uid://dblj3g06fkrpo"]
+[gd_scene load_steps=23 format=3 uid="uid://dblj3g06fkrpo"]
+
+[ext_resource type="Texture2D" uid="uid://i7w64npn7npl" path="res://asset/lobby/bj.png" id="1_3pqew"]
+[ext_resource type="Script" path="res://scripts/home.gd" id="1_4keq7"]
+[ext_resource type="PackedScene" uid="uid://g1t7o7n75h0h" path="res://scenes/element/personal.tscn" id="2_kagwf"]
+[ext_resource type="PackedScene" uid="uid://cibb7ou8lcdk1" path="res://scenes/element/chat.tscn" id="2_m51rd"]
+[ext_resource type="Texture2D" uid="uid://djucjql6is7jg" path="res://asset/hall/logo_r.png" id="3_5pd0w"]
+[ext_resource type="Texture2D" uid="uid://0q54dik5kjk2" path="res://asset/hall/logo.png" id="3_8fqu6"]
+[ext_resource type="PackedScene" uid="uid://rpjo7aqw1o5k" path="res://scenes/element/announcements.tscn" id="3_w6nje"]
+[ext_resource type="Texture2D" uid="uid://cx2g5ae3bm6j3" path="res://asset/hall/logo_y.png" id="4_6y4ni"]
+[ext_resource type="Texture2D" uid="uid://bkqtcig0kfi1b" path="res://asset/hall/start1.png" id="5_hrlg5"]
+[ext_resource type="Texture2D" uid="uid://bqbnsspv7wvrt" path="res://asset/hall/store.png" id="6_bdbkb"]
+[ext_resource type="Texture2D" uid="uid://ckr2snwe7pi7h" path="res://asset/hall/logo_g.png" id="6_s23th"]
+[ext_resource type="Texture2D" uid="uid://dxfj6goqxd4ur" path="res://asset/hall/what.png" id="7_cjf4j"]
+[ext_resource type="Texture2D" uid="uid://cf4xc2d6vqokl" path="res://asset/hall/full.png" id="8_6me3t"]
+[ext_resource type="Texture2D" uid="uid://by06wukfv2agi" path="res://asset/hall/setting.png" id="9_8m2a5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m38j6"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7w7n8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwvo1"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8fk5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w04p1"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pb71d"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p652v"]
+bg_color = Color(0.0352941, 0.239216, 0.235294, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.290196, 0.333333, 0.376471, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oulow"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Home" type="Control"]
 layout_mode = 3
@@ -7,3 +56,246 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_4keq7")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3pqew")
+expand_mode = 2
+
+[node name="HBoxContainerHome" type="HBoxContainer" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 32.0
+offset_bottom = 112.0
+grow_horizontal = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="btn_start" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_m38j6")
+icon = ExtResource("5_hrlg5")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_match" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(90, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_m38j6")
+text = "比赛"
+
+[node name="btn_renwu" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(90, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_m38j6")
+text = "任务"
+
+[node name="tb_home" type="TextureButton" parent="HBoxContainerHome"]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture_normal = ExtResource("3_8fqu6")
+texture_pressed = ExtResource("4_6y4ni")
+texture_hover = ExtResource("3_5pd0w")
+texture_disabled = ExtResource("6_s23th")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="btn_zhanji" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(90, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_m38j6")
+text = "战绩"
+
+[node name="btn_ranking" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(90, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_7w7n8")
+text = "排行榜"
+
+[node name="btn_store" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_cwvo1")
+text = "商城"
+icon = ExtResource("6_bdbkb")
+expand_icon = true
+
+[node name="HBoxContainerRightTop" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -119.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = 38.0
+grow_horizontal = 0
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="btn_what" type="Button" parent="HBoxContainerRightTop"]
+clip_contents = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8fk5")
+icon = ExtResource("7_cjf4j")
+icon_alignment = 2
+expand_icon = true
+
+[node name="btn_full" type="Button" parent="HBoxContainerRightTop"]
+clip_contents = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_w04p1")
+icon = ExtResource("8_6me3t")
+icon_alignment = 2
+expand_icon = true
+
+[node name="MB_setting" type="MenuButton" parent="HBoxContainerRightTop"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pb71d")
+icon = ExtResource("9_8m2a5")
+flat = false
+icon_alignment = 1
+expand_icon = true
+item_count = 5
+popup/item_0/text = "音量"
+popup/item_0/id = 0
+popup/item_1/text = "关于"
+popup/item_1/id = 1
+popup/item_2/text = ""
+popup/item_2/id = 2
+popup/item_2/separator = true
+popup/item_3/text = "注销重登"
+popup/item_3/id = 3
+popup/item_4/text = "退出"
+popup/item_4/id = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0564236
+anchor_top = 0.177469
+anchor_right = 0.359375
+anchor_bottom = 0.871914
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Personal" parent="VBoxContainer" instance=ExtResource("2_kagwf")]
+custom_minimum_size = Vector2(300, 80)
+layout_mode = 2
+
+[node name="ScrollAnnouncements" parent="VBoxContainer" instance=ExtResource("3_w6nje")]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Chat" parent="VBoxContainer" instance=ExtResource("2_m51rd")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.381076
+anchor_top = 0.177469
+anchor_right = 0.951389
+anchor_bottom = 0.867284
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_p652v")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="btn_homepage" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+text = "主页"
+
+[node name="btn_herolist" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+text = "英雄列表"
+
+[node name="btn_matchlist" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+text = "赛事列表"
+
+[node name="btn_ranklist" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+text = "排行榜"
+
+[node name="btn_mygoods" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+text = "我的物品"
+
+[node name="btn_convert" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+text = "兑换"
+
+[node name="btn_rechange" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+text = "充值"
+
+[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "新闻"
+horizontal_alignment = 1
