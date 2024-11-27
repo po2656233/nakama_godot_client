@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/lobby.gd" id="1_3gulo"]
 [ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://asset/lobby/shiling.png" id="2_2uxab"]
-[ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://asset/bg/bg_login.jpg" id="2_07b6t"]
+[ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://asset/lobby/redbj.jpg" id="2_7fbj3"]
 [ext_resource type="Theme" uid="uid://wv2nwe1arwch" path="res://theme/btn.tres" id="3_k5yci"]
 [ext_resource type="Texture2D" uid="uid://bl0qqmk45se0a" path="res://asset/lobby/head.png" id="4_2vswe"]
 [ext_resource type="Texture2D" uid="uid://exkjflel54sq" path="res://asset/lobby/hua.png" id="5_g6igt"]
@@ -56,7 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_07b6t")
+texture = ExtResource("2_7fbj3")
 expand_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Panel"]

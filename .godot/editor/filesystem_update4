@@ -15,3 +15,11 @@ res://scenes/element/chat.tscn
 res://scenes/element/leaderboard.tscn
 res://scenes/element/personal.tscn
 res://scenes/element/homepage.tscn
+res://scenes/element/setting.tscn
+res://scripts/global/window_drag.gd
+res://scripts/home.gd
+res://scripts/unify/setting.gd
+res://scripts/login.gd
+res://scripts/register.gd
+res://scripts/unify/chat.gd
+res://scripts/unify/find_friend.gd

@@ -28,6 +28,11 @@ TransitionsPlugin="*res://addons/transitions/transitions_plugin.gd"
 FadeScene="*res://addons/transitions/FadeScene.gd"
 Network="*res://scripts/unify/network.gd"
 PopupManager="*res://scripts/unify/popup_manager.gd"
+WindowDrag="*res://scripts/global/window_drag.gd"
+
+[display]
+
+window/size/borderless=true
 
 [editor_plugins]
 

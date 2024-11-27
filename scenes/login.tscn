@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bensqtydtmcmw"]
+[gd_scene load_steps=29 format=3 uid="uid://bensqtydtmcmw"]
 
 [ext_resource type="Texture2D" uid="uid://d3bjst7etlnwq" path="res://asset/login/btn_zhdl.png" id="1_lxatw"]
 [ext_resource type="Script" path="res://scripts/login.gd" id="1_ohvyb"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://d2nhkgy08lqdw" path="res://asset/login/btn_wjmm.png" id="12_s581t"]
 [ext_resource type="Texture2D" uid="uid://cqkipfykw0yy7" path="res://asset/login/btn_sjzc_y.png" id="15_7rdsb"]
 [ext_resource type="Texture2D" uid="uid://cw7chhk7pvbk5" path="res://asset/login/btn_wjmm_g.png" id="16_bvtl1"]
+[ext_resource type="PackedScene" uid="uid://b88upmlmmwyiv" path="res://scenes/element/setting.tscn" id="18_jh01n"]
 [ext_resource type="Texture2D" uid="uid://brmmu1rqvldj2" path="res://asset/login/btn_wjmm_y.png" id="18_kgkuh"]
 
 [sub_resource type="Theme" id="Theme_u2x7h"]
@@ -91,6 +92,8 @@ offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
 
 [node name="HBoxContainerUser" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -168,6 +171,8 @@ offset_right = 250.0
 offset_bottom = 213.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
 
 [node name="TR_login" type="TextureButton" parent="Panel/HBoxContainer"]
 layout_mode = 2
@@ -187,6 +192,14 @@ texture_normal = ExtResource("4_33ucq")
 texture_pressed = ExtResource("6_6rye6")
 texture_hover = ExtResource("7_4kxbs")
 stretch_mode = 0
+
+[node name="Setting" parent="." instance=ExtResource("18_jh01n")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 1
 
 [node name="HBoxContainerRegister" type="HBoxContainer" parent="."]
 layout_mode = 1

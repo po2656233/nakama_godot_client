@@ -11,6 +11,7 @@ var home_scene = load("res://scenes/home.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	WindowDrag.register_drag_zone(self)
 	var ret = await Network.restore_session()
 	if not ret:
 		Network.initialize_client()
@@ -34,7 +35,6 @@ func _process(_delta: float) -> void:
 
 
 func _on_tb_register_pressed() -> void:
-	const DISSOLVE_IMAGE = preload('res://addons/transitions/images/blurry-noise.png')
 	FancyFade.custom_fade(register_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	pass # Replace with function body.
 

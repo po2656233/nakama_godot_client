@@ -15,7 +15,7 @@ var announcements = [
 ]
 
 # 滚动设置
-var scroll_speed = 40.0  # 滚动速度
+var scroll_speed = 20.0  # 滚动速度
 var scroll_position = 0.0  # 当前滚动位置
 var content_height = 0.0   # 内容总高度
 var label_height = 10.0    # 每个标签的高度

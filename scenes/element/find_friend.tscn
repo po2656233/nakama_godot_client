@@ -1,14 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://duk1crphy5j8f"]
+[gd_scene load_steps=3 format=3 uid="uid://duk1crphy5j8f"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_e5mcf"]
-
-[sub_resource type="SystemFont" id="SystemFont_boefr"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_xnwxl"]
-font = SubResource("SystemFont_boefr")
-font_size = 24
-font_color = Color(0.615686, 0.623529, 0.631373, 1)
+[ext_resource type="Script" path="res://scripts/unify/find_friend.gd" id="1_fjx16"]
 
 [node name="Firends" type="Control"]
 layout_mode = 3
@@ -17,9 +10,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_fjx16")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(480, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,24 +21,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_e5mcf")
 
-[node name="Label" type="Label" parent="Panel"]
-layout_mode = 2
-offset_left = 24.0
-offset_top = 4.0
-offset_right = 72.0
-offset_bottom = 38.0
-text = "好友"
-label_settings = SubResource("LabelSettings_xnwxl")
-
 [node name="LineEdit_find" type="LineEdit" parent="Panel"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 17.0
-offset_top = 39.0
-offset_right = -14.0
-offset_bottom = 70.0
+offset_left = 14.0
+offset_top = 13.0
+offset_right = -18.0
+offset_bottom = 50.0
 grow_horizontal = 2
+size_flags_horizontal = 0
 placeholder_text = "查找"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
@@ -53,10 +38,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 17.0
-offset_top = 76.0
-offset_right = -10.0
-offset_bottom = -15.0
+offset_left = 14.0
+offset_top = 60.0
+offset_right = -14.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -67,7 +52,3 @@ size_flags_vertical = 3
 theme_override_colors/font_hovered_color = Color(0.968627, 0.807843, 0, 1)
 theme_override_colors/font_selected_color = Color(0.776471, 0.862745, 0.729412, 1)
 theme_override_font_sizes/font_size = 24
-item_count = 3
-item_0/text = "1"
-item_1/text = "2"
-item_2/text = "33333"

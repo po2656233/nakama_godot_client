@@ -11,6 +11,7 @@ var login_scene = load("res://scenes/login.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# WindowDrag.register_drag_zone(self)
 	pass # Replace with function body.
 
 
