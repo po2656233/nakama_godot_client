@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dblj3g06fkrpo"]
+[gd_scene load_steps=23 format=3 uid="uid://dblj3g06fkrpo"]
 
 [ext_resource type="Texture2D" uid="uid://i7w64npn7npl" path="res://asset/lobby/bj.png" id="1_3pqew"]
 [ext_resource type="Script" path="res://scripts/home.gd" id="1_4keq7"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bqbnsspv7wvrt" path="res://asset/hall/store.png" id="6_bdbkb"]
 [ext_resource type="Texture2D" uid="uid://ckr2snwe7pi7h" path="res://asset/hall/logo_g.png" id="6_s23th"]
 [ext_resource type="Texture2D" uid="uid://c46s1r5ocgwv5" path="res://asset/hall/send.png" id="12_qyhqg"]
+[ext_resource type="PackedScene" uid="uid://b6c8g4q5rj3x4" path="res://scenes/element/announcement_scene.tscn" id="14_7exda"]
 [ext_resource type="PackedScene" uid="uid://b88upmlmmwyiv" path="res://scenes/element/setting.tscn" id="14_olehv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m38j6"]
@@ -66,6 +67,31 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_3pqew")
 expand_mode = 2
+
+[node name="AnnouncementScene" parent="." instance=ExtResource("14_7exda")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.056
+anchor_top = 0.155
+anchor_right = 0.951
+anchor_bottom = 0.155
+offset_left = -0.512001
+offset_top = -17.44
+offset_right = -0.552002
+offset_bottom = 17.56
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Announcements" parent="." instance=ExtResource("3_w6nje")]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+offset_left = 64.0
+offset_top = -81.0
+offset_right = -51.0
+offset_bottom = -6.0
+grow_vertical = 0
 
 [node name="Setting" parent="." instance=ExtResource("14_olehv")]
 layout_mode = 1
@@ -283,14 +309,5 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "新闻"
 horizontal_alignment = 1
-
-[node name="Announcements" parent="." instance=ExtResource("3_w6nje")]
-custom_minimum_size = Vector2(0, 75)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-offset_top = -81.0
-offset_bottom = -6.0
-grow_vertical = 0
 
 [connection signal="pressed" from="VBoxContainer/Chat/btn_popup" to="VBoxContainer/Chat" method="_on_btn_popup_pressed"]
