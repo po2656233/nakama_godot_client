@@ -20,6 +20,7 @@ var original_state := {
 var is_fullscreen := false
 var tween: Tween
 
+# 初始化
 func _ready():
     if toggle_button_path:
         var button = get_node(toggle_button_path)
@@ -31,6 +32,8 @@ func _ready():
         button.text = "全屏切换"
         button.pressed.connect(_on_fullscreen_toggle)
         add_child(button)
+    # 获取好友列表
+    get_friends_list()
 
 func _on_fullscreen_toggle():
     if !is_fullscreen:
@@ -179,7 +182,16 @@ func restore_original_state():
     is_fullscreen = false
     emit_signal("fullscreen_changed", false)
 
+###################################################
+# 以下是按钮事件处理函数
+func get_friends_list():
+    var friendlist = await Network.get_friends_list()
+    if friendlist:
+        print(friendlist)
+    print("获取好友列表")
+    pass
 
+###################################################
 func _on_show_addfriend_pressed() -> void:
     if addfirendPanle.visible:
         addfirendPanle.hide()

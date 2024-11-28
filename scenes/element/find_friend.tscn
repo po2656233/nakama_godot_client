@@ -61,6 +61,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/font_hovered_color = Color(0.968627, 0.807843, 0, 1)
 theme_override_colors/font_selected_color = Color(0.776471, 0.862745, 0.729412, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 2
+theme_override_constants/icon_margin = 10
+theme_override_constants/line_separation = 10
 theme_override_styles/panel = SubResource("StyleBoxFlat_dsmle")
 theme_override_styles/focus = SubResource("StyleBoxFlat_mdyjj")
+select_mode = 1
+
+[connection signal="text_submitted" from="Panel/LineEdit_find" to="." method="_on_line_edit_find_text_submitted"]

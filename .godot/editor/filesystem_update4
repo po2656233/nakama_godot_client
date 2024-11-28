@@ -1,12 +1,13 @@
+res://scripts/unify/find_friend.gd
 res://scenes/login.tscn
 res://scripts/unify/chat.gd
 res://theme/chat.tres
+res://theme/btn.tres
 res://scenes/home.tscn
 res://scenes/element/personal.tscn
 res://scenes/element/find_friend.tscn
 res://scenes/element/chat.tscn
 res://scenes/element/setting.tscn
 res://scenes/element/announcement_scene.tscn
-res://scripts/unify/announcement_controller.gd
-res://theme/btn.tres
 res://scenes/lobby.tscn
+res://scripts/home.gd

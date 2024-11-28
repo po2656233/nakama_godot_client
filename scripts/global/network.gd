@@ -245,14 +245,60 @@ func feed_pet(pet_id: String) -> void:
 	save_player_data.call_deferred()
 	pet_data_updated.emit()
 
-# Social Features
-func send_friend_request(friend_id: String) -> void:
-	if socket:
-		await socket.add_friends_async(session, [friend_id])
+# 群管理
+func search_groups(groupname: String):
+	var result = await client.list_groups_async(session, [groupname])
+	if result.is_exception():
+		print("Error searching users: ", result.get_exception().message)
+		return
+	print("查找群组: ", result)
+	return result
 
-func accept_friend_request(friend_id: String) -> void:
-	if socket:
-		await socket.add_friends_async(session, [friend_id])
+
+
+# 好友管理
+# 添加好友
+func add_friends_async(friend_id: String):
+	var result = await client.add_friends_async(session, [friend_id])
+	if result.is_exception():
+		print("Error send_friend_request: ", result.get_exception().message)
+		return
+	print("添加好友: ", result)
+	return result
+
+
+
+# 通过用户名搜索用户
+func search_users(username: String):
+	var result = await client.get_users_async(session,[], [username])
+	if result.is_exception():
+		print("Error searching users: ", result.get_exception().message)
+		return
+	print("查找用户: ", result)
+	return result
+
+
+# 获取好友列表
+func get_friends_list():
+	var result = await client.list_friends_async(session)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return
+	print("好友列表: ", result)
+	return result
+		
+
+# 删除好友
+func remove_friend(user_id: String):
+	var result = await client.delete_friends_async(session, [user_id])
+	if result.is_exception():
+		print("Error removing friend: ", result.get_exception().message)
+		return
+	print("删除好友成功!!!")
+	return result
+
+
+
 
 # Signal Handlers
 func _on_connection_failed():

@@ -1,3 +1,4 @@
+VBoxContainer
 Label
 Button
 CheckButton
@@ -9,6 +10,5 @@ ColorPickerButton
 TabBar
 PanelContainer
 TextureProgressBar
-VBoxContainer
 MenuButton
 GridContainer

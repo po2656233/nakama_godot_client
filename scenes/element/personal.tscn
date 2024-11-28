@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://g1t7o7n75h0h"]
+[gd_scene load_steps=12 format=3 uid="uid://g1t7o7n75h0h"]
 
 [ext_resource type="Texture2D" uid="uid://bwk6gbfvjlu16" path="res://asset/hall/btn_cjfj_db.png" id="1_2tdhu"]
 [ext_resource type="Script" path="res://scripts/unify/personal.gd" id="1_njnbb"]
@@ -24,6 +24,9 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_x28vm"]
+font_color = Color(0.411765, 0.517647, 0.396078, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pl6fm"]
 bg_color = Color(0.313726, 0.313726, 0.313726, 1)
@@ -109,6 +112,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 2
 
+[node name="nickname" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "昵称:"
+label_settings = SubResource("LabelSettings_x28vm")
+
 [node name="HBoxContainerGold" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer"]
 layout_mode = 2
 
@@ -150,7 +159,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.388235, 0.505882, 0.498039, 1)
+theme_override_colors/font_color = Color(0.917647, 0.796078, 0.443137, 1)
 theme_override_font_sizes/font_size = 10
 text = "经验比值"
 horizontal_alignment = 1
