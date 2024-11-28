@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://duk1crphy5j8f"]
+[gd_scene load_steps=6 format=3 uid="uid://duk1crphy5j8f"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_e5mcf"]
 [ext_resource type="Script" path="res://scripts/unify/find_friend.gd" id="1_fjx16"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03han"]
+bg_color = Color(0.0666667, 0.0980392, 0.184314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dsmle"]
+bg_color = Color(0.0156863, 0.34902, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mdyjj"]
+bg_color = Color(0.25098, 0.458824, 0.223529, 1)
 
 [node name="Firends" type="Control"]
 layout_mode = 3
@@ -31,6 +40,7 @@ offset_right = -18.0
 offset_bottom = 50.0
 grow_horizontal = 2
 size_flags_horizontal = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_03han")
 placeholder_text = "查找"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
@@ -52,3 +62,5 @@ size_flags_vertical = 3
 theme_override_colors/font_hovered_color = Color(0.968627, 0.807843, 0, 1)
 theme_override_colors/font_selected_color = Color(0.776471, 0.862745, 0.729412, 1)
 theme_override_font_sizes/font_size = 24
+theme_override_styles/panel = SubResource("StyleBoxFlat_dsmle")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mdyjj")

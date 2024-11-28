@@ -18,11 +18,11 @@ var confirm_scene = preload("res://scenes/element/confirm_popup.tscn")
 # 当前活动的弹窗
 var active_popups: Dictionary = {}
 var canvas_layer: CanvasLayer
-
+var is_visible: bool = false
+## 初始化
 func _ready() -> void:
     # 设置为始终处理（即使游戏暂停）
     set_process_mode(Node.PROCESS_MODE_ALWAYS)
-    
     # 创建一个顶层CanvasLayer来显示弹窗
     canvas_layer = CanvasLayer.new()
     canvas_layer.layer = 100  # 设置一个较高的层级
@@ -67,6 +67,7 @@ func show_custom(popup_scene_path: String, params: Dictionary = {}) -> void:
 
 ## 关闭指定ID的弹窗
 func close_popup(popup_id: String) -> void:
+    is_visible = false
     if active_popups.has(popup_id):
         var popup = active_popups[popup_id]
         popup.queue_free()
@@ -75,11 +76,13 @@ func close_popup(popup_id: String) -> void:
 
 ## 关闭所有弹窗
 func close_all() -> void:
+    is_visible = false
     for popup_id in active_popups.keys():
         close_popup(popup_id)
 
 # 内部方法：设置弹窗基本属性
 func _setup_popup(popup: Node, title: String = "", message: String = "") -> void:
+    is_visible = true
     var popup_id = str(popup.get_instance_id())
     
     # 设置基本属性
@@ -99,3 +102,6 @@ func _setup_popup(popup: Node, title: String = "", message: String = "") -> void
     # 添加到顶层CanvasLayer
     canvas_layer.add_child(popup)
     active_popups[popup_id] = popup
+
+func isVisible() -> bool:
+    return  is_visible

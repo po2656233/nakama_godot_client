@@ -46,6 +46,11 @@ func _on_tr_wxlogin_pressed() -> void:
 	login()
 	pass # Replace with function body.
 
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ENTER and not PopupManager.isVisible():  # 或使用 KEY_RETURN
+			login()
+			get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
 func login()->void:
 	print("Login: " + usernameEdit.text + " " + passwordEdit.text)

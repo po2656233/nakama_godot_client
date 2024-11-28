@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dblj3g06fkrpo"]
+[gd_scene load_steps=22 format=3 uid="uid://dblj3g06fkrpo"]
 
 [ext_resource type="Texture2D" uid="uid://i7w64npn7npl" path="res://asset/lobby/bj.png" id="1_3pqew"]
 [ext_resource type="Script" path="res://scripts/home.gd" id="1_4keq7"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bkqtcig0kfi1b" path="res://asset/hall/start1.png" id="5_hrlg5"]
 [ext_resource type="Texture2D" uid="uid://bqbnsspv7wvrt" path="res://asset/hall/store.png" id="6_bdbkb"]
 [ext_resource type="Texture2D" uid="uid://ckr2snwe7pi7h" path="res://asset/hall/logo_g.png" id="6_s23th"]
+[ext_resource type="Texture2D" uid="uid://c46s1r5ocgwv5" path="res://asset/hall/send.png" id="12_qyhqg"]
 [ext_resource type="PackedScene" uid="uid://b88upmlmmwyiv" path="res://scenes/element/setting.tscn" id="14_olehv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m38j6"]
@@ -177,6 +178,23 @@ metadata/_edit_group_ = true
 [node name="Chat" parent="VBoxContainer" instance=ExtResource("2_m51rd")]
 layout_mode = 2
 size_flags_vertical = 3
+toggle_button_path = NodePath("btn_popup")
+
+[node name="btn_popup" type="Button" parent="VBoxContainer/Chat"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_top = 4.0
+offset_right = -5.0
+offset_bottom = 38.0
+grow_horizontal = 0
+icon = ExtResource("12_qyhqg")
+flat = true
+icon_alignment = 2
+expand_icon = true
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -274,3 +292,5 @@ anchor_top = 1.0
 offset_top = -81.0
 offset_bottom = -6.0
 grow_vertical = 0
+
+[connection signal="pressed" from="VBoxContainer/Chat/btn_popup" to="VBoxContainer/Chat" method="_on_btn_popup_pressed"]

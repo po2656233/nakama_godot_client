@@ -19,13 +19,18 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ENTER and not PopupManager.isVisible():  # 或使用 KEY_RETURN
+			_on_btn_register_pressed()
+			get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
-
+# 返回登录页面
 func _on_tb_return_pressed() -> void:
 	FancyFade.wipe_left(login_scene.instantiate(),0.5)
 	pass # Replace with function body.
 
-
+# 注册
 func _on_btn_register_pressed() -> void:
 	print("register")
 	if usernameEdit.text == "" or usernameEdit.text.length() > 8:
@@ -47,7 +52,7 @@ func _on_btn_register_pressed() -> void:
 		PopupManager.show_message("手机号必须是11位")
 		return	
 	if not is_valid_phone_number(phoneEdit.text):
-		PopupManager.show_messag("请输入有效的手机号码")
+		PopupManager.show_message("请输入有效的手机号码")
 		return
 	if vcodeEdit.text == "":
 		PopupManager.show_message("请填写验证码")

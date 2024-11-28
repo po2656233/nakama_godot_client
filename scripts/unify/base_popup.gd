@@ -18,7 +18,9 @@ var _title: String = ""
 var _message: String = ""
 var _tween: Tween
 var _panel: Panel
+var isFinish: bool = true
 
+# 初始化函数
 func _ready() -> void:
     # 设置初始布局
     anchors_preset = Control.PRESET_FULL_RECT
@@ -29,7 +31,7 @@ func _ready() -> void:
     
     # 获取面板引用
     _panel = get_node_or_null("Panel")
-    
+    isFinish = true
     # 设置初始状态
     if show_animation:
         modulate.a = 0
@@ -41,12 +43,14 @@ func _ready() -> void:
         get_tree().create_timer(close_delay).timeout.connect(close)
 
 func set_title(title: String) -> void:
+    isFinish = false
     _title = title
     var title_label = get_node_or_null("Panel/Title")
     if title_label:
         title_label.text = title
 
 func set_message(message: String) -> void:
+    isFinish = false
     _message = message
     var message_label = get_node_or_null("Panel/Message")
     if message_label:
@@ -55,6 +59,7 @@ func set_message(message: String) -> void:
         print("Message label not found.")
 
 func close() -> void:
+    isFinish = true
     if show_animation:
         _close_with_animation()
     else:
@@ -101,3 +106,7 @@ func _on_cancel_pressed() -> void:
 # 虚函数：子类可以重写这个函数来接收自定义参数
 func set_params(_params: Dictionary) -> void:
     pass
+
+
+func isVisible() -> bool:
+    return isFinish

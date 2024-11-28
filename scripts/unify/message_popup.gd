@@ -23,3 +23,10 @@ func _ready() -> void:
 
 func _on_close_button_pressed() -> void:
 	close()
+
+func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
+		close()
+		get_viewport().set_input_as_handled()  # 阻止事件继续传递
+		# 或者使用 accept_event() 也可以
+		# event.accept()
