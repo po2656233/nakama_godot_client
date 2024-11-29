@@ -1,3 +1,5 @@
+res://scripts/global/network.gd
+res://addons/com.heroiclabs.nakama/client/NakamaClient.gd
 res://scripts/unify/find_friend.gd
 res://scenes/login.tscn
 res://scripts/unify/chat.gd
@@ -5,9 +7,10 @@ res://theme/chat.tres
 res://theme/btn.tres
 res://scenes/home.tscn
 res://scenes/element/personal.tscn
-res://scenes/element/find_friend.tscn
-res://scenes/element/chat.tscn
 res://scenes/element/setting.tscn
 res://scenes/element/announcement_scene.tscn
 res://scenes/lobby.tscn
-res://scripts/home.gd
+res://scenes/element/chat.tscn
+res://scenes/element/find_friend.tscn
+res://addons/com.heroiclabs.nakama/socket/NakamaSocketAdapter.gd
+res://addons/com.heroiclabs.nakama/api/NakamaAPI.gd

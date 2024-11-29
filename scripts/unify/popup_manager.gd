@@ -29,9 +29,9 @@ func _ready() -> void:
     add_child(canvas_layer)
 
 ## 显示普通消息弹窗
-func show_message(message: String, title: String = "提示") -> void:
+func show_message(message: String, title: String = "提示", auto_close=true) -> void:
     var popup = message_scene.instantiate()
-    _setup_popup(popup, title, message)
+    _setup_popup(popup, title, message,auto_close)
     
 ## 显示确认框
 ## callback为确认后的回调函数
@@ -81,16 +81,16 @@ func close_all() -> void:
         close_popup(popup_id)
 
 # 内部方法：设置弹窗基本属性
-func _setup_popup(popup: Node, title: String = "", message: String = "") -> void:
+func _setup_popup(popup: Node, title: String = "", message: String = "",auto_close = false) -> void:
     is_visible = true
     var popup_id = str(popup.get_instance_id())
-    
+    popup.auto_close = auto_close
     # 设置基本属性
     if title and popup.has_method("set_title"):
         popup.set_title(title)
     if message and popup.has_method("set_message"):
         popup.set_message(message)
-        
+       
     # 连接信号
     if popup.has_signal("confirmed"):
         popup.confirmed.connect(func(): popup_confirmed.emit(popup_id))

@@ -6,7 +6,7 @@ var session: NakamaSession
 var socket: NakamaSocket
 
 # Game data
-var player_data: Dictionary = {}
+var player_data: NakamaAPI.ApiUser
 var pets_data: Dictionary = {}
 var home_data: Dictionary = {}
 
@@ -78,19 +78,20 @@ func authenticate_device(username: String="", created:bool=false) -> bool:
 	if result.is_exception():
 		connection_failed.emit()
 		return false
-	
+	print("设备登录请求成功1",result)
 	session = result
 	save_session()
-	
+	print("设备登录请求成功2222")
 	# Connect socket after authentication
 	if socket.is_connected_to_host():
 		return true
+		
 	var socket_result = await socket.connect_async(session)
 	if socket_result.is_exception():
 		push_error("Socket connection failed: " + socket_result.get_exception().message)
 		connection_failed.emit()
 		return false
-	
+	print("设备登录socket",socket_result)
 	connection_established.emit()
 	return true
 
@@ -135,6 +136,8 @@ func save_session() -> void:
 		var file = FileAccess.open("user://nakama_session.save", FileAccess.WRITE)
 		file.store_line(session.token)
 		file.close()
+	return
+		
 
 func restore_session() -> bool:
 	var session_token = load_session_token()
@@ -174,32 +177,24 @@ func setup_socket() -> void:
 func load_player_data() -> void:
 	if !session:
 		return
-		
 	var result = await client.read_storage_objects_async(session, [{
 		"collection": "player_data",
 		"key": "profile",
 		"user_id": session.user_id
 	}])
-	
+	print("读取玩家数据: ", result)
 	if not result.is_exception():
 		if result.objects.size() > 0:
 			player_data = JSON.parse_string(result.objects[0].value)
 		else:
-			# Create new player data
-			player_data = {
-				"nickname": "Player" + str(randi() % 1000),
-				"level": 1,
-				"coins": 1000,
-				"gems": 10,
-				"home_data": {
-					"furniture_list": [],
-					"decoration_theme": "default",
-					"layout": {}
-				},
-				"pets": []
-			}
+			var ret = await client.get_account_async(session)
+			if ret.is_exception():
+				push_error("获取用户信息失败: " + ret.get_exception().message)
+				return
+			player_data = ret.user
+			print('用户信息1',player_data)	
 			await save_player_data()
-	
+		print("已读取玩家数据: ", player_data)
 	player_data_updated.emit()
 
 func save_player_data() -> void:
@@ -245,26 +240,17 @@ func feed_pet(pet_id: String) -> void:
 	save_player_data.call_deferred()
 	pet_data_updated.emit()
 
-# 群管理
-func search_groups(groupname: String):
-	var result = await client.list_groups_async(session, [groupname])
-	if result.is_exception():
-		print("Error searching users: ", result.get_exception().message)
-		return
-	print("查找群组: ", result)
-	return result
-
 
 
 # 好友管理
 # 添加好友
-func add_friends_async(friend_id: String):
+func add_friends_async(friend_id: String)->bool:
 	var result = await client.add_friends_async(session, [friend_id])
 	if result.is_exception():
 		print("Error send_friend_request: ", result.get_exception().message)
-		return
+		return false
 	print("添加好友: ", result)
-	return result
+	return true
 
 
 
@@ -277,6 +263,21 @@ func search_users(username: String):
 	print("查找用户: ", result)
 	return result
 
+func search_users_rpc(username: String):
+	var result = await client.rpc_async(session,  "search_username", username)
+	if result.is_exception():
+		print("Error searching users: ", result.get_exception().message)
+		return
+	print("查找用户RPC: ", result)
+	return JSON.parse_string(result.payload)
+
+func search_groups(groupname: String):
+	var result = await client.list_groups_async(session, groupname)
+	if result.is_exception():
+		print("Error searching users: ", result.get_exception().message)
+		return
+	print("查找群组: ", result)
+	return result
 
 # 获取好友列表
 func get_friends_list():
@@ -289,16 +290,45 @@ func get_friends_list():
 		
 
 # 删除好友
-func remove_friend(user_id: String):
+func remove_friend(user_id: String)->bool:
 	var result = await client.delete_friends_async(session, [user_id])
 	if result.is_exception():
 		print("Error removing friend: ", result.get_exception().message)
-		return
+		return false
 	print("删除好友成功!!!")
-	return result
+	return true
+
+func remove_group(group_id: String)->bool:
+	var result = await client.delete_group_async(session, group_id)
+	if result.is_exception():
+		print("Error removing friend: ", result.get_exception().message)
+		return false
+	print("删除群组!!!")
+	return true
 
 
+# 异步加载 Texture2D
+func load_texture_async(url: String) :
+	var request = HTTPRequest.new()
+	add_child(request)
+	
+	request.request(url)
+	var result = await request.request_completed
+	
+	if result[0] != HTTPRequest.RESULT_SUCCESS:
+		request.queue_free()
+		return null
+	
+	var image = Image.new()
 
+	var error = image.load_png_from_buffer(result[3])
+	if error != OK:
+		request.queue_free()
+		return null
+	
+	image.resize(20,15)
+	request.queue_free()
+	return ImageTexture.create_from_image(image)
 
 # Signal Handlers
 func _on_connection_failed():

@@ -19,10 +19,10 @@ func _ready() -> void:
 	else:
 		print("Network 已恢复",ret)
 		# 验证 PopupManager 是否可用
-	if PopupManager:
-		print("PopupManager 已正确初始化")
-	else:
+	if not PopupManager:
 		print("PopupManager 未正确初始化")
+	else:
+		print("PopupManager 已正确初始化")
 	var username = ProjectSettings.get("username")
 	if username:
 		usernameEdit.text = username
@@ -58,9 +58,8 @@ func login()->void:
 		PopupManager.show_message("请阅读并同意用户协议")
 		return
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text):
-		ProjectSettings.set("username",usernameEdit.text)
-		ProjectSettings.set("password",passwordEdit.text)
-	
+		await Network.load_player_data()
+		# ProjectSettings.set("username",usernameEdit.text)
 		FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	else:
 		PopupManager.show_message("账号或密码错误")

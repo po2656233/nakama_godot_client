@@ -5,3 +5,5 @@ extends Control
 
 func _ready():
 	WindowDrag.register_drag_zone(self)
+	# 取消窗口拖动
+	# WindowDrag.unregister_drag_zone(self)

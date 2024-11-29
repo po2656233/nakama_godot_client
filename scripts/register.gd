@@ -33,33 +33,8 @@ func _on_tb_return_pressed() -> void:
 # 注册
 func _on_btn_register_pressed() -> void:
 	print("register")
-	if usernameEdit.text == "" or usernameEdit.text.length() > 8:
-		PopupManager.show_message("请填写用户名,字符数限制为1-8位")
-		return
-	if passwordEdit.text.length() < 8 or passwordEdit.text.length() > 16:
-		PopupManager.show_message("请填写密码,字符数限制为8-16位")
-		return
-	if qrpasswordEdit.text == "":
-		PopupManager.show_message("请填写确认密码")
-		return
-	if passwordEdit.text!= qrpasswordEdit.text:
-		PopupManager.show_message("两次密码输入不一致")
-		return
-	if phoneEdit.text == "":
-		PopupManager.show_message("请填写手机号码")
-		return
-	if phoneEdit.text.length() != 11:
-		PopupManager.show_message("手机号必须是11位")
-		return	
-	if not is_valid_phone_number(phoneEdit.text):
-		PopupManager.show_message("请输入有效的手机号码")
-		return
-	if vcodeEdit.text == "":
-		PopupManager.show_message("请填写验证码")
-		return
-	if not checkbox.is_pressed():
-			PopupManager.show_message("请阅读并同意用户协议")
-			return
+	# if not checkValidity():
+	# 	return
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text,"",true):
 		ProjectSettings.set("username",usernameEdit.text)
 		# ProjectSettings.set("password",passwordEdit.text)
@@ -67,6 +42,36 @@ func _on_btn_register_pressed() -> void:
 	else:
 		PopupManager.show_message("注册失败")
 	pass # Replace with function body.
+
+func checkValidity()-> bool:
+	if usernameEdit.text == "" or usernameEdit.text.length() > 8:
+		PopupManager.show_message("请填写用户名,字符数限制为1-8位")
+		return false
+	if passwordEdit.text.length() < 8 or passwordEdit.text.length() > 16:
+		PopupManager.show_message("请填写密码,字符数限制为8-16位")
+		return false
+	if qrpasswordEdit.text == "":
+		PopupManager.show_message("请填写确认密码")
+		return false
+	if passwordEdit.text!= qrpasswordEdit.text:
+		PopupManager.show_message("两次密码输入不一致")
+		return false
+	if phoneEdit.text == "":
+		PopupManager.show_message("请填写手机号码")
+		return false
+	if phoneEdit.text.length() != 11:
+		PopupManager.show_message("手机号必须是11位")
+		return	false
+	if not is_valid_phone_number(phoneEdit.text):
+		PopupManager.show_message("请输入有效的手机号码")
+		return false
+	if vcodeEdit.text == "":
+		PopupManager.show_message("请填写验证码")
+		return false
+	if not checkbox.is_pressed():
+		PopupManager.show_message("请阅读并同意用户协议")
+		return false
+	return true
 
 func _on_register_success():
 	FancyFade.wipe_conical(login_scene.instantiate(),0.5)

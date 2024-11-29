@@ -96,7 +96,6 @@ size_flags_horizontal = 3
 alignment = 1
 
 [node name="account" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo"]
-unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 10
 theme_override_colors/font_color = Color(0.423529, 0.537255, 0.403922, 1)
