@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 
 func _input(event):
 	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ENTER and not PopupManager.isVisible():  # 或使用 KEY_RETURN
+		if event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and not PopupManager.isVisible():  # 或使用 KEY_RETURN
 			_on_btn_register_pressed()
 			get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
@@ -81,3 +81,23 @@ func is_valid_phone_number(phone: String) -> bool:
 	var regex = RegEx.new()
 	regex.compile("^1[3-9]\\d{9}$")
 	return regex.search(phone) != null
+
+
+func _on_texture_psw_button_down() -> void:
+	passwordEdit.secret = false
+	pass # Replace with function body.
+
+
+func _on_texture_psw_button_up() -> void:
+	passwordEdit.secret = true
+	pass # Replace with function body.
+
+
+
+func _on_texture_qrpsw_button_up() -> void:
+	qrpasswordEdit.secret = true
+	pass # Replace with function body.
+
+func _on_texture_qrpsw_button_down() -> void:
+	qrpasswordEdit.secret = false
+	pass # Replace with function body.

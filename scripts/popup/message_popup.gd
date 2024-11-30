@@ -1,4 +1,4 @@
-extends "res://scripts/unify/base_popup.gd"
+extends "res://scripts/popup/base_popup.gd"
 
 ## 消息提示弹窗
 ## 用于显示简单的消息提示，支持自动关闭

@@ -1,12 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://bensqtydtmcmw"]
+[gd_scene load_steps=31 format=3 uid="uid://bensqtydtmcmw"]
 
 [ext_resource type="Texture2D" uid="uid://d3bjst7etlnwq" path="res://asset/login/btn_zhdl.png" id="1_lxatw"]
 [ext_resource type="Script" path="res://scripts/login.gd" id="1_ohvyb"]
 [ext_resource type="Texture2D" uid="uid://cspqqll154ltv" path="res://asset/login/bj_cao.jpg" id="1_xcnfk"]
 [ext_resource type="Texture2D" uid="uid://dexs2dkgy4ocr" path="res://asset/login/btn_gx_0.png" id="2_7flgm"]
+[ext_resource type="Texture2D" uid="uid://rotxygefh46c" path="res://asset/login/closeeye1.svg" id="3_nqb36"]
 [ext_resource type="Texture2D" uid="uid://das5kp4ny2ggy" path="res://asset/login/btn_zhdl_g.png" id="4_1a3i5"]
 [ext_resource type="Texture2D" uid="uid://cdb4i86phwax2" path="res://asset/login/btn_zhdl_b.png" id="4_8q84o"]
 [ext_resource type="Texture2D" uid="uid://c5kurqa0v1yt" path="res://asset/login/btn_wxdl.png" id="4_33ucq"]
+[ext_resource type="Texture2D" uid="uid://fs1orn7q0e5k" path="res://asset/login/openeye1.svg" id="4_ll34x"]
 [ext_resource type="Texture2D" uid="uid://i075xh78ak6i" path="res://asset/login/btn_wxdl_y.png" id="6_6rye6"]
 [ext_resource type="Texture2D" uid="uid://dpblp8kgjws5q" path="res://asset/login/btn_wxdl_b.png" id="7_4kxbs"]
 [ext_resource type="Texture2D" uid="uid://cylapxjt4grlm" path="res://asset/login/btn_yhxy.png" id="8_7tra2"]
@@ -137,6 +139,23 @@ placeholder_text = "请输入密码"
 virtual_keyboard_type = 6
 secret = true
 
+[node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerPsw/LineEdit"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("3_nqb36")
+texture_pressed = ExtResource("4_ll34x")
+ignore_texture_size = true
+stretch_mode = 0
+
 [node name="HBoxContainerRead" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
@@ -227,6 +246,8 @@ texture_normal = ExtResource("18_kgkuh")
 texture_pressed = ExtResource("12_s581t")
 texture_hover = ExtResource("16_bvtl1")
 
+[connection signal="button_down" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit/TextureButton" to="." method="_on_texture_button_button_down"]
+[connection signal="button_up" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit/TextureButton" to="." method="_on_texture_button_button_up"]
 [connection signal="pressed" from="Panel/HBoxContainer/TR_login" to="." method="_on_tr_login_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/TR_wxlogin" to="." method="_on_tr_wxlogin_pressed"]
 [connection signal="pressed" from="HBoxContainerRegister/TB_register" to="." method="_on_tb_register_pressed"]

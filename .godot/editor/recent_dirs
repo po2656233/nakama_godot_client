@@ -1,6 +1,8 @@
+res://scripts/notify
+res://scripts/popup
 res://scripts/unify
-res://scenes/element
 res://scripts/global
+res://scenes/element
 res://scripts
 res://theme
 res://asset/login

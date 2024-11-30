@@ -1,6 +1,11 @@
 extends Control
 
 @onready var menuBtn = $HBoxContainerRightTop/MB_setting
+@onready var notifyMusic = $HBoxContainerRightTop/btn_what/lingdang
+@onready var notifyBtn = $HBoxContainerRightTop/btn_what
+@onready var bgMusic = $background
+@onready var msgMusic = $messagecoming
+
 var login_scene = load("res://scenes/login.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -8,7 +13,6 @@ var login_scene = load("res://scenes/login.tscn")
 func _ready() -> void:
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
-	WindowDrag.unregister_drag_zone(self)
 	pass # Replace with function body.
 
 
@@ -22,19 +26,21 @@ func on_setting_pressed(index: int) -> void:
 	var check:bool = popup_menu.is_item_checked(index)
 	var new_check:bool = not check
 	popup_menu.set_item_checked(index, new_check)
+	WindowDrag.dragging = false
 	match index:
 		0:
 			print("Setting 0")
+			bgMusic.stream_paused=!bgMusic.stream_paused
 			pass
 		1:
 			print("Setting 1")
+			
 			pass
 		2:
 			print("Setting 2")
 			pass
 		3:
 			print("Setting 3")
-			WindowDrag.dragging = false
 			FancyFade.wipe_left(login_scene.instantiate(),0.5)
 			pass
 		5:
@@ -64,4 +70,24 @@ func minimize_window():
 # 恢复窗口(恢复到普通窗口模式)
 func restore_window():
 	get_window().mode = Window.MODE_WINDOWED
+
+
+func recv_notify() -> void:
+	#铃铛播放
+	# notifyMusic.set_volume(1.0)
+	notifyMusic.play()
+	#铃铛闪烁
+	notifyBtn.shakeSIG.emit()
+	pass # Replace with function body.
+
+func msg_notify() -> void:
+	msgMusic.play()
+	pass
+
+
+func _on_btn_notify_pressed() -> void:
+	#铃铛停止播放
+	notifyMusic.stop()
+	pass # Replace with function body.
+
 

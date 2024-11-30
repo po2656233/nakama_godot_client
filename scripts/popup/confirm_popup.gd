@@ -1,4 +1,4 @@
-extends "res://scripts/unify/base_popup.gd"
+extends "res://scripts/popup/base_popup.gd"
 
 ## 确认框弹窗
 ## 用于需要用户确认的操作，比如删除、退出等

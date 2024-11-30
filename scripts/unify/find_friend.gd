@@ -5,10 +5,10 @@ extends Control
 @export var placeholder_text: String = "提示文本"
 @export var isClub: bool = false
 
-signal addItemSig(info)
+signal addFinishSIG()
 var popup_menu: PopupMenu
 var selected_index: int = -1  # 用于存储当前选中的项目索引
-
+var isNothing = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,7 +41,7 @@ func _on_popup_menu_item_selected(id: int):
 			var ret = await Network.add_friends_async(info.id)
 			if ret:
 				print("添加",info)
-				addItemSig.emit(info)
+				addFinishSIG.emit()
 	pass
 
 	# elif id == 1:  # Second item in the menu
@@ -50,12 +50,14 @@ func _on_popup_menu_item_selected(id: int):
 func _on_line_edit_find_text_submitted(new_text:String):
 	if new_text == "":
 		return
+	isNothing = false
 	if isClub:
 		var result = await Network.search_groups(new_text)
 		print("俱乐部搜索",result)
 		_list.clear()
 		if result == null or result.groups.size() == 0:
 			_list.add_item("没有找到")
+			isNothing = true
 			return
 	else:
 		var result = await Network.search_users(new_text)
@@ -63,6 +65,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 		_list.clear()
 		if result == null or result.users.size() == 0:
 			_list.add_item("没有找到")
+			isNothing = true
 			return
 		for user in result.users:
 			var index = -1
@@ -84,7 +87,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 
 func _on_item_list_gui_input(event:InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and not isNothing:
 			popup_menu.position = get_viewport().get_mouse_position()
 			popup_menu.popup()
 			print("Popup menu item selected: ")

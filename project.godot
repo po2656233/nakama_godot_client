@@ -27,8 +27,8 @@ FancyFade="*res://addons/transitions/FancyFade.gd"
 TransitionsPlugin="*res://addons/transitions/transitions_plugin.gd"
 FadeScene="*res://addons/transitions/FadeScene.gd"
 Network="*res://scripts/global/network.gd"
-PopupManager="*res://scripts/unify/popup_manager.gd"
 WindowDrag="*res://scripts/global/window_drag.gd"
+PopupManager="*res://scripts/popup/popup_manager.gd"
 
 [display]
 

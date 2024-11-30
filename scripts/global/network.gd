@@ -1,9 +1,10 @@
 extends Node
 
-# Nakama client instance
-var client: NakamaClient
-var session: NakamaSession
-var socket: NakamaSocket
+# Nakama _client instance
+var _client: NakamaClient
+var _session: NakamaSession
+var _socket: NakamaSocket
+var _current_channel: NakamaRTAPI.Channel
 
 # Game data
 var player_data: NakamaAPI.ApiUser
@@ -17,46 +18,37 @@ const PORT: int = 7350
 const SCHEME: String = "http"
 
 signal player_data_updated
-signal pet_data_updated
-signal home_data_updated
 signal connection_established
 signal connection_failed
+signal chat_message_received(message: Dictionary)
+signal chat_presence_changed(joins: Array, leaves: Array)
+signal chat_history_received(messages: Array)
 
-var social_system = null
-
+# 初始化
 func _ready() -> void:
-	# Initialize client
-	client = Nakama.create_client(
+	# Initialize _client
+	_client = Nakama.create_client(
 		SERVER_KEY,
 		HOST,
 		PORT,
 		SCHEME
 	)
 	
-	# Initialize socket
-	socket = Nakama.create_socket_from(client)
-
+	# Initialize _socket
+	_socket = Nakama.create_socket_from(_client)
 	connect_signals()
 	var success = await restore_session()
 	if not success:
 		await authenticate_device()
 	else:
 		connection_established.emit()
-
-func _exit_tree():
-	if social_system:
-		social_system.queue_free()
-		social_system = null
-	if client:
-		client.cancel_free()
-		client = null
 		
 
 func initialize_client() -> void:
-	if client:
-		client.cancel_free()
-		client = null
-	client = Nakama.create_client(SERVER_KEY, HOST, PORT, SCHEME)
+	if _client:
+		_client.cancel_free()
+		_client = null
+	_client = Nakama.create_client(SERVER_KEY, HOST, PORT, SCHEME)
 	connect_signals()
 	var success = await restore_session()
 	if not success:
@@ -65,28 +57,33 @@ func initialize_client() -> void:
 		connection_established.emit()
 
 func connect_signals() -> void:
-	if socket:
-		socket.connection_error.connect(_on_connection_failed)
-		socket.connected.connect(_on_connection_succeeded)
-		socket.received_error.connect(_on_received_error)
+	if _socket:
+		_socket.connection_error.connect(_on_connection_failed)
+		_socket.connected.connect(_on_connection_succeeded)
+		_socket.received_error.connect(_on_received_error)
+
+
+func set_current_channel(channel: NakamaRTAPI.Channel):
+	_current_channel = channel
+	
 
 # Authentication
 func authenticate_device(username: String="", created:bool=false) -> bool:
 	var device_id = OS.get_unique_id()
-	var result = await client.authenticate_device_async(device_id,username,created)
+	var result = await _client.authenticate_device_async(device_id,username,created)
 	
 	if result.is_exception():
 		connection_failed.emit()
 		return false
 	print("设备登录请求成功1",result)
-	session = result
+	_session = result
 	save_session()
 	print("设备登录请求成功2222")
-	# Connect socket after authentication
-	if socket.is_connected_to_host():
+	# Connect _socket after authentication
+	if _socket.is_connected_to_host():
 		return true
 		
-	var socket_result = await socket.connect_async(session)
+	var socket_result = await _socket.connect_async(_session)
 	if socket_result.is_exception():
 		push_error("Socket connection failed: " + socket_result.get_exception().message)
 		connection_failed.emit()
@@ -98,7 +95,7 @@ func authenticate_device(username: String="", created:bool=false) -> bool:
 
 # Authentication
 func authenticate_email(username: String,password: String,email: String="",  created:bool=false) -> bool:
-	if username.is_empty():
+	if username.is_empty() and password.is_empty():
 		return await self.authenticate_device(username,created)
 	
 	if password.is_empty():
@@ -107,20 +104,20 @@ func authenticate_email(username: String,password: String,email: String="",  cre
 	
 	if email.is_empty():
 		email = username+"@game.com"
-	var result = await client.authenticate_email_async(email,password,username,created)
+	var result = await _client.authenticate_email_async(email,password,username,created)
 	if result.is_exception():
 		print("发送登录请求失败",result.get_exception().message)
 		connection_failed.emit()
 		return false
 	
 	print("发送登录请求成功",result)
-	session = result
+	_session = result
 	save_session()
-	# Connect socket after authentication
-	if socket.is_connected_to_host():
+	# Connect _socket after authentication
+	if _socket.is_connected_to_host():
 		return true
 
-	var socket_result = await socket.connect_async(session)
+	var socket_result = await _socket.connect_async(_session)
 	if socket_result.is_exception():
 		push_error("Socket失败: " , socket_result)
 		connection_failed.emit()
@@ -129,19 +126,149 @@ func authenticate_email(username: String,password: String,email: String="",  cre
 	connection_established.emit()
 	return true
 
+##############################################################
+# 加入聊天频道
+func join_chat_channel(channel_id: String, persistence: bool = true, hidden: bool = false) -> Error:
+	if not _socket or not _session:
+		print("Not connected to server")
+		return FAILED
+	
+	var result = await _socket.join_chat_async(channel_id, persistence, hidden)
+	if result.is_exception():
+		print("Failed to join chat channel: ", result.get_exception().message)
+		return FAILED
+	
+	_current_channel = result
+	return OK
 
+# 发送消息
+func send_message(content: Dictionary) -> Error:
+	if not _current_channel:
+		print("Not in a chat channel")
+		return FAILED
+	
+	var result = await _socket.write_chat_message_async(_current_channel.id, content)
+	if result.is_exception():
+		print("Failed to send message: ", result.get_exception().message)
+		return FAILED
+
+	return OK
+
+# 获取聊天历史
+func get_chat_history(limit: int = 20, forward: bool = false) -> Error:
+	if not _current_channel:
+		print("Not in a chat channel")
+		return FAILED
+	
+	var result = await _socket.list_channel_messages_async(_current_channel.id, limit, forward)
+	if result.is_exception():
+		print("Failed to get chat history: ", result.get_exception().message)
+		return FAILED
+	
+	var messages = []
+	for message in result.messages:
+		var content = JSON.parse_string(message.content)
+		if content:
+			messages.append({
+				"message_id": message.message_id,
+				"sender": message.sender_username,
+				"content": content,
+				"timestamp": message.create_time,
+				"is_self": message.sender_id == _session.user_id
+			})
+	
+	chat_history_received.emit(messages)
+	return OK
+
+# 上传文件
+func upload_file(file_path: String) -> Dictionary:
+	if not _session:
+		return {"error": "Not connected to server"}
+	
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if not file:
+		return {"error": "Failed to open file"}
+	
+	var file_data = file.get_buffer(file.get_length())
+	var file_name = file_path.get_file()
+	
+	var result = await _client.write_storage_objects_async(_session, [{
+		"collection": "chat_files",
+		"key": file_name,
+		"value": {"path": file_path},
+		"permission_read": 2,  # Public read
+		"permission_write": 1  # Owner write
+	}])
+	
+	if result.is_exception():
+		return {"error": result.get_exception().message}
+	
+	return {
+		"path": file_path,
+		"name": file_name,
+		"size": file_data.size()
+	}
+
+# 下载文件
+func download_file(file_info: Dictionary) -> Dictionary:
+	if not _session:
+		return {"error": "Not connected to server"}
+	
+	var result = await _client.read_storage_objects_async(_session, [{
+		"collection": "chat_files",
+		"key": file_info.name
+	}])
+	
+	if result.is_exception():
+		return {"error": result.get_exception().message}
+	
+	if result.objects.is_empty():
+		return {"error": "File not found"}
+	
+	var file_data = result.objects[0].value
+	return file_data
+
+# 处理接收到的消息
+func _on_channel_message(message: NakamaAPI.ApiChannelMessage):
+	var content = JSON.parse_string(message.content)
+	if content:
+		var msg_data = {
+			"message_id": message.message_id,
+			"sender": message.sender_username,
+			"content": content,
+			"timestamp": message.create_time,
+			"is_self": message.sender_id == _session.user_id
+		}
+		chat_message_received.emit(msg_data)
+
+# 处理频道状态变化
+func _on_channel_presence(presence: NakamaRTAPI.ChannelPresenceEvent):
+	chat_presence_changed.emit(presence.joins, presence.leaves)
+
+# 清理
+func _notification(what: int):
+	if what == NOTIFICATION_PREDELETE:
+		if _socket and _socket.is_connected_to_host():
+			_socket.close()
+			_socket = null
+
+
+
+
+
+#################################################################
 # Session Management
 func save_session() -> void:
-	if session:
+	if _session:
 		var file = FileAccess.open("user://nakama_session.save", FileAccess.WRITE)
-		file.store_line(session.token)
+		file.store_line(_session.token)
 		file.close()
 	return
 		
 
 func restore_session() -> bool:
 	var session_token = load_session_token()
-	print("当前的 session: " + session_token)
+	print("当前的 _session: " + session_token)
 	if session_token.is_empty():
 		return false
 		
@@ -149,7 +276,7 @@ func restore_session() -> bool:
 	if result.is_exception():
 		return false
 
-	session = result
+	_session = result
 	await setup_socket()
 	await load_player_data()
 	return true
@@ -166,28 +293,28 @@ func load_session_token() -> String:
 
 # Socket Setup
 func setup_socket() -> void:
-	if session:
-		if socket:
-			socket.close()
-		socket = Nakama.create_socket_from(client)
-		await socket.connect_async(session)
+	if _session:
+		if _socket:
+			_socket.close()
+		_socket = Nakama.create_socket_from(_client)
+		await _socket.connect_async(_session)
 		connect_signals()
 
 # Data Management
 func load_player_data() -> void:
-	if !session:
+	if !_session:
 		return
-	var result = await client.read_storage_objects_async(session, [{
+	var result = await _client.read_storage_objects_async(_session, [{
 		"collection": "player_data",
 		"key": "profile",
-		"user_id": session.user_id
+		"user_id": _session.user_id
 	}])
 	print("读取玩家数据: ", result)
 	if not result.is_exception():
 		if result.objects.size() > 0:
 			player_data = JSON.parse_string(result.objects[0].value)
 		else:
-			var ret = await client.get_account_async(session)
+			var ret = await _client.get_account_async(_session)
 			if ret.is_exception():
 				push_error("获取用户信息失败: " + ret.get_exception().message)
 				return
@@ -198,7 +325,7 @@ func load_player_data() -> void:
 	player_data_updated.emit()
 
 func save_player_data() -> void:
-	if !session:
+	if !_session:
 		return
 		
 	var objects = [{
@@ -209,54 +336,16 @@ func save_player_data() -> void:
 		"permission_write": 1
 	}]
 	
-	await client.write_storage_objects_async(session, objects)
-
-# Pet Management
-func add_pet(species: String, name1: String) -> void:
-	var new_pet = {
-		"pet_id": str(Time.get_unix_time_from_system()),
-		"species": species,
-		"name": name1,
-		"level": 1,
-		"stats": {
-			"hunger": 100,
-			"happiness": 100,
-			"energy": 100
-		},
-		"skills": []
-	}
-	
-	player_data.pets.append(new_pet)
-	save_player_data.call_deferred()
-	pet_data_updated.emit()
-
-func feed_pet(pet_id: String) -> void:
-	for pet in player_data.pets:
-		if pet.pet_id == pet_id:
-			pet.stats.hunger = minf(pet.stats.hunger + 30, 100)
-			pet.stats.happiness = minf(pet.stats.happiness + 10, 100)
-			break
-	
-	save_player_data.call_deferred()
-	pet_data_updated.emit()
+	await _client.write_storage_objects_async(_session, objects)
 
 
 
-# 好友管理
-# 添加好友
-func add_friends_async(friend_id: String)->bool:
-	var result = await client.add_friends_async(session, [friend_id])
-	if result.is_exception():
-		print("Error send_friend_request: ", result.get_exception().message)
-		return false
-	print("添加好友: ", result)
-	return true
 
 
-
+# 好友和群组管理
 # 通过用户名搜索用户
 func search_users(username: String):
-	var result = await client.get_users_async(session,[], [username])
+	var result = await _client.get_users_async(_session,[], [username])
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
 		return
@@ -264,7 +353,7 @@ func search_users(username: String):
 	return result
 
 func search_users_rpc(username: String):
-	var result = await client.rpc_async(session,  "search_username", username)
+	var result = await _client.rpc_async(_session,  "search_username", username)
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
 		return
@@ -272,7 +361,7 @@ func search_users_rpc(username: String):
 	return JSON.parse_string(result.payload)
 
 func search_groups(groupname: String):
-	var result = await client.list_groups_async(session, groupname)
+	var result = await _client.list_groups_async(_session, groupname)
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
 		return
@@ -281,17 +370,42 @@ func search_groups(groupname: String):
 
 # 获取好友列表
 func get_friends_list():
-	var result = await client.list_friends_async(session)
+	var result = await _client.list_friends_async(_session)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return
 	print("好友列表: ", result)
 	return result
 		
+# 添加好友
+func add_friends_async(friend_id: String)->bool:
+	var result = await _client.add_friends_async(_session, [friend_id])
+	if result.is_exception():
+		print("Error add_friends_async: ", result.get_exception().message)
+		return false
+	print("添加好友: ", result)
+	return true
+
+func add_channel_async(user_id: String):
+	if _socket:
+		return await _socket.join_chat_async(user_id, NakamaSocket.ChannelType.DirectMessage,true,true)
+	return null
+
+
+# 阻止好友
+func refuse_friends_async(friend_id: String)->bool:
+	var result = await _client.block_friends_async(_session, [friend_id])
+	if result.is_exception():
+		print("Error refuse_friends_async: ", result.get_exception().message)
+		return false
+	print("拒绝好友: ", result)
+	return true
+
+
 
 # 删除好友
 func remove_friend(user_id: String)->bool:
-	var result = await client.delete_friends_async(session, [user_id])
+	var result = await _client.delete_friends_async(_session, [user_id])
 	if result.is_exception():
 		print("Error removing friend: ", result.get_exception().message)
 		return false
@@ -299,9 +413,9 @@ func remove_friend(user_id: String)->bool:
 	return true
 
 func remove_group(group_id: String)->bool:
-	var result = await client.delete_group_async(session, group_id)
+	var result = await _client.delete_group_async(_session, group_id)
 	if result.is_exception():
-		print("Error removing friend: ", result.get_exception().message)
+		print("Error removing group: ", result.get_exception().message)
 		return false
 	print("删除群组!!!")
 	return true

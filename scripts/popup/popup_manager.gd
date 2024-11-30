@@ -29,7 +29,7 @@ func _ready() -> void:
     add_child(canvas_layer)
 
 ## 显示普通消息弹窗
-func show_message(message: String, title: String = "提示", auto_close=true) -> void:
+func show_message(message: String, title: String = "提示", auto_close:bool=true) -> void:
     var popup = message_scene.instantiate()
     _setup_popup(popup, title, message,auto_close)
     
@@ -81,7 +81,7 @@ func close_all() -> void:
         close_popup(popup_id)
 
 # 内部方法：设置弹窗基本属性
-func _setup_popup(popup: Node, title: String = "", message: String = "",auto_close = false) -> void:
+func _setup_popup(popup: Node, title: String = "", message: String = "",auto_close:bool = false) -> void:
     is_visible = true
     var popup_id = str(popup.get_instance_id())
     popup.auto_close = auto_close

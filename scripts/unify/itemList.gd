@@ -9,6 +9,9 @@ extends ItemList
 @export var Del: bool = false
 @export var Modify: bool = false
 @export var Select: bool = false
+@export var Agree: bool = false
+@export var Refuse: bool = false
+@export var Block: bool = false
 
 signal addItemData(info)
 signal delItemData(info)
@@ -19,6 +22,9 @@ var addname: String = "新增"
 var delname: String = "删除"
 var modifyname: String = "修改"
 var findName: String = "查询"
+var agreeName: String = "同意"
+var refuseName: String = "拒绝"
+var blockName: String = "拉黑"
 
 var popup_menu: PopupMenu
 var selected_index: int = -1 # 用于存储当前选中的项目索引
@@ -40,6 +46,12 @@ func _ready():
 		popup_menu.add_item(modifyname)
 	if Select:
 		popup_menu.add_item(findName)
+	if Agree:
+		popup_menu.add_item(agreeName)
+	if Refuse:
+		popup_menu.add_item(refuseName)
+	if Block:
+		popup_menu.add_item(blockName)
 	
 	# 连接信号
 	popup_menu.id_pressed.connect(_on_popup_menu_item_selected)
@@ -49,74 +61,82 @@ func _ready():
 	findItemData.connect(_on_find_item_data)
 	pass
 
-func _on_add_item_data(info):
-	print("新增好友---", info)
+func _on_add_item_data(friend):
+	print("新增好友---", friend)
 	# 遍历所有项目
 	var isExist = false
 	for i in range(self.item_count):
 		var item_meta = self.get_item_metadata(i)  # 获取项目元数据
-		if item_meta.username == info.username:
-			self.set_item_metadata(i,info)
-			self.set_item_text(i, info.username)
+		if item_meta and item_meta.user.username == friend.user.username:
+			self.set_item_metadata(i,friend)
+			self.set_item_text(i, friend.user.username)
 			isExist = true
-			if info.avatar_url:
-				var ret = await Network.load_texture_async(info.avatar_url)
+			if friend.user.avatar_url:
+				var ret = await Network.load_texture_async(friend.user.avatar_url)
 				if ret:
 					self.set_item_icon(i, ret)
 			break
 	if not isExist:
-		var index = self.add_item(info.username)
-		if info.avatar_url:
-			var ret = await Network.load_texture_async(info.avatar_url)
+		var index = self.add_item(friend.user.username)
+		if friend.user.avatar_url:
+			var ret = await Network.load_texture_async(friend.user.avatar_url)
 			if ret:
 				self.set_item_icon(index, ret)
-		self.set_item_metadata(index, info)
+		self.set_item_metadata(index, friend)
 	pass
-func _on_del_item_data(info):
+func _on_del_item_data(friend):
     # 遍历所有项目
 	for i in range(self.item_count):
 		var item_meta = self.get_item_metadata(i)  # 获取项目元数据
-		if item_meta.username == info.username:
+		if item_meta and item_meta.user.username == friend.user.username:
 			self.remove_item(i)
 			break
 	pass
 
-func _on_modify_item_data(info):
+func _on_modify_item_data(friend):
     # 遍历所有项目
 	for i in range(self.item_count):
 		var item_meta = self.get_item_metadata(i)  # 获取项目元数据
-		if item_meta.username == info.username:
-			self.set_item_metadata(i,info)
-			self.set_item_text(i, info.username)
-			if info.avatar_url:
-				var ret = await Network.load_texture_async(info.avatar_url)
+		if item_meta and item_meta.user.username == friend.user.username:
+			self.set_item_metadata(i,friend)
+			self.set_item_text(i, friend.user.username)
+			if friend.user.avatar_url:
+				var ret = await Network.load_texture_async(friend.user.avatar_url)
 				if ret:
 					self.set_item_icon(i, ret)
 			break
 	pass
-func _on_find_item_data(info):
+func _on_find_item_data(friend):
 	for i in range(self.item_count):
 		var item_meta = self.get_item_metadata(i)  # 获取项目元数据
-		if item_meta.username == info.username:
+		if item_meta and item_meta.user.username == friend.user.username:
 			break
 	pass
 
 
-#################
 
+#################
 func _on_item_selected(index: int):
 	# 保存选中项的索引
 	selected_index = index
+	print("选中项索引：", index)
 	pass
 
 func _on_item_list_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			if selected_index != -1: # 确保有选中的项目
+				var friend = self.get_item_metadata(selected_index)
+				if friend:
+					checkState(friend.state)
 				# 显示弹出菜单在鼠标位置
 				popup_menu.position = get_viewport().get_mouse_position()
-				popup_menu.popup()
+				popup_menu.popup()	
 	pass
+
+func _on_gui_input(event:InputEvent) -> void:
+	_on_item_list_gui_input(event)
+	pass # Replace with function body.
 
 func _on_popup_menu_item_selected(id: int):
 	# 处理"删除"选项
@@ -140,7 +160,21 @@ func _on_popup_menu_item_selected(id: int):
 			# 处理"查询"选项
 			# 在这里添加你的代码来处理查询选项
 			print("查询")
-
+		agreeName:
+			# 处理"同意"选项
+			# 在这里添加你的代码来处理同意选项
+			print("同意")
+			_add_item()
+		refuseName:
+			# 处理"拒绝"选项
+			# 在这里添加你的代码来处理拒绝选项
+			print("拒绝")
+			_refuse_item()
+		blockName:
+			# 处理"拉黑"选项
+			# 在这里添加你的代码来处理拉黑选项
+			print("拉黑")
+			_refuse_item()
 	if id == 0 and selected_index != -1: # 第一个菜单项且有选中的项目
 		# 如果你使用 Nakama，这里可以添加删除好友的网络请求
 		# await nakama_client.remove_friend(friend_id)
@@ -153,7 +187,7 @@ func _add_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("新增好友", friend)
 			if friend:
-				var ret = await Network.add_friends_async(friend.id)
+				var ret = await Network.add_friends_async(friend.user.id)
 				if ret:
 					_on_add_item_data(friend)
 				else:
@@ -165,8 +199,34 @@ func _add_item():
 			print("新增组员")
 		3:
 			print("新增房间")
-	
 	pass	
+
+# 拒绝或拉黑好友	
+func _refuse_item():
+	var ret: bool = false
+	match listType:
+		0:
+			var friend = self.get_item_metadata(selected_index)
+			print("拒绝好友", friend)
+			if friend:
+				ret = await Network.refuse_friends_async(friend.user.id)
+		1:
+			print("拒绝俱乐部")
+			var group = self.get_item_metadata(selected_index)
+			if group:
+				ret = await Network.remove_group(group.id)
+		2:
+			print("拒绝组员")
+		3:
+			print("拒绝房间")
+		# 从列表中移除项目
+	if ret:
+		self.remove_item(selected_index)
+		PopupManager.show_message("已拒绝")
+		selected_index = -1 # 重置选中索引
+	pass
+
+
 
 func _delete_item():
 	var ret: bool = false
@@ -175,7 +235,7 @@ func _delete_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("删除好友", friend)
 			if friend:
-				ret = await Network.remove_friend(friend.id)
+				ret = await Network.remove_friend(friend.user.id)
 		1:
 			print("删除俱乐部")
 			var group = self.get_item_metadata(selected_index)
@@ -192,11 +252,20 @@ func _delete_item():
 		selected_index = -1 # 重置选中索引
 	pass
 
-func _on_gui_input(event:InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			if selected_index != -1: # 确保有选中的项目
-				# 显示弹出菜单在鼠标位置
-				popup_menu.position = get_viewport().get_mouse_position()
-				popup_menu.popup()
-	pass # Replace with function body.
+
+func checkState(state: int):
+	popup_menu.clear()
+	match state:
+		0:
+			popup_menu.add_item(blockName)
+		1:
+			popup_menu.add_item(delname)
+		2:
+			popup_menu.add_item(agreeName)
+			popup_menu.add_item(refuseName)
+		3:
+			popup_menu.add_item(delname)
+	pass
+
+func GetCurrentItemData():
+	return self.get_item_metadata(selected_index)
