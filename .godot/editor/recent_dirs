@@ -1,13 +1,1 @@
-res://scripts/notify
-res://scripts/popup
-res://scripts/unify
-res://scripts/global
-res://scenes/element
-res://scripts
-res://theme
-res://asset/login
-res://addons/transitions
-res://addons/com.heroiclabs.nakama
-res://asset/bg
-res://scenes
-res://asset
+res://scripts/chat

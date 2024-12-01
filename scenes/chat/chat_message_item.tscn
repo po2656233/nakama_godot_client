@@ -1,0 +1,168 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4q5x4j6n7saw"]
+
+[ext_resource type="Script" path="res://scripts/chat/chat_message_item.gd" id="1_u4k5p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.2, 0.2, 0.2, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.3, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.15, 0.15, 0.15, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.25, 0.25, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.12, 0.12, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.2, 0.2, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ChatMessageItem" type="MarginContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 81.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+script = ExtResource("1_u4k5p")
+
+[node name="MessageContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="LeftSpacer" type="Control" parent="MessageContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="MessageContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Header" type="HBoxContainer" parent="MessageContainer/Content"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Nickname" type="Label" parent="MessageContainer/Content/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "用户名"
+
+[node name="Time" type="Label" parent="MessageContainer/Content/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "12:34"
+
+[node name="MessagePanel" type="PanelContainer" parent="MessageContainer/Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="MessageContent" type="VBoxContainer" parent="MessageContainer/Content/MessagePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Text" type="RichTextLabel" parent="MessageContainer/Content/MessagePanel/MessageContent"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "这是一条消息"
+fit_content = true
+scroll_active = false
+
+[node name="MediaPreview" type="TextureRect" parent="MessageContainer/Content/MessagePanel/MessageContent"]
+visible = false
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FileInfo" type="PanelContainer" parent="MessageContainer/Content/MessagePanel/MessageContent"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MessageContainer/Content/MessagePanel/MessageContent/FileInfo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FileIcon" type="TextureRect" parent="MessageContainer/Content/MessagePanel/MessageContent/FileInfo/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MessageContainer/Content/MessagePanel/MessageContent/FileInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FileName" type="Label" parent="MessageContainer/Content/MessagePanel/MessageContent/FileInfo/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "文件名.txt"
+
+[node name="FileSize" type="Label" parent="MessageContainer/Content/MessagePanel/MessageContent/FileInfo/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "1.5 MB"
+
+[node name="VoiceMessage" type="PanelContainer" parent="MessageContainer/Content/MessagePanel/MessageContent"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MessageContainer/Content/MessagePanel/MessageContent/VoiceMessage"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PlayButton" type="Button" parent="MessageContainer/Content/MessagePanel/MessageContent/VoiceMessage/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "▶"
+
+[node name="Duration" type="Label" parent="MessageContainer/Content/MessagePanel/MessageContent/VoiceMessage/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0:30"
+
+[node name="RightSpacer" type="Control" parent="MessageContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3

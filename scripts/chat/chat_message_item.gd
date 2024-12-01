@@ -1,325 +1,159 @@
-class_name ChatMessageItem
 extends MarginContainer
 
-# 消息类型枚举
+# 消息类型枚举 - 需要与 chat_system.gd 中的枚举保持一致
 enum MessageType {
-    SYSTEM,
-    NORMAL,
-    IMAGE,
-    VOICE,
-    FILE,
-    EMOJI,
-    SELF
+	RECEIVED,  # 接收到的消息
+	SENT      # 发送的消息
 }
 
-# 信号
-signal message_deleted(message_id: String)
-signal message_copied(content: String)
-signal voice_play_requested(voice_path: String)
-signal file_download_requested(file_path: String)
+enum ContentType {
+	TEXT,      # 文本消息
+	VOICE,     # 语音消息
+	FILE,      # 文件消息
+	LONG_TEXT, # 长文本消息
+	IMAGE,     # 图片消息
+	VIDEO      # 视频消息
+}
+
+var MAX_PREVIEW_SIZE = size#Vector2(300, 200)  # 最大预览尺寸
 
 # 节点引用
-var avatar: TextureRect
-var name_label: Label
-var content: RichTextLabel
-var bubble: PanelContainer
-var timestamp_label: Label
-var image_container: TextureRect
-var context_menu: PopupMenu
-var voice_player: AudioStreamPlayer
-var voice_button: Button
-var file_container: HBoxContainer
-var read_status: Label
-var emoji_container: GridContainer
-var download_button: Button
-var progress_bar: ProgressBar
+@onready var message_container = $MessageContainer
+@onready var left_spacer = $MessageContainer/LeftSpacer
+@onready var right_spacer = $MessageContainer/RightSpacer
+@onready var content_container = $MessageContainer/Content
+@onready var nickname_label = $MessageContainer/Content/Header/Nickname
+@onready var time_label = $MessageContainer/Content/Header/Time
+@onready var message_panel = $MessageContainer/Content/MessagePanel
+@onready var text_label = $MessageContainer/Content/MessagePanel/MessageContent/Text
+@onready var media_preview = $MessageContainer/Content/MessagePanel/MessageContent/MediaPreview
+@onready var file_info = $MessageContainer/Content/MessagePanel/MessageContent/FileInfo
+@onready var voice_message = $MessageContainer/Content/MessagePanel/MessageContent/VoiceMessage
 
-# 消息数据
-var message_id: String
-var message_data: Dictionary
-var is_read: bool = false
-var is_deleted: bool = false
-var voice_duration: float = 0.0
+# 样式引用
+var received_style: StyleBoxFlat
+var sent_style: StyleBoxFlat
 
-# 配置
-const AVATAR_SIZE = 40
-const BUBBLE_MARGIN = 10
-const MAX_BUBBLE_WIDTH = 400
+func _ready():
+	# 克隆样式以便修改
+	received_style = message_panel.get_theme_stylebox("panel").duplicate()
+	sent_style = received_style.duplicate()
+	sent_style.bg_color = Color(0.15, 0.4, 0.15, 0.9)
+	sent_style.border_color = Color(0.2, 0.5, 0.2, 0.8)
 
-# 表情映射
-const EMOJI_MAP = {
-    ":smile:": "😊",
-    ":sad:": "😢",
-    ":laugh:": "😄",
-    ":heart:": "❤️",
-    ":thumbsup:": "👍",
-    ":thumbsdown:": "👎",
-    ":angry:": "😠",
-    ":surprised:": "😮",
-    ":wink:": "😉",
-    ":cry:": "😭"
-}
+# 设置消息内容
+func set_message(content: Dictionary, nickname: String, msg_type: MessageType, show_time: bool = false, time_str: String = ""):
+	# 设置昵称
+	nickname_label.text = nickname
+	
+	# 设置时间
+	time_label.visible = show_time
+	if show_time:
+		time_label.text = time_str
+	
+	# 根据消息类型设置布局
+	if msg_type == MessageType.SENT:
+		message_panel.add_theme_stylebox_override("panel", sent_style)
+		left_spacer.custom_minimum_size.x = 50
+		left_spacer.visible = true
+		right_spacer.custom_minimum_size.x = 8
+		right_spacer.visible = false
+	else:
+		message_panel.add_theme_stylebox_override("panel", received_style)
+		left_spacer.custom_minimum_size.x = 8
+		left_spacer.visible = false
+		right_spacer.custom_minimum_size.x = 50
+		right_spacer.visible = true
+	
+	# 重置所有内容组件的可见性
+	text_label.visible = false
+	media_preview.visible = false
+	file_info.visible = false
+	voice_message.visible = false
+	
+	# 根据内容类型设置显示
+	match content["type"]:
+		ContentType.TEXT, ContentType.LONG_TEXT:
+			_setup_text_message(content["text"])
+		ContentType.IMAGE:
+			_setup_image_message(content["path"])
+		ContentType.VIDEO:
+			_setup_video_message(content["path"], content["thumbnail"], content["duration"])
+		ContentType.FILE:
+			_setup_file_message(content["path"], content["name"], content["size"])
+		ContentType.VOICE:
+			_setup_voice_message(content["path"], content["duration"])
 
-func _init():
-    custom_minimum_size.y = 50
-    add_theme_constant_override("margin_top", 5)
-    add_theme_constant_override("margin_bottom", 5)
-    
-    # 创建水平布局
-    var h_box = HBoxContainer.new()
-    h_box.add_theme_constant_override("separation", 10)
-    add_child(h_box)
-    
-    # 创建头像
-    avatar = TextureRect.new()
-    avatar.custom_minimum_size = Vector2(AVATAR_SIZE, AVATAR_SIZE)
-    avatar.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-    avatar.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-    h_box.add_child(avatar)
-    
-    # 创建消息容器
-    var message_container = VBoxContainer.new()
-    message_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    h_box.add_child(message_container)
-    
-    # 创建名字标签
-    name_label = Label.new()
-    name_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-    message_container.add_child(name_label)
-    
-    # 创建气泡容器
-    bubble = PanelContainer.new()
-    message_container.add_child(bubble)
-    
-    # 创建富文本标签
-    content = RichTextLabel.new()
-    content.bbcode_enabled = true
-    content.fit_content = true
-    content.custom_minimum_size.x = 100
-    content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    content.scroll_active = false
-    bubble.add_child(content)
-    
-    # 创建图片容器
-    image_container = TextureRect.new()
-    image_container.custom_minimum_size = Vector2(200, 200)
-    image_container.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-    image_container.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-    image_container.visible = false
-    bubble.add_child(image_container)
-    
-    # 创建时间戳标签
-    timestamp_label = Label.new()
-    timestamp_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-    timestamp_label.add_theme_font_size_override("font_size", 12)
-    message_container.add_child(timestamp_label)
-    
-    # 创建右键菜单
-    context_menu = PopupMenu.new()
-    add_child(context_menu)
-    context_menu.add_item("复制", 0)
-    context_menu.add_item("撤回", 1)
-    context_menu.id_pressed.connect(_on_context_menu_pressed)
-    
-    # 创建语音播放器
-    voice_player = AudioStreamPlayer.new()
-    add_child(voice_player)
-    voice_player.finished.connect(_on_voice_finished)
-    
-    # 创建已读状态标签
-    read_status = Label.new()
-    read_status.add_theme_font_size_override("font_size", 12)
-    read_status.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-    message_container.add_child(read_status)
+# 设置文本消息
+func _setup_text_message(text: String):
+	text_label.visible = true
+	text_label.text = text
 
-func setup_message(data: Dictionary):
-    message_data = data
-    message_id = data.get("message_id", "")
-    
-    # 设置头像
-    if data.has("avatar"):
-        avatar.texture = data.get("avatar")
-    else:
-        # 设置默认头像
-        var default_avatar = PlaceholderTexture2D.new()
-        default_avatar.size = Vector2(AVATAR_SIZE, AVATAR_SIZE)
-        avatar.texture = default_avatar
-    
-    # 设置名字
-    name_label.text = data.get("sender", "Unknown")
-    
-    # 设置时间戳
-    timestamp_label.text = data.get("timestamp", Time.get_time_string_from_system())
-    
-    # 处理不同类型的消息
-    match data.get("type", MessageType.NORMAL):
-        MessageType.SYSTEM:
-            _setup_system_message(data.get("content", ""))
-        MessageType.IMAGE:
-            _setup_image_message(data.get("content", ""))
-        MessageType.VOICE:
-            _setup_voice_message(data)
-        MessageType.FILE:
-            _setup_file_message(data)
-        MessageType.EMOJI:
-            _setup_emoji_message(data)
-        _:
-            _setup_normal_message(data.get("content", ""), data.get("is_self", false))
-    
-    # 设置已读状态
-    update_read_status(data.get("is_read", false))
+# 设置图片消息
+func _setup_image_message(path: String):
+	media_preview.visible = true
+	var image = Image.new()
+	if image.load(path) == OK:
+		var texture = ImageTexture.create_from_image(image)
+		media_preview.texture = texture
+		_resize_media_preview(texture.get_size())
+	else:
+		text_label.visible = true
+		text_label.text = "[图片加载失败]"
 
-func _setup_system_message(content_text: String):
-    content.visible = true
-    image_container.visible = false
-    content.text = "[center][color=#888888]" + content_text + "[/color][/center]"
-    _setup_bubble_style(Color(0.1, 0.1, 0.1, 0.1))
+# 设置视频消息
+func _setup_video_message(_path: String, thumbnail_path: String, duration: float):
+	media_preview.visible = true
+	var image = Image.new()
+	if image.load(thumbnail_path) == OK:
+		var texture = ImageTexture.create_from_image(image)
+		media_preview.texture = texture
+		_resize_media_preview(texture.get_size())
+		
+		# 添加时长显示
+		text_label.visible = true
+		text_label.text = "▶ " + _format_duration(duration)
+	else:
+		text_label.visible = true
+		text_label.text = "[视频缩略图加载失败]"
 
-func _setup_normal_message(content_text: String, is_self: bool):
-    content.visible = true
-    image_container.visible = false
-    content.text = content_text
-    
-    if is_self:
-        _setup_bubble_style(Color(0.2, 0.6, 1.0, 0.2))
-        # 调整布局为右对齐
-        var h_box = get_child(0) as HBoxContainer
-        h_box.move_child(avatar, 1)
-        content.text_direction = TEXT_DIRECTION_RTL 
-    else:
-        _setup_bubble_style(Color(0.1, 0.1, 0.1, 0.1))
-        content.text_direction = TEXT_DIRECTION_LTR 
+# 设置文件消息
+func _setup_file_message(_path: String, file_name: String, file_size: int):
+	file_info.visible = true
+	var file_name_label = file_info.get_node("HBoxContainer/VBoxContainer/FileName")
+	var file_size_label = file_info.get_node("HBoxContainer/VBoxContainer/FileSize")
+	
+	file_name_label.text = file_name
+	file_size_label.text = _format_file_size(file_size)
 
-func _setup_image_message(image_path: String):
-    content.visible = false
-    image_container.visible = true
-    
-    # 加载图片
-    var image = Image.new()
-    var error = image.load(image_path)
-    if error == OK:
-        var texture = ImageTexture.create_from_image(image)
-        image_container.texture = texture
-    
-    _setup_bubble_style(Color(0.1, 0.1, 0.1, 0.0))
+# 设置语音消息
+func _setup_voice_message(_path: String, duration: float):
+	voice_message.visible = true
+	var duration_label = voice_message.get_node("HBoxContainer/Duration")
+	duration_label.text = _format_duration(duration)
 
-func _setup_voice_message(data: Dictionary):
-    content.visible = false
-    
-    # 创建语音按钮
-    voice_button = Button.new()
-    voice_button.text = "▶️ " + str(data.get("duration", 0.0)) + "s"
-    voice_button.pressed.connect(_on_voice_button_pressed)
-    bubble.add_child(voice_button)
-    
-    voice_duration = data.get("duration", 0.0)
+# 调整媒体预览大小
+func _resize_media_preview(original_size: Vector2):
+	var new_size = original_size
+	if original_size.x > MAX_PREVIEW_SIZE.x or original_size.y > MAX_PREVIEW_SIZE.y:
+		var scale_ = min(MAX_PREVIEW_SIZE.x / original_size.x, MAX_PREVIEW_SIZE.y / original_size.y)
+		new_size = original_size * scale_
+	media_preview.custom_minimum_size = new_size
 
-func _setup_file_message(data: Dictionary):
-    content.visible = false
-    
-    # 创建文件容器
-    file_container = HBoxContainer.new()
-    bubble.add_child(file_container)
-    
-    # 添加文件图标
-    var file_icon = TextureRect.new()
-    # 设置适当的文件图标...
-    file_container.add_child(file_icon)
-    
-    # 添加文件信息
-    var file_info = VBoxContainer.new()
-    file_container.add_child(file_info)
-    
-    var file_name = Label.new()
-    file_name.text = data.get("file_name", "Unknown file")
-    file_info.add_child(file_name)
-    
-    var file_size = Label.new()
-    file_size.text = _format_file_size(data.get("file_size", 0))
-    file_info.add_child(file_size)
-    
-    # 添加下载按钮
-    download_button = Button.new()
-    download_button.text = "下载"
-    download_button.pressed.connect(_on_download_button_pressed)
-    file_container.add_child(download_button)
-    
-    # 添加进度条
-    progress_bar = ProgressBar.new()
-    progress_bar.visible = false
-    file_container.add_child(progress_bar)
-
-func _setup_emoji_message(data: Dictionary):
-    content.visible = true
-    var emoji_text = data.get("content", "")
-    
-    # 替换表情符号
-    for key in EMOJI_MAP:
-        emoji_text = emoji_text.replace(key, EMOJI_MAP[key])
-    
-    content.text = emoji_text
-
-func _setup_bubble_style(color: Color):
-    var style = StyleBoxFlat.new()
-    style.bg_color = color
-    style.corner_radius_top_left = 15
-    style.corner_radius_top_right = 15
-    style.corner_radius_bottom_left = 15
-    style.corner_radius_bottom_right = 15
-    style.content_margin_left = BUBBLE_MARGIN
-    style.content_margin_right = BUBBLE_MARGIN
-    style.content_margin_top = BUBBLE_MARGIN
-    style.content_margin_bottom = BUBBLE_MARGIN
-    bubble.add_theme_stylebox_override("panel", style)
-
-func update_read_status(is_read_1: bool):
-    self.is_read = is_read_1
-    read_status.text = "已读" if is_read_1 else "未读"
-    read_status.visible = message_data.get("is_self", false)
-
-func _on_context_menu_pressed(id: int):
-    match id:
-        0: # 复制
-            if not is_deleted:
-                DisplayServer.clipboard_set(content.text)
-                message_copied.emit(content.text)
-        1: # 撤回
-            if not is_deleted:
-                is_deleted = true
-                content.text = "[i][color=#888888]消息已撤回[/color][/i]"
-                message_deleted.emit(message_id)
-
-func _on_voice_button_pressed():
-    if voice_player.playing:
-        voice_player.stop()
-        voice_button.text = "▶️ " + str(voice_duration) + "s"
-    else:
-        voice_play_requested.emit(message_data.get("voice_path", ""))
-        voice_button.text = "⏹️ " + str(voice_duration) + "s"
-
-func _on_voice_finished():
-    voice_button.text = "▶️ " + str(voice_duration) + "s"
-
-func _on_download_button_pressed():
-    file_download_requested.emit(message_data.get("file_path", ""))
-
-func update_download_progress(progress: float):
-    if progress_bar:
-        progress_bar.visible = true
-        progress_bar.value = progress
-        if progress >= 100:
-            progress_bar.visible = false
-            download_button.text = "已下载"
-
+# 格式化文件大小
 func _format_file_size(size_1: int) -> String:
-    if size_1 < 1024:
-        return str(size_1) + " B"
-    elif size_1 < 1024 * 1024:
-        return str(size_1 / 1024.0).pad_decimals(2) + " KB"
-    else:
-        return str(size_1 / 1024.0 / 1024.0).pad_decimals(2) + " MB"
+	var units = ["B", "KB", "MB", "GB"]
+	var unit_index = 0
+	var size_float = float(size_1)
+	
+	while size_float >= 1024 and unit_index < units.size() - 1:
+		size_float /= 1024
+		unit_index += 1
+	
+	return "%.1f %s" % [size_float, units[unit_index]]
 
-func _gui_input(event: InputEvent):
-    if event is InputEventMouseButton:
-        if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-            context_menu.popup(Rect2i(get_global_mouse_position(), Vector2i(100, 100)))
+# 格式化时长
+func _format_duration(seconds: float) -> String:
+	var minutes = int(seconds / 60)
+	var remaining_seconds = int(seconds) % 60
+	return "%d:%02d" % [minutes, remaining_seconds]

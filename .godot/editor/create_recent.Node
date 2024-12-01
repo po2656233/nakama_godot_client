@@ -1,14 +1,3 @@
-Label
-Control
-AudioStreamPlayer
-Button
-TextureButton
-TextureRect
-ItemList
-RichTextLabel
-GridContainer
 VBoxContainer
-CheckButton
-HSplitContainer
-MarginContainer
-Panel
+ScrollContainer
+Control
