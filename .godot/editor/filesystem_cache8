@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1733023347
+::res://::1733062290
 icon.svg::CompressedTexture2D::4916963148413343689::1732091204::1733015533::1::::<><>::
 README.md::TextFile::-1::1732928585::0::1::::<><>::
 ::res://addons/::1732181013
@@ -36,7 +36,7 @@ godotsteam.gdextension::GDExtension::-1::1732180708::0::1::::<><>::
 ::res://addons/godotsteam/osx/libgodotsteam.macos.template_release.framework/::1732180709
 ::res://addons/godotsteam/osx/libgodotsteam.macos.template_release.framework/Resources/::1732180709
 ::res://addons/godotsteam/win32/::1732180710
-::res://addons/godotsteam/win64/::1733023332
+::res://addons/godotsteam/win64/::1733062278
 ::res://addons/transitions/::1732181013
 Dissolve2d.gdshader::Shader::-1::1698337780::0::1::::<><>::
 FadeScene.gd::GDScript::-1::1698337780::0::1::::<>CanvasLayer<>::
@@ -170,15 +170,15 @@ bg.mp3::AudioStreamMP3::9094926267656991044::1732942066::1733015532::1::::<><>::
 lingdang1.mp3::AudioStreamMP3::8310772643691167806::1732936874::1733015532::1::::<><>::
 lingdang.mp3::AudioStreamMP3::2800056024205729246::1732941518::1733015532::1::::<><>::
 messagecoming.mp3::AudioStreamMP3::75190271115232363::1732942469::1733015532::1::::<><>::
-::res://scenes/::1733020384
+::res://scenes/::1733027019
 home.tscn::PackedScene::7252755860352032656::1733018281::0::1::::<><>::uid://i7w64npn7npl::::res://asset/lobby/bj.png<>res://scripts/home.gd<>uid://g1t7o7n75h0h::::res://scenes/element/personal.tscn<>uid://cibb7ou8lcdk1::::res://scenes/chat/chat.tscn<>uid://djucjql6is7jg::::res://asset/hall/logo_r.png<>uid://0q54dik5kjk2::::res://asset/hall/logo.png<>uid://rpjo7aqw1o5k::::res://scenes/element/announcements.tscn<>uid://cx2g5ae3bm6j3::::res://asset/hall/logo_y.png<>uid://bkqtcig0kfi1b::::res://asset/hall/start1.png<>uid://bqbnsspv7wvrt::::res://asset/hall/store.png<>uid://ckr2snwe7pi7h::::res://asset/hall/logo_g.png<>uid://c46s1r5ocgwv5::::res://asset/hall/send.png<>uid://b6c8g4q5rj3x4::::res://scenes/element/announcement_scene.tscn<>uid://b88upmlmmwyiv::::res://scenes/element/setting.tscn
 lobby.tscn::PackedScene::7512542497941894672::1732958634::0::1::::<><>::res://scripts/lobby.gd<>uid://b513am8b84bug::::res://asset/lobby/shiling.png<>uid://r3q2cfqvy4ye::::res://asset/lobby/redbj.jpg<>uid://wv2nwe1arwch::::res://theme/btn.tres<>uid://bl0qqmk45se0a::::res://asset/lobby/head.png<>uid://exkjflel54sq::::res://asset/lobby/hua.png<>uid://0asrii5d6unm::::res://asset/lobby/yxn_guang.png
-login.tscn::PackedScene::2695135482801412134::1733020384::0::1::::<><>::uid://d3bjst7etlnwq::::res://asset/login/btn_zhdl.png<>res://scripts/login.gd<>uid://cspqqll154ltv::::res://asset/login/bj_cao.jpg<>uid://dexs2dkgy4ocr::::res://asset/login/btn_gx_0.png<>uid://rotxygefh46c::::res://asset/login/closeeye1.svg<>uid://das5kp4ny2ggy::::res://asset/login/btn_zhdl_g.png<>uid://cdb4i86phwax2::::res://asset/login/btn_zhdl_b.png<>uid://c5kurqa0v1yt::::res://asset/login/btn_wxdl.png<>uid://fs1orn7q0e5k::::res://asset/login/openeye1.svg<>uid://i075xh78ak6i::::res://asset/login/btn_wxdl_y.png<>uid://dpblp8kgjws5q::::res://asset/login/btn_wxdl_b.png<>uid://cylapxjt4grlm::::res://asset/login/btn_yhxy.png<>uid://dde5sblcnwyx7::::res://asset/login/btn_gx_1.png<>uid://lf12jh1ljgln::::res://asset/login/btn_sjzc.png<>uid://bu75rlaxk1ygf::::res://asset/login/btn_sjzc_g.png<>uid://d2nhkgy08lqdw::::res://asset/login/btn_wjmm.png<>uid://cqkipfykw0yy7::::res://asset/login/btn_sjzc_y.png<>uid://cw7chhk7pvbk5::::res://asset/login/btn_wjmm_g.png<>uid://b88upmlmmwyiv::::res://scenes/element/setting.tscn<>uid://brmmu1rqvldj2::::res://asset/login/btn_wjmm_y.png
+login.tscn::PackedScene::2695135482801412134::1733027019::0::1::::<><>::uid://d3bjst7etlnwq::::res://asset/login/btn_zhdl.png<>res://scripts/login.gd<>uid://cspqqll154ltv::::res://asset/login/bj_cao.jpg<>uid://dexs2dkgy4ocr::::res://asset/login/btn_gx_0.png<>uid://rotxygefh46c::::res://asset/login/closeeye1.svg<>uid://das5kp4ny2ggy::::res://asset/login/btn_zhdl_g.png<>uid://cdb4i86phwax2::::res://asset/login/btn_zhdl_b.png<>uid://c5kurqa0v1yt::::res://asset/login/btn_wxdl.png<>uid://fs1orn7q0e5k::::res://asset/login/openeye1.svg<>uid://i075xh78ak6i::::res://asset/login/btn_wxdl_y.png<>uid://dpblp8kgjws5q::::res://asset/login/btn_wxdl_b.png<>uid://cylapxjt4grlm::::res://asset/login/btn_yhxy.png<>uid://dde5sblcnwyx7::::res://asset/login/btn_gx_1.png<>uid://lf12jh1ljgln::::res://asset/login/btn_sjzc.png<>uid://bu75rlaxk1ygf::::res://asset/login/btn_sjzc_g.png<>uid://d2nhkgy08lqdw::::res://asset/login/btn_wjmm.png<>uid://cqkipfykw0yy7::::res://asset/login/btn_sjzc_y.png<>uid://cw7chhk7pvbk5::::res://asset/login/btn_wjmm_g.png<>uid://b88upmlmmwyiv::::res://scenes/element/setting.tscn<>uid://brmmu1rqvldj2::::res://asset/login/btn_wjmm_y.png
 register.tscn::PackedScene::5418931480076232267::1732987518::0::1::::<><>::uid://bfhp8oh83rlcj::::res://asset/login/register.jpg<>res://scripts/register.gd<>uid://dde5sblcnwyx7::::res://asset/login/btn_gx_1.png<>uid://dexs2dkgy4ocr::::res://asset/login/btn_gx_0.png<>uid://c43vdrflfxmrg::::res://asset/login/closeeye.svg<>uid://cylapxjt4grlm::::res://asset/login/btn_yhxy.png<>uid://b3w6o68ukeere::::res://asset/login/openeye.svg<>uid://r3uh6ep8dsff::::res://asset/hall/db_cbl_0.png<>uid://brkgpsvkueqq3::::res://asset/hall/db_cbl_0_0.png
-::res://scenes/chat/::1733022969
-chat.tscn::PackedScene::5336535124379385562::1733022969::0::1::::<><>::uid://dxj70fb1mjaob::::res://theme/chat.tres<>res://scripts/chat/chat.gd<>uid://duk1crphy5j8f::::res://scenes/element/find_friend.tscn<>res://scripts/unify/itemList.gd<>res://scripts/unify/TE_send.gd
-chat_message_item.tscn::PackedScene::4456791314811346126::1733023342::0::1::::<><>::res://scripts/chat/chat_message_item.gd
-chat_system.tscn::PackedScene::7123967373056576718::1733021581::0::1::::<><>::res://scripts/chat/chat_system.gd
+::res://scenes/chat/::1733027020
+chat.tscn::PackedScene::5336535124379385562::1733027020::0::1::::<><>::uid://dxj70fb1mjaob::::res://theme/chat.tres<>res://scripts/chat/chat.gd<>uid://duk1crphy5j8f::::res://scenes/element/find_friend.tscn<>res://scripts/unify/itemList.gd<>res://scripts/unify/TE_send.gd
+chat_message_item.tscn::PackedScene::4456791314811346126::1733027019::0::1::::<><>::res://scripts/chat/chat_message_item.gd
+chat_system.tscn::PackedScene::7123967373056576718::1733027019::0::1::::<><>::res://scripts/chat/chat_system.gd
 ::res://scenes/element/::1733018281
 announcements.tscn::PackedScene::1224749143711623790::1733015136::0::1::::<><>::res://scripts/notify/announcement.gd
 announcement_scene.tscn::PackedScene::4568419516785139379::1733015136::0::1::::<><>::res://scripts/notify/announcement_controller.gd
@@ -199,8 +199,8 @@ login.gd::GDScript::-1::1732962521::0::1::::<>Control<>::
 register.gd::GDScript::-1::1732962538::0::1::::<>Control<>::
 userinfo.gd::GDScript::-1::1732347718::0::1::::<>Control<>::
 ::res://scripts/chat/::1733019635
-chat.gd::GDScript::-1::1733023056::0::1::::<>Control<>::
-chat_message_item.gd::GDScript::-1::1733023336::0::1::::<>MarginContainer<>::
+chat.gd::GDScript::-1::1733027234::0::1::::<>Control<>::
+chat_message_item.gd::GDScript::-1::1733027011::0::1::::<>MarginContainer<>::
 chat_system.gd::GDScript::-1::1733020110::0::1::::<>Control<>::
 ::res://scripts/global/::1732943594
 backgroundmusic.gd::GDScript::-1::1732973861::0::1::::<>AudioStreamPlayer<>::
@@ -225,6 +225,6 @@ setting.gd::GDScript::-1::1732975445::0::1::::<>Control<>::
 tabbed_panel.gd::GDScript::-1::1732366372::0::1::::<>Control<>::
 talklist.gd::GDScript::-1::1732986383::0::1::::<>ItemList<>::
 TE_send.gd::GDScript::-1::1732971154::0::1::::<>TextEdit<>::
-::res://theme/::1733022294
+::res://theme/::1733023396
 btn.tres::Theme::1589170229872361451::1732958365::0::1::::<><>::
-chat.tres::Theme::8794172708516001637::1733022294::0::1::::<><>::
+chat.tres::Theme::8794172708516001637::1733023396::0::1::::<><>::

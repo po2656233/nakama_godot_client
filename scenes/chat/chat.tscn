@@ -1,9 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=32 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
 [ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://scenes/element/find_friend.tscn" id="3_ndfss"]
 [ext_resource type="Script" path="res://scripts/unify/itemList.gd" id="4_3wj1b"]
+[ext_resource type="Script" path="res://scripts/unify/color_change_control.gd" id="5_vsklf"]
 [ext_resource type="Script" path="res://scripts/unify/TE_send.gd" id="5_yrxgh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7p85"]
@@ -57,6 +58,9 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_orn7s"]
+bg_color = Color(0.129412, 0.290196, 0.380392, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahplc"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
@@ -72,44 +76,18 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_firds"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 5.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sg1j"]
 bg_color = Color(0.172549, 0.576471, 0.803922, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.486275, 0.505882, 0.623529, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-shadow_size = 10
-
-[sub_resource type="Theme" id="Theme_mkl8v"]
-Panel/styles/panel = SubResource("StyleBoxFlat_firds")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0fkfv"]
-bg_color = Color(0.0705882, 0.411765, 0.580392, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q55fp"]
-bg_color = Color(0.172549, 0.576471, 0.803922, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.486275, 0.505882, 0.623529, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_size = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vs0m8"]
-bg_color = Color(0.0705882, 0.411765, 0.580392, 1)
+shadow_size = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gxk1"]
 bg_color = Color(0.294118, 0.556863, 0.454902, 1)
@@ -146,33 +124,13 @@ bg_color = Color(0.109804, 0.364706, 0.243137, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k16k0"]
 bg_color = Color(0.156863, 0.654902, 0.427451, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_affic"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 5.0
-bg_color = Color(0.172549, 0.576471, 0.803922, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.486275, 0.505882, 0.623529, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_size = 10
-
-[sub_resource type="Theme" id="Theme_5lrsr"]
-Panel/styles/panel = SubResource("StyleBoxFlat_affic")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8rtf"]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgtgl"]
 bg_color = Color(0.109804, 0.364706, 0.243137, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2iwc"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ol08g"]
 bg_color = Color(0.156863, 0.654902, 0.427451, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8yms"]
@@ -281,6 +239,7 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ss6pv")
 tab_alignment = 1
@@ -292,28 +251,36 @@ drag_to_rearrange_enabled = true
 visible = false
 layout_mode = 2
 
-[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/Panel/TabContainer/world"]
+[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/world"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
+script = ExtResource("5_vsklf")
+brightness_factor = 0.5
+custom_color = Color(0.172549, 0.576471, 0.803922, 1)
 
-[node name="Panel_world" type="Panel" parent="MarginContainer/Panel/TabContainer/world/VSplitContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = SubResource("Theme_mkl8v")
-
-[node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/world/VSplitContainer/Panel_world"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_0fkfv")
 
 [node name="club" type="Control" parent="MarginContainer/Panel/TabContainer"]
 visible = false
@@ -331,26 +298,32 @@ split_offset = 250
 [node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 5
-theme_override_constants/minimum_grab_thickness = 5
 
 [node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "俱乐部聊天信息"
-theme_override_styles/panel = SubResource("StyleBoxFlat_q55fp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
+script = ExtResource("5_vsklf")
+brightness_factor = 0.5
+custom_color = Color(0.172549, 0.576471, 0.803922, 1)
 
-[node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk"]
+clip_contents = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 8
-theme_override_styles/focus = SubResource("StyleBoxFlat_vs0m8")
+focus_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="AddClub" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer" instance=ExtResource("3_ndfss")]
 visible = false
@@ -410,27 +383,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/autohide = 5
 split_offset = 250
 
 [node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 5
-theme_override_constants/minimum_grab_thickness = 5
+theme_override_constants/autohide = 5
 
 [node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme = SubResource("Theme_5lrsr")
+theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
+script = ExtResource("5_vsklf")
+brightness_factor = 0.5
+custom_color = Color(0.172549, 0.576471, 0.803922, 1)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
+clip_contents = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
@@ -481,7 +459,7 @@ clip_text = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_hgtgl")
-theme_override_styles/focus = SubResource("StyleBoxFlat_j2iwc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ol08g")
 script = ExtResource("4_3wj1b")
 
 [node name="input_area" type="PanelContainer" parent="MarginContainer/Panel"]

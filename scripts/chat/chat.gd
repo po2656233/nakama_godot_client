@@ -29,7 +29,7 @@ var button: Button
 const ChatMessageItem = preload("res://scenes/chat/chat_message_item.tscn")
 const TIME_INTERVAL_THRESHOLD = 180  # 3分钟的秒数
 const MAX_TEXT_LENGTH = 1000  # 最大文本长度
-
+var last_message_time: int = 0  # 最后一条消息的时间戳
 # 消息类型枚举 - 需要与 chat_message_item.gd 中的枚举保持一致
 enum MessageType {
 	RECEIVED,  # 接收到的消息
@@ -48,11 +48,12 @@ enum ContentType {
 @onready var messages_container = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
 @onready var sendTextEdit = $MarginContainer/Panel/input_area/HBoxContainer/TextEdit
 @onready var send_button = $MarginContainer/Panel/input_area/HBoxContainer/SendButton
-var last_message_time: int = 0  # 最后一条消息的时间戳
+
 ##############聊天系统(part1 end)#####################
 
 # 初始化
 func _ready():
+
 	if toggle_button_path:
 		button = get_node(toggle_button_path)
 		if button:
@@ -85,7 +86,7 @@ func _ready():
 # 添加新消息
 func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0):
 	if timestamp == 0:
-		timestamp = Time.get_unix_time_from_system()
+		timestamp = int(Time.get_unix_time_from_system())
 	
 	# 检查是否需要显示时间分割
 	var show_time = false
@@ -193,6 +194,7 @@ func send_file_message(file_path: String, file_name: String, file_size: int):
 ######################################################
 ######################################################
 func _on_fullscreen_toggle():
+	
 	if !is_fullscreen:
 		enter_fullscreen()
 	else:
@@ -435,7 +437,7 @@ func set_rotation_pivot():
 func enter_fullscreen():
 	if is_fullscreen:
 		return
-		
+
 	# 保存当前状态
 	save_current_state()
 	
@@ -454,7 +456,6 @@ func enter_fullscreen():
 func exit_fullscreen():
 	if !is_fullscreen:
 		return
-		
 	if animate_transition:
 		animate_to_normal()
 	else:
@@ -533,7 +534,7 @@ func animate_to_fullscreen(target_position: Vector2, target_size: Vector2):
 func animate_to_normal():
 	if !original_state.parent:
 		return
-		
+	WindowDrag.unregister_drag_zone(original_state.parent)
 	if tween:
 		tween.kill()
 	tween = create_tween()
@@ -559,6 +560,7 @@ func restore_original_state():
 	
 	# 恢复到原始父节点
 	original_state.parent.add_child(self)
+	WindowDrag.unregister_drag_zone(original_state.parent)
 	
 	# 恢复原始属性
 	position = original_state.position

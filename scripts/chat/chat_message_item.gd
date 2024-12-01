@@ -15,7 +15,7 @@ enum ContentType {
 	VIDEO      # 视频消息
 }
 
-var MAX_PREVIEW_SIZE = size#Vector2(300, 200)  # 最大预览尺寸
+var MAX_PREVIEW_SIZE = size #Vector2(300, 10)  # 最大预览尺寸
 
 # 节点引用
 @onready var message_container = $MessageContainer

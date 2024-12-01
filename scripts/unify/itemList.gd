@@ -1,5 +1,6 @@
 extends ItemList
 
+@export var custom_color: Color = Color(0.8, 0.8, 1.0, 1.0)
 @export_group("列表属性配置")
 @export_enum("聊天", "俱乐部", "房间", "其他") var listType: int
 
@@ -29,7 +30,13 @@ var blockName: String = "拉黑"
 var popup_menu: PopupMenu
 var selected_index: int = -1 # 用于存储当前选中的项目索引
 
+var tween: Tween
+var original_color: Color
+var is_active: bool = false
+
 func _ready():
+	# 保存原始颜色
+	original_color = modulate
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(self)
 	# 创建弹出菜单
@@ -52,7 +59,7 @@ func _ready():
 		popup_menu.add_item(refuseName)
 	if Block:
 		popup_menu.add_item(blockName)
-	
+
 	# 连接信号
 	popup_menu.id_pressed.connect(_on_popup_menu_item_selected)
 	addItemData.connect(_on_add_item_data)
@@ -136,6 +143,9 @@ func _on_item_list_gui_input(event: InputEvent):
 
 func _on_gui_input(event:InputEvent) -> void:
 	_on_item_list_gui_input(event)
+	# if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	# 	toggle_color()
+	# 	pass
 	pass # Replace with function body.
 
 func _on_popup_menu_item_selected(id: int):
@@ -269,3 +279,21 @@ func checkState(state: int):
 
 func GetCurrentItemData():
 	return self.get_item_metadata(selected_index)
+
+
+
+
+func toggle_color():
+	is_active = !is_active
+	# 如果已有正在进行的动画，先停止它
+	if tween and tween.is_valid():
+		tween.kill()
+	
+	# 创建新的颜色过渡动画
+	tween = create_tween()
+	if is_active:
+		tween.tween_property(self, "modulate", original_color, 0.3)
+	else:
+		tween.tween_property(self, "modulate", custom_color, 0.3)
+	pass
+
