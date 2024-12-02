@@ -77,17 +77,18 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sg1j"]
-bg_color = Color(0.172549, 0.576471, 0.803922, 1)
+bg_color = Color(0.176471, 0.380392, 0.498039, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.8, 0.8, 0.8, 0)
+border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-shadow_size = 5
+shadow_size = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gxk1"]
 bg_color = Color(0.294118, 0.556863, 0.454902, 1)
@@ -198,6 +199,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_b4wfc")
 script = ExtResource("2_m52is")
+toggle_button_path = null
+animate_transition = null
+transition_duration = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -262,8 +266,8 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
-brightness_factor = 0.5
-custom_color = Color(0.172549, 0.576471, 0.803922, 1)
+change_mode = 1
+custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk"]
 clip_contents = false
@@ -274,8 +278,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer"]
 layout_mode = 2
@@ -305,8 +307,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
-brightness_factor = 0.5
-custom_color = Color(0.172549, 0.576471, 0.803922, 1)
+custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk"]
 clip_contents = false
@@ -314,11 +315,12 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 5.0
+offset_right = 1.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer"]
 layout_mode = 2
@@ -397,8 +399,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
-brightness_factor = 0.5
-custom_color = Color(0.172549, 0.576471, 0.803922, 1)
+custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
 clip_contents = false
@@ -406,11 +407,12 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 5.0
+offset_right = 1.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer"]
 layout_mode = 2
@@ -507,9 +509,13 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
 text = "发送"
 
+[connection signal="focus_entered" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_club_talk_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_club_talk_focus_exited"]
 [connection signal="pressed" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/CheckButton" to="." method="_on_show_addclub_pressed"]
 [connection signal="gui_input" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" method="_on_gui_input"]
 [connection signal="item_selected" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" method="_on_item_selected"]
+[connection signal="focus_entered" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_friend_talk_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_friend_talk_focus_exited"]
 [connection signal="pressed" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/CheckButton" to="." method="_on_show_addfriend_pressed"]
 [connection signal="gui_input" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_gui_input"]
 [connection signal="item_selected" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_item_selected"]

@@ -5,9 +5,6 @@ var last_click_time := 0.0
 var double_click_threshold := 0.3  # 双击时间阈值（秒）
 
 func _ready() -> void:
-	var account = ProjectSettings.get("username")
-	if account:
-		text = account
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	

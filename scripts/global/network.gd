@@ -24,6 +24,21 @@ signal chat_message_received(message: Dictionary)
 signal chat_presence_changed(joins: Array, leaves: Array)
 signal chat_history_received(messages: Array)
 
+
+const DEFAULT_MESSAGE = {
+    "kind": 0,#2聊天 1俱乐部 0世界
+    "type": 0,
+    "headIcon": "",
+    "path": "",
+	"content": "",
+	"file": "",
+	"size": 0,
+	"thumbnail": "",
+	"duration": 0,
+}
+
+
+
 # 初始化
 func _ready() -> void:
 	# Initialize _client
@@ -65,7 +80,7 @@ func connect_signals() -> void:
 
 func set_current_channel(channel: NakamaRTAPI.Channel):
 	_current_channel = channel
-	
+
 
 # Authentication
 func authenticate_device(username: String="", created:bool=false) -> bool:
@@ -146,7 +161,7 @@ func send_message(content: Dictionary) -> Error:
 	if not _current_channel:
 		print("Not in a chat channel")
 		return FAILED
-	
+	print("发送前确认",content)
 	var result = await _socket.write_chat_message_async(_current_channel.id, content)
 	if result.is_exception():
 		print("Failed to send message: ", result.get_exception().message)
@@ -157,28 +172,57 @@ func send_message(content: Dictionary) -> Error:
 # 获取聊天历史
 func get_chat_history(limit: int = 20, forward: bool = false) -> Error:
 	if not _current_channel:
-		print("Not in a chat channel")
+		print("Not in a chat channel or socket is wrong")
 		return FAILED
 	
-	var result = await _socket.list_channel_messages_async(_current_channel.id, limit, forward)
+	print("获取聊天历史",_current_channel.id, limit, forward)
+	var result = await _client.list_channel_messages_async(_session, _current_channel.id, limit, forward)
 	if result.is_exception():
 		print("Failed to get chat history: ", result.get_exception().message)
 		return FAILED
-	
+	  
 	var messages = []
 	for message in result.messages:
 		var content = JSON.parse_string(message.content)
 		if content:
-			messages.append({
-				"message_id": message.message_id,
-				"sender": message.sender_username,
-				"content": content,
-				"timestamp": message.create_time,
-				"is_self": message.sender_id == _session.user_id
-			})
+			messages.append(message)
 	
 	chat_history_received.emit(messages)
 	return OK
+
+func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
+	if not message or not message.content:
+		return {
+				"kind": DEFAULT_MESSAGE.kind,
+				"type":DEFAULT_MESSAGE.type,
+				"headIcon":  DEFAULT_MESSAGE.headIcon,
+				"username": "",
+				"content": DEFAULT_MESSAGE.content,
+				"path": DEFAULT_MESSAGE.path,
+				"file": DEFAULT_MESSAGE.file,
+				"size":DEFAULT_MESSAGE.size,
+				"thumbnail": DEFAULT_MESSAGE.thumbnail,
+				"duration": DEFAULT_MESSAGE.duration,
+				}
+	var content = null
+	content = JSON.parse_string(message.content)
+	if content:
+		return {
+			"kind": safe_get(content, "kind", DEFAULT_MESSAGE.kind),
+			"type": safe_get(content, "type", DEFAULT_MESSAGE.type),
+			"headIcon": safe_get(content, "headIcon", DEFAULT_MESSAGE.headIcon),
+			"username": message.username,
+			"content": content,
+			"path": safe_get(content, "path", DEFAULT_MESSAGE.path),
+			"file": safe_get(content,"file", DEFAULT_MESSAGE.file),
+			"size":safe_get(content,"size", DEFAULT_MESSAGE.size),
+			"thumbnail": safe_get(content,"thumbnail", DEFAULT_MESSAGE.thumbnail),
+			"duration": safe_get(content,"duration", DEFAULT_MESSAGE.duration),
+		}
+	return {
+		"message_id": "",
+	}
+
 
 # 上传文件
 func upload_file(file_path: String) -> Dictionary:
@@ -230,16 +274,7 @@ func download_file(file_info: Dictionary) -> Dictionary:
 
 # 处理接收到的消息
 func _on_channel_message(message: NakamaAPI.ApiChannelMessage):
-	var content = JSON.parse_string(message.content)
-	if content:
-		var msg_data = {
-			"message_id": message.message_id,
-			"sender": message.sender_username,
-			"content": content,
-			"timestamp": message.create_time,
-			"is_self": message.sender_id == _session.user_id
-		}
-		chat_message_received.emit(msg_data)
+	chat_message_received.emit(message)
 
 # 处理频道状态变化
 func _on_channel_presence(presence: NakamaRTAPI.ChannelPresenceEvent):
@@ -453,3 +488,18 @@ func _on_connection_succeeded():
 
 func _on_received_error(error: String):
 	push_error("Nakama error: " + error)
+
+
+##############################################
+class TimestampSorter:
+	static func sort_ascending(a: Dictionary, b: Dictionary) -> bool:
+		return a["timestamp"] < b["timestamp"]
+
+func sort_messages_by_timestamp(messages: Array) -> Array:
+	messages.sort_custom(TimestampSorter.sort_ascending)
+	return messages
+# 安全转换
+func safe_get(variant_content: Variant, key: String, default_value = null) -> Variant:
+	if variant_content is Dictionary:
+		return variant_content.get(key, default_value)
+	return default_value

@@ -5,11 +5,11 @@ enum ColorChangeMode {BRIGHTNESS, CUSTOM_COLOR}
 # 颜色变化模式设置
 @export var change_mode: ColorChangeMode = ColorChangeMode.BRIGHTNESS
 # 亮度模式的设置
-@export var brightness_factor: float = 1.2
+@export var factor: float = 1.5
 # 自定义颜色模式的设置
 @export var custom_color: Color = Color(0.8, 0.8, 1.0, 1.0)
 # 过渡时间
-@export var transition_duration: float = 0.3
+@export var transition_duration: float = 0.1
 
 var tween: Tween
 var is_active: bool = false
@@ -35,9 +35,9 @@ func toggle_color():
 	var target_color: Color
 	match change_mode:
 		ColorChangeMode.BRIGHTNESS:
-			target_color = original_color * brightness_factor if is_active else original_color
+			target_color = original_color * factor if is_active else original_color
 		ColorChangeMode.CUSTOM_COLOR:
-			target_color = custom_color if is_active else original_color
+			target_color = custom_color* factor if is_active else original_color
 	
 	# 如果已有正在进行的动画，先停止它
 	if tween and tween.is_valid():

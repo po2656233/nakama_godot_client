@@ -32,9 +32,8 @@ func _ready() -> void:
 		print("PopupManager 未正确初始化")
 	else:
 		print("PopupManager 已正确初始化")
-	var username = ProjectSettings.get("username")
-	if username:
-		usernameEdit.text = username
+	if ProjectSettings.has_setting("username"):
+		usernameEdit.text = ProjectSettings.get("username")
 	# # 创建HTTP请求节点
 	# http_request = HTTPRequest.new()
 	# add_child(http_request)
@@ -86,7 +85,7 @@ func login()->void:
 		# ProjectSettings.set("username",usernameEdit.text)
 		FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	else:
-		PopupManager.show_message("账号或密码错误")
+		PopupManager.show_message("账号或密码错误","提示",false)
 		print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
 	pass # Replace with function body.
 

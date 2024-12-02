@@ -3,19 +3,17 @@ extends MarginContainer
 # 消息类型枚举 - 需要与 chat_system.gd 中的枚举保持一致
 enum MessageType {
 	RECEIVED,  # 接收到的消息
-	SENT      # 发送的消息
+	SENT	  # 发送的消息
 }
 
 enum ContentType {
-	TEXT,      # 文本消息
-	VOICE,     # 语音消息
-	FILE,      # 文件消息
+	TEXT,	  # 文本消息
+	VOICE,	 # 语音消息
+	FILE,	  # 文件消息
 	LONG_TEXT, # 长文本消息
-	IMAGE,     # 图片消息
-	VIDEO      # 视频消息
+	IMAGE,	 # 图片消息
+	VIDEO	  # 视频消息
 }
-
-var MAX_PREVIEW_SIZE = size #Vector2(300, 10)  # 最大预览尺寸
 
 # 节点引用
 @onready var message_container = $MessageContainer
@@ -33,6 +31,7 @@ var MAX_PREVIEW_SIZE = size #Vector2(300, 10)  # 最大预览尺寸
 # 样式引用
 var received_style: StyleBoxFlat
 var sent_style: StyleBoxFlat
+var max_height: float = 0  # 最大高度限制
 
 func _ready():
 	# 克隆样式以便修改
@@ -40,12 +39,56 @@ func _ready():
 	sent_style = received_style.duplicate()
 	sent_style.bg_color = Color(0.15, 0.4, 0.15, 0.9)
 	sent_style.border_color = Color(0.2, 0.5, 0.2, 0.8)
+	
+	# 设置大小约束
+	custom_minimum_size = Vector2(0, 0)
+	size_flags_horizontal = SIZE_SHRINK_CENTER
+	size_flags_vertical = SIZE_SHRINK_CENTER
+	
+	# 确保内容不会超出容器
+	message_panel.size_flags_horizontal = SIZE_SHRINK_CENTER
+	message_panel.size_flags_vertical = SIZE_SHRINK_CENTER
+	
+	# 设置文本标签的自动换行
+	if text_label:
+		text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		text_label.size_flags_horizontal = SIZE_SHRINK_CENTER
+		text_label.custom_minimum_size.x = 60  # 最小宽度
+		
+	# 监听大小变化
+	resized.connect(_on_resized)
+
+# 设置最大高度
+func set_max_height(height: float):
+	max_height = height
+	_on_resized()
+
+func _on_resized():
+	# 获取父容器的大小
+	var parent_size = get_parent().size if get_parent() else Vector2.ZERO
+	if parent_size == Vector2.ZERO:
+		return
+	
+	# 限制最大宽度为父容器的80%
+	var max_width = parent_size.x * 0.8
+	if size.x > max_width:
+		custom_minimum_size.x = max_width
+	
+	# 限制最大高度
+	if max_height > 0 and size.y > max_height:
+		custom_minimum_size.y = max_height
+		
+	# 确保文本内容适应宽度和高度
+	if text_label and text_label.visible:
+		text_label.custom_minimum_size.x = min(text_label.size.x, max_width - 40)  # 40为边距
+		if max_height > 0:
+			text_label.custom_minimum_size.y = min(text_label.size.y, max_height - 40)  # 40为边距
 
 # 设置消息内容
 func set_message(content: Dictionary, nickname: String, msg_type: MessageType, show_time: bool = false, time_str: String = ""):
 	# 设置昵称
 	nickname_label.text = nickname
-	
+	print("设置xiaoxi:", content["type"],content["content"],"-->",content.type)
 	# 设置时间
 	time_label.visible = show_time
 	if show_time:
@@ -72,9 +115,10 @@ func set_message(content: Dictionary, nickname: String, msg_type: MessageType, s
 	voice_message.visible = false
 	
 	# 根据内容类型设置显示
-	match content["type"]:
+	var cType = content.type as ContentType
+	match cType:
 		ContentType.TEXT, ContentType.LONG_TEXT:
-			_setup_text_message(content["text"])
+			_setup_text_message(content["content"])
 		ContentType.IMAGE:
 			_setup_image_message(content["path"])
 		ContentType.VIDEO:
@@ -83,11 +127,16 @@ func set_message(content: Dictionary, nickname: String, msg_type: MessageType, s
 			_setup_file_message(content["path"], content["name"], content["size"])
 		ContentType.VOICE:
 			_setup_voice_message(content["path"], content["duration"])
+	
+	# 确保大小适应内容
+	_on_resized()
 
 # 设置文本消息
 func _setup_text_message(text: String):
 	text_label.visible = true
 	text_label.text = text
+	# 确保文本适应容器宽度和高度
+	_on_resized()
 
 # 设置图片消息
 func _setup_image_message(path: String):
@@ -99,7 +148,23 @@ func _setup_image_message(path: String):
 		_resize_media_preview(texture.get_size())
 	else:
 		text_label.visible = true
-		text_label.text = "[图片加载失败]"
+		text_label.text = "无法加载图片"
+
+# 调整媒体预览大小
+func _resize_media_preview(original_size_: Vector2):
+	var parent_size = get_parent().size if get_parent() else Vector2.ZERO
+	if parent_size == Vector2.ZERO:
+		return
+		 
+	var max_width = parent_size.x * 0.6  # 最大宽度为父容器的60%
+	var height_limit = min(parent_size.y * 0.4, max_height * 0.8 if max_height > 0 else INF)  # 最大高度限制
+	
+	var new_size = original_size_
+	if original_size_.x > max_width or original_size_.y > height_limit:
+		var scale_ = min(max_width / original_size_.x, height_limit / original_size_.y)
+		new_size = original_size_ * scale_
+	size = new_size
+	_on_resized()
 
 # 设置视频消息
 func _setup_video_message(_path: String, thumbnail_path: String, duration: float):
@@ -131,14 +196,6 @@ func _setup_voice_message(_path: String, duration: float):
 	voice_message.visible = true
 	var duration_label = voice_message.get_node("HBoxContainer/Duration")
 	duration_label.text = _format_duration(duration)
-
-# 调整媒体预览大小
-func _resize_media_preview(original_size: Vector2):
-	var new_size = original_size
-	if original_size.x > MAX_PREVIEW_SIZE.x or original_size.y > MAX_PREVIEW_SIZE.y:
-		var scale_ = min(MAX_PREVIEW_SIZE.x / original_size.x, MAX_PREVIEW_SIZE.y / original_size.y)
-		new_size = original_size * scale_
-	media_preview.custom_minimum_size = new_size
 
 # 格式化文件大小
 func _format_file_size(size_1: int) -> String:

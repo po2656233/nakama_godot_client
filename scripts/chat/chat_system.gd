@@ -3,6 +3,10 @@ extends Control
 const ChatMessageItem = preload("res://scenes/chat/chat_message_item.tscn")
 const TIME_INTERVAL_THRESHOLD = 180  # 3分钟的秒数
 const MAX_TEXT_LENGTH = 1000  # 最大文本长度
+const MAX_MESSAGES = 20  # 最大消息数量
+const HISTORY_FETCH_COUNT = 20  # 每次获取历史消息的数量
+
+signal request_history_messages(last_message_id: String)  # 请求历史消息的信号
 
 # 消息类型枚举 - 需要与 chat_message_item.gd 中的枚举保持一致
 enum MessageType {
@@ -23,13 +27,115 @@ enum ContentType {
 @onready var text_edit = $input_area/TextEdit
 @onready var send_button = $input_area/SendButton
 var last_message_time: int = 0  # 最后一条消息的时间戳
+var message_count: int = 0  # 当前消息数量
+var oldest_message_id: String = ""  # 最早消息的ID
+var is_loading_history: bool = false  # 是否正在加载历史消息
+var scroll_container: ScrollContainer  # 滚动容器引用
 
 func _ready():
 	if send_button:
 		send_button.pressed.connect(_on_send_button_pressed)
+	
+	# 设置消息容器的大小限制
+	messages_container.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	messages_container.custom_minimum_size.y = 0
+	
+	# 获取并设置滚动容器
+	scroll_container = messages_container.get_parent() as ScrollContainer
+	if scroll_container:
+		scroll_container.scroll_vertical_enabled = true
+		scroll_container.scroll_horizontal_enabled = false
+		# 连接滚动信号
+		scroll_container.get_v_scroll_bar().changed.connect(_on_scroll_changed)
+		# 设置滚动容器的大小策略
+		scroll_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		
+		# 监听大小变化
+		scroll_container.resized.connect(_on_scroll_container_resized)
+
+# 处理滚动容器大小变化
+func _on_scroll_container_resized():
+	if scroll_container:
+		# 更新所有消息项的最大高度
+		var max_height = scroll_container.size.y
+		for child in messages_container.get_children():
+			if child is Control:  # 确保是控制节点
+				child.set_max_height(max_height * 0.8)  # 设置为滚动区域高度的80%
+
+# 处理滚动变化
+func _on_scroll_changed():
+	if scroll_container and not is_loading_history:
+		# 当滚动到顶部时，尝试加载更多历史消息
+		if scroll_container.scroll_vertical <= 0:
+			load_history_messages()
+
+# 加载历史消息
+func load_history_messages():
+	if is_loading_history or oldest_message_id.is_empty():
+		return
+	
+	is_loading_history = true
+	# 发出加载历史消息的信号
+	emit_signal("request_history_messages", oldest_message_id)
+
+# 接收历史消息
+func on_history_messages_received(messages: Array):
+	is_loading_history = false
+	if messages.is_empty():
+		return
+	
+	# 保存当前滚动位置
+	var current_scroll_pos = scroll_container.scroll_vertical if scroll_container else 0
+	
+	# 添加历史消息到顶部
+	for message in messages:
+		add_history_message(message)
+	
+	# 恢复滚动位置
+	await get_tree().process_frame
+	if scroll_container:
+		scroll_container.scroll_vertical = current_scroll_pos + (scroll_container.get_v_scroll_bar().max_value - current_scroll_pos)
+
+# 添加历史消息（在顶部添加）
+func add_history_message(message: Dictionary):
+	var message_item = ChatMessageItem.instantiate()
+	messages_container.add_child(message_item)
+	messages_container.move_child(message_item, 0)
+	
+	# 设置最大高度
+	if scroll_container:
+		message_item.set_max_height(scroll_container.size.y * 0.8)
+	
+	# 设置消息内容
+	message_item.set_message(
+		message.content,
+		message.nickname,
+		MessageType.RECEIVED if message.is_received else MessageType.SENT,
+		true,
+		message.time_str
+	)
+	
+	# 更新最早消息ID
+	oldest_message_id = message.id
+	message_count += 1
+
+# 管理消息数量
+func manage_message_count():
+	if message_count >= MAX_MESSAGES:
+		# 移除最早的消息
+		var oldest_message = messages_container.get_child(0)
+		messages_container.remove_child(oldest_message)
+		oldest_message.queue_free()
+		message_count -= 1
+		
+		# 触发加载历史消息
+		load_history_messages()
 
 # 添加新消息
-func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0):
+func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0, message_id: String = ""):
+	# 管理消息数量
+	manage_message_count()
+	
 	if timestamp == 0:
 		timestamp = Time.get_unix_time_from_system()
 	
@@ -43,6 +149,15 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 	# 创建新的消息项
 	var message_item = ChatMessageItem.instantiate()
 	messages_container.add_child(message_item)
+	message_count += 1
+	
+	# 设置最大高度
+	if scroll_container:
+		message_item.set_max_height(scroll_container.size.y * 0.8)
+	
+	# 如果是第一条消息，设置为最早的消息ID
+	if message_count == 1 and not message_id.is_empty():
+		oldest_message_id = message_id
 	
 	# 设置消息类型
 	var msg_type = MessageType.SENT if is_sent else MessageType.RECEIVED

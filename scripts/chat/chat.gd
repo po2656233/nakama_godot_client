@@ -4,9 +4,11 @@ extends Control
 @onready var addclubPanle = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/AddClub
 @onready var friendListItem = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList
 @onready var clubListItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList
-@onready var clubTalkItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ItemList
 @onready var findFriend = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/AddFirends
 @onready var findClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/AddClub
+
+# @onready var clubSplit = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub
+# @onready var friendSplit = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends
 
 signal fullscreen_changed(is_fullscreen: bool)
 
@@ -25,6 +27,8 @@ var is_fullscreen := false
 var is_rotated = false
 var tween: Tween
 var button: Button
+var myUsername = "我"
+var uid = ""
 ##############聊天系统(part1)#####################
 const ChatMessageItem = preload("res://scenes/chat/chat_message_item.tscn")
 const TIME_INTERVAL_THRESHOLD = 180  # 3分钟的秒数
@@ -45,6 +49,14 @@ enum ContentType {
 	VIDEO      # 视频消息
 }
 
+enum MessageKind{
+	WORLD = 0,
+	CLUB = 1,
+	CHAT = 2
+}
+
+
+
 @onready var messages_container = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
 @onready var sendTextEdit = $MarginContainer/Panel/input_area/HBoxContainer/TextEdit
 @onready var send_button = $MarginContainer/Panel/input_area/HBoxContainer/SendButton
@@ -53,7 +65,9 @@ enum ContentType {
 
 # 初始化
 func _ready():
-
+	if Network.player_data:
+		myUsername = Network.player_data.username
+		uid = Network.player_data.id
 	if toggle_button_path:
 		button = get_node(toggle_button_path)
 		if button:
@@ -70,7 +84,8 @@ func _ready():
 	get_friends_list()
 	findFriend.addFinishSIG.connect(_on_add_finish)
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
-	Network.chat_message_received.connect(_on_received_message)
+	Network._socket.received_channel_message.connect(_on_received_message)
+	Network.chat_history_received.connect(_on_history_message)
 	pass
 
 
@@ -89,7 +104,8 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 		timestamp = int(Time.get_unix_time_from_system())
 	
 	# 检查是否需要显示时间分割
-	var show_time = false
+	# var show_time = false
+	var show_time = true # 显示时间
 	if last_message_time > 0 and (timestamp - last_message_time) > TIME_INTERVAL_THRESHOLD:
 		# 添加时间分割标签
 		add_time_separator(timestamp)
@@ -135,33 +151,89 @@ func add_time_separator(timestamp: int):
 	time_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 	messages_container.add_child(time_label)
 
-# 确保滚动到底部
+# 确保滚动到底部并保持消息在可见区域内
 func ensure_scroll_to_bottom():
 	if messages_container.get_parent() is ScrollContainer:
 		var scroll = messages_container.get_parent() as ScrollContainer
-		scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value
-
-# 发送文本消息
-func _on_send_button_pressed():
-	if not sendTextEdit:
-		return
 		
-	var message = sendTextEdit.text.strip_edges()
-	if message.length() > 0:
-		var content = {
-			"type": ContentType.TEXT if message.length() <= 100 else ContentType.LONG_TEXT,
-			"text": message
-		}
-		add_message(content, "我", true)
-		sendTextEdit.text = ""  # 清空输入框
+		# 获取可见区域的大小和实际内容大小
+		var visible_height = messages_container.size.y#scroll.size.y
+		var content_height = scroll.size.y #messages_container.size.y
+		var scroll_bar = scroll.get_v_scroll_bar()
+		var current_scroll = scroll_bar.value
+		
+		# 设置ScrollContainer的clip_contents属性为true，确保超出部分被裁剪
+		scroll.clip_contents = true
+		messages_container.clip_contents = true
+		
+		# 如果内容超出可见区域，调整显示
+		if content_height > visible_height:
+			# 确保滚动位置不会导致内容超出底部
+			var max_scroll = scroll_bar.max_value
+			var min_scroll = max(0, max_scroll - visible_height)
+			
+			# 限制滚动范围
+			current_scroll = clamp(current_scroll, min_scroll, max_scroll)
+			scroll_bar.value = current_scroll
+			
+			# 检查并清理超出可见区域的消息
+			# cleanup_overflow_messages(scroll)
+			print("检测到超出可见区域的消息，开始清理...")
+	print("检测到超出可见区域的消息，开始清理...")
+# 清理超出可见区域的消息
+func cleanup_overflow_messages(scroll: ScrollContainer):
+	var visible_height = scroll.size.y
+	var scroll_bar = scroll.get_v_scroll_bar()
+	var current_scroll = scroll_bar.value
+	
+	# 获取所有消息
+	var children = messages_container.get_children()
+	var total_height = 0
+	
+	# 从底部开始计算，移除超出可见区域的消息
+	for child in children:
+		if not child is Control:
+			continue
+			
+		var child_pos = child.position.y
+		var child_height = child.size.y
+		
+		# 检查消息是否在可见区域内
+		var is_in_view_area = child_pos + child_height >= current_scroll and child_pos <= current_scroll + visible_height
+		
+		if not is_in_view_area:
+			child.visible = false  # 隐藏不可见的消息
+		else:
+			child.visible = true   # 显示可见的消息
+			
+		total_height += child_height
+		
+		# 如果总高度超过可见区域的2倍，移除最早的消息
+		if total_height > visible_height * 2:
+			child.queue_free()
+
+# # 发送文本消息
+# func _on_send_button_pressed():
+# 	if not sendTextEdit:
+# 		return
+		
+# 	var message = sendTextEdit.text.strip_edges()
+# 	if message.length() > 0:
+# 		var content = {
+# 			"type": ContentType.TEXT if message.length() <= 100 else ContentType.LONG_TEXT,
+# 			"content": message
+# 		}
+# 		add_message(content, myUsername, true)
+# 		sendTextEdit.text = ""  # 清空输入框
 
 # 发送图片消息
-func send_image_message(image_path: String):
+func send_image_message(image_path: String,kind:int = 0):
 	var content = {
+		"kind":kind,
 		"type": ContentType.IMAGE,
 		"path": image_path
 	}
-	add_message(content, "我", true)
+	add_message(content, myUsername, true)
 
 # 发送视频消息
 func send_video_message(video_path: String, thumbnail_path: String, duration: float):
@@ -171,7 +243,7 @@ func send_video_message(video_path: String, thumbnail_path: String, duration: fl
 		"thumbnail": thumbnail_path,
 		"duration": duration
 	}
-	add_message(content, "我", true)
+	add_message(content, myUsername, true)
 
 # 发送语音消息
 func send_voice_message(voice_path: String, duration: float):
@@ -180,17 +252,17 @@ func send_voice_message(voice_path: String, duration: float):
 		"path": voice_path,
 		"duration": duration
 	}
-	add_message(content, "我", true)
+	add_message(content, myUsername, true)
 
 # 发送文件消息
 func send_file_message(file_path: String, file_name: String, file_size: int):
 	var content = {
 		"type": ContentType.FILE,
 		"path": file_path,
-		"name": file_name,
+		"file": file_name,
 		"size": file_size
 	}
-	add_message(content, "我", true)
+	add_message(content, myUsername, true)
 ######################################################
 ######################################################
 func _on_fullscreen_toggle():
@@ -232,79 +304,83 @@ func _on_add_finish():
 	pass
 
 func _on_received_message(msg):
-	print("收到消息:",msg)
-	if msg.content == "":
+	# print("收到消息:",msg) 
+	if msg.message_id == "":
 		return
 	
-	var message = JSON.parse_string(msg.content)
-	if message.type == 0:
-		print("收到世界消息:",message)
-	elif message.type == 1:
-		print("收到俱乐部消息:",message)
-	elif message.type == 2:
-		print("收到聊天消息:",message)
-		add_message({
-				"type": ContentType.TEXT,
-				"text": msg.content,
-			}, "用户A", false)
-	else:
-		print("无效的消息类型")
+	var content = JSON.parse_string(msg.content)
+	print("收到消息:",content) 
+	add_message(content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
 	pass
-	# print("收到消息:",msg)
+
+
+func _on_history_message(msgList):
+	print("收到历史消息:",msgList)
+	msgList = Network.sort_messages_by_timestamp(msgList)
+	for msg in msgList:
+		_on_received_message(msg) 
+	pass
 
 
 func _on_btn_send_pressed() -> void:
 	if sendTextEdit.text.strip_edges() == "":
-		print("全是空字符")
 		return
 	# 发送消息
-	var msg = {
-		"type": mainPanle.current_tab,
-		# "type": ChatMessageItem.MessageType.NORMAL,
-		# "content": "收到你的消息：" + content,
-		"content": sendTextEdit.text,
-		"sender": "Bot",
-		"is_self": false,
-		"timestamp": Time.get_time_string_from_system()
-	}
 	var channel = null
-	if mainPanle.current_tab == 0:
-		# 世界
-		#Network.send_message(msg)
-		pass
-	elif mainPanle.current_tab == 1:
-		# 俱乐部
-		var info = clubListItem.GetCurrentItemData()
-		if info:
-			channel = info.channel
-		pass
-	elif mainPanle.current_tab == 2:
-		# 好友
-		var info = friendListItem.GetCurrentItemData()
-		if info:
-			channel = info.channel
-		pass
-	else:
-		print("无效的选项")
-		return
+	match mainPanle.current_tab:
+		MessageKind.WORLD:
+			# 世界
+			channel = null
+			pass
+		MessageKind.CHAT:
+			# 好友
+			var info = friendListItem.GetCurrentItemData()
+			if info:
+				channel = info.channel
+			pass
+		MessageKind.CLUB:
+			# 俱乐部
+			var info = clubListItem.GetCurrentItemData()
+			if info:
+				channel = info.channel
+			pass
+		_:
+			print("无效的选项")
+			return
 	
 	# 发送消息
 	if channel:
 		Network.set_current_channel(channel)
-		print("发送给好友 内容:",msg)
+		var msg = Network.getMsgData(null)
+		msg.content = sendTextEdit.text.strip_edges()
+		msg.kind = mainPanle.current_tab
+		msg.type = ContentType.TEXT
+		print("发送消息:",msg)
 		var ret = await Network.send_message(msg)
 		if ret == OK:
-			add_message({
-				"type": ContentType.TEXT,
-				"text": msg.content,
-			}, "用户A", false)
-			add_message({
-				"type": ContentType.TEXT,
-				"text": msg.content,
-			}, "用户B", true,Time.get_unix_time_from_system())
 			sendTextEdit.clear()
-		else:
-			PopupManager.show_message("发送失败")
+			return
+
+	PopupManager.show_message("发送失败")
+	pass # Replace with function body.
+
+############################调整分割线的亮度############################
+func _on_friend_talk_focus_exited() -> void:
+	# friendSplit.dragger_visibility = SplitContainer.DRAGGER_HIDDEN_COLLAPSED
+	pass # Replace with function body.
+
+func _on_friend_talk_focus_entered() -> void:
+	# friendSplit.dragger_visibility = SplitContainer.DRAGGER_VISIBLE
+	pass # Replace with function body.
+
+
+
+func _on_club_talk_focus_exited() -> void:
+	# clubSplit.dragger_visibility = SplitContainer.DRAGGER_HIDDEN_COLLAPSED
+	pass # Replace with function body.
+
+func _on_club_talk_focus_entered() -> void:
+	# clubSplit.dragger_visibility = SplitContainer.DRAGGER_VISIBLE
 	pass # Replace with function body.
 
 #################################################################
@@ -327,6 +403,9 @@ func get_friends_list():
 					"state":friend.state,
 				}
 				print("渠道信息",ret,"渠道ID:",itemData.channel)
+				Network.set_current_channel(itemData.channel)
+				await Network.get_chat_history()
+
 				# 区分是否是互为好友
 				if friend.state == 0:
 					friends.append(itemData)
@@ -341,6 +420,7 @@ func get_friends_list():
 					refuses.append(itemData)
 				else:
 					pass
+				
 			pass
 			
 		friends.sort()

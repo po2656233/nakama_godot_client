@@ -57,6 +57,11 @@ func set_message(message: String) -> void:
         message_label.text = message
     else:
         print("Message label not found.")
+    var clossBtn = get_node_or_null("Panel/CloseButton")
+    if clossBtn:
+        clossBtn.visible = false if auto_close else true
+    else:
+        print("Close button not found.")
 
 func close() -> void:
     isFinish = true

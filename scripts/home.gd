@@ -9,7 +9,7 @@ func _ready():
 	WindowDrag.unregister_drag_zone(chatPanle)
 	WindowDrag.unregister_drag_zone(settings)
 	# WindowDrag.unregister_drag_zone(homePanle)
-	Network.chat_message_received.connect(_on_received_message)
+	# Network.chat_message_received.connect(_on_received_message)
 	pass
 
 func _on_received_message(msg):

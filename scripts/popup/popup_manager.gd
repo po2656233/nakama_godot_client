@@ -12,8 +12,10 @@ signal popup_canceled(popup_id: String)
 signal popup_closed(popup_id: String)
 
 # 预加载场景
-var message_scene = preload("res://scenes/element/message_popup.tscn")
-var confirm_scene = preload("res://scenes/element/confirm_popup.tscn")
+var message_scene = preload("res://scenes/element/popup/message_popup.tscn")
+var confirm_scene = preload("res://scenes/element/popup/confirm_popup.tscn")
+
+
 
 # 当前活动的弹窗
 var active_popups: Dictionary = {}
