@@ -16,22 +16,28 @@ enum ContentType {
 }
 
 # 节点引用
-@onready var message_container = $MessageContainer
-@onready var left_spacer = $MessageContainer/LeftSpacer
-@onready var right_spacer = $MessageContainer/RightSpacer
-@onready var content_container = $MessageContainer/Content
-@onready var nickname_label = $MessageContainer/Content/Header/Nickname
-@onready var time_label = $MessageContainer/Content/Header/Time
-@onready var message_panel = $MessageContainer/Content/MessagePanel
-@onready var text_label = $MessageContainer/Content/MessagePanel/MessageContent/Text
-@onready var media_preview = $MessageContainer/Content/MessagePanel/MessageContent/MediaPreview
-@onready var file_info = $MessageContainer/Content/MessagePanel/MessageContent/FileInfo
-@onready var voice_message = $MessageContainer/Content/MessagePanel/MessageContent/VoiceMessage
+# @onready var message_container = $MessageContainer
+@onready var content_container = $Content
+@onready var header_container = $Content/Header
+@onready var nickname_label = $Content/Header/Nickname
+@onready var time_label = $Content/Header/Time
+@onready var message_panel = $Content/MessagePanel
+@onready var text_label = $Content/MessagePanel/MessageContent/Text
+@onready var media_preview = $Content/MessagePanel/MessageContent/MediaPreview
+@onready var file_info = $Content/MessagePanel/MessageContent/FileInfo
+@onready var voice_message = $Content/MessagePanel/MessageContent/VoiceMessage
+
+
+# TextEdit的最大宽度（可以根据需要调整）
+const MAX_TEXTEDIT_WIDTH = 100
+# TextEdit的最小宽度
+const MIN_TEXTEDIT_WIDTH = 0
 
 # 样式引用
 var received_style: StyleBoxFlat
 var sent_style: StyleBoxFlat
 var max_height: float = 0  # 最大高度限制
+var max_talk_width: float = MAX_TEXTEDIT_WIDTH
 
 func _ready():
 	# 克隆样式以便修改
@@ -42,21 +48,48 @@ func _ready():
 	
 	# 设置大小约束
 	custom_minimum_size = Vector2(0, 0)
-	size_flags_horizontal = SIZE_SHRINK_CENTER
-	size_flags_vertical = SIZE_SHRINK_CENTER
-	
-	# 确保内容不会超出容器
-	message_panel.size_flags_horizontal = SIZE_SHRINK_CENTER
-	message_panel.size_flags_vertical = SIZE_SHRINK_CENTER
+	consistent(SIZE_EXPAND_FILL)
 	
 	# 设置文本标签的自动换行
 	if text_label:
+		# 设置初始大小和换行
+		text_label.custom_minimum_size.x = MIN_TEXTEDIT_WIDTH
+		text_label.fit_content = true
 		text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		text_label.size_flags_horizontal = SIZE_SHRINK_CENTER
-		text_label.custom_minimum_size.x = 60  # 最小宽度
+		# 设置垂直大小策略
+		text_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		# 连接文本变化信号
+		text_label.finished.connect(_on_text_changed)
 		
 	# 监听大小变化
 	resized.connect(_on_resized)
+	pass
+
+
+#################################
+# 大小约束
+func consistent(flag:SizeFlags):
+	size_flags_horizontal = flag 
+	size_flags_vertical = flag 
+	
+	# # 确保内容不会超出容器
+	message_panel.size_flags_horizontal = flag 
+	message_panel.size_flags_vertical = flag 
+	pass
+
+# 根据消息类型设置布局
+func set_message_type(msgtype: MessageType):
+	if msgtype == MessageType.SENT:
+		message_panel.add_theme_stylebox_override("panel", sent_style)
+		header_container.alignment = BoxContainer.ALIGNMENT_END
+		text_label.size_flags_horizontal = SIZE_SHRINK_END
+		consistent(SIZE_SHRINK_END)
+	else:
+		message_panel.add_theme_stylebox_override("panel", received_style)
+		header_container.alignment = BoxContainer.ALIGNMENT_BEGIN
+		text_label.size_flags_horizontal = SIZE_SHRINK_BEGIN
+		consistent(SIZE_SHRINK_BEGIN)
+	pass
 
 # 设置最大高度
 func set_max_height(height: float):
@@ -68,7 +101,7 @@ func _on_resized():
 	var parent_size = get_parent().size if get_parent() else Vector2.ZERO
 	if parent_size == Vector2.ZERO:
 		return
-	
+	 
 	# 限制最大宽度为父容器的80%
 	var max_width = parent_size.x * 0.8
 	if size.x > max_width:
@@ -80,33 +113,22 @@ func _on_resized():
 		
 	# 确保文本内容适应宽度和高度
 	if text_label and text_label.visible:
-		text_label.custom_minimum_size.x = min(text_label.size.x, max_width - 40)  # 40为边距
+		text_label.custom_minimum_size.x = min(text_label.size.x, max_width - 20)  # 40为边距
 		if max_height > 0:
-			text_label.custom_minimum_size.y = min(text_label.size.y, max_height - 40)  # 40为边距
-
+			text_label.custom_minimum_size.y = min(text_label.size.y, max_height - 20)  # 40为边距
+		custom_minimum_size.x = text_label.custom_minimum_size.x
+	pass
 # 设置消息内容
 func set_message(content: Dictionary, nickname: String, msg_type: MessageType, show_time: bool = false, time_str: String = ""):
 	# 设置昵称
 	nickname_label.text = nickname
-	print("设置xiaoxi:", content["type"],content["content"],"-->",content.type)
 	# 设置时间
 	time_label.visible = show_time
 	if show_time:
 		time_label.text = time_str
 	
 	# 根据消息类型设置布局
-	if msg_type == MessageType.SENT:
-		message_panel.add_theme_stylebox_override("panel", sent_style)
-		left_spacer.custom_minimum_size.x = 50
-		left_spacer.visible = true
-		right_spacer.custom_minimum_size.x = 8
-		right_spacer.visible = false
-	else:
-		message_panel.add_theme_stylebox_override("panel", received_style)
-		left_spacer.custom_minimum_size.x = 8
-		left_spacer.visible = false
-		right_spacer.custom_minimum_size.x = 50
-		right_spacer.visible = true
+	set_message_type(msg_type)
 	
 	# 重置所有内容组件的可见性
 	text_label.visible = false
@@ -214,3 +236,38 @@ func _format_duration(seconds: float) -> String:
 	var minutes = int(seconds / 60)
 	var remaining_seconds = int(seconds) % 60
 	return "%d:%02d" % [minutes, remaining_seconds]
+
+
+# 处理文本变化，调整TextEdit大小
+func _on_text_changed():
+	if not text_label:
+		return
+		
+	var text = text_label.text
+	if text.is_empty():
+		text_label.custom_minimum_size.x = MIN_TEXTEDIT_WIDTH
+		return
+	
+	# 计算文本宽度
+	var font = text_label.get_theme_font("normal_font")
+	var font_size = text_label.get_theme_font_size("normal_font_size")
+	var text_width = font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	
+	# 添加一些padding（可以根据需要调整）
+	# text_width += 30
+	
+	# 限制宽度范围
+	var proportionX = size.x/3
+	if proportionX>max_talk_width:
+		max_talk_width = proportionX
+	var new_width = clamp(text_width, MIN_TEXTEDIT_WIDTH, max_talk_width)
+	
+	# 设置新的宽度
+	text_label.custom_minimum_size.x = new_width
+	
+	# 强制重新计算大小
+	text_label.custom_minimum_size.y = 0
+	text_label.size.y = 0
+	
+	# 通知父容器重新布局
+	text_label.get_parent().queue_sort()

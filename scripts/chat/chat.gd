@@ -23,17 +23,31 @@ var original_state := {
 	"anchors": {},
 	"margins": {}
 }
+enum ScrollType {
+	TOP,  # 接收到的消息
+	MIDDLE,  # 滚动到中间 
+	BOTTOM # 滚动到最底部
+}
+
 var is_fullscreen := false
 var is_rotated = false
-var tween: Tween
-var button: Button
 var myUsername = "我"
 var uid = ""
+
+var tween: Tween
+var button: Button
+
+const MESSAGES_PER_PAGE = 20  # 每次加载的消息数量
+const SCROLL_THRESHOLD = 10   # 滚动阈值，防止过于频繁触发
+var scroll_container: ScrollContainer  # 消息滚动容器的引用
+var is_loading_history = false
+var scroll_position:ScrollType  = ScrollType.BOTTOM
 ##############聊天系统(part1)#####################
 const ChatMessageItem = preload("res://scenes/chat/chat_message_item.tscn")
-const TIME_INTERVAL_THRESHOLD = 180  # 3分钟的秒数
+const TIME_INTERVAL_THRESHOLD = 60*60*24  # 3分钟的秒数
 const MAX_TEXT_LENGTH = 1000  # 最大文本长度
 var last_message_time: int = 0  # 最后一条消息的时间戳
+var today_timestamp = Network.get_today_start_timestamp()
 # 消息类型枚举 - 需要与 chat_message_item.gd 中的枚举保持一致
 enum MessageType {
 	RECEIVED,  # 接收到的消息
@@ -55,7 +69,10 @@ enum MessageKind{
 	CHAT = 2
 }
 
-
+# 使用字典存储所有channel的消息历史
+var message_history: Dictionary = {}  # Dictionary<String, Array>
+var message_id_cache: Dictionary = {}  # Dictionary<String, Dictionary> 用于快速查找消息ID
+var current_channel_id: String = ""
 
 @onready var messages_container = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
 @onready var sendTextEdit = $MarginContainer/Panel/input_area/HBoxContainer/TextEdit
@@ -82,19 +99,29 @@ func _ready():
 	set_rotation_pivot()
 	# 获取好友列表
 	get_friends_list()
+	# 获取滚动容器引用
+	scroll_container = messages_container.get_parent() as ScrollContainer
+	if scroll_container:
+		# 连接滚动信号
+		scroll_container.get_v_scroll_bar().value_changed.connect(_on_scroll_changed)
+		scroll_container.get_v_scroll_bar().scrolling.connect(_on_scrolling)
+		
+	# 连接信号
 	findFriend.addFinishSIG.connect(_on_add_finish)
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
+	Network.changeChannelSIG.connect(_on_current_channel)
 	Network._socket.received_channel_message.connect(_on_received_message)
 	Network.chat_history_received.connect(_on_history_message)
 	pass
 
 
-# func _input(event):
-# 	if event is InputEventKey:
-# 		if event.pressed and event.keycode == KEY_ENTER and not PopupManager.isVisible():  # 或使用 KEY_RETURN
-# 			_on_btn_send_pressed()
-# 			get_viewport().set_input_as_handled()  # 阻止事件继续传
-# 	pass
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:  # 或使用 KEY_RETURN
+			WindowDrag.stopMove = false
+			exit_fullscreen()
+			get_viewport().set_input_as_handled()  # 阻止事件继续传
+	pass
 ################################################################
 ################     聊天系统相关函数   ########################
 ################################################################
@@ -106,9 +133,13 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 	# 检查是否需要显示时间分割
 	# var show_time = false
 	var show_time = true # 显示时间
-	if last_message_time > 0 and (timestamp - last_message_time) > TIME_INTERVAL_THRESHOLD:
+	var timeEquation = timestamp - last_message_time
+	var curMsgTime = Network.convert_to_china_time(timestamp)
+	var lastMsgTime = Network.convert_to_china_time(last_message_time)
+	
+	if last_message_time >= 0 and (timeEquation > TIME_INTERVAL_THRESHOLD or timestamp - today_timestamp > TIME_INTERVAL_THRESHOLD or curMsgTime.hour < lastMsgTime.hour):
 		# 添加时间分割标签
-		add_time_separator(timestamp)
+		add_time_separator(curMsgTime)
 		show_time = true
 	
 	# 创建新的消息项
@@ -121,38 +152,34 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 	# 格式化时间字符串
 	var time_str = ""
 	if show_time:
-		var datetime = Time.get_datetime_dict_from_unix_time(timestamp)
-		time_str = "%02d:%02d" % [datetime["hour"], datetime["minute"]]
+		time_str = "%02d:%02d" % [curMsgTime["hour"], curMsgTime["minute"]]
 	
 	# 设置消息内容
 	message_item.set_message(content, nickname, msg_type, show_time, time_str)
 	
 	# 更新最后消息时间
 	last_message_time = timestamp
-	
-	# 滚动到底部
-	await get_tree().create_timer(0.1).timeout
-	ensure_scroll_to_bottom()
+	pass
 
 # 添加时间分割线
-func add_time_separator(timestamp: int):
-	var datetime = Time.get_datetime_dict_from_unix_time(timestamp)
-	var time_str = "%d-%02d-%02d %02d:%02d" % [
+func add_time_separator(datetime: Dictionary):
+	var time_str = "%d-%02d-%02d" % [
 		datetime["year"],
 		datetime["month"],
-		datetime["day"],
-		datetime["hour"],
-		datetime["minute"]
+		datetime["day"]
 	]
-	
+
+
 	var time_label = Label.new()
 	time_label.text = time_str
 	time_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	time_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 	messages_container.add_child(time_label)
+	pass
 
 # 确保滚动到底部并保持消息在可见区域内
-func ensure_scroll_to_bottom():
+func ensure_scroll_to():
+	await get_tree().create_timer(0.1).timeout
 	if messages_container.get_parent() is ScrollContainer:
 		var scroll = messages_container.get_parent() as ScrollContainer
 		
@@ -175,11 +202,23 @@ func ensure_scroll_to_bottom():
 			# 限制滚动范围
 			current_scroll = clamp(current_scroll, min_scroll, max_scroll)
 			scroll_bar.value = current_scroll
-			
-			# 检查并清理超出可见区域的消息
+			print("滑到底部")
+			# 检查并清理超出可见区域的消息(未完善暂不采用)
 			# cleanup_overflow_messages(scroll)
-			print("检测到超出可见区域的消息，开始清理...")
-	print("检测到超出可见区域的消息，开始清理...")
+		#等待一帧以确保UI已更新
+		await get_tree().process_frame
+
+		# 直接滚动到最底部
+		match scroll_position:
+			ScrollType.TOP:
+				scroll.scroll_vertical = 0
+			_:
+				scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value+30
+				pass
+
+	pass
+
+
 # 清理超出可见区域的消息
 func cleanup_overflow_messages(scroll: ScrollContainer):
 	var visible_height = scroll.size.y
@@ -266,11 +305,15 @@ func send_file_message(file_path: String, file_name: String, file_size: int):
 ######################################################
 ######################################################
 func _on_fullscreen_toggle():
-	
+
 	if !is_fullscreen:
+		WindowDrag.stopMove = true
 		enter_fullscreen()
 	else:
+		WindowDrag.stopMove = false
 		exit_fullscreen()
+	# await get_tree().create_timer(1).timeout
+	# Network.get_chat_history()
 	pass
 
 func _on_show_addfriend_pressed() -> void:
@@ -292,36 +335,69 @@ func _on_show_addclub_pressed() -> void:
 func _on_btn_popup_pressed() -> void:
 	_on_fullscreen_toggle()
 	# 来回旋转按钮
-	button.rotation_degrees += 45
+	button.rotation_degrees += 180
 	
 	# 如果要添加动画效果
 	# tween = create_tween()
 	# tween.tween_property(button, "rotation_degrees", 90, 0.5)
 	pass # Replace with function body.
 
+# 添加好友完成后刷新好友列表
 func _on_add_finish():
 	get_friends_list()
 	pass
 
+
+func _on_current_channel(channel_id):
+	print("当前频道:",channel_id)
+	current_channel_id = channel_id
+	scroll_position = ScrollType.BOTTOM
+	pass
+
+# 收到消息
 func _on_received_message(msg):
-	# print("收到消息:",msg) 
 	if msg.message_id == "":
 		return
-	
-	var content = JSON.parse_string(msg.content)
-	print("收到消息:",content) 
-	add_message(content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
+	if add_message_to_history(msg.channel_id, msg):
+		refresh_current_channel_display()
 	pass
 
-
+# 收到历史消息
 func _on_history_message(msgList):
-	print("收到历史消息:",msgList)
-	msgList = Network.sort_messages_by_timestamp(msgList)
+	print("收到历史消息:",msgList.size())
+	# 校验是否有新消息
+
 	for msg in msgList:
-		_on_received_message(msg) 
+		add_message_to_history(msg.channel_id, msg)
+	refresh_current_channel_display()
 	pass
 
+# 处理滚动事件
+func _on_scroll_changed(value: float):
+	if not scroll_container or is_loading_history:
+		return
+	
+	# 判断是否滚动到顶部
+	if value <= 10: # 接近顶部的阈值
+		_load_more_history(false)
+		scroll_position = ScrollType.TOP
+		print("滚动顶了---")
+	# 判断是否滚动到底部 (注意:底部不再加载历史记录)
+	elif is_scrolled_to_bottom():
+		# _load_more_history(true)
+		scroll_position = ScrollType.BOTTOM
+		print("滚动底部了@@@@")
+	else:
+		scroll_position = ScrollType.MIDDLE
+		# print("滚动中...",value)
+	pass
 
+#
+func _on_scrolling():
+	is_loading_history = false
+	pass
+
+##############################
 func _on_btn_send_pressed() -> void:
 	if sendTextEdit.text.strip_edges() == "":
 		return
@@ -347,7 +423,7 @@ func _on_btn_send_pressed() -> void:
 		_:
 			print("无效的选项")
 			return
-	
+	 
 	# 发送消息
 	if channel:
 		Network.set_current_channel(channel)
@@ -359,9 +435,11 @@ func _on_btn_send_pressed() -> void:
 		var ret = await Network.send_message(msg)
 		if ret == OK:
 			sendTextEdit.clear()
-			return
-
-	PopupManager.show_message("发送失败")
+			scroll_position = ScrollType.BOTTOM
+		else:
+			PopupManager.show_message("发送失败")
+		return
+	PopupManager.show_message("未指定频道")
 	pass # Replace with function body.
 
 ############################调整分割线的亮度############################
@@ -382,9 +460,116 @@ func _on_club_talk_focus_exited() -> void:
 func _on_club_talk_focus_entered() -> void:
 	# clubSplit.dragger_visibility = SplitContainer.DRAGGER_VISIBLE
 	pass # Replace with function body.
+#################################################################
+# 加载更多历史消息
+func _load_more_history(forward:bool):
+	if current_channel_id.is_empty():
+		return
+	
+	# 获取当前channel的消息
+	var messages = message_history.get(current_channel_id, [])
+	if messages.is_empty():
+		return
+	
+	is_loading_history = true
+	var count = messages.size() + MESSAGES_PER_PAGE
+	print("加载更多历史消息:",count)
+	# 发起加载请求
+	await Network.get_chat_history(current_channel_id, count, forward)
 
 #################################################################
-# 以下是按钮事件处理函数
+# 功能函数
+
+# 检查是否滚动到底部
+func is_scrolled_to_bottom() -> bool:
+	if not scroll_container:
+		return false
+		
+	var scroll_bar = scroll_container.get_v_scroll_bar()
+	var max_scroll = scroll_bar.max_value
+	var current_scroll = scroll_bar.value
+	var page_size = scroll_bar.page
+	
+	# 考虑页面大小，检查是否到达底部
+	# 添加一个小的容差值(1.0)来处理浮点数精度问题
+	return current_scroll >= max_scroll - page_size - 1.0
+
+# 检查消息是否已存在
+func has_message(channel_id: String, message_id: String) -> bool:
+	if not channel_id in message_id_cache:
+		return false
+	return message_id in message_id_cache[channel_id]
+ 
+# 添加消息到指定channel
+func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage) -> bool:
+	# 获取消息ID
+	var message_id = msg.message_id
+	if message_id.is_empty():
+		push_warning("Message has no ID, skipping...")
+		return false
+	
+	# 初始化channel的消息数组和ID缓存
+	if not channel_id in message_history:
+		message_history[channel_id] = []
+		message_id_cache[channel_id] = {}
+	
+	# 检查消息是否已存在
+	if has_message(channel_id, message_id):
+		# print("Message %s already exists in channel %s" % [message_id, channel_id])
+		return false
+	
+	# 添加消息到历史记录和ID缓存
+	message_history[channel_id].append(msg)
+	message_id_cache[channel_id][message_id] = true
+	
+	load_channel_history(channel_id,message_history[channel_id])
+	return true
+	
+
+# 获取指定channel的所有历史消息
+func get_channel_messages(channel_id: String) -> Array:
+	return message_history.get(channel_id, [])
+
+# 加载channel的历史消息
+func load_channel_history(channel_id: String, messages: Array) -> void:
+	# 直接设置channel的消息列表
+	message_history[channel_id] = messages
+	# 对消息按时间戳排序
+	Network.sort_dictionary_array(message_history[channel_id], "create_time")
+	pass
+
+
+# 刷新当前channel的显示
+func refresh_current_channel_display() -> void:
+	# 清空当前显示
+	clear_messages_item()
+	
+	# 获取并显示当前channel的所有消息
+	var messages = get_channel_messages(current_channel_id)
+	for msg in messages:
+		var content = JSON.parse_string(msg.content)
+		add_message(content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
+	# 滚动到底部
+	ensure_scroll_to()
+	pass
+ 
+# 获取channel的最后一条消息
+func get_channel_last_message(channel_id: String) -> NakamaAPI.ApiChannelMessage:
+	var messages = get_channel_messages(channel_id)
+	return messages[-1] if not messages.is_empty() else {}
+
+# 清空消息
+func clear_messages_item():
+	# 方法1：遍历并释放所有子节点
+	for child in messages_container.get_children():
+		messages_container.remove_child(child)
+		child.queue_free()
+	
+	# 重置最后消息时间
+	last_message_time = 0
+	pass
+
+# 获取好友列表
 func get_friends_list():
 	var friendlist = await Network.get_friends_list()
 	if friendlist:
@@ -403,9 +588,6 @@ func get_friends_list():
 					"state":friend.state,
 				}
 				print("渠道信息",ret,"渠道ID:",itemData.channel)
-				Network.set_current_channel(itemData.channel)
-				await Network.get_chat_history()
-
 				# 区分是否是互为好友
 				if friend.state == 0:
 					friends.append(itemData)
@@ -506,6 +688,7 @@ func get_friends_list():
 func set_rotation_pivot():
 	# 设置旋转中心为按钮中心
 	button.pivot_offset = button.size / 2
+	button.rotation_degrees = 45 
 	pass
 
 
@@ -531,11 +714,13 @@ func enter_fullscreen():
 			animate_to_fullscreen(target_position, target_size)
 		else:
 			apply_fullscreen(target_position, target_size)
+
 	pass
 
 func exit_fullscreen():
 	if !is_fullscreen:
 		return
+	
 	if animate_transition:
 		animate_to_normal()
 	else:
@@ -654,9 +839,16 @@ func restore_original_state():
 	offset_top = original_state.margins.top
 	offset_bottom = original_state.margins.bottom
 	
+	
 	# 重置顶层显示
 	top_level = false
 	
 	is_fullscreen = false
 	emit_signal("fullscreen_changed", false)
 	pass
+
+# 处理滚动结束事件
+func _on_msg_scroll_ended() -> void:
+	print("滚动结束")
+	is_loading_history = false
+	pass # Replace with function body.

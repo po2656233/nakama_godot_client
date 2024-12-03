@@ -75,7 +75,7 @@ func checkValidity()-> bool:
 
 func _on_register_success():
 	FancyFade.wipe_conical(login_scene.instantiate(),0.5)
-
+	pass
 
 func is_valid_phone_number(phone: String) -> bool:
 	var regex = RegEx.new()

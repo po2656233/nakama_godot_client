@@ -60,7 +60,10 @@ func _input(event: InputEvent) -> void:
 		DisplayServer.window_set_position(new_position)
 	elif event is InputEventKey and event.keycode == KEY_ESCAPE:
 		# 按下ESC键，取消最大化
-		toggle_maximize()
+		# 还原窗口
+		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+			# 还原窗口
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		dragging = false
 	pass
 

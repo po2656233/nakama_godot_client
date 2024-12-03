@@ -1,12 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://dfbeqh2tgjje3"]
 
-[ext_resource type="Script" path="res://scripts/lobby.gd" id="1_3gulo"]
-[ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://asset/lobby/shiling.png" id="2_2uxab"]
-[ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://asset/lobby/redbj.jpg" id="2_7fbj3"]
-[ext_resource type="Theme" uid="uid://wv2nwe1arwch" path="res://theme/btn.tres" id="3_k5yci"]
-[ext_resource type="Texture2D" uid="uid://bl0qqmk45se0a" path="res://asset/lobby/head.png" id="4_2vswe"]
-[ext_resource type="Texture2D" uid="uid://exkjflel54sq" path="res://asset/lobby/hua.png" id="5_g6igt"]
-[ext_resource type="Texture2D" uid="uid://0asrii5d6unm" path="res://asset/lobby/yxn_guang.png" id="6_cdsqy"]
+[ext_resource type="Script" path="res://scripts/lobby.gd" id="1_u1q0l"]
+[ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://asset/lobby/redbj.jpg" id="2_kwnfe"]
+[ext_resource type="Theme" uid="uid://wv2nwe1arwch" path="res://theme/btn.tres" id="3_tymeq"]
+[ext_resource type="Texture2D" uid="uid://bl0qqmk45se0a" path="res://asset/lobby/head.png" id="4_t67r1"]
+[ext_resource type="Texture2D" uid="uid://exkjflel54sq" path="res://asset/lobby/hua.png" id="5_12ie1"]
+[ext_resource type="Texture2D" uid="uid://0asrii5d6unm" path="res://asset/lobby/yxn_guang.png" id="6_3l7pe"]
+[ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://asset/lobby/shiling.png" id="7_3s4cl"]
 
 [sub_resource type="SystemFont" id="SystemFont_x6gtk"]
 
@@ -39,7 +39,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_3gulo")
+script = ExtResource("1_u1q0l")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -56,7 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_7fbj3")
+texture = ExtResource("2_kwnfe")
 expand_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Panel"]
@@ -105,28 +105,28 @@ alignment = 1
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("3_k5yci")
+theme = ExtResource("3_tymeq")
 text = "创建公赛"
 
 [node name="Btn_Private_match" type="Button" parent="Panel/ColorRect/ColorRect/VBoxContainer"]
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("3_k5yci")
+theme = ExtResource("3_tymeq")
 text = "创建个赛"
 
 [node name="Btn_Find_match" type="Button" parent="Panel/ColorRect/ColorRect/VBoxContainer"]
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("3_k5yci")
+theme = ExtResource("3_tymeq")
 text = "查找赛事"
 
 [node name="Btn_match_list" type="Button" parent="Panel/ColorRect/ColorRect/VBoxContainer"]
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("3_k5yci")
+theme = ExtResource("3_tymeq")
 text = "赛事列表"
 
 [node name="TR_HEAD" type="TextureRect" parent="Panel/ColorRect"]
@@ -139,7 +139,7 @@ offset_top = 86.0
 offset_right = 264.0
 offset_bottom = 182.0
 grow_horizontal = 2
-texture = ExtResource("4_2vswe")
+texture = ExtResource("4_t67r1")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Panel/ColorRect/TR_HEAD"]
@@ -168,7 +168,7 @@ offset_top = 28.0
 offset_right = 77.0
 offset_bottom = 141.0
 grow_horizontal = 2
-texture = ExtResource("5_g6igt")
+texture = ExtResource("5_12ie1")
 expand_mode = 1
 
 [node name="TR_Guang" type="TextureRect" parent="Panel"]
@@ -178,7 +178,7 @@ offset_top = 253.0
 offset_right = 631.0
 offset_bottom = 813.0
 rotation = 2.24459
-texture = ExtResource("6_cdsqy")
+texture = ExtResource("6_3l7pe")
 expand_mode = 1
 
 [node name="TR_ShiLing" type="TextureRect" parent="Panel"]
@@ -186,7 +186,7 @@ layout_mode = 0
 offset_right = 125.0
 offset_bottom = 109.0
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_2uxab")
+texture = ExtResource("7_3s4cl")
 
 [node name="Btn_out" type="Button" parent="Panel"]
 layout_mode = 1

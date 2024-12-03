@@ -126,19 +126,25 @@ func _on_find_item_data(friend):
 func _on_item_selected(index: int):
 	# 保存选中项的索引
 	selected_index = index
-	print("选中项索引：", index)
-	pass
 
+	var friend = self.get_item_metadata(selected_index)
+	if friend:
+		print("选中项索引：", index, friend.user.username)
+		await Network.set_current_channel(friend.channel, true) 
+	pass
+ 
 func _on_item_list_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			if selected_index != -1: # 确保有选中的项目
-				var friend = self.get_item_metadata(selected_index)
-				if friend:
-					checkState(friend.state)
-				# 显示弹出菜单在鼠标位置
-				popup_menu.position = get_viewport().get_mouse_position()
-				popup_menu.popup()	
+		# 确保有项目被选中
+		if event.pressed and event.button_index == MOUSE_BUTTON_RIGHT and selected_index != -1:
+			var friend = self.get_item_metadata(selected_index)
+			if not friend:
+				return
+			checkState(friend.state)
+			# 显示弹出菜单在鼠标位置
+			popup_menu.position = get_viewport().get_mouse_position()
+			popup_menu.popup()	
+		pass
 	pass
 
 func _on_gui_input(event:InputEvent) -> void:
@@ -278,7 +284,9 @@ func checkState(state: int):
 	pass
 
 func GetCurrentItemData():
-	return self.get_item_metadata(selected_index)
+	if selected_index != -1:
+		return self.get_item_metadata(selected_index)
+	return null
 
 
 

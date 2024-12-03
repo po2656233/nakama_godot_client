@@ -199,9 +199,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_b4wfc")
 script = ExtResource("2_m52is")
-toggle_button_path = null
-animate_transition = null
-transition_duration = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -509,13 +506,12 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
 text = "发送"
 
-[connection signal="focus_entered" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_club_talk_focus_entered"]
-[connection signal="focus_exited" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_club_talk_focus_exited"]
+[connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
+[connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
 [connection signal="pressed" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/CheckButton" to="." method="_on_show_addclub_pressed"]
 [connection signal="gui_input" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" method="_on_gui_input"]
 [connection signal="item_selected" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" method="_on_item_selected"]
-[connection signal="focus_entered" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_friend_talk_focus_entered"]
-[connection signal="focus_exited" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_friend_talk_focus_exited"]
+[connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
 [connection signal="pressed" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/CheckButton" to="." method="_on_show_addfriend_pressed"]
 [connection signal="gui_input" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_gui_input"]
 [connection signal="item_selected" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_item_selected"]

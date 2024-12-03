@@ -363,4 +363,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "充值"
 
+[connection signal="pressed" from="HBoxContainerHome/btn_start" to="." method="_on_btn_start_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/btn_match" to="." method="_on_btn_match_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/btn_renwu" to="." method="_on_btn_renwu_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/btn_zhanji" to="." method="_on_btn_zhanji_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/btn_ranking" to="." method="_on_btn_ranking_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/btn_store" to="." method="_on_btn_store_pressed"]
 [connection signal="pressed" from="VBoxContainer/Chat/btn_popup" to="VBoxContainer/Chat" method="_on_btn_popup_pressed"]

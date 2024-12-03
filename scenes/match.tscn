@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dx3ixk5yl63hs"]
+[gd_scene load_steps=2 format=3 uid="uid://dx3ixk5yl63hs"]
+
+[ext_resource type="PackedScene" uid="uid://b88upmlmmwyiv" path="res://scenes/element/setting.tscn" id="1_vusbq"]
 
 [node name="Match" type="Control"]
 layout_mode = 3
@@ -80,3 +82,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 item_count = 1
 item_0/text = "连连看"
+
+[node name="Setting" parent="." instance=ExtResource("1_vusbq")]
+layout_mode = 1
