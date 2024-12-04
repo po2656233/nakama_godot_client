@@ -36,11 +36,12 @@ func on_setting_pressed(index: int) -> void:
 			print("Setting 1")
 			
 			pass
-		2:
+		2: 
 			print("Setting 2")
 			pass
 		3:
 			print("Setting 3")
+			Network.reset_network() 
 			FancyFade.wipe_left(login_scene.instantiate(),0.5)
 			pass
 		5:

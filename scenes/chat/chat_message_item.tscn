@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4q5x4j6n7saw"]
+[gd_scene load_steps=6 format=3 uid="uid://b4q5x4j6n7saw"]
 
 [ext_resource type="Script" path="res://scripts/chat/chat_message_item.gd" id="1_u4k5p"]
 
@@ -17,6 +17,9 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3w0b"]
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
 content_margin_left = 8.0
@@ -94,12 +97,15 @@ theme_override_constants/separation = 8
 
 [node name="Text" type="RichTextLabel" parent="Content/MessagePanel/MessageContent"]
 clip_contents = false
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 size_flags_vertical = 3
+focus_mode = 2
 theme_override_font_sizes/normal_font_size = 14
+theme_override_styles/focus = SubResource("StyleBoxFlat_l3w0b")
 text = "这是一条消息"
 fit_content = true
-autowrap_mode = 1
+selection_enabled = true
 
 [node name="MediaPreview" type="TextureRect" parent="Content/MessagePanel/MessageContent"]
 visible = false

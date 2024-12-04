@@ -28,8 +28,8 @@ var original_state := {
 	"margins": {}
 }
 enum ScrollType {
-	TOP,  # 接收到的消息
-	MIDDLE,  # 滚动到中间 
+	TOP, # 接收到的消息
+	MIDDLE, # 滚动到中间
 	BOTTOM # 滚动到最底部
 }
 
@@ -45,37 +45,37 @@ var button: Button
 ##############聊天系统(part1)#####################
 const ChatMessageItem = preload("res://scenes/chat/chat_message_item.tscn")
 var MsgItemGD = load("res://scripts/chat/chat_message_item.gd")
-const TIME_INTERVAL_THRESHOLD = 60*60*24  # 3分钟的秒数
-const MAX_TEXT_LENGTH = 1000  # 最大文本长度
-const MESSAGES_PER_PAGE = 20  # 每次加载的消息数量
+const TIME_INTERVAL_THRESHOLD = 60 * 60 * 24 # 3分钟的秒数
+const MAX_TEXT_LENGTH = 1000 # 最大文本长度
+const MESSAGES_PER_PAGE = 20 # 每次加载的消息数量
 var isToTop = false
 var message_index = 0
-var last_message_time: int = 0  # 最后一条消息的时间戳
+var last_message_time: int = 0 # 最后一条消息的时间戳
 var today_timestamp = Network.get_today_start_timestamp()
 # 消息类型枚举 - 需要与 chat_message_item.gd 中的枚举保持一致
 enum MessageType {
-	RECEIVED,  # 接收到的消息
-	SENT	  # 发送的消息
+	RECEIVED, # 接收到的消息
+	SENT # 发送的消息
 }
 
 enum ContentType {
-	TEXT,	  # 文本消息
-	VOICE,	 # 语音消息
-	FILE,	  # 文件消息
+	TEXT, # 文本消息
+	VOICE, # 语音消息
+	FILE, # 文件消息
 	LONG_TEXT, # 长文本消息
-	IMAGE,	 # 图片消息
-	VIDEO	  # 视频消息
+	IMAGE, # 图片消息
+	VIDEO # 视频消息
 }
 
-enum MessageKind{
+enum MessageKind {
 	WORLD = 0,
 	CLUB = 1,
 	CHAT = 2
 }
 
 # 使用字典存储所有channel的消息历史
-var message_history: Dictionary = {}  # Dictionary<String, Array>
-var message_id_cache: Dictionary = {}  # Dictionary<String, Dictionary> 用于快速查找消息ID
+var message_history: Dictionary = {} # Dictionary<String, Array>
+var message_id_cache: Dictionary = {} # Dictionary<String, Dictionary> 用于快速查找消息ID
 var current_channel_id: String = ""
 
 @onready var messages_container = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
@@ -115,16 +115,16 @@ func _ready():
 
 func _input(event):
 	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ESCAPE:  # 或使用 KEY_RETURN
+		if event.pressed and event.keycode == KEY_ESCAPE: # 或使用 KEY_RETURN
 			WindowDrag.stopMove = false
 			exit_fullscreen()
-			get_viewport().set_input_as_handled()  # 阻止事件继续传
+			get_viewport().set_input_as_handled() # 阻止事件继续传
 	pass
 ################################################################
 ################	 聊天系统相关函数   ########################
 ################################################################
 # 添加新消息
-func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0):
+func add_message(chanId: String, msgId: String, content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0):
 	if timestamp == 0:
 		timestamp = int(Time.get_unix_time_from_system())
 	
@@ -160,10 +160,16 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 			messages_container.add_child(message_item)
 			# 确保新节点在正确的位置
 			messages_container.move_child(message_item, message_index)
+			# 连接信号
+			message_item.message_revoked.connect(_on_message_revoked)
+			message_item.message_deleted.connect(_on_message_deleted)
 	else:
 		# 如果没有可复用的控件，创建新的
 		message_item = ChatMessageItem.instantiate()
 		messages_container.add_child(message_item)
+		# 连接信号
+		message_item.message_revoked.connect(_on_message_revoked)
+		message_item.message_deleted.connect(_on_message_deleted)
 	
 	# 设置消息类型
 	var msg_type = MessageType.SENT if is_sent else MessageType.RECEIVED
@@ -175,14 +181,12 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 	
 
 	# 设置消息内容
-	message_item.set_message(content, nickname, msg_type, show_time, time_str)
+	message_item.set_message(chanId, msgId, content, nickname, msg_type, show_time, time_str)
 
 	# 更新最后消息时间
 	last_message_time = timestamp
 	message_index += 1
-	# 连接信号
-    message_item.message_revoked.connect(_on_message_revoked)
-    message_item.message_deleted.connect(_on_message_deleted)
+
 	pass
 
 # 添加时间分割线
@@ -219,8 +223,8 @@ func ensure_scroll_to():
 		var scroll = messages_container.get_parent() as ScrollContainer
 		
 		# 获取可见区域的大小和实际内容大小
-		var visible_height = messages_container.size.y#scroll.size.y
-		var content_height = scroll.size.y #messages_container.size.y
+		var visible_height = messages_container.size.y # scroll.size.y
+		var content_height = scroll.size.y # messages_container.size.y
 		var scroll_bar = scroll.get_v_scroll_bar()
 		var current_scroll = scroll_bar.value
 		
@@ -274,9 +278,9 @@ func cleanup_overflow_messages(scroll: ScrollContainer):
 		var is_in_view_area = child_pos + child_height >= current_scroll and child_pos <= current_scroll + visible_height
 		
 		if not is_in_view_area:
-			child.visible = false  # 隐藏不可见的消息
+			child.visible = false # 隐藏不可见的消息
 		else:
-			child.visible = true   # 显示可见的消息
+			child.visible = true # 显示可见的消息
 			
 		total_height += child_height
 		
@@ -299,42 +303,42 @@ func cleanup_overflow_messages(scroll: ScrollContainer):
 # 		sendTextEdit.text = ""  # 清空输入框
 
 # 发送图片消息
-func send_image_message(image_path: String,kind:int = 0):
+func send_image_message(msgId:String, image_path: String, kind: int = 0):
 	var content = {
-		"kind":kind,
+		"kind": kind,
 		"type": ContentType.IMAGE,
 		"path": image_path
 	}
-	add_message(content, myUsername, true)
+	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送视频消息
-func send_video_message(video_path: String, thumbnail_path: String, duration: float):
+func send_video_message(msgId:String, video_path: String, thumbnail_path: String, duration: float):
 	var content = {
 		"type": ContentType.VIDEO,
 		"path": video_path,
 		"thumbnail": thumbnail_path,
 		"duration": duration
 	}
-	add_message(content, myUsername, true)
+	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送语音消息
-func send_voice_message(voice_path: String, duration: float):
+func send_voice_message(msgId:String, voice_path: String, duration: float):
 	var content = {
 		"type": ContentType.VOICE,
 		"path": voice_path,
 		"duration": duration
 	}
-	add_message(content, myUsername, true)
+	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送文件消息
-func send_file_message(file_path: String, file_name: String, file_size: int):
+func send_file_message(msgId:String, file_path: String, file_name: String, file_size: int):
 	var content = {
 		"type": ContentType.FILE,
 		"path": file_path,
 		"file": file_name,
 		"size": file_size
 	}
-	add_message(content, myUsername, true)
+	add_message(current_channel_id, msgId, content, myUsername, true)
 ######################################################
 ######################################################
 func _on_fullscreen_toggle():
@@ -382,7 +386,7 @@ func _on_add_finish():
 
 
 func _on_current_channel(channel_id):
-	print("当前频道:",channel_id)
+	print("当前频道:", channel_id)
 	current_channel_id = channel_id
 	isToTop = false
 	clear_messages_item()
@@ -398,7 +402,7 @@ func _on_received_message(msg):
 
 # 收到历史消息
 func _on_history_message(msgList):
-	print("收到历史消息:",msgList.size())
+	print("收到历史消息:", msgList.size())
 	# 校验是否有新消息
 	var channel_id = ""
 	for msg in msgList:
@@ -407,15 +411,16 @@ func _on_history_message(msgList):
 		if message_id_cache[channel_id] and message_id_cache[channel_id].finish_history:
 			break
 		pass
-	if not message_id_cache[channel_id].finish_history:
-		var isFull = msgList.size()!=MESSAGES_PER_PAGE
-		if isFull and message_id_cache[channel_id] :
+		
+	if channel_id != "" and not message_id_cache[channel_id].finish_history:
+		var isFull = msgList.size() != MESSAGES_PER_PAGE
+		if isFull and message_id_cache[channel_id]:
 			message_id_cache[channel_id].finish_history = true
 			pass
 		showLoadMore(!isFull)
 	else:
 		showLoadMore(false)
-	refresh_current_channel_display() 
+	refresh_current_channel_display()
 	pass
 
 
@@ -431,7 +436,7 @@ func _on_btn_send_pressed() -> void:
 		msg.content = sendTextEdit.text.strip_edges()
 		msg.kind = mainPanle.current_tab
 		msg.type = ContentType.TEXT
-		print("发送消息:",msg)
+		print("发送消息:", msg)
 		var ret = await Network.send_message(msg)
 		if ret == OK:
 			sendTextEdit.clear()
@@ -452,7 +457,6 @@ func _on_friend_talk_focus_entered() -> void:
 	pass # Replace with function body.
 
 
-
 func _on_club_talk_focus_exited() -> void:
 	# clubSplit.dragger_visibility = SplitContainer.DRAGGER_HIDDEN_COLLAPSED
 	pass # Replace with function body.
@@ -463,28 +467,26 @@ func _on_club_talk_focus_entered() -> void:
 
 # 处理消息撤销
 func _on_message_revoked(message_item):
-    # 发送撤销请求到服务器
-    # 这里需要实现具体的撤销逻辑
-    if Network.is_connected():
-        # 示例：发送撤销请求
-        await Network.revoke_message(message_item.current_content)
-        # 如果成功，可以更新消息显示
-        message_item.text_label.text = "[已撤回]"
-        message_item.text_label.modulate = Color(0.5, 0.5, 0.5)
+	if message_item.current_content.content:
+		message_item.current_content.content = "[已撤回]"
+	var ret = await Network.reback_channel_message(message_item.channel_id, message_item.message_id,message_item.current_content)
+	# 如果成功，可以更新消息显示
+	if ret:
+		message_item.text_label.text = "[已撤回]"
+		message_item.text_label.modulate = Color(0.5, 0.5, 0.5)
+		modify_message(message_item.channel_id, message_item.message_id, "[已撤回]")
+	pass 
 
 # 处理消息删除
 func _on_message_deleted(message_item):
-    # 发送删除请求到服务器
-    # 这里需要实现具体的删除逻辑
-    if Network.is_connected():
-        # 示例：发送删除请求
-        await Network.delete_message(message_item.current_content)
-        # 如果成功，可以隐藏或移除消息
-        message_item.visible = false
+	await Network.remove_channel_message(message_item.channel_id, message_item.message_id)
+	 # 创建渐隐动画
+	message_item.visible = false
+	delete_message(message_item.channel_id, message_item.message_id)
 
 #################################################################
 # 加载更多历史消息
-func _load_more_history(forward:bool):
+func _load_more_history(forward: bool):
 	if current_channel_id.is_empty():
 		return
 	
@@ -498,7 +500,44 @@ func _load_more_history(forward:bool):
 
 #################################################################
 # 功能函数
+# 删除消息的主函数
+func delete_message(channel_id: String, message_id: String):
+	# 从历史记录中删除
+	if channel_id in message_history:
+		if message_history[channel_id].is_empty():
+			message_history.erase(channel_id)
+			return
+		Network.remove_message_by_id(message_history[channel_id], message_id)
+	
+	# 从ID缓存中删除
+	if channel_id in message_id_cache:
+		message_id_cache[channel_id].erase(message_id)
 
+func modify_message(channel_id: String, message_id: String,content: String):
+	# 从历史记录中删除
+	if channel_id in message_history:
+		var messages = message_history[channel_id]
+		 # 使用从后向前遍历的方法（最安全）
+		for i in range(messages.size() - 1, -1, -1):
+			if messages[i].message_id == message_id:
+				var old_msg = messages[i]
+				# 创建新的消息对象 
+				var new_msg = {
+					"message_id": old_msg.message_id,
+					"channel_id": old_msg.channel_id,
+					"sender_id": old_msg.sender_id,
+					"username": old_msg.username,
+					"create_time": old_msg.create_time,
+					"update_time": Time.get_unix_time_from_system(),
+					"content": JSON.stringify({
+						"type": "TEXT",
+						"content": content
+					})
+				}
+				# 替换消息
+				messages[i] = new_msg
+				print("更新后的消息: ", messages[i])
+	pass
 # 检查消息是否已存在
 func has_message(channel_id: String, message_id: String) -> bool:
 	if not channel_id in message_id_cache:
@@ -521,22 +560,36 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 			"finish_history": false
 		}
 	
+
 	# 检查消息是否已存在
 	if has_message(channel_id, message_id):
 		# print("Message %s already exists in channel %s" % [message_id, channel_id])
 		return false
-	print("新消息-->", msg.content) 
+	
+	print("新消息-->", msg.content)
 	# 添加消息到历史记录和ID缓存
+	if message_history[channel_id] == null:
+		message_history[channel_id] = []
 	message_history[channel_id].append(msg)
 	message_id_cache[channel_id][message_id] = true
 	
-	load_channel_history(channel_id,message_history[channel_id])
+	load_channel_history(channel_id, message_history[channel_id])
 	return true
 	
 
 # 获取指定channel的所有历史消息
 func get_channel_messages(channel_id: String) -> Array:
-	return message_history.get(channel_id, [])
+	# 如果字典为空，初始化它
+	if message_history == null:
+		message_history = {}
+	
+	# 如果channel_id不存在，为其创建一个空数组
+	if not message_history.has(channel_id):
+		message_history[channel_id] = []
+		
+	# 确保返回的是数组类型
+	var messages: Array = message_history[channel_id]
+	return messages
 
 # 加载channel的历史消息
 func load_channel_history(channel_id: String, messages: Array) -> void:
@@ -556,7 +609,7 @@ func refresh_current_channel_display() -> void:
 	var messages = get_channel_messages(current_channel_id)
 	for msg in messages:
 		var content = JSON.parse_string(msg.content)
-		add_message(content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
+		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
 	# 滚动到底部
 	ensure_scroll_to()
 	pass
@@ -568,7 +621,7 @@ func get_channel_last_message(channel_id: String) -> NakamaAPI.ApiChannelMessage
 
 # 清理消息但保留控件以供复用
 func clear_messages_item():
-	message_index = 0  # 重置消息索引
+	message_index = 0 # 重置消息索引
 	
  	# 获取所有子控件
 	var children = messages_container.get_children()
@@ -588,22 +641,22 @@ func get_friends_list():
 		friendListItem.clear()
 		var friends = []
 		var waits = []
-		var refuses= []
+		var refuses = []
 		var approves = []
 		for friend in friendlist.friends:
 			var ret = await Network.add_channel_async(friend.user.id)
 			if not ret.is_exception():
-				var itemData ={
-					"channel":ret,
-					"user":friend.user,
-					"state":friend.state,
+				var itemData = {
+					"channel": ret,
+					"user": friend.user,
+					"state": friend.state,
 				}
-				print("渠道信息",ret,"渠道ID:",itemData.channel)
+				print("渠道信息", ret, "渠道ID:", itemData.channel)
 				# 区分是否是互为好友
 				if friend.state == 0:
 					friends.append(itemData)
 				# 等待确认
-				elif friend.state ==1:
+				elif friend.state == 1:
 					waits.append(itemData)
 				# 请审批
 				elif friend.state == 2:
@@ -623,16 +676,16 @@ func get_friends_list():
 			var username = user.username
 			var friend_status = "在线" if user.online else "离线"
 			if user.display_name:
-				username += '('+user.display_name+')'
+				username += '(' + user.display_name + ')'
 			# 显示好友在线状态
-			username += '['+friend_status+']'
+			username += '[' + friend_status + ']'
 			var index = friendListItem.add_item(username)
 			# 加载头像
 			if user.avatar_url:
 				var texture = await Network.load_texture_async(user.avatar_url)
 				if texture:
-					friendListItem.set_item_icon(index,texture)
-			friendListItem.set_item_metadata(index,friend)
+					friendListItem.set_item_icon(index, texture)
+			friendListItem.set_item_metadata(index, friend)
 			pass
 		var stateName = '[请审批通过]'
 		approves.sort()
@@ -649,8 +702,8 @@ func get_friends_list():
 			if user.avatar_url:
 				var texture = await Network.load_texture_async(user.avatar_url)
 				if texture:
-					friendListItem.set_item_icon(index,texture)
-			friendListItem.set_item_metadata(index,friend)
+					friendListItem.set_item_icon(index, texture)
+			friendListItem.set_item_metadata(index, friend)
 			pass
 		stateName = '[等待确认]'
 		waits.sort()
@@ -667,8 +720,8 @@ func get_friends_list():
 			if user.avatar_url:
 				var texture = await Network.load_texture_async(user.avatar_url)
 				if texture:
-					friendListItem.set_item_icon(index,texture)
-			friendListItem.set_item_metadata(index,friend)
+					friendListItem.set_item_icon(index, texture)
+			friendListItem.set_item_metadata(index, friend)
 			pass
 		refuses.sort()
 		stateName = '[对方已拒绝]'
@@ -685,8 +738,8 @@ func get_friends_list():
 			if user.avatar_url:
 				var texture = await Network.load_texture_async(user.avatar_url)
 				if texture:
-					friendListItem.set_item_icon(index,texture)
-			friendListItem.set_item_metadata(index,friend)
+					friendListItem.set_item_icon(index, texture)
+			friendListItem.set_item_metadata(index, friend)
 		
 	print("获取好友列表")
 	pass
@@ -699,11 +752,8 @@ func get_friends_list():
 func set_rotation_pivot():
 	# 设置旋转中心为按钮中心
 	button.pivot_offset = button.size / 2
-	button.rotation_degrees = 45 
+	button.rotation_degrees = 45
 	pass
-
-
-
 
 
 #########################################################
@@ -796,13 +846,13 @@ func animate_to_fullscreen(target_position: Vector2, target_size: Vector2):
 	tween.parallel().tween_property(self, "size", target_size, transition_duration)
 	
 	tween.tween_callback(func():
-		var viewport = get_viewport()
+		var viewport=get_viewport()
 		if viewport and original_state.parent:
 			if get_parent() != viewport:
 				original_state.parent.remove_child(self)
 				viewport.add_child(self)
-			anchors_preset = Control.PRESET_FULL_RECT
-			is_fullscreen = true
+			anchors_preset=Control.PRESET_FULL_RECT
+			is_fullscreen=true
 			emit_signal("fullscreen_changed", true)
 	)
 	pass
@@ -858,8 +908,8 @@ func restore_original_state():
 	emit_signal("fullscreen_changed", false)
 	pass
 
-func showLoadMore(isVisible:bool):
-	print("显示加载更多按钮",isVisible)
+func showLoadMore(isVisible: bool):
+	print("显示加载更多按钮", isVisible)
 	var kind = mainPanle.current_tab as MessageKind
 	match kind:
 		MessageKind.WORLD:

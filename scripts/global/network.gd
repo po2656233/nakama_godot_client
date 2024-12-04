@@ -77,13 +77,37 @@ func connect_signals() -> void:
 		_socket.connected.connect(_on_connection_succeeded)
 		_socket.received_error.connect(_on_received_error)
 
+# 重置网络连接
+func reset_network() -> void:
+	# 1. 关闭现有的 WebSocket 连接
+	if _socket:
+		if _socket.is_connected_to_host():
+			_socket.close()
+		_socket = null
 
+	# 2. 清理 client
+	if _client:
+		await _client.session_logout_async(_session)
+		_client = null
+		
+	# 3. 清理会话
+	_session = null
+	
+	# 4. 清理渠道
+	_current_channel = null
+
+	# 4. 重新初始化
+	initialize_client()
+	
+
+# 设置当前聊天频道
 func set_current_channel(channel: NakamaRTAPI.Channel,isLoadhistory:bool=false):
 	if _current_channel == channel:
 		return
 	_cursor_list_channel = null
 	_current_channel = channel
-	changeChannelSIG.emit(channel.id)
+	if channel:
+		changeChannelSIG.emit(channel.id)
 	if isLoadhistory:
 		await get_chat_history(channel.id)
 
@@ -163,7 +187,7 @@ func join_chat_channel(channel_id: String, persistence: bool = true, hidden: boo
 		print("Failed to join chat channel: ", result.get_exception().message)
 		return FAILED
 	
-	_current_channel = result
+	set_current_channel(result)
 	return OK
 
 # 发送消息
@@ -187,7 +211,7 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 		print("Not in a chat channel or socket is wrong")
 		return FAILED
  
-	print("获取聊天历史",channelId, limit, forward)
+	print("获取聊天历史",channelId," -->", limit, "-->",forward)
 	if cursor == null:
 		cursor = _cursor_list_channel
 	var result = await _client.list_channel_messages_async(_session, channelId, limit, forward, cursor)
@@ -474,6 +498,24 @@ func remove_group(group_id: String)->bool:
 	print("删除群组!!!")
 	return true
 
+func remove_channel_message(channel_id:String,message_id: String)->bool:
+	if _socket:
+		var result= await _socket.remove_chat_message_async(channel_id,message_id)
+		if result.is_exception():
+			print("Error removing group: ", result.get_exception().message)
+			return false
+		return true 
+	return false
+
+func reback_channel_message(channel_id:String,message_id: String,data:Dictionary)->bool:
+	if _socket:
+		var result= await _socket.update_chat_message_async(channel_id,message_id,data)
+		if result.is_exception():
+			print("Error removing group: ", result.get_exception().message)
+			return false
+		return true
+	return false
+
 
 # 异步加载 Texture2D
 func load_texture_async(url: String) :
@@ -657,3 +699,10 @@ func get_today_start_timestamp() -> int:
 	# 因为我们要得到的是东八区的凌晨0点
 	const CHINA_TIMEZONE_OFFSET = 8 * 60 * 60
 	return Time.get_unix_time_from_datetime_dict(current_time) - CHINA_TIMEZONE_OFFSET
+
+func remove_message_by_id(messages: Array, target_message_id: String):
+	for i in range(messages.size() - 1, -1, -1):
+		if messages[i].message_id == target_message_id:
+			messages.remove_at(i)
+			return true
+	return false

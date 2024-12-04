@@ -129,7 +129,7 @@ func _on_item_selected(index: int):
 
 	var friend = self.get_item_metadata(selected_index)
 	if friend:
-		print("选中项索引：", index, friend.user.username)
+		print("选中项索引：", index,"-->", friend.user.username)
 		await Network.set_current_channel(friend.channel, true) 
 	pass
  
