@@ -7,6 +7,10 @@ extends Control
 @onready var findFriend = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/AddFirends
 @onready var findClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/AddClub
 
+@onready var btn_upmoreChat = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore
+@onready var btn_upmoreClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore
+@onready var btn_upmoreWorld = $MarginContainer/Panel/TabContainer/world/Panel_talk/btn_upmore
+
 # @onready var clubSplit = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub
 # @onready var friendSplit = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends
 
@@ -37,30 +41,30 @@ var uid = ""
 var tween: Tween
 var button: Button
 
-const MESSAGES_PER_PAGE = 20  # 每次加载的消息数量
-const SCROLL_THRESHOLD = 10   # 滚动阈值，防止过于频繁触发
-var scroll_container: ScrollContainer  # 消息滚动容器的引用
-var is_loading_history = false
-var scroll_position:ScrollType  = ScrollType.BOTTOM
+
 ##############聊天系统(part1)#####################
 const ChatMessageItem = preload("res://scenes/chat/chat_message_item.tscn")
+var MsgItemGD = load("res://scripts/chat/chat_message_item.gd")
 const TIME_INTERVAL_THRESHOLD = 60*60*24  # 3分钟的秒数
 const MAX_TEXT_LENGTH = 1000  # 最大文本长度
+const MESSAGES_PER_PAGE = 20  # 每次加载的消息数量
+var isToTop = false
+var message_index = 0
 var last_message_time: int = 0  # 最后一条消息的时间戳
 var today_timestamp = Network.get_today_start_timestamp()
 # 消息类型枚举 - 需要与 chat_message_item.gd 中的枚举保持一致
 enum MessageType {
 	RECEIVED,  # 接收到的消息
-	SENT      # 发送的消息
+	SENT	  # 发送的消息
 }
 
 enum ContentType {
-	TEXT,      # 文本消息
-	VOICE,     # 语音消息
-	FILE,      # 文件消息
+	TEXT,	  # 文本消息
+	VOICE,	 # 语音消息
+	FILE,	  # 文件消息
 	LONG_TEXT, # 长文本消息
-	IMAGE,     # 图片消息
-	VIDEO      # 视频消息
+	IMAGE,	 # 图片消息
+	VIDEO	  # 视频消息
 }
 
 enum MessageKind{
@@ -99,12 +103,6 @@ func _ready():
 	set_rotation_pivot()
 	# 获取好友列表
 	get_friends_list()
-	# 获取滚动容器引用
-	scroll_container = messages_container.get_parent() as ScrollContainer
-	if scroll_container:
-		# 连接滚动信号
-		scroll_container.get_v_scroll_bar().value_changed.connect(_on_scroll_changed)
-		scroll_container.get_v_scroll_bar().scrolling.connect(_on_scrolling)
 		
 	# 连接信号
 	findFriend.addFinishSIG.connect(_on_add_finish)
@@ -123,7 +121,7 @@ func _input(event):
 			get_viewport().set_input_as_handled()  # 阻止事件继续传
 	pass
 ################################################################
-################     聊天系统相关函数   ########################
+################	 聊天系统相关函数   ########################
 ################################################################
 # 添加新消息
 func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0):
@@ -143,8 +141,29 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 		show_time = true
 	
 	# 创建新的消息项
-	var message_item = ChatMessageItem.instantiate()
-	messages_container.add_child(message_item)
+	# 获取当前消息容器中的子控件数量
+	var child_count = messages_container.get_child_count()
+	var message_item = null
+	# 尝试复用已有控件
+	if child_count > message_index:
+		# 获取子节点并检查类型
+		var child = messages_container.get_child(message_index)
+		# 检查是否是ChatMessageItem场景实例
+		if child.get_script() == MsgItemGD:
+			message_item = child
+			message_item.visible = true
+		else:
+			# 如果类型不匹配，创建新的
+			message_item = ChatMessageItem.instantiate()
+			# 替换旧的节点
+			messages_container.remove_child(child)
+			messages_container.add_child(message_item)
+			# 确保新节点在正确的位置
+			messages_container.move_child(message_item, message_index)
+	else:
+		# 如果没有可复用的控件，创建新的
+		message_item = ChatMessageItem.instantiate()
+		messages_container.add_child(message_item)
 	
 	# 设置消息类型
 	var msg_type = MessageType.SENT if is_sent else MessageType.RECEIVED
@@ -154,11 +173,16 @@ func add_message(content: Dictionary, nickname: String, is_sent: bool, timestamp
 	if show_time:
 		time_str = "%02d:%02d" % [curMsgTime["hour"], curMsgTime["minute"]]
 	
+
 	# 设置消息内容
 	message_item.set_message(content, nickname, msg_type, show_time, time_str)
-	
+
 	# 更新最后消息时间
 	last_message_time = timestamp
+	message_index += 1
+	# 连接信号
+    message_item.message_revoked.connect(_on_message_revoked)
+    message_item.message_deleted.connect(_on_message_deleted)
 	pass
 
 # 添加时间分割线
@@ -169,12 +193,23 @@ func add_time_separator(datetime: Dictionary):
 		datetime["day"]
 	]
 
-
 	var time_label = Label.new()
 	time_label.text = time_str
 	time_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	time_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-	messages_container.add_child(time_label)
+
+	# 获取当前消息容器中的子控件数量
+	var child_count = messages_container.get_child_count()
+	# 尝试复用已有控件
+	if child_count > message_index:
+		var child = messages_container.get_child(message_index)
+		messages_container.remove_child(child)
+		messages_container.add_child(time_label)
+		# 确保新节点在正确的位置
+		messages_container.move_child(time_label, message_index)
+	else:
+		messages_container.add_child(time_label)
+	message_index += 1
 	pass
 
 # 确保滚动到底部并保持消息在可见区域内
@@ -209,12 +244,10 @@ func ensure_scroll_to():
 		await get_tree().process_frame
 
 		# 直接滚动到最底部
-		match scroll_position:
-			ScrollType.TOP:
-				scroll.scroll_vertical = 0
-			_:
-				scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value+30
-				pass
+		if isToTop:
+			scroll.scroll_vertical = 0
+		else:
+			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value
 
 	pass
 
@@ -250,7 +283,7 @@ func cleanup_overflow_messages(scroll: ScrollContainer):
 		# 如果总高度超过可见区域的2倍，移除最早的消息
 		if total_height > visible_height * 2:
 			child.queue_free()
-
+ 
 # # 发送文本消息
 # func _on_send_button_pressed():
 # 	if not sendTextEdit:
@@ -351,7 +384,8 @@ func _on_add_finish():
 func _on_current_channel(channel_id):
 	print("当前频道:",channel_id)
 	current_channel_id = channel_id
-	scroll_position = ScrollType.BOTTOM
+	isToTop = false
+	clear_messages_item()
 	pass
 
 # 收到消息
@@ -366,65 +400,31 @@ func _on_received_message(msg):
 func _on_history_message(msgList):
 	print("收到历史消息:",msgList.size())
 	# 校验是否有新消息
-
+	var channel_id = ""
 	for msg in msgList:
-		add_message_to_history(msg.channel_id, msg)
-	refresh_current_channel_display()
-	pass
-
-# 处理滚动事件
-func _on_scroll_changed(value: float):
-	if not scroll_container or is_loading_history:
-		return
-	
-	# 判断是否滚动到顶部
-	if value <= 10: # 接近顶部的阈值
-		_load_more_history(false)
-		scroll_position = ScrollType.TOP
-		print("滚动顶了---")
-	# 判断是否滚动到底部 (注意:底部不再加载历史记录)
-	elif is_scrolled_to_bottom():
-		# _load_more_history(true)
-		scroll_position = ScrollType.BOTTOM
-		print("滚动底部了@@@@")
+		channel_id = msg.channel_id
+		add_message_to_history(channel_id, msg)
+		if message_id_cache[channel_id] and message_id_cache[channel_id].finish_history:
+			break
+		pass
+	if not message_id_cache[channel_id].finish_history:
+		var isFull = msgList.size()!=MESSAGES_PER_PAGE
+		if isFull and message_id_cache[channel_id] :
+			message_id_cache[channel_id].finish_history = true
+			pass
+		showLoadMore(!isFull)
 	else:
-		scroll_position = ScrollType.MIDDLE
-		# print("滚动中...",value)
+		showLoadMore(false)
+	refresh_current_channel_display() 
 	pass
 
-#
-func _on_scrolling():
-	is_loading_history = false
-	pass
 
 ##############################
 func _on_btn_send_pressed() -> void:
 	if sendTextEdit.text.strip_edges() == "":
 		return
 	# 发送消息
-	var channel = null
-	match mainPanle.current_tab:
-		MessageKind.WORLD:
-			# 世界
-			channel = null
-			pass
-		MessageKind.CHAT:
-			# 好友
-			var info = friendListItem.GetCurrentItemData()
-			if info:
-				channel = info.channel
-			pass
-		MessageKind.CLUB:
-			# 俱乐部
-			var info = clubListItem.GetCurrentItemData()
-			if info:
-				channel = info.channel
-			pass
-		_:
-			print("无效的选项")
-			return
-	 
-	# 发送消息
+	var channel = getCurChannelData()
 	if channel:
 		Network.set_current_channel(channel)
 		var msg = Network.getMsgData(null)
@@ -435,7 +435,7 @@ func _on_btn_send_pressed() -> void:
 		var ret = await Network.send_message(msg)
 		if ret == OK:
 			sendTextEdit.clear()
-			scroll_position = ScrollType.BOTTOM
+			isToTop = false
 		else:
 			PopupManager.show_message("发送失败")
 		return
@@ -460,6 +460,28 @@ func _on_club_talk_focus_exited() -> void:
 func _on_club_talk_focus_entered() -> void:
 	# clubSplit.dragger_visibility = SplitContainer.DRAGGER_VISIBLE
 	pass # Replace with function body.
+
+# 处理消息撤销
+func _on_message_revoked(message_item):
+    # 发送撤销请求到服务器
+    # 这里需要实现具体的撤销逻辑
+    if Network.is_connected():
+        # 示例：发送撤销请求
+        await Network.revoke_message(message_item.current_content)
+        # 如果成功，可以更新消息显示
+        message_item.text_label.text = "[已撤回]"
+        message_item.text_label.modulate = Color(0.5, 0.5, 0.5)
+
+# 处理消息删除
+func _on_message_deleted(message_item):
+    # 发送删除请求到服务器
+    # 这里需要实现具体的删除逻辑
+    if Network.is_connected():
+        # 示例：发送删除请求
+        await Network.delete_message(message_item.current_content)
+        # 如果成功，可以隐藏或移除消息
+        message_item.visible = false
+
 #################################################################
 # 加载更多历史消息
 func _load_more_history(forward:bool):
@@ -470,29 +492,12 @@ func _load_more_history(forward:bool):
 	var messages = message_history.get(current_channel_id, [])
 	if messages.is_empty():
 		return
-	
-	is_loading_history = true
-	var count = messages.size() + MESSAGES_PER_PAGE
-	print("加载更多历史消息:",count)
+
 	# 发起加载请求
-	await Network.get_chat_history(current_channel_id, count, forward)
+	await Network.get_chat_history(current_channel_id, MESSAGES_PER_PAGE, forward)
 
 #################################################################
 # 功能函数
-
-# 检查是否滚动到底部
-func is_scrolled_to_bottom() -> bool:
-	if not scroll_container:
-		return false
-		
-	var scroll_bar = scroll_container.get_v_scroll_bar()
-	var max_scroll = scroll_bar.max_value
-	var current_scroll = scroll_bar.value
-	var page_size = scroll_bar.page
-	
-	# 考虑页面大小，检查是否到达底部
-	# 添加一个小的容差值(1.0)来处理浮点数精度问题
-	return current_scroll >= max_scroll - page_size - 1.0
 
 # 检查消息是否已存在
 func has_message(channel_id: String, message_id: String) -> bool:
@@ -511,13 +516,16 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 	# 初始化channel的消息数组和ID缓存
 	if not channel_id in message_history:
 		message_history[channel_id] = []
-		message_id_cache[channel_id] = {}
+		message_id_cache[channel_id] = {
+			"message_id": false,
+			"finish_history": false
+		}
 	
 	# 检查消息是否已存在
 	if has_message(channel_id, message_id):
 		# print("Message %s already exists in channel %s" % [message_id, channel_id])
 		return false
-	
+	print("新消息-->", msg.content) 
 	# 添加消息到历史记录和ID缓存
 	message_history[channel_id].append(msg)
 	message_id_cache[channel_id][message_id] = true
@@ -558,13 +566,16 @@ func get_channel_last_message(channel_id: String) -> NakamaAPI.ApiChannelMessage
 	var messages = get_channel_messages(channel_id)
 	return messages[-1] if not messages.is_empty() else {}
 
-# 清空消息
+# 清理消息但保留控件以供复用
 func clear_messages_item():
-	# 方法1：遍历并释放所有子节点
-	for child in messages_container.get_children():
-		messages_container.remove_child(child)
-		child.queue_free()
+	message_index = 0  # 重置消息索引
 	
+ 	# 获取所有子控件
+	var children = messages_container.get_children()
+	# 隐藏所有正确类型的控件
+	for child in children:
+		# 检查是否是ChatMessageItem场景实例
+		child.visible = false
 	# 重置最后消息时间
 	last_message_time = 0
 	pass
@@ -847,8 +858,48 @@ func restore_original_state():
 	emit_signal("fullscreen_changed", false)
 	pass
 
+func showLoadMore(isVisible:bool):
+	print("显示加载更多按钮",isVisible)
+	var kind = mainPanle.current_tab as MessageKind
+	match kind:
+		MessageKind.WORLD:
+			btn_upmoreWorld.visible = isVisible
+		MessageKind.CHAT:
+			btn_upmoreChat.visible = isVisible
+		MessageKind.CLUB:
+			btn_upmoreClub.visible = isVisible
+	pass
+
+func getCurChannelData():
+	var channel = null
+	var kind = mainPanle.current_tab as MessageKind
+	match kind:
+		MessageKind.WORLD:
+			# 世界
+			channel = null
+			pass
+		MessageKind.CHAT:
+			# 好友
+			var info = friendListItem.GetCurrentItemData()
+			if info:
+				channel = info.channel
+			pass
+		MessageKind.CLUB:
+			# 俱乐部
+			var info = clubListItem.GetCurrentItemData()
+			if info:
+				channel = info.channel
+			pass
+		_:
+			print("无效的选项")
+	return channel
 # 处理滚动结束事件
 func _on_msg_scroll_ended() -> void:
 	print("滚动结束")
-	is_loading_history = false
+	pass # Replace with function body.
+
+
+func _on_btn_upmore_pressed() -> void:
+	isToTop = true
+	_load_more_history(false)
 	pass # Replace with function body.

@@ -14,7 +14,9 @@ enum ContentType {
 	IMAGE,	 # 图片消息
 	VIDEO	  # 视频消息
 }
-
+# 在类的开头添加信号定义
+signal message_revoked(message_item)
+signal message_deleted(message_item)
 # 节点引用
 # @onready var message_container = $MessageContainer
 @onready var content_container = $Content
@@ -29,7 +31,7 @@ enum ContentType {
 
 
 # TextEdit的最大宽度（可以根据需要调整）
-const MAX_TEXTEDIT_WIDTH = 100
+const MAX_TEXTEDIT_WIDTH = 150
 # TextEdit的最小宽度
 const MIN_TEXTEDIT_WIDTH = 0
 
@@ -38,6 +40,11 @@ var received_style: StyleBoxFlat
 var sent_style: StyleBoxFlat
 var max_height: float = 0  # 最大高度限制
 var max_talk_width: float = MAX_TEXTEDIT_WIDTH
+
+# 在类的开头添加变量
+var popup_menu: PopupMenu
+var current_content: Dictionary  # 保存当前消息内容以便复制
+var is_self_message: bool = false  # 是否是自己发送的消息
 
 func _ready():
 	# 克隆样式以便修改
@@ -49,18 +56,32 @@ func _ready():
 	# 设置大小约束
 	custom_minimum_size = Vector2(0, 0)
 	consistent(SIZE_EXPAND_FILL)
-	
+
+	 # 创建右键菜单
+	popup_menu = PopupMenu.new()
+	add_child(popup_menu)
+	# 添加菜单项
+	popup_menu.add_item("复制", 0)
+	popup_menu.add_separator()
+	popup_menu.add_item("撤销", 1)
+	popup_menu.add_item("删除", 2)
+
 	# 设置文本标签的自动换行
 	if text_label:
 		# 设置初始大小和换行
 		text_label.custom_minimum_size.x = MIN_TEXTEDIT_WIDTH
 		text_label.fit_content = true
+		text_label.selection_enabled = true	 # 设置文本标签可选择
 		text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		# 设置垂直大小策略
 		text_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		# 连接文本变化信号
 		text_label.finished.connect(_on_text_changed)
-		
+	
+	# 连接菜单信号
+	popup_menu.id_pressed.connect(_on_popup_menu_item_selected)
+	# 添加右键点击检测
+	gui_input.connect(_on_gui_input)
 	# 监听大小变化
 	resized.connect(_on_resized)
 	pass
@@ -116,7 +137,7 @@ func _on_resized():
 		text_label.custom_minimum_size.x = min(text_label.size.x, max_width - 20)  # 40为边距
 		if max_height > 0:
 			text_label.custom_minimum_size.y = min(text_label.size.y, max_height - 20)  # 40为边距
-		custom_minimum_size.x = text_label.custom_minimum_size.x
+		custom_minimum_size.x = min(text_label.custom_minimum_size.x,max_width)
 	pass
 # 设置消息内容
 func set_message(content: Dictionary, nickname: String, msg_type: MessageType, show_time: bool = false, time_str: String = ""):
@@ -263,7 +284,7 @@ func _on_text_changed():
 	var new_width = clamp(text_width, MIN_TEXTEDIT_WIDTH, max_talk_width)
 	
 	# 设置新的宽度
-	text_label.custom_minimum_size.x = new_width
+	text_label.custom_minimum_size.x =  new_width
 	
 	# 强制重新计算大小
 	text_label.custom_minimum_size.y = 0
@@ -271,3 +292,45 @@ func _on_text_changed():
 	
 	# 通知父容器重新布局
 	text_label.get_parent().queue_sort()
+
+# 处理右键点击
+func _on_gui_input(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			# 显示菜单前更新菜单项状态
+			_update_popup_menu_items()
+			# 在点击位置显示菜单
+			popup_menu.position = get_global_mouse_position()
+			popup_menu.popup()
+
+# 更新菜单项状态
+func _update_popup_menu_items():
+	# 撤销只对自己发送的消息有效
+	popup_menu.set_item_disabled(1, !is_self_message)
+	# 删除只对自己发送的消息有效
+	popup_menu.set_item_disabled(2, !is_self_message)
+
+# 处理菜单项选择
+func _on_popup_menu_item_selected(id: int):
+	match id:
+		0:  # 复制
+			if current_content.has("type") and current_content["type"] == ContentType.TEXT:
+				DisplayServer.clipboard_set(current_content["content"])
+		1:  # 撤销
+			if is_self_message:
+				_revoke_message()
+		2:  # 删除
+			if is_self_message:
+				_delete_message()
+
+# 撤销消息
+func _revoke_message():
+	# 发送撤销消息到服务器
+	# 这里需要根据你的具体需求实现
+	emit_signal("message_revoked", self)  # 需要先定义信号
+
+# 删除消息
+func _delete_message():
+	# 发送删除消息到服务器
+	# 这里需要根据你的具体需求实现
+	emit_signal("message_deleted", self)  # 需要先定义信号

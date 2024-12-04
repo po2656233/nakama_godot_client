@@ -81,6 +81,7 @@ func connect_signals() -> void:
 func set_current_channel(channel: NakamaRTAPI.Channel,isLoadhistory:bool=false):
 	if _current_channel == channel:
 		return
+	_cursor_list_channel = null
 	_current_channel = channel
 	changeChannelSIG.emit(channel.id)
 	if isLoadhistory:
@@ -181,19 +182,19 @@ func send_message(content: Dictionary) -> Error:
 
 
 # 获取聊天历史
-func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, forward : bool = false,cursor = null) -> Error:
+func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false,cursor = null,all:bool = false) -> Error:
 	if channelId.is_empty():
 		print("Not in a chat channel or socket is wrong")
 		return FAILED
-
-	# if cursor == null:
-	# 	cursor = _cursor_list_channel #只会返回最新的几条
+ 
 	print("获取聊天历史",channelId, limit, forward)
+	if cursor == null:
+		cursor = _cursor_list_channel
 	var result = await _client.list_channel_messages_async(_session, channelId, limit, forward, cursor)
 	if result.is_exception():
 		print("Failed to get chat history: ", result.get_exception().message)
 		return FAILED
-	_cursor_list_channel = result.cacheable_cursor
+
 	var messages = []
 	for message in result.messages:
 		var content = JSON.parse_string(message.content)
@@ -201,6 +202,11 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 			messages.append(message)
 	
 	chat_history_received.emit(messages)
+	if result.next_cursor:
+		_cursor_list_channel = result.next_cursor
+		print("获取历史记录游标",_cursor_list_channel)
+		if all:
+			get_chat_history(channelId, limit, forward,_cursor_list_channel,all)
 	return OK
 
 func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:

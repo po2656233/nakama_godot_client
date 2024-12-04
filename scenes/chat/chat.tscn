@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=36 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/unify/itemList.gd" id="4_3wj1b"]
 [ext_resource type="Script" path="res://scripts/unify/color_change_control.gd" id="5_vsklf"]
 [ext_resource type="Script" path="res://scripts/unify/TE_send.gd" id="5_yrxgh"]
+[ext_resource type="Texture2D" uid="uid://dbfy6a2vu8372" path="res://asset/chat/upmore1.svg" id="7_8p5lf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7p85"]
 bg_color = Color(0.219608, 0.458824, 0.282353, 1)
@@ -90,6 +91,12 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1krri"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbkeq"]
+draw_center = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gxk1"]
 bg_color = Color(0.294118, 0.556863, 0.454902, 1)
 border_width_left = 5
@@ -124,6 +131,9 @@ bg_color = Color(0.109804, 0.364706, 0.243137, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k16k0"]
 bg_color = Color(0.156863, 0.654902, 0.427451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apc2m"]
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8rtf"]
 draw_center = false
@@ -281,6 +291,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/world/Panel_talk"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -4.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_1krri")
+icon = ExtResource("7_8p5lf")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
 [node name="club" type="Control" parent="MarginContainer/Panel/TabContainer"]
 visible = false
 layout_mode = 2
@@ -323,6 +352,24 @@ focus_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 25.0
+grow_horizontal = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_xbkeq")
+icon = ExtResource("7_8p5lf")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="AddClub" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer" instance=ExtResource("3_ndfss")]
 visible = false
@@ -416,6 +463,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
+clip_contents = true
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = -7.0
+offset_right = 25.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_apc2m")
+icon = ExtResource("7_8p5lf")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
 [node name="AddFirends" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer" instance=ExtResource("3_ndfss")]
 visible = false
 custom_minimum_size = Vector2(80, 0)
@@ -507,11 +573,14 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
 text = "发送"
 
 [connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
+[connection signal="pressed" from="MarginContainer/Panel/TabContainer/world/Panel_talk/btn_upmore" to="." method="_on_btn_upmore_pressed"]
 [connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
+[connection signal="pressed" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore" to="." method="_on_btn_upmore_pressed"]
 [connection signal="pressed" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/CheckButton" to="." method="_on_show_addclub_pressed"]
 [connection signal="gui_input" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" method="_on_gui_input"]
 [connection signal="item_selected" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList" method="_on_item_selected"]
 [connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
+[connection signal="pressed" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore" to="." method="_on_btn_upmore_pressed"]
 [connection signal="pressed" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/CheckButton" to="." method="_on_show_addfriend_pressed"]
 [connection signal="gui_input" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_gui_input"]
 [connection signal="item_selected" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_item_selected"]
