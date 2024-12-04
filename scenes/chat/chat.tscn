@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=44 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -120,6 +120,14 @@ Panel/styles/panel = SubResource("StyleBoxFlat_7gxk1")
 [sub_resource type="Theme" id="Theme_wvrv0"]
 CheckButton/icons/checked = null
 
+[sub_resource type="ImageTexture" id="ImageTexture_jqwve"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_p084e"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_h13iw"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_wb4a8"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5v26"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
@@ -134,6 +142,14 @@ bg_color = Color(0.156863, 0.654902, 0.427451, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apc2m"]
 draw_center = false
+
+[sub_resource type="ImageTexture" id="ImageTexture_0lg1a"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_x8wry"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_e3827"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_3noft"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8rtf"]
 draw_center = false
@@ -404,8 +420,12 @@ theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1
 theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_icons/checked = SubResource("ImageTexture_jqwve")
+theme_override_icons/checked_disabled = SubResource("ImageTexture_p084e")
+theme_override_icons/unchecked = SubResource("ImageTexture_h13iw")
+theme_override_icons/unchecked_disabled = SubResource("ImageTexture_wb4a8")
 theme_override_styles/focus = SubResource("StyleBoxFlat_x5v26")
-text = "添加俱乐部"
+text = "俱乐部列表"
 alignment = 1
 clip_text = true
 
@@ -516,8 +536,13 @@ theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243
 theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
 theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_icons/checked = SubResource("ImageTexture_0lg1a")
+theme_override_icons/checked_disabled = SubResource("ImageTexture_x8wry")
+theme_override_icons/unchecked = SubResource("ImageTexture_e3827")
+theme_override_icons/unchecked_disabled = SubResource("ImageTexture_x8wry")
+theme_override_icons/checked_mirrored = SubResource("ImageTexture_3noft")
 theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
-text = "添加好友"
+text = "好友列表"
 alignment = 1
 clip_text = true
 

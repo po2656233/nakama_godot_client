@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dblj3g06fkrpo"]
+[gd_scene load_steps=26 format=3 uid="uid://dblj3g06fkrpo"]
 
 [ext_resource type="Texture2D" uid="uid://i7w64npn7npl" path="res://asset/lobby/bj.png" id="1_3pqew"]
 [ext_resource type="Script" path="res://scripts/home.gd" id="1_4keq7"]
@@ -90,7 +90,42 @@ corner_radius_bottom_left = 10
 shadow_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oulow"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+bg_color = Color(0.290196, 0.65098, 0.792157, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fluuk"]
+bg_color = Color(0.792157, 0.772549, 0.427451, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.917647, 0.752941, 0.760784, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2180j"]
+bg_color = Color(0.207843, 0.65098, 0.831373, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.984314, 0.745098, 0.54902, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fcaqj"]
 draw_center = false
@@ -317,6 +352,8 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fcaqj")
 text = "主页"
 
@@ -324,6 +361,8 @@ text = "主页"
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "英雄列表"
 
@@ -331,6 +370,8 @@ text = "英雄列表"
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "赛事列表"
 
@@ -338,6 +379,8 @@ text = "赛事列表"
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "排行榜"
 
@@ -346,6 +389,8 @@ custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "我的物品"
 
@@ -353,6 +398,8 @@ text = "我的物品"
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "兑换"
 
@@ -360,6 +407,8 @@ text = "兑换"
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "充值"
 

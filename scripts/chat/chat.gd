@@ -645,13 +645,13 @@ func get_friends_list():
 		var approves = []
 		for friend in friendlist.friends:
 			var ret = await Network.add_channel_async(friend.user.id)
-			if not ret.is_exception():
+			if ret:
 				var itemData = {
 					"channel": ret,
 					"user": friend.user,
 					"state": friend.state,
 				}
-				print("渠道信息", ret, "渠道ID:", itemData.channel)
+				print("渠道信息", ret, "渠道ID:", itemData.channel.id)
 				# 区分是否是互为好友
 				if friend.state == 0:
 					friends.append(itemData)

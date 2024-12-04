@@ -466,7 +466,11 @@ func add_friends_async(friend_id: String)->bool:
 
 func add_channel_async(user_id: String):
 	if _socket:
-		return await _socket.join_chat_async(user_id, NakamaSocket.ChannelType.DirectMessage,true,true)
+		var result = await _socket.join_chat_async(user_id, NakamaSocket.ChannelType.DirectMessage,true,true)
+		if result.is_exception():
+			push_error("Error add_channel_async: ", result.get_exception().message)
+			return null
+		return result
 	return null
 
 
