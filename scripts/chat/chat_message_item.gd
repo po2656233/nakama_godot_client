@@ -219,7 +219,7 @@ func _setup_text_message(text: String):
 	var font_size = text_label.get_theme_font_size("normal_font_size")
 	var content_width = font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 
-	print("实际尺寸",content_width," ",text)
+	# print("实际尺寸",content_width," ",text)
 	 
 	# 计算合适的宽度（不超过最大宽度）
 	var final_width = min(content_width + HORIZONTAL_PADDING, MAX_TEXTEDIT_WIDTH)

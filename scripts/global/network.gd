@@ -25,7 +25,8 @@ signal chat_presence_changed(joins: Array, leaves: Array)
 signal chat_history_received(messages: Array)
 signal changeChannelSIG(id:String)
 
-const DEFAULT_MESSAGE = {
+var DEFAULT_MESSAGE = {
+	# "message_id":"",
 	"kind": 0,#2聊天 1俱乐部 0世界
 	"type": 0,
 	"headIcon": "",
@@ -35,6 +36,8 @@ const DEFAULT_MESSAGE = {
 	"size": 0,
 	"thumbnail": "",
 	"duration": 0,
+	# "create_time":0,
+	# "update_time":0,
 }
 
 
@@ -66,10 +69,10 @@ func initialize_client() -> void:
 	_client = Nakama.create_client(SERVER_KEY, HOST, PORT, SCHEME)
 	connect_signals()
 	var success = await restore_session()
-	if not success:
-		await authenticate_device()
-	else:
+	if success:
 		connection_established.emit()
+	# else:
+	# 	await authenticate_device()
 
 func connect_signals() -> void:
 	if _socket:
@@ -77,18 +80,24 @@ func connect_signals() -> void:
 		_socket.connected.connect(_on_connection_succeeded)
 		_socket.received_error.connect(_on_received_error)
 
+func disconnect_signals() -> void:
+	if _socket:
+		_socket.disconnect("connection_error",_on_connection_failed)
+		_socket.disconnect("connected",_on_connection_succeeded)
+		_socket.disconnect("received_error",_on_received_error)
+
 # 重置网络连接
 func reset_network() -> void:
 	# 1. 关闭现有的 WebSocket 连接
 	if _socket:
+		disconnect_signals()
 		if _socket.is_connected_to_host():
-			_socket.close()
+			await _socket.close()
 		_socket = null
 
 	# 2. 清理 client
 	if _client:
 		await _client.session_logout_async(_session)
-		_client = null
 		
 	# 3. 清理会话
 	_session = null
@@ -181,7 +190,7 @@ func join_chat_channel(channel_id: String, persistence: bool = true, hidden: boo
 	if not _socket or not _session:
 		print("Not connected to server")
 		return FAILED
-	
+	 
 	var result = await _socket.join_chat_async(channel_id, persistence, hidden)
 	if result.is_exception():
 		print("Failed to join chat channel: ", result.get_exception().message)
@@ -211,6 +220,14 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 		print("Not in a chat channel or socket is wrong")
 		return FAILED
  
+	# 	# 先尝试加入频道
+	# var join_try = await _client.join_chat_async(channelId)
+	# if join_try.is_exception():
+	# 	print("无法加入频道: ", join_try.get_exception().message)
+	# 	# 处理错误，比如通知用户或创建新频道
+	# 	return FAILED
+
+
 	print("获取聊天历史",channelId," -->", limit, "-->",forward)
 	if cursor == null:
 		cursor = _cursor_list_channel
@@ -235,20 +252,8 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 
 func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
 	if not message or not message.content:
-		return {
-				"kind": DEFAULT_MESSAGE.kind,
-				"type":DEFAULT_MESSAGE.type,
-				"headIcon":  DEFAULT_MESSAGE.headIcon,
-				"username": "",
-				"content": DEFAULT_MESSAGE.content,
-				"path": DEFAULT_MESSAGE.path,
-				"file": DEFAULT_MESSAGE.file,
-				"size":DEFAULT_MESSAGE.size,
-				"thumbnail": DEFAULT_MESSAGE.thumbnail,
-				"duration": DEFAULT_MESSAGE.duration,
-				}
-	var content = null
-	content = JSON.parse_string(message.content)
+		return DEFAULT_MESSAGE
+	var content = JSON.parse_string(message.content)
 	if content:
 		return {
 			"kind": safe_get(content, "kind", DEFAULT_MESSAGE.kind),
@@ -262,9 +267,7 @@ func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
 			"thumbnail": safe_get(content,"thumbnail", DEFAULT_MESSAGE.thumbnail),
 			"duration": safe_get(content,"duration", DEFAULT_MESSAGE.duration),
 		}
-	return {
-		"message_id": "",
-	}
+	return DEFAULT_MESSAGE
 
 
 # 上传文件
@@ -317,7 +320,7 @@ func download_file(file_info: Dictionary) -> Dictionary:
 
 # 处理接收到的消息
 func _on_channel_message(message: NakamaAPI.ApiChannelMessage):
-	chat_message_received.emit(message)
+	chat_message_received.emit(message) 
 
 # 处理频道状态变化
 func _on_channel_presence(presence: NakamaRTAPI.ChannelPresenceEvent):
@@ -470,6 +473,7 @@ func add_channel_async(user_id: String):
 		if result.is_exception():
 			push_error("Error add_channel_async: ", result.get_exception().message)
 			return null
+		print("添加频道: ", result)
 		return result
 	return null
 
@@ -557,37 +561,19 @@ func _on_received_error(error: String):
 
 ############################################################################################
 ############################################################################################
-# 字典排序器类
-class DictionarySorter:
-	var field: String
-	var ascending: bool
-	
-	func _init(sort_field: String, is_ascending: bool = true):
-		field = sort_field
-		ascending = is_ascending
-	
-	func sort(a, b) -> bool:
-		if not (a is Dictionary and b is Dictionary):
-			print("Error: Invalid input to DictionarySorter.sort")
-			return false
-		if not (field in a and field in b):
-			print("Error: Invalid input to Object.sort")
-			return false
-			
-		if ascending:
-			return a[field] < b[field]
-		else:
-			return a[field] > b[field]
-
 # 安全地获取对象的字段值
 func _get_field_value(item, field: String):
 	if item == null:
 		return null
-		
+
 	# 如果是字典
 	if item is Dictionary:
 		return item.get(field)
 	
+	if item is String:
+		var obj = parse_message(item)
+		return obj.get(field)
+
 	# 如果是对象，尝试多种方式获取值
 	if item is Object:
 		# 1. 尝试使用get方法
@@ -595,7 +581,7 @@ func _get_field_value(item, field: String):
 			return item.get(field)
 		
 		# 2. 尝试直接访问属性
-		if field in item:
+		if field in item: 
 			return item.get(field)
 			
 		# 3. 尝试使用get_xxx方法
@@ -626,12 +612,21 @@ func sort_dictionary_array(array: Array, sort_field: String, ascending: bool = t
 	array.sort_custom(func(a, b): 
 		var field_value_a = _get_field_value(a,sort_field)
 		var field_value_b = _get_field_value(b,sort_field)
+		print('时间比较:',field_value_a, field_value_b)
 		if ascending:
 			return field_value_a < field_value_b
 		else:
 			return field_value_a > field_value_b
 		)
 	return array
+
+
+#####################
+func validate_dict_types(data: Dictionary) -> Dictionary:
+	if not (data is Dictionary):
+		push_warning("data is not Dictionary")
+		return {}
+	return data
 ####################################################################
 
 
@@ -710,3 +705,111 @@ func remove_message_by_id(messages: Array, target_message_id: String):
 			messages.remove_at(i)
 			return true
 	return false
+
+
+#############################
+func parse_message(text: String) -> Dictionary:
+	var result = {}
+	
+	# 定义字段名
+	const FIELD_CONTENT = "content: "
+	const FIELD_CREATE_TIME = "create_time: "
+	const FIELD_CHANNEL_ID = "channel_id: "
+	const FIELD_CODE = "code: "
+	const FIELD_GROUP_ID = "group_id: "
+	const FIELD_MESSAGE_ID = "message_id: "
+	const FIELD_PERSISTENT = "persistent: "
+	const FIELD_ROOM_NAME = "room_name: "
+	const FIELD_SENDER_ID = "sender_id: "
+	const FIELD_UPDATE_TIME = "update_time: "
+	const FIELD_USER_ID_ONE = "user_id_one: "
+	const FIELD_USER_ID_TWO = "user_id_two: "
+	const FIELD_USERNAME = "username: "
+	
+	text = text.replace("\\", "")
+	# 1. 优先解析 content
+	var content_start = text.find(FIELD_CONTENT) + FIELD_CONTENT.length()
+	var content_end = text.find(", " + FIELD_CREATE_TIME)
+	if content_start != -1 and content_end != -1:
+		var content_str = text.substr(content_start, content_end - content_start)
+		# 移除转义字符
+		var json = JSON.new()
+		var parse_result = json.parse(content_str)
+		if parse_result == OK:
+			result["content"] = json.get_data()
+		else:
+			result["content"] = {}
+	# 2. 解析 create_time
+	var create_time_start = text.find(FIELD_CREATE_TIME) + FIELD_CREATE_TIME.length()
+	var create_time_end = text.find(", " + FIELD_GROUP_ID)
+	if create_time_start != -1 and create_time_end != -1:
+		result["create_time"] = text.substr(create_time_start, create_time_end - create_time_start)
+	
+	# 3. 解析 channel_id
+	var channel_start = text.find(FIELD_CHANNEL_ID) + FIELD_CHANNEL_ID.length()
+	var channel_end = text.find(", " + FIELD_CODE)
+	if channel_start != -1 and channel_end != -1:
+		result["channel_id"] = text.substr(channel_start, channel_end - channel_start).replace(".", "")
+	
+	# 4. 解析 code
+	var code_start = text.find(FIELD_CODE) + FIELD_CODE.length()
+	var code_end = text.find(", " + FIELD_CONTENT)
+	if code_start != -1 and code_end != -1:
+		result["code"] = text.substr(code_start, code_end - code_start).to_int()
+	
+	# 5. 解析 group_id
+	var group_id_start = text.find(FIELD_GROUP_ID) + FIELD_GROUP_ID.length()
+	var group_id_end = text.find(", " + FIELD_MESSAGE_ID)
+	if group_id_start != -1 and group_id_end != -1:
+		var group_id = text.substr(group_id_start, group_id_end - group_id_start)
+		result["group_id"] = "" if group_id == "<null>" else group_id
+	
+	# 6. 解析 message_id
+	var message_id_start = text.find(FIELD_MESSAGE_ID) + FIELD_MESSAGE_ID.length()
+	var message_id_end = text.find(", " + FIELD_PERSISTENT)
+	if message_id_start != -1 and message_id_end != -1:
+		result["message_id"] = text.substr(message_id_start, message_id_end - message_id_start)
+	
+	# 7. 解析 persistent
+	var persistent_start = text.find(FIELD_PERSISTENT) + FIELD_PERSISTENT.length()
+	var persistent_end = text.find(", " + FIELD_ROOM_NAME)
+	if persistent_start != -1 and persistent_end != -1:
+		result["persistent"] = text.substr(persistent_start, persistent_end - persistent_start) == "true"
+	
+	# 8. 解析 room_name
+	var room_name_start = text.find(FIELD_ROOM_NAME) + FIELD_ROOM_NAME.length()
+	var room_name_end = text.find(", " + FIELD_SENDER_ID)
+	if room_name_start != -1 and room_name_end != -1:
+		var room_name = text.substr(room_name_start, room_name_end - room_name_start)
+		result["room_name"] = "" if room_name == "<null>" else room_name
+	
+	# 9. 解析 sender_id
+	var sender_id_start = text.find(FIELD_SENDER_ID) + FIELD_SENDER_ID.length()
+	var sender_id_end = text.find(", " + FIELD_UPDATE_TIME)
+	if sender_id_start != -1 and sender_id_end != -1:
+		result["sender_id"] = text.substr(sender_id_start, sender_id_end - sender_id_start)
+	
+	# 10. 解析 update_time
+	var update_time_start = text.find(FIELD_UPDATE_TIME) + FIELD_UPDATE_TIME.length()
+	var update_time_end = text.find(", " + FIELD_USER_ID_ONE)
+	if update_time_start != -1 and update_time_end != -1:
+		result["update_time"] = text.substr(update_time_start, update_time_end - update_time_start)
+	
+	# 11. 解析 user_id_one
+	var user_id_one_start = text.find(FIELD_USER_ID_ONE) + FIELD_USER_ID_ONE.length()
+	var user_id_one_end = text.find(", " + FIELD_USER_ID_TWO)
+	if user_id_one_start != -1 and user_id_one_end != -1:
+		result["user_id_one"] = text.substr(user_id_one_start, user_id_one_end - user_id_one_start)
+	
+	# 12. 解析 user_id_two
+	var user_id_two_start = text.find(FIELD_USER_ID_TWO) + FIELD_USER_ID_TWO.length()
+	var user_id_two_end = text.find(", " + FIELD_USERNAME)
+	if user_id_two_start != -1 and user_id_two_end != -1:
+		result["user_id_two"] = text.substr(user_id_two_start, user_id_two_end - user_id_two_start)
+	
+	# 13. 解析 username (最后一个字段)
+	var username_start = text.find(FIELD_USERNAME) + FIELD_USERNAME.length()
+	if username_start != -1:
+		result["username"] = text.substr(username_start)
+	
+	return result

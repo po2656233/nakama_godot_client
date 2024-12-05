@@ -1,8 +1,5 @@
-res://scenes/chat/chat.tscn
-res://theme/chat.tres
-res://theme/btn.tres
 res://scenes/login.tscn
-res://scenes/home.tscn
-res://scenes/match.tscn
-res://scenes/game.tscn
 res://scenes/element/setting.tscn
+res://scripts/chat/chat.gd
+res://scripts/global/network.gd
+res://scripts/popup/popup_manager.gd

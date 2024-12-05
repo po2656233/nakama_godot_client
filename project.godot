@@ -29,6 +29,7 @@ FadeScene="*res://addons/transitions/FadeScene.gd"
 Network="*res://scripts/global/network.gd"
 WindowDrag="*res://scripts/global/window_drag.gd"
 PopupManager="*res://scripts/popup/popup_manager.gd"
+DataMgr="*res://scripts/global/data_manager.gd"
 
 [display]
 

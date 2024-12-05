@@ -84,11 +84,15 @@ var current_channel_id: String = ""
 
 ##############聊天系统(part1 end)#####################
 
-# 初始化
+# 初始化 
 func _ready():
 	if Network.player_data:
 		myUsername = Network.player_data.username
 		uid = Network.player_data.id
+		# 加载本地历史消息
+		load_local_history()
+
+	# 创建全屏按钮
 	if toggle_button_path:
 		button = get_node(toggle_button_path)
 		if button:
@@ -105,7 +109,7 @@ func _ready():
 	get_friends_list()
 		
 	# 连接信号
-	findFriend.addFinishSIG.connect(_on_add_finish)
+	findFriend.addFinishSIG.connect(_on_add_finish) 
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
 	Network.changeChannelSIG.connect(_on_current_channel)
 	Network._socket.received_channel_message.connect(_on_received_message)
@@ -120,6 +124,7 @@ func _input(event):
 			exit_fullscreen()
 			get_viewport().set_input_as_handled() # 阻止事件继续传
 	pass
+ 
 ################################################################
 ################	 聊天系统相关函数   ########################
 ################################################################
@@ -411,11 +416,13 @@ func _on_history_message(msgList):
 		if message_id_cache[channel_id] and message_id_cache[channel_id].finish_history:
 			break
 		pass
-		
+
 	if channel_id != "" and not message_id_cache[channel_id].finish_history:
 		var isFull = msgList.size() != MESSAGES_PER_PAGE
 		if isFull and message_id_cache[channel_id]:
 			message_id_cache[channel_id].finish_history = true
+			print("渠道" + channel_id + "历史消息加载完毕")
+			DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
 			pass
 		showLoadMore(!isFull)
 	else:
@@ -500,6 +507,22 @@ func _load_more_history(forward: bool):
 
 #################################################################
 # 功能函数
+
+# 加载本地历史记录
+func load_local_history():
+	message_id_cache = Network.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
+	# print("加载本地历史记录2:",message_id_cache)
+	var channelList = DataManager.get_instance().get_channel_list(uid)
+	print("channelList:-->历史",channelList)
+	for channel_id in channelList:
+		if not message_history.has(channel_id):
+			message_history[channel_id] = []
+		message_history[channel_id] = DataManager.get_instance().get_chat_history(channel_id)
+	# print("本地历史记录--->",message_history)
+	pass
+  
+
+
 # 删除消息的主函数
 func delete_message(channel_id: String, message_id: String):
 	# 从历史记录中删除
@@ -546,7 +569,7 @@ func has_message(channel_id: String, message_id: String) -> bool:
  
 # 添加消息到指定channel
 func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage) -> bool:
-	# 获取消息ID
+	# 获取消息ID 
 	var message_id = msg.message_id
 	if message_id.is_empty():
 		push_warning("Message has no ID, skipping...")
@@ -559,23 +582,25 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 			"message_id": false,
 			"finish_history": false
 		}
-	
-
+		print("渠道---> "+str(channel_id)+" 初始化完毕")
+		DataManager.get_instance().add_channel_list(uid, msg.channel_id)
 	# 检查消息是否已存在
 	if has_message(channel_id, message_id):
-		# print("Message %s already exists in channel %s" % [message_id, channel_id])
+		# print("消息 %s 已经存在于渠道 %s" % [message_id, channel_id])
 		return false
 	
 	print("新消息-->", msg.content)
+
 	# 添加消息到历史记录和ID缓存
-	if message_history[channel_id] == null:
-		message_history[channel_id] = []
 	message_history[channel_id].append(msg)
 	message_id_cache[channel_id][message_id] = true
 	
 	load_channel_history(channel_id, message_history[channel_id])
-	return true
+	# print("保存聊天记录",message_history[channel_id].size()) 
 	
+	DataManager.get_instance().add_chat_history(msg.channel_id, msg)
+	DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
+	return true
 
 # 获取指定channel的所有历史消息
 func get_channel_messages(channel_id: String) -> Array:
@@ -588,17 +613,14 @@ func get_channel_messages(channel_id: String) -> Array:
 		message_history[channel_id] = []
 		
 	# 确保返回的是数组类型
-	var messages: Array = message_history[channel_id]
-	return messages
+	# var messages: Array = message_history[channel_id] 
+	return Network.sort_dictionary_array(message_history[channel_id], "create_time",true)
 
 # 加载channel的历史消息
 func load_channel_history(channel_id: String, messages: Array) -> void:
-	# 直接设置channel的消息列表
-	message_history[channel_id] = messages
-	# 对消息按时间戳排序
-	Network.sort_dictionary_array(message_history[channel_id], "create_time")
+	# 直接设置channel的消息列表 对消息按时间戳排序
+	message_history[channel_id] = Network.sort_dictionary_array(messages, "create_time",true)
 	pass
-
 
 # 刷新当前channel的显示
 func refresh_current_channel_display() -> void:
@@ -607,8 +629,9 @@ func refresh_current_channel_display() -> void:
 	
 	# 获取并显示当前channel的所有消息
 	var messages = get_channel_messages(current_channel_id)
-	for msg in messages:
-		var content = JSON.parse_string(msg.content)
+	for message in messages:
+		var msg = message if typeof(message) != TYPE_STRING else Network.parse_message(message)
+		var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
 	# 滚动到底部
 	ensure_scroll_to()
