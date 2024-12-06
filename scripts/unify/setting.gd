@@ -1,10 +1,11 @@
 extends Control
 
 @onready var menuBtn = $HBoxContainerRightTop/MB_setting
-@onready var notifyMusic = $HBoxContainerRightTop/btn_what/lingdang
-@onready var notifyBtn = $HBoxContainerRightTop/btn_what
-@onready var bgMusic = $background
-@onready var msgMusic = $messagecoming
+@onready var notifyMusic = $btn_what/lingdang
+@onready var notifyBtn = $btn_what
+@onready var emailBtn = $HBoxContainerRightTop/btn_email
+@onready var bgMusic = $HBoxContainerRightTop/btn_full/background
+@onready var msgMusic = $HBoxContainerRightTop/btn_email/messagecoming
 
 var login_scene = load("res://scenes/login.tscn")
 
@@ -63,11 +64,11 @@ func _on_btn_full_pressed() -> void:
 # 最大化窗口
 func maximize_window():
 	get_window().mode = Window.MODE_FULLSCREEN 
-    
+	
 # 最小化窗口
 func minimize_window():
 	get_window().mode = Window.MODE_MINIMIZED
-    
+	
 # 恢复窗口(恢复到普通窗口模式)
 func restore_window():
 	get_window().mode = Window.MODE_WINDOWED

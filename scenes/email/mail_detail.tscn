@@ -1,0 +1,96 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqxkj2m7d4n1k"]
+
+[ext_resource type="Script" path="res://scripts/email/mail_detail.gd" id="1_n2p4r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6x7xj"]
+bg_color = Color(0.490196, 0.631373, 0.635294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85iih"]
+bg_color = Color(0.101961, 0.768627, 0.615686, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vifji"]
+bg_color = Color(0.776471, 0.741176, 0.278431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uml1q"]
+bg_color = Color(0.341176, 0.576471, 0.341176, 1)
+
+[node name="MailDetail" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n2p4r")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6x7xj")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "返回"
+
+[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "邮件标题"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+text = "2023-12-25 10:00:00"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ContentLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "邮件内容"
+autowrap_mode = 2
+
+[node name="RewardLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.921569, 0.682353, 0, 1)
+text = "奖励: 1000金币 50宝石"
+horizontal_alignment = 1
+
+[node name="ClaimButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_85iih")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vifji")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uml1q")
+text = "领取奖励"
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/ClaimButton" to="." method="_on_claim_button_pressed"]

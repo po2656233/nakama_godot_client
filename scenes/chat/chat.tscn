@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
-[ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://scenes/element/find_friend.tscn" id="3_ndfss"]
+[ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://scenes/chat/find_friend.tscn" id="3_ndfss"]
 [ext_resource type="Script" path="res://scripts/unify/itemList.gd" id="4_3wj1b"]
 [ext_resource type="Script" path="res://scripts/unify/color_change_control.gd" id="5_vsklf"]
 [ext_resource type="Script" path="res://scripts/unify/TE_send.gd" id="5_yrxgh"]

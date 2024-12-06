@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6j8p4q3yqx6k"]
+
+[ext_resource type="Script" path="res://scripts/email/mail_item.gd" id="1_kxn4r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tu8ks"]
+bg_color = Color(0.603922, 0.588235, 0.658824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwxv8"]
+bg_color = Color(0.752941, 0.545098, 0.466667, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b45mw"]
+bg_color = Color(0.286275, 0.619608, 0.937255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8omkr"]
+bg_color = Color(0.160784, 0.419608, 0.807843, 1)
+
+[node name="MailItem" type="Button"]
+custom_minimum_size = Vector2(0, 80)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_tu8ks")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mwxv8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b45mw")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8omkr")
+script = ExtResource("1_kxn4r")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "邮件标题"
+
+[node name="TimeLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+text = "2023-12-25 10:00:00"
+
+[node name="StatusLabel" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "未领取"
+horizontal_alignment = 1
+vertical_alignment = 1

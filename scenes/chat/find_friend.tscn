@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://duk1crphy5j8f"]
 
-[ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_e5mcf"]
-[ext_resource type="Script" path="res://scripts/unify/find_friend.gd" id="1_fjx16"]
+[ext_resource type="Script" path="res://scripts/unify/find_friend.gd" id="1_54668"]
+[ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="2_a7bd4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03han"]
 bg_color = Color(0.0666667, 0.0980392, 0.184314, 1)
@@ -19,7 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fjx16")
+script = ExtResource("1_54668")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -28,7 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_e5mcf")
+theme = ExtResource("2_a7bd4")
 
 [node name="LineEdit_find" type="LineEdit" parent="Panel"]
 layout_mode = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b88upmlmmwyiv"]
+[gd_scene load_steps=21 format=3 uid="uid://b88upmlmmwyiv"]
 
 [ext_resource type="Script" path="res://scripts/unify/setting.gd" id="1_ng6nc"]
 [ext_resource type="Texture2D" uid="uid://b3y5q5trn4jgq" path="res://asset/currency/notify.svg" id="2_p0qrl"]
@@ -6,14 +6,17 @@
 [ext_resource type="Texture2D" uid="uid://cf4xc2d6vqokl" path="res://asset/hall/full.png" id="3_u7pao"]
 [ext_resource type="Script" path="res://scripts/unify/btn_shake.gd" id="3_yogt2"]
 [ext_resource type="Script" path="res://scripts/global/backgroundmusic.gd" id="4_0c3ci"]
+[ext_resource type="Texture2D" uid="uid://cmlsq7dtg6762" path="res://asset/currency/notification.svg" id="4_5fqi1"]
 [ext_resource type="Texture2D" uid="uid://by06wukfv2agi" path="res://asset/hall/setting.png" id="4_6kece"]
 [ext_resource type="AudioStream" uid="uid://d2twdvrmc45pg" path="res://asset/music/bg.mp3" id="6_6njb1"]
+[ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://asset/currency/email.svg" id="6_xkbed"]
+[ext_resource type="Texture2D" uid="uid://mpdsl2oh0qr3" path="res://asset/currency/email_new.svg" id="8_7btfg"]
 [ext_resource type="AudioStream" uid="uid://bcomw60dylot" path="res://asset/music/messagecoming.mp3" id="9_ermvf"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g4t"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cw5id"]
+draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awqwa"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yi3xu"]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndc40"]
@@ -26,6 +29,12 @@ draw_center = false
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm51a"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g4t"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awqwa"]
 draw_center = false
 
 [node name="Setting" type="Control"]
@@ -42,31 +51,28 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -120.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 40.0
+offset_left = -121.0
+offset_top = 5.0
+offset_right = -11.0
+offset_bottom = 35.0
 grow_horizontal = 0
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="btn_what" type="Button" parent="HBoxContainerRightTop"]
+[node name="btn_email" type="Button" parent="HBoxContainerRightTop"]
 clip_contents = true
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_85g4t")
-theme_override_styles/focus = SubResource("StyleBoxFlat_awqwa")
-icon = ExtResource("2_p0qrl")
-icon_alignment = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_cw5id")
+theme_override_styles/focus = SubResource("StyleBoxFlat_yi3xu")
+icon = ExtResource("6_xkbed")
 expand_icon = true
 script = ExtResource("3_yogt2")
-shake_amount = null
-shake_duration = null
-shake_speed = null
+normal_texture = ExtResource("6_xkbed")
+shake_texture = ExtResource("8_7btfg")
 
-[node name="lingdang" type="AudioStreamPlayer" parent="HBoxContainerRightTop/btn_what"]
-stream = ExtResource("3_1ldyl")
-script = ExtResource("4_0c3ci")
+[node name="messagecoming" type="AudioStreamPlayer" parent="HBoxContainerRightTop/btn_email"]
+stream = ExtResource("9_ermvf")
 
 [node name="btn_full" type="Button" parent="HBoxContainerRightTop"]
 clip_contents = true
@@ -77,6 +83,10 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_undds")
 icon = ExtResource("3_u7pao")
 icon_alignment = 2
 expand_icon = true
+
+[node name="background" type="AudioStreamPlayer" parent="HBoxContainerRightTop/btn_full"]
+stream = ExtResource("6_6njb1")
+script = ExtResource("4_0c3ci")
 
 [node name="MB_setting" type="MenuButton" parent="HBoxContainerRightTop"]
 custom_minimum_size = Vector2(30, 30)
@@ -105,12 +115,28 @@ popup/item_4/separator = true
 popup/item_5/text = "退出"
 popup/item_5/id = 5
 
-[node name="background" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_6njb1")
+[node name="btn_what" type="Button" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 35.0
+offset_bottom = 35.0
+size_flags_horizontal = 8
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_85g4t")
+theme_override_styles/focus = SubResource("StyleBoxFlat_awqwa")
+icon = ExtResource("2_p0qrl")
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("3_yogt2")
+normal_texture = ExtResource("2_p0qrl")
+shake_texture = ExtResource("4_5fqi1")
+
+[node name="lingdang" type="AudioStreamPlayer" parent="btn_what"]
+stream = ExtResource("3_1ldyl")
 script = ExtResource("4_0c3ci")
 
-[node name="messagecoming" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_ermvf")
-
-[connection signal="pressed" from="HBoxContainerRightTop/btn_what" to="." method="_on_btn_notify_pressed"]
 [connection signal="pressed" from="HBoxContainerRightTop/btn_full" to="." method="_on_btn_full_pressed"]
+[connection signal="pressed" from="btn_what" to="." method="_on_btn_notify_pressed"]

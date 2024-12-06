@@ -1,7 +1,7 @@
-TextureButton
+VBoxContainer
 Button
+TextureButton
 VScrollBar
 ItemList
-VBoxContainer
 ScrollContainer
 Control
