@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bensqtydtmcmw"]
+[gd_scene load_steps=30 format=3 uid="uid://bensqtydtmcmw"]
 
 [ext_resource type="Texture2D" uid="uid://d3bjst7etlnwq" path="res://asset/login/btn_zhdl.png" id="1_lxatw"]
 [ext_resource type="Script" path="res://scripts/login.gd" id="1_ohvyb"]
@@ -20,8 +20,6 @@
 [ext_resource type="Texture2D" uid="uid://cw7chhk7pvbk5" path="res://asset/login/btn_wjmm_g.png" id="16_bvtl1"]
 [ext_resource type="PackedScene" uid="uid://b88upmlmmwyiv" path="res://scenes/element/setting.tscn" id="18_jh01n"]
 [ext_resource type="Texture2D" uid="uid://brmmu1rqvldj2" path="res://asset/login/btn_wjmm_y.png" id="18_kgkuh"]
-
-[sub_resource type="Theme" id="Theme_u2x7h"]
 
 [sub_resource type="SystemFont" id="SystemFont_84gu5"]
 
@@ -69,7 +67,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_u2x7h")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Panel"]
 layout_mode = 1

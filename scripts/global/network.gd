@@ -76,9 +76,12 @@ func initialize_client() -> void:
 
 func connect_signals() -> void:
 	if _socket:
-		_socket.connection_error.connect(_on_connection_failed)
-		_socket.connected.connect(_on_connection_succeeded)
-		_socket.received_error.connect(_on_received_error)
+		if not _socket.is_connected("connection_error",_on_connection_failed):
+			_socket.connection_error.connect(_on_connection_failed)
+		if not _socket.is_connected("connected",_on_connection_succeeded):
+			_socket.connected.connect(_on_connection_succeeded)
+		if not _socket.is_connected("received_error",_on_received_error):
+			_socket.received_error.connect(_on_received_error)
 
 func disconnect_signals() -> void:
 	if _socket:
@@ -245,7 +248,7 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 	chat_history_received.emit(messages)
 	if result.next_cursor:
 		_cursor_list_channel = result.next_cursor
-		print("获取历史记录游标",_cursor_list_channel)
+		# print("获取历史记录游标",_cursor_list_channel)
 		if all:
 			get_chat_history(channelId, limit, forward,_cursor_list_channel,all)
 	return OK
@@ -571,7 +574,7 @@ func _get_field_value(item, field: String):
 		return item.get(field)
 	
 	if item is String:
-		var obj = parse_message(item)
+		var obj = DataManager.get_instance().parse_message(item)
 		return obj.get(field)
 
 	# 如果是对象，尝试多种方式获取值
@@ -612,7 +615,10 @@ func sort_dictionary_array(array: Array, sort_field: String, ascending: bool = t
 	array.sort_custom(func(a, b): 
 		var field_value_a = _get_field_value(a,sort_field)
 		var field_value_b = _get_field_value(b,sort_field)
-		print('时间比较:',field_value_a, field_value_b)
+		# print('时间比较:',field_value_a, field_value_b)
+		if not field_value_a or not field_value_b:
+			push_error("比较异常",field_value_a, field_value_b)
+			return false
 		if ascending:
 			return field_value_a < field_value_b
 		else:
@@ -704,112 +710,4 @@ func remove_message_by_id(messages: Array, target_message_id: String):
 		if messages[i].message_id == target_message_id:
 			messages.remove_at(i)
 			return true
-	return false
-
-
-#############################
-func parse_message(text: String) -> Dictionary:
-	var result = {}
-	
-	# 定义字段名
-	const FIELD_CONTENT = "content: "
-	const FIELD_CREATE_TIME = "create_time: "
-	const FIELD_CHANNEL_ID = "channel_id: "
-	const FIELD_CODE = "code: "
-	const FIELD_GROUP_ID = "group_id: "
-	const FIELD_MESSAGE_ID = "message_id: "
-	const FIELD_PERSISTENT = "persistent: "
-	const FIELD_ROOM_NAME = "room_name: "
-	const FIELD_SENDER_ID = "sender_id: "
-	const FIELD_UPDATE_TIME = "update_time: "
-	const FIELD_USER_ID_ONE = "user_id_one: "
-	const FIELD_USER_ID_TWO = "user_id_two: "
-	const FIELD_USERNAME = "username: "
-	
-	text = text.replace("\\", "")
-	# 1. 优先解析 content
-	var content_start = text.find(FIELD_CONTENT) + FIELD_CONTENT.length()
-	var content_end = text.find(", " + FIELD_CREATE_TIME)
-	if content_start != -1 and content_end != -1:
-		var content_str = text.substr(content_start, content_end - content_start)
-		# 移除转义字符
-		var json = JSON.new()
-		var parse_result = json.parse(content_str)
-		if parse_result == OK:
-			result["content"] = json.get_data()
-		else:
-			result["content"] = {}
-	# 2. 解析 create_time
-	var create_time_start = text.find(FIELD_CREATE_TIME) + FIELD_CREATE_TIME.length()
-	var create_time_end = text.find(", " + FIELD_GROUP_ID)
-	if create_time_start != -1 and create_time_end != -1:
-		result["create_time"] = text.substr(create_time_start, create_time_end - create_time_start)
-	
-	# 3. 解析 channel_id
-	var channel_start = text.find(FIELD_CHANNEL_ID) + FIELD_CHANNEL_ID.length()
-	var channel_end = text.find(", " + FIELD_CODE)
-	if channel_start != -1 and channel_end != -1:
-		result["channel_id"] = text.substr(channel_start, channel_end - channel_start).replace(".", "")
-	
-	# 4. 解析 code
-	var code_start = text.find(FIELD_CODE) + FIELD_CODE.length()
-	var code_end = text.find(", " + FIELD_CONTENT)
-	if code_start != -1 and code_end != -1:
-		result["code"] = text.substr(code_start, code_end - code_start).to_int()
-	
-	# 5. 解析 group_id
-	var group_id_start = text.find(FIELD_GROUP_ID) + FIELD_GROUP_ID.length()
-	var group_id_end = text.find(", " + FIELD_MESSAGE_ID)
-	if group_id_start != -1 and group_id_end != -1:
-		var group_id = text.substr(group_id_start, group_id_end - group_id_start)
-		result["group_id"] = "" if group_id == "<null>" else group_id
-	
-	# 6. 解析 message_id
-	var message_id_start = text.find(FIELD_MESSAGE_ID) + FIELD_MESSAGE_ID.length()
-	var message_id_end = text.find(", " + FIELD_PERSISTENT)
-	if message_id_start != -1 and message_id_end != -1:
-		result["message_id"] = text.substr(message_id_start, message_id_end - message_id_start)
-	
-	# 7. 解析 persistent
-	var persistent_start = text.find(FIELD_PERSISTENT) + FIELD_PERSISTENT.length()
-	var persistent_end = text.find(", " + FIELD_ROOM_NAME)
-	if persistent_start != -1 and persistent_end != -1:
-		result["persistent"] = text.substr(persistent_start, persistent_end - persistent_start) == "true"
-	
-	# 8. 解析 room_name
-	var room_name_start = text.find(FIELD_ROOM_NAME) + FIELD_ROOM_NAME.length()
-	var room_name_end = text.find(", " + FIELD_SENDER_ID)
-	if room_name_start != -1 and room_name_end != -1:
-		var room_name = text.substr(room_name_start, room_name_end - room_name_start)
-		result["room_name"] = "" if room_name == "<null>" else room_name
-	
-	# 9. 解析 sender_id
-	var sender_id_start = text.find(FIELD_SENDER_ID) + FIELD_SENDER_ID.length()
-	var sender_id_end = text.find(", " + FIELD_UPDATE_TIME)
-	if sender_id_start != -1 and sender_id_end != -1:
-		result["sender_id"] = text.substr(sender_id_start, sender_id_end - sender_id_start)
-	
-	# 10. 解析 update_time
-	var update_time_start = text.find(FIELD_UPDATE_TIME) + FIELD_UPDATE_TIME.length()
-	var update_time_end = text.find(", " + FIELD_USER_ID_ONE)
-	if update_time_start != -1 and update_time_end != -1:
-		result["update_time"] = text.substr(update_time_start, update_time_end - update_time_start)
-	
-	# 11. 解析 user_id_one
-	var user_id_one_start = text.find(FIELD_USER_ID_ONE) + FIELD_USER_ID_ONE.length()
-	var user_id_one_end = text.find(", " + FIELD_USER_ID_TWO)
-	if user_id_one_start != -1 and user_id_one_end != -1:
-		result["user_id_one"] = text.substr(user_id_one_start, user_id_one_end - user_id_one_start)
-	
-	# 12. 解析 user_id_two
-	var user_id_two_start = text.find(FIELD_USER_ID_TWO) + FIELD_USER_ID_TWO.length()
-	var user_id_two_end = text.find(", " + FIELD_USERNAME)
-	if user_id_two_start != -1 and user_id_two_end != -1:
-		result["user_id_two"] = text.substr(user_id_two_start, user_id_two_end - user_id_two_start)
-	
-	# 13. 解析 username (最后一个字段)
-	var username_start = text.find(FIELD_USERNAME) + FIELD_USERNAME.length()
-	if username_start != -1:
-		result["username"] = text.substr(username_start)
-	
-	return result
+	return false 

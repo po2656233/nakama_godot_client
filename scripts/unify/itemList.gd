@@ -161,13 +161,13 @@ func _on_popup_menu_item_selected(id: int):
 		addname:
 			# 处理"新增"选项
 			# 在这里添加你的代码来处理新增选项
-			_add_item()
+			PopupManager.show_confirm("确定新增吗？", _add_item, "确认")
 			print("新增")
 		delname:
 			# 处理"删除"选项
 			# 在这里添加你的代码来处理删除选项
-			_delete_item()
 			print("删除")
+			PopupManager.show_confirm("确定删除吗？", _delete_item, "确认")
 		modifyname:
 			# 处理"修改"选项
 			# 在这里添加你的代码来处理修改选项
@@ -180,17 +180,18 @@ func _on_popup_menu_item_selected(id: int):
 			# 处理"同意"选项
 			# 在这里添加你的代码来处理同意选项
 			print("同意")
-			_add_item()
+			PopupManager.show_confirm("确定同意吗？", _add_item, "确认")
 		refuseName:
 			# 处理"拒绝"选项
 			# 在这里添加你的代码来处理拒绝选项
 			print("拒绝")
-			_refuse_item()
+			PopupManager.show_confirm("确定拒绝吗？", _refuse_item, "确认")
 		blockName:
 			# 处理"拉黑"选项
 			# 在这里添加你的代码来处理拉黑选项
 			print("拉黑")
-			_refuse_item()
+			PopupManager.show_confirm("确定要拉黑该用户吗？", _refuse_item, "确认")
+			# _refuse_item()
 	if id == 0 and selected_index != -1: # 第一个菜单项且有选中的项目
 		# 如果你使用 Nakama，这里可以添加删除好友的网络请求
 		# await nakama_client.remove_friend(friend_id)

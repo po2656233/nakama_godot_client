@@ -26,8 +26,7 @@ subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_72a8w"]
 font = SubResource("SystemFont_kqv1y")
-font_size = 20
-font_color = Color(0.615686, 0.623529, 0.631373, 1)
+font_color = Color(0.682353, 0.72549, 0.380392, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5o8v3"]
 bg_color = Color(0.380392, 0.321569, 0.0980392, 0.968627)
@@ -83,7 +82,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.8, 0.8, 0.8, 0)
+border_color = Color(0.513726, 0.447059, 0.8, 0)
 border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -590,8 +589,10 @@ text = "+"
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_colors/font_color = Color(0.333333, 0.643137, 0.564706, 1)
 theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0.866667, 0.964706, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_1efha")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ayyfq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")

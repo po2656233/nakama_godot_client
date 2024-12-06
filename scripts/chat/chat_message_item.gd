@@ -56,7 +56,7 @@ func _ready():
 	sent_style = received_style.duplicate()
 	sent_style.bg_color = Color(0.15, 0.4, 0.15, 0.9)
 	sent_style.border_color = Color(0.2, 0.5, 0.2, 0.8)
-	
+	received_style.bg_color = Color(0.5, 0.25, 0.44, 0.6)
 	# 设置大小约束
 	custom_minimum_size = Vector2(0, 0)
 	consistent(SIZE_EXPAND_FILL)
