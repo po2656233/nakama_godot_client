@@ -51,9 +51,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -121.0
+offset_left = -115.0
 offset_top = 5.0
-offset_right = -11.0
+offset_right = -5.0
 offset_bottom = 35.0
 grow_horizontal = 0
 theme_override_constants/separation = 10
@@ -63,6 +63,7 @@ alignment = 2
 clip_contents = true
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
+tooltip_text = "邮件信息"
 theme_override_styles/normal = SubResource("StyleBoxFlat_cw5id")
 theme_override_styles/focus = SubResource("StyleBoxFlat_yi3xu")
 icon = ExtResource("6_xkbed")
@@ -78,6 +79,7 @@ stream = ExtResource("9_ermvf")
 clip_contents = true
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
+tooltip_text = "窗体缩放"
 theme_override_styles/normal = SubResource("StyleBoxFlat_ndc40")
 theme_override_styles/focus = SubResource("StyleBoxFlat_undds")
 icon = ExtResource("3_u7pao")
@@ -99,7 +101,7 @@ icon = ExtResource("4_6kece")
 flat = false
 icon_alignment = 1
 expand_icon = true
-item_count = 6
+item_count = 8
 popup/item_0/text = "音量"
 popup/item_0/id = 0
 popup/item_1/text = "关于"
@@ -114,6 +116,10 @@ popup/item_4/id = 4
 popup/item_4/separator = true
 popup/item_5/text = "退出"
 popup/item_5/id = 5
+popup/item_6/text = "测试邮件"
+popup/item_6/id = 6
+popup/item_7/text = "测试通知"
+popup/item_7/id = 7
 
 [node name="btn_what" type="Button" parent="."]
 clip_contents = true
@@ -138,5 +144,6 @@ shake_texture = ExtResource("4_5fqi1")
 stream = ExtResource("3_1ldyl")
 script = ExtResource("4_0c3ci")
 
+[connection signal="pressed" from="HBoxContainerRightTop/btn_email" to="." method="_on_btn_email_pressed"]
 [connection signal="pressed" from="HBoxContainerRightTop/btn_full" to="." method="_on_btn_full_pressed"]
 [connection signal="pressed" from="btn_what" to="." method="_on_btn_notify_pressed"]

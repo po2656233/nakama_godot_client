@@ -4,7 +4,6 @@ extends Node
 
 signal mail_claimed(mail_id: int)
 signal mail_selected(mail_data: Dictionary)
-
 var mail_list = [
 	{
 		"id": 1,
@@ -31,9 +30,36 @@ var mail_list = [
 		"send_time": "2023-12-27 10:00:00"
 	}
 ]
+var _mail_list_node = null
+
+func set_mail_list_node(node):
+	_mail_list_node = node
+
+func get_mail_list_node():
+	return _mail_list_node
+
+func clear():
+	mail_list = []
+
+# 获取已领取邮件列表
+func clear_claimed_mails() -> bool:
+	var had_claimed = false
+	# 从后向前遍历，这样删除元素时不会影响索引
+	for i in range(mail_list.size() - 1, -1, -1):
+		if mail_list[i]["is_claimed"]:
+			mail_list.remove_at(i)
+			had_claimed = true
+	return had_claimed
+
+func sort():
+	mail_list = get_mail_list()
 
 func get_mail_list() -> Array:
-	return mail_list
+	# 创建邮件列表的副本
+	var sorted_list = mail_list.duplicate()
+	# 根据是否领取进行排序，未领取的排在前面
+	sorted_list.sort_custom(func(a, b): return not a["is_claimed"] and b["is_claimed"])
+	return sorted_list
 
 func get_mail_by_id(id: int) -> Dictionary:
 	for mail in mail_list:
@@ -41,10 +67,13 @@ func get_mail_by_id(id: int) -> Dictionary:
 			return mail
 	return {}
 
-func claim_mail_reward(mail_id: int) -> bool:
+func claim_mail_reward(mail_id: int) -> bool: 
 	for mail in mail_list:
 		if mail["id"] == mail_id and not mail["is_claimed"]:
 			mail["is_claimed"] = true
 			mail_claimed.emit(mail_id)
+			# sort()
 			return true
 	return false
+
+

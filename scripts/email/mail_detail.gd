@@ -8,12 +8,31 @@ extends Control
 
 var current_mail_id: int = -1
 var mail_system
-
+var mail_list  # 引用邮件列表节点
 func _ready():
 	mail_system = get_node("/root/MailSystem")
+	mail_list = mail_system.get_mail_list_node()
 	mail_system.mail_selected.connect(_on_mail_selected)
 	mail_system.mail_claimed.connect(_on_mail_claimed)
 	hide()
+	# 失去焦点时
+	focus_exited.connect(_on_focus_exited)
+	# 鼠标离开时
+	mouse_exited.connect(_on_mouse_exited)
+	# 确保可以获取焦点
+	focus_mode = Control.FOCUS_ALL
+	# 确保可以检测鼠标
+	mouse_filter = Control.MOUSE_FILTER_STOP
+
+func _on_focus_exited():
+	# 检查鼠标是否也在控件外
+	if !get_global_rect().has_point(get_global_mouse_position()):
+		hide()
+
+func _on_mouse_exited():
+	# 如果没有焦点则隐藏
+	if !has_focus():
+		hide()
 
 func _on_mail_selected(mail_data: Dictionary):
 	show()
@@ -31,6 +50,8 @@ func _on_mail_selected(mail_data: Dictionary):
 	
 	claim_button.disabled = mail_data["is_claimed"]
 	claim_button.text = "领取奖励" if not mail_data["is_claimed"] else "已领取"
+		
+		
 
 func _on_claim_button_pressed():
 	if current_mail_id != -1:
@@ -42,6 +63,10 @@ func _on_mail_claimed(mail_id: int):
 	if mail_id == current_mail_id:
 		claim_button.disabled = true
 		claim_button.text = "已领取"
+		
 
 func _on_back_button_pressed():
+	if mail_list:
+		mail_list._load_mail_list()  # 直接调用刷新方法
 	hide()
+	

@@ -142,7 +142,7 @@ bg_color = Color(0.156863, 0.654902, 0.427451, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apc2m"]
 draw_center = false
 
-[sub_resource type="ImageTexture" id="ImageTexture_0lg1a"]
+[sub_resource type="ImageTexture" id="ImageTexture_xn5wv"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_x8wry"]
 
@@ -286,6 +286,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+tooltip_text = "聊天信息面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
 change_mode = 1
@@ -346,6 +347,7 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "聊天信息面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
@@ -424,13 +426,14 @@ theme_override_icons/checked_disabled = SubResource("ImageTexture_p084e")
 theme_override_icons/unchecked = SubResource("ImageTexture_h13iw")
 theme_override_icons/unchecked_disabled = SubResource("ImageTexture_wb4a8")
 theme_override_styles/focus = SubResource("StyleBoxFlat_x5v26")
-text = "俱乐部列表"
+text = "俱乐部面板"
 alignment = 1
 clip_text = true
 
 [node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "已添加的俱乐部列表"
 theme = SubResource("Theme_fxhsx")
 theme_override_styles/panel = SubResource("StyleBoxFlat_6k7ck")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k16k0")
@@ -460,6 +463,7 @@ theme_override_constants/autohide = 5
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "聊天信息面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
@@ -481,6 +485,7 @@ focus_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+tooltip_text = "聊天信息面板"
 
 [node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
 visible = false
@@ -535,19 +540,20 @@ theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243
 theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
 theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_icons/checked = SubResource("ImageTexture_0lg1a")
+theme_override_icons/checked = SubResource("ImageTexture_xn5wv")
 theme_override_icons/checked_disabled = SubResource("ImageTexture_x8wry")
 theme_override_icons/unchecked = SubResource("ImageTexture_e3827")
 theme_override_icons/unchecked_disabled = SubResource("ImageTexture_x8wry")
 theme_override_icons/checked_mirrored = SubResource("ImageTexture_3noft")
 theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
-text = "好友列表"
+text = "好友面板"
 alignment = 1
 clip_text = true
 
 [node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "展示好友列表"
 theme_override_styles/panel = SubResource("StyleBoxFlat_hgtgl")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ol08g")
 script = ExtResource("4_3wj1b")
@@ -572,6 +578,7 @@ theme_override_constants/separation = 8
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "消息发送框"
 theme_override_colors/background_color = Color(0.0980392, 0.168627, 0.235294, 1)
 theme_override_colors/selection_color = Color(0.666667, 0.588235, 0.466667, 1)
 placeholder_text = "请输入..."
@@ -589,6 +596,7 @@ text = "+"
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "发送输入框文本至指定渠道"
 theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0, 0.866667, 0.964706, 1)

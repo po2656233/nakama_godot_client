@@ -393,7 +393,7 @@ func _on_change_channel(channel_id):
 	print("当前频道:", channel_id)
 	current_channel_id = channel_id
 	isToTop = false
-	clear_messages_item()
+	refresh_current_channel_display()
 	pass
 
 # 收到消息
@@ -410,9 +410,11 @@ func _on_history_message(msgList):
 	print("收到历史消息:", msgList.size())
 	# 校验是否有新消息
 	var channel_id = ""
+	var haveNew = msgList.size() == 0
 	for msg in msgList:
 		channel_id = msg.channel_id
-		add_message_to_history(msg.channel_id, msg)
+		if add_message_to_history(msg.channel_id, msg):
+			haveNew = true
 		if message_id_cache[channel_id] and message_id_cache[channel_id].finish_history:
 			break
 		pass
@@ -428,7 +430,8 @@ func _on_history_message(msgList):
 	else:
 		showLoadMore(false)
 	# 刷新当前显示的频道信息
-	refresh_current_channel_display()
+	if haveNew:
+		refresh_current_channel_display()
 	pass
 
 

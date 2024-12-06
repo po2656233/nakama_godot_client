@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2n4rqcyg1p8k"]
+[gd_scene load_steps=6 format=3 uid="uid://b2n4rqcyg1p8k"]
 
 [ext_resource type="Script" path="res://scripts/email/mail_list.gd" id="1_m2p4r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaumh"]
 bg_color = Color(0.941176, 0.886275, 0.815686, 0.588235)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6vpl"]
+bg_color = Color(0.631373, 0.596078, 0.541176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb341"]
+bg_color = Color(0.533333, 0.6, 0.74902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okley"]
+bg_color = Color(0.726161, 0.508214, 0.760476, 1)
 
 [node name="MailList" type="Control"]
 layout_mode = 3
@@ -54,3 +63,20 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
+
+[node name="ClearButton" type="Button" parent="Panel"]
+clip_contents = true
+custom_minimum_size = Vector2(90, 30)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -106.0
+offset_top = 6.0
+offset_right = -16.0
+offset_bottom = 36.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_r6vpl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rb341")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_okley")
+text = "清理已领取"
