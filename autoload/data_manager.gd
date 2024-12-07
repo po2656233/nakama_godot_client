@@ -38,6 +38,7 @@ func _notification(what):
 static func get_instance() -> DataManager:
 	return instance
 
+
 # 保存数据
 func save_data() -> void:
 	# 使用临时文件进行保存，以防保存过程中崩溃导致数据损坏

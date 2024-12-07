@@ -5,7 +5,11 @@ var game_scene = load("res://scenes/game.tscn")
 @onready var chatPanle = $VBoxContainer/Chat
 @onready var homePanle = $PanelContainer
 @onready var settings = $Setting
+
+
 func _ready():
+	SceneManager.set_current_scene("home")
+	print("当前运行的节点名",SceneManager.get_running_scene_name())
 	WindowDrag.register_drag_zone(self)
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(chatPanle)

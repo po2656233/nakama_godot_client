@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://bf5mrp0scfty1" path="res://asset/music/lingdang.mp3" id="3_1ldyl"]
 [ext_resource type="Texture2D" uid="uid://cf4xc2d6vqokl" path="res://asset/hall/full.png" id="3_u7pao"]
 [ext_resource type="Script" path="res://scripts/unify/btn_shake.gd" id="3_yogt2"]
-[ext_resource type="Script" path="res://scripts/global/backgroundmusic.gd" id="4_0c3ci"]
+[ext_resource type="Script" path="res://autoload/backgroundmusic.gd" id="4_0c3ci"]
 [ext_resource type="Texture2D" uid="uid://cmlsq7dtg6762" path="res://asset/currency/notification.svg" id="4_5fqi1"]
 [ext_resource type="Texture2D" uid="uid://by06wukfv2agi" path="res://asset/hall/setting.png" id="4_6kece"]
 [ext_resource type="AudioStream" uid="uid://d2twdvrmc45pg" path="res://asset/music/bg.mp3" id="6_6njb1"]
@@ -39,11 +39,9 @@ draw_center = false
 
 [node name="Setting" type="Control"]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("1_ng6nc")
 
 [node name="HBoxContainerRightTop" type="HBoxContainer" parent="."]
@@ -101,7 +99,7 @@ icon = ExtResource("4_6kece")
 flat = false
 icon_alignment = 1
 expand_icon = true
-item_count = 8
+item_count = 9
 popup/item_0/text = "音量"
 popup/item_0/id = 0
 popup/item_1/text = "关于"
@@ -120,6 +118,8 @@ popup/item_6/text = "测试邮件"
 popup/item_6/id = 6
 popup/item_7/text = "测试通知"
 popup/item_7/id = 7
+popup/item_8/text = "返回"
+popup/item_8/id = 8
 
 [node name="btn_what" type="Button" parent="."]
 clip_contents = true

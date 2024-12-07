@@ -2,6 +2,7 @@ extends Control
 
 @onready var mail_list_container = $Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer
 @onready var mail_item_scene = preload("res://scenes/email/mail_item.tscn")
+# @onready var home_scene = preload("res://scenes/home.tscn").instantiate()
 @onready var clear_button = $Panel/ClearButton
 
 
@@ -46,3 +47,8 @@ func _update_clear_button():
 			has_claimed = true
 			break
 	clear_button.disabled = not has_claimed
+ 
+func _on_close_button_pressed() -> void:
+	SceneManager.show_scene("home")
+	# FancyFade.wipe_right(home_scene)
+	pass # Replace with function body.

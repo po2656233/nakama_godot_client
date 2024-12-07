@@ -12,7 +12,7 @@ var mail_scene = load("res://scenes/email/mail.tscn")
 
 # Called when the node enters the scene tree for the first time.
 
-func _ready() -> void:
+func _ready() -> void: 
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
 	notifyBtn.lookSIG.connect(_on_look_notify)
@@ -24,6 +24,21 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+
+# 显示邮件系统
+func show_mail():
+	if mail_scene and not mail_scene.visible:
+		mail_scene.show()  # 或者 mail_scene.visible = true
+
+# 隐藏邮件系统
+func hide_mail():
+	if mail_scene:
+		mail_scene.hide()  # 或者 mail_scene.visible = false
+
+# 切换显示/隐藏状态
+func toggle_mail():
+	if mail_scene:
+		mail_scene.visible = !mail_scene.visible
 
 func on_setting_pressed(index: int) -> void:
 	var popup_menu = menuBtn.get_popup()
@@ -58,6 +73,8 @@ func on_setting_pressed(index: int) -> void:
 		5:
 			get_tree().quit()
 			pass
+		8:
+			SceneManager.go_back()
 		_:
 			print("Setting error",index)
 			pass
@@ -113,9 +130,10 @@ func _on_btn_email_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_look_notify()->void:
+	SceneManager.show_scene("approval_form")
 	pass
 
 func _on_look_email()->void:
-	# mail_scene.instantiate().visible = true 
-	FancyFade.wipe_left(mail_scene.instantiate(),0.5)
+	SceneManager.show_scene("mail")
+	# FancyFade.wipe_left(mail_scene.instantiate(),0.5)
 	pass

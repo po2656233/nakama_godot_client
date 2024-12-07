@@ -26,11 +26,12 @@ Transitions="*res://addons/transitions/Transitions.gd"
 FancyFade="*res://addons/transitions/FancyFade.gd"
 TransitionsPlugin="*res://addons/transitions/transitions_plugin.gd"
 FadeScene="*res://addons/transitions/FadeScene.gd"
-Network="*res://scripts/global/network.gd"
-WindowDrag="*res://scripts/global/window_drag.gd"
-PopupManager="*res://scripts/popup/popup_manager.gd"
-DataMgr="*res://scripts/global/data_manager.gd"
-MailSystem="*res://scripts/email/mail_system.gd"
+Network="*res://autoload/network.gd"
+DataMgr="*res://autoload/data_manager.gd"
+WindowDrag="*res://autoload/window_drag.gd"
+PopupManager="*res://autoload/popup_manager.gd"
+MailSystem="*res://autoload/mail_system.gd"
+SceneManager="*res://autoload/scene_manager.gd"
 
 [display]
 

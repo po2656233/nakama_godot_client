@@ -3,6 +3,8 @@ var home_scene = load("res://scenes/home.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	SceneManager.set_current_scene("game")
+	print("当前运行的节点名",SceneManager.get_running_scene_name())
 	pass # Replace with function body.
 
 

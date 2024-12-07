@@ -1,14 +1,9 @@
 extends Control
-const DISSOLVE_IMAGE = preload('res://addons/transitions/images/blurry-noise.png')
-
-var register_scene = load("res://scenes/register.tscn")
-var home_scene = load("res://scenes/home.tscn")
-# var lobby_scene = load("res://scenes/lobby.tscn")
 
 @onready var usernameEdit = $Panel/VBoxContainer/HBoxContainerUser/LineEdit
 @onready var passwordEdit = $Panel/VBoxContainer/HBoxContainerPsw/LineEdit
 @onready var checkbox = $Panel/VBoxContainer/HBoxContainerRead/CheckBox
-
+@onready var settings_scene = $Panel/Setting
 
 # 微信登录
 const WECHAT_APPID = "wxcf2136ff70f7726a"
@@ -17,10 +12,10 @@ const STATE = "godot_wechat_login"
 
 var http_request: HTTPRequest
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	WindowDrag.register_drag_zone(self)
+	SceneManager.set_current_scene("login")
+
 	var ret = await Network.restore_session()
 	if not ret:
 		Network.initialize_client()
@@ -32,6 +27,8 @@ func _ready() -> void:
 		print("PopupManager 未正确初始化")
 	else:
 		print("PopupManager 已正确初始化")
+	
+	WindowDrag.register_drag_zone(self)
 	if ProjectSettings.has_setting("username"):
 		usernameEdit.text = ProjectSettings.get("username")
 	# # 创建HTTP请求节点
@@ -47,7 +44,7 @@ func _process(_delta: float) -> void:
 
 
 func _on_tb_register_pressed() -> void:
-	FancyFade.custom_fade(register_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
+	SceneManager.switch_to_scene("register","tile_reveal")
 	pass # Replace with function body.
 
 
@@ -64,7 +61,7 @@ func _on_request_completed(result, _response_code, _headers, body):
 	if result == HTTPRequest.RESULT_SUCCESS:
 		var response = body.get_string_from_utf8()
 		print("Response: ", response)
-	    # 处理响应数据
+		# 处理响应数据
 	else:
 		print("Error: ", result)
 	pass
@@ -81,15 +78,16 @@ func login()->void:
 		PopupManager.show_message("请阅读并同意用户协议")
 		return
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text):
-		await Network.load_player_data()
+		await Network.load_player_data()  
+		SceneManager.switch_to_scene("home","custom",1.0)
 		# ProjectSettings.set("username",usernameEdit.text)
-		FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
+		# FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	else:
 		PopupManager.show_message("账号或密码错误","提示",false)
 		print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
 	pass # Replace with function body.
-
-
+ 
+###########################################################################################
 # 微信登录(暂不使用)
 func wechatLogin()->void:
 	var auth_url = "https://open.weixin.qq.com/connect/qrconnect"
@@ -99,8 +97,8 @@ func wechatLogin()->void:
 	auth_url += "&scope=snsapi_login"
 	auth_url += "&state=" + STATE
 	auth_url += "#wechat_redirect"
-    
-    # 打开浏览器进行微信授权
+	
+	# 打开浏览器进行微信授权
 	OS.shell_open(auth_url)
 	pass
 
