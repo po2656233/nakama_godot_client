@@ -53,11 +53,13 @@ func on_setting_pressed(index: int) -> void:
 				bgMusic.play()
 			else:
 				bgMusic.stream_paused=!bgMusic.stream_paused
+				msgMusic.stream_paused=!msgMusic.stream_paused
+				notifyMusic.stream_paused=!notifyMusic.stream_paused
 			
 			var hints = "打开音量" if bgMusic.stream_paused else "关闭音量"
 			if bgMusic.stream_paused:
-				notifyMusic.stop()
 				msgMusic.stop()
+				notifyMusic.stop()
 			popup_menu.set_item_text(index, hints)
 			pass
 		6:
@@ -68,7 +70,7 @@ func on_setting_pressed(index: int) -> void:
 			pass
 		3:
 			Network.reset_network() 
-			FancyFade.wipe_left(login_scene.instantiate(),0.5)
+			SceneManager.switch_to_scene("login","wipe_left",0.5)
 			pass
 		5:
 			get_tree().quit()
@@ -130,10 +132,10 @@ func _on_btn_email_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_look_notify()->void:
-	SceneManager.show_scene("approval_form")
+	SceneManager.show_scene_in_center("approval_form",0.9)
 	pass
 
 func _on_look_email()->void:
-	SceneManager.show_scene("mail")
+	SceneManager.show_scene_in_center("mail")
 	# FancyFade.wipe_left(mail_scene.instantiate(),0.5)
 	pass

@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://scripts/email/mail_item.gd" id="1_kxn4r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tu8ks"]
-bg_color = Color(0.603922, 0.588235, 0.658824, 1)
+bg_color = Color(0.105882, 0.447059, 0.321569, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwxv8"]
-bg_color = Color(0.752941, 0.545098, 0.466667, 1)
+bg_color = Color(0.317647, 0.427451, 0.647059, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b45mw"]
-bg_color = Color(0.286275, 0.619608, 0.937255, 1)
+bg_color = Color(0.388235, 0.603922, 0.490196, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8omkr"]
 bg_color = Color(0.160784, 0.419608, 0.807843, 1)

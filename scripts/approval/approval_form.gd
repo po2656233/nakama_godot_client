@@ -2,10 +2,10 @@ extends Control
 
 # 预加载请求项场景
 var RequestItemScene = preload("res://scenes/approval/request_item.tscn")
-
+@onready var addBtn = $Panel/MarginContainer/VBoxContainer/AddTestDataButton
 func _ready():
 	# 连接测试按钮信号
-	$Panel/MarginContainer/VBoxContainer/AddTestDataButton.pressed.connect(_on_add_test_data_button_pressed)
+	addBtn.pressed.connect(_on_add_test_data_button_pressed)
 
 # 添加新的请求项到列表
 func add_request_item(type: String, name1: String, time: String, status = null) -> void:
@@ -91,7 +91,11 @@ func _on_add_test_data_button_pressed() -> void:
 		{"type": "俱乐部", "name": "读书会", "time": current_time, "status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
 		{"type": "俱乐部", "name": "读书会", "time": current_time, "status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
 		{"type": "俱乐部", "name": "读书会", "time": current_time, "status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "status": RequestItemScene.instantiate().Status.OTHER_APPROVED}
+		{"type": "俱乐部", "name": "读书会", "time": current_time, "status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
+		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
+		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
+		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
+		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
 	]
 	import_requests(test_data)
 
@@ -105,5 +109,9 @@ func update_other_party_status(request_item: Control, approved: bool) -> void:
 
 
 func _on_close_button_pressed() -> void:
-	self.queue_free()
+	var parent_node = get_parent()
+	if parent_node:
+		parent_node.queue_free()
+	else:
+		self.queue_free()
 	pass # Replace with function body.

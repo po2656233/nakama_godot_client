@@ -48,7 +48,3 @@ func _update_clear_button():
 			break
 	clear_button.disabled = not has_claimed
  
-func _on_close_button_pressed() -> void:
-	SceneManager.show_scene("home")
-	# FancyFade.wipe_right(home_scene)
-	pass # Replace with function body.

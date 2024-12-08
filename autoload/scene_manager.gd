@@ -79,7 +79,20 @@ const TRANSITION_TYPES = {
 	"TILE_REVEAL": {
 		"key": "tile_reveal",
 		"description": "瓦片揭示效果"
-	}
+	},
+	# 特殊效果
+	"custom": {
+		"key": "custom",
+		"description": "自定义过渡效果"
+	},
+	"cross": {
+		"key": "cross",
+		"description": "交叉淡入淡出"
+	},
+	"instant": {
+		"key": "instant",
+		"description": "立即切换"
+	},
 }
 
 
@@ -287,6 +300,8 @@ func _transition_scene(scene_path: String,  transition_way:String = "conical",di
 		FancyFade.custom_fade(sceneObj, dissolve_time, dissolve_image)
 	elif transition_way == "cross":
 		FancyFade.cross_fade(sceneObj, dissolve_time)
+	elif transition_way == "instant":
+		FancyFade.instant_change(sceneObj)
 	else:
 		FancyFade._fade(transition_way,sceneObj,dissolve_time)
 
@@ -300,21 +315,17 @@ func hide_scene(scene_name: String) -> bool:
 		return false
 		
 	# 遍历当前场景的所有子节点
-	if _is_scene_displayed(scene_path):
-		for child in current_scene.get_children():
-			# 检查是否是我们添加的容器
-			if child is Control:
-				# 检查容器中的场景
-				for container_child in child.get_children():
-					print("节点路径:",container_child.scene_file_path)
-					if container_child.scene_file_path == scene_path:
-						# 找到了指定场景，隐藏其容器
-						child.visible = false
-						print("隐藏--->",scene_name)
-						return true
-		push_warning("未找到要隐藏的场景：" + scene_path)
-		return false
-
+	for child in current_scene.get_children():
+		# 检查是否是我们添加的容器
+		if child is Control:
+			# 检查容器中的场景
+			for container_child in child.get_children():
+				print("节点路径:",container_child.scene_file_path)
+				if container_child.scene_file_path == scene_path:
+					# 找到了指定场景，隐藏其容器
+					child.visible = false
+					print("隐藏--->",scene_name)
+					return true
 	var scene = load(scene_path)
 	if not scene:
 		push_error("无法加载场景：" + scene_path)
@@ -337,20 +348,16 @@ func show_scene(scene_name: String) -> bool:
 		push_warning("当前没有活动场景")
 		return false
 
-	if _is_scene_displayed(scene_path):
-		# 遍历当前场景的所有子节点 
-		for child in current_scene.get_children():
-			# 检查是否是我们添加的容器
-			if child is Control:
-				# 检查容器中的场景
-				for container_child in child.get_children():
-					if container_child.scene_file_path == scene_path:
-						# 找到了指定场景，显示其容器
-						child.visible = true
-						print("展示--->",scene_name)
-						return true
-		push_warning("未找到要显示的场景：" + scene_path)
-		return false
+	for child in current_scene.get_children():
+		# 检查是否是我们添加的容器
+		if child is Control:
+			# 检查容器中的场景
+			for container_child in child.get_children():
+				if container_child.scene_file_path == scene_path:
+					# 找到了指定场景，显示其容器
+					child.visible = true
+					print("展示--->",scene_name)
+					return true
 
 	var scene = load(scene_path)
 	if not scene:
@@ -429,7 +436,6 @@ func show_scene_in_center(scene_name: String, scale_ratio: float = 0.8) -> Node:
 	container.offset_bottom = 0
 	
 	# 将场景实例添加到容器中
-	scene_instance.visible = true
 	container.add_child(scene_instance)
 	
 	# 将容器添加到当前场景
@@ -441,7 +447,7 @@ func show_scene_in_center(scene_name: String, scale_ratio: float = 0.8) -> Node:
 # @param scene_path: 要显示的场景路径
 # @param custom_size: 自定义大小 (可选)
 # @return: 返回实例化的场景节点
-func show_scene_on_right(scene_name: String, custom_size: Vector2 = Vector2.ZERO) -> Node:
+func show_scene_on_right(scene_name: String,scale_ratio: float = 1.0, custom_size: Vector2 = Vector2.ZERO) -> Node:
 	var scene_path = get_scene_path(scene_name)
 
 	# 检查场景是否已经显示
@@ -477,13 +483,16 @@ func show_scene_on_right(scene_name: String, custom_size: Vector2 = Vector2.ZERO
 	container.offset_right = 0
 	container.offset_top = 0
 	container.offset_bottom = 0
-	
+	# 确保比例在有效范围内
+	scale_ratio = clampf(scale_ratio, 0.1, 1.0)
+
 	# 如果提供了自定义大小，则设置大小
 	if custom_size != Vector2.ZERO:
 		container.custom_minimum_size = custom_size
 	
+	container.custom_minimum_size.x *= scale_ratio
+	container.custom_minimum_size.y *= scale_ratio
 	# 将场景实例添加到容器中
-	scene_instance.visible = true
 	container.add_child(scene_instance)
 	
 	# 将容器添加到当前场景

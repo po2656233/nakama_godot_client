@@ -1,9 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2n4rqcyg1p8k"]
+[gd_scene load_steps=6 format=3 uid="uid://b2n4rqcyg1p8k"]
 
 [ext_resource type="Script" path="res://scripts/email/mail_list.gd" id="1_m2p4r"]
-[ext_resource type="Texture2D" uid="uid://7lqek46tetex" path="res://asset/currency/close.svg" id="2_dawvp"]
-[ext_resource type="Texture2D" uid="uid://bv7jniuolpeml" path="res://asset/currency/close2.svg" id="3_c2653"]
-[ext_resource type="Texture2D" uid="uid://ch0adttkqctmh" path="res://asset/currency/close1.svg" id="4_mh8k4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaumh"]
 bg_color = Color(0.941176, 0.886275, 0.815686, 0.588235)
@@ -83,18 +80,3 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_r6vpl")
 theme_override_styles/hover = SubResource("StyleBoxFlat_rb341")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_okley")
 text = "清理已领取"
-
-[node name="CloseButton" type="TextureButton" parent="Panel"]
-custom_minimum_size = Vector2(35, 35)
-layout_mode = 0
-offset_left = 3.0
-offset_top = 5.0
-offset_right = 43.0
-offset_bottom = 45.0
-texture_normal = ExtResource("2_dawvp")
-texture_pressed = ExtResource("3_c2653")
-texture_hover = ExtResource("4_mh8k4")
-ignore_texture_size = true
-stretch_mode = 0
-
-[connection signal="pressed" from="Panel/CloseButton" to="." method="_on_close_button_pressed"]

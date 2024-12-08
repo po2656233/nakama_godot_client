@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3gvlbaf4oebi"]
+[gd_scene load_steps=7 format=3 uid="uid://b3gvlbaf4oebi"]
 
+[ext_resource type="Script" path="res://scripts/email/mail.gd" id="1_csb40"]
 [ext_resource type="PackedScene" uid="uid://b2n4rqcyg1p8k" path="res://scenes/email/mail_list.tscn" id="1_l2p4r"]
 [ext_resource type="PackedScene" uid="uid://cqxkj2m7d4n1k" path="res://scenes/email/mail_detail.tscn" id="2_m3p4r"]
+[ext_resource type="Texture2D" uid="uid://7lqek46tetex" path="res://asset/currency/close.svg" id="3_ky2lw"]
+[ext_resource type="Texture2D" uid="uid://bv7jniuolpeml" path="res://asset/currency/close2.svg" id="4_6aymw"]
+[ext_resource type="Texture2D" uid="uid://ch0adttkqctmh" path="res://asset/currency/close1.svg" id="5_ulb6m"]
 
 [node name="Mail" type="Control"]
 layout_mode = 3
@@ -10,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_csb40")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -25,3 +30,18 @@ layout_mode = 2
 
 [node name="MailDetail" parent="HSplitContainer" instance=ExtResource("2_m3p4r")]
 layout_mode = 2
+
+[node name="CloseButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+offset_left = 6.0
+offset_top = 7.0
+offset_right = 36.0
+offset_bottom = 37.0
+texture_normal = ExtResource("3_ky2lw")
+texture_pressed = ExtResource("4_6aymw")
+texture_hover = ExtResource("5_ulb6m")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
