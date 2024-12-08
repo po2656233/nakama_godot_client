@@ -106,7 +106,7 @@ func _ready():
 	set_rotation_pivot()
 	# 获取好友列表
 	get_friends_list()
-		
+
 	# 连接信号
 	findFriend.addFinishSIG.connect(_on_add_finish) 
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
@@ -441,7 +441,7 @@ func _on_btn_send_pressed() -> void:
 		return
 	# 发送消息
 	var channel = getCurChannelData()
-	if channel:
+	if channel: 
 		Network.set_current_channel(channel)
 		var msg = Network.getMsgData(null)
 		msg.content = sendTextEdit.text.strip_edges()
@@ -649,115 +649,49 @@ func clear_messages_item():
 func get_friends_list():
 	var friendlist = await Network.get_friends_list()
 	if friendlist:
-		print(friendlist)
 		friendListItem.clear()
-		var friends = []
-		var waits = []
-		var refuses = []
-		var approves = []
 		for friend in friendlist.friends:
 			var ret = await Network.add_channel_async(friend.user.id)
 			if ret:
-				var itemData = {
-					"channel": ret,
-					"user": friend.user,
-					"state": friend.state,
-				}
-				print("渠道信息", ret, "渠道ID:", itemData.channel.id)
 				# 区分是否是互为好友
 				if friend.state == 0:
-					friends.append(itemData)
-				# 等待确认
-				elif friend.state == 1:
-					waits.append(itemData)
-				# 请审批
-				elif friend.state == 2:
-					approves.append(itemData)
-				# 已拒绝
-				elif friend.state == 3:
-					refuses.append(itemData)
-				else:
-					pass
-				
+					var user = friend.user
+					var username = user.username
+					var friend_status = "在线" if user.online else "离线"
+					if user.display_name:
+						username += '(' + user.display_name + ')'
+					# 显示好友在线状态
+					username += '[' + friend_status + ']'
+					var index = friendListItem.add_item(username)
+					# 加载头像
+					if user.avatar_url:
+						var texture = await Network.load_texture_async(user.avatar_url)
+						if texture:
+							friendListItem.set_item_icon(index, texture)
+					print("好友列表--> ", friend.user)
+					friendListItem.set_item_metadata(index, {
+							"channel": ret,
+							"user": friend.user,
+							"state": friend.state,
+							"online":friend.user.online,
+						})
+			# 状态
+			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			{
+				"type":"用户",
+				"name":friend.user.username,
+				"time":friend.user.username,
+				"update_time":friend.user.update_time,
+				"status":friend.state,
+			}
+			)
+			# add_request_item("用户",friend.user.username,
+			# 	friend.user.create_time,
+			# 	friend.user.update_time,friend.state)
 			pass
-			
-		friends.sort()
-		for friend in friends:
-			# 处理好友数据
-			var user = friend.user
-			var username = user.username
-			var friend_status = "在线" if user.online else "离线"
-			if user.display_name:
-				username += '(' + user.display_name + ')'
-			# 显示好友在线状态
-			username += '[' + friend_status + ']'
-			var index = friendListItem.add_item(username)
-			# 加载头像
-			if user.avatar_url:
-				var texture = await Network.load_texture_async(user.avatar_url)
-				if texture:
-					friendListItem.set_item_icon(index, texture)
-			friendListItem.set_item_metadata(index, friend)
-			pass
-		var stateName = '[请审批通过]'
-		approves.sort()
-		for friend in approves:
-			# 处理好友数据
-			var user = friend.user
-			var username = user.username
-			# if user.display_name:
-			# 	username += '('+user.display_name+')'
-			# 显示好友在线状态
-			username += stateName
-			var index = friendListItem.add_item(username)
-			# 加载头像
-			if user.avatar_url:
-				var texture = await Network.load_texture_async(user.avatar_url)
-				if texture:
-					friendListItem.set_item_icon(index, texture)
-			friendListItem.set_item_metadata(index, friend)
-			pass
-		stateName = '[等待确认]'
-		waits.sort()
-		for friend in waits:
-			# 处理好友数据
-			var user = friend.user
-			var username = user.username
-			# if user.display_name:
-			# 	username += '('+user.display_name+')'
-			# 显示好友在线状态
-			username += stateName
-			var index = friendListItem.add_item(username)
-			# 加载头像
-			if user.avatar_url:
-				var texture = await Network.load_texture_async(user.avatar_url)
-				if texture:
-					friendListItem.set_item_icon(index, texture)
-			friendListItem.set_item_metadata(index, friend)
-			pass
-		refuses.sort()
-		stateName = '[对方已拒绝]'
-		for friend in refuses:
-			# 处理好友数据
-			var user = friend.user
-			var username = user.username
-			# if user.display_name:
-			# 	username += '('+user.display_name+')'
-			# 显示好友在线状态
-			username += stateName
-			var index = friendListItem.add_item(username)
-			# 加载头像
-			if user.avatar_url:
-				var texture = await Network.load_texture_async(user.avatar_url)
-				if texture:
-					friendListItem.set_item_icon(index, texture)
-			friendListItem.set_item_metadata(index, friend)
-		
 	print("获取好友列表")
 	pass
-
 ####
-
 
 #######################弹窗按钮旋转###############################
 # 设置旋转中心点

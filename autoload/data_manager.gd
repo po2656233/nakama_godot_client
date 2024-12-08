@@ -6,6 +6,7 @@ class_name DataManager
 const SAVE_PATH = "user://game_data.save"
 const chat_key = "chat_history_"
 const uid_channel_key = "uid_channel_"
+const uid_approval_key = "uid_approval_"
 # 缓存的数据
 var cached_data: Dictionary = {}
 
@@ -105,6 +106,27 @@ func add_chat_history(channelId:String, msg) -> int:
 	# print("保存消息的数据 键:", channelId, " 值:", msg) 
 	save_data()  # 每次设置数据后 自动保存
 	return cached_data[chat_key][channelId].size()
+
+# 添加申请数据 
+func add_uid_approval(uid:String, approvalData:Dictionary) -> int:
+	var key = uid_approval_key + uid
+	if not cached_data.has(key):
+		cached_data[key] = []
+	
+	for approval in cached_data[key]:
+		if approval.name == approvalData.name:
+			return cached_data[key].size()
+	cached_data[key].append(approvalData)
+	save_data()  # 每次设置数据后 自动保存
+	return cached_data[key].size()
+
+# 添加申请数据 
+func get_uid_approval(uid:String) -> Array:
+	var key = uid_approval_key + uid
+	if not cached_data.has(key):
+		return []
+	return cached_data[key]
+
 
 func set_chat_history(channelId:String, msgList) -> void:
 	# 如果 chat_key 不存在，创建一个字典

@@ -166,7 +166,7 @@ func authenticate_email(username: String,password: String,email: String="",  cre
 	if email.is_empty():
 		email = username+"@game.com"
 	var result = await _client.authenticate_email_async(email,password,username,created)
-	if result.is_exception():
+	if result.is_exception() or not result.is_valid():
 		print("发送登录请求失败",result.get_exception().message)
 		connection_failed.emit()
 		return false

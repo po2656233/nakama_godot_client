@@ -11,12 +11,14 @@ var login_scene = load("res://scenes/login.tscn")
 var mail_scene = load("res://scenes/email/mail.tscn")
 
 # Called when the node enters the scene tree for the first time.
-
+var isMute = false
 func _ready() -> void: 
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
 	notifyBtn.lookSIG.connect(_on_look_notify)
 	emailBtn.lookSIG.connect(_on_look_email)
+	emailBtn.shakeSIG.connect(email_notify)
+	notifyBtn.shakeSIG.connect(recv_notify)
 	pass # Replace with function body.
 
 
@@ -57,9 +59,7 @@ func on_setting_pressed(index: int) -> void:
 				notifyMusic.stream_paused=!notifyMusic.stream_paused
 			
 			var hints = "打开音量" if bgMusic.stream_paused else "关闭音量"
-			if bgMusic.stream_paused:
-				msgMusic.stop()
-				notifyMusic.stop()
+			isMute = bgMusic.stream_paused
 			popup_menu.set_item_text(index, hints)
 			pass
 		6:
@@ -70,7 +70,7 @@ func on_setting_pressed(index: int) -> void:
 			pass
 		3:
 			Network.reset_network() 
-			SceneManager.switch_to_scene("login","wipe_left",0.5)
+			SceneManager.switch_to_scene("login",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
 			pass
 		5:
 			get_tree().quit()
@@ -106,18 +106,19 @@ func restore_window():
 func recv_notify() -> void:
 	#铃铛播放
 	# notifyMusic.set_volume(1.0)
+	print('通知声音播放')
 	notifyMusic.play()
 	#铃铛闪烁
-	notifyBtn.shakeSIG.emit()
 	pass # Replace with function body.
 
 func msg_notify() -> void:
+	print('消息声音播放')
 	msgMusic.play()
 	pass
 
 func email_notify() -> void:
+	print('邮件声音播放')
 	msgMusic.play()
-	emailBtn.shakeSIG.emit()
 	pass
 
 

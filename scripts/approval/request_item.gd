@@ -4,9 +4,9 @@ signal approved
 signal rejected
 
 enum Status {
-	PENDING,           # 待审批
 	APPROVED,         # 已同意
 	REJECTED,         # 已拒绝
+	PENDING,           # 待审批
 	WAITING_OTHER,    # 等待对方通过
 	OTHER_APPROVED,   # 对方已通过
 	OTHER_REJECTED    # 对方已拒绝
@@ -23,16 +23,17 @@ func _ready():
 	$MarginContainer/HBoxContainer/ButtonContainer/ApproveButton.pressed.connect(_on_approve_button_pressed)
 	$MarginContainer/HBoxContainer/ButtonContainer/RejectButton.pressed.connect(_on_reject_button_pressed)
 
-func setup(type: String, name1: String, time: String, status: Status = Status.PENDING) -> void:
+func setup(type: String, name1: String, create_time: String,update_time: String="-", status: Status = Status.PENDING) -> void:
 	_type = type
 	_name = name1
-	_apply_time = time
+	_apply_time = create_time
+	_approval_time = update_time
 	_status = status
 	
 	$MarginContainer/HBoxContainer/TypeLabel.text = type
 	$MarginContainer/HBoxContainer/NameLabel.text = name1
-	$MarginContainer/HBoxContainer/ApplyTimeLabel.text = time
-	$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = "-"
+	$MarginContainer/HBoxContainer/ApplyTimeLabel.text = create_time
+	$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = update_time
 	
 	_update_status_display()
 	_update_buttons()

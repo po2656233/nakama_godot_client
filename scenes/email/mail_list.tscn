@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/email/mail_list.gd" id="1_m2p4r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaumh"]
-bg_color = Color(0.941176, 0.886275, 0.815686, 0.588235)
+bg_color = Color(0.501961, 0.611765, 0.286275, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6vpl"]
 bg_color = Color(0.168627, 0.415686, 0.368627, 1)

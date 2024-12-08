@@ -72,6 +72,7 @@ shake_texture = ExtResource("8_7btfg")
 
 [node name="messagecoming" type="AudioStreamPlayer" parent="HBoxContainerRightTop/btn_email"]
 stream = ExtResource("9_ermvf")
+script = ExtResource("4_0c3ci")
 
 [node name="btn_full" type="Button" parent="HBoxContainerRightTop"]
 clip_contents = true

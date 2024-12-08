@@ -1,5 +1,5 @@
 @tool
-extends EditorPlugin
+extends Control
 
 func _enter_tree():
     # Initialization of the plugin goes here

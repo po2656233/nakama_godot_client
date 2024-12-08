@@ -116,13 +116,13 @@ func _ready():
 
 ###############################################################
 # 获取转换效果的键值
-static func get_transition_key(transition_type: String) -> String:
+func get_transition_key(transition_type: String) -> String:
 	if TRANSITION_TYPES.has(transition_type):
 		return TRANSITION_TYPES[transition_type]["key"]
 	return ""
 
 # 获取转换效果的描述
-static func get_transition_description(transition_type: String) -> String:
+func get_transition_description(transition_type: String) -> String:
 	if TRANSITION_TYPES.has(transition_type):
 		return TRANSITION_TYPES[transition_type]["description"]
 	return ""
@@ -296,6 +296,8 @@ func _transition_scene(scene_path: String,  transition_way:String = "conical",di
 	var sceneObj = load(scene_path).instantiate()
 	if not  sceneObj:
 		return
+	if transition_way == "":
+		transition_way = "conical"
 	if transition_way == "custom":
 		FancyFade.custom_fade(sceneObj, dissolve_time, dissolve_image)
 	elif transition_way == "cross":
