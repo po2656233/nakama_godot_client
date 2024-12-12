@@ -11,7 +11,7 @@ extends Button
 
 signal shakeSIG() #抖动信号
 signal lookSIG() #查看信号
-
+signal newMsgSIG() #查看信号
 # 是否抖动中
 var _is_shaking := false
 var _shake_time := 0.0
@@ -25,7 +25,8 @@ func _ready():
 		self.icon = normal_texture    # 设置按钮图标
 	position = _initial_position
 	pressed.connect(_on_button_pressed)
-	shakeSIG.connect(shaked)
+	shakeSIG.connect(_on_shaked)
+	newMsgSIG.connect(_on_newMsg)
 
 func _process(delta):
 	if _is_shaking:
@@ -44,11 +45,10 @@ func _on_button_pressed():
 		lookSIG.emit()
 	_is_shaking = false
 	position = _initial_position
-	print('位置:',position)
 	_is_shaking = false
 	_shake_time = 0.0
 
-func shaked():
+func _on_shaked():
 	print("震动")
 	icon = shake_texture
 	if not _is_shaking:
@@ -56,3 +56,6 @@ func shaked():
 		_shake_time = 0.0
 		if shake_texture:  # 如果在编辑器中选择了图片
 			self.icon = shake_texture    # 设置按钮图标
+
+func _on_newMsg():
+	self.icon = shake_texture    # 设置按钮图标

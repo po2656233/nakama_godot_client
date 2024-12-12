@@ -12,13 +12,13 @@ func _ready():
 	
 
 # 添加新的请求项到列表
-func add_request_item(type: String, name1: String, time: String, update_time: String="-", status = null) -> void:
+func add_request_item(type: String,uid:String, name1: String, time: String, update_time: String="-", status = null) -> void:
 	var request_item = RequestItemScene.instantiate()
 	request_list.add_child(request_item)
 	if status != null:
-		request_item.setup(type, name1, time,update_time, status)
+		request_item.setup(type,uid, name1, time,update_time, status)
 	else:
-		request_item.setup(type, name1, time)
+		request_item.setup(type,uid, name1, time)
 	request_item.approved.connect(_on_request_approved.bind(request_item))
 	request_item.rejected.connect(_on_request_rejected.bind(request_item))
 
@@ -32,10 +32,10 @@ func import_requests(requests: Array) -> void:
 	# 添加新项目
 	for request in requests:
 		if "status" in request:
-			add_request_item(request.type, request.name, request.time, request.update_time, request.status)
+			add_request_item(request.type,request.uid, request.name, request.time, request.update_time, request.status)
 		else:
-			add_request_item(request.type, request.name,  request.time)
-
+			add_request_item(request.type,request.uid, request.name,  request.time)
+	reorder_requests()
 
 # 重新排序请求列表
 func reorder_requests() -> void:
@@ -72,7 +72,7 @@ func reorder_requests() -> void:
 func _on_request_approved(request_item: Control) -> void:
 	print("请求已批准: ", request_item.get_request_info())
 	# 更新状态为等待对方通过
-	request_item.update_other_status(request_item.Status.WAITING_OTHER)
+	request_item.update_other_status(request_item.Status.APPROVED)
 	reorder_requests()
 
 # 当请求被拒绝时
@@ -85,7 +85,7 @@ func _on_request_rejected(request_item: Control) -> void:
 # 模拟更新对方状态（实际应用中这个方法应该由网络请求触发）
 func update_other_party_status(request_item: Control, approved: bool) -> void:
 	if approved:
-		request_item.update_other_status(request_item.Status.OTHER_APPROVED)
+		request_item.update_other_status(request_item.Status.APPROVED)
 	else:
 		request_item.update_other_status(request_item.Status.OTHER_REJECTED)
 	reorder_requests()
@@ -101,6 +101,7 @@ func get_all_requests() -> Array:
 	for child in request_list.get_children():
 		requests.append({
 			"type": child.type,
+			"uid": child.uid,
 			"name": child.name,
 			"status": child.status,
 			"apply_time": child.apply_time,
@@ -115,31 +116,3 @@ func _on_close_button_pressed() -> void:
 	else:
 		self.queue_free()
 	pass # Replace with function body.
-
-
-# 添加测试数据的按钮回调
-func _on_add_test_data_button_pressed() -> void:
-	var current_time = Time.get_datetime_string_from_system().split(".")[0]
-	var test_data = [
-		{"type": "用户", "name": "张三", "time": current_time},
-		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
-		{"type": "用户", "name": "李四", "time": current_time, "update_time": current_time, "status": RequestItemScene.instantiate().Status.WAITING_OTHER},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time,"update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time,"update_time": current_time, "status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "读书会", "time": current_time, "update_time": current_time,"status": RequestItemScene.instantiate().Status.OTHER_APPROVED},
-		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
-		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
-		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
-		{"type": "俱乐部", "name": "篮球俱乐部", "time": current_time},
-	]
-	import_requests(test_data)

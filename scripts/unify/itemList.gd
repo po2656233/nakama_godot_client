@@ -34,6 +34,12 @@ var tween: Tween
 var original_color: Color
 var is_active: bool = false
 
+# 长按后弹出菜单
+var long_press_time = 1.0  # 长按时间（秒）
+var press_start_time = 0
+var is_long_press = false
+
+
 func _ready():
 	# 保存原始颜色
 	original_color = modulate
@@ -66,7 +72,9 @@ func _ready():
 	delItemData.connect(_on_del_item_data)
 	modifyItemData.connect(_on_modify_item_data)
 	findItemData.connect(_on_find_item_data)
+	self.connect("gui_input", Callable(self, "_on_ItemList_gui_input"))
 	pass
+
 
 func _on_add_item_data(friend):
 	print("新增好友---", friend)
@@ -92,7 +100,7 @@ func _on_add_item_data(friend):
 		self.set_item_metadata(index, friend)
 	pass
 func _on_del_item_data(friend):
-    # 遍历所有项目
+	# 遍历所有项目
 	for i in range(self.item_count):
 		var item_meta = self.get_item_metadata(i)  # 获取项目元数据
 		if item_meta and item_meta.user.username == friend.user.username:
@@ -101,7 +109,7 @@ func _on_del_item_data(friend):
 	pass
 
 func _on_modify_item_data(friend):
-    # 遍历所有项目
+	# 遍历所有项目
 	for i in range(self.item_count):
 		var item_meta = self.get_item_metadata(i)  # 获取项目元数据
 		if item_meta and item_meta.user.username == friend.user.username:
@@ -136,23 +144,25 @@ func _on_item_selected(index: int):
 func _on_item_list_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
 		# 确保有项目被选中
-		if event.pressed and event.button_index == MOUSE_BUTTON_RIGHT and selected_index != -1:
-			var friend = self.get_item_metadata(selected_index)
-			if not friend:
-				return
-			checkState(friend.state)
-			# 显示弹出菜单在鼠标位置
-			popup_menu.position = get_viewport().get_mouse_position()
-			popup_menu.popup()	
-		pass
+		if event.pressed  and selected_index != -1:
+			if  event.button_index == MOUSE_BUTTON_RIGHT:
+				showPopup(selected_index)
+			else:
+				press_start_time = Time.get_ticks_msec()
+		else:
+			var press_duration = (Time.get_ticks_msec() - press_start_time) / 1000.0
+			if press_duration >= long_press_time and selected_index != -1:
+				showPopup(selected_index)
 	pass
 
-func _on_gui_input(event:InputEvent) -> void:
-	_on_item_list_gui_input(event)
-	# if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-	# 	toggle_color()
-	# 	pass
-	pass # Replace with function body.
+func showPopup(index:int):
+	var friend = self.get_item_metadata(index)
+	if not friend:
+		return
+	checkState(friend.state)
+	# 显示弹出菜单在鼠标位置
+	popup_menu.position = get_viewport().get_mouse_position()
+	popup_menu.popup()	
 
 func _on_popup_menu_item_selected(id: int):
 	# 处理"删除"选项
@@ -190,8 +200,9 @@ func _on_popup_menu_item_selected(id: int):
 			# 处理"拉黑"选项
 			# 在这里添加你的代码来处理拉黑选项
 			print("拉黑")
-			PopupManager.show_confirm("确定要拉黑该用户吗？", _refuse_item, "确认")
+			PopupManager.show_confirm("确定要拉黑该用户吗？", _block_item, "确认")
 			# _refuse_item()
+		
 	if id == 0 and selected_index != -1: # 第一个菜单项且有选中的项目
 		# 如果你使用 Nakama，这里可以添加删除好友的网络请求
 		# await nakama_client.remove_friend(friend_id)
@@ -204,7 +215,7 @@ func _add_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("新增好友", friend)
 			if friend:
-				var ret = await Network.add_friends_async(friend.user.id)
+				var ret = await Network.add_friends_async([friend.user.id])
 				if ret:
 					_on_add_item_data(friend)
 				else:
@@ -243,6 +254,30 @@ func _refuse_item():
 		selected_index = -1 # 重置选中索引
 	pass
 
+# 拉黑好友	
+func _block_item():
+	var ret: bool = false
+	match listType:
+		0:
+			var friend = self.get_item_metadata(selected_index)
+			print("拉黑好友", friend)
+			if friend:
+				ret = await Network.refuse_friends_async(friend.user.id)
+		1:
+			print("拉黑俱乐部")
+			var group = self.get_item_metadata(selected_index)
+			if group:
+				ret = await Network.remove_group(group.id)
+		2:
+			print("拉黑组员")
+		3:
+			print("拉黑房间")
+		# 从列表中移除项目
+	if ret:
+		self.remove_item(selected_index)
+		PopupManager.show_message("已拉黑")
+		selected_index = -1 # 重置选中索引
+	pass
 
 
 func _delete_item():

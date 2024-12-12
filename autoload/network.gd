@@ -16,7 +16,7 @@ const SERVER_KEY: String = "superman"
 const HOST: String = "60.205.90.152"
 const PORT: int = 7350
 const SCHEME: String = "http"
-
+const SESSION_FILE_PATH = "user://nakama_session.save"
 signal player_data_updated
 signal connection_established
 signal connection_failed
@@ -25,8 +25,8 @@ signal chat_presence_changed(joins: Array, leaves: Array)
 signal chat_history_received(messages: Array)
 signal changeChannelSIG(id:String)
 
+# 聊天内容结构
 var DEFAULT_MESSAGE = {
-	# "message_id":"",
 	"kind": 0,#2聊天 1俱乐部 0世界
 	"type": 0,
 	"headIcon": "",
@@ -36,37 +36,31 @@ var DEFAULT_MESSAGE = {
 	"size": 0,
 	"thumbnail": "",
 	"duration": 0,
-	# "create_time":0,
-	# "update_time":0,
 }
 
 
 
 # 初始化
 func _ready() -> void:
+	connection_failed.connect(_on_connection_failed)
 	# Initialize _client
-	_client = Nakama.create_client(
-		SERVER_KEY,
-		HOST,
-		PORT,
-		SCHEME
-	)
-	
-	# Initialize _socket
-	_socket = Nakama.create_socket_from(_client)
-	connect_signals()
-	var success = await restore_session()
-	if not success:
-		await authenticate_device()
-	else:
-		connection_established.emit()
+	initialize_client()
+
 		
 
 func initialize_client() -> void:
 	if _client:
+		if _session:			# 退出登录
+			_client.session_logout_async(_session)
 		_client.cancel_free()
 		_client = null
 	_client = Nakama.create_client(SERVER_KEY, HOST, PORT, SCHEME)
+	# 1. 关闭现有的 WebSocket 连接
+	if _socket:
+		if _socket.is_connected_to_host():
+			_socket.close()
+		_socket = null
+	_socket = Nakama.create_socket_from(_client)
 	connect_signals()
 	var success = await restore_session()
 	if success:
@@ -83,33 +77,27 @@ func connect_signals() -> void:
 		if not _socket.is_connected("received_error",_on_received_error):
 			_socket.received_error.connect(_on_received_error)
 
-func disconnect_signals() -> void:
-	if _socket:
-		_socket.disconnect("connection_error",_on_connection_failed)
-		_socket.disconnect("connected",_on_connection_succeeded)
-		_socket.disconnect("received_error",_on_received_error)
+func logout():
+	remove_session()
 
-# 重置网络连接
-func reset_network() -> void:
-	# 1. 关闭现有的 WebSocket 连接
-	if _socket:
-		disconnect_signals()
-		if _socket.is_connected_to_host():
-			await _socket.close()
-		_socket = null
-
-	# 2. 清理 client
-	if _client:
-		await _client.session_logout_async(_session)
-		
-	# 3. 清理会话
-	_session = null
-	
-	# 4. 清理渠道
-	_current_channel = null
-
-	# 4. 重新初始化
-	initialize_client()
+# func check_network():
+# 	if OS.has_feature("mobile"):
+# 		# 检查网络连接状态
+# 		if OS.get_network_connected_type() == -1:
+# 			push_error("没有网络连接")
+# 			return false
+			
+# 		# 输出网络类型
+# 		var network_type = OS.get_network_connected_type()
+# 		match network_type:
+# 			0: print("未知网络类型")
+# 			1: print("以太网连接")
+# 			2: print("WIFI连接")
+# 			3: print("移动数据连接")
+# 			4: print("移动数据2G")
+# 			5: print("移动数据3G")
+# 			6: print("移动数据4G")
+# 	return true
 	
 
 # 设置当前聊天频道
@@ -136,10 +124,8 @@ func authenticate_device(username: String="", created:bool=false) -> bool:
 	if result.is_exception():
 		connection_failed.emit()
 		return false
-	print("设备登录请求成功1",result)
 	_session = result
 	save_session()
-	print("设备登录请求成功2222")
 	# Connect _socket after authentication
 	if _socket.is_connected_to_host():
 		return true
@@ -174,6 +160,8 @@ func authenticate_email(username: String,password: String,email: String="",  cre
 	print("发送登录请求成功",result)
 	_session = result
 	save_session()
+	if not _socket:
+		_socket = Nakama.create_socket_from(_client)
 	# Connect _socket after authentication
 	if _socket.is_connected_to_host():
 		return true
@@ -344,11 +332,19 @@ func _notification(what: int):
 # Session Management
 func save_session() -> void:
 	if _session:
-		var file = FileAccess.open("user://nakama_session.save", FileAccess.WRITE)
+		var file = FileAccess.open(SESSION_FILE_PATH, FileAccess.WRITE)
 		file.store_line(_session.token)
 		file.close()
 	return
-		
+
+func remove_session() -> void:
+	if _session:
+		# 清除当前 session
+		_session = null
+		var dir = DirAccess.open("user://")
+		if dir and dir.file_exists("nakama_session.save"):
+			dir.remove("nakama_session.save")
+		print("Logged out successfully")	
 
 func restore_session() -> bool:
 	var session_token = load_session_token()
@@ -366,13 +362,13 @@ func restore_session() -> bool:
 	return true
 
 func load_session_token() -> String:
-	if not FileAccess.file_exists("user://nakama_session.save"):
+	if not FileAccess.file_exists(SESSION_FILE_PATH):
 		return ""
 		
-	var file = FileAccess.open("user://nakama_session.save", FileAccess.READ)
+	var file = FileAccess.open(SESSION_FILE_PATH, FileAccess.READ)
 	var token = file.get_line()
 	file.close()
-	print("缓存的Session token: " + token)
+	# print("缓存的Session token: " + token)
 	return token
 
 # Socket Setup
@@ -458,16 +454,30 @@ func get_friends_list():
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return
-	print("好友列表: ", result)
+	var friend_ids = [] 
+	var friend_names = []
+	for friend in result.friends:
+		var f = friend as NakamaAPI.ApiFriend
+		if not f or not f.user.online:
+			continue
+		friend_ids.append(f.user.id)
+		friend_names.append(f.user.username)
+	var ret : NakamaAsyncResult = await _socket.follow_users_async(friend_ids,friend_names)
+	for presence in ret.presences:
+		print("%s is online with status: %s" % [presence.user_id, presence.status])
+	print("好友列表: ", ret)
 	return result
 		
 # 添加好友
-func add_friends_async(friend_id: String)->bool:
-	var result = await _client.add_friends_async(_session, [friend_id])
+func add_friends_async(friend_ids: Array)->bool:
+	if friend_ids.size() == 0:
+		return false
+	var result = await _client.add_friends_async(_session, friend_ids)
 	if result.is_exception():
 		print("Error add_friends_async: ", result.get_exception().message)
 		return false
 	print("添加好友: ", result)
+	SignalManager.FreshFriendListSIG.emit()
 	return true
 
 func add_channel_async(user_id: String):
@@ -479,6 +489,28 @@ func add_channel_async(user_id: String):
 		print("添加频道: ", result)
 		return result
 	return null
+
+# 订阅好友
+func follow_users_async(p_ids : PackedStringArray, p_usernames : PackedStringArray):
+	if _socket:
+		var result = await _socket.follow_users_async(p_ids, p_usernames)
+		if result.is_exception():
+			push_error("Error follow_users_async: ", result.get_exception().message)
+			return null
+		print("订阅好友: ", result)
+		return result
+	return null
+
+func update_status_async(_status:String):
+	if _socket:
+		var result = await _socket.update_status_async(_status)
+		if result.is_exception():
+			push_error("Error update_status_async: ", result.get_exception().message)
+			return null
+		print("变更状态: ", result)
+		return result
+	return null
+
 
 
 # 阻止好友
@@ -547,16 +579,17 @@ func load_texture_async(url: String) :
 		request.queue_free()
 		return null
 	
-	image.resize(20,15)
+	image.resize(25,25)
 	request.queue_free()
 	return ImageTexture.create_from_image(image)
 
 # Signal Handlers
 func _on_connection_failed():
-	connection_failed.emit()
+	PopupManager.show_dynamic("网络连接失败")
 
 func _on_connection_succeeded():
-	connection_established.emit()
+	PopupManager.show_dynamic("网络连接成功")
+	# connection_established.emit()
 
 func _on_received_error(error: String):
 	push_error("Nakama error: " + error)

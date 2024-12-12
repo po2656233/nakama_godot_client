@@ -8,6 +8,8 @@ var game_scene = load("res://scenes/game.tscn")
 
 
 func _ready():
+	settings.emailBtn.visible = true
+	settings.notifyBtn.visible = true
 	SceneManager.set_current_scene("home")
 	print("当前运行的节点名",SceneManager.get_running_scene_name())
 	WindowDrag.register_drag_zone(self)

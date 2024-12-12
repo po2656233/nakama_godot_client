@@ -48,7 +48,7 @@ theme_override_constants/separation = 20
 
 [node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_font_sizes/font_size = 28
 text = "审批表单"
@@ -108,8 +108,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ButtonSpaceHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "操作"
 horizontal_alignment = 1
@@ -131,7 +131,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 12
 
 [node name="CloseButton" type="TextureButton" parent="Panel"]
-custom_minimum_size = Vector2(35, 35)
+custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

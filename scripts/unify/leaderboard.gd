@@ -21,7 +21,7 @@ class PlayerScore:
 		player_name = name
 		score = score_value
 		rank = rank_value
-		timestamp = Time.get_unix_time_from_system()
+		timestamp = int(Time.get_unix_time_from_system())
 
 # 节点引用
 @onready var tab_container = $MarginContainer/VBoxContainer/TabContainer

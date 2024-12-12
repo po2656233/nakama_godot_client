@@ -4,9 +4,13 @@ extends Control
 @onready var notifyBtn = $btn_what
 @onready var emailBtn = $HBoxContainerRightTop/btn_email
 
-@onready var bgMusic = $HBoxContainerRightTop/btn_full/background
-@onready var msgMusic = $HBoxContainerRightTop/btn_email/messagecoming
-@onready var notifyMusic = $btn_what/lingdang
+@onready var bgMusic = $music/background
+@onready var sendMusic = $music/send
+@onready var recvMusic = $music/recv
+@onready var comingMusic = $music/comming
+@onready var welcomegMusic = $music/welcome
+@onready var emailMusic = $music/email
+@onready var notifyMusic = $music/notify
 var login_scene = load("res://scenes/login.tscn")
 var mail_scene = load("res://scenes/email/mail.tscn")
 
@@ -17,8 +21,13 @@ func _ready() -> void:
 	popup_menu.index_pressed.connect(on_setting_pressed)
 	notifyBtn.lookSIG.connect(_on_look_notify)
 	emailBtn.lookSIG.connect(_on_look_email)
-	emailBtn.shakeSIG.connect(email_notify)
-	notifyBtn.shakeSIG.connect(recv_notify)
+	SignalManager.NewMessageSIG.connect(_on_msg_notify)
+	SignalManager.SendMessageSIG.connect(_on_send_msg)
+	SignalManager.RecvMessageSIG.connect(_on_recv_msg)
+
+
+	SignalManager.NewEmailSIG.connect(_on_email_notify)
+	SignalManager.NewNotifySIG.connect(_on_recv_notify)
 	pass # Replace with function body.
 
 
@@ -55,8 +64,6 @@ func on_setting_pressed(index: int) -> void:
 				bgMusic.play()
 			else:
 				bgMusic.stream_paused=!bgMusic.stream_paused
-				msgMusic.stream_paused=!msgMusic.stream_paused
-				notifyMusic.stream_paused=!notifyMusic.stream_paused
 			
 			var hints = "打开音量" if bgMusic.stream_paused else "关闭音量"
 			isMute = bgMusic.stream_paused
@@ -64,18 +71,20 @@ func on_setting_pressed(index: int) -> void:
 			pass
 		6:
 			notifyBtn.shakeSIG.emit()
+			SignalManager.NewNotifySIG.emit("notify")
 			pass
 		7: 
 			emailBtn.shakeSIG.emit()
+			SignalManager.NewMessageSIG.emit("message")
 			pass
-		3:
-			Network.reset_network() 
+		3:#返回登录页
+			Network.logout() 
 			SceneManager.switch_to_scene("login",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
 			pass
-		5:
+		5:# 退出
 			get_tree().quit()
 			pass
-		8:
+		8:#返回上一页
 			SceneManager.go_back()
 		_:
 			print("Setting error",index)
@@ -102,26 +111,36 @@ func minimize_window():
 func restore_window():
 	get_window().mode = Window.MODE_WINDOWED
 
-
-func recv_notify() -> void:
-	#铃铛播放
-	# notifyMusic.set_volume(1.0)
-	print('通知声音播放')
-	notifyMusic.play()
-	#铃铛闪烁
+##########################################
+func _on_recv_notify(args) -> void:
+	if args:
+		# notifyMusic.set_volume(1.0)
+		notifyMusic.play()
+	notifyBtn.newMsgSIG.emit()
 	pass # Replace with function body.
 
-func msg_notify() -> void:
-	print('消息声音播放')
-	msgMusic.play()
+func _on_msg_notify(_args) -> void:
 	pass
 
-func email_notify() -> void:
-	print('邮件声音播放')
-	msgMusic.play()
+func _on_send_msg(_args) -> void:
+	if isMute:
+		return
+	sendMusic.play()
 	pass
 
+func _on_recv_msg(_args) -> void:
+	if isMute:
+		return
+	recvMusic.play()
+	pass
 
+func _on_email_notify(args) -> void:
+	if args and not isMute:
+		emailMusic.play()
+	emailBtn.newMsgSIG.emit()
+	pass
+
+#############################
 func _on_btn_notify_pressed() -> void:
 	#铃铛停止播放
 	notifyMusic.stop()
@@ -129,14 +148,13 @@ func _on_btn_notify_pressed() -> void:
 
 
 func _on_btn_email_pressed() -> void:
-	msgMusic.stop()
 	pass # Replace with function body.
 
 func _on_look_notify()->void:
-	SceneManager.show_scene_in_center("approval_form",0.9)
+	SceneManager.show_scene_in_center("approval",0.9)
 	pass
 
 func _on_look_email()->void:
-	SceneManager.show_scene_in_center("mail")
+	SceneManager.show_scene_in_center("email")
 	# FancyFade.wipe_left(mail_scene.instantiate(),0.5)
 	pass

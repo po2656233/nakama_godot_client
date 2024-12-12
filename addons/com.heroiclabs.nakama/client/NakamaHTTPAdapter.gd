@@ -68,6 +68,10 @@ class AsyncRequest:
 		return await make_request()
 
 	func make_request():
+		##############[测试用,正式环境请移除]#########################
+		var opts =  TLSOptions.client_unsafe()
+		request.set_tls_options( opts )
+		#######################################
 		var err = request.request(uri, headers, method, body.get_string_from_utf8())
 		if err != OK:
 			await request.get_tree().process_frame

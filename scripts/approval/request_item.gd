@@ -4,18 +4,19 @@ signal approved
 signal rejected
 
 enum Status {
-	APPROVED,         # 已同意
-	REJECTED,         # 已拒绝
-	PENDING,           # 待审批
-	WAITING_OTHER,    # 等待对方通过
-	OTHER_APPROVED,   # 对方已通过
-	OTHER_REJECTED    # 对方已拒绝
+	APPROVED = 0, # 已同意
+	WAITING_OTHER = 1, # 等待对方通过
+	PENDING = 2, # 待审批
+	REJECTED = 3, # 已拒绝
+	OTHER_APPROVED = 4, # 对方已通过
+	OTHER_REJECTED = 5 # 对方已拒绝
 }
 
 var _type: String
+var _uid: String
 var _name: String
-var _apply_time: String      # 申请时间
-var _approval_time: String   # 审批时间
+var _apply_time: String # 申请时间
+var _approval_time: String # 审批时间
 var _status: Status = Status.PENDING
 
 func _ready():
@@ -23,12 +24,15 @@ func _ready():
 	$MarginContainer/HBoxContainer/ButtonContainer/ApproveButton.pressed.connect(_on_approve_button_pressed)
 	$MarginContainer/HBoxContainer/ButtonContainer/RejectButton.pressed.connect(_on_reject_button_pressed)
 
-func setup(type: String, name1: String, create_time: String,update_time: String="-", status: Status = Status.PENDING) -> void:
+func setup(type: String, uid:String, name1: String, create_time: String, update_time: String = "-", status: Status = Status.PENDING) -> void:
 	_type = type
+	_uid = uid
 	_name = name1
 	_apply_time = create_time
 	_approval_time = update_time
 	_status = status
+	if status == Status.WAITING_OTHER or status == Status.PENDING:
+		update_time = "-"
 	
 	$MarginContainer/HBoxContainer/TypeLabel.text = type
 	$MarginContainer/HBoxContainer/NameLabel.text = name1
@@ -40,27 +44,27 @@ func setup(type: String, name1: String, create_time: String,update_time: String=
 
 func _update_status_display() -> void:
 	var status_text = ""
-	var status_color = Color(0.4, 0.4, 0.4)  # 默认灰色
+	var status_color = Color(0.4, 0.4, 0.4) # 默认灰色
 	
 	match _status:
 		Status.PENDING:
 			status_text = "待审批"
-			status_color = Color(0.4, 0.4, 0.4)  # 灰色
+			status_color = Color(0.4, 0.4, 0.4) # 灰色
 		Status.APPROVED:
 			status_text = "已同意"
-			status_color = Color(0.188, 0.514, 0.302)  # 绿色
+			status_color = Color(0.188, 0.514, 0.302) # 绿色
 		Status.REJECTED:
-			status_text = "已拒绝"
-			status_color = Color(0.851, 0.275, 0.275)  # 红色
+			status_text = "已拉黑"
+			status_color = Color(0.851, 0.275, 0.275) # 红色
 		Status.WAITING_OTHER:
 			status_text = "等待对方通过"
-			status_color = Color(0.2, 0.6, 1.0)  # 蓝色
+			status_color = Color(0.2, 0.6, 1.0) # 蓝色
 		Status.OTHER_APPROVED:
 			status_text = "对方已通过"
-			status_color = Color(0.188, 0.514, 0.302)  # 绿色
+			status_color = Color(0.188, 0.514, 0.302) # 绿色
 		Status.OTHER_REJECTED:
 			status_text = "对方已拒绝"
-			status_color = Color(0.851, 0.275, 0.275)  # 红色
+			status_color = Color(0.851, 0.275, 0.275) # 红色
 	
 	$MarginContainer/HBoxContainer/StatusLabel.text = status_text
 	$MarginContainer/HBoxContainer/StatusLabel.add_theme_color_override("font_color", status_color)
@@ -69,6 +73,9 @@ func _update_buttons() -> void:
 	var show_buttons = _status == Status.PENDING
 	$MarginContainer/HBoxContainer/ButtonContainer/ApproveButton.visible = show_buttons
 	$MarginContainer/HBoxContainer/ButtonContainer/RejectButton.visible = show_buttons
+	if _status == Status.REJECTED:
+		$MarginContainer/HBoxContainer/ButtonContainer/RejectButton.text = "解除"
+		$MarginContainer/HBoxContainer/ButtonContainer/RejectButton.visible = true
 
 func get_request_info() -> Dictionary:
 	return {
@@ -80,20 +87,28 @@ func get_request_info() -> Dictionary:
 	}
 
 func _on_approve_button_pressed() -> void:
-	_status = Status.WAITING_OTHER
-	_approval_time = Time.get_datetime_string_from_system().split(".")[0]
-	$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
-	_update_status_display()
-	_update_buttons()
-	approved.emit()
+	_status = Status.APPROVED
+	if await Network.add_friends_async([_uid]):
+		_approval_time = Time.get_datetime_string_from_system().split(".")[0]
+		$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
+		_update_status_display()
+		_update_buttons()
+		approved.emit()
+	else:
+		PopupManager.show_message("网络错误，请重试", "提示")
+	pass
 
 func _on_reject_button_pressed() -> void:
 	_status = Status.REJECTED
-	_approval_time = Time.get_datetime_string_from_system().split(".")[0]
-	$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
-	_update_status_display()
-	_update_buttons()
-	rejected.emit()
+	if await Network.refuse_friends_async(_uid):
+		_approval_time = Time.get_datetime_string_from_system().split(".")[0]
+		$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
+		_update_status_display()
+		_update_buttons()
+		rejected.emit()
+	else:
+		PopupManager.show_message("网络错误，请重试", "提示")
+	pass
 
 # 更新为其他状态（等待对方通过、对方已通过、对方已拒绝）
 func update_other_status(new_status: Status) -> void:

@@ -35,6 +35,8 @@ func _on_tb_return_pressed() -> void:
 # 注册
 func _on_btn_register_pressed() -> void:
 	print("register")
+	if usernameEdit.text.is_empty():
+		await Network.authenticate_device("",true)
 	if not checkValidity():
 		return
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text,"",true):

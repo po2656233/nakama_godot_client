@@ -1,7 +1,5 @@
+AudioStreamPlayer
 TextureButton
+HBoxContainer
 Button
 VBoxContainer
-VScrollBar
-ItemList
-ScrollContainer
-Control

@@ -14,12 +14,13 @@ signal popup_closed(popup_id: String)
 # 预加载场景
 var message_scene = preload("res://scenes/element/popup/message_popup.tscn")
 var confirm_scene = preload("res://scenes/element/popup/confirm_popup.tscn")
-
+var dynamic_scene = preload("res://scenes/element/popup/dynamic_text.tscn")
 
 
 # 当前活动的弹窗
 var active_popups: Dictionary = {}
 var canvas_layer: CanvasLayer
+var dynamic_text:Label
 var is_visible: bool = false
 ## 初始化
 func _ready() -> void:
@@ -29,6 +30,17 @@ func _ready() -> void:
 	canvas_layer = CanvasLayer.new()
 	canvas_layer.layer = 100  # 设置一个较高的层级
 	add_child(canvas_layer)
+	dynamic_text = dynamic_scene.instantiate()
+	canvas_layer.add_child(dynamic_text)
+
+
+## 显示普通消息弹窗
+func show_dynamic(message: String,speed:float=200.0) -> void:
+	dynamic_text.display_text(message)  # 文本会自动居中显示
+	dynamic_text.set_speed(speed)
+	is_visible = true
+	pass
+
 
 ## 显示普通消息弹窗
 func show_message(message: String, title: String = "提示", auto_close:bool=true) -> void:

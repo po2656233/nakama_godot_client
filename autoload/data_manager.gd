@@ -88,34 +88,39 @@ func add_channel_list(uid: String, value:String) -> void:
 
 
 # 设置数据
-func add_chat_history(channelId:String, msg) -> int:
+func add_chat_history(uid:String, channelId:String, msg) -> int:
 	# 如果 chat_key 不存在，创建一个字典
-	if not cached_data.has(chat_key):
-		cached_data[chat_key] = {}
+	var key = chat_key+uid
+	if not cached_data.has(key):
+		cached_data[key] = {}
 	
 	# 如果 channelId 不存在，创建一个数组
-	if not cached_data[chat_key].has(channelId):
-		cached_data[chat_key][channelId] = []
+	if not cached_data[key].has(channelId):
+		cached_data[key][channelId] = []
 	
 	# 添加消息到数组 
 	if msg.channel_id != "" and msg.channel_id != channelId:
 		push_error("channelId 不匹配，无法添加消息到缓存中。")
 		return -1
 	msg.channel_id = ""
-	cached_data[chat_key][channelId].append(msg._to_string())
+	cached_data[key][channelId].append(msg._to_string())
 	# print("保存消息的数据 键:", channelId, " 值:", msg) 
 	save_data()  # 每次设置数据后 自动保存
-	return cached_data[chat_key][channelId].size()
+	return cached_data[key][channelId].size()
 
-# 添加申请数据 
+# 添加申请数据  
 func add_uid_approval(uid:String, approvalData:Dictionary) -> int:
 	var key = uid_approval_key + uid
 	if not cached_data.has(key):
 		cached_data[key] = []
 	
-	for approval in cached_data[key]:
-		if approval.name == approvalData.name:
-			return cached_data[key].size()
+	var count = cached_data[key].size()
+	for i in range(count-1,-1,-1):
+		if cached_data[key][i].name == approvalData.name:
+			cached_data[key][i] = approvalData
+			print("更新申请数据")
+			return count
+	print("新增申请数据")
 	cached_data[key].append(approvalData)
 	save_data()  # 每次设置数据后 自动保存
 	return cached_data[key].size()
@@ -128,16 +133,17 @@ func get_uid_approval(uid:String) -> Array:
 	return cached_data[key]
 
 
-func set_chat_history(channelId:String, msgList) -> void:
+func set_chat_history(uid:String,channelId:String, msgList) -> void:
 	# 如果 chat_key 不存在，创建一个字典
-	if not cached_data.has(chat_key):
-		cached_data[chat_key] = {}
+	var key = chat_key+uid
+	if not cached_data.has(key):
+		cached_data[key] = {}
 	
 	# 如果 channelId 不存在，创建一个数组
-	if not cached_data[chat_key].has(channelId):
-		cached_data[chat_key][channelId] = []
+	if not cached_data[key].has(channelId):
+		cached_data[key][channelId] = []
 	# 添加消息到数组 
-	cached_data[chat_key][channelId] = msgList
+	cached_data[key][channelId] = msgList
 	# print("保存消息的数据 键:", channelId, " 值:", msg) 
 	save_data()  # 每次设置数据后 自动保存
 
@@ -153,14 +159,15 @@ func get_channel_list(uid: String)-> Array:
 	return cached_data[key]
 
 # 获取聊天记录
-func get_chat_history(channelId:String, default_value = null):
-	if not cached_data.has(chat_key):
+func get_chat_history(uid:String, channelId:String, default_value = null):
+	var key = chat_key+uid
+	if not cached_data.has(key):
 		return default_value
-	if not cached_data[chat_key].has(channelId):
+	if not cached_data[key].has(channelId):
 		return default_value
 
 	var msgList = []
-	for message in cached_data[chat_key][channelId]:
+	for message in cached_data[key][channelId]:
 		var msg =message  if not (message is String) else parse_message(message)
 		msgList.append(msg)
 	return msgList

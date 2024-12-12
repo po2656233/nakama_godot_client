@@ -11,7 +11,7 @@ signal closed
 @export var auto_close: bool = false  # 是否自动关闭
 @export var close_delay: float = 1.0  # 自动关闭延迟时间(秒)
 @export var show_animation: bool = true  # 是否显示动画
-@export var animation_duration: float = 0.2  # 动画持续时间
+@export var animation_duration: float = 0.4  # 动画持续时间
 
 # 内部变量
 var _title: String = ""

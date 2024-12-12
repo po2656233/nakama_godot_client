@@ -3,8 +3,7 @@ extends Control
 @onready var usernameEdit = $Panel/VBoxContainer/HBoxContainerUser/LineEdit
 @onready var passwordEdit = $Panel/VBoxContainer/HBoxContainerPsw/LineEdit
 @onready var checkbox = $Panel/VBoxContainer/HBoxContainerRead/CheckBox
-@onready var settings_scene = $Panel/Setting
-
+@onready var settings = $Setting
 # 微信登录
 const WECHAT_APPID = "wxcf2136ff70f7726a"
 const REDIRECT_URI = "http://60.205.90.152:8080/callback"
@@ -14,8 +13,11 @@ var http_request: HTTPRequest
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	settings.emailBtn.visible = false
+	settings.notifyBtn.visible = false
+	
+	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
 	SceneManager.set_current_scene("login")
-
 	var ret = await Network.restore_session()
 	if not ret:
 		Network.initialize_client()

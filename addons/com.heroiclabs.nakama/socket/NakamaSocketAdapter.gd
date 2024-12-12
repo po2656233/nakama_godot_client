@@ -40,7 +40,10 @@ func close():
 func connect_to_host(p_uri : String, p_timeout : int):
 	_timeout = p_timeout
 	_start = Time.get_unix_time_from_system()
-	var err = _ws.connect_to_url(p_uri)
+	############测试时使用 todo[注意:正式环境请关闭]########################
+	var tls_options = TLSOptions.client_unsafe()
+	######################################################################
+	var err = _ws.connect_to_url(p_uri,tls_options)
 	if err != OK:
 		logger.debug("Error connecting to host %s" % p_uri)
 		call_deferred("emit_signal", "received_error", err)

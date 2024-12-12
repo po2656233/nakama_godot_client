@@ -1,9 +1,9 @@
 extends Node
 
 # 邮件数据结构
-
 signal mail_claimed(mail_id: int)
-signal mail_selected(mail_data: Dictionary)
+@warning_ignore("unused_signal")
+signal mail_selected(mail_data: Dictionary) #无需理会,已全局有使用
 var mail_list = [
 	{
 		"id": 1,

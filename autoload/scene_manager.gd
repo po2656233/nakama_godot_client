@@ -95,9 +95,7 @@ const TRANSITION_TYPES = {
 	},
 }
 
-
-###############################################################
-func _ready():
+func _init():
 	# 添加场景字典
 	var scenes = {
 		"login": "res://scenes/login.tscn",
@@ -105,7 +103,8 @@ func _ready():
 		"home": "res://scenes/home.tscn",
 		"game": "res://scenes/game.tscn",
 		"match": "res://scenes/match.tscn",
-		# "email":"res://scenes/email/mail.tscn"
+		"email":"res://scenes/email/mail.tscn",
+		"approval":"res://scenes/approval/approval_form.tscn"
 		# # 如果有重复的场景名称，将被跳过并输出警告
 		# "login": "res://scenes/another_login.tscn"  ,
 	}
@@ -113,6 +112,24 @@ func _ready():
 	add_scenes_from_dict(scenes)
 	scan_scenes_directory("res://scenes")
 	print_all_scenes()
+
+###############################################################
+# func _ready():
+# 	# 添加场景字典
+# 	var scenes = {
+# 		"login": "res://scenes/login.tscn",
+# 		"register": "res://scenes/register.tscn",
+# 		"home": "res://scenes/home.tscn",
+# 		"game": "res://scenes/game.tscn",
+# 		"match": "res://scenes/match.tscn",
+# 		# "email":"res://scenes/email/mail.tscn"
+# 		# # 如果有重复的场景名称，将被跳过并输出警告
+# 		# "login": "res://scenes/another_login.tscn"  ,
+# 	}
+
+# 	add_scenes_from_dict(scenes)
+# 	scan_scenes_directory("res://scenes")
+# 	print_all_scenes()
 
 ###############################################################
 # 获取转换效果的键值
@@ -291,6 +308,7 @@ func switch_to_scene(scene_name: String, transition_way:String = "conical", diss
 
 func _transition_scene(scene_path: String,  transition_way:String = "conical",dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_path == "":
+		PopupManager.show_dynamic("场景路径为空")
 		push_error("场景路径为空")
 		return
 	var sceneObj = load(scene_path).instantiate()

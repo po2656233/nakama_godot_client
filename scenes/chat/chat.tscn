@@ -25,8 +25,28 @@ shadow_size = 10
 subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_72a8w"]
+line_spacing = 10.0
 font = SubResource("SystemFont_kqv1y")
+font_size = 25
 font_color = Color(0.682353, 0.72549, 0.380392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahplc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_orn7s"]
+bg_color = Color(0.129412, 0.290196, 0.380392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss6pv"]
+bg_color = Color(0.266667, 0.462745, 0.592157, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5o8v3"]
 bg_color = Color(0.380392, 0.321569, 0.0980392, 0.968627)
@@ -57,24 +77,6 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_orn7s"]
-bg_color = Color(0.129412, 0.290196, 0.380392, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahplc"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss6pv"]
-bg_color = Color(0.266667, 0.462745, 0.592157, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sg1j"]
 bg_color = Color(0.176471, 0.380392, 0.498039, 1)
@@ -119,45 +121,45 @@ Panel/styles/panel = SubResource("StyleBoxFlat_7gxk1")
 [sub_resource type="Theme" id="Theme_wvrv0"]
 CheckButton/icons/checked = null
 
-[sub_resource type="ImageTexture" id="ImageTexture_jqwve"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_p084e"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_h13iw"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_wb4a8"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5v26"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
 
-[sub_resource type="Theme" id="Theme_fxhsx"]
+[sub_resource type="ImageTexture" id="ImageTexture_jqwve"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6k7ck"]
-bg_color = Color(0.109804, 0.364706, 0.243137, 1)
+[sub_resource type="ImageTexture" id="ImageTexture_h13iw"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_p084e"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_wb4a8"]
+
+[sub_resource type="Theme" id="Theme_fxhsx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k16k0"]
 bg_color = Color(0.156863, 0.654902, 0.427451, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6k7ck"]
+bg_color = Color(0.109804, 0.364706, 0.243137, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apc2m"]
 draw_center = false
-
-[sub_resource type="ImageTexture" id="ImageTexture_xn5wv"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_x8wry"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_e3827"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_3noft"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8rtf"]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgtgl"]
-bg_color = Color(0.109804, 0.364706, 0.243137, 1)
+[sub_resource type="ImageTexture" id="ImageTexture_xn5wv"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_e3827"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_x8wry"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_3noft"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ol08g"]
 bg_color = Color(0.156863, 0.654902, 0.427451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgtgl"]
+bg_color = Color(0.109804, 0.364706, 0.243137, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8yms"]
 bg_color = Color(0.027451, 0.196078, 0.301961, 1)
@@ -172,18 +174,9 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1efha"]
-bg_color = Color(0.145098, 0.341176, 0.286275, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.607843, 0.623529, 0.607843, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_size = 5
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajf2a"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayyfq"]
 bg_color = Color(0.113725, 0.431373, 0.580392, 1)
@@ -211,9 +204,18 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajf2a"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1efha"]
+bg_color = Color(0.145098, 0.341176, 0.286275, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.607843, 0.623529, 0.607843, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 5
 
 [node name="Chat" type="Control"]
 layout_mode = 3
@@ -224,6 +226,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_b4wfc")
 script = ExtResource("2_m52is")
+toggle_button_path = null
+animate_transition = null
+transition_duration = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -239,10 +244,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_b7p85")
 
 [node name="Label" type="Label" parent="MarginContainer/Panel"]
 layout_mode = 1
-offset_left = 14.0
-offset_top = 8.0
-offset_right = 62.0
-offset_bottom = 36.0
+offset_left = 32.0
+offset_top = 5.0
+offset_right = 82.0
+offset_bottom = 40.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "聊天"
@@ -259,15 +264,15 @@ offset_bottom = -57.0
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "社交场"
-theme_override_colors/font_selected_color = Color(1, 0.843137, 0, 1)
 theme_override_colors/font_hovered_color = Color(0, 0.458824, 0.745098, 1)
+theme_override_colors/font_selected_color = Color(1, 0.843137, 0, 1)
 theme_override_font_sizes/font_size = 20
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ss6pv")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
-theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
-theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
-theme_override_styles/panel = SubResource("StyleBoxFlat_ss6pv")
 tab_alignment = 1
 current_tab = 2
 all_tabs_in_front = true
@@ -276,9 +281,10 @@ drag_to_rearrange_enabled = true
 [node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/world"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -286,7 +292,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
-tooltip_text = "聊天信息面板"
+tooltip_text = "世界面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
 change_mode = 1
@@ -319,6 +325,7 @@ offset_left = -4.0
 offset_right = 4.0
 offset_bottom = 8.0
 grow_horizontal = 2
+mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxFlat_1krri")
 icon = ExtResource("7_8p5lf")
 flat = true
@@ -329,6 +336,7 @@ expand_icon = true
 [node name="club" type="Control" parent="MarginContainer/Panel/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="HSplitContainerClub" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club"]
 layout_mode = 1
@@ -342,12 +350,13 @@ split_offset = 250
 [node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
 
 [node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "聊天信息面板"
+tooltip_text = "俱乐部面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
@@ -358,9 +367,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 5.0
-offset_right = 1.0
-offset_bottom = -4.0
+offset_right = 359.0
+offset_bottom = 530.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
@@ -381,6 +389,7 @@ anchor_right = 1.0
 offset_left = -50.0
 offset_bottom = 25.0
 grow_horizontal = 0
+mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxFlat_xbkeq")
 icon = ExtResource("7_8p5lf")
 flat = true
@@ -399,6 +408,8 @@ isClub = true
 [node name="Panel_clubs" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_bk1xq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs"]
@@ -416,16 +427,16 @@ layout_mode = 2
 tooltip_text = "打开或关闭添加俱乐部面板"
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_wvrv0")
-theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_icons/checked = SubResource("ImageTexture_jqwve")
-theme_override_icons/checked_disabled = SubResource("ImageTexture_p084e")
-theme_override_icons/unchecked = SubResource("ImageTexture_h13iw")
-theme_override_icons/unchecked_disabled = SubResource("ImageTexture_wb4a8")
+theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_x5v26")
+theme_override_icons/checked = SubResource("ImageTexture_jqwve")
+theme_override_icons/unchecked = SubResource("ImageTexture_h13iw")
+theme_override_icons/checked_disabled = SubResource("ImageTexture_p084e")
+theme_override_icons/unchecked_disabled = SubResource("ImageTexture_wb4a8")
 text = "俱乐部面板"
 alignment = 1
 clip_text = true
@@ -433,16 +444,17 @@ clip_text = true
 [node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "已添加的俱乐部列表"
+tooltip_text = "俱乐部列表"
 theme = SubResource("Theme_fxhsx")
-theme_override_styles/panel = SubResource("StyleBoxFlat_6k7ck")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k16k0")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6k7ck")
 script = ExtResource("4_3wj1b")
 listType = 1
 Del = true
 
 [node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="HSplitContainerFriends" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends"]
 layout_mode = 1
@@ -457,13 +469,14 @@ split_offset = 250
 [node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
 theme_override_constants/autohide = 5
 
 [node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "聊天信息面板"
+tooltip_text = "信息面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
@@ -485,7 +498,7 @@ focus_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-tooltip_text = "聊天信息面板"
+tooltip_text = "信息面板"
 
 [node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
 visible = false
@@ -500,6 +513,7 @@ offset_top = -7.0
 offset_right = 25.0
 offset_bottom = 27.0
 grow_horizontal = 2
+mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxFlat_apc2m")
 icon = ExtResource("7_8p5lf")
 flat = true
@@ -517,6 +531,8 @@ placeholder_text = "输入用户名(查找)"
 [node name="Panel_friends" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_bk1xq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends"]
@@ -533,19 +549,19 @@ size_flags_horizontal = 3
 layout_mode = 2
 tooltip_text = "打开或关闭添加好友面板"
 mouse_default_cursor_shape = 2
-theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
 theme_override_icons/checked = SubResource("ImageTexture_xn5wv")
-theme_override_icons/checked_disabled = SubResource("ImageTexture_x8wry")
 theme_override_icons/unchecked = SubResource("ImageTexture_e3827")
+theme_override_icons/checked_disabled = SubResource("ImageTexture_x8wry")
 theme_override_icons/unchecked_disabled = SubResource("ImageTexture_x8wry")
 theme_override_icons/checked_mirrored = SubResource("ImageTexture_3noft")
-theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
 text = "好友面板"
 alignment = 1
 clip_text = true
@@ -553,10 +569,11 @@ clip_text = true
 [node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "展示好友列表"
-theme_override_styles/panel = SubResource("StyleBoxFlat_hgtgl")
+tooltip_text = "好友列表"
 theme_override_styles/focus = SubResource("StyleBoxFlat_ol08g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_hgtgl")
 script = ExtResource("4_3wj1b")
+custom_color = Color(0.390667, 0.490507, 0.585071, 0.960784)
 
 [node name="input_area" type="PanelContainer" parent="MarginContainer/Panel"]
 custom_minimum_size = Vector2(0, 45)
@@ -578,6 +595,7 @@ theme_override_constants/separation = 8
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
 tooltip_text = "消息发送框"
 theme_override_colors/background_color = Color(0.0980392, 0.168627, 0.235294, 1)
 theme_override_colors/selection_color = Color(0.666667, 0.588235, 0.466667, 1)
@@ -587,24 +605,23 @@ caret_blink = true
 script = ExtResource("5_yrxgh")
 
 [node name="AttachmentButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer"]
-custom_minimum_size = Vector2(25, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 tooltip_text = "添加附件"
 text = "+"
 
 [node name="SendButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 3
 tooltip_text = "发送输入框文本至指定渠道"
-theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0.866667, 0.964706, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_1efha")
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
+theme_override_colors/font_focus_color = Color(0, 0.866667, 0.964706, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ayyfq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")
-theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1efha")
 text = "发送"
 
 [connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
