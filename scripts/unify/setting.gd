@@ -3,6 +3,7 @@ extends Control
 @onready var menuBtn = $HBoxContainerRightTop/MB_setting
 @onready var notifyBtn = $btn_what
 @onready var emailBtn = $HBoxContainerRightTop/btn_email
+@onready var fullBtn = $HBoxContainerRightTop/btn_full
 
 @onready var bgMusic = $music/background
 @onready var sendMusic = $music/send
@@ -157,4 +158,10 @@ func _on_look_notify()->void:
 func _on_look_email()->void:
 	SceneManager.show_scene_in_center("email")
 	# FancyFade.wipe_left(mail_scene.instantiate(),0.5)
+	pass
+#######################################
+func showNotify(isShow:bool):
+	notifyBtn.visible = isShow
+	emailBtn.visible = isShow
+	# fullBtn.visible = isShow
 	pass

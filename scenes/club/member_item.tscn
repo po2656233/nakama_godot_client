@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://riqfmggkqpf6"]
+
+[ext_resource type="Script" path="res://scenes/club/member_item.gd" id="1_xxxxx"]
+
+[node name="MemberItem" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 70)
+script = ExtResource("1_xxxxx")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "用户名"
+
+[node name="Note" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+text = "(备注)"
+
+[node name="Status" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "状态"
+
+[node name="ManageButton" type="MenuButton" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "管理"

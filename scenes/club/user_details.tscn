@@ -1,0 +1,224 @@
+[gd_scene load_steps=2 format=3 uid="uid://riqfmggkqpf8"]
+
+[ext_resource type="Script" path="res://scenes/club/user_details.gd" id="1_xxxxx"]
+
+[node name="UserDetails" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xxxxx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.117647, 0.231373, 0.2, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -15.5
+offset_right = 60.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "返回"
+
+[node name="Title" type="Label" parent="VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -13.0
+offset_right = 43.5
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "用户详情"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ContentContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="BasicInfo" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Avatar" type="TextureRect" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Nickname" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "昵称"
+
+[node name="Signature" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+text = "这是个性签名"
+autowrap_mode = 3
+
+[node name="Stats" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Level" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+text = "等级"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="Coins" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Coins"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+text = "金币"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Coins"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="Rank" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Rank"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+text = "排名"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Rank"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="GameStats" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "游戏统计"
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="TotalGames" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "总场次：0"
+
+[node name="WinRate" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "胜率：0%"
+
+[node name="HighestScore" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "最高分：0"
+
+[node name="AverageScore" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "平均分：0"

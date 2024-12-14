@@ -54,8 +54,8 @@ func add_test_data():
 	# 添加一些随机玩家数据用于测试
 	var test_names = ["玩家A", "玩家B", "玩家C", "玩家D", "玩家E"]
 	for type in RankType.values():
-		for name in test_names:
-			add_score(type, name, randi_range(1000, 10000))
+		for name1 in test_names:
+			add_score(type, name1, randi_range(1000, 10000))
 
 # 添加分数
 func add_score(type: RankType, player_name: String, score: int):

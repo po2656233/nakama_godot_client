@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://riqfmggkqpf3"]
+
+[ext_resource type="Script" path="res://scenes/club/group_item.gd" id="1_xxxxx"]
+[ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://asset/currency/email.svg" id="2_alo0b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqodf"]
+bg_color = Color(0.0191054, 0.388241, 0.574974, 1)
+
+[node name="GroupItem" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 80)
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_yqodf")
+script = ExtResource("1_xxxxx")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GroupIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GroupName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "群组名称"
+
+[node name="NotificationIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 10
+texture = ExtResource("2_alo0b")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MemberCount" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "成员数: 0"
+
+[node name="ManageButton" type="MenuButton" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "管理"
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]

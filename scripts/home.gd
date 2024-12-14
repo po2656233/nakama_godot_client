@@ -8,8 +8,7 @@ var game_scene = load("res://scenes/game.tscn")
 
 
 func _ready():
-	settings.emailBtn.visible = true
-	settings.notifyBtn.visible = true
+	settings.showNotify(true)
 	SceneManager.set_current_scene("home")
 	print("当前运行的节点名",SceneManager.get_running_scene_name())
 	WindowDrag.register_drag_zone(self)
@@ -52,3 +51,5 @@ func _on_btn_match_pressed() -> void:
 func _on_btn_start_pressed() -> void:
 	FancyFade.vertical_paint_brush(game_scene.instantiate())
 	pass # Replace with function body.
+
+

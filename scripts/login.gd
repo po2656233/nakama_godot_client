@@ -13,8 +13,7 @@ var http_request: HTTPRequest
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	settings.emailBtn.visible = false
-	settings.notifyBtn.visible = false
+	settings.showNotify(false)
 	
 	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
 	SceneManager.set_current_scene("login")

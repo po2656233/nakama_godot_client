@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=56 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/unify/itemList.gd" id="4_3wj1b"]
 [ext_resource type="Script" path="res://scripts/unify/color_change_control.gd" id="5_vsklf"]
 [ext_resource type="Script" path="res://scripts/unify/TE_send.gd" id="5_yrxgh"]
+[ext_resource type="PackedScene" uid="uid://riqfmggkqpf4" path="res://scenes/club/group_list.tscn" id="7_0cs3x"]
 [ext_resource type="Texture2D" uid="uid://dbfy6a2vu8372" path="res://asset/chat/upmore1.svg" id="7_8p5lf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7p85"]
@@ -141,8 +142,25 @@ bg_color = Color(0.156863, 0.654902, 0.427451, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6k7ck"]
 bg_color = Color(0.109804, 0.364706, 0.243137, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_35mub"]
+bg_color = Color(0.0823529, 0.270588, 0.568627, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqjww"]
+bg_color = Color(0.832413, 0.514982, 0.197963, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ew0nf"]
+bg_color = Color(0.831373, 0.513726, 0.196078, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iml2m"]
+bg_color = Color(0.144063, 0.144063, 0.144062, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivj4w"]
+bg_color = Color(0.440972, 0.256756, 0.0646954, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apc2m"]
 draw_center = false
+
+[sub_resource type="ImageTexture" id="ImageTexture_qd0pn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8rtf"]
 draw_center = false
@@ -160,6 +178,21 @@ bg_color = Color(0.156863, 0.654902, 0.427451, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgtgl"]
 bg_color = Color(0.109804, 0.364706, 0.243137, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2w1l2"]
+bg_color = Color(0.436567, 0.582596, 0.951561, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7agav"]
+bg_color = Color(0.605019, 0.0340473, 0.619093, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wpep7"]
+bg_color = Color(0.16966, 0.399681, 0.75114, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3cxro"]
+bg_color = Color(0.880956, 0.454744, 0.448274, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_256f6"]
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8yms"]
 bg_color = Color(0.027451, 0.196078, 0.301961, 1)
@@ -226,9 +259,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_b4wfc")
 script = ExtResource("2_m52is")
-toggle_button_path = null
-animate_transition = null
-transition_duration = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -274,7 +304,7 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
 tab_alignment = 1
-current_tab = 2
+current_tab = 1
 all_tabs_in_front = true
 drag_to_rearrange_enabled = true
 
@@ -304,6 +334,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 11.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
@@ -334,7 +366,6 @@ vertical_icon_alignment = 0
 expand_icon = true
 
 [node name="club" type="Control" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -367,13 +398,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 359.0
-offset_bottom = 530.0
+offset_top = 5.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -406,7 +438,7 @@ placeholder_text = "查找俱乐部"
 isClub = true
 
 [node name="Panel_clubs" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(255, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
@@ -423,6 +455,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 
 [node name="CheckButton" type="CheckButton" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer"]
+visible = false
 layout_mode = 2
 tooltip_text = "打开或关闭添加俱乐部面板"
 mouse_default_cursor_shape = 2
@@ -442,17 +475,28 @@ alignment = 1
 clip_text = true
 
 [node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "俱乐部列表"
 theme = SubResource("Theme_fxhsx")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k16k0")
 theme_override_styles/panel = SubResource("StyleBoxFlat_6k7ck")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_35mub")
+theme_override_styles/selected = SubResource("StyleBoxFlat_lqjww")
+theme_override_styles/selected_focus = SubResource("StyleBoxFlat_ew0nf")
+theme_override_styles/cursor_unfocused = SubResource("StyleBoxFlat_iml2m")
+theme_override_styles/cursor = SubResource("StyleBoxFlat_ivj4w")
 script = ExtResource("4_3wj1b")
 listType = 1
 Del = true
 
+[node name="GroupList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer" instance=ExtResource("7_0cs3x")]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -556,6 +600,7 @@ theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1
 theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_icons/icon = SubResource("ImageTexture_qd0pn")
 theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
 theme_override_icons/checked = SubResource("ImageTexture_xn5wv")
 theme_override_icons/unchecked = SubResource("ImageTexture_e3827")
@@ -572,6 +617,11 @@ size_flags_vertical = 3
 tooltip_text = "好友列表"
 theme_override_styles/focus = SubResource("StyleBoxFlat_ol08g")
 theme_override_styles/panel = SubResource("StyleBoxFlat_hgtgl")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_2w1l2")
+theme_override_styles/selected = SubResource("StyleBoxFlat_7agav")
+theme_override_styles/selected_focus = SubResource("StyleBoxFlat_wpep7")
+theme_override_styles/cursor_unfocused = SubResource("StyleBoxFlat_3cxro")
+theme_override_styles/cursor = SubResource("StyleBoxFlat_256f6")
 script = ExtResource("4_3wj1b")
 custom_color = Color(0.390667, 0.490507, 0.585071, 0.960784)
 
@@ -595,7 +645,7 @@ theme_override_constants/separation = 8
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
+size_flags_stretch_ratio = 6.0
 tooltip_text = "消息发送框"
 theme_override_colors/background_color = Color(0.0980392, 0.168627, 0.235294, 1)
 theme_override_colors/selection_color = Color(0.666667, 0.588235, 0.466667, 1)
@@ -613,6 +663,7 @@ text = "+"
 [node name="SendButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 tooltip_text = "发送输入框文本至指定渠道"
 theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)

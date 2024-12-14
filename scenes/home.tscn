@@ -301,8 +301,6 @@ metadata/_edit_group_ = true
 layout_mode = 2
 size_flags_vertical = 3
 toggle_button_path = NodePath("btn_popup")
-animate_transition = null
-transition_duration = null
 
 [node name="btn_popup" type="Button" parent="VBoxContainer/Chat"]
 custom_minimum_size = Vector2(60, 45)

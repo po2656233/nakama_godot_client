@@ -1,0 +1,110 @@
+[gd_scene load_steps=3 format=3 uid="uid://riqfmggkqpf7"]
+
+[ext_resource type="Script" path="res://scenes/club/member_list.gd" id="1_xxxxx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prwc2"]
+bg_color = Color(0.294118, 0.556863, 0.454902, 1)
+
+[node name="MemberList" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xxxxx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.294118, 0.556863, 0.454902, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -15.5
+offset_right = 60.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "返回"
+
+[node name="GroupName" type="Label" parent="VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -13.0
+offset_right = 43.5
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "群组名称"
+horizontal_alignment = 1
+
+[node name="AddButton" type="Button" parent="VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -15.5
+offset_right = -10.0
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "添加成员"
+
+[node name="SearchBar" type="Panel" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/SearchBar"]
+visible = false
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SearchInput" type="LineEdit" parent="VBoxContainer/SearchBar/MarginContainer"]
+visible = false
+layout_mode = 2
+placeholder_text = "搜索成员..."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_prwc2")
+
+[node name="MemberContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

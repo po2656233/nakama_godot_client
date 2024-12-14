@@ -137,7 +137,7 @@ func _on_item_selected(index: int):
 
 	var friend = self.get_item_metadata(selected_index)
 	if friend:
-		print("选中项索引：", index,"-->", friend.user.username)
+		print("选中项索引：", index,"-->", friend.user)
 		await Network.set_current_channel(friend.channel, true) 
 	pass
  
@@ -340,4 +340,3 @@ func toggle_color():
 	else:
 		tween.tween_property(self, "modulate", custom_color, 0.3)
 	pass
-

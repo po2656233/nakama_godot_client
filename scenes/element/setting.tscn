@@ -15,7 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://bcomw60dylot" path="res://asset/music/messagecoming.mp3" id="9_ermvf"]
 [ext_resource type="AudioStream" uid="uid://ssac4vmysowm" path="res://asset/music/send.mp3" id="12_nc226"]
 [ext_resource type="AudioStream" uid="uid://crmef6a2tkncv" path="res://asset/music/welcome.mp3" id="15_6qa6r"]
-[ext_resource type="AudioStream" uid="uid://c1bcumonqjkun" path="res://asset/music/recv1.mp3" id="16_1uxva"]
+[ext_resource type="AudioStream" uid="uid://g0ar5ds4fm2p" path="res://asset/music/recv.mp3" id="16_37b2e"]
 [ext_resource type="AudioStream" uid="uid://chojs5lx178qm" path="res://asset/music/dingding.mp3" id="17_sy3nu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yi3xu"]
@@ -79,6 +79,7 @@ normal_texture = ExtResource("6_xkbed")
 shake_texture = ExtResource("8_7btfg")
 
 [node name="btn_full" type="Button" parent="HBoxContainerRightTop"]
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
@@ -166,7 +167,7 @@ stream = ExtResource("15_6qa6r")
 script = ExtResource("4_0c3ci")
 
 [node name="recv" type="AudioStreamPlayer" parent="music"]
-stream = ExtResource("16_1uxva")
+stream = ExtResource("16_37b2e")
 
 [node name="dingding" type="AudioStreamPlayer" parent="music"]
 stream = ExtResource("17_sy3nu")

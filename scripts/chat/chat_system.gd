@@ -36,12 +36,30 @@ enum MessageKind {
 # 使用字典存储所有channel的消息历史
 var message_id_cache: Dictionary = {} # Dictionary<String, Dictionary> 用于快速查找消息ID
 var current_channel_id: String = ""
+var messages_container:VBoxContainer
 
-@onready var messages_container = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
+@onready var friend_container = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
+@onready var club_container = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
+@onready var world_container = $MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer/talkhistory
+
+
 @onready var sendTextEdit = $MarginContainer/Panel/input_area/HBoxContainer/TextEdit
 @onready var send_button = $MarginContainer/Panel/input_area/HBoxContainer/SendButton
 
 ##############聊天系统(part1 end)#####################
+
+func changePanel(tab):
+	var kind = tab as MessageKind
+	match kind:
+		MessageKind.WORLD:
+			messages_container = world_container
+		MessageKind.CHAT:
+			messages_container = friend_container
+		MessageKind.CLUB:
+			messages_container = club_container
+	pass
+	
+	
 
 
 ################################################################
@@ -49,6 +67,8 @@ var current_channel_id: String = ""
 ################################################################
 # 添加新消息
 func add_message(chanId: String, msgId: String, content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0):
+	if messages_container == null:
+		return
 	if timestamp == 0:
 		timestamp = int(Time.get_unix_time_from_system())
 	
@@ -312,7 +332,7 @@ func message_to_show(msg:NakamaAPI.ApiChannelMessage):
 	var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 	add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
 	ensure_scroll_to()
- 
+
 # 获取channel的最后一条消息
 func get_channel_last_message(channel_id: String) -> NakamaAPI.ApiChannelMessage:
 	var messages = get_channel_messages(channel_id)

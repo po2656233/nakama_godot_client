@@ -5,7 +5,7 @@ signal fullscreenSIG(is_fullscreen: bool)
 
 
 @export var animate_transition: bool = true
-@export var transition_duration: float = 0.1
+@export var transition_duration: float = 0.3
 
 var is_fullscreen := false
 var is_rotated = false

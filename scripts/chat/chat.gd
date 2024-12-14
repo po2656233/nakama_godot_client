@@ -4,8 +4,6 @@ extends "res://scripts/chat/chat_system.gd"
 @onready var addclubPanle = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/AddClub
 @onready var friendListItem = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList
 @onready var clubListItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList
-@onready var findFriend = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/AddFirends
-@onready var findClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/AddClub
 
 @onready var btn_upmoreChat = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore
 @onready var btn_upmoreClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore
@@ -20,8 +18,8 @@ enum ScrollType {
 	MIDDLE, # 滚动到中间 
 	BOTTOM # 滚动到最底部
 }
-var onlineColor = Color(0.605, 0.898, 0.636, 0.961)
-var leaveColor = Color(0.391, 0.491, 0.585, 0.961)
+var onlineColor = Color(0.605, 0.6, 0.636, 0.961)
+var leaveColor = Color(0.391, 0.491, 0.585, 0.5)
 var is_first = true
 
 var button: Button
@@ -45,7 +43,7 @@ func _ready():
 		button.text = "全屏切换"
 		button.pressed.connect(_on_fullscreen_toggle)
 		add_child(button)
-		
+
 	set_rotation_pivot()		# 设置旋转中心点
 	# 加载本地历史消息
 	load_local_history()
@@ -53,9 +51,13 @@ func _ready():
 	# 获取好友列表
 	get_friends_list()
 
+	# 获取群组
+	get_club_list()
+
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
 	SignalManager.FreshFriendListSIG.connect(_on_fresh_friend_list) #刷新好友列表
+	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) #刷新好友列表
 	Network.changeChannelSIG.connect(_on_change_channel)
 	 
 	Network._socket.received_channel_presence.connect(_on_channel_presence)
@@ -97,11 +99,16 @@ func _on_fresh_friend_list():
 	get_friends_list()
 	pass
 
+func _on_fresh_club_list():
+	get_club_list()
+	pass
+
 # 切换频道
 func _on_change_channel(channel_id):
 	print("当前频道:", channel_id)
 	current_channel_id = channel_id
 	isToTop = false 
+	changePanel(mainPanle.current_tab)	
 	refresh_current_channel_display()
 	pass
 
@@ -111,7 +118,8 @@ func _on_received_message(msg):
 		return
 	print("收到消息:", msg.message_id)
 	if add_message_to_history(msg.channel_id, msg):
-		SignalManager.RecvMessageSIG.emit(msg)
+		if msg.sender_id != uid:
+			SignalManager.RecvMessageSIG.emit(msg)
 		message_to_show(msg)
 	pass
 
@@ -233,6 +241,7 @@ func get_friends_list():
 		friendListItem.clear()
 		var friendIds = []
 		var friendNames = []
+		DataManager.get_instance().remove_friend_all(uid)
 		for friend in friendlist.friends:
 			var ret = await Network.add_channel_async(friend.user.id)
 			if ret:
@@ -243,6 +252,7 @@ func get_friends_list():
 					var friend_status = "在线" if user.online else "离线"
 					friendIds.append(user.id)
 					friendNames.append(username)
+					DataManager.get_instance().add_uid_friend(uid,user.serialize()) 
 					if user.display_name:
 						username += '(' + user.display_name + ')'
 					# 显示好友在线状态
@@ -281,14 +291,34 @@ func get_friends_list():
 				"status":friend.state,
 			})
 			pass
-		# 
-		# if is_first and 0 < friendIds.size():
-		# 	is_first = false
-		# 	await Network.follow_users_async(friendIds,friendNames)
 		await Network.update_status_async("online")
 	print("获取好友列表")
 	pass
 ####
+func get_club_list():
+	var result = await Network.get_group_list()
+	if result == null:
+		return
+	print("群组数量:",result.groups.size())
+	clubListItem.clear() 
+	for group in result.groups:
+		print("群组名称:",group.name)
+		var ret = await Network.add_channel_async(group.id,2)
+		if ret:
+			var index = clubListItem.add_item(group.name)
+			var texture = await Network.load_texture_async(group.avatar_url)
+			if texture:
+				clubListItem.set_item_icon(index, texture)
+			clubListItem.set_item_custom_fg_color(index, onlineColor if group.open else leaveColor )
+			clubListItem.set_item_metadata(index, {
+							"channel": ret,
+							"user": group,  
+							"online":group.open,
+						})
+			DataManager.get_instance().add_uid_club(uid,group.serialize()) 
+	pass
+
+
 
 #######################弹窗按钮旋转###############################
 func showLoadMore(isVisible: bool):

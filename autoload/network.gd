@@ -43,8 +43,7 @@ var DEFAULT_MESSAGE = {
 # 初始化
 func _ready() -> void:
 	connection_failed.connect(_on_connection_failed)
-	# Initialize _client
-	initialize_client()
+	# initialize_client()
 
 		
 
@@ -349,7 +348,7 @@ func remove_session() -> void:
 func restore_session() -> bool:
 	var session_token = load_session_token()
 	print("当前的 _session: " + session_token)
-	if session_token.is_empty():
+	if session_token.is_empty() or not _client:
 		return false
 		
 	var result = await NakamaClient.restore_session(session_token)
@@ -467,6 +466,17 @@ func get_friends_list():
 		print("%s is online with status: %s" % [presence.user_id, presence.status])
 	print("好友列表: ", ret)
 	return result
+
+
+# 获取群组列表
+func get_group_list():
+	var result = await _client.list_groups_async(_session)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return
+	print("群组列表: ", result)
+	return result
+
 		
 # 添加好友
 func add_friends_async(friend_ids: Array)->bool:
@@ -480,9 +490,27 @@ func add_friends_async(friend_ids: Array)->bool:
 	SignalManager.FreshFriendListSIG.emit()
 	return true
 
-func add_channel_async(user_id: String):
+		
+# 添加好友 
+func create_group_async(name1: String, description : String = "", avatar_url = null)->bool:
+	var result = await _client.create_group_async(_session, name1, description, avatar_url)
+	if result.is_exception():
+		print("Error add_friends_async: ", result.get_exception().message)
+		return false
+	print("添加好友: ", result)
+	SignalManager.FreshClubListSIG.emit()
+	return true
+
+func add_channel_async(targetId: String,chanType:int = 0):
 	if _socket:
-		var result = await _socket.join_chat_async(user_id, NakamaSocket.ChannelType.DirectMessage,true,true)
+		var chType = null
+		if chanType == 1:
+			chType = NakamaSocket.ChannelType.Room
+		elif chanType == 2:
+			chType = NakamaSocket.ChannelType.Group
+		else:
+			chType = NakamaSocket.ChannelType.DirectMessage
+		var result = await _socket.join_chat_async(targetId,chType,true,true)
 		if result.is_exception():
 			push_error("Error add_channel_async: ", result.get_exception().message)
 			return null
@@ -490,9 +518,20 @@ func add_channel_async(user_id: String):
 		return result
 	return null
 
+func add_group_async(group_id: String):
+	var result = await _client.join_group_async(_session,group_id)
+	if result.is_exception():
+		push_error("Error add_group_async: ", result.get_exception().message)
+		return null
+	print("添加群组: ", result)
+	return result
+
+
+
 # 订阅好友
 func follow_users_async(p_ids : PackedStringArray, p_usernames : PackedStringArray):
 	if _socket:
+		await _socket.unfollow_users_async(p_ids)
 		var result = await _socket.follow_users_async(p_ids, p_usernames)
 		if result.is_exception():
 			push_error("Error follow_users_async: ", result.get_exception().message)
@@ -562,6 +601,8 @@ func reback_channel_message(channel_id:String,message_id: String,data:Dictionary
 
 # 异步加载 Texture2D
 func load_texture_async(url: String) :
+	if url.is_empty():
+		return null
 	var request = HTTPRequest.new()
 	add_child(request)
 	

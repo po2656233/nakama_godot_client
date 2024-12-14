@@ -17,3 +17,6 @@ signal RecvMessageSIG(args)
 
 @warning_ignore("unused_signal")
 signal FreshFriendListSIG() 
+
+@warning_ignore("unused_signal")
+signal FreshClubListSIG() 

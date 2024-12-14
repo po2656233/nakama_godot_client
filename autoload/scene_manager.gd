@@ -311,9 +311,11 @@ func _transition_scene(scene_path: String,  transition_way:String = "conical",di
 		PopupManager.show_dynamic("场景路径为空")
 		push_error("场景路径为空")
 		return
-	var sceneObj = load(scene_path).instantiate()
-	if not  sceneObj:
+	print("切换场景: ", scene_path)
+	var resObj = load(scene_path)
+	if not  resObj:
 		return
+	var sceneObj = resObj.instantiate()
 	if transition_way == "":
 		transition_way = "conical"
 	if transition_way == "custom":

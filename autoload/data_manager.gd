@@ -7,6 +7,8 @@ const SAVE_PATH = "user://game_data.save"
 const chat_key = "chat_history_"
 const uid_channel_key = "uid_channel_"
 const uid_approval_key = "uid_approval_"
+const uid_friend_key = "uid_friend_"
+const uid_club_key = "uid_club_"
 # 缓存的数据
 var cached_data: Dictionary = {}
 
@@ -77,6 +79,39 @@ func set_data(key: String, value) -> void:
 	# print("正在保存的数据 键:", key, " 值:", value)
 	save_data()  # 每次设置数据后自动保存
 
+
+func set_chat_history(uid:String,channelId:String, msgList) -> void:
+	# 如果 chat_key 不存在，创建一个字典
+	var key = chat_key+uid
+	if not cached_data.has(key):
+		cached_data[key] = {}
+	
+	# 如果 channelId 不存在，创建一个数组
+	if not cached_data[key].has(channelId):
+		cached_data[key][channelId] = []
+	# 添加消息到数组 
+	cached_data[key][channelId] = msgList
+	# print("保存消息的数据 键:", channelId, " 值:", msg) 
+	save_data()  # 每次设置数据后 自动保存
+
+# 添加数据 针对数组
+func add_data(key, data:Dictionary) -> int:
+	if not cached_data.has(key):
+		cached_data[key] = []
+	var count = cached_data[key].size()
+	if 0 < count and cached_data[key][0].has("name"):
+		for i in range(count-1,-1,-1):
+			if cached_data[key][i].name == data.name:
+				cached_data[key][i] = data
+				save_data()
+				return count
+	print("新增申请数据")
+	cached_data[key].append(data)
+	save_data()  # 每次设置数据后 自动保存
+	return cached_data[key].size()
+
+
+
 # 添加渠道
 func add_channel_list(uid: String, value:String) -> void:
 	var key = uid_channel_key + uid
@@ -108,49 +143,61 @@ func add_chat_history(uid:String, channelId:String, msg) -> int:
 	save_data()  # 每次设置数据后 自动保存
 	return cached_data[key][channelId].size()
 
+
+
 # 添加申请数据  
 func add_uid_approval(uid:String, approvalData:Dictionary) -> int:
 	var key = uid_approval_key + uid
-	if not cached_data.has(key):
-		cached_data[key] = []
-	
-	var count = cached_data[key].size()
-	for i in range(count-1,-1,-1):
-		if cached_data[key][i].name == approvalData.name:
-			cached_data[key][i] = approvalData
-			print("更新申请数据")
-			return count
-	print("新增申请数据")
-	cached_data[key].append(approvalData)
-	save_data()  # 每次设置数据后 自动保存
-	return cached_data[key].size()
+	return add_data(key,approvalData)
 
-# 添加申请数据 
-func get_uid_approval(uid:String) -> Array:
-	var key = uid_approval_key + uid
-	if not cached_data.has(key):
-		return []
-	return cached_data[key]
+# 添加好友 
+func add_uid_friend(uid:String, friend:Dictionary) -> int:
+	var key = uid_friend_key + uid
+	return add_data(key,friend)
 
+# 添加俱乐部
+func add_uid_club(uid:String, club:Dictionary) -> int:
+	var key = uid_club_key + uid
+	return add_data(key,club)
 
-func set_chat_history(uid:String,channelId:String, msgList) -> void:
-	# 如果 chat_key 不存在，创建一个字典
-	var key = chat_key+uid
-	if not cached_data.has(key):
-		cached_data[key] = {}
-	
-	# 如果 channelId 不存在，创建一个数组
-	if not cached_data[key].has(channelId):
-		cached_data[key][channelId] = []
-	# 添加消息到数组 
-	cached_data[key][channelId] = msgList
-	# print("保存消息的数据 键:", channelId, " 值:", msg) 
-	save_data()  # 每次设置数据后 自动保存
 
 # 获取数据
 func get_data(key: String, default_value = null):
 	return cached_data.get(key, default_value)
 
+
+func get_data_array(key:String) -> Array:
+	if not cached_data.has(key):
+		return []
+	return cached_data[key]
+
+func get_data_array_item(key:String,field:String,value) -> Dictionary:
+	if not cached_data.has(key):
+		return {}
+	for item in cached_data[key]:
+		if item.has(field) and item[field] == value:
+			return item
+	return {}
+
+#获取申请数据 
+func get_uid_approval(uid:String) -> Array:
+	return get_data_array(uid_approval_key + uid)
+
+# 获取好友列表
+func get_uid_friends(uid:String) -> Array:
+	return get_data_array(uid_friend_key + uid)
+
+# 获取好友信息
+func get_uid_friendInfo(uid:String, friendId:String) -> Dictionary:
+	return get_data_array_item(uid_friend_key + uid,"id",friendId)
+
+# 获取俱乐部列表
+func get_uid_clubs(uid:String) -> Array:
+	return get_data_array(uid_club_key + uid)
+
+# 获取俱乐部信息
+func get_uid_clubInfo(uid:String, clubId:String) -> Dictionary:
+	return get_data_array_item(uid_club_key + uid,"id",clubId)
 
 func get_channel_list(uid: String)-> Array:
 	var key = uid_channel_key + uid
@@ -172,6 +219,60 @@ func get_chat_history(uid:String, channelId:String, default_value = null):
 		msgList.append(msg)
 	return msgList
 
+
+
+
+
+
+# 删除数据
+func remove_data(key:String, filed:String, value):
+	if not cached_data.has(key):
+		return 
+	if not cached_data[key].has(filed):
+		return 
+	cached_data[key].filed.erase(value)
+	pass
+
+# 删除数组数据
+func remove_data_array(key:String, field:String, value):
+	if not cached_data.has(key):
+		return 
+	var itemList = []
+	if field == "":
+		cached_data[key] = itemList
+		return
+	for item in cached_data[key]:
+		if item.has(field) and item[field] == value:
+			continue
+		itemList.append(item)
+	cached_data[key] = itemList
+	pass
+
+# 获取聊天记录
+func remove_chat_history(uid:String, channelId:String, messageId:String=""):
+	var key = chat_key+uid
+	if not cached_data.has(key):
+		return 
+	if not cached_data[key].has(channelId):
+		return 
+
+	var msgList = []
+	if messageId != "":
+		for message in cached_data[key][channelId]:
+			var msg =message  if not (message is String) else parse_message(message)
+			if msg.message_id != messageId:
+				msgList.append(msg)
+	cached_data[key][channelId] = msgList
+	return msgList
+
+
+func remove_friend(uid:String, friendId:String):
+	remove_data_array(uid_friend_key + uid,"id",friendId)
+	pass
+
+func remove_friend_all(uid:String):
+	remove_data_array(uid_friend_key + uid,"","")
+	pass
 
 # 清除所有数据
 func clear_data() -> void:

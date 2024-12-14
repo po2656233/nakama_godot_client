@@ -60,6 +60,14 @@ func _on_line_edit_find_text_submitted(new_text:String):
 			_list.add_item("没有找到")
 			isNothing = true
 			return
+		for club in result.groups:
+			var texture:Texture2D
+			if club.avatar_url:
+				texture = await Network.load_texture_async(club.avatar_url)
+			# var index = _list.add_item_with_buttons(user.username,texture,"添加",Callable(Network,"add_friends_async").bind(user.id))
+			var index = _list.add_item(club.name,texture)
+			if index != -1:
+				_list.set_item_metadata(index,club)
 	else:
 		var result = await Network.search_users(new_text)
 		print("好友搜索",result)
@@ -113,11 +121,48 @@ func _on_item_list_item_clicked(index:int, _at_position:Vector2, _mouse_button_i
 
 func _on_tb_add_pressed() -> void:
 	var selected_items = _list.get_selected_items()
-	var friend_uids = []
+	var ids = []
+	if not Network.player_data:
+		PopupManager.show_message("未登录")
+		return
+	var uid = Network.player_data.id
 	for item in selected_items:
 		print("选中",item)
 		var info = _list.get_item_metadata(selected_index)
 		if info:
-			friend_uids.append(info.id)
-	await Network.add_friends_async(friend_uids)	
+			var friend = DataManager.get_instance().get_uid_friendInfo(uid,info.id)
+			if friend:
+				PopupManager.show_message("已添加")
+				return
+			ids.append(info.id)
+	
+	
+	
+	if ids.size() == 0:
+		# 创建群组
+		if isClub:
+			var result = await Network.create_group_async(_search_box.text)
+			if result:
+				PopupManager.show_message("创建群组成功")
+			else:
+				PopupManager.show_message("创建群组失败")
+		else:
+			PopupManager.show_message("没有选中用户")
+		return
+
+	# 添加俱乐部
+	if isClub:
+		for id in ids:
+			await Network.add_group_async(id)
+		return
+
+	# 添加好友
+	var ret = await Network.add_friends_async(ids)	
+	if ret:
+		PopupManager.show_message("已添加,等待通过")
+		_list.clear()
+		_search_box.text = ""
+	else:
+		PopupManager.show_message("添加失败")
+
 	pass # Replace with function body.
