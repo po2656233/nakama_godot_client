@@ -3,7 +3,9 @@ extends "res://scripts/chat/chat_system.gd"
 @onready var addfirendPanle = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/AddFirends
 @onready var addclubPanle = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/AddClub
 @onready var friendListItem = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList
-@onready var clubListItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList
+# @onready var clubListItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList
+
+@onready var clubListItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/GroupList
 
 @onready var btn_upmoreChat = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore
 @onready var btn_upmoreClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore
@@ -18,6 +20,20 @@ enum ScrollType {
 	MIDDLE, # 滚动到中间 
 	BOTTOM # 滚动到最底部
 }
+
+enum MessageCode {
+	ChatMessage = 0,
+	ChatUpdate = 1,
+	ChatRemove = 2,
+	JoinedGroup = 3,
+	AddedToGroup = 4,#已经添加到组
+	LeftGroup = 5,#已经离开组
+	KickedFromGroup = 6,#被踢Group
+	PromotedInGroup = 7, #在小组内晋升
+	BannedInGroup = 8,# 在群组中被禁止
+	DemotedInGroup = 9, #在小组内降职
+}
+
 var onlineColor = Color(0.605, 0.6, 0.636, 0.961)
 var leaveColor = Color(0.391, 0.491, 0.585, 0.5)
 var is_first = true
@@ -51,13 +67,13 @@ func _ready():
 	# 获取好友列表
 	get_friends_list()
 
-	# 获取群组
+	# 获取俱乐部
 	get_club_list()
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
 	SignalManager.FreshFriendListSIG.connect(_on_fresh_friend_list) #刷新好友列表
-	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) #刷新好友列表
+	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) #刷新俱乐部列表
 	Network.changeChannelSIG.connect(_on_change_channel)
 	 
 	Network._socket.received_channel_presence.connect(_on_channel_presence)
@@ -116,7 +132,16 @@ func _on_change_channel(channel_id):
 func _on_received_message(msg):
 	if msg.message_id == "":
 		return
-	print("收到消息:", msg.message_id)
+	print("收到消息:", msg)
+	if msg.code == MessageCode.JoinedGroup:
+		msg.content = msg.username+"加入了群聊"
+	elif msg.code == MessageCode.AddedToGroup:
+		msg.content = msg.username+"已加入群聊"
+	elif msg.code == MessageCode.KickedFromGroup:
+		msg.content = msg.username+"已被踢出群聊"
+	elif msg.code == MessageCode.LeftGroup:
+		msg.content = msg.username+"已离开群聊"
+
 	if add_message_to_history(msg.channel_id, msg):
 		if msg.sender_id != uid:
 			SignalManager.RecvMessageSIG.emit(msg)
@@ -296,25 +321,33 @@ func get_friends_list():
 	pass
 ####
 func get_club_list():
-	var result = await Network.get_group_list()
+	var result = await Network.get_group_list(uid)
 	if result == null:
 		return
-	print("群组数量:",result.groups.size())
+	print("俱乐部数量:",result.user_groups.size())
 	clubListItem.clear() 
-	for group in result.groups:
-		print("群组名称:",group.name)
+	
+	for info in result.user_groups:
+		var group = info.group
+		print("俱乐部信息:",group)
 		var ret = await Network.add_channel_async(group.id,2)
 		if ret:
-			var index = clubListItem.add_item(group.name)
-			var texture = await Network.load_texture_async(group.avatar_url)
-			if texture:
-				clubListItem.set_item_icon(index, texture)
-			clubListItem.set_item_custom_fg_color(index, onlineColor if group.open else leaveColor )
-			clubListItem.set_item_metadata(index, {
-							"channel": ret,
-							"user": group,  
-							"online":group.open,
-						})
+			print("俱乐部渠道信息:",ret)
+			clubListItem._on_group_joined(
+				{
+					"id": group.id,
+					"name": group.name,
+					"channel":ret,
+					"avatar":group.avatar_url,
+					"description": group.description,
+					"member_count": group.edge_count,
+					"max_count": group.max_count,
+					"notification_enabled": group.open,
+					"owner_id":group.creator_id,
+					"create_time":group.create_time,
+					"update_time":group.update_time,
+				},
+			)
 			DataManager.get_instance().add_uid_club(uid,group.serialize()) 
 	pass
 
@@ -352,6 +385,7 @@ func getCurChannelData():
 			var info = clubListItem.GetCurrentItemData()
 			if info:
 				channel = info.channel
+				print("俱乐部信息:",channel)
 			pass
 		_:
 			print("无效的选项")

@@ -19,7 +19,7 @@ func _ready():
 	
 	# 设置管理菜单
 	var popup = $MarginContainer/HBoxContainer/ManageButton.get_popup()
-	popup.add_item("退出群组", 0)
+	popup.add_item("退出俱乐部", 0)
 	popup.add_separator()
 	popup.add_check_item("接收消息通知", notify_id)
 	popup.id_pressed.connect(_on_manage_option_selected)
@@ -48,7 +48,7 @@ func _on_gui_input(event):
 
 func _on_manage_option_selected(id: int):
 	match id:
-		0:  # 退出群组
+		0:  # 退出俱乐部
 			_show_leave_confirmation()
 		notify_id:  # 切换通知状态
 			var popup = $MarginContainer/HBoxContainer/ManageButton.get_popup()
@@ -60,8 +60,8 @@ func _on_manage_option_selected(id: int):
 
 func _show_leave_confirmation():
 	var dialog = ConfirmationDialog.new()
-	dialog.title = "退出群组"
-	dialog.dialog_text = "确定要退出该群组吗？"
+	dialog.title = "退出俱乐部"
+	dialog.dialog_text = "确定要退出该俱乐部吗？"
 	
 	add_child(dialog)
 	dialog.popup_centered()
@@ -90,5 +90,5 @@ func _setup_panel_style(isSelected: bool):
 	style.shadow_offset = Vector2(0, 1)
 	add_theme_stylebox_override("panel", style)
 	
-
-
+func get_group_data():
+	return group_data

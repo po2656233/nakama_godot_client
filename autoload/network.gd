@@ -421,7 +421,7 @@ func save_player_data() -> void:
 
 
 
-# 好友和群组管理
+# 好友和俱乐部管理
 # 通过用户名搜索用户
 func search_users(username: String):
 	var result = await _client.get_users_async(_session,[], [username])
@@ -444,7 +444,7 @@ func search_groups(groupname: String):
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
 		return
-	print("查找群组: ", result)
+	print("查找俱乐部: ", result)
 	return result
 
 # 获取好友列表
@@ -468,13 +468,23 @@ func get_friends_list():
 	return result
 
 
-# 获取群组列表
-func get_group_list():
-	var result = await _client.list_groups_async(_session)
+# 获取俱乐部列表
+func get_group_list(uid: String):
+	var result = await _client.list_user_groups_async(_session,uid)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return
-	print("群组列表: ", result)
+	print("俱乐部列表: ", result)
+	return result
+
+
+# 获取俱乐部成员列表
+func get_group_member_list_async(group_id: String):
+	var result = await _client.list_group_users_async(_session,group_id)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return
+	print("俱乐部成员列表: ", result)
 	return result
 
 		
@@ -491,15 +501,15 @@ func add_friends_async(friend_ids: Array)->bool:
 	return true
 
 		
-# 添加好友 
-func create_group_async(name1: String, description : String = "", avatar_url = null)->bool:
+# 创建俱乐部 
+func create_group_async(name1: String, description : String = "", avatar_url = null):
 	var result = await _client.create_group_async(_session, name1, description, avatar_url)
 	if result.is_exception():
 		print("Error add_friends_async: ", result.get_exception().message)
-		return false
-	print("添加好友: ", result)
+		return null
+	print("添加俱乐部: ", result)
 	SignalManager.FreshClubListSIG.emit()
-	return true
+	return result
 
 func add_channel_async(targetId: String,chanType:int = 0):
 	if _socket:
@@ -518,14 +528,19 @@ func add_channel_async(targetId: String,chanType:int = 0):
 		return result
 	return null
 
-func add_group_async(group_id: String):
-	var result = await _client.join_group_async(_session,group_id)
+func add_group_async(group_name: String):
+	var result = await _client.list_groups_async(_session,group_name)
 	if result.is_exception():
-		push_error("Error add_group_async: ", result.get_exception().message)
+		print("Error getting friends list: ", result.get_exception().message)
 		return null
-	print("添加群组: ", result)
-	return result
-
+	for group in result.groups:
+		var ret = await _client.join_group_async(_session,group.id)
+		if ret.is_exception():
+			push_error("Error add_group_async: ", ret.get_exception().message)
+			return null
+		print("添加俱乐部: ", ret)
+		return ret 
+	return null
 
 
 # 订阅好友
@@ -577,8 +592,17 @@ func remove_group(group_id: String)->bool:
 	if result.is_exception():
 		print("Error removing group: ", result.get_exception().message)
 		return false
-	print("删除群组!!!")
+	print("删除俱乐部!!!")
 	return true
+
+func remove_gourp_user(group_id: String,user_id: String)->bool:
+	var result = await _client.kick_group_users_async(_session, group_id, [user_id])
+	if result.is_exception():
+		print("Error removing group: ", result.get_exception().message)
+		return false
+	print("删除俱乐部用户!!!")
+	return true
+
 
 func remove_channel_message(channel_id:String,message_id: String)->bool:
 	if _socket:
@@ -778,6 +802,10 @@ func get_today_start_timestamp() -> int:
 	# 因为我们要得到的是东八区的凌晨0点
 	const CHINA_TIMEZONE_OFFSET = 8 * 60 * 60
 	return Time.get_unix_time_from_datetime_dict(current_time) - CHINA_TIMEZONE_OFFSET
+
+# 获取东八区时间
+func get_chinese_time_str(timestamp: String, show_seconds: bool = true) -> String:
+	return format_china_time(Time.get_unix_time_from_datetime_string(timestamp),show_seconds)
 
 func remove_message_by_id(messages: Array, target_message_id: String):
 	for i in range(messages.size() - 1, -1, -1):

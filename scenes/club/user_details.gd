@@ -9,11 +9,10 @@ func setup(user_data: Dictionary):
 	$VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer/Signature.text = user_data["signature"]
 	
 	if user_data["avatar"]:
-		$VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/Avatar.texture = user_data["avatar"]
+		$VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/Avatar.texture =await Network.load_texture_async(user_data["avatar"]) 
 	
-	# 设置统计数据
 	$VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level/Value.text = str(user_data["level"])
-	$VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Coins/Value.text = str(user_data["coins"])
+	$VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score/Value.text = str(user_data["score"])
 	$VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Rank/Value.text = str(user_data["rank"])
 	
 	# 设置游戏统计

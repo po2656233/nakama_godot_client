@@ -38,7 +38,7 @@ layout_mode = 2
 
 [node name="GroupName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "群组名称"
+text = "俱乐部名称"
 
 [node name="NotificationIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)

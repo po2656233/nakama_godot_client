@@ -40,9 +40,7 @@ func _on_popup_menu_item_selected(id: int):
 	# Handle the "Add" button press
 	if id == 0:  # First item in the menu
 		# 处理添加按钮的点击事件
-		var info = _list.get_item_metadata(selected_index)
-		if info:
-			await Network.add_friends_async([info.id])		
+		_on_tb_add_pressed()
 	pass
 
 	# elif id == 1:  # Second item in the menu
@@ -127,7 +125,6 @@ func _on_tb_add_pressed() -> void:
 		return
 	var uid = Network.player_data.id
 	for item in selected_items:
-		print("选中",item)
 		var info = _list.get_item_metadata(selected_index)
 		if info:
 			var friend = DataManager.get_instance().get_uid_friendInfo(uid,info.id)
@@ -135,17 +132,15 @@ func _on_tb_add_pressed() -> void:
 				PopupManager.show_message("已添加")
 				return
 			ids.append(info.id)
-	
-	
-	
+		pass
 	if ids.size() == 0:
-		# 创建群组
+		# 创建俱乐部
 		if isClub:
 			var result = await Network.create_group_async(_search_box.text)
 			if result:
-				PopupManager.show_message("创建群组成功")
+				PopupManager.show_message("创建俱乐部成功")
 			else:
-				PopupManager.show_message("创建群组失败")
+				PopupManager.show_message("创建俱乐部失败")
 		else:
 			PopupManager.show_message("没有选中用户")
 		return

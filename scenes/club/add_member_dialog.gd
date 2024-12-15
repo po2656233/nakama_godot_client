@@ -24,7 +24,7 @@ func _on_add_pressed():
 		"status": "离线",
 		"signature": "新成员",
 		"level": 1,
-		"coins": 0,
+		"score": 0,
 		"rank": 999,
 		"total_games": 0,
 		"win_rate": 0.0,

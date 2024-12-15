@@ -52,10 +52,13 @@ func changePanel(tab):
 	var kind = tab as MessageKind
 	match kind:
 		MessageKind.WORLD:
+			print("切换到世界聊天")
 			messages_container = world_container
 		MessageKind.CHAT:
+			print("切换到好友聊天")
 			messages_container = friend_container
 		MessageKind.CLUB:
+			print("切换到俱乐部聊天")
 			messages_container = club_container
 	pass
 	
@@ -354,6 +357,8 @@ func clear_messages_item():
 
 # 确保滚动到底部并保持消息在可见区域内
 func ensure_scroll_to():
+	if not messages_container:
+		return
 	# await get_tree().create_timer(0.1).timeout
 	if messages_container.get_parent() is ScrollContainer:
 		var scroll = messages_container.get_parent() as ScrollContainer

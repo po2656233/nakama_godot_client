@@ -2,9 +2,16 @@ extends PanelContainer
 
 signal member_selected(member_data)
 signal member_deleted(member_data)
+signal member_clicked()
 signal note_changed(member_data, new_note)
 
 var member_data: Dictionary
+
+var style = StyleBoxFlat.new()
+# 定义颜色常量
+const NORMAL_COLOR = Color(0.9, 0.9, 0.9, 1)  # 普通状态为灰色
+const HOVER_COLOR = Color(1, 1, 1, 1)  # 悬浮状态为亮色（白色）
+const SELECTED_COLOR = Color(1, 0.95, 0.7, 1)  # 选中状态为黄色
 
 func _ready():
 	gui_input.connect(_on_gui_input)
@@ -15,11 +22,17 @@ func _ready():
 	popup.add_item("删除成员", 1)
 	popup.id_pressed.connect(_on_manage_option_selected)
 
+	# 设置默认样式
+		# 初始化颜色
+	self_modulate = NORMAL_COLOR
+	_setup_panel_style(false)
+	pass
+
 func setup(data: Dictionary):
 	member_data = data
 	$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Name.text = data["name"]
 	$MarginContainer/HBoxContainer/VBoxContainer/Status.text = data["status"]
-	
+	 
 	# 显示备注
 	var note_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Note
 	if data.has("note") and not data["note"].is_empty():
@@ -28,11 +41,15 @@ func setup(data: Dictionary):
 		note_label.text = ""
 	
 	if data["avatar"]:
-		$MarginContainer/HBoxContainer/Avatar.texture = data["avatar"]
+		$MarginContainer/HBoxContainer/Avatar.texture =await Network.load_texture_async(data["avatar"]) 
 
 func _on_gui_input(event):
-	if event is InputEventMouseButton and event.double_click:
-		member_selected.emit(member_data)
+	if event is InputEventMouseButton:
+		if event.double_click:
+			member_selected.emit(member_data)
+		elif event.is_pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			member_clicked.emit()
+	pass
 
 func _on_manage_option_selected(id: int):
 	match id:
@@ -76,3 +93,14 @@ func _show_delete_confirmation():
 		member_deleted.emit(member_data)
 		dialog.queue_free()
 	)
+
+func _setup_panel_style(isSelected: bool):
+	style.bg_color = Color.DARK_GREEN if isSelected else Color(0.019, 0.388, 0.575) 
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8
+	style.corner_radius_bottom_right = 8
+	style.shadow_color = Color(0, 0, 0, 0.1)  # 半透明黑色阴影
+	style.shadow_size = 2
+	style.shadow_offset = Vector2(0, 1)
+	add_theme_stylebox_override("panel", style)

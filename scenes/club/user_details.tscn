@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://riqfmggkqpf8"]
+[gd_scene load_steps=3 format=3 uid="uid://riqfmggkqpf8"]
 
 [ext_resource type="Script" path="res://scenes/club/user_details.gd" id="1_xxxxx"]
+[ext_resource type="Texture2D" uid="uid://dyudb8ry74m70" path="res://asset/default_avatar.svg" id="2_v7o7n"]
 
 [node name="UserDetails" type="Control"]
 layout_mode = 3
@@ -90,8 +91,9 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="Avatar" type="TextureRect" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(120, 120)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+texture = ExtResource("2_v7o7n")
 expand_mode = 1
 stretch_mode = 5
 
@@ -147,17 +149,17 @@ layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Coins" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
+[node name="Score" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Coins"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
-text = "金币"
+text = "积分"
 horizontal_alignment = 1
 
-[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Coins"]
+[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1

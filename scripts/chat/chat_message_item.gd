@@ -182,7 +182,10 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	voice_message.visible = false
 	
 	# 根据内容类型设置显示
+	if not content:
+		return
 	var cType = content.type as ContentType
+	print("消息类型-----------------", cType)
 	match cType:
 		ContentType.TEXT, ContentType.LONG_TEXT:
 			_setup_text_message(content["content"])
@@ -416,4 +419,3 @@ func _on_popup_menu_item_selected(id: int):
 			if is_self_message:
 				message_deleted.emit(self)
 	pass
-
