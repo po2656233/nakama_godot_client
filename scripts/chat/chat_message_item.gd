@@ -185,7 +185,6 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	if not content:
 		return
 	var cType = content.type as ContentType
-	print("消息类型-----------------", cType)
 	match cType:
 		ContentType.TEXT, ContentType.LONG_TEXT:
 			_setup_text_message(content["content"])

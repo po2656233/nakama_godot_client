@@ -1,3 +1,7 @@
+VBoxContainer
+OnscreenKeyboard
+KeyboardLayout
+VSeparator
 Label
 MenuButton
 MenuBar

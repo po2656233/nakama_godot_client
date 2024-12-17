@@ -5,9 +5,13 @@ var game_scene = load("res://scenes/game.tscn")
 @onready var chatPanle = $VBoxContainer/Chat
 @onready var homePanle = $PanelContainer
 @onready var settings = $Setting
+# @onready var keyboard = $VBoxContainer/OnscreenKeyboard
 
 
 func _ready():
+	if Network.get_world_channel() == null:
+		await Network.create_world_async()
+	await Network.load_world_channel()  
 	settings.showNotify(true)
 	SceneManager.set_current_scene("home")
 	print("当前运行的节点名",SceneManager.get_running_scene_name())
@@ -18,7 +22,7 @@ func _ready():
 	# WindowDrag.unregister_drag_zone(homePanle)
 	# Network.chat_message_received.connect(_on_received_message)
 	pass
-
+ 
 func _on_received_message(msg):
 	print("id--->",msg)
 	if msg.sender_id != Network.session.user_id:

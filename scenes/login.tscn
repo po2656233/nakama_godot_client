@@ -81,9 +81,9 @@ texture = ExtResource("1_xcnfk")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.487847
-anchor_top = 0.366512
+anchor_top = 0.341821
 anchor_right = 0.512153
-anchor_bottom = 0.497685
+anchor_bottom = 0.472994
 offset_left = -175.0
 offset_top = -60.0
 offset_right = 175.0
@@ -178,11 +178,11 @@ offset_bottom = 37.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.481481
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.481481
 offset_left = -250.0
 offset_top = 105.0
 offset_right = 250.0
@@ -242,6 +242,10 @@ texture_hover = ExtResource("16_bvtl1")
 [node name="Setting" parent="." instance=ExtResource("18_jh01n")]
 layout_mode = 1
 
+[connection signal="focus_entered" from="Panel/VBoxContainer/HBoxContainerUser/LineEdit" to="." method="_on_line_edit_focus_entered"]
+[connection signal="focus_exited" from="Panel/VBoxContainer/HBoxContainerUser/LineEdit" to="." method="_on_line_edit_focus_exited"]
+[connection signal="focus_entered" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit" to="." method="_on_line_edit_focus_entered_psw"]
+[connection signal="focus_exited" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit" to="." method="_on_line_edit_focus_exited_psw"]
 [connection signal="button_down" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit/TextureButton" to="." method="_on_texture_button_button_down"]
 [connection signal="button_up" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit/TextureButton" to="." method="_on_texture_button_button_up"]
 [connection signal="pressed" from="Panel/HBoxContainer/TR_login" to="." method="_on_tr_login_pressed"]

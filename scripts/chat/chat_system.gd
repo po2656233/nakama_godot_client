@@ -43,7 +43,7 @@ var messages_container:VBoxContainer
 @onready var world_container = $MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer/talkhistory
 
 
-@onready var sendTextEdit = $MarginContainer/Panel/input_area/HBoxContainer/TextEdit
+@onready var sendTextEdit = $MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer/TextEdit
 @onready var send_button = $MarginContainer/Panel/input_area/HBoxContainer/SendButton
 
 ##############聊天系统(part1 end)#####################
@@ -295,7 +295,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 	message_id_cache[channel_id].message_id = true
 
 	var msgCount = DataManager.get_instance().add_chat_history(uid, channel_id, msg)
-	print("当前消息数量",msgCount,"新消息-->", msg.content) 
+	print("当前消息数量",msgCount) 
 	DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
 	return true
 

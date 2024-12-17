@@ -9,7 +9,7 @@ var groups = []
 var filtered_groups = []
 var current_selected_item: Node = null  # 当前选中的俱乐部项
 enum SortType { NAME, MEMBER_COUNT, UPDATE_TIME }
-var current_sort = SortType.NAME
+var current_sort = SortType.UPDATE_TIME
 
 enum MgrType { CREATE, JOIN }
 
@@ -176,4 +176,6 @@ func _on_notification_toggled(group_data, enabled):
 			break
 
 func GetCurrentItemData():
+	if not current_selected_item:
+		return null
 	return current_selected_item.get_group_data()

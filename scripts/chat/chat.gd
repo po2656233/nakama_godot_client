@@ -11,10 +11,11 @@ extends "res://scripts/chat/chat_system.gd"
 @onready var btn_upmoreClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore
 @onready var btn_upmoreWorld = $MarginContainer/Panel/TabContainer/world/Panel_talk/btn_upmore
 
+@onready var keyboardContainer = $MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer
 # @onready var clubSplit = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub
 # @onready var friendSplit = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends
 @export var toggle_button_path: NodePath
- 
+
 enum ScrollType {
 	TOP, # 接收到的消息
 	MIDDLE, # 滚动到中间 
@@ -37,17 +38,23 @@ enum MessageCode {
 var onlineColor = Color(0.605, 0.6, 0.636, 0.961)
 var leaveColor = Color(0.391, 0.491, 0.585, 0.5)
 var is_first = true
-
+var is_mobile:bool = false
+var last_keyboard_height = 0
+var origin_height = 0
 var button: Button
- 
 
 # 初始化 
 func _ready():
 	if not Network.player_data:
 		PopupManager.show_message("未登录")
 		return
+	
+	# 获取基础信息
 	myUsername = Network.player_data.username
 	uid = Network.player_data.id
+	is_mobile = Network.isMobile()
+	origin_height = keyboardContainer.position.y
+
 	# 创建全屏按钮
 	if toggle_button_path:
 		button = get_node(toggle_button_path)
@@ -82,6 +89,15 @@ func _ready():
 	Network.chat_history_received.connect(_on_history_message)
 	pass
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	# 在进程中检查键盘高度变化
+	if not is_mobile: return
+	var current_height = DisplayServer.virtual_keyboard_get_height()
+	if current_height != last_keyboard_height:
+		_on_virtual_keyboard_height_changed(current_height)
+		last_keyboard_height = current_height
+	pass
 
 func _input(event):
 	if event is InputEventKey:
@@ -90,8 +106,24 @@ func _input(event):
 			exit_fullscreen()
 			get_viewport().set_input_as_handled() # 阻止事件继续传
 	pass
- 
 
+####################调整虚拟键盘#########################################
+func _on_virtual_keyboard_height_changed(keyboard_height):
+	# 如果键盘显示，确保输入框可见
+	if keyboard_height > 0:
+		var viewport_size = get_viewport_rect().size
+		var editY = sendTextEdit.size.y 
+		var editGlobalY = sendTextEdit.global_position.y 
+
+		var target_position = viewport_size.y - keyboard_height - editY - 20
+		
+		# 如果输入框被键盘遮挡，调整VBoxContainer的位置
+		if editGlobalY > target_position:
+			var offset = editGlobalY - target_position
+			keyboardContainer.position.y -= offset
+	else:
+		keyboardContainer.position.y = origin_height
+	pass
 
 
 ######################################################
@@ -342,7 +374,7 @@ func get_club_list():
 					"description": group.description,
 					"member_count": group.edge_count,
 					"max_count": group.max_count,
-					"notification_enabled": group.open,
+					"notification_enabled": true,
 					"owner_id":group.creator_id,
 					"create_time":group.create_time,
 					"update_time":group.update_time,
@@ -372,7 +404,7 @@ func getCurChannelData():
 	match kind:
 		MessageKind.WORLD:
 			# 世界
-			channel = null
+			channel = Network.get_world_channel() 
 			pass
 		MessageKind.CHAT:
 			# 好友
@@ -414,10 +446,29 @@ func set_rotation_pivot():
 ###############################################################
 func _on_btn_popup_pressed() -> void:
 	# 来回旋转按钮
+	if not button:
+		return
 	button.rotation_degrees += 180
 	
 	# 如果要添加动画效果
 	tween = create_tween()
 	tween.tween_property(button, "rotation_degrees", 90, 0.01)
 	_on_fullscreen_toggle()
+	pass # Replace with function body.
+
+##############################################################
+func _on_text_edit_focus_entered() -> void:
+	# 获取目标编辑控件的全局位置和大小
+	if is_mobile:
+		DisplayServer.virtual_keyboard_show("中文输入法") 
+	pass # Replace with function body.
+ 
+func _on_text_edit_focus_exited() -> void:
+	if is_mobile:
+		DisplayServer.virtual_keyboard_hide()
+	pass # Replace with function body.
+
+func _on_text_edit_finished() -> void:
+	if is_mobile:
+		DisplayServer.virtual_keyboard_hide()
 	pass # Replace with function body.

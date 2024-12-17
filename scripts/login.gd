@@ -3,18 +3,25 @@ extends Control
 @onready var usernameEdit = $Panel/VBoxContainer/HBoxContainerUser/LineEdit
 @onready var passwordEdit = $Panel/VBoxContainer/HBoxContainerPsw/LineEdit
 @onready var checkbox = $Panel/VBoxContainer/HBoxContainerRead/CheckBox
+@onready var keyboardContainer = $Panel/VBoxContainer
 @onready var settings = $Setting
 # 微信登录
 const WECHAT_APPID = "wxcf2136ff70f7726a"
 const REDIRECT_URI = "http://60.205.90.152:8080/callback"
 const STATE = "godot_wechat_login"
-
-var http_request: HTTPRequest
-
+var is_mobile:bool = false
+var is_psw_editing:bool = false
+var last_keyboard_height = 0
+var origin_height = 0
+# var http_request: HTTPRequest
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	settings.showNotify(false)
-	
+	# 基础信息
+	is_mobile = Network.isMobile()
+	origin_height = keyboardContainer.position.y
+
+
+	# 禁用 SSL 验证 【todo 正式环境建议解除】
 	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
 	SceneManager.set_current_scene("login")
 	var ret = await Network.restore_session()
@@ -28,7 +35,8 @@ func _ready() -> void:
 		print("PopupManager 未正确初始化")
 	else:
 		print("PopupManager 已正确初始化")
-	
+
+	settings.showNotify(false)
 	WindowDrag.register_drag_zone(self)
 	if ProjectSettings.has_setting("username"):
 		usernameEdit.text = ProjectSettings.get("username")
@@ -40,9 +48,13 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
+func _process(_delta):
+	# 在进程中检查键盘高度变化
+	if not is_mobile: return
+	var current_height = DisplayServer.virtual_keyboard_get_height()
+	if current_height != last_keyboard_height:
+		_on_virtual_keyboard_height_changed(current_height)
+		last_keyboard_height = current_height
 
 func _on_tb_register_pressed() -> void:
 	SceneManager.switch_to_scene("register","tile_reveal")
@@ -103,11 +115,54 @@ func wechatLogin()->void:
 	OS.shell_open(auth_url)
 	pass
 
-
+#############################################################################################
 func _on_texture_button_button_down() -> void:
 	passwordEdit.secret = false
 	pass # Replace with function body.
 
 func _on_texture_button_button_up() -> void:
 	passwordEdit.secret = true
+	pass # Replace with function body.
+
+func _on_virtual_keyboard_height_changed(keyboard_height):
+	# 如果键盘显示，确保输入框可见
+	if keyboard_height > 0:
+		var viewport_size = get_viewport_rect().size
+		var editY = passwordEdit.size.y if is_psw_editing else usernameEdit.size.y
+		var editGlobalY = passwordEdit.global_position.y if is_psw_editing else usernameEdit.global_position.y
+
+		var target_position = viewport_size.y - keyboard_height - editY - 20
+		
+		# 如果输入框被键盘遮挡，调整VBoxContainer的位置
+		if editGlobalY > target_position:
+			var offset = editGlobalY - target_position
+			keyboardContainer.position.y -= offset
+	else:
+		keyboardContainer.position.y = origin_height
+	pass
+
+
+func _on_line_edit_focus_exited() -> void:
+	if is_mobile:
+		DisplayServer.virtual_keyboard_hide()
+	pass # Replace with function body.
+
+
+func _on_line_edit_focus_entered() -> void:
+	# 获取目标编辑控件的全局位置和大小
+	if is_mobile:
+		DisplayServer.virtual_keyboard_show("中文输入法") 
+	pass # Replace with function body.
+
+
+func _on_line_edit_focus_entered_psw() -> void:
+	is_psw_editing = true
+	if is_mobile:
+		DisplayServer.virtual_keyboard_show("中文输入法") 
+	pass # Replace with function body.
+
+func _on_line_edit_focus_exited_psw() -> void:
+	is_psw_editing = false
+	if is_mobile:
+		DisplayServer.virtual_keyboard_hide()
 	pass # Replace with function body.

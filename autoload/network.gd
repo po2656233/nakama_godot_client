@@ -6,6 +6,7 @@ var _session: NakamaSession
 var _socket: NakamaSocket
 var _current_channel: NakamaRTAPI.Channel
 var _cursor_list_channel = null
+var _world_channel = null
 # Game data
 var player_data: NakamaAPI.ApiUser
 var pets_data: Dictionary = {}
@@ -443,7 +444,7 @@ func search_groups(groupname: String):
 	var result = await _client.list_groups_async(_session, groupname)
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
-		return
+		return null
 	print("查找俱乐部: ", result)
 	return result
 
@@ -503,13 +504,45 @@ func add_friends_async(friend_ids: Array)->bool:
 		
 # 创建俱乐部 
 func create_group_async(name1: String, description : String = "", avatar_url = null):
-	var result = await _client.create_group_async(_session, name1, description, avatar_url)
+	var result = await _client.create_group_async(_session, name1, description, avatar_url,"zh",false)
 	if result.is_exception():
 		print("Error add_friends_async: ", result.get_exception().message)
 		return null
 	print("添加俱乐部: ", result)
 	SignalManager.FreshClubListSIG.emit()
 	return result
+
+
+# 创建世界频道 一般不能使用
+func create_world_async():
+	var result = await _client.create_group_async(_session, "world", "世界渠道", null,"zh", true)
+	if result.is_exception():
+		print("Error add_friends_async: ", result.get_exception().message)
+		return null
+	print("添加俱乐部: ", result)
+	# SignalManager.FreshClubListSIG.emit()
+	return result
+
+
+func get_world_channel():
+	return _world_channel
+	
+
+func load_world_channel():
+	var result = await search_groups("world")
+	if not result:
+		return null
+	for group in result.groups:
+		# var group = info.group
+		print("查找世界频道: ", group)
+		if group.name == "world":
+			var ret = await add_channel_async(group.id, 2)
+			if not ret:
+				return null
+			print("添加世界渠道频道: ", ret)
+			_world_channel = ret
+			return ret
+	return null
 
 func add_channel_async(targetId: String,chanType:int = 0):
 	if _socket:
@@ -813,3 +846,8 @@ func remove_message_by_id(messages: Array, target_message_id: String):
 			messages.remove_at(i)
 			return true
 	return false 
+
+
+func isMobile()->bool:
+	var systemName = OS.get_name()
+	return systemName == "Android" or systemName == "iOS"
