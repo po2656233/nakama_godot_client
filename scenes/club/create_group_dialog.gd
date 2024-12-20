@@ -1,6 +1,6 @@
 extends Control
 
-signal group_created(group_data)
+# signal group_created(group_data)
 
 var selected_avatar: Image
 
@@ -50,24 +50,25 @@ func _on_create_pressed():
 	
 	if group_name.is_empty():
 		return
-	
+	 
 	var group = await Network.create_group_async(group_name, group_desc, selected_avatar)
 	if not group:
 		PopupManager.show_message("创建群组失败")
 		return 
-	var new_group = {
-					"id": group.id,
-					"name": group.name,
-					"channelId":"",
-					"avatar":group.avatar_url,
-					"description": group.description,
-					"member_count": group.edge_count,
-					"max_count": group.max_count,
-					"notification_enabled": group.open,
-					"owner_id":group.creator_id,
-					"create_time":group.create_time,
-					"update_time":group.update_time,
-				}
-	# 模拟创建新群组
-	group_created.emit(new_group)
+	SignalManager.AddClubSIG.emit(group)
+	# var new_group = {
+	# 				"id": group.id,
+	# 				"name": group.name,
+	# 				"channelId":"",
+	# 				"avatar":group.avatar_url,
+	# 				"description": group.description,
+	# 				"member_count": group.edge_count,
+	# 				"max_count": group.max_count,
+	# 				"notification_enabled": group.open,
+	# 				"owner_id":group.creator_id,
+	# 				"create_time":group.create_time,
+	# 				"update_time":group.update_time,
+	# 			}
+	# # 模拟创建新群组
+	# group_created.emit(new_group)
 	queue_free()

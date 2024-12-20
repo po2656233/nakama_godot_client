@@ -7,11 +7,7 @@ var game_scene = load("res://scenes/game.tscn")
 @onready var settings = $Setting
 # @onready var keyboard = $VBoxContainer/OnscreenKeyboard
 
-
 func _ready():
-	if Network.get_world_channel() == null:
-		await Network.create_world_async()
-	await Network.load_world_channel()  
 	settings.showNotify(true)
 	SceneManager.set_current_scene("home")
 	print("当前运行的节点名",SceneManager.get_running_scene_name())

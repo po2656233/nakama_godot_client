@@ -17,8 +17,8 @@ func _on_join_pressed():
 		return
 	var ret = await Network.add_group_async(group_name)
 	if not ret:
-		PopupManager.show_message("加入群组失败")
+		PopupManager.show_message("加入俱乐部失败")
 		return 
-	SignalManager.FreshClubListSIG.emit()
 	# group_joined.emit(new_group)
+	PopupManager.show_message("已申请,请等待审批")
 	queue_free()

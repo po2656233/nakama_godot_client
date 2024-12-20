@@ -10,6 +10,7 @@ extends "res://scripts/chat/chat_system.gd"
 @onready var btn_upmoreChat = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore
 @onready var btn_upmoreClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore
 @onready var btn_upmoreWorld = $MarginContainer/Panel/TabContainer/world/Panel_talk/btn_upmore
+@onready var btn_light_switch = $MarginContainer/Panel/btn_light_switch
 
 @onready var keyboardContainer = $MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer
 # @onready var clubSplit = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub
@@ -21,27 +22,32 @@ enum ScrollType {
 	MIDDLE, # 滚动到中间 
 	BOTTOM # 滚动到最底部
 }
-
-enum MessageCode {
-	ChatMessage = 0,
-	ChatUpdate = 1,
-	ChatRemove = 2,
-	JoinedGroup = 3,
-	AddedToGroup = 4,#已经添加到组
-	LeftGroup = 5,#已经离开组
-	KickedFromGroup = 6,#被踢Group
-	PromotedInGroup = 7, #在小组内晋升
-	BannedInGroup = 8,# 在群组中被禁止
-	DemotedInGroup = 9, #在小组内降职
+enum NotifyStatus {
+	NONE = 0,
+	RECV_OFFLINE = -1, # 对方离线或不在频道的消息
+	WANT_FRIEND  = -2, # 用户 X 想将您添加为好友。
+	ACCEPT_FRIEND = -3, # 用户 X 接受了您的好友邀请。
+	ACCEPT_GROUP = -4, # 您已被 X 组接受。
+	WANT_GROUP  = -5, # 用户 X 想要加入您的组。
+	FRIEND_JOIN = -6, # 您的朋友 X 刚刚加入游戏。
+	SERVER_CLOSE = -7, # 服务器断开
+	BANNED = -8, # 你被封禁了。
 }
 
-var onlineColor = Color(0.605, 0.6, 0.636, 0.961)
-var leaveColor = Color(0.391, 0.491, 0.585, 0.5)
+
+var onlineColor = Color.YELLOW
+var leaveColor = Color.GRAY
 var is_first = true
 var is_mobile:bool = false
 var last_keyboard_height = 0
 var origin_height = 0
 var button: Button
+var isOpenLight = false
+
+# func _init() -> void:
+# 	# if Network.get_world_channel() == null:
+# 	# 	await Network.create_world_async()
+# 	# pass
 
 # 初始化 
 func _ready():
@@ -68,25 +74,28 @@ func _ready():
 		add_child(button)
 
 	set_rotation_pivot()		# 设置旋转中心点
-	# 加载本地历史消息
-	load_local_history()
 
-	# 获取好友列表
-	get_friends_list()
-
-	# 获取俱乐部
-	get_club_list()
+	# 线程开启加载俱乐部成员
+	# startThread()
+	call_deferred("initData")
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
 	SignalManager.FreshFriendListSIG.connect(_on_fresh_friend_list) #刷新好友列表
 	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) #刷新俱乐部列表
+	SignalManager.AddClubSIG.connect(_on_add_club) #添加俱乐部
+	SignalManager.UpdateClubSIG.connect(_on_update_club) #更新俱乐部
 	Network.changeChannelSIG.connect(_on_change_channel)
-	 
+	  
 	Network._socket.received_channel_presence.connect(_on_channel_presence)
 	Network._socket.received_channel_message.connect(_on_received_message)
 	Network._socket.received_status_presence.connect(_on_status_presence) #监听好友状态
+	Network._socket.received_notification.connect(_on_received_notify) #监听好友状态
+	
 	Network.chat_history_received.connect(_on_history_message)
+
+	# 加载世界频道
+	# toWork()
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -124,8 +133,22 @@ func _on_virtual_keyboard_height_changed(keyboard_height):
 	else:
 		keyboardContainer.position.y = origin_height
 	pass
+####################线程开启加载数据##################################
+func initData():
+	# 加载世界频道
+	var world = await Network.load_world_channel()
+	if world:
+		_on_change_channel(world.id)
 
+	# 加载本地历史消息
+	load_local_history()
 
+	# 获取好友列表
+	get_friends_list()
+
+	# 加载群组列表
+	get_club_list()
+	pass
 ######################################################
 func _on_show_addfriend_pressed() -> void:
 	if addfirendPanle.visible:
@@ -151,33 +174,53 @@ func _on_fresh_club_list():
 	get_club_list()
 	pass
 
+# 添加俱乐部
+func _on_add_club(club):
+	print("添加俱乐部的信息-->:", club)
+	add_club(club)
+
+func _on_update_club(clubName):
+	print("更新俱乐部的信息-->:", clubName)
+	var result =await Network.search_groups(clubName)
+	if result:
+		for group in result.groups:
+			clubListItem._on_group_updated({
+					"id": group.id,
+					"name": group.name,
+					"channel":null,
+					"avatar":group.avatar_url,
+					"description": group.description,
+					"member_count": group.edge_count,
+					"max_count": group.max_count,
+					"notification_enabled": true,
+					"owner_id":group.creator_id,
+					"create_time":group.create_time,
+					"update_time":group.update_time,
+				})
+	pass
+
 # 切换频道
 func _on_change_channel(channel_id):
 	print("当前频道:", channel_id)
 	current_channel_id = channel_id
 	isToTop = false 
-	changePanel(mainPanle.current_tab)	
+	var tab = mainPanle.current_tab if mainPanle else 0
+	changePanel(tab)	
 	refresh_current_channel_display()
 	pass
+
+
 
 # 收到消息--------------------------
 func _on_received_message(msg):
 	if msg.message_id == "":
 		return
 	print("收到消息:", msg)
-	if msg.code == MessageCode.JoinedGroup:
-		msg.content = msg.username+"加入了群聊"
-	elif msg.code == MessageCode.AddedToGroup:
-		msg.content = msg.username+"已加入群聊"
-	elif msg.code == MessageCode.KickedFromGroup:
-		msg.content = msg.username+"已被踢出群聊"
-	elif msg.code == MessageCode.LeftGroup:
-		msg.content = msg.username+"已离开群聊"
-
 	if add_message_to_history(msg.channel_id, msg):
 		if msg.sender_id != uid:
 			SignalManager.RecvMessageSIG.emit(msg)
-		message_to_show(msg)
+		if current_channel_id == msg.channel_id:
+			message_to_show(msg)
 	pass
 
 # 收到历史消息----------------------
@@ -209,50 +252,154 @@ func _on_history_message(msgList):
 		print("有新消息")
 		refresh_current_channel_display()
 	pass
-
+#############################################################
 
 ## 监听好友状态
 func _on_status_presence(presence):
 	print("好友状态变更:", presence)
-	var count = friendListItem.item_count
+	var count = presence.joins.size()
 	for joinItem in presence.joins:
-		for i in range(count):
-			var friend = friendListItem.get_item_metadata(i)
-			var user = friend.user
-			if user.id == joinItem.user_id:
-				friend.online = joinItem.status
-				var username = user.username
-				if user.display_name:
-					username += '(' + user.display_name + ')'
-						# 显示好友在线状态
-				username += '[在线]'
-				friendListItem.set_item_text(i,username)
-				friendListItem.set_item_metadata(i, friend)
-				friendListItem.set_item_custom_fg_color(i, onlineColor)
-				friendListItem.move_item(i, 0)
-				break
-	for leaveItem in presence.leaves:
-		for i in range(count):
-			var friend = friendListItem.get_item_metadata(i)
-			var user = friend.user
-			if user.id == leaveItem.user_id:
-				friend.online = leaveItem.status
-				var username = user.username 
-				if user.display_name:
-					username += '(' + user.display_name + ')'
-						# 显示好友在线状态
-				username += '[离线]'
-				friendListItem.set_item_text(i,username)
-				friendListItem.set_item_metadata(i, friend)
-				friendListItem.set_item_custom_fg_color(i, leaveColor)
-				friendListItem.move_item(i, count - 1)
-				break
+		changeOnline(joinItem.user_id, true)
+	if count>1:
+		SignalManager.OnlineSIG.emit()
+	if count == 0:
+		for leaveItem in presence.leaves:
+			changeOnline(leaveItem.user_id, false)
 	pass
+
+
+func changeOnline(user_id:String, online:bool)->int:
+	var count = friendListItem.item_count
+	for i in count:
+		var friend = friendListItem.get_item_metadata(i)
+		var user = friend.user
+		if user.id == user_id:
+			user.online = online
+			var username = user.username
+			print("好友变更状态--> ", username, " 在线状态:",online)
+			if user.display_name:
+				username += '(' + user.display_name + ')'
+					# 显示好友在线状态
+			username += '[在线]' if online else '[离线]'
+			friendListItem.set_item_text(i,username)
+			friendListItem.set_item_metadata(i, friend)
+			friendListItem.set_item_custom_fg_color(i, onlineColor if online else leaveColor)
+			friendListItem.move_item(i, 0 if online else count - 1)
+			return i
+	return -1
+
 
 func _on_channel_presence(presence):
 	print("频道状态变更:", presence)
+	# for p in p_presence.joins:
+	#   room_users[p.user_id] = p
+
+  	# for p in p_presence.leaves:
+	#   room_users.erase(p.user_id)
 	pass
 
+func _on_received_notify(notify):
+	print("收到通知:", notify)
+	var content = JSON.parse_string(notify.content)
+	print("收到通知内容:", content)
+	var status = notify.code as NotifyStatus
+	match status:
+		NotifyStatus.RECV_OFFLINE:
+			# changeOnline(notify.sender_id, true)
+			pass
+		NotifyStatus.WANT_FRIEND:
+			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			{
+				"type":"用户",
+				"level":0,
+				"uid":notify.sender_id,
+				"name":content.username,
+				"time":notify.create_time,
+				"group_id":"-",
+				"group_name":"-",
+				"update_time":"-",
+				"status":2,
+			})
+			SignalManager.NewNotifySIG.emit()
+		NotifyStatus.ACCEPT_FRIEND:
+			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			{
+				"type":"用户",
+				"level":0,
+				"uid":notify.sender_id,
+				"name":content.username,
+				"time":notify.create_time,
+				"group_id":"-",
+				"group_name":"-",
+				"update_time":"-",
+				"status":4,
+			})
+			# SignalManager.NewNotifySIG.emit()
+			SignalManager.FreshFriendListSIG.emit()
+		NotifyStatus.ACCEPT_GROUP:
+			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			{
+				"type":"俱乐部",
+				"level":0,
+				"uid":notify.sender_id,
+				"name":content.username,
+				"time":notify.create_time,
+				"group_id":"-",
+				"group_name":"-",
+				"update_time":"-",
+				"status":4,
+			})
+			SignalManager.NewNotifySIG.emit()
+			pass
+		NotifyStatus.WANT_GROUP:
+			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			{
+				"type":"俱乐部",
+				"level":0,
+				"uid":notify.sender_id,
+				"name":content.username,
+				"time":notify.create_time,
+				"group_id":"-",
+				"group_name":"-",
+				"update_time":"-",
+				"status":2,
+			})
+			SignalManager.NewNotifySIG.emit()
+			pass
+		NotifyStatus.FRIEND_JOIN:
+			SignalManager.NewNotifySIG.emit()
+			pass
+		NotifyStatus.SERVER_CLOSE:
+			pass
+		NotifyStatus.BANNED:
+			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			{
+				"type":"俱乐部",
+				"level":0,
+				"uid":notify.sender_id,
+				"name":content.username,
+				"time":notify.create_time,
+				"group_id":"-",
+				"group_name":"-",
+				"update_time":"-",
+				"status":3,
+			})
+			SignalManager.NewNotifySIG.emit()
+			pass
+		_:
+			pass
+	pass
+
+
+# enum NotifyStatus {
+# 			RECV_OFFLINE = -1, # 对方离线或不在频道的消息
+# 	WANT_FRIEND  = -2, # 用户 X 想将您添加为好友。
+# 	ACCEPT_FRIEND = -3, # 用户 X 接受了您的好友邀请。
+# 	ACCEPT_GROUP = -4, # 您已被 X 组接受。
+# 	WANT_GROUP  = -5, # 用户 X 想要加入您的组。
+# 	FRIEND_JOIN = -6, # 您的朋友 X 刚刚加入游戏。
+# 	SERVER_CLOSE = -7, # 服务器断开
+# 	BANNED = -8, # 你被封禁了。
 
 
 #################################################################
@@ -294,22 +441,26 @@ func _load_more_history(forward: bool):
 # 获取好友列表
 func get_friends_list():
 	var friendlist = await Network.get_friends_list()
-	if friendlist:
+	if friendlist and friendlist.friends.size() > 0:
 		friendListItem.clear()
 		var friendIds = []
 		var friendNames = []
 		DataManager.get_instance().remove_friend_all(uid)
+		print("好友人数:",friendlist.friends.size())
 		for friend in friendlist.friends:
-			var ret = await Network.add_channel_async(friend.user.id)
-			if ret:
-				# 区分是否是互为好友
-				if friend.state == 0:
-					var user = friend.user
+			# 避免重复 
+			var user = friend.user
+			if friendIds.find(user.id) != -1:
+				continue
+			# 区分是否是互为好友 
+			if friend.state == 0:
+				var ret = await Network.add_channel_async(friend.user.id,0)
+				if ret:
 					var username = user.username
 					var friend_status = "在线" if user.online else "离线"
 					friendIds.append(user.id)
 					friendNames.append(username)
-					DataManager.get_instance().add_uid_friend(uid,user.serialize()) 
+					# 显示好友昵称
 					if user.display_name:
 						username += '(' + user.display_name + ')'
 					# 显示好友在线状态
@@ -321,29 +472,32 @@ func get_friends_list():
 						if texture:
 							friendListItem.set_item_icon(index, texture)
 						pass
-					print("好友列表--> ", friend.user)
+					# 保存好友信息
 					friendListItem.set_item_metadata(index, {
 							"channel": ret,
 							"user": friend.user,
 							"state": friend.state,
 							"online":friend.user.online,
 						})
-					if user.online:
-						friendListItem.set_item_custom_fg_color(index, onlineColor)
-						friendListItem.move_item(index, 0)
-					else:
-						friendListItem.set_item_custom_fg_color(index, leaveColor)
-						friendListItem.move_item(index, friendListItem.item_count - 1)
-				if friend.state == 2:#需要审批
-					SignalManager.NewNotifySIG.emit(null)
+					DataManager.get_instance().add_uid_friend(uid,user.serialize()) 
+					friendListItem.set_item_custom_fg_color(index, onlineColor if user.online else leaveColor)
+					# 上线了则移至上方
+					friendListItem.move_item(index, 0 if user.online else friendListItem.item_count - 1)
+					print("好友--> ", index,"好友信息",friend.user)
 					pass
+			elif friend.state == 2:#需要审批
+				SignalManager.NewNotifySIG.emit(null)
+				pass
 			# 状态
 			DataManager.get_instance().add_uid_approval(Network.player_data.id,
 			{
 				"type":"用户",
+				"level":0,
 				"uid":friend.user.id,
 				"name":friend.user.username,
 				"time":friend.user.create_time,
+				"group_id":"-",
+				"group_name":"-",
 				"update_time":friend.user.update_time,
 				"status":friend.state,
 			})
@@ -352,35 +506,72 @@ func get_friends_list():
 	print("获取好友列表")
 	pass
 ####
+func add_club(group):
+	if group.name == "world": 
+		return
+	# print("俱乐部信息:",group)
+	var ret = await Network.add_channel_async(group.id,2)
+	if ret:
+		clubListItem._on_group_joined(
+			{
+				"id": group.id,
+				"name": group.name,
+				"channel":ret,
+				"avatar":group.avatar_url,
+				"description": group.description,
+				"member_count": group.edge_count,
+				"max_count": group.max_count,
+				"notification_enabled": true,
+				"owner_id":group.creator_id,
+				"create_time":group.create_time,
+				"update_time":group.update_time,
+			},
+		)
+		# 更新成员
+		update_club(group.serialize())
+	pass
+
+#######################获取俱乐部###############################
+func update_club(group):
+	# 获取成员列表
+	var retsult = await Network.get_group_member_list_async(group.id)
+	var dataList = []
+	var isAdmin = false
+	for info1 in retsult.group_users:
+		if info1.user.id == Network.player_data.id and (info1.state == 0 or info1.state == 1):
+			isAdmin = true
+			continue
+		if info1.state == 3:# 申请加入群组
+			dataList.append({
+			"type":"俱乐部",
+			"level":info1.state,#0超管 1 管理员 2成员
+			"uid":info1.user.id,
+			"name":info1.user.username,
+			"time":info1.user.create_time,
+			"group_id":group["id"],
+			"group_name":group["name"],
+			"update_time":info1.user.update_time,
+			"status":2,
+		})
+
+	# 是管理员
+	if isAdmin and dataList.size() > 0:
+		for data in dataList:
+			DataManager.get_instance().add_uid_approval(Network.player_data.id,data)
+	DataManager.get_instance().add_uid_club(uid, group) 
+	pass
+
+
+#######################获取俱乐部列表###############################
 func get_club_list():
 	var result = await Network.get_group_list(uid)
 	if result == null:
 		return
 	print("俱乐部数量:",result.user_groups.size())
 	clubListItem.clear() 
-	
+	 
 	for info in result.user_groups:
-		var group = info.group
-		print("俱乐部信息:",group)
-		var ret = await Network.add_channel_async(group.id,2)
-		if ret:
-			print("俱乐部渠道信息:",ret)
-			clubListItem._on_group_joined(
-				{
-					"id": group.id,
-					"name": group.name,
-					"channel":ret,
-					"avatar":group.avatar_url,
-					"description": group.description,
-					"member_count": group.edge_count,
-					"max_count": group.max_count,
-					"notification_enabled": true,
-					"owner_id":group.creator_id,
-					"create_time":group.create_time,
-					"update_time":group.update_time,
-				},
-			)
-			DataManager.get_instance().add_uid_club(uid,group.serialize()) 
+		add_club(info.group)
 	pass
 
 
@@ -471,4 +662,24 @@ func _on_text_edit_focus_exited() -> void:
 func _on_text_edit_finished() -> void:
 	if is_mobile:
 		DisplayServer.virtual_keyboard_hide()
+	pass # Replace with function body.
+
+func _on_tab_container_tab_selected(tab: int) -> void:
+	if tab == 0:
+		var world = Network.get_world_channel()
+		if world:
+			await Network.get_chat_history(world.id)
+	pass # Replace with function body.  
+
+
+func _on_light_button_pressed() -> void:
+	var normal =btn_light_switch.texture_normal
+	var pressed = btn_light_switch.texture_pressed
+	btn_light_switch.texture_normal = pressed
+	btn_light_switch.texture_pressed = normal
+	if !isOpenLight:
+		SignalManager.OpenLightSIG.emit()
+	else:
+		SignalManager.CloseLightSIG.emit()
+	isOpenLight = !isOpenLight
 	pass # Replace with function body.

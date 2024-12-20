@@ -65,11 +65,20 @@ func _ready():
 	popup_menu = PopupMenu.new()
 	add_child(popup_menu)
 	# 添加菜单项
-	popup_menu.add_item("复制", 0)
+	var copyIcon = load("res://asset/currency/copy.png")
+	var rebackIcon = load("res://asset/currency/reback.png")
+	var deleteIcon = load("res://asset/currency/delete.png")
+	
+	popup_menu.add_icon_item(copyIcon, "复制", 0)
 	popup_menu.add_separator()
-	popup_menu.add_item("撤销", 1)
-	popup_menu.add_item("删除", 2)
-
+	popup_menu.add_icon_item(rebackIcon, "撤销", 1)
+	popup_menu.add_separator()
+	popup_menu.add_icon_item(deleteIcon, "删除", 2)
+	 # 设置菜单项高度
+	popup_menu.add_theme_constant_override("item_height", 40)
+    # 设置图标大小
+	popup_menu.add_theme_constant_override("icon_max_width", 32)
+	popup_menu.add_theme_constant_override("icon_max_height", 32)
 	# 设置文本标签的自动换行
 	if text_label:
 		# 重置尺寸限制，让文本先自然布局
@@ -200,11 +209,12 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 
 # 设置文本消息
 func _setup_text_message(text: String):
-	if not text_label:
+	if not text_label or text == "":
 		return
 		
 	text_label.visible = true
 	text_label.text = text
+	text_label.push_font_size(24) 
 	
 	# 设置自动换行
 	text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -358,21 +368,28 @@ func _on_text_selection_changed():
 # 处理右键点击
 func _on_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			print("右键点击")
-			# 确保菜单在鼠标位置显示
+		# if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		# 	print("右键点击")
+		# 	# 确保菜单在鼠标位置显示
+		# 	var popup_position = get_viewport().get_mouse_position()
+		# 	popup_menu.reset_size()  # 重置大小以确保正确显示
+		# 	popup_menu.position = popup_position
+		# 	popup_menu.popup()
+		# 	# 防止事件继续传播
+		# 	get_viewport().set_input_as_handled()
+		#  # 处理Ctrl+C快捷键
+		# elif event.button_index == MOUSE_BUTTON_LEFT:
+		# 	# 双击选中整个单词
+		# 	if event.double_click:
+		# 		text_label.select_all()
+		# 	has_selection = text_label.get_selected_text().length() > 0
+		if event.double_click:
 			var popup_position = get_viewport().get_mouse_position()
 			popup_menu.reset_size()  # 重置大小以确保正确显示
 			popup_menu.position = popup_position
 			popup_menu.popup()
 			# 防止事件继续传播
 			get_viewport().set_input_as_handled()
-		 # 处理Ctrl+C快捷键
-		elif event.button_index == MOUSE_BUTTON_LEFT:
-			# 双击选中整个单词
-			if event.double_click:
-				text_label.select_all()
-			has_selection = text_label.get_selected_text().length() > 0
 	pass
 
 # 添加快捷键支持

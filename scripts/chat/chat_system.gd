@@ -32,7 +32,18 @@ enum MessageKind {
 	CLUB = 1,
 	CHAT = 2
 }
-
+enum MessageCode {
+	ChatMessage = 0,
+	ChatUpdate = 1,
+	ChatRemove = 2,
+	JoinedGroup = 3,
+	AddedToGroup = 4,#已经添加到组
+	LeftGroup = 5,#已经离开组
+	KickedFromGroup = 6,#被踢Group
+	PromotedInGroup = 7, #在小组内晋升
+	BannedInGroup = 8,# 在群组中被禁止
+	DemotedInGroup = 9, #在小组内降职
+}
 # 使用字典存储所有channel的消息历史
 var message_id_cache: Dictionary = {} # Dictionary<String, Dictionary> 用于快速查找消息ID
 var current_channel_id: String = ""
@@ -69,9 +80,17 @@ func changePanel(tab):
 ################	 聊天系统相关函数   ########################
 ################################################################
 # 添加新消息
-func add_message(chanId: String, msgId: String, content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0):
+func add_message(chanId: String, msgId: String, content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0,code: int = 0):
 	if messages_container == null:
+		print("消息容器为空")
 		return
+	
+	# 检查消息类型	
+	var msgcode =  code as MessageCode
+	if msgcode > MessageCode.ChatRemove:
+		add_center_message(localContent(nickname,msgcode))
+		return
+
 	if timestamp == 0:
 		timestamp = int(Time.get_unix_time_from_system())
 	
@@ -86,7 +105,10 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 		# 添加时间分割标签
 		add_time_separator(curMsgTime)
 		show_time = true
-	
+
+
+		
+
 	# 创建新的消息项
 	# 获取当前消息容器中的子控件数量
 	var child_count = messages_container.get_child_count()
@@ -129,7 +151,7 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 
 	# 设置消息内容
 	message_item.set_message(chanId, msgId, content, nickname, msg_type, show_time, time_str)
-
+		
 	# 更新最后消息时间
 	last_message_time = timestamp
 	message_index += 1
@@ -143,9 +165,15 @@ func add_time_separator(datetime: Dictionary):
 		datetime["month"],
 		datetime["day"]
 	]
+	add_center_message(time_str)
+	pass
 
+# 添加中间消息
+func add_center_message(msg: String):
+	if msg.is_empty():
+		return
 	var time_label = Label.new()
-	time_label.text = time_str
+	time_label.text = msg
 	time_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	time_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 
@@ -162,7 +190,6 @@ func add_time_separator(datetime: Dictionary):
 		messages_container.add_child(time_label)
 	message_index += 1
 	pass
-
 # 清理超出可见区域的消息
 func cleanup_overflow_messages(scroll: ScrollContainer):
 	var visible_height = scroll.size.y
@@ -269,8 +296,49 @@ func has_message(channel_id: String, message_id: String) -> bool:
 		return false
 	return message_id in message_id_cache[channel_id]
  
+
+func localContent(username:String,code:MessageCode):
+	match code:
+		MessageCode.JoinedGroup:
+			return username+"加入了群聊"
+		MessageCode.AddedToGroup:
+			return username+"已加入群聊"
+		MessageCode.KickedFromGroup:
+			return username+"已被踢出群聊"
+		MessageCode.LeftGroup:
+			return username+"已离开群聊"
+	return ""
+
+func localMsg(msg):
+	var code = msg.code as MessageCode
+	match code:
+		MessageCode.JoinedGroup:
+			msg._content = JSON.stringify({
+				"type":ContentType.TEXT,
+				"content":msg.username+"加入了群聊"
+				})
+		MessageCode.AddedToGroup:
+			msg._content = JSON.stringify({
+					"type":ContentType.TEXT,
+					"content":msg.username+"已加入群聊"
+				})
+		MessageCode.KickedFromGroup:
+			msg._content = JSON.stringify({
+				"type":ContentType.TEXT,
+				"content":msg.username+"已被踢出群聊"
+				})
+		MessageCode.LeftGroup:
+			msg._content = JSON.stringify({
+				"type":ContentType.TEXT,
+				"content":msg.username+"已离开群聊"
+				})
+		_:
+			pass
+	return msg
+
 # 添加消息到指定channel
 func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage) -> bool:
+	msg = localMsg(msg)
 	# 获取消息ID 
 	var message_id = msg.message_id
 	if message_id.is_empty():
@@ -303,8 +371,8 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 func load_local_history():
 	message_id_cache = Network.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
 	print("加载本地历史记录:",message_id_cache)
-	var channelList = DataManager.get_instance().get_channel_list(uid)
-	print("加载本地玩家渠道:",channelList)
+	# var channelList = DataManager.get_instance().get_channel_list(uid)
+	# print("加载本地玩家渠道:",channelList)
 	pass
 
 # 获取指定channel的所有历史消息
@@ -326,14 +394,15 @@ func refresh_current_channel_display() -> void:
 	for message in messages:
 		var msg = message if typeof(message) != TYPE_STRING else DataManager.get_instance().parse_message(message) 
 		var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
-		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
+		var code = msg.code if msg.has("code") else 0
+		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time),code)
 	# 滚动到底部
 	ensure_scroll_to()
 	pass
 
 func message_to_show(msg:NakamaAPI.ApiChannelMessage):
 	var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
-	add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time))
+	add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time),msg.code)
 	ensure_scroll_to()
 
 # 获取channel的最后一条消息
@@ -343,6 +412,8 @@ func get_channel_last_message(channel_id: String) -> NakamaAPI.ApiChannelMessage
 
 # 清理消息但保留控件以供复用
 func clear_messages_item():
+	if not messages_container:
+		return
 	message_index = 0 # 重置消息索引
 	
  	# 获取所有子控件

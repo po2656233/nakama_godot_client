@@ -129,7 +129,7 @@ func _on_tb_add_pressed() -> void:
 		if info:
 			var friend = DataManager.get_instance().get_uid_friendInfo(uid,info.id)
 			if friend:
-				PopupManager.show_message("已添加")
+				PopupManager.show_message("已是好友,请勿重复添加")
 				return
 			ids.append(info.id)
 		pass
@@ -154,7 +154,7 @@ func _on_tb_add_pressed() -> void:
 	# 添加好友
 	var ret = await Network.add_friends_async(ids)	
 	if ret:
-		PopupManager.show_message("已添加,等待通过")
+		PopupManager.show_message("已添加,请等待对方通过")
 		_list.clear()
 		_search_box.text = ""
 	else:

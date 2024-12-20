@@ -83,6 +83,14 @@ text = "名称"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ClubHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "俱乐部"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ApplyTimeHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
@@ -133,14 +141,10 @@ theme_override_constants/separation = 12
 [node name="CloseButton" type="TextureButton" parent="Panel"]
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -45.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 45.0
-grow_horizontal = 0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 79.0
+offset_bottom = 80.0
 texture_normal = ExtResource("2_8w8cs")
 texture_pressed = ExtResource("3_up2tw")
 texture_hover = ExtResource("4_d1wjj")

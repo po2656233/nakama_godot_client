@@ -9,10 +9,9 @@ var group_data: Dictionary
 var notify_id: int = 2
 
 var style = StyleBoxFlat.new()
-# 定义颜色常量
-const NORMAL_COLOR = Color(0.9, 0.9, 0.9, 1)  # 普通状态为灰色
-const HOVER_COLOR = Color(1, 1, 1, 1)  # 悬浮状态为亮色（白色）
-const SELECTED_COLOR = Color(1, 0.95, 0.7, 1)  # 选中状态为黄色
+# # 定义颜色常量
+const NORMAL_COLOR = Color(0.02, 0.388, 0.576)  # 普通状态为灰色
+const SELECTED_COLOR = Color(0, 0.149, 0.329) # 选中状态为黄色
 
 func _ready():
 	gui_input.connect(_on_gui_input)
@@ -24,13 +23,14 @@ func _ready():
 	popup.add_check_item("接收消息通知", notify_id)
 	popup.id_pressed.connect(_on_manage_option_selected)
 	
-	# 初始化颜色
-	self_modulate = NORMAL_COLOR
-	_setup_panel_style(false)
 
 func setup(data: Dictionary):
 	group_data = data
 	$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/GroupName.text = data["name"]
+	if data["description"] == "":
+		$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Description.visible = false
+	else:
+		$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Description.text = data["description"]
 	$MarginContainer/HBoxContainer/VBoxContainer/MemberCount.text = "成员数: %d" % data["member_count"]
 	
 	# 设置通知状态
@@ -67,20 +67,28 @@ func _show_leave_confirmation():
 	dialog.popup_centered()
 	
 	dialog.confirmed.connect(func():
-		group_left.emit(group_data)
+		var ret = await Network.leave_group(group_data["id"])
+		if ret:
+			group_left.emit(group_data)
+		else:
+			ret = await Network.remove_group(group_data["id"])
+			if ret:
+				group_left.emit(group_data)
+			else:
+				PopupManager.show_message(group_data["name"]+"解散失败")
 		dialog.queue_free()
 	)
 
 func _update_notification_icon():
 	var icon = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/NotificationIcon
 	if group_data.get("notification_enabled", true):
-		icon.modulate = Color(0.2, 0.8, 0.2)  # 绿色
+		icon.modulate = Color(0.2, 0.8, 1.0)  # 绿色
 	else:
 		icon.modulate = Color(0.6, 0.6, 0.6)  # 灰色
 
 
-func _setup_panel_style(isSelected: bool):
-	style.bg_color = Color.DARK_GREEN if isSelected else Color(0.019, 0.388, 0.575)  # 白色背景
+func setup_panel_style(isSelected: bool):
+	style.bg_color = SELECTED_COLOR if isSelected else NORMAL_COLOR  
 	style.corner_radius_top_left = 8
 	style.corner_radius_top_right = 8
 	style.corner_radius_bottom_left = 8

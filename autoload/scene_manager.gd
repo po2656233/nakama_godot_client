@@ -299,14 +299,14 @@ func go_back() -> void:
 	pass
 
 # 切换场景
-func switch_to_scene(scene_name: String, transition_way:String = "conical", dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
+func switch_to_scene(scene_name: String, transition_way:String = "cross", dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_name == "":
 		return 
 	var scene_path = get_scene_path(scene_name)
 	_transition_scene(scene_path,transition_way,dissolve_time, dissolve_image)
 	pass
 
-func _transition_scene(scene_path: String,  transition_way:String = "conical",dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
+func _transition_scene(scene_path: String,  transition_way:String = "cross",dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_path == "":
 		PopupManager.show_dynamic("场景路径为空")
 		push_error("场景路径为空")

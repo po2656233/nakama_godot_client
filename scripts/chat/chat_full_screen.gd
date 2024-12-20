@@ -32,7 +32,6 @@ func _on_fullscreen_toggle():
 		WindowDrag.stopMove = false
 		exit_fullscreen()
 	# await get_tree().create_timer(1).timeout
-	# Network.get_chat_history()
 	pass
 
 

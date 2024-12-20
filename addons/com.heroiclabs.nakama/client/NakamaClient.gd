@@ -303,6 +303,16 @@ func authenticate_steam_async(p_token : String, p_username = null, p_create : bo
 func block_friends_async(p_session : NakamaSession, p_ids : PackedStringArray, p_usernames = null) -> NakamaAsyncResult:
 	return await _api_client.block_friends_async(p_session, p_ids, p_usernames);
 
+
+
+# 禁言
+func ban_group_users_async(	p_session : NakamaSession
+		, p_group_id : String
+		, p_user_ids = null # : array
+		) -> NakamaAsyncResult:
+	return await _api_client.ban_group_users_async(p_session, p_group_id, p_user_ids);
+
+
 # Create a group.
 # @param p_session - The session of the user.
 # @param p_name - The name for the group.

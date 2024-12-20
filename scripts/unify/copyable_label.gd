@@ -21,7 +21,10 @@ func _gui_input(event: InputEvent) -> void:
 			if now - last_click_time < double_click_threshold:
 				_copy_text()
 			last_click_time = now
+		elif event.double_click:
+			_copy_text()
 
 func _copy_text() -> void:
 	DisplayServer.clipboard_set(text)
+	PopupManager.show_message("已复制账号")
 	print("已复制文本：", text)

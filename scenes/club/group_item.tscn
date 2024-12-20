@@ -1,13 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://riqfmggkqpf3"]
+[gd_scene load_steps=6 format=3 uid="uid://riqfmggkqpf3"]
 
 [ext_resource type="Script" path="res://scenes/club/group_item.gd" id="1_xxxxx"]
 [ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://asset/currency/email.svg" id="2_alo0b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqodf"]
 bg_color = Color(0.0191054, 0.388241, 0.574974, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_fy74u"]
+font_size = 18
+font_color = Color(1, 1, 0.396078, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7qx3e"]
+font_size = 14
+font_color = Color(0.834614, 0.834614, 0.834614, 1)
 
 [node name="GroupItem" type="PanelContainer"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 65)
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_yqodf")
 script = ExtResource("1_xxxxx")
@@ -35,18 +47,32 @@ size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 5
 
 [node name="GroupName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 text = "俱乐部名称"
+label_settings = SubResource("LabelSettings_fy74u")
 
 [node name="NotificationIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 2
 texture = ExtResource("2_alo0b")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "详情111111"
+label_settings = SubResource("LabelSettings_7qx3e")
+vertical_alignment = 2
+autowrap_mode = 3
+text_overrun_behavior = 4
 
 [node name="MemberCount" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -55,6 +81,7 @@ text = "成员数: 0"
 
 [node name="ManageButton" type="MenuButton" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 10
 text = "管理"
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

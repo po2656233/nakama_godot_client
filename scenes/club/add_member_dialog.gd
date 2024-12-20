@@ -15,10 +15,10 @@ func _on_add_pressed():
 	
 	if user_id.is_empty():
 		return
-	
+
 	# 模拟添加新成员
 	var new_member = {
-		"id": randi() % 1000 + 100,  # 随机ID
+		"id": user_id,  # 随机ID
 		"name": user_id,  # 使用输入的ID作为名称
 		"avatar": null,
 		"status": "离线",

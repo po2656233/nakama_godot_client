@@ -10,13 +10,17 @@ func _ready():
 		var approvals = DataManager.get_instance().get_uid_approval(Network.player_data.id)
 		import_requests(approvals)
 	
+func _exit_tree() -> void:
+	DataManager.get_instance().save_data()
+	clear_requests()
+	pass
 
 # 添加新的请求项到列表
-func add_request_item(type: String,uid:String, name1: String, time: String, update_time: String="-", status = null) -> void:
+func add_request_item(type: String,uid:String, name1: String, time: String,gid:String="-", gname1: String="-", level: int = 0, update_time: String="-", status = null) -> void:
 	var request_item = RequestItemScene.instantiate()
 	request_list.add_child(request_item)
 	if status != null:
-		request_item.setup(type,uid, name1, time,update_time, status)
+		request_item.setup(type,uid, name1, time, gid, gname1,level, update_time, status)
 	else:
 		request_item.setup(type,uid, name1, time)
 	request_item.approved.connect(_on_request_approved.bind(request_item))
@@ -32,7 +36,7 @@ func import_requests(requests: Array) -> void:
 	# 添加新项目
 	for request in requests:
 		if "status" in request:
-			add_request_item(request.type,request.uid, request.name, request.time, request.update_time, request.status)
+			add_request_item(request.type,request.uid, request.name, request.time, request.group_id, request.group_name,request.level, request.update_time, request.status)
 		else:
 			add_request_item(request.type,request.uid, request.name,  request.time)
 	reorder_requests()

@@ -1,5 +1,4 @@
 extends Control
-
 func _ready():
 	$VBoxContainer/Header/BackButton.pressed.connect(_on_back_button_pressed)
 

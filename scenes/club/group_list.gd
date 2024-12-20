@@ -8,19 +8,40 @@ var create_group_dialog_scene = preload("res://scenes/club/create_group_dialog.t
 var groups = []
 var filtered_groups = []
 var current_selected_item: Node = null  # 当前选中的俱乐部项
+var is_ascending = false
+
+enum MgrType { CREATE, JOIN }
 enum SortType { NAME, MEMBER_COUNT, UPDATE_TIME }
 var current_sort = SortType.UPDATE_TIME
 
-enum MgrType { CREATE, JOIN }
+# 定义颜色常量
+const NORMAL_COLOR = Color(0.02, 0.388, 0.576)  # 普通状态为灰色
+# const HOVER_COLOR = Color(1, 1, 1, 1)  # 悬浮状态为亮色（白色）
+# const SELECTED_COLOR = Color.YELLOW # 选中状态为黄色
 
 
 func _ready():
 	# 设置管理菜单
 	var mgrPopup = $VBoxContainer/SearchBar/MarginContainer/HBoxContainer/ManagerButton.get_popup()
+	# 基本设置
+	mgrPopup.add_theme_constant_override("item_height", 80)
+	mgrPopup.add_theme_constant_override("v_separation", 5)
+	
+	# 设置字体
+	 
+	# 设置样式
+	var style = StyleBoxFlat.new()
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 5
+	style.content_margin_bottom = 5
+	style.bg_color = NORMAL_COLOR
+	mgrPopup.add_theme_stylebox_override("panel", style)
+
 	mgrPopup.add_item("创建俱乐部", MgrType.CREATE)
 	mgrPopup.add_item("加入俱乐部", MgrType.JOIN)
 	mgrPopup.id_pressed.connect(_on_mgr_selected)
-	
+	mgrPopup.reset_size()
 	# 设置排序菜单
 	var popup = $VBoxContainer/SearchBar/MarginContainer/HBoxContainer/SortButton.get_popup()
 	popup.add_item("按名称排序", SortType.NAME)
@@ -30,10 +51,6 @@ func _ready():
 
 	# 连接搜索信号
 	$VBoxContainer/SearchBar/MarginContainer/HBoxContainer/SearchInput.text_changed.connect(_on_search_text_changed)
-	
-	# 连接按钮信号
-	$VBoxContainer/Header/HBoxContainer/JoinButton.pressed.connect(_on_join_button_pressed)
-	$VBoxContainer/Header/HBoxContainer/CreateButton.pressed.connect(_on_create_button_pressed)
 	pass
 
 func clear() :
@@ -47,24 +64,36 @@ func update_group_list():
 	
 	# 排序
 	filtered_groups.sort_custom(func(a, b):
-		if current_sort == SortType.UPDATE_TIME:
-			return Time.get_unix_time_from_datetime_string(a["update_time"]) > Time.get_unix_time_from_datetime_string(b["update_time"])
-		elif current_sort == SortType.NAME:
-			return a["name"] < b["name"]
-		else:
-			return a["member_count"] > b["member_count"]
+		if current_sort == SortType.UPDATE_TIME and a.has("update_time") and b.has("update_time"):
+			var time_a = Time.get_unix_time_from_datetime_string(a["update_time"])
+			var time_b = Time.get_unix_time_from_datetime_string(b["update_time"])
+			return time_a < time_b if is_ascending else time_b < time_a
+			
+		elif current_sort == SortType.NAME and a.has("name") and b.has("name"):
+			return a["name"] < b["name"] if is_ascending else b["name"] < a["name"]
+			
+		elif a.has("member_count") and b.has("member_count"):
+			return a["member_count"] < b["member_count"] if is_ascending else b["member_count"] < a["member_count"]
+		
+		return false  # 如果没有可比较的字段，返回 false
 	)
 	 
 	# 添加排序后的项目
+	var preGroup = null
 	for group in filtered_groups:
+		if preGroup and preGroup["id"] == group["id"]:
+			continue
 		var group_item = group_item_scene.instantiate()
 		$VBoxContainer/ScrollContainer/GroupContainer.add_child(group_item)
 		group_item.setup(group)
-		group_item.tooltip_text = "创建于:" + Network.get_chinese_time_str(group["create_time"])
+		group_item.tooltip_text = group["description"]+"\n创建时间:" + Network.get_chinese_time_str(group["create_time"])
 		group_item.group_selected.connect(func(data): _on_group_selected(data, group_item))
 		group_item.group_clicked.connect(func(): _on_cliecked_group(group_item))
 		group_item.group_left.connect(_on_group_left)
 		group_item.notification_toggled.connect(_on_notification_toggled)
+		preGroup = group
+	pass
+
 
 func _clear_group_selection():
 	if current_selected_item:
@@ -73,9 +102,9 @@ func _clear_group_selection():
 func _on_cliecked_group(item: Node):
 	var sleceteNode = current_selected_item
 	if sleceteNode != null:
-		sleceteNode.style.bg_color = Color(0.019, 0.388, 0.575) 
+		sleceteNode.setup_panel_style(false)
 	if item != null:
-		item.style.bg_color =  Color.GREEN
+		item.setup_panel_style(true)
 		var clubInfo = item.get_group_data()
 		await Network.set_current_channel(clubInfo.channel, true) 
 	current_selected_item = item
@@ -87,33 +116,9 @@ func _on_group_selected(group_data: Dictionary, item: Node):
 	# 这里可以添加其他选中俱乐部后的逻辑
 	print("选中的群组信息:", group_data)
 
-
 	var member_list = member_list_scene.instantiate()
 	add_child(member_list)
 	member_list.setup(group_data)
-		# 获取成员列表
-	var result = await Network.get_group_member_list_async(group_data["id"])
-	if not result:
-		return
-	for info in result.group_users:
-		var member = info.user
-		member_list._on_new_member_added(
-			{
-			"id": member.id, 
-			"name": member.username, 
-			"avatar": member.avatar_url, 
-			"status": "在线"if member.online else "离线",
-			"signature": member.display_name, 
-			"level": 15, 
-			"score": 1500,
-			"rank": 25, 
-			"total_games": 150, 
-			"win_rate": 0.65,
-			"highest_score": 12800, 
-			"average_score": 8500,
-			"note": "",#"资深玩家"
-		}
-		)
 	pass
 	
 
@@ -138,6 +143,7 @@ func _on_mgr_selected(id: int):
 
 func _on_sort_selected(id: int):
 	current_sort = id as SortType
+	is_ascending = !is_ascending
 	update_group_list()
 
 func _on_join_button_pressed():
@@ -149,11 +155,11 @@ func _on_create_button_pressed():
 	var dialog = create_group_dialog_scene.instantiate()
 	add_child(dialog)
 	dialog.group_created.connect(_on_group_created)
-
+ 
 func _on_group_created(group_data):
-	var result = await Network.create_group_async(group_data.name, group_data.description, group_data.avatar)
-	if result:
-		SignalManager.FreshClubListSIG.emit()
+	groups.append(group_data)
+	filtered_groups = groups.duplicate()
+	update_group_list()
 	pass
 
 func _on_group_joined(group_data):
@@ -165,6 +171,16 @@ func _on_group_left(group_data):
 	for i in range(groups.size()):
 		if groups[i]["id"] == group_data["id"]:
 			groups.remove_at(i)
+			break
+	filtered_groups = groups.duplicate()
+	update_group_list()
+
+func _on_group_updated(group_data):
+	for i in range(groups.size()):
+		if groups[i]["id"] == group_data["id"]:
+			if not group_data["channel"]:
+				group_data["channel"] = groups[i].channel
+			groups[i] = group_data
 			break
 	filtered_groups = groups.duplicate()
 	update_group_list()

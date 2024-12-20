@@ -49,24 +49,32 @@ func _ready() -> void:
 		
 
 func initialize_client() -> void:
+	# 1.重置client
 	if _client:
 		if _session:			# 退出登录
 			_client.session_logout_async(_session)
 		_client.cancel_free()
 		_client = null
 	_client = Nakama.create_client(SERVER_KEY, HOST, PORT, SCHEME)
-	# 1. 关闭现有的 WebSocket 连接
+	# 2. 关闭现有的 WebSocket 连接
 	if _socket:
 		if _socket.is_connected_to_host():
 			_socket.close()
 		_socket = null
+	
+	# 3. 创建新的 WebSocket 连接
 	_socket = Nakama.create_socket_from(_client)
 	connect_signals()
+
+	# 4. 尝试恢复会话
 	var success = await restore_session()
 	if success:
 		connection_established.emit()
 	# else:
 	# 	await authenticate_device()
+	# 5.重置世界渠道,方便重新加入世界渠道
+	_world_channel = null
+	pass
 
 func connect_signals() -> void:
 	if _socket:
@@ -108,9 +116,8 @@ func set_current_channel(channel: NakamaRTAPI.Channel,isLoadhistory:bool=false):
 	_current_channel = channel
 	if channel:
 		changeChannelSIG.emit(channel.id)
-	if isLoadhistory:
-		await get_chat_history(channel.id)
-
+		if isLoadhistory:
+			await get_chat_history(channel.id)
 	pass
 
 func get_cursor_for_list_channel():
@@ -130,7 +137,7 @@ func authenticate_device(username: String="", created:bool=false) -> bool:
 	if _socket.is_connected_to_host():
 		return true
 		
-	var socket_result = await _socket.connect_async(_session)
+	var socket_result = await _socket.connect_async(_session,true)
 	if socket_result.is_exception():
 		push_error("Socket connection failed: " + socket_result.get_exception().message)
 		connection_failed.emit()
@@ -166,7 +173,7 @@ func authenticate_email(username: String,password: String,email: String="",  cre
 	if _socket.is_connected_to_host():
 		return true
 
-	var socket_result = await _socket.connect_async(_session)
+	var socket_result = await _socket.connect_async(_session,true)
 	if socket_result.is_exception():
 		push_error("Socket失败: " , socket_result)
 		connection_failed.emit()
@@ -377,7 +384,7 @@ func setup_socket() -> void:
 		if _socket:
 			_socket.close()
 		_socket = Nakama.create_socket_from(_client)
-		await _socket.connect_async(_session)
+		await _socket.connect_async(_session,true)
 		connect_signals()
 
 # Data Management
@@ -450,22 +457,26 @@ func search_groups(groupname: String):
 
 # 获取好友列表
 func get_friends_list():
+	if not _socket:
+		return
+	# 获取好友列表并订阅他们的状态
 	var result = await _client.list_friends_async(_session)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return
-	var friend_ids = [] 
+	
+	var friend_ids = []
 	var friend_names = []
 	for friend in result.friends:
-		var f = friend as NakamaAPI.ApiFriend
-		if not f or not f.user.online:
-			continue
-		friend_ids.append(f.user.id)
-		friend_names.append(f.user.username)
-	var ret : NakamaAsyncResult = await _socket.follow_users_async(friend_ids,friend_names)
-	for presence in ret.presences:
-		print("%s is online with status: %s" % [presence.user_id, presence.status])
-	print("好友列表: ", ret)
+		friend_ids.append(friend.user.id)
+		friend_names.append(friend.user.username)
+	
+	# 订阅好友状态
+	if not friend_ids.is_empty(): 
+		var status_result = await _socket.follow_users_async(friend_ids,friend_names)
+		if status_result.is_exception():
+			print("Error following users: ", status_result.get_exception().message)
+	# print("好友列表: ", ret)
 	return result
 
 
@@ -484,8 +495,8 @@ func get_group_member_list_async(group_id: String):
 	var result = await _client.list_group_users_async(_session,group_id)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
-		return
-	print("俱乐部成员列表: ", result)
+		return null
+	print("俱乐部成员信息: ", result)
 	return result
 
 		
@@ -498,7 +509,6 @@ func add_friends_async(friend_ids: Array)->bool:
 		print("Error add_friends_async: ", result.get_exception().message)
 		return false
 	print("添加好友: ", result)
-	SignalManager.FreshFriendListSIG.emit()
 	return true
 
 		
@@ -506,10 +516,9 @@ func add_friends_async(friend_ids: Array)->bool:
 func create_group_async(name1: String, description : String = "", avatar_url = null):
 	var result = await _client.create_group_async(_session, name1, description, avatar_url,"zh",false)
 	if result.is_exception():
-		print("Error add_friends_async: ", result.get_exception().message)
+		print("Error create_group_async: ", result.get_exception().message)
 		return null
 	print("添加俱乐部: ", result)
-	SignalManager.FreshClubListSIG.emit()
 	return result
 
 
@@ -517,7 +526,7 @@ func create_group_async(name1: String, description : String = "", avatar_url = n
 func create_world_async():
 	var result = await _client.create_group_async(_session, "world", "世界渠道", null,"zh", true)
 	if result.is_exception():
-		print("Error add_friends_async: ", result.get_exception().message)
+		print("Error create_world_async: ", result.get_exception().message)
 		return null
 	print("添加俱乐部: ", result)
 	# SignalManager.FreshClubListSIG.emit()
@@ -529,6 +538,8 @@ func get_world_channel():
 	
 
 func load_world_channel():
+	if _world_channel:
+		return _world_channel
 	var result = await search_groups("world")
 	if not result:
 		return null
@@ -536,28 +547,30 @@ func load_world_channel():
 		# var group = info.group
 		print("查找世界频道: ", group)
 		if group.name == "world":
+			await _client.join_group_async(_session, group.id)
 			var ret = await add_channel_async(group.id, 2)
 			if not ret:
 				return null
 			print("添加世界渠道频道: ", ret)
 			_world_channel = ret
+			get_chat_history(_world_channel.id)
 			return ret
 	return null
 
-func add_channel_async(targetId: String,chanType:int = 0):
+func add_channel_async(targetId: String,tab:int = 0):
 	if _socket:
 		var chType = null
-		if chanType == 1:
+		if tab == 1:
 			chType = NakamaSocket.ChannelType.Room
-		elif chanType == 2:
+		elif tab == 2:
 			chType = NakamaSocket.ChannelType.Group
 		else:
 			chType = NakamaSocket.ChannelType.DirectMessage
 		var result = await _socket.join_chat_async(targetId,chType,true,true)
 		if result.is_exception():
-			push_error("Error add_channel_async: ", result.get_exception().message)
+			push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型", chType)
 			return null
-		print("添加频道: ", result)
+		# print("添加频道: ", result)
 		return result
 	return null
 
@@ -575,6 +588,16 @@ func add_group_async(group_name: String):
 		return ret 
 	return null
 
+
+func add_group_users_async(group_id: String,p_ids: PackedStringArray):
+	if group_id.is_empty() or p_ids.size() <= 0:
+		return false
+	var result = await _client.add_group_users_async(_session,group_id,p_ids)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return false
+	print("添加俱乐部成员: ", result)
+	return true
 
 # 订阅好友
 func follow_users_async(p_ids : PackedStringArray, p_usernames : PackedStringArray):
@@ -609,6 +632,23 @@ func refuse_friends_async(friend_id: String)->bool:
 	print("拒绝好友: ", result)
 	return true
 
+# 群组中禁言
+func ban_group_users_async(group_id: String,user_id: String)->bool:
+	var result = await _client.ban_group_users_async(_session, group_id, [user_id])
+	if result.is_exception():
+		print("Error ban_group_users_async: ", result.get_exception().message)
+		return false
+	print("群组中禁言: ", result)
+	return true
+
+# 离开群组
+func leave_group(group_id: String)->bool:
+	var result = await _client.leave_group_async(_session, group_id)
+	if result.is_exception():
+		print("Error leave_group: ", result.get_exception().message)
+		return false
+	print("离开俱乐部: ", result)
+	return true
 
 
 # 删除好友
@@ -633,7 +673,7 @@ func remove_gourp_user(group_id: String,user_id: String)->bool:
 	if result.is_exception():
 		print("Error removing group: ", result.get_exception().message)
 		return false
-	print("删除俱乐部用户!!!")
+	print("删除俱乐部用户!!!",result)
 	return true
 
 

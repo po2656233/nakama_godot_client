@@ -22,6 +22,7 @@ func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	print("data manger init")
 	load_data()
+	SignalManager.NewNotifySIG.connect(_on_approval_notify)
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -36,6 +37,12 @@ func _notification(what):
 		# 注意：这个通知在当前版本可能不存在，作为未来可能的扩展
 		print("Game is crashing, attempting to save data...")
 		# save_data()
+
+func _on_approval_notify(data):
+	if data:
+		add_uid_approval(data["uid"], data)
+
+
 
 # 获取单例实例
 static func get_instance() -> DataManager:
@@ -99,13 +106,21 @@ func add_data(key, data:Dictionary) -> int:
 	if not cached_data.has(key):
 		cached_data[key] = []
 	var count = cached_data[key].size()
-	if 0 < count and cached_data[key][0].has("name"):
-		for i in range(count-1,-1,-1):
-			if cached_data[key][i].name == data.name:
-				cached_data[key][i] = data
-				save_data()
-				return count
-	print("新增申请数据")
+	if 0 < count :
+		if cached_data[key][0].has("name"):
+			if cached_data[key][0].has("type"):
+				for i in range(count-1,-1,-1):
+					if cached_data[key][i].name == data.name and cached_data[key][i].type == data.type:
+						cached_data[key][i] = data
+						save_data()
+						return count
+			else:
+				for i in range(count-1,-1,-1):
+					if cached_data[key][i].name == data.name:
+						cached_data[key][i] = data
+						save_data()
+						return count
+	print("新增申请数据",key," data:",data)
 	cached_data[key].append(data)
 	save_data()  # 每次设置数据后 自动保存
 	return cached_data[key].size()

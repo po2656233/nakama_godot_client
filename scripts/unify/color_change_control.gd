@@ -21,17 +21,27 @@ func _ready():
 	# 保存原始颜色
 	original_color = modulate
 	
-	# 连接鼠标事件信号
-	gui_input.connect(_on_gui_input)
 
-func _on_gui_input(event: InputEvent):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			toggle_color()
+	SignalManager.OpenLightSIG.connect(open_color)
+	SignalManager.CloseLightSIG.connect(close_color)
+
+# 	# 连接鼠标事件信号
+# 	gui_input.connect(_on_gui_input)
+
+# func _on_gui_input(event: InputEvent):
+# 	if event is InputEventMouseButton:
+# 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+# 			toggle_color()
+
+func open_color():
+	is_active = true
+	toggle_color()
+
+func close_color():
+	is_active = false
+	toggle_color()
 
 func toggle_color():
-	is_active = !is_active
-	
 	var target_color: Color
 	match change_mode:
 		ColorChangeMode.BRIGHTNESS:

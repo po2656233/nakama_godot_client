@@ -1,6 +1,6 @@
 extends ItemList
 
-@export var custom_color: Color = Color(0.8, 0.8, 1.0, 1.0)
+@export var custom_color: Color = Color(0.157, 0.655, 0.427,0.5)
 @export_group("列表属性配置")
 @export_enum("聊天", "俱乐部", "房间", "其他") var listType: int
 
@@ -13,7 +13,7 @@ extends ItemList
 @export var Agree: bool = false
 @export var Refuse: bool = false
 @export var Block: bool = false
-
+ 
 signal addItemData(info)
 signal delItemData(info)
 signal modifyItemData(info)
@@ -30,8 +30,8 @@ var blockName: String = "拉黑"
 var popup_menu: PopupMenu
 var selected_index: int = -1 # 用于存储当前选中的项目索引
 
-var tween: Tween
-var original_color: Color
+# var tween: Tween 
+var original_color: Color = Color(0.02, 0.388, 0.576)
 var is_active: bool = false
 
 # 长按后弹出菜单
@@ -41,8 +41,6 @@ var is_long_press = false
 
 
 func _ready():
-	# 保存原始颜色
-	original_color = modulate
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(self)
 	# 创建弹出菜单
@@ -50,7 +48,7 @@ func _ready():
 	add_child(popup_menu)
 	
 	# 添加"删除"选项到弹出菜单
-	popup_menu.size = Vector2(20, 10)
+	popup_menu.size = Vector2(200, 120)
 	if Add:
 		popup_menu.add_item(addname)
 	if Del:
@@ -72,7 +70,9 @@ func _ready():
 	delItemData.connect(_on_del_item_data)
 	modifyItemData.connect(_on_modify_item_data)
 	findItemData.connect(_on_find_item_data)
-	self.connect("gui_input", Callable(self, "_on_ItemList_gui_input"))
+	SignalManager.OpenLightSIG.connect(open_color)
+	SignalManager.CloseLightSIG.connect(close_color)
+	self.connect("gui_input", Callable(self, "_on_item_list_gui_input"))
 	pass
 
 
@@ -144,15 +144,17 @@ func _on_item_selected(index: int):
 func _on_item_list_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
 		# 确保有项目被选中
-		if event.pressed  and selected_index != -1:
-			if  event.button_index == MOUSE_BUTTON_RIGHT:
-				showPopup(selected_index)
-			else:
-				press_start_time = Time.get_ticks_msec()
-		else:
-			var press_duration = (Time.get_ticks_msec() - press_start_time) / 1000.0
-			if press_duration >= long_press_time and selected_index != -1:
-				showPopup(selected_index)
+		if event.double_click:
+			showPopup(selected_index)
+		# if event.pressed  and selected_index != -1:
+		# 	if  event.button_index == MOUSE_BUTTON_RIGHT:
+		# 		showPopup(selected_index)
+		# 	else:
+		# 		press_start_time = Time.get_ticks_msec()
+		# else:
+		# 	var press_duration = (Time.get_ticks_msec() - press_start_time) / 1000.0
+		# 	if press_duration >= long_press_time and selected_index != -1:
+		# 		showPopup(selected_index)
 	pass
 
 func showPopup(index:int):
@@ -236,13 +238,15 @@ func _refuse_item():
 		0:
 			var friend = self.get_item_metadata(selected_index)
 			print("拒绝好友", friend)
-			if friend:
+			if friend: 
 				ret = await Network.refuse_friends_async(friend.user.id)
+				SignalManager.FreshFriendListSIG.emit()
 		1:
 			print("拒绝俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
 				ret = await Network.remove_group(group.id)
+				SignalManager.FreshClubListSIG.emit()
 		2:
 			print("拒绝组员")
 		3:
@@ -261,13 +265,15 @@ func _block_item():
 		0:
 			var friend = self.get_item_metadata(selected_index)
 			print("拉黑好友", friend)
-			if friend:
+			if friend: 
 				ret = await Network.refuse_friends_async(friend.user.id)
+				SignalManager.FreshFriendListSIG.emit()
 		1:
 			print("拉黑俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
 				ret = await Network.remove_group(group.id)
+				SignalManager.FreshClubListSIG.emit()
 		2:
 			print("拉黑组员")
 		3:
@@ -325,18 +331,31 @@ func GetCurrentItemData():
 	return null
 
 
+func close_color():
+	is_active = false
+	toggle_color()
 
+func open_color():
+	is_active = true
+	toggle_color()
 
 func toggle_color():
-	is_active = !is_active
 	# 如果已有正在进行的动画，先停止它
-	if tween and tween.is_valid():
-		tween.kill()
+	# if tween and tween.is_valid():
+	# 	tween.kill()
 	
-	# 创建新的颜色过渡动画
-	tween = create_tween()
-	if is_active:
-		tween.tween_property(self, "modulate", original_color, 0.3)
-	else:
-		tween.tween_property(self, "modulate", custom_color, 0.3)
+		# 设置面板样式
+	var style = StyleBoxFlat.new()
+	style.bg_color = custom_color if is_active else original_color
+	style.corner_radius_top_left = 5
+	style.corner_radius_top_right = 5
+	style.corner_radius_bottom_left = 5
+	style.corner_radius_bottom_right = 5
+	add_theme_stylebox_override("panel", style)
+	# # 创建新的颜色过渡动画
+	# tween = create_tween()
+	# if is_active:
+	# 	tween.tween_property(self, "modulate", original_color, 0.3)
+	# else:
+	# 	tween.tween_property(self, "modulate", custom_color, 0.3)
 	pass

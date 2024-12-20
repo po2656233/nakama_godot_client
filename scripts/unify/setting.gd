@@ -12,6 +12,7 @@ extends Control
 @onready var welcomegMusic = $music/welcome
 @onready var emailMusic = $music/email
 @onready var notifyMusic = $music/notify
+@onready var onlineMusic = $music/online
 var login_scene = load("res://scenes/login.tscn")
 var mail_scene = load("res://scenes/email/mail.tscn")
 
@@ -25,7 +26,7 @@ func _ready() -> void:
 	SignalManager.NewMessageSIG.connect(_on_msg_notify)
 	SignalManager.SendMessageSIG.connect(_on_send_msg)
 	SignalManager.RecvMessageSIG.connect(_on_recv_msg)
-
+	SignalManager.OnlineSIG.connect(_on_online_msg)
 
 	SignalManager.NewEmailSIG.connect(_on_email_notify)
 	SignalManager.NewNotifySIG.connect(_on_recv_notify)
@@ -70,18 +71,10 @@ func on_setting_pressed(index: int) -> void:
 			isMute = bgMusic.stream_paused
 			popup_menu.set_item_text(index, hints)
 			pass
-		6:
-			notifyBtn.shakeSIG.emit()
-			SignalManager.NewNotifySIG.emit("notify")
-			pass
-		7: 
-			emailBtn.shakeSIG.emit()
-			SignalManager.NewMessageSIG.emit("message")
-			pass
 		3:#返回登录页
 			Network.logout() 
 			SceneManager.switch_to_scene("login",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
-			pass
+		# 	pass
 		5:# 退出
 			get_tree().quit()
 			pass
@@ -134,7 +127,11 @@ func _on_recv_msg(_args) -> void:
 		return
 	recvMusic.play()
 	pass
-
+func _on_online_msg() -> void:
+	if isMute:
+		return
+	onlineMusic.play()
+	pass
 func _on_email_notify(args) -> void:
 	if args and not isMute:
 		emailMusic.play()

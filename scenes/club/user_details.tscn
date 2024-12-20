@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://riqfmggkqpf8"]
+[gd_scene load_steps=4 format=3 uid="uid://riqfmggkqpf8"]
 
 [ext_resource type="Script" path="res://scenes/club/user_details.gd" id="1_xxxxx"]
 [ext_resource type="Texture2D" uid="uid://dyudb8ry74m70" path="res://asset/default_avatar.svg" id="2_v7o7n"]
+[ext_resource type="Script" path="res://scripts/unify/copyable_label.gd" id="3_ljiin"]
 
 [node name="UserDetails" type="Control"]
 layout_mode = 3
@@ -106,6 +107,7 @@ theme_override_constants/separation = 10
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "昵称"
+script = ExtResource("3_ljiin")
 
 [node name="Signature" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(20, 0)

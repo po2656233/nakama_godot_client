@@ -6,6 +6,7 @@ extends Control
 @onready var announcement_container = $Background/SubViewportContainer/SubViewport/VBoxContainer
 @onready var background_panel = $Background
 
+
 # 公告设置
 var announcements = [
 	"欢迎来到我们的游戏！",

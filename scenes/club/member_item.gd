@@ -1,7 +1,9 @@
 extends PanelContainer
 
 signal member_selected(member_data)
-signal member_deleted(member_data)
+signal member_add_friend(member_id)
+signal member_deleted(member_id)
+signal member_band(member_id)
 signal member_clicked()
 signal note_changed(member_data, new_note)
 
@@ -9,9 +11,9 @@ var member_data: Dictionary
 
 var style = StyleBoxFlat.new()
 # 定义颜色常量
-const NORMAL_COLOR = Color(0.9, 0.9, 0.9, 1)  # 普通状态为灰色
-const HOVER_COLOR = Color(1, 1, 1, 1)  # 悬浮状态为亮色（白色）
-const SELECTED_COLOR = Color(1, 0.95, 0.7, 1)  # 选中状态为黄色
+# # 定义颜色常量
+const NORMAL_COLOR = Color(0.02, 0.388, 0.576)  # 普通状态为灰色
+const SELECTED_COLOR = Color(0, 0.749, 0.35) # 选中状态为黄色
 
 func _ready():
 	gui_input.connect(_on_gui_input)
@@ -19,13 +21,13 @@ func _ready():
 	# 设置管理菜单
 	var popup = $MarginContainer/HBoxContainer/ManageButton.get_popup()
 	popup.add_item("修改备注", 0)
-	popup.add_item("删除成员", 1)
+	popup.add_item("添加好友", 1)
+	popup.add_item("拉黑成员", 2)
+	popup.add_item("删除成员", 3)
 	popup.id_pressed.connect(_on_manage_option_selected)
 
 	# 设置默认样式
-		# 初始化颜色
-	self_modulate = NORMAL_COLOR
-	_setup_panel_style(false)
+	setup_panel_style(false)
 	pass
 
 func setup(data: Dictionary):
@@ -55,8 +57,16 @@ func _on_manage_option_selected(id: int):
 	match id:
 		0:  # 修改备注
 			_show_note_dialog()
-		1:  # 删除成员
+		1:  # 添加好友
+			_on_add_friend()
+		2:  # 禁止发言
+			_show_ban_confirmation()
+		3:  # 删除成员
 			_show_delete_confirmation()
+
+func _on_add_friend():
+	member_add_friend.emit(member_data["id"])
+	pass
 
 func _show_note_dialog():
 	var dialog = AcceptDialog.new()
@@ -90,12 +100,17 @@ func _show_delete_confirmation():
 	dialog.popup_centered()
 	
 	dialog.confirmed.connect(func():
-		member_deleted.emit(member_data)
+		member_deleted.emit(member_data["id"])
 		dialog.queue_free()
 	)
 
-func _setup_panel_style(isSelected: bool):
-	style.bg_color = Color.DARK_GREEN if isSelected else Color(0.019, 0.388, 0.575) 
+func _show_ban_confirmation():
+	member_band.emit(member_data["id"])
+	pass
+
+
+func setup_panel_style(isSelected: bool):
+	style.bg_color = SELECTED_COLOR if isSelected else NORMAL_COLOR 
 	style.corner_radius_top_left = 8
 	style.corner_radius_top_right = 8
 	style.corner_radius_bottom_left = 8
