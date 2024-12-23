@@ -405,6 +405,7 @@ func _on_received_notify(notify):
 #################################################################
 func _on_btn_send_pressed() -> void:
 	if sendTextEdit.text.strip_edges() == "":
+		ensure_scroll_to()
 		return
 	# 发送消息
 	var channel = getCurChannelData()
@@ -528,7 +529,7 @@ func add_club(group):
 			},
 		)
 		# 更新成员
-		update_club(group.serialize())
+		await update_club(group.serialize())
 	pass
 
 #######################获取俱乐部###############################
@@ -571,7 +572,7 @@ func get_club_list():
 	clubListItem.clear() 
 	 
 	for info in result.user_groups:
-		add_club(info.group)
+		await add_club(info.group)
 	pass
 
 

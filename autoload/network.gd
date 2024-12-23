@@ -566,7 +566,7 @@ func add_channel_async(targetId: String,tab:int = 0):
 			chType = NakamaSocket.ChannelType.Group
 		else:
 			chType = NakamaSocket.ChannelType.DirectMessage
-		var result = await _socket.join_chat_async(targetId,chType,true,true)
+		var result = await _socket.join_chat_async(targetId,chType,true)
 		if result.is_exception():
 			push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型", chType)
 			return null

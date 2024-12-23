@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4q5x4j6n7saw"]
+[gd_scene load_steps=7 format=3 uid="uid://b4q5x4j6n7saw"]
 
 [ext_resource type="Script" path="res://scripts/chat/chat_message_item.gd" id="1_u4k5p"]
 
@@ -18,8 +18,9 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3w0b"]
-draw_center = false
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_374i1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b15p6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
 content_margin_left = 8.0
@@ -101,9 +102,11 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
-theme_override_font_sizes/normal_font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxFlat_l3w0b")
+theme_override_font_sizes/normal_font_size = 38
+theme_override_styles/focus = SubResource("StyleBoxEmpty_374i1")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_b15p6")
 fit_content = true
+scroll_following = true
 selection_enabled = true
 
 [node name="MediaPreview" type="TextureRect" parent="Content/MessagePanel/MessageContent"]

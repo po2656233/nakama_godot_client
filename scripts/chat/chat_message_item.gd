@@ -75,10 +75,10 @@ func _ready():
 	popup_menu.add_separator()
 	popup_menu.add_icon_item(deleteIcon, "删除", 2)
 	 # 设置菜单项高度
-	popup_menu.add_theme_constant_override("item_height", 40)
+	popup_menu.add_theme_constant_override("item_height", 50)
     # 设置图标大小
-	popup_menu.add_theme_constant_override("icon_max_width", 32)
-	popup_menu.add_theme_constant_override("icon_max_height", 32)
+	popup_menu.add_theme_constant_override("icon_max_width", 48)
+	popup_menu.add_theme_constant_override("icon_max_height", 48)
 	# 设置文本标签的自动换行
 	if text_label:
 		# 重置尺寸限制，让文本先自然布局
@@ -143,6 +143,7 @@ func set_message_type(msgtype: MessageType):
 		header_container.alignment = BoxContainer.ALIGNMENT_BEGIN
 		text_label.size_flags_horizontal = SIZE_SHRINK_BEGIN
 		consistent(SIZE_SHRINK_BEGIN)
+	_update_popup_menu_items()
 	pass
 
 # 设置最大高度
@@ -214,7 +215,7 @@ func _setup_text_message(text: String):
 		
 	text_label.visible = true
 	text_label.text = text
-	text_label.push_font_size(24) 
+	# text_label.push_font_size(24) 
 	
 	# 设置自动换行
 	text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -384,6 +385,7 @@ func _on_gui_input(event: InputEvent):
 		# 		text_label.select_all()
 		# 	has_selection = text_label.get_selected_text().length() > 0
 		if event.double_click:
+			text_label.select_all()
 			var popup_position = get_viewport().get_mouse_position()
 			popup_menu.reset_size()  # 重置大小以确保正确显示
 			popup_menu.position = popup_position
@@ -414,6 +416,9 @@ func _update_popup_menu_items():
 	popup_menu.set_item_disabled(1, !is_self_message)
 	# 删除只对自己发送的消息有效
 	popup_menu.set_item_disabled(2, !is_self_message)
+	popup_menu.set_item_disabled(3, !is_self_message)
+	popup_menu.set_item_disabled(4, !is_self_message)
+	# popup_menu.set_item_disabled(5, !is_self_message)
 
 # 处理菜单项选择
 func _on_popup_menu_item_selected(id: int):
@@ -424,9 +429,9 @@ func _on_popup_menu_item_selected(id: int):
 			if has_selection:
 				var selected_text = text_label.get_selected_text()
 				DisplayServer.clipboard_set(selected_text)
-				print("已复制选中文本：", selected_text)
 			else:
 				DisplayServer.clipboard_set(text_label.text)
+			PopupManager.show_message("已复制")
 		1: # 撤销
 			if is_self_message:
 				text_label.text = "[正在撤销...]"

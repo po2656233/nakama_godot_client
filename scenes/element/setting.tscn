@@ -149,7 +149,6 @@ script = ExtResource("4_0c3ci")
 
 [node name="background" type="AudioStreamPlayer" parent="music"]
 stream = ExtResource("6_6njb1")
-autoplay = true
 script = ExtResource("4_0c3ci")
 
 [node name="send" type="AudioStreamPlayer" parent="music"]

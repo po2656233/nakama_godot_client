@@ -105,6 +105,8 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 		# 添加时间分割标签
 		add_time_separator(curMsgTime)
 		show_time = true
+		if timestamp - today_timestamp > TIME_INTERVAL_THRESHOLD:
+			today_timestamp = Network.get_today_start_timestamp()
 
 
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=38 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://dbfy6a2vu8372" path="res://asset/chat/upmore1.svg" id="7_8p5lf"]
 [ext_resource type="Texture2D" uid="uid://bs3sp7rcewbji" path="res://asset/currency/light3.png" id="9_001t8"]
 [ext_resource type="Texture2D" uid="uid://c0yjbbu1qk33i" path="res://asset/currency/light1.png" id="10_rl2rc"]
-[ext_resource type="Texture2D" uid="uid://ba0st2s62s62p" path="res://asset/currency/light2.png" id="11_jk5gs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7p85"]
 bg_color = Color(0.219608, 0.458824, 0.282353, 1)
@@ -308,7 +307,7 @@ offset_top = 5.0
 offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_mode = 2
+follow_focus = true
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer"]
 layout_mode = 2
@@ -374,8 +373,10 @@ offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
+follow_focus = true
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer"]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -467,6 +468,7 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
+follow_focus = true
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer"]
 layout_mode = 2
@@ -614,8 +616,7 @@ offset_top = 8.0
 offset_right = 64.0
 offset_bottom = 58.0
 texture_normal = ExtResource("9_001t8")
-texture_pressed = ExtResource("11_jk5gs")
-texture_hover = ExtResource("10_rl2rc")
+texture_pressed = ExtResource("10_rl2rc")
 ignore_texture_size = true
 stretch_mode = 0
 

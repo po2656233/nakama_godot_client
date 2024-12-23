@@ -78,7 +78,7 @@ func on_setting_pressed(index: int) -> void:
 		5:# 退出
 			get_tree().quit()
 			pass
-		8:#返回上一页
+		6:#返回上一页
 			SceneManager.go_back()
 		_:
 			print("Setting error",index)
