@@ -2,6 +2,8 @@ extends Control
 
 var match_scene = load("res://scenes/match.tscn")
 var game_scene = load("res://scenes/game.tscn")
+var leaderboard_scene = load("res://scenes/element/leaderboard.tscn")
+
 @onready var chatPanle = $VBoxContainer/Chat
 @onready var homePanle = $PanelContainer
 @onready var settings = $Setting
@@ -33,6 +35,7 @@ func _on_btn_store_pressed() -> void:
 
 
 func _on_btn_ranking_pressed() -> void:
+	FancyFade.circle_out( leaderboard_scene.instantiate())
 	pass # Replace with function body.
 
 

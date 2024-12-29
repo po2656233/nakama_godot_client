@@ -72,3 +72,12 @@ func _on_create_pressed():
 	# # 模拟创建新群组
 	# group_created.emit(new_group)
 	queue_free()
+
+
+func _on_input_focus_entered():
+	if Network.isMobile():
+		DisplayServer.virtual_keyboard_show("中文输入法") 
+
+func _on_input_focus_exited():
+	if Network.isMobile():
+		DisplayServer.virtual_keyboard_hide() 

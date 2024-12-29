@@ -24,12 +24,8 @@ func _ready() -> void:
 	# 禁用 SSL 验证 【todo 正式环境建议解除】
 	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
 	SceneManager.set_current_scene("login")
-	var ret = await Network.restore_session()
-	if not ret:
-		Network.initialize_client()
-		print("Network 初始化",ret)
-	else:
-		print("Network 已恢复",ret)
+	Network.initialize_client()
+	print("Network 初始化")
 		# 验证 PopupManager 是否可用
 	if not PopupManager:
 		print("PopupManager 未正确初始化")

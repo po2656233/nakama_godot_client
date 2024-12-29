@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dfbeqh2tgjje3"]
+[gd_scene load_steps=15 format=3 uid="uid://dfbeqh2tgjje3"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_j1cfq"]
 [ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://asset/lobby/redbj.jpg" id="2_kwnfe"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://exkjflel54sq" path="res://asset/lobby/hua.png" id="5_12ie1"]
 [ext_resource type="Texture2D" uid="uid://0asrii5d6unm" path="res://asset/lobby/yxn_guang.png" id="6_3l7pe"]
 [ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://asset/lobby/shiling.png" id="7_3s4cl"]
+[ext_resource type="PackedScene" uid="uid://ci4hjjem0yeyj" path="res://scenes/game/create_room_dialog.tscn" id="8_dqgvw"]
 
 [sub_resource type="SystemFont" id="SystemFont_x6gtk"]
 
@@ -17,20 +18,20 @@ font_color = Color(1, 1, 0.290196, 1)
 outline_size = 10
 outline_color = Color(0.0980392, 0.254902, 0.670588, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dkral"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvnjq"]
 bg_color = Color(0.52549, 0.643137, 0.443137, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_476p1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmfjw"]
 bg_color = Color(0.156863, 0.254902, 0.580392, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cij1y"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i04x8"]
 bg_color = Color(0.756863, 0.160784, 0.211765, 1)
 
 [sub_resource type="Theme" id="Theme_4yxkr"]
 Button/font_sizes/font_size = 24
-Button/styles/hover = SubResource("StyleBoxFlat_dkral")
-Button/styles/normal = SubResource("StyleBoxFlat_476p1")
-Button/styles/pressed = SubResource("StyleBoxFlat_cij1y")
+Button/styles/hover = SubResource("StyleBoxFlat_fvnjq")
+Button/styles/normal = SubResource("StyleBoxFlat_tmfjw")
+Button/styles/pressed = SubResource("StyleBoxFlat_i04x8")
 
 [node name="lobby" type="Control"]
 layout_mode = 3
@@ -40,6 +41,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j1cfq")
+
+[node name="CreateRoomDialog" parent="." instance=ExtResource("8_dqgvw")]
+initial_position = 2
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -201,4 +205,6 @@ grow_horizontal = 0
 theme = SubResource("Theme_4yxkr")
 text = "OUT"
 
+[connection signal="room_created" from="CreateRoomDialog" to="." method="_on_create_room_dialog_room_created"]
+[connection signal="pressed" from="Panel/ColorRect/ColorRect/VBoxContainer/Btn_Public_match" to="." method="_on_btn_public_match_pressed"]
 [connection signal="pressed" from="Panel/Btn_out" to="." method="_on_btn_out_pressed"]

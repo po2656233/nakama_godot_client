@@ -1,5 +1,7 @@
 extends Control
 
+@onready var itemContainer = $VBoxContainer/ScrollContainer/MemberContainer
+
 var member_item_scene = preload("res://scenes/club/member_item.tscn")
 var user_details_scene = preload("res://scenes/club/user_details.tscn")
 var add_member_dialog_scene = preload("res://scenes/club/add_member_dialog.tscn")
@@ -26,37 +28,45 @@ func setup(group_data: Dictionary):
 
 func update_member_list():
 	# 清除现有项目
-	for child in $VBoxContainer/ScrollContainer/MemberContainer.get_children():
+	for child in itemContainer.get_children():
 		child.queue_free()
 	
 	# 拉取最新数据
 	members = []
+	var isAdmin = false
 	var result = await Network.get_group_member_list_async(group_id)
 	if result:
-		print("更新俱乐部信息:", result)
+		print("更新俱乐部信息:", result," 当前玩家ID:",Network.player_data.id)
 		for info in result.group_users:
 			if info.state == 3:
 				continue
 			var member = info.user
+			if member.id == Network.player_data.id and (info.state == 0 or info.state == 1):
+				isAdmin = true
 			members.append({
 				"id": member.id, 
 				"name": member.username, 
 				"avatar": member.avatar_url, 
 				"status": "在线"if member.online else "离线",
 				"signature": member.display_name, 
-				"level": 15, 
+				"level": info.state, 
+				"myGroup":false,
 				"score": 1500,
 				"rank": 25, 
 				"total_games": 150, 
 				"win_rate": 0.65,
-				"highest_score": 12800, 
+				"highest_score": 12800,
 				"average_score": 8500,
 				"note": "",#"资深玩家"
 			}
 			)
+	if isAdmin:
+		for i in range(members.size() - 1, -1, -1):
+			members[i]["myGroup"] = true
+	filtered_members.clear()
 	filtered_members = members.duplicate()
 
-		# 排序
+	# 排序
 	filtered_members.sort_custom(func(a, b):
 		var status_order = {"在线": 0, "离线": 1, "忙碌": 2, "隐身": 3}
 		if a.has("status") and b.has("status"):
@@ -70,11 +80,14 @@ func update_member_list():
 
 func add_member_item(member_data: Dictionary):
 	var member_item = member_item_scene.instantiate()
-	$VBoxContainer/ScrollContainer/MemberContainer.add_child(member_item)
+	print("成员信息:", member_data)
+	itemContainer.add_child(member_item)
 	member_item.setup(member_data)
 	member_item.member_selected.connect(_on_member_selected)
 	member_item.member_deleted.connect(_on_member_deleted)
 	member_item.member_band.connect(_on_member_band)
+	member_item.member_demote.connect(_on_member_demote)
+	member_item.member_promote.connect(_on_member_promote)
 	member_item.member_add_friend.connect(_on_member_add_friend)
 	member_item.member_clicked.connect(func(): _on_member_clicked(member_item))
 	
@@ -130,6 +143,24 @@ func _on_member_band(member_id: String):
 	var ret = await Network.ban_group_users_async(group_id, member_id)
 	if not ret:
 		PopupManager.show_message("拉黑失败")
+		return
+	isOp = true
+	update_member_list()
+	pass
+
+func _on_member_demote(member_id: String):
+	var ret = await Network.demote_group_users_async(group_id, [member_id])
+	if not ret:
+		PopupManager.show_message("降级失败")
+		return
+	isOp = true
+	update_member_list()
+	pass
+
+func _on_member_promote(member_id: String):
+	var ret = await Network.promote_group_users_async(group_id, [member_id])
+	if not ret:
+		PopupManager.show_message("升级失败")
 		return
 	isOp = true
 	update_member_list()

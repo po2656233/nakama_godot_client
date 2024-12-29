@@ -4,11 +4,15 @@ signal member_selected(member_data)
 signal member_add_friend(member_id)
 signal member_deleted(member_id)
 signal member_band(member_id)
+signal member_demote(member_id)
+signal member_promote(member_id)
 signal member_clicked()
 signal note_changed(member_data, new_note)
 
-var member_data: Dictionary
+@onready var managerBtn = $MarginContainer/HBoxContainer/ManageButton
 
+var member_data: Dictionary
+var isAdmin:bool = false
 var style = StyleBoxFlat.new()
 # 定义颜色常量
 # # 定义颜色常量
@@ -18,14 +22,7 @@ const SELECTED_COLOR = Color(0, 0.749, 0.35) # 选中状态为黄色
 func _ready():
 	gui_input.connect(_on_gui_input)
 	
-	# 设置管理菜单
-	var popup = $MarginContainer/HBoxContainer/ManageButton.get_popup()
-	popup.add_item("修改备注", 0)
-	popup.add_item("添加好友", 1)
-	popup.add_item("拉黑成员", 2)
-	popup.add_item("删除成员", 3)
-	popup.id_pressed.connect(_on_manage_option_selected)
-
+	managerBtn.visible = false
 	# 设置默认样式
 	setup_panel_style(false)
 	pass
@@ -34,16 +31,32 @@ func setup(data: Dictionary):
 	member_data = data
 	$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Name.text = data["name"]
 	$MarginContainer/HBoxContainer/VBoxContainer/Status.text = data["status"]
-	 
 	# 显示备注
 	var note_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Note
 	if data.has("note") and not data["note"].is_empty():
 		note_label.text = "(%s)" % data["note"]
-	else:
+	else: 
 		note_label.text = ""
-	
+	var isMe = data["id"] == Network.player_data.id
+	print("isMe = ",data["id"], " myID:", Network.player_data.id)
+	if isMe:
+		return
+	managerBtn.visible = true
+	var popup = managerBtn.get_popup()
+	popup.add_item("添加好友", 1)
+	if data["myGroup"]:
+		if data["level"] == 1:
+			popup.add_item("取消管理员", 4)
+			isAdmin = true
+		elif data["level"] == 2:
+			popup.add_item("拉黑成员", 2)
+			popup.add_item("删除成员", 3)
+			popup.add_item("设置管理员", 4)
+			isAdmin = false
+	popup.id_pressed.connect(_on_manage_option_selected)
 	if data["avatar"]:
-		$MarginContainer/HBoxContainer/Avatar.texture =await Network.load_texture_async(data["avatar"]) 
+		$MarginContainer/HBoxContainer/Avatar.texture = await Network.load_texture_async(data["avatar"]) 
+	pass
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton:
@@ -63,6 +76,9 @@ func _on_manage_option_selected(id: int):
 			_show_ban_confirmation()
 		3:  # 删除成员
 			_show_delete_confirmation()
+		4:  # 设置管理员
+			_show_promote_confirmation()
+	pass
 
 func _on_add_friend():
 	member_add_friend.emit(member_data["id"])
@@ -108,6 +124,12 @@ func _show_ban_confirmation():
 	member_band.emit(member_data["id"])
 	pass
 
+func _show_promote_confirmation():
+	if isAdmin:
+		member_demote.emit(member_data["id"])
+	else:
+		member_promote.emit(member_data["id"])
+	pass
 
 func setup_panel_style(isSelected: bool):
 	style.bg_color = SELECTED_COLOR if isSelected else NORMAL_COLOR 

@@ -101,3 +101,8 @@ text = "取消"
 layout_mode = 2
 size_flags_horizontal = 3
 text = "创建"
+
+[connection signal="focus_entered" from="Panel/MarginContainer/VBoxContainer/GroupNameInput" to="." method="_on_input_focus_entered"]
+[connection signal="focus_exited" from="Panel/MarginContainer/VBoxContainer/GroupNameInput" to="." method="_on_input_focus_exited"]
+[connection signal="focus_entered" from="Panel/MarginContainer/VBoxContainer/GroupDescInput" to="." method="_on_input_focus_entered"]
+[connection signal="focus_exited" from="Panel/MarginContainer/VBoxContainer/GroupDescInput" to="." method="_on_input_focus_exited"]

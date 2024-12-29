@@ -599,6 +599,28 @@ func add_group_users_async(group_id: String,p_ids: PackedStringArray):
 	print("添加俱乐部成员: ", result)
 	return true
 
+# 降级权限
+func demote_group_users_async(group_id : String, p_ids : Array):
+	if group_id.is_empty() or p_ids.size() <= 0:
+		return false
+	var result = await _client.demote_group_users_async(_session,group_id,p_ids)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return false
+	print("设置管理员: ", result)
+	return true
+
+# 提升权限
+func promote_group_users_async(group_id : String, p_ids: Array):
+	if group_id.is_empty() or p_ids.size() <= 0:
+		return false
+	var result = await _client.promote_group_users_async(_session,group_id,p_ids)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return false
+	print("设置管理员: ", result)
+	return true
+
 # 订阅好友
 func follow_users_async(p_ids : PackedStringArray, p_usernames : PackedStringArray):
 	if _socket:

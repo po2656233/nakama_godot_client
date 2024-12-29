@@ -35,3 +35,11 @@ func _on_add_pressed():
 	
 	member_added.emit(new_member)
 	queue_free()
+
+func _on_input_focus_entered():
+	if Network.isMobile():
+		DisplayServer.virtual_keyboard_show("中文输入法") 
+
+func _on_input_focus_exited():
+	if Network.isMobile():
+		DisplayServer.virtual_keyboard_hide() 

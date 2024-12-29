@@ -1,5 +1,6 @@
 extends Control
 
+var home_scene = load("res://scenes/home.tscn")
 # 排行榜类型枚举
 enum RankType {
 	DAILY,
@@ -159,3 +160,8 @@ func get_player_rank(type: RankType, player_name: String) -> int:
 		if score_data.player_name == player_name:
 			return score_data.rank
 	return -1  # 未找到玩家
+
+
+func _on_btn_out_pressed() -> void:
+	FancyFade.circle_in(home_scene.instantiate())
+	pass # Replace with function body.

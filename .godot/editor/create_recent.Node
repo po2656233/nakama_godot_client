@@ -1,3 +1,11 @@
+Node2D
+Polygon2D
+TextureRect
+AnimatedSprite2D
+AnimationPlayer
+Sprite2D
+Label
+HBoxContainer
+MarginContainer
 TextureButton
 CheckButton
-VBoxContainer

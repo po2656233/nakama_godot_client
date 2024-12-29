@@ -1,0 +1,169 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci4hjjem0yeyj"]
+
+[ext_resource type="Script" path="res://scripts/game/create_room_dialog.gd" id="1_xxxxx"]
+
+[node name="CreateRoomDialog" type="Window"]
+title = "创建游戏房间"
+initial_position = 1
+size = Vector2i(500, 580)
+exclusive = true
+unresizable = true
+always_on_top = true
+popup_window = true
+script = ExtResource("1_xxxxx")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="GameTypeSection" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/GameTypeSection"]
+layout_mode = 2
+text = "游戏类型"
+
+[node name="GameTypeOption" type="OptionButton" parent="MarginContainer/ScrollContainer/VBoxContainer/GameTypeSection"]
+layout_mode = 2
+item_count = 4
+popup/item_0/text = "五子棋"
+popup/item_1/text = "象棋"
+popup/item_1/id = 1
+popup/item_2/text = "麻将"
+popup/item_2/id = 2
+popup/item_3/text = "斗地主"
+popup/item_3/id = 3
+
+[node name="PlayersSection" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/PlayersSection"]
+layout_mode = 2
+text = "游戏人数"
+
+[node name="PlayersSpinBox" type="SpinBox" parent="MarginContainer/ScrollContainer/VBoxContainer/PlayersSection"]
+layout_mode = 2
+min_value = 2.0
+max_value = 10.0
+value = 4.0
+
+[node name="SpectatorSection" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SpectatorCheck" type="CheckBox" parent="MarginContainer/ScrollContainer/VBoxContainer/SpectatorSection"]
+layout_mode = 2
+text = "允许观战"
+
+[node name="EntryFeeSection" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EntryFeeCheck" type="CheckBox" parent="MarginContainer/ScrollContainer/VBoxContainer/EntryFeeSection"]
+layout_mode = 2
+text = "设置入场分"
+
+[node name="EntryFeeContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/EntryFeeSection"]
+layout_mode = 2
+
+[node name="EntryFeeSpinBox" type="SpinBox" parent="MarginContainer/ScrollContainer/VBoxContainer/EntryFeeSection/EntryFeeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 100.0
+max_value = 1e+06
+step = 100.0
+value = 1000.0
+
+[node name="TaxSection" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TaxCheck" type="CheckBox" parent="MarginContainer/ScrollContainer/VBoxContainer/TaxSection"]
+layout_mode = 2
+text = "启用税收"
+
+[node name="TaxContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TaxSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TaxSection/TaxContainer"]
+layout_mode = 2
+text = "税收比例："
+
+[node name="TaxSlider" type="HSlider" parent="MarginContainer/ScrollContainer/VBoxContainer/TaxSection/TaxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 20.0
+step = 0.5
+value = 5.0
+
+[node name="TaxValue" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TaxSection/TaxContainer"]
+layout_mode = 2
+text = "5%"
+
+[node name="GameModeSection" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/GameModeSection"]
+layout_mode = 2
+text = "游戏模式"
+
+[node name="GameModeOption" type="OptionButton" parent="MarginContainer/ScrollContainer/VBoxContainer/GameModeSection"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "积分模式"
+popup/item_1/text = "金币模式"
+popup/item_1/id = 1
+popup/item_2/text = "钻石模式"
+popup/item_2/id = 2
+
+[node name="GameSection" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/GameSection"]
+layout_mode = 2
+text = "赛制"
+
+[node name="GameSectionOption" type="OptionButton" parent="MarginContainer/ScrollContainer/VBoxContainer/GameSection"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "标准赛"
+popup/item_1/text = "锦标赛"
+popup/item_1/id = 1
+popup/item_2/text = "世界杯"
+popup/item_2/id = 2
+
+[node name="ButtonSection" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CreateButton" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer/ButtonSection"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "创建"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer/ButtonSection"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "取消"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
