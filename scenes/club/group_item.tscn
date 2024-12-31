@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://riqfmggkqpf3"]
 
 [ext_resource type="Script" uid="uid://chy0eypnyrrs1" path="res://scenes/club/group_item.gd" id="1_xxxxx"]
-[ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://asset/currency/email.svg" id="2_alo0b"]
+[ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://assets/currency/email.svg" id="2_alo0b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqodf"]
 bg_color = Color(0.0191054, 0.388241, 0.574974, 1)

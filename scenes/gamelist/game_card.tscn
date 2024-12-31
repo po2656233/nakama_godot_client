@@ -1,0 +1,120 @@
+[gd_scene load_steps=7 format=3 uid="uid://riqfmggkqpfd"]
+
+[ext_resource type="Script" path="res://scenes/gamelist/game_card.gd" id="1_xxxxx"]
+[ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://assets/bg/bg_login.jpg" id="2_lydmc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.133333, 0.133333, 0.180392, 0.960784)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.301961, 0.301961, 0.4, 0.2)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="Animation" id="Animation_flip"]
+resource_name = "flip"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hover"]
+resource_name = "hover"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.287175, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.05, 1.05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
+_data = {
+"flip": SubResource("Animation_flip"),
+"hover": SubResource("Animation_hover")
+}
+
+[node name="GameCard" type="PanelContainer"]
+custom_minimum_size = Vector2(350, 650)
+offset_right = 350.0
+offset_bottom = 650.0
+pivot_offset = Vector2(175, 325)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+script = ExtResource("1_xxxxx")
+
+[node name="Front" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GameTitle" type="Label" parent="Front"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Game Title"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Front"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="GameImage" type="TextureRect" parent="Front/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_lydmc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Back" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 15
+
+[node name="MarginContainer" type="MarginContainer" parent="Back"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Description" type="RichTextLabel" parent="Back/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "Game Description"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1")
+}

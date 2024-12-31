@@ -1,12 +1,5 @@
-res://scenes/element/gallery_form.tscn
-res://theme/chat.tres
-res://scenes/club/add_member_dialog.tscn
-res://scenes/chat/chat.tscn
-res://scenes/club/create_group_dialog.tscn
-res://scenes/club/group_item.tscn
-res://scenes/club/member_item.tscn
-res://scenes/club/member_list.tscn
-res://scenes/club/user_details.tscn
-res://scenes/club/join_group_dialog.tscn
-res://scenes/club/group_list.tscn
-res://scenes/club/member_item.gd
+res://scenes/login.tscn
+res://scenes/gamelist/game_card.tscn
+res://scenes/gamelist/game_list.tscn
+res://scenes/gamelist/game_list.gd
+res://scenes/element/gridanimation/board.gd

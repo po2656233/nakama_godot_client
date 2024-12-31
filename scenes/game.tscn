@@ -1,12 +1,12 @@
 [gd_scene load_steps=15 format=3 uid="uid://dfbeqh2tgjje3"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_j1cfq"]
-[ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://asset/lobby/redbj.jpg" id="2_kwnfe"]
+[ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://assets/lobby/redbj.jpg" id="2_kwnfe"]
 [ext_resource type="Theme" uid="uid://wv2nwe1arwch" path="res://theme/btn.tres" id="3_tymeq"]
-[ext_resource type="Texture2D" uid="uid://bl0qqmk45se0a" path="res://asset/lobby/head.png" id="4_t67r1"]
-[ext_resource type="Texture2D" uid="uid://exkjflel54sq" path="res://asset/lobby/hua.png" id="5_12ie1"]
-[ext_resource type="Texture2D" uid="uid://0asrii5d6unm" path="res://asset/lobby/yxn_guang.png" id="6_3l7pe"]
-[ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://asset/lobby/shiling.png" id="7_3s4cl"]
+[ext_resource type="Texture2D" uid="uid://bl0qqmk45se0a" path="res://assets/lobby/head.png" id="4_t67r1"]
+[ext_resource type="Texture2D" uid="uid://exkjflel54sq" path="res://assets/lobby/hua.png" id="5_12ie1"]
+[ext_resource type="Texture2D" uid="uid://0asrii5d6unm" path="res://assets/lobby/yxn_guang.png" id="6_3l7pe"]
+[ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://assets/lobby/shiling.png" id="7_3s4cl"]
 [ext_resource type="PackedScene" uid="uid://ci4hjjem0yeyj" path="res://scenes/game/create_room_dialog.tscn" id="8_dqgvw"]
 
 [sub_resource type="SystemFont" id="SystemFont_x6gtk"]
@@ -44,6 +44,7 @@ script = ExtResource("1_j1cfq")
 
 [node name="CreateRoomDialog" parent="." instance=ExtResource("8_dqgvw")]
 initial_position = 2
+visible = false
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

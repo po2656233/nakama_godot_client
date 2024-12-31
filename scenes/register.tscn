@@ -1,14 +1,14 @@
 [gd_scene load_steps=29 format=3 uid="uid://cjg8aljwb2qbb"]
 
-[ext_resource type="Texture2D" uid="uid://bfhp8oh83rlcj" path="res://asset/login/register.jpg" id="1_mo4gw"]
-[ext_resource type="Script" path="res://scripts/register.gd" id="1_sij6y"]
-[ext_resource type="Texture2D" uid="uid://dde5sblcnwyx7" path="res://asset/login/btn_gx_1.png" id="2_lg3fp"]
-[ext_resource type="Texture2D" uid="uid://dexs2dkgy4ocr" path="res://asset/login/btn_gx_0.png" id="3_8vfe4"]
-[ext_resource type="Texture2D" uid="uid://c43vdrflfxmrg" path="res://asset/login/closeeye.svg" id="3_jcxa0"]
-[ext_resource type="Texture2D" uid="uid://cylapxjt4grlm" path="res://asset/login/btn_yhxy.png" id="4_vt4ww"]
-[ext_resource type="Texture2D" uid="uid://b3w6o68ukeere" path="res://asset/login/openeye.svg" id="4_yx6uh"]
-[ext_resource type="Texture2D" uid="uid://r3uh6ep8dsff" path="res://asset/hall/db_cbl_0.png" id="9_njh8n"]
-[ext_resource type="Texture2D" uid="uid://brkgpsvkueqq3" path="res://asset/hall/db_cbl_0_0.png" id="10_dkx4k"]
+[ext_resource type="Texture2D" uid="uid://bfhp8oh83rlcj" path="res://assets/login/register.jpg" id="1_mo4gw"]
+[ext_resource type="Script" uid="uid://d37lwmw2t7m7c" path="res://scripts/register.gd" id="1_sij6y"]
+[ext_resource type="Texture2D" uid="uid://dde5sblcnwyx7" path="res://assets/login/btn_gx_1.png" id="2_lg3fp"]
+[ext_resource type="Texture2D" uid="uid://dexs2dkgy4ocr" path="res://assets/login/btn_gx_0.png" id="3_8vfe4"]
+[ext_resource type="Texture2D" uid="uid://c43vdrflfxmrg" path="res://assets/login/closeeye.svg" id="3_jcxa0"]
+[ext_resource type="Texture2D" uid="uid://cylapxjt4grlm" path="res://assets/login/btn_yhxy.png" id="4_vt4ww"]
+[ext_resource type="Texture2D" uid="uid://b3w6o68ukeere" path="res://assets/login/openeye.svg" id="4_yx6uh"]
+[ext_resource type="Texture2D" uid="uid://r3uh6ep8dsff" path="res://assets/hall/db_cbl_0.png" id="9_njh8n"]
+[ext_resource type="Texture2D" uid="uid://brkgpsvkueqq3" path="res://assets/hall/db_cbl_0_0.png" id="10_dkx4k"]
 
 [sub_resource type="Theme" id="Theme_5ok0u"]
 

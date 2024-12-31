@@ -717,7 +717,16 @@ func reback_channel_message(channel_id:String,message_id: String,data:Dictionary
 		return true
 	return false
 
+func sendDataRPC(funcName:String,payload = null):
+	if _socket:
+		var result= await _socket.rpc_async(funcName,payload)
+		if result.is_exception():
+			print("Error removing group: ", result.get_exception().message)
+			return null
+		return result
+	return null
 
+#################################################################################
 # 异步加载 Texture2D
 func load_texture_async(url: String) :
 	if url.is_empty():

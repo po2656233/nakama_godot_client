@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ci4hjjem0yeyj"]
 
-[ext_resource type="Script" path="res://scripts/game/create_room_dialog.gd" id="1_xxxxx"]
+[ext_resource type="Script" uid="uid://vklfjuk5vbb6" path="res://scripts/game/create_room_dialog.gd" id="1_xxxxx"]
 
 [node name="CreateRoomDialog" type="Window"]
 title = "创建游戏房间"

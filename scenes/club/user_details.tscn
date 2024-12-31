@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://riqfmggkqpf8"]
 
 [ext_resource type="Script" uid="uid://bccou2iqkept2" path="res://scenes/club/user_details.gd" id="1_xxxxx"]
-[ext_resource type="Texture2D" uid="uid://dyudb8ry74m70" path="res://asset/default_avatar.svg" id="2_v7o7n"]
+[ext_resource type="Texture2D" uid="uid://dyudb8ry74m70" path="res://assets/default_avatar.svg" id="2_v7o7n"]
 [ext_resource type="Script" path="res://scripts/unify/copyable_label.gd" id="3_ljiin"]
 
 [node name="UserDetails" type="Control"]

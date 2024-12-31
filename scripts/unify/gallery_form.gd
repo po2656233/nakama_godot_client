@@ -15,12 +15,13 @@ var items: Array = []
 
 func _ready():
 	# # Sample items - replace with your actual items
-	# for i in range(10):
-	# 	items.append({
-	# 		"image_path": "res://icon.svg",
-	# 		"text": "Item " + str(i + 1)
-	# 	})
-	
+	for i in range(10):
+		items.append({
+			"image_path": "res://icon.svg",
+			"text": "Item " + str(i + 1)
+		})
+
+
 	update_total_pages()
 	update_page_display()
 	pass

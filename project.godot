@@ -16,8 +16,8 @@ config/version="1.0.1"
 run/main_scene="res://scenes/login.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/bg_color=Color(0.345098, 0.698039, 0.635294, 1)
-boot_splash/image="res://asset/login/chenguang.png"
-config/icon="res://asset/bg/img_gg.png"
+boot_splash/image="res://assets/login/chenguang.png"
+config/icon="res://assets/bg/img_gg.png"
 
 [autoload]
 
