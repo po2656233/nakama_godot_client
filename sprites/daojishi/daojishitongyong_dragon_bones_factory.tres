@@ -1,0 +1,5 @@
+[gd_resource type="DragonBonesFactory" format=3 uid="uid://cv48p2uhignld"]
+
+[resource]
+dragon_bones_ske_file_list = PackedStringArray("res://sprites/daojishi/daojishitongyong_ske.json")
+texture_atlas_json_file_list = PackedStringArray("res://sprites/daojishi/daojishitongyong_tex.json")

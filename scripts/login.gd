@@ -5,6 +5,8 @@ extends Control
 @onready var checkbox = $Panel/VBoxContainer/HBoxContainerRead/CheckBox
 @onready var keyboardContainer = $Panel/VBoxContainer
 @onready var settings = $Setting
+@onready var gameScene = preload("res://scenes/gamelist/game_list.tscn")
+
 # 微信登录
 const WECHAT_APPID = "wxcf2136ff70f7726a"
 const REDIRECT_URI = "http://60.205.90.152:8080/callback"
@@ -88,7 +90,7 @@ func login()->void:
 		return
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text):
 		await Network.load_player_data()  
-		SceneManager.switch_to_scene("game_list","custom",0.5) 
+		SceneManager.switch_to_scene("home","custom",0.5) 
 		# ProjectSettings.set("username",usernameEdit.text)
 		# FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	else:

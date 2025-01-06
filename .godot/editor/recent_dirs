@@ -1,9 +1,16 @@
 res://scenes/gamelist
+res://sprites/daojishi
+res://sprites/startgame
+res://sprites/shaibao
+res://sprites/puke
+res://sprites/jiangbei
+res://sprites/dibeichang
+res://scripts/game
+E:/成品打包/振志中华
 res://scenes/element/gridanimation
 res://
 E:/gamePrj/godotGame
 res://scripts/unify
 res://scenes/element
 res://sprites
-E:/成品打包/振志中华
 E:/成品打包/俄罗斯方块

@@ -104,7 +104,9 @@ func _init():
 		"game": "res://scenes/game.tscn",
 		"match": "res://scenes/match.tscn",
 		"email":"res://scenes/email/mail.tscn",
-		"approval":"res://scenes/approval/approval_form.tscn"
+		"approval":"res://scenes/approval/approval_form.tscn",
+		"gamelist":"res://scenes/gamelist/game_list.tscn",
+		"matchSuccess":"res://scenes/game/match_success.tscn",
 		# # 如果有重复的场景名称，将被跳过并输出警告
 		# "login": "res://scenes/another_login.tscn"  ,
 	}

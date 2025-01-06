@@ -1,19 +1,24 @@
-[gd_scene load_steps=27 format=3 uid="uid://b88upmlmmwyiv"]
+[gd_scene load_steps=32 format=3 uid="uid://b88upmlmmwyiv"]
 
-[ext_resource type="Script" uid="uid://dtfker1sh1j17" path="res://scripts/unify/setting.gd" id="1_ng6nc"]
+[ext_resource type="Script" path="res://scripts/unify/setting.gd" id="1_ng6nc"]
 [ext_resource type="Texture2D" uid="uid://b3y5q5trn4jgq" path="res://assets/currency/notify.svg" id="2_p0qrl"]
 [ext_resource type="AudioStream" uid="uid://bf5mrp0scfty1" path="res://assets/music/lingdang.mp3" id="3_1ldyl"]
 [ext_resource type="Texture2D" uid="uid://cf4xc2d6vqokl" path="res://assets/hall/full.png" id="3_u7pao"]
-[ext_resource type="Script" uid="uid://cp245aat65lkl" path="res://scripts/unify/btn_shake.gd" id="3_yogt2"]
+[ext_resource type="Script" path="res://scripts/unify/btn_shake.gd" id="3_yogt2"]
 [ext_resource type="Script" path="res://autoload/backgroundmusic.gd" id="4_0c3ci"]
 [ext_resource type="Texture2D" uid="uid://cmlsq7dtg6762" path="res://assets/currency/notification.svg" id="4_5fqi1"]
 [ext_resource type="Texture2D" uid="uid://by06wukfv2agi" path="res://assets/hall/setting.png" id="4_6kece"]
 [ext_resource type="AudioStream" uid="uid://cy6y4sdgcrcl6" path="res://assets/music/email.mp3" id="5_vi0or"]
 [ext_resource type="AudioStream" uid="uid://d2twdvrmc45pg" path="res://assets/music/bg.mp3" id="6_6njb1"]
 [ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://assets/currency/email.svg" id="6_xkbed"]
+[ext_resource type="Texture2D" uid="uid://cyc6twhburdkp" path="res://assets/currency/volume.png" id="7_sku5c"]
 [ext_resource type="Texture2D" uid="uid://mpdsl2oh0qr3" path="res://assets/currency/email_new.svg" id="8_7btfg"]
+[ext_resource type="Texture2D" uid="uid://ode1e3wwl8xh" path="res://assets/currency/about.png" id="8_jnucy"]
 [ext_resource type="AudioStream" uid="uid://wfyfn0f87x2k" path="res://assets/music/online.mp3" id="9_cq8er"]
 [ext_resource type="AudioStream" uid="uid://bcomw60dylot" path="res://assets/music/messagecoming.mp3" id="9_ermvf"]
+[ext_resource type="Texture2D" uid="uid://c4io4bw8l82l3" path="res://assets/currency/rest.png" id="9_py038"]
+[ext_resource type="Texture2D" uid="uid://cbtyhawxiukwn" path="res://assets/currency/exit.png" id="10_8hrxv"]
+[ext_resource type="Texture2D" uid="uid://byxoofshj56sj" path="res://assets/currency/reback1.png" id="11_evuvb"]
 [ext_resource type="AudioStream" uid="uid://ssac4vmysowm" path="res://assets/music/send.mp3" id="12_nc226"]
 [ext_resource type="AudioStream" uid="uid://crmef6a2tkncv" path="res://assets/music/welcome.mp3" id="15_6qa6r"]
 [ext_resource type="AudioStream" uid="uid://g0ar5ds4fm2p" path="res://assets/music/recv.mp3" id="16_37b2e"]
@@ -103,20 +108,22 @@ icon = ExtResource("4_6kece")
 flat = false
 icon_alignment = 1
 expand_icon = true
-item_count = 7
-popup/item_0/text = "音量"
-popup/item_1/text = "关于"
+item_count = 5
+popup/item_0/text = "打开音量"
+popup/item_0/icon = ExtResource("7_sku5c")
+popup/item_0/checked = true
+popup/item_1/text = "关于我们"
+popup/item_1/icon = ExtResource("8_jnucy")
 popup/item_1/id = 1
+popup/item_2/text = "注销重登"
+popup/item_2/icon = ExtResource("9_py038")
 popup/item_2/id = 2
-popup/item_2/separator = true
-popup/item_3/text = "注销重登"
+popup/item_3/text = "退出"
+popup/item_3/icon = ExtResource("10_8hrxv")
 popup/item_3/id = 3
+popup/item_4/text = "返回"
+popup/item_4/icon = ExtResource("11_evuvb")
 popup/item_4/id = 4
-popup/item_4/separator = true
-popup/item_5/text = "退出"
-popup/item_5/id = 5
-popup/item_6/text = "返回"
-popup/item_6/id = 8
 
 [node name="btn_what" type="Button" parent="."]
 unique_name_in_owner = true

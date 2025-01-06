@@ -43,6 +43,9 @@ var last_keyboard_height = 0
 var origin_height = 0
 var button: Button
 var isOpenLight = false
+var first_friends = true
+var first_clubs = true
+var first_world = true
 
 # func _init() -> void:
 # 	# if Network.get_world_channel() == null:
@@ -143,11 +146,11 @@ func initData():
 	# 加载本地历史消息
 	load_local_history()
 
-	# 获取好友列表
-	get_friends_list()
+	# # 获取好友列表
+	# get_friends_list()
 
-	# 加载群组列表
-	get_club_list()
+	# # 加载群组列表
+	# get_club_list()
 	pass
 ######################################################
 func _on_show_addfriend_pressed() -> void:
@@ -290,7 +293,7 @@ func changeOnline(user_id:String, online:bool)->int:
 
 
 func _on_channel_presence(presence):
-	print("频道状态变更:", presence)
+	print("频道状态变更:", presence.channel_id)
 	# for p in p_presence.joins:
 	#   room_users[p.user_id] = p
 
@@ -666,10 +669,18 @@ func _on_text_edit_finished() -> void:
 	pass # Replace with function body.
 
 func _on_tab_container_tab_selected(tab: int) -> void:
-	if tab == 0:
+	if tab == 0 and first_world:
+		first_world = false
 		var world = Network.get_world_channel()
 		if world:
 			await Network.get_chat_history(world.id)
+	elif tab == 1 and first_clubs:
+		first_clubs = false
+		call_deferred("get_club_list")
+	elif tab == 2 and first_friends:
+		first_friends = false
+		call_deferred("get_friends_list")
+	print("切换选项卡:", tab)
 	pass # Replace with function body.  
 
 

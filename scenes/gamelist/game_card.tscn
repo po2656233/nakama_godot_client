@@ -1,10 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://riqfmggkqpfd"]
+[gd_scene load_steps=26 format=3 uid="uid://riqfmggkqpfd"]
 
 [ext_resource type="Script" path="res://scenes/gamelist/game_card.gd" id="1_xxxxx"]
-[ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://assets/bg/bg_login.jpg" id="2_lydmc"]
+[ext_resource type="DragonBonesFactory" path="res://sprites/dibeichang/dibeichang_ske.dbfactory" id="2_45j2b"]
+[ext_resource type="DragonBonesFactory" path="res://sprites/puke/puke_ske.dbfactory" id="3_7okkc"]
+[ext_resource type="Script" path="res://scenes/gamelist/dragon_bones.gd" id="4_2lxpo"]
+[ext_resource type="DragonBonesFactory" path="res://sprites/jiangbei/jiangbei_ske.dbfactory" id="4_gloe0"]
+[ext_resource type="Script" path="res://scenes/gamelist/description.gd" id="6_6l74d"]
+[ext_resource type="Shader" path="res://scenes/gamelist/flow_light.gdshader" id="7_keqs5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
-bg_color = Color(0.133333, 0.133333, 0.180392, 0.960784)
+bg_color = Color(0.133333, 0.101961, 0.286275, 0.203922)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -18,9 +23,69 @@ shadow_color = Color(0, 0, 0, 0.2)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
+[sub_resource type="SystemFont" id="SystemFont_2r2l2"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_r28s4"]
+font = SubResource("SystemFont_2r2l2")
+font_size = 36
+font_color = Color(1, 1, 0.313726, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ag7gp"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8cwjc"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ctnco"]
+blend_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06hqm"]
+resource_local_to_scene = true
+shader = ExtResource("7_keqs5")
+shader_parameter/progress = -1.0
+shader_parameter/angle = 2.206
+shader_parameter/n = 0.163
+
+[sub_resource type="Gradient" id="Gradient_yvwfo"]
+offsets = PackedFloat32Array(0, 0.996241)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t1jci"]
+gradient = SubResource("Gradient_yvwfo")
+
+[sub_resource type="SystemFont" id="SystemFont_w7vkm"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_75xrq"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_5f45h"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_6jbmw"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_dcyp8"]
+subpixel_positioning = 0
+
+[sub_resource type="Animation" id="Animation_6stlh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_flip"]
 resource_name = "flip"
-length = 0.4
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -33,10 +98,21 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(0, 1), Vector2(1, 1)]
 }
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Front/MarginContainer/FlowLight:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.233333, 1.5)
+}
 
 [sub_resource type="Animation" id="Animation_hover"]
 resource_name = "hover"
-length = 0.2
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -44,25 +120,31 @@ tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.287175, 1),
+"times": PackedFloat32Array(0, 0.2, 0.466667),
+"transitions": PackedFloat32Array(0.287175, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1.05, 1.05)]
+"values": [Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
 _data = {
+"RESET": SubResource("Animation_6stlh"),
 "flip": SubResource("Animation_flip"),
 "hover": SubResource("Animation_hover")
 }
 
 [node name="GameCard" type="PanelContainer"]
-custom_minimum_size = Vector2(350, 650)
-offset_right = 350.0
-offset_bottom = 650.0
+custom_minimum_size = Vector2(380, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(175, 325)
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 script = ExtResource("1_xxxxx")
 
@@ -74,7 +156,9 @@ theme_override_constants/separation = 15
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Game Title"
+label_settings = SubResource("LabelSettings_r28s4")
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Front"]
 layout_mode = 2
@@ -86,9 +170,65 @@ theme_override_constants/margin_right = 10
 [node name="GameImage" type="TextureRect" parent="Front/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("2_lydmc")
-expand_mode = 1
 stretch_mode = 5
+
+[node name="DragonBonesDibeichang" type="DragonBones" parent="Front/MarginContainer"]
+factory = ExtResource("2_45j2b")
+armature_settings = {
+"clip_children": 0,
+"current_animation": "animation",
+"material": null,
+"slots_inherit_material": false,
+"sub_armatures": {},
+"use_parent_material": true,
+"visibility_layerF": null
+}
+visible = false
+material = SubResource("CanvasItemMaterial_ag7gp")
+position = Vector2(600, 250)
+script = ExtResource("4_2lxpo")
+
+[node name="DragonBonesPuke" type="DragonBones" parent="Front/MarginContainer"]
+factory = ExtResource("3_7okkc")
+armature_settings = {
+"clip_children": 0,
+"current_animation": "animation",
+"material": null,
+"slots_inherit_material": false,
+"sub_armatures": {},
+"use_parent_material": true,
+"visibility_layerF": null
+}
+visible = false
+material = SubResource("CanvasItemMaterial_8cwjc")
+position = Vector2(600, 350)
+script = ExtResource("4_2lxpo")
+scaleX = 2.2
+scaleY = 1.6
+
+[node name="DragonBonesJiangbei" type="DragonBones" parent="Front/MarginContainer"]
+factory = ExtResource("4_gloe0")
+armature_settings = {
+"clip_children": 0,
+"current_animation": "animation",
+"material": null,
+"slots_inherit_material": false,
+"sub_armatures": {},
+"use_parent_material": true,
+"visibility_layerF": null
+}
+visible = false
+material = SubResource("CanvasItemMaterial_ctnco")
+position = Vector2(600, 350)
+script = ExtResource("4_2lxpo")
+scaleX = 1.8
+scaleY = 1.6
+
+[node name="FlowLight" type="TextureRect" parent="Front/MarginContainer"]
+material = SubResource("ShaderMaterial_06hqm")
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_t1jci")
 
 [node name="Back" type="VBoxContainer" parent="."]
 visible = false
@@ -109,10 +249,16 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 16
-theme_override_font_sizes/bold_font_size = 20
+theme_override_fonts/normal_font = SubResource("SystemFont_w7vkm")
+theme_override_fonts/mono_font = SubResource("SystemFont_75xrq")
+theme_override_fonts/italics_font = SubResource("SystemFont_5f45h")
+theme_override_fonts/bold_italics_font = SubResource("SystemFont_6jbmw")
+theme_override_fonts/bold_font = SubResource("SystemFont_dcyp8")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 36
 bbcode_enabled = true
 text = "Game Description"
+script = ExtResource("6_6l74d")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

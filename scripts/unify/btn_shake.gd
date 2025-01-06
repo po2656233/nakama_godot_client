@@ -6,8 +6,8 @@ extends Button
 @export var normal_texture: Texture2D
 @export var shake_texture: Texture2D
 
-# @onready var normal_texture = preload("res://asset/currency/notify.svg")  # 替换成你的默认按钮图片路径
-# @onready var shake_texture = preload("res://asset/currency/notification.svg")  # 替换成你的按下状态图片路径
+# @onready var normal_texture = preload("res://assets/currency/notify.svg")  # 替换成你的默认按钮图片路径
+# @onready var shake_texture = preload("res://assets/currency/notification.svg")  # 替换成你的按下状态图片路径
 
 signal shakeSIG() #抖动信号
 signal lookSIG() #查看信号

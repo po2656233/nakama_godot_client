@@ -65,9 +65,9 @@ func _ready():
 	popup_menu = PopupMenu.new()
 	add_child(popup_menu)
 	# 添加菜单项
-	var copyIcon = load("res://asset/currency/copy.png")
-	var rebackIcon = load("res://asset/currency/reback.png")
-	var deleteIcon = load("res://asset/currency/delete.png")
+	var copyIcon = load("res://assets/currency/copy.png")
+	var rebackIcon = load("res://assets/currency/reback.png")
+	var deleteIcon = load("res://assets/currency/delete.png")
 	
 	popup_menu.add_icon_item(copyIcon, "复制", 0)
 	popup_menu.add_separator()

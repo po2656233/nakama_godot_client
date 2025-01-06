@@ -1,9 +1,9 @@
 [gd_scene load_steps=38 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
-[ext_resource type="Script" uid="uid://debl37q3eq6mw" path="res://scripts/chat/chat.gd" id="2_m52is"]
+[ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
 [ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://scenes/chat/find_friend.tscn" id="3_ndfss"]
-[ext_resource type="Script" uid="uid://cpian0oi3lpvh" path="res://scripts/unify/itemList.gd" id="4_3wj1b"]
+[ext_resource type="Script" path="res://scripts/unify/itemList.gd" id="4_3wj1b"]
 [ext_resource type="Script" uid="uid://b4ywhfdjj7udo" path="res://scripts/unify/color_change_control.gd" id="5_vsklf"]
 [ext_resource type="Script" uid="uid://cds1teudj02ae" path="res://scripts/unify/TE_send.gd" id="5_yrxgh"]
 [ext_resource type="PackedScene" uid="uid://riqfmggkqpf4" path="res://scenes/club/group_list.tscn" id="7_0cs3x"]
@@ -257,7 +257,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 14.0
 offset_right = -1.0
-offset_bottom = -57.0
+offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "社交场"
@@ -273,12 +273,11 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 all_tabs_in_front = true
 drag_to_rearrange_enabled = true
 
 [node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -335,6 +334,7 @@ vertical_icon_alignment = 0
 expand_icon = true
 
 [node name="club" type="Control" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -552,7 +552,7 @@ script = ExtResource("4_3wj1b")
 Block = true
 
 [node name="input_area" type="PanelContainer" parent="MarginContainer/Panel"]
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -574,6 +574,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
 
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

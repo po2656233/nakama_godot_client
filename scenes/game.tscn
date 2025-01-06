@@ -43,7 +43,6 @@ grow_vertical = 2
 script = ExtResource("1_j1cfq")
 
 [node name="CreateRoomDialog" parent="." instance=ExtResource("8_dqgvw")]
-initial_position = 2
 visible = false
 
 [node name="Panel" type="Panel" parent="."]

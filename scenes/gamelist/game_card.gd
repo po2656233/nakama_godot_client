@@ -1,6 +1,16 @@
 extends PanelContainer
 
-signal game_selected(game_data)
+signal game_selected(itemNode)
+
+@onready var description = $Back/MarginContainer/Description
+@onready var gameTitle = $Front/GameTitle
+@onready var gameImge = $Front/MarginContainer/GameImage
+@onready var gameFront = $Front
+@onready var gameBack = $Back
+@onready var animation = $AnimationPlayer
+@onready var dragonBonesDibeichang = $Front/MarginContainer/DragonBonesDibeichang
+@onready var dragonBonesJiangbei = $Front/MarginContainer/DragonBonesJiangbei
+@onready var dragonBonesPuke = $Front/MarginContainer/DragonBonesPuke
 
 var game_data = {}
 var is_flipped = true
@@ -10,7 +20,7 @@ var is_animating = false
 # 滑动相关变量
 var drag_start_position = Vector2.ZERO
 var is_dragging = false
-var min_swipe_distance = 50  # 最小滑动距离
+var min_swipe_distance = 80  # 最小滑动距离
 
 func _ready():
 	mouse_entered.connect(_on_mouse_entered)
@@ -19,25 +29,45 @@ func _ready():
 
 func setup(data):
 	game_data = data
-	$Front/GameTitle.text = data.title
-	$Back/MarginContainer/Description.text = data.description
+	gameTitle.text = data.title
+	description.text = data.description
 	if data.image:
-		$Front/MarginContainer/GameImage.texture = data.image
+		gameImge.texture = data.image
+		dragonBonesDibeichang.visible = false
+		dragonBonesJiangbei.visible = false
+		dragonBonesPuke.visible = false
+	else:
+		gameImge.visible = false
+		var index = randi() % 3
+		if index == 0:
+			dragonBonesDibeichang.visible = true
+			dragonBonesJiangbei.visible = false
+			dragonBonesPuke.visible = false
+		elif index == 1:
+			dragonBonesJiangbei.visible = true
+			dragonBonesDibeichang.visible = false
+			dragonBonesPuke.visible = false
+		else:
+			dragonBonesPuke.visible = true
+			dragonBonesJiangbei.visible = false
+			dragonBonesDibeichang.visible = false
+
+	pass
 
 func flip():
 	if is_animating:
 		return
 		
 	is_animating = true
-	$AnimationPlayer.play("flip")
+	animation.play("flip")
 	
 	# 在动画中间点切换正反面
-	await get_tree().create_timer(0.2).timeout
-	$Front.visible = !is_flipped
-	$Back.visible = is_flipped
+	await get_tree().create_timer(0.4).timeout
+	gameFront.visible = !is_flipped
+	gameBack.visible = is_flipped
 	is_flipped = !is_flipped
 	
-	await $AnimationPlayer.animation_finished
+	await animation.animation_finished
 	is_animating = false
 
 func _on_gui_input(event):
@@ -45,10 +75,15 @@ func _on_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
 			# 如果卡片是翻转状态且描述文本有滚动条
-			if $Back/MarginContainer/Description.get_v_scroll_bar().max_value > 0:
+			if description.get_v_scroll_bar().max_value > 0:
 				get_viewport().set_input_as_handled()
 				return
 		elif event.button_index == MOUSE_BUTTON_LEFT:
+			 # 如果没有明显的拖动，则视为点击，且双击
+			if event.double_click and  (event.position - drag_start_position).length() < min_swipe_distance:
+				game_selected.emit(self)
+				print("即将进入游戏", game_data["title"])
+				return
 			if event.pressed:
 				# 开始拖动
 				drag_start_position = event.position
@@ -56,11 +91,6 @@ func _on_gui_input(event):
 			else:
 				# 结束拖动
 				is_dragging = false
-				# 如果没有明显的拖动，则视为点击
-				if (event.position - drag_start_position).length() < min_swipe_distance and event.double_click:
-					game_selected.emit(game_data)
-					print("即将进入游戏", game_data["title"])
-					return
 	
 	elif event is InputEventMouseMotion and is_dragging:
 		# 计算水平滑动距离
@@ -72,9 +102,9 @@ func _on_gui_input(event):
 			flip()
 
 func _on_mouse_entered():
-	if not is_hovering and not $AnimationPlayer.is_playing():
+	if not is_hovering and not animation.is_playing():
 		is_hovering = true
-		$AnimationPlayer.play("hover")
+		animation.play("hover")
 
 func _on_mouse_exited():
 	if is_hovering:

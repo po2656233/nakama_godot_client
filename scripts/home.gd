@@ -44,6 +44,7 @@ func _on_btn_zhanji_pressed() -> void:
 
 
 func _on_btn_renwu_pressed() -> void:
+	FancyFade.vertical_paint_brush(game_scene.instantiate())
 	pass # Replace with function body.
 
 
@@ -52,7 +53,7 @@ func _on_btn_match_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_btn_start_pressed() -> void:
-	FancyFade.vertical_paint_brush(game_scene.instantiate())
+	SceneManager.switch_to_scene("gamelist","custom",0.5) 
 	pass # Replace with function body.
 
 

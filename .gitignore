@@ -18,6 +18,7 @@ output.json
 # IntelliJ
 *.iml
 .idea/
+.godot/
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml

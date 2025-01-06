@@ -108,9 +108,6 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 		if timestamp - today_timestamp > TIME_INTERVAL_THRESHOLD:
 			today_timestamp = Network.get_today_start_timestamp()
 
-
-		
-
 	# 创建新的消息项
 	# 获取当前消息容器中的子控件数量
 	var child_count = messages_container.get_child_count()
@@ -150,7 +147,6 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	if show_time:
 		time_str = "%02d:%02d" % [curMsgTime["hour"], curMsgTime["minute"]]
 	
-
 	# 设置消息内容
 	message_item.set_message(chanId, msgId, content, nickname, msg_type, show_time, time_str)
 		

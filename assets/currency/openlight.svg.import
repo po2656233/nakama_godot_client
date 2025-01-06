@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://asset/currency/openlight.svg"
+source_file="res://assets/currency/openlight.svg"
 dest_files=["res://.godot/imported/openlight.svg-2af66822191c21d5495d82c94511b1d3.ctex"]
 
 [params]

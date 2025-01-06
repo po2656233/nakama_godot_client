@@ -13,14 +13,18 @@ extends Control
 @onready var emailMusic = $music/email
 @onready var notifyMusic = $music/notify
 @onready var onlineMusic = $music/online
-var login_scene = load("res://scenes/login.tscn")
+
 var mail_scene = load("res://scenes/email/mail.tscn")
+var novolume = preload("res://assets/currency/novolume.png")
+var volume = preload("res://assets/currency/volume.png")
 
 # Called when the node enters the scene tree for the first time.
 var isMute = false
 func _ready() -> void: 
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
+	for i in popup_menu.item_count:
+		popup_menu.set_item_icon_max_width(i, 80)
 	notifyBtn.lookSIG.connect(_on_look_notify)
 	emailBtn.lookSIG.connect(_on_look_email)
 	SignalManager.NewMessageSIG.connect(_on_msg_notify)
@@ -70,16 +74,17 @@ func on_setting_pressed(index: int) -> void:
 			var hints = "打开音量" if bgMusic.stream_paused else "关闭音量"
 			isMute = bgMusic.stream_paused
 			popup_menu.set_item_text(index, hints)
+			popup_menu.set_item_icon(index, volume if bgMusic.stream_paused else novolume)
 			pass
-		3:#返回登录页
+		2:#返回登录页
 			Network.logout() 
 			SceneManager.switch_to_scene("login",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
 		# 	pass
-		5:# 退出
+		3:# 退出
 			get_tree().quit()
 			pass
-		6:#返回上一页
-			SceneManager.go_back()
+		4:#返回主页
+			SceneManager.switch_to_scene("home",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
 		_:
 			print("Setting error",index)
 			pass

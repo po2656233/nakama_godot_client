@@ -1,0 +1,102 @@
+[gd_scene load_steps=6 format=3 uid="uid://riqfmggkqpfx"]
+
+[ext_resource type="Script" path="res://scripts/game/match_success.gd" id="1_xxxxx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxxxx"]
+bg_color = Color(0.133333, 0.133333, 0.180392, 0.960784)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_x2c8t"]
+font_size = 20
+font_color = Color(1, 1, 0.517647, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3u3mi"]
+font_color = Color(0.533037, 0.533037, 0.533037, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnmft"]
+draw_center = false
+
+[node name="MatchSuccess" type="Window"]
+process_mode = 3
+title = "匹配成功"
+initial_position = 2
+size = Vector2i(550, 350)
+exclusive = true
+unresizable = true
+borderless = true
+always_on_top = true
+script = ExtResource("1_xxxxx")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xxxxx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderLabel" type="Label" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "匹配成功"
+label_settings = SubResource("LabelSettings_x2c8t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ReadyLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "   1 /10已准备就绪"
+label_settings = SubResource("LabelSettings_3u3mi")
+
+[node name="TimerLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "进入游戏倒计时: 13 秒   "
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="AcceptButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnmft")
+text = "接受"
+
+[node name="DeclineButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "拒绝"
+
+[node name="empty" type="Panel" parent="Panel/VBoxContainer"]
+layout_mode = 2

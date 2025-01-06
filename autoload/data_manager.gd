@@ -9,6 +9,8 @@ const uid_channel_key = "uid_channel_"
 const uid_approval_key = "uid_approval_"
 const uid_friend_key = "uid_friend_"
 const uid_club_key = "uid_club_"
+const game_list_key = "game_list_"
+
 # 缓存的数据
 var cached_data: Dictionary = {}
 
@@ -18,12 +20,19 @@ static var instance: DataManager = null
 func _init():
 	if instance == null:
 		instance = self
+
+# 获取单例实例
+static func get_instance() -> DataManager:
+	return instance
+
+# 准备
 func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	print("data manger init")
 	load_data()
 	SignalManager.NewNotifySIG.connect(_on_approval_notify)
 
+# 信号通知
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		print("Game is closing normally, saving data...")
@@ -42,11 +51,6 @@ func _on_approval_notify(data):
 	if data:
 		add_uid_approval(data["uid"], data)
 
-
-
-# 获取单例实例
-static func get_instance() -> DataManager:
-	return instance
 
 
 # 保存数据

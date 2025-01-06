@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://duk1crphy5j8f"]
 
-[ext_resource type="Script" uid="uid://c1l06ujgrpte6" path="res://scripts/unify/find_friend.gd" id="1_54668"]
+[ext_resource type="Script" path="res://scripts/unify/find_friend.gd" id="1_54668"]
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="2_a7bd4"]
 [ext_resource type="Texture2D" uid="uid://edm34hfg0egi" path="res://assets/hall/btn_jia.png" id="3_on8jn"]
 [ext_resource type="Script" uid="uid://dij8d7bwtac1e" path="res://scripts/unify/itemlist_ctrl.gd" id="3_qwje4"]

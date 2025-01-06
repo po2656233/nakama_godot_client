@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://asset/currency/closelight.svg"
+source_file="res://assets/currency/closelight.svg"
 dest_files=["res://.godot/imported/closelight.svg-4c7d62bd064e939d49d91d750a138a6e.ctex"]
 
 [params]
