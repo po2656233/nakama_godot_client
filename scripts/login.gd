@@ -4,7 +4,6 @@ extends Control
 @onready var passwordEdit = $Panel/VBoxContainer/HBoxContainerPsw/LineEdit
 @onready var checkbox = $Panel/VBoxContainer/HBoxContainerRead/CheckBox
 @onready var keyboardContainer = $Panel/VBoxContainer
-@onready var settings = $Setting
 @onready var gameScene = preload("res://scenes/gamelist/game_list.tscn")
 
 # 微信登录
@@ -15,6 +14,8 @@ var is_mobile:bool = false
 var is_psw_editing:bool = false
 var last_keyboard_height = 0
 var origin_height = 0
+
+
 # var http_request: HTTPRequest
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,20 +23,22 @@ func _ready() -> void:
 	is_mobile = Network.isMobile()
 	origin_height = keyboardContainer.position.y
 
-
 	# 禁用 SSL 验证 【todo 正式环境建议解除】
 	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
 	SceneManager.set_current_scene("login")
+	
+	SettingsManager.show_settings(2) 
+
+	WindowDrag.register_drag_zone(self)
 	Network.initialize_client()
 	print("Network 初始化")
-		# 验证 PopupManager 是否可用
+	# 验证 PopupManager 是否可用
 	if not PopupManager:
 		print("PopupManager 未正确初始化")
 	else:
 		print("PopupManager 已正确初始化")
 
-	settings.showNotify(false)
-	WindowDrag.register_drag_zone(self)
+	
 	if ProjectSettings.has_setting("username"):
 		usernameEdit.text = ProjectSettings.get("username")
 	# # 创建HTTP请求节点

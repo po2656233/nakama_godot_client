@@ -11,7 +11,7 @@ signal game_selected(itemNode)
 @onready var dragonBonesDibeichang = $Front/MarginContainer/DragonBonesDibeichang
 @onready var dragonBonesJiangbei = $Front/MarginContainer/DragonBonesJiangbei
 @onready var dragonBonesPuke = $Front/MarginContainer/DragonBonesPuke
-
+@onready var version = $Front/MarginContainer/Version
 var game_data = {}
 var is_flipped = true
 var is_hovering = false
@@ -32,26 +32,27 @@ func setup(data):
 	gameTitle.text = data.title
 	description.text = data.description
 	if data.image:
-		gameImge.texture = data.image
-		dragonBonesDibeichang.visible = false
-		dragonBonesJiangbei.visible = false
-		dragonBonesPuke.visible = false
+		gameImge.texture = await  Network.load_texture_async(data.image,350,300)
+		DataManager.safe_free_node(dragonBonesDibeichang)
+		DataManager.safe_free_node(dragonBonesJiangbei)
+		DataManager.safe_free_node(dragonBonesPuke)
 	else:
 		gameImge.visible = false
 		var index = randi() % 3
 		if index == 0:
 			dragonBonesDibeichang.visible = true
-			dragonBonesJiangbei.visible = false
-			dragonBonesPuke.visible = false
+			DataManager.safe_free_node(dragonBonesJiangbei)
+			DataManager.safe_free_node(dragonBonesPuke)
 		elif index == 1:
 			dragonBonesJiangbei.visible = true
-			dragonBonesDibeichang.visible = false
-			dragonBonesPuke.visible = false
+			DataManager.safe_free_node(dragonBonesDibeichang)
+			DataManager.safe_free_node(dragonBonesPuke)
 		else:
 			dragonBonesPuke.visible = true
-			dragonBonesJiangbei.visible = false
-			dragonBonesDibeichang.visible = false
-
+			DataManager.safe_free_node(dragonBonesDibeichang)
+			DataManager.safe_free_node(dragonBonesJiangbei)
+	if data.version:
+		version.text = "当前版本:"+data.version
 	pass
 
 func flip():

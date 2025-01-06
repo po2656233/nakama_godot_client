@@ -1,15 +1,15 @@
 [gd_scene load_steps=38 format=3 uid="uid://cibb7ou8lcdk1"]
 
-[ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
+[ext_resource type="Theme" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
-[ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://scenes/chat/find_friend.tscn" id="3_ndfss"]
+[ext_resource type="PackedScene"  path="res://scenes/chat/find_friend.tscn" id="3_ndfss"]
 [ext_resource type="Script" path="res://scripts/unify/itemList.gd" id="4_3wj1b"]
-[ext_resource type="Script" uid="uid://b4ywhfdjj7udo" path="res://scripts/unify/color_change_control.gd" id="5_vsklf"]
-[ext_resource type="Script" uid="uid://cds1teudj02ae" path="res://scripts/unify/TE_send.gd" id="5_yrxgh"]
-[ext_resource type="PackedScene" uid="uid://riqfmggkqpf4" path="res://scenes/club/group_list.tscn" id="7_0cs3x"]
-[ext_resource type="Texture2D" uid="uid://dbfy6a2vu8372" path="res://assets/chat/upmore1.svg" id="7_8p5lf"]
-[ext_resource type="Texture2D" uid="uid://bs3sp7rcewbji" path="res://assets/currency/light3.png" id="9_001t8"]
-[ext_resource type="Texture2D" uid="uid://c0yjbbu1qk33i" path="res://assets/currency/light1.png" id="10_rl2rc"]
+[ext_resource type="Script"  path="res://scripts/unify/color_change_control.gd" id="5_vsklf"]
+[ext_resource type="Script" path="res://scripts/unify/TE_send.gd" id="5_yrxgh"]
+[ext_resource type="PackedScene"  path="res://scenes/club/group_list.tscn" id="7_0cs3x"]
+[ext_resource type="Texture2D"  path="res://assets/chat/upmore1.svg" id="7_8p5lf"]
+[ext_resource type="Texture2D" path="res://assets/currency/light3.png" id="9_001t8"]
+[ext_resource type="Texture2D" path="res://assets/currency/light1.png" id="10_rl2rc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7p85"]
 bg_color = Color(0.219608, 0.458824, 0.282353, 1)

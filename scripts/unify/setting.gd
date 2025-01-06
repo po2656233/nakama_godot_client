@@ -18,6 +18,11 @@ var mail_scene = load("res://scenes/email/mail.tscn")
 var novolume = preload("res://assets/currency/novolume.png")
 var volume = preload("res://assets/currency/volume.png")
 
+
+# 存储所有菜单项的信息
+var menu_items = []
+var hidden_indices = []  # 存储需要隐藏的索引
+
 # Called when the node enters the scene tree for the first time.
 var isMute = false
 func _ready() -> void: 
@@ -25,6 +30,16 @@ func _ready() -> void:
 	popup_menu.index_pressed.connect(on_setting_pressed)
 	for i in popup_menu.item_count:
 		popup_menu.set_item_icon_max_width(i, 80)
+		menu_items.append({
+			"text": popup_menu.get_item_text(i),
+			"id": popup_menu.get_item_id(i),
+			"icon": popup_menu.get_item_icon(i),
+			"submenu": popup_menu.get_item_submenu(i),
+			"metadata": popup_menu.get_item_metadata(i)
+			})
+	# 连接菜单打开信号
+	popup_menu.about_to_popup.connect(_rebuild_menu)
+
 	notifyBtn.lookSIG.connect(_on_look_notify)
 	emailBtn.lookSIG.connect(_on_look_email)
 	SignalManager.NewMessageSIG.connect(_on_msg_notify)
@@ -42,6 +57,46 @@ func _process(_delta: float) -> void:
 	pass
 
 
+# 隐藏指定索引的菜单项
+func hide_menu_item(index: int):
+	if index not in hidden_indices:
+		hidden_indices.append(index)
+	_rebuild_menu()
+
+# 显示指定索引的菜单项
+func show_menu_item(index: int):
+	hidden_indices.erase(index)
+	_rebuild_menu()
+
+# 重建菜单
+func _rebuild_menu():
+	var popup = menuBtn.get_popup()
+	var icon = popup.get_item_icon(0)
+	var text = popup.get_item_text(0)
+	popup.clear()
+
+	
+	# 重新添加未隐藏的菜单项
+	for i in range(menu_items.size()):
+		if i == 0:
+			popup.add_item(text, 0)
+			popup.set_item_icon(0,icon) 
+			popup.set_item_icon_max_width(0, 80)
+		elif i not in hidden_indices:
+			var item = menu_items[i]
+			if item.submenu.is_empty():
+				popup.add_item(item.text, item.id)
+				var idx = popup.item_count - 1
+				if item.icon:
+					popup.set_item_icon(idx, item.icon)
+				if item.metadata != null:
+					popup.set_item_metadata(idx, item.metadata)
+				popup.set_item_icon_max_width(idx, 80)
+			else:
+				popup.add_submenu_item(item.text, item.submenu, item.id)
+	pass
+##############################################################################
+
 # 显示邮件系统
 func show_mail():
 	if mail_scene and not mail_scene.visible:
@@ -57,6 +112,26 @@ func toggle_mail():
 	if mail_scene:
 		mail_scene.visible = !mail_scene.visible
 
+# 禁用返回主页
+func noReback():
+	# showNotify(false)
+	hide_menu_item(4)
+	pass
+
+
+# 没有返回主页
+func noHome():
+	print("没有返回主页")
+	hide_menu_item(3)
+	pass
+
+# 登录
+func simple():
+	hide_menu_item(2)
+	hide_menu_item(4)
+	showNotify(false)
+	pass
+
 func on_setting_pressed(index: int) -> void:
 	var popup_menu = menuBtn.get_popup()
 	var check:bool = popup_menu.is_item_checked(index)
@@ -64,13 +139,13 @@ func on_setting_pressed(index: int) -> void:
 	popup_menu.set_item_checked(index, new_check)
 	WindowDrag.dragging = false
 	print("Setting pressed ",index)
-	match index:
+	var id = popup_menu.get_item_id(index)
+	match id:
 		0:
 			if not bgMusic.playing and not bgMusic.stream_paused:
 				bgMusic.play()
 			else:
 				bgMusic.stream_paused=!bgMusic.stream_paused
-			
 			var hints = "打开音量" if bgMusic.stream_paused else "关闭音量"
 			isMute = bgMusic.stream_paused
 			popup_menu.set_item_text(index, hints)
@@ -82,6 +157,7 @@ func on_setting_pressed(index: int) -> void:
 		# 	pass
 		3:# 退出
 			get_tree().quit()
+			print("退出游戏")
 			pass
 		4:#返回主页
 			SceneManager.switch_to_scene("home",SceneManager.get_transition_key("WIPE_LEFT"),0.5)

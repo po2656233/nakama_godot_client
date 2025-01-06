@@ -728,7 +728,7 @@ func sendDataRPC(funcName:String,payload = null):
 
 #################################################################################
 # 异步加载 Texture2D
-func load_texture_async(url: String) :
+func load_texture_async(url: String,width: int = 25,height: int = 25) :
 	if url.is_empty():
 		return null
 	var request = HTTPRequest.new()
@@ -738,17 +738,39 @@ func load_texture_async(url: String) :
 	var result = await request.request_completed
 	
 	if result[0] != HTTPRequest.RESULT_SUCCESS:
+		print("无法加载图片: ", result[0],url)
 		request.queue_free()
 		return null
-	
+	# var response_code = result[1]
+	var headers = result[2]
 	var image = Image.new()
-
-	var error = image.load_png_from_buffer(result[3])
+	# 检查Content-Type
+	var error = OK
+	for header in headers:
+		if header.to_lower().begins_with("content-type:"):
+			var content_type = header.split(":")[1].strip_edges().to_lower()
+			# 根据content-type返回对应的扩展名
+			match content_type:
+				"image/jpeg", "image/jpg":
+					error = image.load_jpg_from_buffer(result[3])
+				"image/png":
+					error = image.load_png_from_buffer(result[3])
+				"image/gif":
+					return "gif"
+				"image/webp":
+					error = image.load_webp_from_buffer(result[3])
+				"image/bmp":
+					error = image.load_bmp_from_buffer(result[3])
+				"image/svg":
+					error = image.load_svg_from_buffer(result[3])
+				"image/tga":
+					error = image.load_tga_from_buffer(result[3])
 	if error != OK:
 		request.queue_free()
+		print("加载图片失败: ", url)
 		return null
 	
-	image.resize(25,25)
+	image.resize(width,height)
 	request.queue_free()
 	return ImageTexture.create_from_image(image)
 

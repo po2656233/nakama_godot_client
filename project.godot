@@ -32,6 +32,7 @@ DataMgr="*res://autoload/data_manager.gd"
 PopupManager="*res://autoload/popup_manager.gd"
 SceneManager="*res://autoload/scene_manager.gd"
 SignalManager="*res://autoload/signal_manager.gd"
+SettingsManager="*res://autoload/settings_manager.gd"
 
 [display]
 

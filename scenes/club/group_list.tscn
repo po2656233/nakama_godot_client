@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://riqfmggkqpf4"]
 
-[ext_resource type="Script" uid="uid://dk00fhsjlhinq" path="res://scenes/club/group_list.gd" id="1_xxxxx"]
+[ext_resource type="Script"  path="res://scenes/club/group_list.gd" id="1_lhinq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ej2n"]
 bg_color = Color(0.242083, 0.6227, 0.945089, 1)
@@ -16,7 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_xxxxx")
+script = ExtResource("1_lhinq")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

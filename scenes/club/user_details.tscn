@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://riqfmggkqpf8"]
 
-[ext_resource type="Script" uid="uid://bccou2iqkept2" path="res://scenes/club/user_details.gd" id="1_xxxxx"]
+[ext_resource type="Script" path="res://scenes/club/user_details.gd" id="1_kept2"]
 [ext_resource type="Texture2D" uid="uid://dyudb8ry74m70" path="res://assets/default_avatar.svg" id="2_v7o7n"]
 [ext_resource type="Script" path="res://scripts/unify/copyable_label.gd" id="3_ljiin"]
 
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_xxxxx")
+script = ExtResource("1_kept2")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

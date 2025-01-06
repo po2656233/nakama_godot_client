@@ -5,9 +5,11 @@ extends DragonBones
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	center_in_parent()
-	get_parent().connect("resized", Callable(self, "_on_parent_resized"))
+	get_parent().resized.connect(_on_parent_resized)
 
 func center_in_parent():
+	if self == null or get_parent() == null: 
+		return
 	var parent_rect = get_parent().get_rect()
 	position = Vector2(
 		parent_rect.size.x / scaleX,

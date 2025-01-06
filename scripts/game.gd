@@ -4,6 +4,8 @@ var home_scene = load("res://scenes/home.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SceneManager.set_current_scene("game")
+	SettingsManager.show_settings()
+	# SettingsManager.showNotify(false)
 	print("当前运行的节点名",SceneManager.get_running_scene_name())
 	var result = await Network.sendDataRPC("list_games")
 	print("获取游戏列表",result)

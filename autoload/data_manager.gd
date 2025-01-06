@@ -25,6 +25,39 @@ func _init():
 static func get_instance() -> DataManager:
 	return instance
 
+
+# 静态函数，安全地销毁节点
+static func safe_free_node(node: Node) -> void:
+	if node == null:
+		return
+		
+	# 如果节点已经在队列中等待释放，直接返回
+	if not is_instance_valid(node) or node.is_queued_for_deletion():
+		return
+	
+	# 停止所有正在运行的tween
+	var tweens = node.get_tree().get_processed_tweens()
+	for tween in tweens:
+		if tween.is_valid():
+			tween.kill()
+	
+	# 停止所有计时器
+	for child in node.get_children():
+		if child is Timer:
+			child.stop()
+	
+	# 如果有动画播放器，停止动画
+	var anim_player = node.get_node_or_null("AnimationPlayer")
+	if anim_player:
+		anim_player.stop()
+	
+	# 如果节点在场景树中，从父节点移除
+	if node.is_inside_tree():
+		node.get_parent().remove_child(node)
+	
+	# 将节点加入释放队列
+	node.queue_free()
+
 # 准备
 func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)

@@ -240,6 +240,7 @@ texture_pressed = ExtResource("12_s581t")
 texture_hover = ExtResource("16_bvtl1")
 
 [node name="Setting" parent="." instance=ExtResource("18_jh01n")]
+visible = false
 layout_mode = 1
 
 [connection signal="focus_entered" from="Panel/VBoxContainer/HBoxContainerUser/LineEdit" to="." method="_on_line_edit_focus_entered"]

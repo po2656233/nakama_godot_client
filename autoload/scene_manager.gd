@@ -107,6 +107,7 @@ func _init():
 		"approval":"res://scenes/approval/approval_form.tscn",
 		"gamelist":"res://scenes/gamelist/game_list.tscn",
 		"matchSuccess":"res://scenes/game/match_success.tscn",
+		"leaderboard":"res://scenes/element/leaderboard.tscn",
 		# # 如果有重复的场景名称，将被跳过并输出警告
 		# "login": "res://scenes/another_login.tscn"  ,
 	}
@@ -304,6 +305,7 @@ func go_back() -> void:
 func switch_to_scene(scene_name: String, transition_way:String = "cross", dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_name == "":
 		return 
+	SettingsManager.settings_changed.emit()
 	var scene_path = get_scene_path(scene_name)
 	_transition_scene(scene_path,transition_way,dissolve_time, dissolve_image)
 	pass
@@ -531,8 +533,6 @@ func remove_scene(scene_instance: Node) -> void:
 		var parent = scene_instance.get_parent()
 		if parent:
 			parent.queue_free()  # 这将同时移除容器和场景实例
-
-
 
 
 # 打印所有场景信息
