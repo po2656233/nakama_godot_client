@@ -5,14 +5,6 @@ extends Control
 @onready var emailBtn = $HBoxContainerRightTop/btn_email
 @onready var fullBtn = $HBoxContainerRightTop/btn_full
 
-@onready var bgMusic = $music/background
-@onready var sendMusic = $music/send
-@onready var recvMusic = $music/recv
-@onready var comingMusic = $music/comming
-@onready var welcomegMusic = $music/welcome
-@onready var emailMusic = $music/email
-@onready var notifyMusic = $music/notify
-@onready var onlineMusic = $music/online
 
 var mail_scene = load("res://scenes/email/mail.tscn")
 var novolume = preload("res://assets/currency/novolume.png")
@@ -24,31 +16,30 @@ var menu_items = []
 var hidden_indices = []  # 存储需要隐藏的索引
 
 # Called when the node enters the scene tree for the first time.
-var isMute = false
 func _ready() -> void: 
+	var isMute = DataManager.get_instance().get_isMute()
+	print("当前是否禁音:",isMute)
+	SignalManager.MuteSIG.emit(isMute)
+	SignalManager.backgroundMusicSIG.emit(isMute)
+	
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
 	for i in popup_menu.item_count:
 		popup_menu.set_item_icon_max_width(i, 80)
+		var icon = popup_menu.get_item_icon(i)
 		menu_items.append({
 			"text": popup_menu.get_item_text(i),
 			"id": popup_menu.get_item_id(i),
-			"icon": popup_menu.get_item_icon(i),
+			"icon": icon,
 			"submenu": popup_menu.get_item_submenu(i),
 			"metadata": popup_menu.get_item_metadata(i)
 			})
 	# 连接菜单打开信号
+	_rebuild_menu()
 	popup_menu.about_to_popup.connect(_rebuild_menu)
 
 	notifyBtn.lookSIG.connect(_on_look_notify)
 	emailBtn.lookSIG.connect(_on_look_email)
-	SignalManager.NewMessageSIG.connect(_on_msg_notify)
-	SignalManager.SendMessageSIG.connect(_on_send_msg)
-	SignalManager.RecvMessageSIG.connect(_on_recv_msg)
-	SignalManager.OnlineSIG.connect(_on_online_msg)
-
-	SignalManager.NewEmailSIG.connect(_on_email_notify)
-	SignalManager.NewNotifySIG.connect(_on_recv_notify)
 	pass # Replace with function body.
 
 
@@ -71,8 +62,9 @@ func show_menu_item(index: int):
 # 重建菜单
 func _rebuild_menu():
 	var popup = menuBtn.get_popup()
-	var icon = popup.get_item_icon(0)
-	var text = popup.get_item_text(0)
+	var isMute = DataManager.get_instance().get_isMute()
+	var icon = volume if isMute else novolume
+	var text = "打开音量" if isMute else "关闭音量"
 	popup.clear()
 
 	
@@ -142,14 +134,16 @@ func on_setting_pressed(index: int) -> void:
 	var id = popup_menu.get_item_id(index)
 	match id:
 		0:
-			if not bgMusic.playing and not bgMusic.stream_paused:
-				bgMusic.play()
-			else:
-				bgMusic.stream_paused=!bgMusic.stream_paused
-			var hints = "打开音量" if bgMusic.stream_paused else "关闭音量"
-			isMute = bgMusic.stream_paused
-			popup_menu.set_item_text(index, hints)
-			popup_menu.set_item_icon(index, volume if bgMusic.stream_paused else novolume)
+			var isMute = DataManager.get_instance().get_isMute()
+			isMute = !isMute
+			print("是否禁音: ",isMute)
+			DataManager.get_instance().set_isMute(isMute)
+			SignalManager.backgroundMusicSIG.emit(isMute)
+			SignalManager.MuteSIG.emit(isMute)
+			_rebuild_menu()
+			# var hints = "打开音量" if isMute else "关闭音量"
+			# popup_menu.set_item_text(index, hints)
+			# popup_menu.set_item_icon(index, volume if isMute else novolume)
 			pass
 		2:#返回登录页
 			Network.logout() 
@@ -187,42 +181,12 @@ func restore_window():
 	get_window().mode = Window.MODE_WINDOWED
 
 ##########################################
-func _on_recv_notify(args) -> void:
-	if args:
-		# notifyMusic.set_volume(1.0)
-		notifyMusic.play()
-	notifyBtn.newMsgSIG.emit()
-	pass # Replace with function body.
 
-func _on_msg_notify(_args) -> void:
-	pass
-
-func _on_send_msg(_args) -> void:
-	if isMute:
-		return
-	sendMusic.play()
-	pass
-
-func _on_recv_msg(_args) -> void:
-	if isMute:
-		return
-	recvMusic.play()
-	pass
-func _on_online_msg() -> void:
-	if isMute:
-		return
-	onlineMusic.play()
-	pass
-func _on_email_notify(args) -> void:
-	if args and not isMute:
-		emailMusic.play()
-	emailBtn.newMsgSIG.emit()
-	pass
 
 #############################
 func _on_btn_notify_pressed() -> void:
 	#铃铛停止播放
-	notifyMusic.stop()
+	SignalManager.NewNotifySIG.emit(false)
 	pass # Replace with function body.
 
 

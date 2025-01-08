@@ -1,0 +1,46 @@
+[gd_scene load_steps=12 format=3 uid="uid://16d2o6xinx5k"]
+
+[ext_resource type="Script" path="res://scripts/unify/music.gd" id="1_gf1mb"]
+[ext_resource type="AudioStream" uid="uid://ssac4vmysowm" path="res://assets/music/send.mp3" id="2_mwe5s"]
+[ext_resource type="AudioStream" uid="uid://wfyfn0f87x2k" path="res://assets/music/online.mp3" id="3_mvr1c"]
+[ext_resource type="AudioStream" uid="uid://d2twdvrmc45pg" path="res://assets/music/bg.mp3" id="6_04t5u"]
+[ext_resource type="AudioStream" uid="uid://bcomw60dylot" path="res://assets/music/messagecoming.mp3" id="7_jl6ta"]
+[ext_resource type="AudioStream" uid="uid://cy6y4sdgcrcl6" path="res://assets/music/email.mp3" id="8_k3npl"]
+[ext_resource type="AudioStream" uid="uid://crmef6a2tkncv" path="res://assets/music/welcome.mp3" id="9_sbyor"]
+[ext_resource type="AudioStream" uid="uid://8kbicuvoslr" path="res://assets/music/ding.mp3" id="10_ternn"]
+[ext_resource type="AudioStream" uid="uid://chojs5lx178qm" path="res://assets/music/notify.mp3" id="10_xuyyx"]
+[ext_resource type="AudioStream" uid="uid://g0ar5ds4fm2p" path="res://assets/music/recv.mp3" id="11_ro1u8"]
+[ext_resource type="AudioStream" uid="uid://gp83awe0wjia" path="res://assets/music/newmsg.mp3" id="12_7g8x6"]
+
+[node name="music" type="Node"]
+script = ExtResource("1_gf1mb")
+
+[node name="send" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_mwe5s")
+
+[node name="online" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mvr1c")
+
+[node name="notify" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_xuyyx")
+
+[node name="background" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_04t5u")
+
+[node name="comming" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_jl6ta")
+
+[node name="email" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_k3npl")
+
+[node name="welcome" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_sbyor")
+
+[node name="ding" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ternn")
+
+[node name="recv" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ro1u8")
+
+[node name="newmsg" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_7g8x6")

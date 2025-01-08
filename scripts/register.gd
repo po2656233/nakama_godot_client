@@ -12,7 +12,7 @@ var login_scene = load("res://scenes/login.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SceneManager.set_current_scene("register")
-	print("当前运行的节点名",SceneManager.get_running_scene_name())
+	print("当前运行的节点名",SceneManager.get_current_scene_name())
 	# WindowDrag.register_drag_zone(self)
 	pass # Replace with function body.
 

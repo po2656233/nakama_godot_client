@@ -30,7 +30,7 @@ signal changeChannelSIG(id:String)
 var DEFAULT_MESSAGE = {
 	"kind": 0,#2聊天 1俱乐部 0世界
 	"type": 0,
-	"headIcon": "",
+	"headicon": "",
 	"path": "",
 	"content": "",
 	"file": "",
@@ -256,7 +256,7 @@ func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
 		return {
 			"kind": safe_get(content, "kind", DEFAULT_MESSAGE.kind),
 			"type": safe_get(content, "type", DEFAULT_MESSAGE.type),
-			"headIcon": safe_get(content, "headIcon", DEFAULT_MESSAGE.headIcon),
+			"headicon": safe_get(content, "headicon", DEFAULT_MESSAGE.headicon),
 			"username": message.username,
 			"content": content,
 			"path": safe_get(content, "path", DEFAULT_MESSAGE.path),
@@ -766,8 +766,8 @@ func load_texture_async(url: String,width: int = 25,height: int = 25) :
 				"image/tga":
 					error = image.load_tga_from_buffer(result[3])
 	if error != OK:
-		request.queue_free()
 		print("加载图片失败: ", url)
+		request.queue_free()
 		return null
 	
 	image.resize(width,height)

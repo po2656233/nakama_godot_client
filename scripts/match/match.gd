@@ -5,7 +5,7 @@ func _ready() -> void:
 	SettingsManager.show_settings() 
 	SettingsManager.showNotify(false)
 	SceneManager.set_current_scene("match")
-	print("当前运行的节点名",SceneManager.get_running_scene_name())
+	print("当前运行的节点名",SceneManager.get_current_scene_name())
 	pass # Replace with function body.
 
 

@@ -51,3 +51,13 @@ signal OpenLightSIG()
 # 关灯
 @warning_ignore("unused_signal")
 signal CloseLightSIG() 
+
+# 静音
+@warning_ignore("unused_signal")
+signal MuteSIG(isMute)
+# 背景音乐
+@warning_ignore("unused_signal")
+signal backgroundMusicSIG(isMute)
+# 背景音乐
+@warning_ignore("unused_signal")
+signal gameMusicSIG(id,isMute)

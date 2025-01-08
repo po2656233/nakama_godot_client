@@ -11,6 +11,7 @@ var message_index = 0
 var last_message_time: int = 0 # 最后一条消息的时间戳
 var today_timestamp = Network.get_today_start_timestamp()
 var myUsername = "我"
+var myHeadicon = Network.player_data.avatar_url
 var uid = ""
 # 消息类型枚举 - 需要与 chat_message_item.gd 中的枚举保持一致
 enum MessageType {
@@ -486,38 +487,42 @@ func ensure_scroll_to():
 # 发送图片消息
 func send_image_message(msgId:String, image_path: String, kind: int = 0):
 	var content = {
+		"headicon":myHeadicon,
 		"kind": kind,
 		"type": ContentType.IMAGE,
-		"path": image_path
+		"path": image_path,
 	}
 	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送视频消息
 func send_video_message(msgId:String, video_path: String, thumbnail_path: String, duration: float):
 	var content = {
+		"headicon":myHeadicon,
 		"type": ContentType.VIDEO,
 		"path": video_path,
 		"thumbnail": thumbnail_path,
-		"duration": duration
+		"duration": duration,
 	}
 	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送语音消息
 func send_voice_message(msgId:String, voice_path: String, duration: float):
 	var content = {
+		"headicon":myHeadicon,
 		"type": ContentType.VOICE,
 		"path": voice_path,
-		"duration": duration
+		"duration": duration,
 	}
 	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送文件消息
 func send_file_message(msgId:String, file_path: String, file_name: String, file_size: int):
 	var content = {
+		"headicon":myHeadicon,
 		"type": ContentType.FILE,
 		"path": file_path,
 		"file": file_name,
-		"size": file_size
+		"size": file_size,
 	}
 	add_message(current_channel_id, msgId, content, myUsername, true)
 ######################################################

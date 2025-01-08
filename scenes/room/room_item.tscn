@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6j8g4q3y7m5n"]
+
+[ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.188235, 0.207843, 0.278431, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_favorite"]
+bg_color = Color(0.839698, 0.401707, 0.135815, 0.741176)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.219608, 0.478431, 0.937255, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="RoomItem" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 120)
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(350, 60)
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("1_room")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RoomInfo" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="RoomName" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "房间名称"
+
+[node name="GameName" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "游戏类型"
+horizontal_alignment = 1
+
+[node name="RoomID" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "房间ID"
+horizontal_alignment = 2
+
+[node name="BaseScore" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+layout_mode = 2
+text = "底分"
+
+[node name="PlayerCount" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+layout_mode = 2
+text = "玩家数"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+layout_mode = 2
+text = "状态"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="FavoriteButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 35)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_favorite")
+toggle_mode = true
+text = "☆ 收藏"
+
+[node name="JoinButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 35)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "加入房间"

@@ -27,11 +27,15 @@ func _ready():
 func setup(data: Dictionary):
 	group_data = data
 	$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/GroupName.text = data["name"]
-	if data["description"] == "":
-		$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Description.visible = false
-	else:
-		$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Description.text = data["description"]
 	$MarginContainer/HBoxContainer/VBoxContainer/MemberCount.text = "成员数: %d" % data["member_count"]
+	if data["description"]:
+		$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Description.text = data["description"]
+	else:
+		$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Description.visible = false
+	if data["avatar"]:
+		$MarginContainer/HBoxContainer/GroupIcon.texture = await Network.load_texture_async(data["avatar"])
+	else:
+		$MarginContainer/HBoxContainer/GroupIcon.visible = false
 	
 	# 设置通知状态
 	var popup = $MarginContainer/HBoxContainer/ManageButton.get_popup()

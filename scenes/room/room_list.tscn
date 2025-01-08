@@ -1,0 +1,271 @@
+[gd_scene load_steps=7 format=3 uid="uid://b6j8g4q3y7m5n"]
+
+[ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
+[ext_resource type="StyleBox" uid="uid://bd6cd22s3xrgs" path="res://styles/room_panel_style.tres" id="2_panel"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stats"]
+bg_color = Color(0.32549, 0.423529, 0.352941, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_search"]
+bg_color = Color(0.15, 0.16, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_filter"]
+bg_color = Color(0.219608, 0.478431, 0.937255, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_refresh"]
+bg_color = Color(0.155523, 0.582878, 0.332215, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="RoomList" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2k3vw")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.129558, 0.129558, 0.129558, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "游戏房间列表"
+horizontal_alignment = 1
+
+[node name="StatsPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_stats")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="TotalRooms" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.487425, 0.628046, 0.677378, 1)
+text = "总房间数: 0"
+
+[node name="ActiveRooms" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.713726, 0.239216, 1)
+text = "活跃房间: 0"
+
+[node name="TotalPlayers" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.87451, 0, 1)
+text = "在线玩家: 0"
+
+[node name="SearchBar" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="SearchInput" type="LineEdit" parent="VBoxContainer/SearchBar"]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_search")
+placeholder_text = "搜索房间..."
+
+[node name="FilterOptions" type="HBoxContainer" parent="VBoxContainer/SearchBar"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BaseScoreFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+alignment = 1
+expand_icon = true
+selected = 0
+item_count = 4
+popup/item_0/text = "全部底分"
+popup/item_1/text = "低底分 (<100)"
+popup/item_1/id = 1
+popup/item_2/text = "中底分 (100-500)"
+popup/item_2/id = 2
+popup/item_3/text = "高底分 (>500)"
+popup/item_3/id = 3
+
+[node name="StatusFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+alignment = 1
+selected = 0
+item_count = 4
+popup/item_0/text = "全部状态"
+popup/item_1/text = "等待中"
+popup/item_1/id = 1
+popup/item_2/text = "进行中"
+popup/item_2/id = 2
+popup/item_3/text = "已满员"
+popup/item_3/id = 3
+
+[node name="GameTypeFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+alignment = 1
+icon_alignment = 1
+selected = 0
+item_count = 8
+popup/item_0/text = "全部游戏"
+popup/item_1/text = "德州扑克"
+popup/item_1/id = 1
+popup/item_2/text = "斗地主"
+popup/item_2/id = 2
+popup/item_3/text = "麻将"
+popup/item_3/id = 3
+popup/item_4/text = "21点"
+popup/item_4/id = 4
+popup/item_5/text = "五子棋"
+popup/item_5/id = 5
+popup/item_6/text = "象棋"
+popup/item_6/id = 6
+popup/item_7/text = "围棋"
+popup/item_7/id = 7
+
+[node name="SortOptions" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+alignment = 1
+icon_alignment = 1
+selected = 0
+item_count = 6
+popup/item_0/text = "默认排序"
+popup/item_1/text = "底分升序"
+popup/item_1/id = 1
+popup/item_2/text = "底分降序"
+popup/item_2/id = 2
+popup/item_3/text = "人数升序"
+popup/item_3/id = 3
+popup/item_4/text = "人数降序"
+popup/item_4/id = 4
+popup/item_5/text = "创建时间"
+popup/item_5/id = 5
+
+[node name="ShowFavorites" type="Button" parent="VBoxContainer/SearchBar"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+toggle_mode = true
+text = "显示收藏"
+
+[node name="ShowHistory" type="Button" parent="VBoxContainer/SearchBar"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+toggle_mode = true
+text = "显示历史"
+
+[node name="RefreshButton" type="Button" parent="VBoxContainer/SearchBar"]
+visible = false
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_refresh")
+text = "刷新"
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RoomContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="DetailPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "房间详情"
+horizontal_alignment = 1
+
+[node name="RoomInfo" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RefreshTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true

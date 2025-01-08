@@ -76,6 +76,11 @@ size_flags_vertical = 3
 theme_override_constants/separation = 8
 alignment = 2
 
+[node name="HeadIcon" type="TextureRect" parent="Content/Header"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+expand_mode = 1
+
 [node name="Nickname" type="Label" parent="Content/Header"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)

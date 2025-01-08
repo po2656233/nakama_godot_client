@@ -161,3 +161,11 @@ func _on_tb_add_pressed() -> void:
 		PopupManager.show_message("添加失败")
 
 	pass # Replace with function body.
+
+
+func _on_line_edit_find_text_changed(new_text:String) -> void:
+	if new_text == "":
+		_list.clear()
+		return
+	_on_line_edit_find_text_submitted(new_text)
+	pass # Replace with function body.

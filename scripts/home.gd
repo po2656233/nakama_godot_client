@@ -7,7 +7,7 @@ func _ready():
 	SceneManager.set_current_scene("home")
 	SettingsManager.show_settings(1)
 
-	print("当前运行的节点名",SceneManager.get_running_scene_name())
+	print("当前运行的节点名",SceneManager.get_current_scene_name())
 	WindowDrag.register_drag_zone(self)
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(chatPanle)
@@ -35,9 +35,9 @@ func _on_btn_renwu_pressed() -> void:
 
 
 func _on_btn_match_pressed() -> void:
-	SceneManager.switch_to_scene("match","swirl",0.5) 
+	SceneManager.switch_to_scene("gamelist","custom",0.5) 
 	pass # Replace with function body.
 
 func _on_btn_start_pressed() -> void:
-	SceneManager.switch_to_scene("gamelist","custom",0.5) 
+	SceneManager.switch_to_scene("matching","swirl",0.5) 
 	pass # Replace with function body.

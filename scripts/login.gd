@@ -26,9 +26,9 @@ func _ready() -> void:
 	# 禁用 SSL 验证 【todo 正式环境建议解除】
 	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
 	SceneManager.set_current_scene("login")
-	
 	SettingsManager.show_settings(2) 
-
+	
+	print("当前运行的节点名",SceneManager.get_current_scene_name())
 	WindowDrag.register_drag_zone(self)
 	Network.initialize_client()
 	print("Network 初始化")

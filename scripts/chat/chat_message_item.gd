@@ -23,6 +23,7 @@ signal message_deleted(message_item)
 @onready var header_container = $Content/Header
 @onready var nickname_label = $Content/Header/Nickname
 @onready var time_label = $Content/Header/Time
+@onready var head_icon = $Content/Header/HeadIcon
 @onready var message_panel = $Content/MessagePanel
 @onready var text_label = $Content/MessagePanel/MessageContent/Text
 @onready var media_preview = $Content/MessagePanel/MessageContent/MediaPreview
@@ -76,7 +77,7 @@ func _ready():
 	popup_menu.add_icon_item(deleteIcon, "删除", 2)
 	 # 设置菜单项高度
 	popup_menu.add_theme_constant_override("item_height", 50)
-    # 设置图标大小
+	# 设置图标大小
 	popup_menu.add_theme_constant_override("icon_max_width", 48)
 	popup_menu.add_theme_constant_override("icon_max_height", 48)
 	# 设置文本标签的自动换行
@@ -179,6 +180,11 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	time_label.visible = show_time
 	if show_time:
 		time_label.text = time_str
+	if content.has("headicon") and content["headicon"] != null:
+		head_icon.texture = await Network.load_texture_async(content["headicon"])
+	else:
+		head_icon.visible = false
+
 	channel_id = chanId
 	message_id = msgId
 	current_content = content

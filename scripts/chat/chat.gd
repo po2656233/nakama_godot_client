@@ -418,6 +418,7 @@ func _on_btn_send_pressed() -> void:
 		msg.content = sendTextEdit.text.strip_edges()
 		msg.kind = mainPanle.current_tab
 		msg.type = ContentType.TEXT
+		msg.headicon = Network.player_data.avatar_url
 		print("发送消息:", msg)
 		var ret = await Network.send_message(msg)
 		if ret == OK:

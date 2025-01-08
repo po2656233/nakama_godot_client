@@ -5,9 +5,11 @@ signal settings_changed
 
 var settings_ui: Control = null
 var settings_scene = preload("res://scenes/element/setting.tscn")
+var music_scene = preload("res://scenes/element/music.tscn")
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS # 让设置在游戏暂停时也能工作
+	add_child(music_scene.instantiate())
 	settings_changed.connect(_on_scene_changed)
 
 func show_settings(state: int = 0):
@@ -20,19 +22,20 @@ func show_settings(state: int = 0):
 		var root = get_tree().root
 		var current_scene = root.get_child(root.get_child_count() - 1)
 		current_scene.add_child(settings_ui)
-	settings_ui.show()
-
 	if state == 0:
 		settings_ui.noHome()
 	elif state == 1:
-		print("noReback")
+		# print("noReback")
 		settings_ui.noReback()
 	elif state == 2:
 		settings_ui.simple()
+	settings_ui.show()
+	pass
 
 func hide_settings():
 	if settings_ui != null:
 		settings_ui.hide()
+	pass
 
 
 func showNotify(isMute: bool = false):

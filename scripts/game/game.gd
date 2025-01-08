@@ -6,7 +6,7 @@ func _ready() -> void:
 	SceneManager.set_current_scene("game")
 	SettingsManager.show_settings()
 	# SettingsManager.showNotify(false)
-	print("当前运行的节点名",SceneManager.get_running_scene_name())
+	print("当前运行的节点名",SceneManager.get_current_scene_name())
 	var result = await Network.sendDataRPC("list_games")
 	print("获取游戏列表",result)
 	pass # Replace with function body.

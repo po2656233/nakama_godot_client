@@ -137,7 +137,7 @@ _data = {
 }
 
 [node name="GameCard" type="PanelContainer"]
-custom_minimum_size = Vector2(380, 0)
+custom_minimum_size = Vector2(450, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -168,7 +168,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 25
 
 [node name="GameImage" type="TextureRect" parent="Front/MarginContainer"]
 layout_mode = 2

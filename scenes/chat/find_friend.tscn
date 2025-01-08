@@ -4,8 +4,8 @@
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="2_a7bd4"]
 [ext_resource type="Texture2D" uid="uid://edm34hfg0egi" path="res://assets/hall/btn_jia.png" id="3_on8jn"]
 [ext_resource type="Script" path="res://scripts/unify/itemlist_ctrl.gd" id="3_qwje4"]
-[ext_resource type="Texture2D"  path="res://assets/hall/btn_jia _xuant.png" id="4_o61lp"]
-[ext_resource type="Texture2D"  path="res://assets/hall/btn_jia_enx.png" id="5_g27v3"]
+[ext_resource type="Texture2D" uid="uid://c3nkmrq40xd4p" path="res://assets/hall/btn_jia _xuant.png" id="4_o61lp"]
+[ext_resource type="Texture2D" uid="uid://iuonmkrhiqvo" path="res://assets/hall/btn_jia_enx.png" id="5_g27v3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03han"]
 content_margin_left = 20.0
@@ -99,7 +99,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_dsmle")
 select_mode = 1
 script = ExtResource("3_qwje4")
 
-[connection signal="text_submitted" from="Panel/HBoxContainer/LineEdit_find" to="." method="_on_line_edit_find_text_submitted"]
+[connection signal="text_changed" from="Panel/HBoxContainer/LineEdit_find" to="." method="_on_line_edit_find_text_changed"]
 [connection signal="pressed" from="Panel/HBoxContainer/tb_add" to="." method="_on_tb_add_pressed"]
 [connection signal="gui_input" from="Panel/ScrollContainer/ItemList" to="." method="_on_item_list_gui_input"]
 [connection signal="item_clicked" from="Panel/ScrollContainer/ItemList" to="." method="_on_item_list_item_clicked"]

@@ -9,6 +9,7 @@ const uid_channel_key = "uid_channel_"
 const uid_approval_key = "uid_approval_"
 const uid_friend_key = "uid_friend_"
 const uid_club_key = "uid_club_"
+const ismute_key = "ismute_"
 const game_list_key = "game_list_"
 
 # 缓存的数据
@@ -30,33 +31,28 @@ static func get_instance() -> DataManager:
 static func safe_free_node(node: Node) -> void:
 	if node == null:
 		return
-		
 	# 如果节点已经在队列中等待释放，直接返回
 	if not is_instance_valid(node) or node.is_queued_for_deletion():
 		return
-	
 	# 停止所有正在运行的tween
 	var tweens = node.get_tree().get_processed_tweens()
 	for tween in tweens:
 		if tween.is_valid():
 			tween.kill()
-	
 	# 停止所有计时器
 	for child in node.get_children():
 		if child is Timer:
 			child.stop()
-	
 	# 如果有动画播放器，停止动画
 	var anim_player = node.get_node_or_null("AnimationPlayer")
 	if anim_player:
 		anim_player.stop()
-	
 	# 如果节点在场景树中，从父节点移除
 	if node.is_inside_tree():
 		node.get_parent().remove_child(node)
-	
 	# 将节点加入释放队列
 	node.queue_free()
+	pass
 
 # 准备
 func _ready() -> void:
@@ -137,6 +133,11 @@ func set_chat_history(uid:String,channelId:String, msgList) -> void:
 	cached_data[key][channelId] = msgList
 	# print("保存消息的数据 键:", channelId, " 值:", msg) 
 	save_data()  # 每次设置数据后 自动保存
+
+func set_isMute(value) -> void:
+	cached_data[ismute_key] = value
+	save_data()
+
 
 # 添加数据 针对数组
 func add_data(key, data:Dictionary) -> int:
@@ -230,6 +231,12 @@ func get_data_array_item(key:String,field:String,value) -> Dictionary:
 		if item.has(field) and item[field] == value:
 			return item
 	return {}
+
+# 获取是否静音
+func get_isMute() -> bool:
+	if cached_data.has(ismute_key):
+		return cached_data[ismute_key]
+	return false
 
 #获取申请数据 
 func get_uid_approval(uid:String) -> Array:
@@ -341,7 +348,7 @@ func has_key(key: String) -> bool:
 
 
 
-#############################
+##########################################################################
 func parse_message(text: String) -> Dictionary:
 	var result = {}
 	

@@ -14,6 +14,7 @@ var player_icons: Array[TextureRect] = []
 var player_total = 10
 
 func _ready():
+	SettingsManager.show_settings(1)
 	add_child(timer)
 	setup_player_icons()
 	start_countdown()
