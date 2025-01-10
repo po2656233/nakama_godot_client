@@ -1,12 +1,12 @@
 [gd_scene load_steps=27 format=3 uid="uid://riqfmggkqpfd"]
 
-[ext_resource type="Script" path="res://scenes/gamelist/game_card.gd" id="1_xxxxx"]
+[ext_resource type="Script" path="res://scripts/gamelist/game_card.gd" id="1_xxxxx"]
 [ext_resource type="DragonBonesFactory" path="res://sprites/dibeichang/dibeichang_ske.dbfactory" id="2_45j2b"]
 [ext_resource type="DragonBonesFactory" path="res://sprites/puke/puke_ske.dbfactory" id="3_7okkc"]
-[ext_resource type="Script" path="res://scenes/gamelist/dragon_bones.gd" id="4_2lxpo"]
+[ext_resource type="Script" path="res://scripts/gamelist/dragon_bones.gd" id="4_2lxpo"]
 [ext_resource type="DragonBonesFactory" path="res://sprites/jiangbei/jiangbei_ske.dbfactory" id="4_gloe0"]
-[ext_resource type="Script" path="res://scenes/gamelist/description.gd" id="6_6l74d"]
-[ext_resource type="Shader" path="res://scenes/gamelist/flow_light.gdshader" id="7_keqs5"]
+[ext_resource type="Script" path="res://scripts/gamelist/description.gd" id="6_6l74d"]
+[ext_resource type="Shader" path="res://shaders/flow_light.gdshader" id="7_keqs5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.133333, 0.101961, 0.286275, 0.203922)

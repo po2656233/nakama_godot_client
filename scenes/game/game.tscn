@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfbeqh2tgjje3"]
+[gd_scene load_steps=14 format=3 uid="uid://dfbeqh2tgjje3"]
 
 [ext_resource type="Script" path="res://scripts/game/game.gd" id="1_j1cfq"]
 [ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://assets/lobby/redbj.jpg" id="2_kwnfe"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://exkjflel54sq" path="res://assets/lobby/hua.png" id="5_12ie1"]
 [ext_resource type="Texture2D" uid="uid://0asrii5d6unm" path="res://assets/lobby/yxn_guang.png" id="6_3l7pe"]
 [ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://assets/lobby/shiling.png" id="7_3s4cl"]
-[ext_resource type="PackedScene" uid="uid://ci4hjjem0yeyj" path="res://scenes/game/create_room_dialog.tscn" id="8_dqgvw"]
 
 [sub_resource type="SystemFont" id="SystemFont_x6gtk"]
 
@@ -41,9 +40,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j1cfq")
-
-[node name="CreateRoomDialog" parent="." instance=ExtResource("8_dqgvw")]
-visible = false
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -205,6 +201,5 @@ grow_horizontal = 0
 theme = SubResource("Theme_4yxkr")
 text = "OUT"
 
-[connection signal="room_created" from="CreateRoomDialog" to="." method="_on_create_room_dialog_room_created"]
 [connection signal="pressed" from="Panel/ColorRect/ColorRect/VBoxContainer/Btn_Public_match" to="." method="_on_btn_public_match_pressed"]
 [connection signal="pressed" from="Panel/Btn_out" to="." method="_on_btn_out_pressed"]

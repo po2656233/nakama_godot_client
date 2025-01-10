@@ -1,0 +1,413 @@
+[gd_scene load_steps=21 format=3 uid="uid://15qsfdusk3fu"]
+
+[ext_resource type="Script" path="res://scripts/room/create_room_dialog.gd" id="1_2gsk4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7mx"]
+bg_color = Color(0.165511, 0.526981, 0.734506, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.282353, 0.443137, 0.443137, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.272275, 0.278684, 0.860612, 0.6)
+shadow_size = 5
+
+[sub_resource type="SystemFont" id="SystemFont_ftbnh"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_hy4ta"]
+font = SubResource("SystemFont_ftbnh")
+font_size = 28
+font_color = Color(0.152941, 0.807843, 0.611765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nr032"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 15.0
+draw_center = false
+
+[sub_resource type="SystemFont" id="SystemFont_52i1x"]
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gw5jc"]
+bg_color = Color(0.330232, 0.656819, 0.70855, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.888382, 0.755451, 0.840572, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yow2o"]
+bg_color = Color(0.332563, 0.663867, 0.658635, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.611317, 0.84217, 0.923275, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_waorw"]
+bg_color = Color(0.893531, 0.424, 0.559144, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.633162, 0.849444, 0.836479, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iaehl"]
+bg_color = Color(0.135156, 0.620246, 0.995502, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_taggt"]
+bg_color = Color(0.821811, 0.406599, 0.858689, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h3ddr"]
+bg_color = Color(0.644075, 0.591475, 0.528089, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rs32d"]
+bg_color = Color(0.362196, 0.643105, 0.755985, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_md0mq"]
+bg_color = Color(0.86449, 0.439915, 0.612554, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndbgd"]
+bg_color = Color(0.524449, 0.659498, 0.161463, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7502j"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.298039, 0.686275, 0.52549, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.609634, 0.864344, 0.769551, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1elv"]
+bg_color = Color(0.344409, 0.614454, 0.911431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ljqd"]
+bg_color = Color(0.100695, 0.358324, 0.313291, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.354927, 0.557257, 0.262143, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13k10"]
+bg_color = Color(0.375695, 0.649752, 0.700114, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8h8lc"]
+bg_color = Color(0.392157, 0.313726, 0.486275, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.696323, 0.87474, 0.35253, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="CreateRoomDialog" type="Window"]
+transparent_bg = true
+title = "创建游戏房间"
+initial_position = 2
+size = Vector2i(500, 500)
+exclusive = true
+borderless = true
+transparent = true
+popup_window = true
+keep_title_visible = true
+script = ExtResource("1_2gsk4")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fu7mx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel"]
+layout_mode = 2
+offset_right = 460.0
+offset_bottom = 480.0
+theme_override_constants/separation = 5
+
+[node name="name" type="Label" parent="MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "创建房间"
+label_settings = SubResource("LabelSettings_hy4ta")
+horizontal_alignment = 1
+vertical_alignment = 2
+uppercase = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nr032")
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="GameType" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "游戏类型:"
+horizontal_alignment = 2
+
+[node name="GameTypeOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_colors/font_hover_pressed_color = Color(0.517647, 0.376471, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.501961, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.392157, 0, 1)
+theme_override_colors/font_focus_color = Color(0.551934, 0.410995, 0.672005, 1)
+theme_override_colors/font_color = Color(0.894118, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/h_separation = 10
+theme_override_constants/icon_max_width = 10
+theme_override_constants/align_to_largest_stylebox = 10
+theme_override_fonts/font = SubResource("SystemFont_52i1x")
+theme_override_styles/focus = SubResource("StyleBoxFlat_gw5jc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_yow2o")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_waorw")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_iaehl")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_taggt")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h3ddr")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_rs32d")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_md0mq")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ndbgd")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7502j")
+theme_override_constants/arrow_margin = 10
+theme_override_constants/modulate_arrow = 10
+alignment = 1
+item_count = 4
+popup/item_0/text = "五子棋"
+popup/item_1/text = "象棋"
+popup/item_1/id = 1
+popup/item_2/text = "麻将"
+popup/item_2/id = 2
+popup/item_3/text = "斗地主"
+popup/item_3/id = 3
+
+[node name="RoomName" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "房间名称:"
+horizontal_alignment = 2
+
+[node name="RoomNameOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+placeholder_text = "请输入房间名(1~8字符)"
+
+[node name="GameSection" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "赛制:"
+horizontal_alignment = 2
+
+[node name="GameSectionOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "标准赛"
+popup/item_1/text = "锦标赛"
+popup/item_1/id = 1
+popup/item_2/text = "世界杯"
+popup/item_2/id = 2
+
+[node name="GameMode" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "模式:"
+horizontal_alignment = 2
+
+[node name="GameModeOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "积分模式"
+popup/item_1/text = "金币模式"
+popup/item_1/id = 1
+popup/item_2/text = "钻石模式"
+popup/item_2/id = 2
+
+[node name="Players" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "游戏人数:"
+horizontal_alignment = 2
+
+[node name="PlayersOption" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="PlayersSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption"]
+layout_mode = 2
+size_flags_horizontal = 3
+suffix = "人"
+
+[node name="SpectatorCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "允许观战"
+
+[node name="EntryFeeCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "入场分:"
+
+[node name="EntryFeeContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+
+[node name="EntryFeeSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/EntryFeeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1e+06
+step = 100.0
+
+[node name="TaxCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "税收:"
+alignment = 2
+
+[node name="TaxContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+
+[node name="TaxSlider" type="HSlider" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/TaxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 0.01
+value = 5.0
+
+[node name="TaxValue" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/TaxContainer"]
+layout_mode = 2
+text = "5%"
+
+[node name="ButtonSection" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CreateButton" type="Button" parent="MarginContainer/Panel/VBoxContainer/ButtonSection"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_c1elv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8ljqd")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_13k10")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8h8lc")
+text = "创建"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/Panel/VBoxContainer/ButtonSection"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_c1elv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8ljqd")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_13k10")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8h8lc")
+text = "创建"
+
+[node name="Control" type="Control" parent="MarginContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dblj3g06fkrpo"]
+[gd_scene load_steps=26 format=3 uid="uid://dblj3g06fkrpo"]
 
 [ext_resource type="Texture2D" uid="uid://i7w64npn7npl" path="res://assets/lobby/bj.png" id="1_3pqew"]
 [ext_resource type="Script" path="res://scripts/home.gd" id="1_4keq7"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://bqbnsspv7wvrt" path="res://assets/hall/store.png" id="6_bdbkb"]
 [ext_resource type="Texture2D" uid="uid://ckr2snwe7pi7h" path="res://assets/hall/logo_g.png" id="6_s23th"]
 [ext_resource type="Texture2D" uid="uid://c46s1r5ocgwv5" path="res://assets/hall/send.png" id="12_qyhqg"]
-[ext_resource type="PackedScene" uid="uid://egr5pjwvrrk5" path="res://scenes/element/gridanimation/board.tscn" id="14_3dca5"]
 [ext_resource type="PackedScene" uid="uid://b6c8g4q5rj3x4" path="res://scenes/element/announcements/announcement_scene.tscn" id="14_7exda"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n31td"]
@@ -458,10 +457,6 @@ text = "充值"
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_5rkik")
-
-[node name="board" parent="PanelContainer/MarginContainer/VBoxContainer/Panel" instance=ExtResource("14_3dca5")]
-layout_mode = 1
-widthLen = 7
 
 [connection signal="pressed" from="HBoxContainerHome/btn_start" to="." method="_on_btn_start_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_match" to="." method="_on_btn_match_pressed"]

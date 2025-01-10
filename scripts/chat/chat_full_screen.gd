@@ -35,7 +35,6 @@ func _on_fullscreen_toggle():
 	pass
 
 
-
 ########################################################
 func enter_fullscreen():
 	if is_fullscreen:

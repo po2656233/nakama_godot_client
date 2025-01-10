@@ -27,8 +27,9 @@ size = Vector2i(550, 350)
 exclusive = true
 unresizable = true
 borderless = true
-always_on_top = true
 script = ExtResource("1_xxxxx")
+countdown = null
+gamename = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15

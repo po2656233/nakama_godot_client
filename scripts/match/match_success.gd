@@ -1,6 +1,7 @@
 extends Window
 
-@export var timer_value: int = 15
+@export var countdown: int = 20
+@export var gamename: String = ""
 
 @onready var grid_container = $Panel/VBoxContainer/GridContainer
 @onready var timer_label = $Panel/VBoxContainer/HBoxContainer/TimerLabel
@@ -12,12 +13,17 @@ var ready_count = 0
 var png = preload("res://assets/game/snake.png")
 var player_icons: Array[TextureRect] = []
 var player_total = 10
-
+var timer_value: int = 10
+var game_id = 0 #当前的游戏ID
+signal cancle_game(id)
 func _ready():
-	SettingsManager.show_settings(1)
+	# SettingsManager.show_settings(1)
 	add_child(timer)
-	setup_player_icons()
-	start_countdown()
+	timer.wait_time = 1.0
+	timer.timeout.connect(_on_timer_timeout)
+	
+	reset()
+	# start_countdown()
 	setup_buttons()
 
 func setup_player_icons():
@@ -37,10 +43,6 @@ func setup_buttons():
 	accept_button.pressed.connect(_on_accept_pressed)
 	decline_button.pressed.connect(_on_decline_pressed)
 
-func start_countdown():
-	timer.wait_time = 1.0
-	timer.timeout.connect(_on_timer_timeout)
-	timer.start()
 
 func add_player():
 	ready_count += 1
@@ -49,13 +51,25 @@ func add_player():
 	player_icons[ready_count-1].modulate = Color(1, 0.84, 0)  # Gold color
 	pass
 
-func reset():
+func reset(player_max:int=10):
+	player_total = player_max
+	player_icons.clear()
+	# 清除子项
+	for child in grid_container.get_children():
+		child.queue_free()
+	
+	# 重置准备图标
+	setup_player_icons()
 	timer.stop()
 	ready_count = 0
-	timer_value = 15
-	timer.start()
+	timer_value = countdown
 	for i in range(player_total):
 		player_icons[i].modulate = Color(0.5, 0.5, 0.6)
+	pass
+
+func start():
+	visible = true
+	timer.start()
 	pass
 
 func _on_timer_timeout():
@@ -66,7 +80,8 @@ func _on_timer_timeout():
 		ready_label.text = "   %d/10已准备就绪" % ready_count
 	else:
 		reset()
-		visible = false
+		print("匹配到游戏",timer_value,ready_count, player_total)
+		SceneManager.switch_to_scene("xiangqi")
 	pass
 
 func _on_accept_pressed():
@@ -79,4 +94,5 @@ func _on_decline_pressed():
 	# Handle decline logic
 	reset()
 	# queue_free()
+	cancle_game.emit(game_id)
 	pass

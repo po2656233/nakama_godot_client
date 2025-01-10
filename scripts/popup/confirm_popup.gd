@@ -40,11 +40,11 @@ func _input(event):
 			var confirm_button = get_node_or_null("Panel/ButtonContainer/ConfirmButton")  # 修改路径以匹配实际节点路径
 			if confirm_button:
 				confirm_button.pressed.emit()
-				get_viewport().set_input_as_handled()  # 阻止事件继续传递
+				# get_viewport().set_input_as_handled()  # 阻止事件继续传递
 		elif event.keycode == KEY_ESCAPE:
 			var cancel_button = get_node_or_null("Panel/ButtonContainer/CancelButton")   # 修改路径以匹配实际节点路径
 			if cancel_button:
 				cancel_button.pressed.emit()
-				get_viewport().set_input_as_handled()  # 阻止事件继续传递
+				# get_viewport().set_input_as_handled()  # 阻止事件继续传递
         # 或者使用 accept_event() 也可以
         # event.accept()

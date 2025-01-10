@@ -72,9 +72,11 @@ func toggle_maximize() -> void:
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		# 还原窗口
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		SignalManager.NormalWindowSIG.emit()
 	else:
 		# 最大化窗口
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		SignalManager.FullWindowSIG.emit()
 
 # 注册一个控件作为拖动区域
 func register_drag_zone(control: Control) -> void:

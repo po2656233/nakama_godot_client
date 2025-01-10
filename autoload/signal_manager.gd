@@ -52,12 +52,22 @@ signal OpenLightSIG()
 @warning_ignore("unused_signal")
 signal CloseLightSIG() 
 
+# 全屏化
+@warning_ignore("unused_signal")
+signal FullWindowSIG() 
+# 正常化
+@warning_ignore("unused_signal")
+signal NormalWindowSIG() 
+# 最小化
+@warning_ignore("unused_signal")
+signal SmallWindowSIG() 
+
 # 静音
 @warning_ignore("unused_signal")
 signal MuteSIG(isMute)
 # 背景音乐
 @warning_ignore("unused_signal")
-signal backgroundMusicSIG(isMute)
+signal BackgroundMusicSIG(isMute)
 # 背景音乐
 @warning_ignore("unused_signal")
-signal gameMusicSIG(id,isMute)
+signal GameMusicSIG(id,isMute)

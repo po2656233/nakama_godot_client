@@ -944,3 +944,7 @@ func remove_message_by_id(messages: Array, target_message_id: String):
 func isMobile()->bool:
 	var systemName = OS.get_name()
 	return systemName == "Android" or systemName == "iOS"
+
+
+func isFullScreen()->bool:
+	return  DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN

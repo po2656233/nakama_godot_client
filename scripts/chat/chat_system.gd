@@ -11,7 +11,7 @@ var message_index = 0
 var last_message_time: int = 0 # 最后一条消息的时间戳
 var today_timestamp = Network.get_today_start_timestamp()
 var myUsername = "我"
-var myHeadicon = Network.player_data.avatar_url
+var myHeadicon = ""
 var uid = ""
 # 消息类型枚举 - 需要与 chat_message_item.gd 中的枚举保持一致
 enum MessageType {

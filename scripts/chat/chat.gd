@@ -10,7 +10,7 @@ extends "res://scripts/chat/chat_system.gd"
 @onready var btn_upmoreChat = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore
 @onready var btn_upmoreClub = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore
 @onready var btn_upmoreWorld = $MarginContainer/Panel/TabContainer/world/Panel_talk/btn_upmore
-@onready var btn_light_switch = $MarginContainer/Panel/btn_light_switch
+@onready var light_switch = $MarginContainer/Panel/light_switch
 
 @onready var keyboardContainer = $MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer
 # @onready var clubSplit = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub
@@ -59,9 +59,12 @@ func _ready():
 		return
 	
 	# 获取基础信息
+	myHeadicon = Network.player_data.avatar_url
 	myUsername = Network.player_data.username
 	uid = Network.player_data.id
 	is_mobile = Network.isMobile()
+
+	# 虚拟键盘高度
 	origin_height = keyboardContainer.position.y
 
 	# 创建全屏按钮
@@ -75,6 +78,8 @@ func _ready():
 		button.text = "全屏切换"
 		button.pressed.connect(_on_fullscreen_toggle)
 		add_child(button)
+	button.visible = Network.isFullScreen()
+	light_switch.visible = Network.isFullScreen()
 
 	set_rotation_pivot()		# 设置旋转中心点
 
@@ -84,6 +89,8 @@ func _ready():
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
+	SignalManager.FullWindowSIG.connect(_on_fullscreen)
+	SignalManager.NormalWindowSIG.connect(_on_normalscreen)
 	SignalManager.FreshFriendListSIG.connect(_on_fresh_friend_list) #刷新好友列表
 	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) #刷新俱乐部列表
 	SignalManager.AddClubSIG.connect(_on_add_club) #添加俱乐部
@@ -207,8 +214,8 @@ func _on_change_channel(channel_id):
 	print("当前频道:", channel_id)
 	current_channel_id = channel_id
 	isToTop = false 
-	var tab = mainPanle.current_tab if mainPanle else 0
-	changePanel(tab)	
+	var tabNum = mainPanle.current_tab if mainPanle else 0
+	changePanel(tabNum)	 
 	refresh_current_channel_display()
 	pass
 
@@ -431,6 +438,18 @@ func _on_btn_send_pressed() -> void:
 	PopupManager.show_message("未指定频道")
 	pass # Replace with function body.
 
+
+func _on_fullscreen():
+	if button:
+		button.visible = true
+		light_switch.visible = true
+	pass
+
+func _on_normalscreen():
+	if button:
+		button.visible = false
+		light_switch.visible = false
+	pass
 ############################调整分割线的亮度############################
 
 #################################################################
@@ -669,7 +688,21 @@ func _on_text_edit_finished() -> void:
 		DisplayServer.virtual_keyboard_hide()
 	pass # Replace with function body.
 
-func _on_tab_container_tab_selected(tab: int) -> void:
+
+func _on_light_button_pressed() -> void:
+	var normal =light_switch.texture_normal
+	var pressed = light_switch.texture_pressed
+	light_switch.texture_normal = pressed
+	light_switch.texture_pressed = normal
+	if !isOpenLight:
+		SignalManager.OpenLightSIG.emit()
+	else:
+		SignalManager.CloseLightSIG.emit()
+	isOpenLight = !isOpenLight
+	pass # Replace with function body.
+
+
+func _on_tab_container_tab_selected(tab:int) -> void:
 	if tab == 0 and first_world:
 		first_world = false
 		var world = Network.get_world_channel()
@@ -677,22 +710,11 @@ func _on_tab_container_tab_selected(tab: int) -> void:
 			await Network.get_chat_history(world.id)
 	elif tab == 1 and first_clubs:
 		first_clubs = false
+		# get_club_list()
 		call_deferred("get_club_list")
 	elif tab == 2 and first_friends:
 		first_friends = false
+		# get_friends_list()  
 		call_deferred("get_friends_list")
 	print("切换选项卡:", tab)
-	pass # Replace with function body.  
-
-
-func _on_light_button_pressed() -> void:
-	var normal =btn_light_switch.texture_normal
-	var pressed = btn_light_switch.texture_pressed
-	btn_light_switch.texture_normal = pressed
-	btn_light_switch.texture_pressed = normal
-	if !isOpenLight:
-		SignalManager.OpenLightSIG.emit()
-	else:
-		SignalManager.CloseLightSIG.emit()
-	isOpenLight = !isOpenLight
 	pass # Replace with function body.

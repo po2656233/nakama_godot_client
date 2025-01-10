@@ -20,7 +20,7 @@ func _ready() -> void:
 	var isMute = DataManager.get_instance().get_isMute()
 	print("当前是否禁音:",isMute)
 	SignalManager.MuteSIG.emit(isMute)
-	SignalManager.backgroundMusicSIG.emit(isMute)
+	SignalManager.BackgroundMusicSIG.emit(isMute)
 	
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
@@ -138,7 +138,7 @@ func on_setting_pressed(index: int) -> void:
 			isMute = !isMute
 			print("是否禁音: ",isMute)
 			DataManager.get_instance().set_isMute(isMute)
-			SignalManager.backgroundMusicSIG.emit(isMute)
+			SignalManager.BackgroundMusicSIG.emit(isMute)
 			SignalManager.MuteSIG.emit(isMute)
 			_rebuild_menu()
 			# var hints = "打开音量" if isMute else "关闭音量"

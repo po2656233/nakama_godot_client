@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6ap652uaw1dh"]
+
+[ext_resource type="Script" path="res://scenes/game/xiangqi/M/chess_position.gd" id="1_70f5p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ef6oi"]
+radius = 27.0185
+
+[node name="chess_position" type="Area2D"]
+script = ExtResource("1_70f5p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ef6oi")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

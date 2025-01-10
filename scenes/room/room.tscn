@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://jspsea8iyhbg"]
+[gd_scene load_steps=2 format=3 uid="uid://jspsea8iyhbg"]
 
 [ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://assets/bg/bg_login.jpg" id="1_lglhj"]
-[ext_resource type="PackedScene" uid="uid://b6j8g4q3y7m5n" path="res://scenes/room/room_list.tscn" id="2_nob0p"]
 
 [node name="Room" type="Control"]
 layout_mode = 3
@@ -20,6 +19,3 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_lglhj")
 expand_mode = 1
-
-[node name="RoomList" parent="." instance=ExtResource("2_nob0p")]
-layout_mode = 1

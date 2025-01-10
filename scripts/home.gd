@@ -11,6 +11,7 @@ func _ready():
 	WindowDrag.register_drag_zone(self)
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(chatPanle)
+	
 	pass
  
 
@@ -26,18 +27,21 @@ func _on_btn_ranking_pressed() -> void:
 
 
 func _on_btn_zhanji_pressed() -> void:
+	SceneManager.switch_to_scene("gamelist","square",0.5) 
 	pass # Replace with function body.
 
 
+# 任务
 func _on_btn_renwu_pressed() -> void:
 	SceneManager.switch_to_scene("game","vertical-paint-brush",0.5) 
 	pass # Replace with function body.
 
-
+# 比赛
 func _on_btn_match_pressed() -> void:
 	SceneManager.switch_to_scene("gamelist","custom",0.5) 
 	pass # Replace with function body.
 
+# 匹配
 func _on_btn_start_pressed() -> void:
-	SceneManager.switch_to_scene("matching","swirl",0.5) 
+	SceneManager.switch_to_scene("roomlist","swirl",0.5) 
 	pass # Replace with function body.

@@ -9,6 +9,11 @@ extends PanelContainer
 @onready var player_count_label = $MarginContainer/VBoxContainer/RoomInfo/PlayerCount
 @onready var join_button = $MarginContainer/VBoxContainer/HBoxContainer/JoinButton
 @onready var favorite_button = $MarginContainer/VBoxContainer/HBoxContainer/FavoriteButton
+var room_style_path = "res://styles/room_panel_style.tres"
+var waiting_style_path = "res://styles/waiting_style.tres"
+var playing_style_path = "res://styles/playing_style.tres"
+var full_style_path = "res://styles/full_style.tres"
+var default_style_path = "res://styles/default_style.tres"
 
 var hover_tween: Tween
 var pulse_tween: Tween
@@ -19,6 +24,7 @@ var is_favorite: bool = false:
 		_update_favorite_button()
 
 signal room_clicked(room_data: Dictionary)
+signal join_room(room_data: Dictionary)
 signal favorite_toggled(is_favorite: bool)
 
 # 收藏按钮样式
@@ -48,13 +54,13 @@ func setup(data: Dictionary):
 	var style_path: String
 	match data.get("status", ""):
 		"等待中":
-			style_path = "res://styles/waiting_style.tres"
+			style_path = waiting_style_path
 		"进行中":
-			style_path = "res://styles/playing_style.tres"
+			style_path = playing_style_path
 		"已满员":
-			style_path = "res://styles/full_style.tres"
+			style_path = full_style_path
 		_:
-			style_path = "res://styles/default_style.tres"
+			style_path = default_style_path
 	
 	var style = load(style_path)
 	if style:
@@ -103,7 +109,7 @@ func _on_mouse_exited():
 	hover_tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.2).set_trans(Tween.TRANS_CUBIC)
 	
 	# 移除光晕效果
-	var style = load("res://styles/room_panel_style.tres")
+	var style = load(room_style_path)
 	if style:
 		add_theme_stylebox_override("panel", style)
 
@@ -132,6 +138,7 @@ func _on_join_button_pressed():
 	button_tween.tween_property(join_button, "modulate", Color(1, 1, 1), 0.1)
 	
 	# 这里可以发送加入房间的信号
+	join_room.emit(room_data)
 	print("加入房间：", room_data.get("room_name", ""))
 
 func _on_favorite_button_toggled(_button_pressed: bool):

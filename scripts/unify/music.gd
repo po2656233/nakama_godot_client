@@ -20,8 +20,8 @@ func _ready() -> void:
 	SignalManager.NewEmailSIG.connect(_on_email_notify)
 	SignalManager.NewNotifySIG.connect(_on_recv_notify)
 
-	SignalManager.backgroundMusicSIG.connect(_on_backgroundMusic)
-	SignalManager.gameMusicSIG.connect(_on_gameMusic)
+	SignalManager.BackgroundMusicSIG.connect(_on_backgroundMusic)
+	SignalManager.GameMusicSIG.connect(_on_gameMusic)
 	SignalManager.MuteSIG.connect(_on_mute)
 	pass # Replace with function body.
 

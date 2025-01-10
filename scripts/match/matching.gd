@@ -1,5 +1,14 @@
 extends Control
 
+# 匹配游戏名称
+@export var gamename: String = ""
+
+# 信号
+signal match_start()
+signal match_cancel()
+signal match_sucess()
+
+
 # 匹配状态
 enum MatchState { IDLE, MATCHING, SUCCESS, FAILED }
 var current_state: MatchState = MatchState.IDLE
@@ -14,31 +23,35 @@ var progress_speed: float = 1.2
 var progress_value: float = 0.0
 
 # 节点引用
-@onready var timer_label = $CenterContainer/VBoxContainer/TimerLabel
-@onready var status_label = $CenterContainer/VBoxContainer/StatusLabel
-@onready var progress_circle = $CenterContainer/VBoxContainer/ProgressCircle
-@onready var cancel_button = $CenterContainer/VBoxContainer/CancelButton
-@onready var start_button = $CenterContainer/VBoxContainer/StartButton
+@onready var game_name = $Panel/VBoxContainer/NameLabel
+@onready var timer_label = $Panel/VBoxContainer/TimerLabel
+@onready var status_label = $Panel/VBoxContainer/StatusLabel
+@onready var progress_circle = $Panel/VBoxContainer/ProgressCircle
+@onready var cancel_button = $Panel/VBoxContainer/HBoxContainer/CancelButton
+@onready var start_button = $Panel/VBoxContainer/HBoxContainer/StartButton
 @onready var animation_player = $AnimationPlayer
 @onready var match_sound = $MatchSound
 @onready var success_sound = $SuccessSound
 @onready var fail_sound = $FailSound
 
+
+# 初始化
 func _ready():
-    SettingsManager.show_settings(1)
     # 初始化UI状态
     reset_ui()
     # 连接信号
     cancel_button.pressed.connect(_on_cancel_button_pressed)
     start_button.pressed.connect(_on_start_button_pressed)
+    match_start.connect(_on_start_button_pressed)
     
     # 测试模式：5-15秒后随机匹配成功或失败
-    if OS.has_feature("editor"):
-        await get_tree().create_timer(randf_range(5, 15)).timeout
-        if randf() > 0.5:
-            _on_match_success()
-        else:
-            _on_match_failed()
+    # if OS.has_feature("editor"):
+    #     await get_tree().create_timer(randf_range(5, 15)).timeout
+    #     if randf() > 0.5:
+    #         _on_match_success()
+    #     else:
+    #         _on_match_failed()
+
 
 func _process(delta):
     if is_matching:
@@ -53,6 +66,7 @@ func _process(delta):
 func start_matching():
     current_state = MatchState.MATCHING
     is_matching = true
+    game_name.text = gamename
     status_label.text = "正在匹配中..."
     elapsed_time = 0
     cancel_button.visible = true
@@ -65,14 +79,23 @@ func start_matching():
     progress_rotation = 0
     progress_value = 0
 
+    await get_tree().create_timer(randf_range(3, 8)).timeout
+    if randf() > 0.5:
+        _on_match_success()
+    else:
+        _on_match_failed()
+    pass
+
 func stop_matching():
     is_matching = false
     current_state = MatchState.IDLE
     reset_ui()
     animation_player.stop()
     match_sound.stop()
+    match_cancel.emit()
 
 func reset_ui():
+    game_name.text = gamename
     status_label.text = "等待开始匹配..."
     timer_label.text = "00:00"
     cancel_button.visible = false
@@ -105,14 +128,14 @@ func _on_match_success():
     await get_tree().create_timer(2.0).timeout
 
     # 这里添加切换到游戏场景的代码
-    SceneManager.switch_to_scene("match_success","swirl",0.5) 
+    match_sucess.emit()
     print("切换到游戏场景")
 
 func _on_match_failed():
     current_state = MatchState.FAILED
     is_matching = false
-    status_label.text = "匹配失败，请重试"
-    cancel_button.visible = false
+    status_label.text = "匹配到的房间关闭了，请重试"
+    cancel_button.visible = true
     start_button.visible = true
     animation_player.play("failed_shake")
     progress_circle.visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=39 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -185,6 +185,13 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52lde"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+draw_center = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajf2a"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
@@ -237,6 +244,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_b4wfc")
 script = ExtResource("2_m52is")
+toggle_button_path = null
+animate_transition = null
+transition_duration = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -257,7 +267,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 14.0
 offset_right = -1.0
-offset_bottom = -61.0
+offset_bottom = -65.0
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "社交场"
@@ -273,11 +283,11 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
 tab_alignment = 1
-current_tab = 0
-all_tabs_in_front = true
+current_tab = 2
 drag_to_rearrange_enabled = true
 
 [node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -427,7 +437,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -552,7 +561,7 @@ script = ExtResource("4_3wj1b")
 Block = true
 
 [node name="input_area" type="PanelContainer" parent="MarginContainer/Panel"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 55)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -574,7 +583,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
 
 [node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -582,6 +591,7 @@ size_flags_stretch_ratio = 6.0
 tooltip_text = "消息发送框"
 theme_override_colors/background_color = Color(0.0980392, 0.168627, 0.235294, 1)
 theme_override_colors/selection_color = Color(0.666667, 0.588235, 0.466667, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_52lde")
 placeholder_text = "请输入..."
 wrap_mode = 1
 scroll_fit_content_height = true
@@ -594,10 +604,9 @@ tooltip_text = "添加附件"
 text = "+"
 
 [node name="SendButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer"]
-custom_minimum_size = Vector2(80, 45)
+custom_minimum_size = Vector2(120, 55)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 tooltip_text = "发送输入框文本至指定渠道"
 theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
@@ -609,7 +618,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")
 theme_override_styles/normal = SubResource("StyleBoxFlat_1efha")
 text = "发送"
 
-[node name="btn_light_switch" type="TextureButton" parent="MarginContainer/Panel"]
+[node name="light_switch" type="TextureButton" parent="MarginContainer/Panel"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 1
 offset_left = 14.0
@@ -634,4 +643,4 @@ stretch_mode = 0
 [connection signal="focus_entered" from="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_focus_entered"]
 [connection signal="focus_exited" from="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_focus_exited"]
 [connection signal="pressed" from="MarginContainer/Panel/input_area/HBoxContainer/SendButton" to="." method="_on_btn_send_pressed"]
-[connection signal="pressed" from="MarginContainer/Panel/btn_light_switch" to="." method="_on_light_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/light_switch" to="." method="_on_light_button_pressed"]

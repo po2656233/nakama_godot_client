@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=10 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
 [ext_resource type="StyleBox" uid="uid://bd6cd22s3xrgs" path="res://styles/room_panel_style.tres" id="2_panel"]
+[ext_resource type="PackedScene" uid="uid://15qsfdusk3fu" path="res://scenes/room/create_room_dialog.tscn" id="3_b0c4m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stats"]
 bg_color = Color(0.32549, 0.423529, 0.352941, 0.8)
@@ -24,12 +25,21 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_osyog"]
+bg_color = Color(0.624422, 0.563065, 0.752978, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_refresh"]
 bg_color = Color(0.155523, 0.582878, 0.332215, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="SystemFont" id="SystemFont_vxb51"]
 
 [node name="RoomList" type="Control"]
 layout_mode = 3
@@ -120,37 +130,6 @@ placeholder_text = "搜索房间..."
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="BaseScoreFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
-custom_minimum_size = Vector2(80, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
-alignment = 1
-expand_icon = true
-selected = 0
-item_count = 4
-popup/item_0/text = "全部底分"
-popup/item_1/text = "低底分 (<100)"
-popup/item_1/id = 1
-popup/item_2/text = "中底分 (100-500)"
-popup/item_2/id = 2
-popup/item_3/text = "高底分 (>500)"
-popup/item_3/id = 3
-
-[node name="StatusFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
-custom_minimum_size = Vector2(120, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
-alignment = 1
-selected = 0
-item_count = 4
-popup/item_0/text = "全部状态"
-popup/item_1/text = "等待中"
-popup/item_1/id = 1
-popup/item_2/text = "进行中"
-popup/item_2/id = 2
-popup/item_3/text = "已满员"
-popup/item_3/id = 3
-
 [node name="GameTypeFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
@@ -174,6 +153,21 @@ popup/item_6/text = "象棋"
 popup/item_6/id = 6
 popup/item_7/text = "围棋"
 popup/item_7/id = 7
+
+[node name="StatusFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+alignment = 1
+selected = 0
+item_count = 4
+popup/item_0/text = "全部状态"
+popup/item_1/text = "等待中"
+popup/item_1/id = 1
+popup/item_2/text = "进行中"
+popup/item_2/id = 2
+popup/item_3/text = "已满员"
+popup/item_3/id = 3
 
 [node name="SortOptions" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
 custom_minimum_size = Vector2(120, 40)
@@ -209,12 +203,19 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 toggle_mode = true
 text = "显示历史"
 
-[node name="RefreshButton" type="Button" parent="VBoxContainer/SearchBar"]
-visible = false
+[node name="ShowMyRooms" type="Button" parent="VBoxContainer/SearchBar"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_osyog")
+theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
+toggle_mode = true
+text = "我创建的"
+
+[node name="CreateButton" type="Button" parent="VBoxContainer/SearchBar"]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_refresh")
-text = "刷新"
+text = "创建房间"
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -258,6 +259,7 @@ theme_override_constants/separation = 15
 
 [node name="Title" type="Label" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_vxb51")
 theme_override_font_sizes/font_size = 24
 text = "房间详情"
 horizontal_alignment = 1
@@ -269,3 +271,6 @@ theme_override_constants/separation = 10
 [node name="RefreshTimer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
+
+[node name="CreateRoomDialog" parent="." instance=ExtResource("3_b0c4m")]
+visible = false
