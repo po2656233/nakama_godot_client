@@ -23,7 +23,7 @@ func _ready():
 	# 设置窗口为模态
 	exclusive = true
 	# 连接信号
-	entry_fee_check.toggled.connect(_on_entry_fee_toggled)
+	# entry_fee_check.toggled.connect(_on_entry_fee_toggled)
 	tax_check.toggled.connect(_on_tax_toggled)
 	tax_slider.value_changed.connect(_on_tax_value_changed)
 	cancel_button.pressed.connect(_on_cancel_pressed)
@@ -49,9 +49,9 @@ func _input(event):
 				cancel_button.pressed.emit()
 				get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
-func _on_entry_fee_toggled(button_pressed: bool):
-	# entry_fee_container.visible = button_pressed
-	pass
+# func _on_entry_fee_toggled(button_pressed: bool):
+# 	entry_fee_container.visible = button_pressed
+# 	pass
 
 func _on_tax_toggled(button_pressed: bool):
 	tax_container.visible = button_pressed

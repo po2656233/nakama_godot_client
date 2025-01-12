@@ -2,16 +2,22 @@ extends PanelContainer
 
 signal game_selected(itemNode)
 
-@onready var description = $Back/MarginContainer/Description
-@onready var gameTitle = $Front/GameTitle
-@onready var gameImge = $Front/MarginContainer/GameImage
-@onready var gameFront = $Front
+@onready var description = $Back/GameBack/MarginContainer/Description
+@onready var gameTitle = $Front/MarginContainer/GameImage/GameTitle
+@onready var gameImage = $Front/MarginContainer/GameImage
 @onready var gameBack = $Back
+@onready var gameBackImage = $Back/GameBack
+
+@onready var gameFront = $Front
+@onready var introduceTitle = $Back/GameBack/Introduce
 @onready var animation = $AnimationPlayer
 @onready var dragonBonesDibeichang = $Front/MarginContainer/DragonBonesDibeichang
 @onready var dragonBonesJiangbei = $Front/MarginContainer/DragonBonesJiangbei
 @onready var dragonBonesPuke = $Front/MarginContainer/DragonBonesPuke
 @onready var version = $Front/MarginContainer/Version
+
+
+
 var game_data = {}
 var is_flipped = true
 var is_hovering = false
@@ -21,8 +27,19 @@ var is_animating = false
 var drag_start_position = Vector2.ZERO
 var is_dragging = false
 var min_swipe_distance = 80  # 最小滑动距离
-
+#
+const FLAG_ITEM_IMAGES = [
+    preload("res://assets/game/flagItem/0.png"),
+    preload("res://assets/game/flagItem/1.png"),
+    preload("res://assets/game/flagItem/2.png"),
+    preload("res://assets/game/flagItem/3.png"),
+    preload("res://assets/game/flagItem/4.png")
+]
+#
 func _ready():
+	var index = randi() % len(FLAG_ITEM_IMAGES)
+	gameImage.texture = FLAG_ITEM_IMAGES[index]
+	gameBackImage.texture = FLAG_ITEM_IMAGES[index]
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
@@ -30,14 +47,18 @@ func _ready():
 func setup(data):
 	game_data = data
 	gameTitle.text = data.title
+	introduceTitle.text = data.name
 	description.text = data.description
+	var img = load("res://assets/game/flagItem/"+str(randi() % 5)+".png")
+	gameImage.texture = img
+	gameBackImage.texture = img
 	if data.image:
-		gameImge.texture = await  Network.load_texture_async(data.image,350,300)
+		# gameImage.texture = await Network.load_texture_async(data.image,350,300)
 		DataManager.safe_free_node(dragonBonesDibeichang)
 		DataManager.safe_free_node(dragonBonesJiangbei)
 		DataManager.safe_free_node(dragonBonesPuke)
 	else:
-		gameImge.visible = false
+		# gameImage.visible = false
 		var index = randi() % 3
 		if index == 0:
 			dragonBonesDibeichang.visible = true
