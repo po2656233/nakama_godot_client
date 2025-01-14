@@ -28,18 +28,7 @@ var drag_start_position = Vector2.ZERO
 var is_dragging = false
 var min_swipe_distance = 80  # 最小滑动距离
 #
-const FLAG_ITEM_IMAGES = [
-    preload("res://assets/game/flagItem/0.png"),
-    preload("res://assets/game/flagItem/1.png"),
-    preload("res://assets/game/flagItem/2.png"),
-    preload("res://assets/game/flagItem/3.png"),
-    preload("res://assets/game/flagItem/4.png")
-]
-#
 func _ready():
-	var index = randi() % len(FLAG_ITEM_IMAGES)
-	gameImage.texture = FLAG_ITEM_IMAGES[index]
-	gameBackImage.texture = FLAG_ITEM_IMAGES[index]
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)

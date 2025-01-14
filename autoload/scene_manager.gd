@@ -98,6 +98,7 @@ const TRANSITION_TYPES = {
 func _init():
 	# 添加场景字典
 	var scenes = {
+        "loading": "res://scenes/element/loading.tscn",
 		"login": "res://scenes/login.tscn",
 		"register": "res://scenes/register.tscn",
 		"home": "res://scenes/home.tscn",

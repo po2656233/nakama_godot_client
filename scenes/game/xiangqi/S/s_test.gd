@@ -8,6 +8,7 @@ var V_CHESS_POSITION:chess_position
 @onready var chessposition: Node2D = $chessposition
 
 var chess_position_array=[]
+var pre_chess:chess_position
 var size:int=58
 func _ready() -> void:
 	add_position()
@@ -145,7 +146,11 @@ func _move_end(chess:chess_position)->void:
 	V_chess.play=null
 	chess.play.position=chess.position
 	V_chess=null
-	player_move.visible=false
+	if pre_chess:
+		V_chess = pre_chess
+		player_move.position=pre_chess.position
+	pre_chess = chess
+	# player_move.visible=false
 	change_player()
 	player_move._change_color()
 func change_player()->void:

@@ -19,7 +19,7 @@ subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_r28s4"]
 font = SubResource("SystemFont_2r2l2")
-font_size = 36
+font_size = 30
 font_color = Color(1, 1, 0.313726, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06hqm"]
@@ -48,11 +48,12 @@ blend_mode = 1
 font_color = Color(0.299859, 0.709815, 0.648078, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_803ka"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_qovik"]
 line_spacing = 5.0
 font = SubResource("SystemFont_803ka")
-font_size = 48
+font_size = 30
 font_color = Color(0.996078, 0.984314, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_w7vkm"]
@@ -164,7 +165,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 mouse_filter = 2
 texture = ExtResource("2_wmhxu")
-stretch_mode = 5
+stretch_mode = 3
 
 [node name="GameTitle" type="Label" parent="Front/MarginContainer/GameImage"]
 layout_mode = 1
@@ -330,6 +331,22 @@ theme_override_font_sizes/bold_font_size = 36
 bbcode_enabled = true
 text = "Game Description"
 script = ExtResource("6_6l74d")
+
+[node name="FlowLight" type="TextureRect" parent="Back/GameBack"]
+material = SubResource("ShaderMaterial_06hqm")
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -228.5
+offset_right = 229.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_t1jci")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

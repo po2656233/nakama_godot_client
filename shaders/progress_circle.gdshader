@@ -14,12 +14,12 @@ void fragment() {
     float circle = smoothstep(1.0, 1.0 - thickness, dist);
 
     // 添加发光效果
-    float glow = smoothstep(1.2, 0.8, dist) * glow_strength;
+    float glow = smoothstep(1.0, 0.6, dist) * glow_strength;
 
     // 计算角度用于进度显示
     float angle = atan(uv.y, uv.x);
-    angle = angle + 3.14159; // 将角度范围从[-pi,pi]转换为[0,2pi]
-    float normalized_angle = angle / (2.0 * 3.14159);
+    angle = angle + PI; // 将角度范围从[-pi,pi]转换为[0,2pi]
+    float normalized_angle = angle / (2.0 * PI);
 
     // 创建进度遮罩
     float progress_mask = step(normalized_angle, progress);

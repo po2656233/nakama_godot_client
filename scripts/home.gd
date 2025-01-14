@@ -2,7 +2,7 @@ extends Control
 
 @onready var chatPanle = $VBoxContainer/Chat
 @onready var homePanle = $PanelContainer
-
+@onready var loading = $LoadingScreen
 func _ready():
 	SceneManager.set_current_scene("home")
 	SettingsManager.show_settings(1)
@@ -11,7 +11,7 @@ func _ready():
 	WindowDrag.register_drag_zone(self)
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(chatPanle)
-	
+	SignalManager.LoadingSIG.connect(_on_loading)
 	pass
  
 
@@ -27,7 +27,7 @@ func _on_btn_ranking_pressed() -> void:
 
 
 func _on_btn_zhanji_pressed() -> void:
-	SceneManager.switch_to_scene("gamelist","square",0.5) 
+	# SceneManager.switch_to_scene("gamelist","square",0.5) 
 	pass # Replace with function body.
 
 
@@ -38,10 +38,13 @@ func _on_btn_renwu_pressed() -> void:
 
 # 比赛
 func _on_btn_match_pressed() -> void:
-	SceneManager.switch_to_scene("gamelist","custom",0.5) 
+	SceneManager.switch_to_scene("roomlist","custom",0.5) 
 	pass # Replace with function body.
 
 # 匹配
 func _on_btn_start_pressed() -> void:
-	SceneManager.switch_to_scene("roomlist","swirl",0.5) 
+	SceneManager.switch_to_scene("gamelist","swirl",0.5) 
 	pass # Replace with function body.
+
+func _on_loading(value):
+	loading.set_progress(value)

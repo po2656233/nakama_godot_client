@@ -71,3 +71,7 @@ signal BackgroundMusicSIG(isMute)
 # 背景音乐
 @warning_ignore("unused_signal")
 signal GameMusicSIG(id,isMute)
+
+# 加载
+@warning_ignore("unused_signal")
+signal LoadingSIG(value) 

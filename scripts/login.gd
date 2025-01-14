@@ -93,7 +93,7 @@ func login()->void:
 		return
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text):
 		await Network.load_player_data()  
-		SceneManager.switch_to_scene("home","custom",0.5) 
+		SceneManager.switch_to_scene("home","custom",1) 
 		# ProjectSettings.set("username",usernameEdit.text)
 		# FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	else:

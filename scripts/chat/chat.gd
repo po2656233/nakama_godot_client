@@ -57,7 +57,7 @@ func _ready():
 	if not Network.player_data:
 		PopupManager.show_message("未登录")
 		return
-	
+	SignalManager.LoadingSIG.emit(1)
 	# 获取基础信息
 	myHeadicon = Network.player_data.avatar_url
 	myUsername = Network.player_data.username
@@ -152,7 +152,7 @@ func initData():
 
 	# 加载本地历史消息
 	load_local_history()
-
+	SignalManager.LoadingSIG.emit(100)
 	# # 获取好友列表
 	# get_friends_list()
 

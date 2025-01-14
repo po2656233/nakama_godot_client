@@ -52,7 +52,7 @@ var games_data =[
 		"image": "",
 	}
 ]
-
+		
 func _ready(): 
 	
 	print("当前运行的节点名",SceneManager.get_current_scene_name())
@@ -74,8 +74,8 @@ func _ready():
 				description += "\n\n[b]特色：[/b][color=read]\n"+item.special+"[/color]"
 			games_data.append({
 				"id": item.id,
-				"name": item.name,
-				"title": item.en_name,
+				"name": item.en_name,
+				"title": item.name,
 				"description": description,
 				"image": item.logo,
 				"version": item.updated_at,

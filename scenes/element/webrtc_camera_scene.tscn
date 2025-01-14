@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://riqfmggkqpfd"]
+
+[ext_resource type="Script" path="res://scripts/unify/webrtc_camera_controller.gd" id="1_xxxxx"]
+
+[node name="WebRTCCameraScene" type="Node"]
+script = ExtResource("1_xxxxx")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Controls" type="VBoxContainer" parent="."]
+offset_right = 200.0
+offset_bottom = 100.0
+
+[node name="StatusLabel" type="Label" parent="Controls"]
+layout_mode = 2
+text = "Camera Status: Initializing..."
+
+[node name="SwitchCameraButton" type="Button" parent="Controls"]
+layout_mode = 2
+text = "Switch Camera"
+
+[connection signal="pressed" from="Controls/SwitchCameraButton" to="." method="switch_camera"]
