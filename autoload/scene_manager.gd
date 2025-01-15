@@ -6,6 +6,8 @@ var scene_paths = {}
 var scene_order = []
 # 当前场景索引
 var current_scene_index = -1
+# 上一个场景
+var previous_name = ""
 var DISSOLVE_IMAGE = preload('res://addons/transitions/images/blurry-noise.png')
 # 场景转换效果类型映射
 const TRANSITION_TYPES = {
@@ -98,7 +100,7 @@ const TRANSITION_TYPES = {
 func _init():
 	# 添加场景字典
 	var scenes = {
-        "loading": "res://scenes/element/loading.tscn",
+        "loading": "res://scenes/element/loading_screen.tscn",
 		"login": "res://scenes/login.tscn",
 		"register": "res://scenes/register.tscn",
 		"home": "res://scenes/home.tscn",
@@ -227,35 +229,44 @@ func get_current_scene_name() -> String:
 		return scene_order[current_scene_index]
 	return ""
 
-func get_previous_scene_name() -> String:
-	if current_scene_index > 0:
-		# 获取上一个场景的名称
-		var previous_name = scene_order[current_scene_index - 1]
-		# 返回上一个场景的完整路径
-		return previous_name
-	# 如果是第一个场景或未找到当前场景，返回空字符串
-	return ""
+# 设置上一个场景的名称 便于返回
+func set_previous_name(sceneName: String) -> void:
+	previous_name = sceneName
+	pass
 
-# 根据当前场景名称获取上一个场景的路径
-# @param current_scene_name: 当前场景名称（不带.tscn后缀）
-# @return: 上一个场景的完整路径，如果没有上一个场景则返回空字符串
-func get_previous_scene_path(current_scene_name: String) -> String:
-	# 如果当前场景名称为空，返回空字符串
-	if current_scene_name.is_empty():
-		return ""
+func get_previous_scene_name() -> String:
+	print("上一个场景: ", previous_name)
+	# if current_scene_index > 0 and scene_order.size() > current_scene_index:
+	# 	# 获取上一个场景的名称
+	# 	 previous_name = scene_order[current_scene_index - 1]
+	# 	# 返回上一个场景的完整路径
+	# 	return previous_name
+	# # 如果是第一个场景或未找到当前场景，返回空字符串
+	return previous_name
+
+func get_previous_scene_path() -> String:
+	return get_scene_path(previous_name)
+
+# # 根据当前场景名称获取上一个场景的路径
+# # @param current_scene_name: 当前场景名称（不带.tscn后缀）
+# # @return: 上一个场景的完整路径，如果没有上一个场景则返回空字符串
+# func get_previous_scene_path(current_scene_name: String) -> String:
+# 	# 如果当前场景名称为空，返回空字符串
+# 	if current_scene_name.is_empty():
+# 		return ""
 		
-	# 在顺序数组中查找当前场景的索引
-	var current_idx = scene_order.find(current_scene_name)
+# 	# 在顺序数组中查找当前场景的索引
+# 	var current_idx = scene_order.find(current_scene_name)
 	
-	# 如果找到当前场景且不是第一个场景
-	if current_idx > 0:
-		# 获取上一个场景的名称
-		var previous_name = scene_order[current_idx - 1]
-		# 返回上一个场景的完整路径
-		return scene_paths[previous_name]
+# 	# 如果找到当前场景且不是第一个场景
+# 	if current_idx > 0:
+# 		# 获取上一个场景的名称
+# 		previous_name = scene_order[current_idx - 1]
+# 		# 返回上一个场景的完整路径
+# 		return scene_paths[previous_name]
 	
-	# 如果是第一个场景或未找到当前场景，返回空字符串
-	return ""
+# 	# 如果是第一个场景或未找到当前场景，返回空字符串
+# 	return ""
 
 # 设置当前场景
 func set_current_scene(scene_name: String) -> void:
@@ -300,9 +311,10 @@ func get_running_scene_name() -> String:
 
 # 返回上一个场景
 func go_back() -> void:
-	var nodeName = get_running_scene_name()
-	var path = SceneManager.get_previous_scene_path(nodeName)
-	_transition_scene(path)
+	var nodeName = get_previous_scene_name()
+	if nodeName == "":
+		return
+	switch_to_scene(nodeName)
 	pass
 
 # 切换场景

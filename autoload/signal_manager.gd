@@ -20,7 +20,7 @@ signal RecvMessageSIG(args)
 @warning_ignore("unused_signal")
 signal OnlineSIG()
 
-
+###################社交###########################
 # 添加好友
 @warning_ignore("unused_signal")
 signal AddFriendSIG(args) 
@@ -45,6 +45,7 @@ signal DeleteClubSIG(gid)
 @warning_ignore("unused_signal")
 signal FreshClubListSIG() 
 
+##################系统############################
 # 开灯
 @warning_ignore("unused_signal")
 signal OpenLightSIG() 
@@ -75,3 +76,25 @@ signal GameMusicSIG(id,isMute)
 # 加载
 @warning_ignore("unused_signal")
 signal LoadingSIG(value) 
+
+####################游戏#############################
+# 开始游戏
+@warning_ignore("unused_signal")
+signal StartGameSIG(gid) 
+# 取消游戏
+@warning_ignore("unused_signal")
+signal CancleGameSIG(gid) 
+# 退出游戏
+@warning_ignore("unused_signal")
+signal ExitGameSIG(gid) 
+
+# 加入房间
+@warning_ignore("unused_signal")
+signal JoinRoomSIG(rid) 
+# 退出房间
+@warning_ignore("unused_signal")
+signal ExitRoomSIG(rid) 
+
+# 房间满员
+@warning_ignore("unused_signal")
+signal FullRoomSIG(rid) 

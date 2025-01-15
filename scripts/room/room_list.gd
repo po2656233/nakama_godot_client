@@ -1,6 +1,7 @@
 extends Control
 
 const RoomItem = preload("res://scenes/room/room_item.tscn")
+const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
 const SAVE_PATH = "user://room_data.json"
 
 @onready var search_input = $VBoxContainer/SearchBar/SearchInput
@@ -27,23 +28,25 @@ var room_data = [
 	{
 		"room_name": "欢乐场",
 		"game_name": "德州扑克",
+		"game_type": 1,
 		"room_id": "R001",
 		"creator_id": "xxxxxx01",
 		"base_score": 100,
 		"entry_score": 1000,
 		"current_round": 5,
-		"player_count": 3,
-		"max_players": 6,
+		"player_count": 9,
+		"max_players": 10,
 		"status": "等待中",
 		"create_time": "2024-01-08 10:00:00",
 		"description": "适合新手的休闲场，气氛轻松友好",
 		"rules": ["基础规则", "休闲模式", "15分钟限时"],
-		"players": ["玩家1", "玩家2", "玩家3"],
+		"players": ["玩家1", "玩家2", "玩家3", "玩家4", "玩家5", "玩家6", "玩家7", "玩家8", "玩家9"],
 		"favorite": false,
 	},
 	{
 		"room_name": "21点新手场",
 		"game_name": "21点",
+		"game_type": 2,
 		"room_id": "R006",
 		"creator_id": "xxxxxx01",
 		"base_score": 50,
@@ -61,6 +64,7 @@ var room_data = [
 	{
 		"room_name": "五子棋竞技场",
 		"game_name": "五子棋",
+		"game_type": 3,
 		"room_id": "R007",
 		"creator_id": "xxxxxx01",
 		"base_score": 200,
@@ -78,6 +82,7 @@ var room_data = [
 	{
 		"room_name": "象棋大师场",
 		"game_name": "象棋",
+		"game_type": 4,
 		"room_id": "R008",
 		"creator_id": "xxxxxx01",
 		"base_score": 300,
@@ -95,6 +100,7 @@ var room_data = [
 	{
 		"room_name": "围棋道场",
 		"game_name": "围棋",
+		"game_type": 5,
 		"room_id": "R009",
 		"creator_id": "xxxxxx01",
 		"base_score": 500,
@@ -122,6 +128,8 @@ signal room_selected(room_data: Dictionary)
 # 准备
 func _ready():
 	SettingsManager.show_settings()
+	SceneManager.set_previous_name("roomlist")
+	WindowDrag.register_drag_zone(self)
 
 	# 绑定事件
 	search_input.text_changed.connect(_on_search_changed)
@@ -196,7 +204,7 @@ func _apply_filters(rooms: Array) -> Array:
 	for room in rooms:
 		# 搜索文本过滤
 		if search_text:
-			var room_text = "%s%s%s" % [room.room_name, room.game_name, room.room_id]
+			var room_text = "%s%s%s" % [room.room_name, room.game_type, room.room_id]
 			if not room_text.to_lower().contains(search_text):
 				continue
 
@@ -217,25 +225,25 @@ func _apply_filters(rooms: Array) -> Array:
 		# 游戏类型过滤
 		match game_type_id:
 			1: # 德州扑克
-				if room.game_name != "德州扑克":
+				if room.game_type != "德州扑克":
 					continue
 			2: # 斗地主
-				if room.game_name != "斗地主":
+				if room.game_type != "斗地主":
 					continue
 			3: # 麻将
-				if room.game_name != "麻将":
+				if room.game_type != "麻将":
 					continue
 			4: # 21点
-				if room.game_name != "21点":
+				if room.game_type != "21点":
 					continue
 			5: # 五子棋
-				if room.game_name != "五子棋":
+				if room.game_type != "五子棋":
 					continue
 			6: # 象棋
-				if room.game_name != "象棋":
+				if room.game_type != "象棋":
 					continue
 			7: # 围棋
-				if room.game_name != "围棋":
+				if room.game_type != "围棋":
 					continue
 		
 		filtered.append(room)
@@ -374,6 +382,22 @@ func _on_join_room(room_info: Dictionary):
 		if room_history.size() > 10: # 限制历史记录数量
 			room_history.pop_back()
 		_save_data()
+
+	if room_info.max_players == room_info.player_count:
+		PopupManager.show_dynamic("房间已满员")
+		print("房间已满员")
+		return
+
+	# 进入房间
+	var waitingStart = room_for_waiting.instantiate()
+	add_child(waitingStart)
+	waitingStart.reset(room_info.room_id, room_info.max_players)
+	waitingStart.add_player("我")
+	for playerName in room_info.players:
+		waitingStart.add_player(playerName)
+
+	pass
+
 
 func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 	room_info["favorite"] = is_favorite

@@ -61,6 +61,8 @@ func show_menu_item(index: int):
 
 # 重建菜单
 func _rebuild_menu():
+	if not menuBtn:
+		return
 	var popup = menuBtn.get_popup()
 	var isMute = DataManager.get_instance().get_isMute()
 	var icon = volume if isMute else novolume

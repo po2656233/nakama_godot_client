@@ -372,6 +372,7 @@ func load_local_history():
 	print("加载本地历史记录:",message_id_cache)
 	# var channelList = DataManager.get_instance().get_channel_list(uid)
 	# print("加载本地玩家渠道:",channelList)
+	ensure_scroll_to()
 	pass
 
 # 获取指定channel的所有历史消息

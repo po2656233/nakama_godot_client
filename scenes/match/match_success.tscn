@@ -28,8 +28,6 @@ exclusive = true
 unresizable = true
 borderless = true
 script = ExtResource("1_xxxxx")
-countdown = null
-gamename = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -63,7 +61,6 @@ layout_mode = 2
 [node name="ReadyLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "   1 /10已准备就绪"
 label_settings = SubResource("LabelSettings_3u3mi")
 
 [node name="TimerLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8p4xkj6p2n8w"]
+
+[ext_resource type="Script" path="res://scripts/room/player_item.gd" id="1_u2w3v"]
+
+[node name="PlayerItem" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u2w3v")
+
+[node name="PlayerAvatar" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="PlayerAvatar"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerAvatar"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+
+[node name="PlayerName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.847059, 0.886275, 0.956863, 1)
+text = "玩家名称"
+vertical_alignment = 1

@@ -81,11 +81,12 @@ func start_matching():
 	progress_value = 0
 
 	await get_tree().create_timer(randf_range(2, 5)).timeout
-	if randf() > 0.5:
-		_on_match_success()
-	else:
-		_on_match_failed()
-	pass
+	_on_match_success()
+	# if randf() > 0.5:
+	# 	_on_match_success()
+	# else:
+	# 	_on_match_failed()
+	# pass
 
 func stop_matching():
 	is_matching = false
@@ -119,16 +120,13 @@ func _on_start_button_pressed():
 func _on_match_success():
 	current_state = MatchState.SUCCESS
 	is_matching = false
-	status_label.text = "匹配成功！"
+	status_label.text = "匹配成功"
 	cancel_button.visible = false
 	animation_player.play("success_flash")
 	progress_circle.visible = false
 	match_sound.stop()
 	success_sound.play()
 	
-	# 2秒后切换场景或显示其他UI
-	await get_tree().create_timer(2.0).timeout
-
 	# 这里添加切换到游戏场景的代码
 	match_sucess.emit()
 	print("切换到游戏场景")

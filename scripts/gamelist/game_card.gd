@@ -26,7 +26,7 @@ var is_animating = false
 # 滑动相关变量
 var drag_start_position = Vector2.ZERO
 var is_dragging = false
-var min_swipe_distance = 80  # 最小滑动距离
+var min_swipe_distance = 200  # 最小滑动距离
 #
 func _ready():
 	mouse_entered.connect(_on_mouse_entered)

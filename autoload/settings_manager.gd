@@ -21,7 +21,8 @@ func show_settings(state: int = 0):
 		# 添加到最上层场景
 		var root = get_tree().root
 		var current_scene = root.get_child(root.get_child_count() - 1)
-		current_scene.add_child(settings_ui)
+		if current_scene:
+			current_scene.add_child(settings_ui)
 	if state == 0:
 		settings_ui.noHome()
 	elif state == 1:

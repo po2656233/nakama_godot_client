@@ -11,6 +11,7 @@ func _ready():
 	# 初始化进度条
 	progress_bar.value = 0
 	update_progress_label(0)
+	SignalManager.LoadingSIG.connect(_on_loading)
 	# example_loading()
 
 func _process(delta):
@@ -23,6 +24,9 @@ func _process(delta):
 		progress = 0.0
 		target_progress = 0.0
 		current = 0.0
+		var timer = get_tree().create_timer(0.1)
+		await timer.timeout
+		SceneManager.switch_to_scene("home","custom",1.5) 
 		queue_free()
 
 
@@ -57,3 +61,6 @@ func example_loading():
 	timer = get_tree().create_timer(0.5)
 	await timer.timeout
 	print("Loading completed!")
+
+func _on_loading(value):
+	set_progress(value)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=11 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
 [ext_resource type="StyleBox" uid="uid://bd6cd22s3xrgs" path="res://styles/room_panel_style.tres" id="2_panel"]
@@ -27,6 +27,13 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_osyog"]
 bg_color = Color(0.624422, 0.563065, 0.752978, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6alr2"]
+bg_color = Color(0.329412, 0.262745, 0.407843, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -214,6 +221,7 @@ text = "我创建的"
 [node name="CreateButton" type="Button" parent="VBoxContainer/SearchBar"]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_6alr2")
 theme_override_styles/normal = SubResource("StyleBoxFlat_refresh")
 text = "创建房间"
 

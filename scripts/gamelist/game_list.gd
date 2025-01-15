@@ -54,35 +54,45 @@ var games_data =[
 ]
 		
 func _ready(): 
-	
 	print("当前运行的节点名",SceneManager.get_current_scene_name())
 	# WindowDrag.register_drag_zone(self) 
 	SettingsManager.show_settings() 
+	SceneManager.set_previous_name("gamelist")
 	print("游戏列表--->")
-	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 25
-	matching.match_sucess.connect(_on_match_sucess)
-	matching.match_cancel.connect(_on_match_cancel)
-	match_sucess.cancle_game.connect(_on_game_cancel)
+	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
+
 	# 获取游戏列表
 	var result = await Network.sendDataRPC("list_games")
 	print("获取游戏列表",result)
 	if result and result.id == "list_games":
 		var games = JSON.parse_string(result.payload)
 		for item in games:
-			var description = "规则介绍:\n[color=black]"+item.how_to_play+"[/color]"
+			var description = ""
 			if item.special:
-				description += "\n\n[b]特色：[/b][color=read]\n"+item.special+"[/color]"
+				description += "[b]特色：[/b][color=read]\n"+item.special+"[/color]\n\n"
+			if item.rules:
+				description += "[b]规则介绍：[/b][color=read]\n"+item.rules+"[/color]\n\n"
 			games_data.append({
 				"id": item.id,
+				"kid": item.kid,
 				"name": item.en_name,
 				"title": item.name,
 				"description": description,
 				"image": item.logo,
 				"version": item.updated_at,
+				"max_player": item.max_player,
+				"lessscore": item.lessscore,
+				"state": item.state,
 			})
 	# 添加游戏
 	for item in games_data:
 		on_add_game_data(item)
+	
+	# 连接匹配信号
+	matching.match_sucess.connect(_on_match_sucess)
+	matching.match_cancel.connect(_on_match_cancel)
+	SignalManager.StartGameSIG.connect(_on_game_start)
+	SignalManager.CancleGameSIG.connect(_on_game_cancel)
 	pass
 
 # 添加游戏
@@ -105,23 +115,32 @@ func _on_game_selected(itemNode):
 	switch_controls(scrollContainer, matching)
 	pass
 
+# 取消匹配
 func _on_match_cancel():
 	match_sucess.hide()
 	switch_controls(matching, scrollContainer)
 	pass
 
-func _on_game_cancel(_game_id):
-	switch_controls(match_sucess, scrollContainer)
-	pass
-
+# 匹配成功
 func _on_match_sucess():
-	match_sucess.start()
-	match_sucess.game_id = game_id
-	match_sucess.gamename = matching.gamename
-
-	switch_controls(matching, match_sucess)
+	match_sucess.reset(game_id,2)
+	await get_tree().create_timer(1.5).timeout
+	matching.hide()
+	match_sucess.start(1.0)
 	match_sucess.popup_centered()
 	pass
+
+# 游戏取消
+func _on_game_cancel(_game_id):
+	match_sucess.hide()
+	switch_controls(matching, scrollContainer)
+	pass
+
+# 游戏开始
+func _on_game_start(_game_id):
+	SceneManager.switch_to_scene("xiangqi","custom",0.5)
+	pass
+
 
 # 切换控件
 func switch_controls(controlAHide, controlBShow):

@@ -213,7 +213,7 @@ func send_message(content: Dictionary) -> Error:
 
 
 # 获取聊天历史
-func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false,cursor = null,all:bool = false) -> Error:
+func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false,cursor = null) -> Error:
 	if channelId.is_empty():
 		print("Not in a chat channel or socket is wrong")
 		return FAILED
@@ -234,6 +234,7 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 		print("Failed to get chat history: ", result.get_exception().message)
 		return FAILED
 
+
 	var messages = []
 	for message in result.messages:
 		var content = JSON.parse_string(message.content)
@@ -244,8 +245,18 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 	if result.next_cursor:
 		_cursor_list_channel = result.next_cursor
 		# print("获取历史记录游标",_cursor_list_channel)
-		if all:
-			get_chat_history(channelId, limit, forward,_cursor_list_channel,all)
+	if messages.size()<limit-1:
+		return FAILED
+	return OK
+
+func get_chat_history_all(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false) -> Error:
+	if channelId.is_empty():
+		print("Not in a chat channel or socket is wrong")
+		return FAILED
+	while true:
+		var result = await get_chat_history(channelId, limit, forward)
+		if result == FAILED:
+			break
 	return OK
 
 func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
@@ -553,7 +564,7 @@ func load_world_channel():
 				return null
 			print("添加世界渠道频道: ", ret)
 			_world_channel = ret
-			get_chat_history(_world_channel.id)
+			get_chat_history_all(_world_channel.id)
 			return ret
 	return null
 

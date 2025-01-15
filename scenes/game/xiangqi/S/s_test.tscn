@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccum0nu0ovqh6"]
+[gd_scene load_steps=8 format=3 uid="uid://ccum0nu0ovqh6"]
 
 [ext_resource type="Script" path="res://scenes/game/xiangqi/S/s_test.gd" id="1_3g5qc"]
 [ext_resource type="Texture2D" uid="uid://b2nfgkamfjwk7" path="res://assets/xiangqi/bg.png" id="1_70mxo"]
@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://c5e58u42d4iav" path="res://assets/xiangqi/music/pieces_down_yes.mp3" id="5_8s6xe"]
 [ext_resource type="AudioStream" uid="uid://dh8pl7whao7o6" path="res://assets/xiangqi/music/pieces_del.mp3" id="6_1ep10"]
 [ext_resource type="AudioStream" uid="uid://cv2ilwrgi35m3" path="res://assets/xiangqi/music/pieces_down_no.mp3" id="7_ayalg"]
-[ext_resource type="PackedScene" uid="uid://riqfmggkqpfd" path="res://scenes/gamelist/game_list.tscn" id="8_3eqe0"]
 
 [node name="S_test" type="Node2D"]
 script = ExtResource("1_3g5qc")
@@ -92,13 +91,6 @@ stream = ExtResource("6_1ep10")
 
 [node name="cuowu" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ayalg")
-
-[node name="CountdownTimer" parent="." instance=ExtResource("8_3eqe0")]
-offset_left = -481.0
-offset_top = -294.0
-offset_right = -481.0
-offset_bottom = -294.0
-scale = Vector2(0.6, 0.6)
 
 [connection signal="button_down" from="over/Button" to="." method="_on_button_button_down"]
 [connection signal="button_down" from="RebackBtn" to="." method="_on_reback_btn_pressed"]

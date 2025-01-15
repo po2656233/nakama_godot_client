@@ -11,6 +11,7 @@ var chess_position_array=[]
 var pre_chess:chess_position
 var size:int=58
 func _ready() -> void:
+	
 	add_position()
 	add_player_chess()
 	
@@ -135,6 +136,8 @@ func move(chess:chess_position):
 				else :
 					cuowu.play()
 		else :
+			if V_chess.play == null:
+				return
 			if V_chess.play.move(V_chess,chess,chess_position_array):
 				_move_end(chess)
 				luozi.play()
@@ -176,5 +179,5 @@ func _on_button_button_down() -> void:
 
 
 func _on_reback_btn_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/gamelist/game_list.tscn")
+	get_tree().change_scene_to_file(SceneManager.get_previous_scene_path())
 	pass # Replace with function body.

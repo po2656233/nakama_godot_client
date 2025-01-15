@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://riqfmggkqpfd"]
+[gd_scene load_steps=12 format=3 uid="uid://ryqfmggkqpxe"]
 
 [ext_resource type="Script" path="res://scripts/unify/countdown_timer.gd" id="1_xxxxx"]
 [ext_resource type="AudioStream" uid="uid://r6as7qelxqcx" path="res://assets/music/tick.mp3" id="2_cmetn"]

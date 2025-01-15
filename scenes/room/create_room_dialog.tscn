@@ -155,6 +155,16 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1elv"]
 bg_color = Color(0.344409, 0.614454, 0.911431, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.358347, 0.596223, 0.429844, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ljqd"]
 bg_color = Color(0.100695, 0.358324, 0.313291, 1)
@@ -404,7 +414,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_c1elv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8ljqd")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_13k10")
 theme_override_styles/normal = SubResource("StyleBoxFlat_8h8lc")
-text = "创建"
+text = "取消"
 
 [node name="Control" type="Control" parent="MarginContainer/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 15)

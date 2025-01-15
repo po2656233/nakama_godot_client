@@ -2,6 +2,7 @@ extends Node2D
 
 signal timeout
 
+
 @onready var progress_circle = $ProgressCircle
 @onready var time_label = $TimeLabel
 @onready var animation_player = $AnimationPlayer
@@ -14,7 +15,7 @@ var time_left: float = 20.0
 var is_running: bool = false
 
 func _ready():
-	start()
+	# start()
 	pass
 	
 func _process(_delta):

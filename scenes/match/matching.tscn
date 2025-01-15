@@ -6,12 +6,12 @@
 [sub_resource type="Theme" id="Theme_8pgp0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ieusa"]
-bg_color = Color(0.0816042, 0.530393, 0.864344, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.469832, 0.868117, 0.955458, 1)
+bg_color = Color(0.00392157, 0.0941176, 0.235294, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.470588, 0.866667, 0.956863, 0.580392)
 border_blend = true
 corner_radius_top_left = 20
 corner_radius_top_right = 20
@@ -40,7 +40,7 @@ font_color = Color(0.352941, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bnmqq"]
 shader = ExtResource("2_p1m5x")
-shader_parameter/color = Color(0.97651, 0.912877, 0.981306, 1)
+shader_parameter/color = Color(0.856947, 0.715422, 0.538069, 1)
 shader_parameter/thickness = 0.1
 shader_parameter/progress = 0.0
 shader_parameter/glow_strength = 0.5
@@ -185,6 +185,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 3.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_8pgp0")
@@ -197,10 +199,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -290.0
-offset_top = -320.0
-offset_right = 290.0
-offset_bottom = 246.0
+offset_left = -214.0
+offset_top = -292.0
+offset_right = 207.0
+offset_bottom = 274.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ieusa")
@@ -211,8 +213,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -132.0
+offset_top = 6.0
 offset_right = 133.0
-offset_bottom = 524.0
+offset_bottom = 530.0
 grow_horizontal = 2
 theme_override_constants/separation = 25
 
@@ -225,14 +228,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="StatusLabel" type="Label" parent="Panel/VBoxContainer"]
-modulate = Color(1, 0.929788, 0.917735, 1)
+modulate = Color(0.955175, 0.904035, 0.986151, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "等待开始匹配..."
 label_settings = SubResource("LabelSettings_4dcj2")
 horizontal_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="TimerLabel" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -249,6 +251,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.538823, 0.436949, 0.762096, 1)
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2

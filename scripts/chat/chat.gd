@@ -261,6 +261,8 @@ func _on_history_message(msgList):
 	if haveNew:
 		print("有新消息")
 		refresh_current_channel_display()
+	else:
+		ensure_scroll_to()
 	pass
 #############################################################
 
@@ -460,6 +462,7 @@ func _load_more_history(forward: bool):
 
 	# 发起加载请求
 	await Network.get_chat_history(current_channel_id, MESSAGES_PER_PAGE, forward)
+	pass
 
 #################################################################
 # 获取好友列表

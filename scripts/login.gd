@@ -4,7 +4,7 @@ extends Control
 @onready var passwordEdit = $Panel/VBoxContainer/HBoxContainerPsw/LineEdit
 @onready var checkbox = $Panel/VBoxContainer/HBoxContainerRead/CheckBox
 @onready var keyboardContainer = $Panel/VBoxContainer
-@onready var gameScene = preload("res://scenes/gamelist/game_list.tscn")
+@onready var loading = $LoadingScreen
 
 # 微信登录
 const WECHAT_APPID = "wxcf2136ff70f7726a"
@@ -91,12 +91,16 @@ func login()->void:
 	if not checkbox.is_pressed():
 		PopupManager.show_message("请阅读并同意用户协议")
 		return
+	loading.show()
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text):
+		SignalManager.LoadingSIG.emit(1)
 		await Network.load_player_data()  
-		SceneManager.switch_to_scene("home","custom",1) 
+		SignalManager.LoadingSIG.emit(100)
+
 		# ProjectSettings.set("username",usernameEdit.text)
 		# FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	else:
+		loading.hide()
 		PopupManager.show_message("账号或密码错误","提示",false)
 		print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
 	pass # Replace with function body.
