@@ -1,6 +1,8 @@
 extends Control
 
-const RoomItem = preload("res://scenes/room/room_item.tscn")
+signal room_selected(room_data: Dictionary)
+
+const roomItem = preload("res://scenes/room/room_item.tscn")
 const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
 const SAVE_PATH = "user://room_data.json"
 
@@ -24,12 +26,25 @@ const SAVE_PATH = "user://room_data.json"
 
 # 创建房间
 @onready var create_room_dialog = $CreateRoomDialog
+
+# 加入房间
+@onready var jion_dialog = $CenterContainer
+@onready var jion_room = $CenterContainer/Panel/RoomID
+@onready var jion_input = $CenterContainer/Panel/RoomPsw
+
+var favorite_rooms = []
+var room_history = []
+var pre_room_id = ""
+var pre_room_count = 0
+var selected_room_info = {}
+var tween:Tween
 var room_data = [
 	{
+		"room_id": "R001",
 		"room_name": "欢乐场",
+		"is_locked": true,
 		"game_name": "德州扑克",
 		"game_type": 1,
-		"room_id": "R001",
 		"creator_id": "xxxxxx01",
 		"base_score": 100,
 		"entry_score": 1000,
@@ -48,6 +63,7 @@ var room_data = [
 		"game_name": "21点",
 		"game_type": 2,
 		"room_id": "R006",
+		"is_locked": false,
 		"creator_id": "xxxxxx01",
 		"base_score": 50,
 		"entry_score": 500,
@@ -66,6 +82,7 @@ var room_data = [
 		"game_name": "五子棋",
 		"game_type": 3,
 		"room_id": "R007",
+		"is_locked": false,
 		"creator_id": "xxxxxx01",
 		"base_score": 200,
 		"entry_score": 2000,
@@ -84,6 +101,7 @@ var room_data = [
 		"game_name": "象棋",
 		"game_type": 4,
 		"room_id": "R008",
+		"is_locked": true,
 		"creator_id": "xxxxxx01",
 		"base_score": 300,
 		"entry_score": 3000,
@@ -102,6 +120,7 @@ var room_data = [
 		"game_name": "围棋",
 		"game_type": 5,
 		"room_id": "R009",
+		"is_locked": false,
 		"creator_id": "xxxxxx01",
 		"base_score": 500,
 		"entry_score": 5000,
@@ -117,19 +136,14 @@ var room_data = [
 	}
 ]
 
-var favorite_rooms = []
-var room_history = []
-var pre_room_id = ""
-var pre_room_count = 0
 
-signal room_selected(room_data: Dictionary)
 
 
 # 准备
 func _ready():
 	SettingsManager.show_settings()
 	SceneManager.set_previous_name("roomlist")
-	WindowDrag.register_drag_zone(self)
+	# WindowDrag.register_drag_zone(self)
 
 	# 绑定事件
 	search_input.text_changed.connect(_on_search_changed)
@@ -150,6 +164,7 @@ func _ready():
 	# 加载保存的数据
 	_load_saved_data()
 	
+	jion_dialog.visible = false
 	_refresh_room_list()
 	_update_stats()
 
@@ -161,10 +176,16 @@ func _refresh_room_list():
 	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_data)
 	filtered_rooms = _sort_rooms(filtered_rooms)
-	
+
+	if filtered_rooms.size() == 0:
+		return
+
+	if tween:
+		tween.kill()
+	tween = create_tween()
 	# 创建房间列表项
 	for data in filtered_rooms:
-		var room_item = RoomItem.instantiate()
+		var room_item = roomItem.instantiate()
 		room_container.add_child(room_item)
 		room_item.setup(data)
 		room_item.room_clicked.connect(_on_room_clicked)
@@ -176,8 +197,9 @@ func _refresh_room_list():
 		
 		# 添加进入动画
 		room_item.modulate.a = 0
-		var tween = create_tween()
-		tween.tween_property(room_item, "modulate:a", 1.0, 0.3)
+		tween.chain().tween_property(room_item, "modulate:a", 1.0, 0.1)
+		
+
 
 func _apply_filters(rooms: Array) -> Array:
 	var search_text = search_input.text.to_lower()
@@ -265,6 +287,8 @@ func _sort_rooms(rooms: Array) -> Array:
 			sorted.sort_custom(func(a, b): return a.player_count > b.player_count)
 		5: # 创建时间
 			sorted.sort_custom(func(a, b): return a.create_time > b.create_time)
+		6: # 创建时间
+			sorted.sort_custom(func(a, b): return not a.is_locked and b.is_locked)
 	
 	return sorted
 
@@ -320,45 +344,49 @@ func _on_show_myrooms_toggled(button_pressed: bool):
 		show_favorites.button_pressed = false
 		show_history.button_pressed = false
 		# 左右移动
-		var move_tween = create_tween()
-		move_tween.set_ease(Tween.EASE_IN_OUT)
-		move_tween.set_trans(Tween.TRANS_SINE)
+		if tween:
+			tween.kill()
+		tween = create_tween()
+		tween.set_ease(Tween.EASE_IN_OUT)
+		tween.set_trans(Tween.TRANS_SINE)
 		# 获取按钮当前的x位置
 		var original_x = show_myrooms.position.x
 		# 向右移动30像素
-		move_tween.tween_property(show_myrooms, "position:x", original_x - 30, 0.05)
-		move_tween.tween_property(show_myrooms, "position:x", original_x, 0.05)
-		move_tween.tween_property(show_myrooms, "position:x", original_x + 30, 0.05)
-		move_tween.tween_property(show_myrooms, "position:x", original_x, 0.05)
+		tween.chain().tween_property(show_myrooms, "position:x", original_x - 30, 0.05)
+		tween.chain().tween_property(show_myrooms, "position:x", original_x, 0.05)
+		tween.chain().tween_property(show_myrooms, "position:x", original_x + 30, 0.05)
+		tween.chain().tween_property(show_myrooms, "position:x", original_x, 0.05)
 	_refresh_room_list()
 
 func _on_create_pressed():
 	# 添加刷新动画
 	# 左右移动
-	var move_tween = create_tween()
-	move_tween.set_ease(Tween.EASE_IN_OUT)
-	move_tween.set_trans(Tween.TRANS_SINE)
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
 	# # 获取按钮当前的x位置
 	# var original_x = create_button.position.x
 	# # 向右移动30像素
-	# move_tween.tween_property(create_button, "position:x", original_x - 30, 0.15)
-	# move_tween.tween_property(create_button, "position:x", original_x, 0.15)
-	# move_tween.tween_property(create_button, "position:x", original_x + 30, 0.15)
-	# move_tween.tween_property(create_button, "position:x", original_x, 0.15)
+	# tween.tween_property(create_button, "position:x", original_x - 30, 0.15)
+	# tween.tween_property(create_button, "position:x", original_x, 0.15)
+	# tween.tween_property(create_button, "position:x", original_x + 30, 0.15)
+	# tween.tween_property(create_button, "position:x", original_x, 0.15)
 
 	# # 招手
 	# var rotation_tween = create_tween()
-	# move_tween.set_ease(Tween.EASE_IN_OUT)
-	# move_tween.set_trans(Tween.TRANS_SINE)
-	move_tween.tween_property(create_button, "rotation_degrees", -15, 0.1)
-	move_tween.tween_property(create_button, "rotation_degrees", 15, 0.2)
-	move_tween.tween_property(create_button, "rotation_degrees", -15, 0.1)
-	move_tween.tween_property(create_button, "rotation_degrees", 15, 0.2)
-	move_tween.tween_property(create_button, "rotation_degrees", 0, 0.1)
+	# tween.set_ease(Tween.EASE_IN_OUT)
+	# tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(create_button, "rotation_degrees", -15, 0.1)
+	tween.tween_property(create_button, "rotation_degrees", 15, 0.2)
+	tween.tween_property(create_button, "rotation_degrees", -15, 0.1)
+	tween.tween_property(create_button, "rotation_degrees", 15, 0.2)
+	tween.tween_property(create_button, "rotation_degrees", 0, 0.1)
 	# # 旋转
 	# var rotation_tween = create_tween()
-	# move_tween.tween_property(create_button, "rotation", PI * 2, 0.5)
-	# move_tween.tween_property(create_button, "rotation", 0, 0)
+	# tween.tween_property(create_button, "rotation", PI * 2, 0.5)
+	# tween.tween_property(create_button, "rotation", 0, 0)
 	create_room_dialog.popup_centered()
 	print("公开匹配")
 	# 这里可以添加从服务器刷新数据的逻辑
@@ -375,27 +403,41 @@ func _on_room_clicked(room_info: Dictionary):
 	room_selected.emit(room_info)
 	pass
 
+# 等待房间开始
+func wait_for_room_to_start():
+	var room_info = selected_room_info
+	# 进入房间
+	var waitingStart = room_for_waiting.instantiate()
+	add_child(waitingStart)
+	waitingStart.reset(room_info.room_id, room_info.max_players)
+	waitingStart.add_player(Network.get_my_name())
+	for playerName in room_info.players:
+		waitingStart.add_player(playerName)
+	# 测试人员退出
+	# var timer = get_tree().create_timer(3.0)
+	# await timer.timeout
+	# waitingStart.remove_player(room_info.players[0])
+	pass # Replace with function body.
+
 func _on_join_room(room_info: Dictionary):
+	if room_info.max_players == room_info.player_count:
+		PopupManager.show_dynamic("房间已满员")
+		print("房间已满员")
+		return
+
+	selected_room_info = room_info
+
 	# 添加到历史记录
 	if not room_history.any(func(r): return r.room_id == room_info.room_id):
 		room_history.push_front(room_info)
 		if room_history.size() > 10: # 限制历史记录数量
 			room_history.pop_back()
 		_save_data()
-
-	if room_info.max_players == room_info.player_count:
-		PopupManager.show_dynamic("房间已满员")
-		print("房间已满员")
-		return
-
-	# 进入房间
-	var waitingStart = room_for_waiting.instantiate()
-	add_child(waitingStart)
-	waitingStart.reset(room_info.room_id, room_info.max_players)
-	waitingStart.add_player("我")
-	for playerName in room_info.players:
-		waitingStart.add_player(playerName)
-
+	if room_info.is_locked:
+		jion_dialog.visible = true
+		jion_room.text = "%s\nID:%s"%[room_info.room_name,room_info.room_id]
+	else:
+		wait_for_room_to_start()
 	pass
 
 
@@ -448,8 +490,11 @@ func _on_room_selected(room_info: Dictionary):
 	pre_room_count = 0 if pre_room_id != room_info.room_id else pre_room_count+1
 
 	pre_room_id = room_info.room_id
-	var tween = create_tween()
+	if tween:
+		tween.kill()
+	tween = create_tween()
 	tween.tween_property(detail_panel, "modulate:a", 1.0, 0.3)
+	pass
 
 
 func _on_room_created(room_info: Dictionary):
@@ -459,3 +504,20 @@ func _on_room_created(room_info: Dictionary):
 		_save_data()
 		_refresh_room_list()
 		_update_stats()
+
+
+func _on_confirm_btn_pressed() -> void:
+	# 校验房间密码
+	if jion_input.text != "1234":
+		PopupManager.show_dynamic("房间密码错误")
+		return
+	wait_for_room_to_start()
+	pass
+
+
+
+func _on_cancle_btn_pressed() -> void:
+	selected_room_info = {}
+	jion_dialog.visible = false
+	jion_input.text = ""
+	pass # Replace with function body.

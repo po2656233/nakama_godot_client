@@ -208,7 +208,7 @@ corner_radius_bottom_left = 10
 transparent_bg = true
 title = "创建游戏房间"
 initial_position = 2
-size = Vector2i(500, 500)
+size = Vector2i(500, 550)
 exclusive = true
 borderless = true
 transparent = true
@@ -220,7 +220,6 @@ script = ExtResource("1_2gsk4")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
@@ -235,9 +234,12 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fu7mx")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel"]
-layout_mode = 2
-offset_right = 460.0
-offset_bottom = 480.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 5
 
 [node name="name" type="Label" parent="MarginContainer/Panel/VBoxContainer"]
@@ -310,6 +312,16 @@ horizontal_alignment = 2
 [node name="RoomNameOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
 layout_mode = 2
 placeholder_text = "请输入房间名(1~8字符)"
+
+[node name="RoomPassword" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "房间密码:"
+horizontal_alignment = 2
+
+[node name="RoomPasswordOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+placeholder_text = "请输入房间密码(16字符以内)"
+secret = true
 
 [node name="GameSection" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
 layout_mode = 2
@@ -394,7 +406,6 @@ text = "5%"
 
 [node name="ButtonSection" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 8
 theme_override_constants/separation = 20
 alignment = 1
 
@@ -417,7 +428,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8h8lc")
 text = "取消"
 
 [node name="Control" type="Control" parent="MarginContainer/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 15)
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]

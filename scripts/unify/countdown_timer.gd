@@ -1,7 +1,7 @@
 extends Node2D
 
 signal timeout
-
+signal timeleft(value) #还剩余多少时间
 
 @onready var progress_circle = $ProgressCircle
 @onready var time_label = $TimeLabel
@@ -31,11 +31,10 @@ func update_time_label():
 	var minutes = floor(time_left / 60)
 	var seconds = int(time_left) % 60
 
-	
 	# 根据剩余时间更新颜色 - 使用更暖的颜色
 	if time_left <= 10.0:
 		time_label.label_settings.font_color = Color.RED
-		time_label.label_settings.font_size = 50
+		time_label.label_settings.font_size = 80
 		time_label.text = "%2d" % [seconds]
 	else:
 		time_label.text = "%02d:%02d" % [minutes, seconds]
@@ -56,10 +55,10 @@ func stop():
 	pass
 
 func _on_timer_timeout():
-	print("计时器超时")
+	# print("计时器超时")
 	time_left -= 1.0
 	update_time_label()
-	
+	timeleft.emit(time_left)
 	# 在最后10秒开始视觉和听觉反馈
 	animation_player.stop()
 	if time_left <= 10.0:
@@ -71,5 +70,6 @@ func _on_timer_timeout():
 			timeout_sound.play()  # 播放滴答声
 	else:
 		tick_sound.play()
+	
 	pass 
 

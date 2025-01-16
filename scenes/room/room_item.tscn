@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=6 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
+[ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.188235, 0.207843, 0.278431, 0.8)
@@ -95,3 +96,11 @@ custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 text = "加入房间"
+
+[node name="Lock" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("2_hrbh1")
+expand_mode = 1

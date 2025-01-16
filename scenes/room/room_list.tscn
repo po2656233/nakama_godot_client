@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=17 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
 [ext_resource type="StyleBox" uid="uid://bd6cd22s3xrgs" path="res://styles/room_panel_style.tres" id="2_panel"]
@@ -47,6 +47,55 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="SystemFont" id="SystemFont_vxb51"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7y3c"]
+bg_color = Color(0.298507, 0.424749, 0.492482, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.633757, 0.633757, 0.633757, 1)
+border_blend = true
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(0.539432, 0.714701, 0.443229, 0.6)
+shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_gage8"]
+font_size = 22
+font_color = Color(0.716944, 0.83517, 0.76336, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tlaog"]
+bg_color = Color(0.543246, 0.630619, 0.517792, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_te5nl"]
+bg_color = Color(0.399655, 0.541059, 0.451504, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny8e5"]
+bg_color = Color(0.530574, 0.780398, 0.615162, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02g8e"]
+bg_color = Color(0.225346, 0.375139, 0.498513, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="RoomList" type="Control"]
 layout_mode = 3
@@ -183,7 +232,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 alignment = 1
 icon_alignment = 1
 selected = 0
-item_count = 6
+item_count = 7
 popup/item_0/text = "默认排序"
 popup/item_1/text = "底分升序"
 popup/item_1/id = 1
@@ -195,6 +244,8 @@ popup/item_4/text = "人数降序"
 popup/item_4/id = 4
 popup/item_5/text = "创建时间"
 popup/item_5/id = 5
+popup/item_6/text = "未加锁"
+popup/item_6/id = 6
 
 [node name="ShowFavorites" type="Button" parent="VBoxContainer/SearchBar"]
 custom_minimum_size = Vector2(120, 40)
@@ -276,9 +327,86 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 10
 
+[node name="CenterContainer" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(350, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q7y3c")
+
+[node name="RoomID" type="Label" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "房间ID"
+label_settings = SubResource("LabelSettings_gage8")
+horizontal_alignment = 1
+
+[node name="RoomPsw" type="LineEdit" parent="CenterContainer/Panel"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -20.5
+offset_right = 100.0
+offset_bottom = 10.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+placeholder_text = "请输入房间密码"
+secret = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -42.0
+offset_top = -40.0
+offset_right = 42.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="confirmBtn" type="Button" parent="CenterContainer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(65, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_tlaog")
+theme_override_styles/hover = SubResource("StyleBoxFlat_te5nl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ny8e5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_02g8e")
+text = "加入"
+
+[node name="cancleBtn" type="Button" parent="CenterContainer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(65, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_tlaog")
+theme_override_styles/hover = SubResource("StyleBoxFlat_te5nl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ny8e5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_02g8e")
+text = "取消"
+
 [node name="RefreshTimer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
 
 [node name="CreateRoomDialog" parent="." instance=ExtResource("3_b0c4m")]
 visible = false
+
+[connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/confirmBtn" to="." method="_on_confirm_btn_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/cancleBtn" to="." method="_on_cancle_btn_pressed"]

@@ -370,7 +370,7 @@ func restore_session() -> bool:
 	if session_token.is_empty() or not _client:
 		return false
 		
-	var result = await NakamaClient.restore_session(session_token)
+	var result =  NakamaClient.restore_session(session_token)
 	if result.is_exception():
 		return false
 
@@ -437,7 +437,15 @@ func save_player_data() -> void:
 	await _client.write_storage_objects_async(_session, objects)
 
 
+func get_my_id() -> String:
+	if not player_data:
+		return ""
+	return player_data.id
 
+func get_my_name() -> String:
+	if not player_data:
+		return ""
+	return player_data.username
 
 
 # 好友和俱乐部管理

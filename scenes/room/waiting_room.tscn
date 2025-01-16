@@ -112,6 +112,8 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 
 [node name="CountdownTimer" parent="CenterContainer/PanelContainer/Control" instance=ExtResource("2_bgkmg")]
+visible = false
+position = Vector2(-5, 10)
 scale = Vector2(0.4, 0.4)
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
@@ -131,11 +133,16 @@ theme_override_font_sizes/font_size = 32
 text = "等待其他玩家加入..."
 horizontal_alignment = 1
 
-[node name="RoomInfo" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RoomInfo" type="RichTextLabel" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(550, 35)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.33676, 0.559474, 0.659131, 1)
-text = "房间号：0000"
-horizontal_alignment = 1
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.321858, 0.538656, 0.636054, 1)
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]房间号:[b][color=gold]0000[/color][/b]    最小人数:[b][color=#c0c0c0]10[/color][/b]人    当前:[color=#4c7856]10[/color]人[/center] (满)"
+autowrap_mode = 0
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

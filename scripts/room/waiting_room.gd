@@ -3,15 +3,18 @@ extends Control
 var player_scene = preload("res://scenes/room/player_item.tscn") 
 var max_players = 4
 var last_wait_time = 5
+var time_left:float = 0.0
 var room_id = ""
 var current_players = []
 @onready var player_list = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerList
 @onready var waiting_animation = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WaitingAnimation
 @onready var room_info = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RoomInfo
 @onready var countdown = $CenterContainer/PanelContainer/Control/CountdownTimer
+@onready var cancleBtn = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CancelButton
+
 func _ready():
 	# 初始化房间信息
-	room_info.text = "房间号：" + str(randi() % 10000).pad_zeros(4)
+	room_info.text = "[center]房间号:[b][color=yellow]0000[/color][/b]    最小人数:[b][color=red]10[/color][/b]人    当前:[color=green]10[/color]人[/center] (满)" #"房间号：" + str(randi() % 10000).pad_zeros(4)
 	
 	# 启动等待动画
 	start_waiting_animation()
@@ -20,9 +23,12 @@ func _ready():
 	# if OS.has_feature("editor"):
 	 #     _debug_add_test_players()
 	countdown.timeout.connect(_on_countdown_timeout)
+	countdown.timeleft.connect(_on_countdown_timeleft)
+	
 	pass
 
 func reset(roomId: String = "",playerMax:int=10):
+	cancleBtn.disabled = false
 	max_players = playerMax
 	room_id = roomId
 	if playerMax > 3:
@@ -41,23 +47,34 @@ func reset(roomId: String = "",playerMax:int=10):
 	pass
 
 func add_player(player_name: String):
+	if current_players.size() >= max_players:
+		PopupManager.show_dynamic("房间已满，无法加入")
+		return
 	var player_item = player_scene.instantiate()
 	player_item.get_node("PlayerName").text = player_name
 	player_list.add_child(player_item)
 	current_players.append(player_name)
-	room_info.text= "房间号:" + room_id +"    最小人数:"+str(max_players) +"人    当前人数:"+str(current_players.size()) +"人"
+	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#880218]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 	if current_players.size() >= max_players:
+		room_info.text += "  [color=red](满)[/color]"
 		countdown.show()
 		countdown.start(last_wait_time)
 		SignalManager.FullRoomSIG.emit(room_id)
 
 func remove_player(player_name: String):
-	for i in range(player_list.get_child_count()):
-		var player_item = player_list.get_child(i)
+	if  time_left <= 1.0:
+		return
+	for player_item in player_list.get_children():
 		if player_item.get_node("PlayerName").text == player_name:
 			player_list.remove_child(player_item)
-			current_players.remove(player_name)
-			room_info.text= "房间号:" + room_id +"    最小人数:"+str(max_players) +"人    当前人数:"+str(current_players.size()) +"人"
+			current_players.erase(player_name)
+			PopupManager.show_dynamic("%s  已离开房间"%[player_name])
+			countdown.stop()
+			countdown.hide()
+			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#880218]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
+			return
+	pass
+
 
 func start_waiting_animation():
 	var tween = create_tween()
@@ -67,14 +84,23 @@ func start_waiting_animation():
 
 func _on_countdown_timeout():
 	if current_players.size() >= max_players:
+		# cancleBtn.disabled = true
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
 		SceneManager.switch_to_scene("xiangqi")
-	
+
+func _on_countdown_timeleft(timeleft:float):
+	time_left = timeleft
+	if timeleft == 1.0:
+		PopupManager.show_dynamic("选手已锁定,不允许离开")
+		cancleBtn.disabled = true
+	pass
+
 func _on_cancel_button_pressed():
 	# 这里添加取消等待的逻辑
 	countdown.stop()
 	countdown.hide()
+	remove_player(Network.get_my_name())
 	SceneManager.switch_to_scene("roomlist")
 
 func _debug_add_test_players():

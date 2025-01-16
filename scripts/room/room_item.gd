@@ -9,6 +9,8 @@ extends PanelContainer
 @onready var player_count_label = $MarginContainer/VBoxContainer/RoomInfo/PlayerCount
 @onready var join_button = $MarginContainer/VBoxContainer/HBoxContainer/JoinButton
 @onready var favorite_button = $MarginContainer/VBoxContainer/HBoxContainer/FavoriteButton
+@onready var room_lock = $Lock
+
 var room_style_path = "res://styles/room_panel_style.tres"
 var waiting_style_path = "res://styles/waiting_style.tres"
 var playing_style_path = "res://styles/playing_style.tres"
@@ -49,7 +51,7 @@ func setup(data: Dictionary):
 	base_score_label.text = "底分: " + str(data.get("base_score", 0))
 	player_count_label.text = "人数: %d/%d" % [data.get("player_count", 0), data.get("max_players", 0)]
 	status_label.text = data.get("status", "")
-	
+	room_lock.visible = data.get("is_locked", false)
 	# 根据状态设置状态标签样式
 	var style_path: String
 	match data.get("status", ""):
