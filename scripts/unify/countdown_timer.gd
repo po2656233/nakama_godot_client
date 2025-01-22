@@ -10,12 +10,13 @@ signal timeleft(value) #还剩余多少时间
 @onready var timeout_sound = $TimeoutSound
 @onready var timerover_sound = $TimeoverSound
 @onready var timer = $Timer
-
+@onready var texiao = $DragonBones
 var time_left: float = 20.0
 var is_running: bool = false
 
 func _ready():
 	# start()
+	texiao.visible = false
 	pass
 	
 func _process(_delta):
@@ -63,13 +64,14 @@ func _on_timer_timeout():
 	animation_player.stop()
 	if time_left <= 10.0:
 		if time_left == 0.0:
+			texiao.visible = false
 			timerover_sound.play()
 			timeout.emit()
 			stop()
 		else:
+			texiao.visible = true
 			timeout_sound.play()  # 播放滴答声
 	else:
 		tick_sound.play()
 	
 	pass 
-

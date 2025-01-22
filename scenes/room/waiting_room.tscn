@@ -154,7 +154,7 @@ size_flags_vertical = 6
 
 [node name="WaitingAnimation" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.483917, 0.706701, 0.848075, 1)
+theme_override_colors/font_color = Color(0.391497, 0.629197, 0.777006, 1)
 text = "● ● ●"
 horizontal_alignment = 1
 

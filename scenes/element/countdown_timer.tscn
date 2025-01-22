@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://ryqfmggkqpxe"]
+[gd_scene load_steps=13 format=3 uid="uid://ryqfmggkqpxe"]
 
 [ext_resource type="Script" path="res://scripts/unify/countdown_timer.gd" id="1_xxxxx"]
 [ext_resource type="AudioStream" uid="uid://r6as7qelxqcx" path="res://assets/music/tick.mp3" id="2_cmetn"]
 [ext_resource type="AudioStream" uid="uid://8kbicuvoslr" path="res://assets/music/ding.mp3" id="3_yjwb7"]
 [ext_resource type="AudioStream" uid="uid://bc3v74o1tqsa7" path="res://assets/music/lingling.mp3" id="4_yv3yn"]
+[ext_resource type="DragonBonesFactory" uid="uid://cv48p2uhignld" path="res://sprites/daojishi/daojishitongyong_dragon_bones_factory.tres" id="5_kdx38"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -94,9 +95,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 21.0
-offset_top = 38.0
+offset_top = 46.0
 offset_right = 166.0
-offset_bottom = 148.0
+offset_bottom = 156.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "0"
@@ -119,5 +120,18 @@ stream = ExtResource("3_yjwb7")
 
 [node name="TimeoverSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_yv3yn")
+
+[node name="DragonBones" type="DragonBones" parent="."]
+factory = ExtResource("5_kdx38")
+instantiate_dragon_bones_data_name = "daojishitongyong"
+armature_settings = {
+"clip_children": 0,
+"current_animation": "animation",
+"material": null,
+"sub_armatures": {},
+"use_parent_material": true,
+"visibility_layerF": null
+}
+position = Vector2(96, 107)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

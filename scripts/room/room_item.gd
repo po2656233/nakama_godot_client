@@ -1,15 +1,15 @@
 extends PanelContainer
 
 # 节点引用
-@onready var status_label = $MarginContainer/VBoxContainer/RoomInfo/Status
-@onready var room_name_label = $MarginContainer/VBoxContainer/RoomInfo/RoomName
-@onready var game_name_label = $MarginContainer/VBoxContainer/RoomInfo/GameName
-@onready var room_id_label = $MarginContainer/VBoxContainer/RoomInfo/RoomID
-@onready var base_score_label = $MarginContainer/VBoxContainer/RoomInfo/BaseScore
-@onready var player_count_label = $MarginContainer/VBoxContainer/RoomInfo/PlayerCount
-@onready var join_button = $MarginContainer/VBoxContainer/HBoxContainer/JoinButton
-@onready var favorite_button = $MarginContainer/VBoxContainer/HBoxContainer/FavoriteButton
-@onready var room_lock = $Lock
+@onready var status_label = $MarginContainer/Panel/Status
+@onready var room_name_label = $MarginContainer/Panel/RoomName
+@onready var game_name_label = $MarginContainer/Panel/GameName
+@onready var room_id_label = $MarginContainer/Panel/RoomID
+@onready var base_score_label = $MarginContainer/Panel/BaseScore
+@onready var player_count_label = $MarginContainer/Panel/PlayerCount
+@onready var join_button = $MarginContainer/HBoxContainer/JoinButton
+@onready var favorite_button = $MarginContainer/HBoxContainer/FavoriteButton
+@onready var room_lock = $MarginContainer/Panel/Lock
 
 var room_style_path = "res://styles/room_panel_style.tres"
 var waiting_style_path = "res://styles/waiting_style.tres"
@@ -45,11 +45,11 @@ func _ready():
 
 func setup(data: Dictionary):
 	room_data = data
-	room_name_label.text = "房间: " + data.get("room_name", "")
-	game_name_label.text = "游戏: " + data.get("game_name", "")
-	room_id_label.text = "ID: " + data.get("room_id", "")
-	base_score_label.text = "底分: " + str(data.get("base_score", 0))
-	player_count_label.text = "人数: %d/%d" % [data.get("player_count", 0), data.get("max_players", 0)]
+	room_name_label.text = data.get("room_name", "")
+	game_name_label.text = data.get("game_name", "")
+	room_id_label.text = data.get("room_id", "")
+	base_score_label.text = str(data.get("base_score", 0))+" 分"
+	player_count_label.text = "%d/%d" % [data.get("player_count", 0), data.get("max_players", 0)]
 	status_label.text = data.get("status", "")
 	room_lock.visible = data.get("is_locked", false)
 	# 根据状态设置状态标签样式
@@ -98,7 +98,7 @@ func _on_mouse_entered():
 	
 	# 添加光晕效果
 	var style = get_theme_stylebox("panel").duplicate()
-	style.shadow_size = 10
+	style.shadow_size = 5
 	style.shadow_color = Color(0.2, 0.4, 0.8, 0.3)
 	add_theme_stylebox_override("panel", style)
 
@@ -124,7 +124,7 @@ func _on_gui_input(event: InputEvent):
 		# 点击动画
 		var scale_tween = create_tween()
 		scale_tween.tween_property(self, "scale", Vector2(0.95, 0.95), 0.1)
-		scale_tween.tween_property(self, "scale", Vector2(1, 1), 0.1)
+		scale_tween.tween_property(self, "scale", Vector2(1, 1), 0.1) 
 
 func _on_join_button_pressed():
 	if not is_instance_valid(self) or not is_instance_valid(join_button):

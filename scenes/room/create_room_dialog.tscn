@@ -312,6 +312,7 @@ horizontal_alignment = 2
 [node name="RoomNameOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
 layout_mode = 2
 placeholder_text = "请输入房间名(1~8字符)"
+virtual_keyboard_type = 4
 
 [node name="RoomPassword" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
 layout_mode = 2

@@ -93,7 +93,7 @@ func login()->void:
 		return
 	loading.show()
 	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text):
-		SignalManager.LoadingSIG.emit(1)
+		SignalManager.LoadingSIG.emit(20)
 		await Network.load_player_data()  
 		SignalManager.LoadingSIG.emit(100)
 

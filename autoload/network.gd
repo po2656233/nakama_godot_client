@@ -436,17 +436,17 @@ func save_player_data() -> void:
 	
 	await _client.write_storage_objects_async(_session, objects)
 
-
+# 获取当前用户 ID
 func get_my_id() -> String:
 	if not player_data:
 		return ""
 	return player_data.id
 
+# 获取当前用户名
 func get_my_name() -> String:
 	if not player_data:
 		return ""
 	return player_data.username
-
 
 # 好友和俱乐部管理
 # 通过用户名搜索用户
@@ -727,6 +727,7 @@ func remove_channel_message(channel_id:String,message_id: String)->bool:
 		return true 
 	return false
 
+# 修改消息
 func reback_channel_message(channel_id:String,message_id: String,data:Dictionary)->bool:
 	if _socket:
 		var result= await _socket.update_chat_message_async(channel_id,message_id,data)
@@ -744,6 +745,8 @@ func sendDataRPC(funcName:String,payload = null):
 			return null
 		return result
 	return null
+#########################
+
 
 #################################################################################
 # 异步加载 Texture2D

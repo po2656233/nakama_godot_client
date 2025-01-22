@@ -162,11 +162,16 @@ func _on_nakama_socket_closed() -> void:
 
 func get_user_presence_for_peer(peer_id: int) -> NakamaRTAPI.UserPresence:
 	var session_id = _id_map.get(peer_id)
+	print("session_id: %s" % session_id)
+	print("_id_map: %s" % _id_map)
 	if session_id == null:
 		return null
+	print("session_id: %s" % session_id)
 	var user = _users.get(session_id)
+	print("user: %s" % user)
 	if user == null:
 		return null
+	print("get_user_presence_for_peer: %s" % user.presence)
 	return user.presence
 
 func leave() -> void:

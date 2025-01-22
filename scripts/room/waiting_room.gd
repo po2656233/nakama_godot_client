@@ -1,6 +1,7 @@
 extends Control
 
 var player_scene = preload("res://scenes/room/player_item.tscn") 
+var tween:Tween
 var max_players = 4
 var last_wait_time = 5
 var time_left:float = 0.0
@@ -27,6 +28,7 @@ func _ready():
 	
 	pass
 
+# 重置房间信息
 func reset(roomId: String = "",playerMax:int=10):
 	cancleBtn.disabled = false
 	max_players = playerMax
@@ -46,6 +48,7 @@ func reset(roomId: String = "",playerMax:int=10):
 		player_list.columns = playerMax
 	pass
 
+# 加入房间
 func add_player(player_name: String):
 	if current_players.size() >= max_players:
 		PopupManager.show_dynamic("房间已满，无法加入")
@@ -54,13 +57,14 @@ func add_player(player_name: String):
 	player_item.get_node("PlayerName").text = player_name
 	player_list.add_child(player_item)
 	current_players.append(player_name)
-	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#880218]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
+	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 	if current_players.size() >= max_players:
 		room_info.text += "  [color=red](满)[/color]"
 		countdown.show()
 		countdown.start(last_wait_time)
 		SignalManager.FullRoomSIG.emit(room_id)
 
+# 离开房间
 func remove_player(player_name: String):
 	if  time_left <= 1.0:
 		return
@@ -71,17 +75,20 @@ func remove_player(player_name: String):
 			PopupManager.show_dynamic("%s  已离开房间"%[player_name])
 			countdown.stop()
 			countdown.hide()
-			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#880218]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
+			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 			return
 	pass
 
-
+# 启动等待动画
 func start_waiting_animation():
-	var tween = create_tween()
+	if tween:
+		tween.kill()
+	tween = get_tree().create_tween()
 	tween.tween_property(waiting_animation, "modulate:a", 0.3, 1.0)
 	tween.tween_property(waiting_animation, "modulate:a", 1.0, 1.0)
 	tween.set_loops()
 
+# 计时器回调
 func _on_countdown_timeout():
 	if current_players.size() >= max_players:
 		# cancleBtn.disabled = true
@@ -89,15 +96,21 @@ func _on_countdown_timeout():
 		await timer.timeout
 		SceneManager.switch_to_scene("xiangqi")
 
+# 计时器回调
 func _on_countdown_timeleft(timeleft:float):
 	time_left = timeleft
 	if timeleft == 1.0:
-		PopupManager.show_dynamic("选手已锁定,不允许离开")
+		PopupManager.show_dynamic("选手已锁定,不允许离开",150)
 		cancleBtn.disabled = true
+		if tween:
+			tween.kill()
 	pass
 
+# 点击取消按钮
 func _on_cancel_button_pressed():
 	# 这里添加取消等待的逻辑
+	if tween:
+		tween.kill()
 	countdown.stop()
 	countdown.hide()
 	remove_player(Network.get_my_name())

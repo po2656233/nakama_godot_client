@@ -70,8 +70,9 @@ theme_override_constants/margin_right = 15
 layout_mode = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
-size_flags_vertical = 1
+size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_ngnld")
 theme_override_styles/fill = SubResource("StyleBoxFlat_tlhce")
 show_percentage = false

@@ -1,14 +1,47 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=13 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
+[ext_resource type="Texture2D" uid="uid://bhjwhm86nw8hx" path="res://assets/room/room0202.png" id="2_mcopm"]
+[ext_resource type="Texture2D" uid="uid://cg5r875ad5l1s" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.188235, 0.207843, 0.278431, 0.8)
+bg_color = Color(0.567014, 0.771032, 0.875651, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3edv"]
+draw_center = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_3t4jk"]
+font_size = 14
+font_color = Color(0.673416, 0.832612, 0.917436, 1)
+shadow_size = 3
+shadow_color = Color(0.482353, 0.482353, 0.482353, 0.866667)
+
+[sub_resource type="LabelSettings" id="LabelSettings_20nq0"]
+font_color = Color(0.99524, 0.928726, 0, 1)
+outline_size = 3
+outline_color = Color(0.201527, 0.201527, 0.201527, 1)
+shadow_size = 2
+shadow_color = Color(0.577836, 0.713973, 0.579438, 0.807843)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2tp5m"]
+font_size = 20
+font_color = Color(0.375987, 0.31869, 0.379707, 1)
+outline_size = 5
+outline_color = Color(0.756863, 0.74902, 0.584314, 1)
+shadow_size = 3
+shadow_color = Color(0.385493, 0.385492, 0.385492, 0.952941)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u0kmr"]
+font_size = 12
+font_color = Color(0.634316, 0.727066, 0.566808, 1)
+outline_color = Color(0.194349, 0.194349, 0.194349, 1)
+shadow_size = 3
+shadow_color = Color(0.259294, 0.259294, 0.259294, 0.811765)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_favorite"]
 bg_color = Color(0.839698, 0.401707, 0.135815, 0.741176)
@@ -25,82 +58,137 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="RoomItem" type="PanelContainer"]
-custom_minimum_size = Vector2(0, 120)
-offset_right = 40.0
-offset_bottom = 40.0
+clip_contents = true
+custom_minimum_size = Vector2(280, 250)
+offset_right = 290.0
+offset_bottom = 247.0
 pivot_offset = Vector2(350, 60)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 script = ExtResource("1_room")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_mcopm")
+expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Panel" type="Panel" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_styles/panel = SubResource("StyleBoxFlat_a3edv")
 
-[node name="RoomInfo" type="GridContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-columns = 3
+[node name="RoomID" type="Label" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.5
+offset_top = 41.0
+offset_right = -56.5
+offset_bottom = 67.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "ID:"
+label_settings = SubResource("LabelSettings_3t4jk")
 
-[node name="RoomName" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
-layout_mode = 2
+[node name="RoomName" type="Label" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -7.0
+offset_bottom = 16.0
+grow_horizontal = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 18
 text = "房间名称"
+label_settings = SubResource("LabelSettings_20nq0")
+horizontal_alignment = 1
 
-[node name="GameName" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
-layout_mode = 2
+[node name="GameName" type="Label" parent="MarginContainer/Panel"]
+layout_mode = 1
+offset_left = -16.0
+offset_top = -7.0
+offset_right = 48.0
+offset_bottom = 16.0
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "游戏类型"
-horizontal_alignment = 1
 
-[node name="RoomID" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+[node name="BaseScoreTR" type="TextureRect" parent="MarginContainer/Panel"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "房间ID"
-horizontal_alignment = 2
+offset_left = 12.0
+offset_top = 142.0
+offset_right = 12.0
+offset_bottom = 207.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_fftwn")
+expand_mode = 4
+stretch_mode = 2
 
-[node name="BaseScore" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+[node name="BaseScore" type="Label" parent="MarginContainer/Panel"]
 layout_mode = 2
-text = "底分"
+offset_left = 45.0
+offset_top = 162.0
+offset_right = 188.0
+offset_bottom = 196.0
+text = "110111111 分"
+label_settings = SubResource("LabelSettings_2tp5m")
 
-[node name="PlayerCount" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+[node name="PlayerCount" type="Label" parent="MarginContainer/Panel"]
 layout_mode = 2
-text = "玩家数"
-horizontal_alignment = 1
+offset_left = 168.0
+offset_top = 112.0
+offset_right = 216.0
+offset_bottom = 135.0
+text = "人数："
+label_settings = SubResource("LabelSettings_u0kmr")
 
-[node name="Status" type="Label" parent="MarginContainer/VBoxContainer/RoomInfo"]
+[node name="Status" type="Label" parent="MarginContainer/Panel"]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+offset_left = 150.0
+offset_top = 38.0
+offset_right = 200.0
+offset_bottom = 61.0
 text = "状态"
 horizontal_alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Lock" type="TextureRect" parent="MarginContainer/Panel"]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-theme_override_constants/separation = 10
-alignment = 2
+offset_left = 186.0
+offset_top = 138.0
+offset_right = 206.0
+offset_bottom = 158.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = ExtResource("2_hrbh1")
+expand_mode = 1
 
-[node name="FavoriteButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="FavoriteButton" type="Button" parent="MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_favorite")
 toggle_mode = true
 text = "☆ 收藏"
 
-[node name="JoinButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="JoinButton" type="Button" parent="MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 text = "加入房间"
 
-[node name="Lock" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(25, 25)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-texture = ExtResource("2_hrbh1")
-expand_mode = 1
+[connection signal="gui_input" from="MarginContainer/Panel" to="." method="_on_gui_input"]

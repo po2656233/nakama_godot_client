@@ -133,6 +133,63 @@ var room_data = [
 		"rules": ["中国规则", "60分钟限时"],
 		"players": ["黑棋手", "白棋手"],
 		"favorite": true,
+	},
+	{
+		"room_name": "军棋道场",
+		"game_name": "军棋",
+		"game_type": 6,
+		"room_id": "R010",
+		"is_locked": false,
+		"creator_id": "xxxxxx01",
+		"base_score": 500,
+		"entry_score": 5000,
+		"current_round": 1,
+		"player_count": 2,
+		"max_players": 2,
+		"status": "进行中",
+		"create_time": "2024-01-08 10:30:00",
+		"description": "围棋爱好者的修炼场所",
+		"rules": ["中国规则", "60分钟限时"],
+		"players": ["黑棋手", "白棋手"],
+		"favorite": true,
+	},
+	{
+		"room_name": "飞机棋道场",
+		"game_name": "飞机棋",
+		"game_type": 7,
+		"room_id": "R011",
+		"is_locked": false,
+		"creator_id": "xxxxxx01",
+		"base_score": 500,
+		"entry_score": 5000,
+		"current_round": 1,
+		"player_count": 2,
+		"max_players": 2,
+		"status": "进行中",
+		"create_time": "2024-01-08 10:30:00",
+		"description": "围棋爱好者的修炼场所",
+		"rules": ["中国规则", "60分钟限时"],
+		"players": ["黑棋手", "白棋手"],
+		"favorite": true,
+	},
+	{
+		"room_name": "大富翁道场",
+		"game_name": "大富翁",
+		"game_type": 8,
+		"room_id": "R012",
+		"is_locked": false,
+		"creator_id": "xxxxxx01",
+		"base_score": 500,
+		"entry_score": 5000,
+		"current_round": 1,
+		"player_count": 2,
+		"max_players": 2,
+		"status": "进行中",
+		"create_time": "2024-01-08 10:30:00",
+		"description": "围棋爱好者的修炼场所",
+		"rules": ["中国规则", "60分钟限时"],
+		"players": ["黑棋手", "白棋手"],
+		"favorite": true,
 	}
 ]
 
@@ -144,6 +201,21 @@ func _ready():
 	SettingsManager.show_settings()
 	SceneManager.set_previous_name("roomlist")
 	# WindowDrag.register_drag_zone(self)
+	var width = get_viewport_rect().size.x
+	if width>300:
+		room_container.columns = (width-250)/ 300
+
+	# 创建房间
+	create_room_dialog.room_created.connect(_on_room_created)
+	# 初始化动画
+	detail_panel.modulate.a = 0
+	
+	# 加载保存的数据
+	_load_saved_data()
+	
+	jion_dialog.visible = false
+	_refresh_room_list()
+	_update_stats()
 
 	# 绑定事件
 	search_input.text_changed.connect(_on_search_changed)
@@ -156,17 +228,7 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	refresh_timer.timeout.connect(_on_refresh_timer_timeout)
 	room_selected.connect(_on_room_selected)
-	# 创建房间
-	create_room_dialog.room_created.connect(_on_room_created)
-	# 初始化动画
-	detail_panel.modulate.a = 0
-	
-	# 加载保存的数据
-	_load_saved_data()
-	
-	jion_dialog.visible = false
-	_refresh_room_list()
-	_update_stats()
+
 
 func _refresh_room_list():
 	# 清除现有房间
@@ -180,9 +242,9 @@ func _refresh_room_list():
 	if filtered_rooms.size() == 0:
 		return
 
-	if tween:
-		tween.kill()
-	tween = create_tween()
+	# if tween:
+	# 	tween.kill()
+	# tween = get_tree().create_tween()
 	# 创建房间列表项
 	for data in filtered_rooms:
 		var room_item = roomItem.instantiate()
@@ -196,8 +258,9 @@ func _refresh_room_list():
 		room_item.is_favorite = data.favorite 
 		
 		# 添加进入动画
-		room_item.modulate.a = 0
-		tween.chain().tween_property(room_item, "modulate:a", 1.0, 0.1)
+		room_item.show()
+		# room_item.modulate.a = 0
+		# tween.chain().tween_property(room_item, "modulate:a", 1.0, 0.2)
 		
 
 

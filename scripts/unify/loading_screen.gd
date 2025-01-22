@@ -26,7 +26,7 @@ func _process(delta):
 		current = 0.0
 		var timer = get_tree().create_timer(0.1)
 		await timer.timeout
-		SceneManager.switch_to_scene("home","custom",1.5) 
+		SceneManager.switch_to_scene("home","custom",0.5) 
 		queue_free()
 
 

@@ -11,13 +11,19 @@ signal game_selected(itemNode)
 @onready var gameFront = $Front
 @onready var introduceTitle = $Back/GameBack/Introduce
 @onready var animation = $AnimationPlayer
-@onready var dragonBonesDibeichang = $Front/MarginContainer/DragonBonesDibeichang
-@onready var dragonBonesJiangbei = $Front/MarginContainer/DragonBonesJiangbei
-@onready var dragonBonesPuke = $Front/MarginContainer/DragonBonesPuke
+# @onready var dragonBonesDibeichang = $Front/MarginContainer/DragonBonesDibeichang
+# @onready var dragonBonesJiangbei = $Front/MarginContainer/DragonBonesJiangbei
+# @onready var dragonBonesPuke = $Front/MarginContainer/DragonBonesPuke
 @onready var version = $Front/MarginContainer/Version
+@onready var dragonBones1 = $Front/MarginContainer/DragonBonesDibeichang
+@onready var dragonBones2 = 	$Front/MarginContainer/DragonBonesJiangbei
+@onready var dragonBones3 = 	$Front/MarginContainer/DragonBonesPuke
+@onready var dragonBones4 = 	$Front/MarginContainer/DragonBonesBaoX1
+@onready var dragonBones5 = 	$Front/MarginContainer/DragonBonesBaoX2
+@onready var dragonBones6 = 	$Front/MarginContainer/DragonBonesBaoX3
+@onready var dragonBones7 = 	$Front/MarginContainer/DragonBonesBaoX4
 
-
-
+var gameLogos = []
 var game_data = {}
 var is_flipped = true
 var is_hovering = false
@@ -29,6 +35,7 @@ var is_dragging = false
 var min_swipe_distance = 200  # 最小滑动距离
 #
 func _ready():
+	gameLogos = [ dragonBones1, dragonBones2, dragonBones3, dragonBones4, dragonBones5, dragonBones6, dragonBones7]
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
@@ -41,26 +48,21 @@ func setup(data):
 	var img = load("res://assets/game/flagItem/"+str(randi() % 5)+".png")
 	gameImage.texture = img
 	gameBackImage.texture = img
+	
 	if data.image:
 		# gameImage.texture = await Network.load_texture_async(data.image,350,300)
-		DataManager.safe_free_node(dragonBonesDibeichang)
-		DataManager.safe_free_node(dragonBonesJiangbei)
-		DataManager.safe_free_node(dragonBonesPuke)
+		for dragonBones in gameLogos:
+			DataManager.safe_free_node(dragonBones)
 	else:
 		# gameImage.visible = false
-		var index = randi() % 3
-		if index == 0:
-			dragonBonesDibeichang.visible = true
-			DataManager.safe_free_node(dragonBonesJiangbei)
-			DataManager.safe_free_node(dragonBonesPuke)
-		elif index == 1:
-			dragonBonesJiangbei.visible = true
-			DataManager.safe_free_node(dragonBonesDibeichang)
-			DataManager.safe_free_node(dragonBonesPuke)
-		else:
-			dragonBonesPuke.visible = true
-			DataManager.safe_free_node(dragonBonesDibeichang)
-			DataManager.safe_free_node(dragonBonesJiangbei)
+		var logoLen = gameLogos.size()
+		var index = randi() % logoLen
+		for i in range(logoLen):#gameLogos:
+			var dragonBones = gameLogos[i]
+			if i == index:
+				dragonBones.visible = true
+			else:
+				DataManager.safe_free_node(dragonBones)
 	if data.version:
 		version.text = "当前版本:"+data.version
 	pass
