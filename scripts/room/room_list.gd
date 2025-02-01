@@ -473,7 +473,7 @@ func wait_for_room_to_start():
 	var waitingStart = room_for_waiting.instantiate()
 	add_child(waitingStart)
 	waitingStart.reset(room_info.room_id, room_info.max_players)
-	waitingStart.add_player(Online.nakama_client.get_my_name())
+	waitingStart.add_player(OnlineChat.get_my_name())
 	for playerName in room_info.players:
 		waitingStart.add_player(playerName)
 	# 测试人员退出

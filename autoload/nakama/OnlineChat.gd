@@ -632,14 +632,7 @@ func reback_channel_message(channel_id:String,message_id: String,data:Dictionary
 		return true
 	return false
 
-func sendDataRPC(funcName:String,payload = null):
-	if Online.nakama_socket:
-		var result= await Online.nakama_socket.rpc_async(funcName,payload)
-		if result.is_exception():
-			print("Error removing group: ", result.get_exception().message)
-			return null
-		return result
-	return null
+
 #########################
 
 

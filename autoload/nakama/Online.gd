@@ -67,3 +67,12 @@ func connect_nakama_socket() -> void:
 
 func is_nakama_socket_connected() -> bool:
 	return nakama_socket != null && nakama_socket.is_connected_to_host()
+
+func sendDataRPC(funcName:String,payload = null):
+	if nakama_socket:
+		var result= await nakama_socket.rpc_async(funcName,payload)
+		if result.is_exception():
+			print("Error removing group: ", result.get_exception().message)
+			return null
+		return result
+	return null

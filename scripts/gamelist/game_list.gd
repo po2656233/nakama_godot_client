@@ -62,7 +62,7 @@ func _ready():
 	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
 
 	# 获取游戏列表
-	var result = await Online.nakama_client.sendDataRPC("list_games")
+	var result = await Online.sendDataRPC("list_games")
 	print("获取游戏列表",result)
 	if result and result.id == "list_games":
 		var games = JSON.parse_string(result.payload)
