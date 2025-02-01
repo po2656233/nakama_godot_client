@@ -86,7 +86,7 @@ func update_group_list():
 		var group_item = group_item_scene.instantiate()
 		$VBoxContainer/ScrollContainer/GroupContainer.add_child(group_item)
 		group_item.setup(group)
-		group_item.tooltip_text = group["description"]+"\n创建时间:" + Network.get_chinese_time_str(group["create_time"])
+		group_item.tooltip_text = group["description"]+"\n创建时间:" + Online.nakama_client.get_chinese_time_str(group["create_time"])
 		group_item.group_selected.connect(func(data): _on_group_selected(data, group_item))
 		group_item.group_clicked.connect(func(): _on_cliecked_group(group_item))
 		group_item.group_left.connect(_on_group_left)
@@ -106,7 +106,7 @@ func _on_cliecked_group(item: Node):
 	if item != null:
 		item.setup_panel_style(true)
 		var clubInfo = item.get_group_data()
-		await Network.set_current_channel(clubInfo.channel, true) 
+		await Online.nakama_client.set_current_channel(clubInfo.channel, true) 
 	current_selected_item = item
 
 func _on_group_selected(group_data: Dictionary, item: Node):

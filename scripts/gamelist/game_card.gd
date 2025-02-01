@@ -50,7 +50,7 @@ func setup(data):
 	gameBackImage.texture = img
 	
 	if data.image:
-		# gameImage.texture = await Network.load_texture_async(data.image,350,300)
+		# gameImage.texture = await Util.load_texture_async(data.image,350,300)
 		for dragonBones in gameLogos:
 			DataManager.safe_free_node(dragonBones)
 	else:

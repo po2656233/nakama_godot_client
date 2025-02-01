@@ -39,11 +39,10 @@ func get_nakama_client() -> NakamaClient:
 func set_nakama_session(_nakama_session: NakamaSession) -> void:
 	nakama_session = _nakama_session
 	session_changed.emit(nakama_session)
-	# emit_signal("session_changed", nakama_session)
-
 	if nakama_session and not nakama_session.is_exception() and not nakama_session.is_expired():
+		# 获取到session后连接socket
+		Online.connect_nakama_socket()
 		session_connected.emit(nakama_session)
-		# emit_signal("session_connected", nakama_session)
 	pass
 	
 func connect_nakama_socket() -> void:
@@ -57,6 +56,12 @@ func connect_nakama_socket() -> void:
 	await new_socket.connect_async(nakama_session)
 	nakama_socket = new_socket
 	_nakama_socket_connecting = false
+
+	# 重连
+	if not is_nakama_socket_connected():
+		await socket_connected
+
+	# 通知恢复连接
 	socket_connected.emit(nakama_socket)
 	pass
 

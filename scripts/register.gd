@@ -36,10 +36,10 @@ func _on_tb_return_pressed() -> void:
 func _on_btn_register_pressed() -> void:
 	print("register")
 	if usernameEdit.text.is_empty():
-		await Network.authenticate_device("",true)
+		await Online.nakama_client.authenticate_device("",true)
 	if not checkValidity():
 		return
-	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text,"",true):
+	if await Online.nakama_client.authenticate_email(usernameEdit.text, passwordEdit.text,"",true):
 		ProjectSettings.set("username",usernameEdit.text)
 		# ProjectSettings.set("password",passwordEdit.text)
 		PopupManager.show_confirm("注册成功", Callable(self,"_on_register_success"))

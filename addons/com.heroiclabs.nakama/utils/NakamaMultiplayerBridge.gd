@@ -37,14 +37,14 @@ var rpc_op_code: int = 9002
 
 # Internal variables.
 var _my_session_id: String
-var _my_peer_id: int = 0
+var _my_peer_id: int
 var _id_map := {}
 var _users := {}
 var _matchmaker_ticket := ''
 
 class User extends RefCounted:
 	var presence
-	var peer_id: int = 0
+	var peer_id: String 
 
 	func _init(p_presence) -> void:
 		presence = p_presence
@@ -212,7 +212,7 @@ func _setup_match(res) -> void:
 func _setup_host() -> void:
 	# Claim id 1 and start the match.
 	_my_peer_id = 1
-	_map_id_to_session(1, _my_session_id)
+	_map_id_to_session(_my_peer_id, _my_session_id)
 	_match_state = MatchState.CONNECTED
 	_multiplayer_peer.initialize(_my_peer_id)
 	match_joined.emit()

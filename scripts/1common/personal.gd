@@ -13,14 +13,14 @@ extends Control
 @export var text_prefix := "经验值"  # 可自定义前缀文本
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print('当前玩家信息',Network.player_data)
+	print('当前玩家信息',OnlineChat.player_data)
 	nickname.text = ''
-	if Network.player_data:
-		username.text = Network.player_data.username
-		if Network.player_data.avatar_url:
-			headIcon.texture = await Network.load_texture_async(Network.player_data.avatar_url)
-		if Network.player_data.display_name:
-			nickname.text = Network.player_data.display_name
+	if OnlineChat.player_data:
+		username.text = OnlineChat.player_data.username
+		if OnlineChat.player_data.avatar_url:
+			headIcon.texture = await Util.load_texture_async(OnlineChat.player_data.avatar_url)
+		if OnlineChat.player_data.display_name:
+			nickname.text = OnlineChat.player_data.display_name
 	 # 初始化进度条
 	init_progress_bar()
 	pass # Replace with function body.

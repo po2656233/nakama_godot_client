@@ -67,8 +67,8 @@ func _on_create_pressed():
 	hide()
 	# 模拟创建房间回包
 	var creator_id = "0"
-	if Network.player_data:
-		creator_id = Network.player_data.id
+	if OnlineChat.player_data:
+		creator_id = OnlineChat.player_data.id
 	var gametype = game_type_option.get_selected_id()
 	if gametype == -1:
 		PopupManager.show_message("请选择游戏类型")

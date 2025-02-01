@@ -5,7 +5,7 @@ func _ready() -> void:
 	SettingsManager.show_settings()
 	# SettingsManager.showNotify(false)
 	print("当前运行的节点名",SceneManager.get_current_scene_name())
-	var result = await Network.sendDataRPC("list_games")
+	var result = await Online.nakama_client.sendDataRPC("list_games")
 	print("获取游戏列表",result)
 	pass # Replace with function body.
 

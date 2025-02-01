@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://16d2o6xinx5k"]
 
-[ext_resource type="Script" path="res://scripts/unify/music.gd" id="1_gf1mb"]
+[ext_resource type="Script" path="res://scripts/1common/music.gd" id="1_gf1mb"]
 [ext_resource type="AudioStream" uid="uid://ssac4vmysowm" path="res://assets/music/send.mp3" id="2_mwe5s"]
 [ext_resource type="AudioStream" uid="uid://wfyfn0f87x2k" path="res://assets/music/online.mp3" id="3_mvr1c"]
 [ext_resource type="AudioStream" uid="uid://d2twdvrmc45pg" path="res://assets/music/bg.mp3" id="6_04t5u"]
@@ -15,32 +15,40 @@
 [node name="music" type="Node"]
 script = ExtResource("1_gf1mb")
 
-[node name="send" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_mwe5s")
-
-[node name="online" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_mvr1c")
-
-[node name="notify" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_xuyyx")
-
 [node name="background" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_04t5u")
 
-[node name="comming" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_jl6ta")
+[node name="message" type="Node" parent="."]
 
-[node name="email" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_k3npl")
+[node name="send" type="AudioStreamPlayer" parent="message"]
+stream = ExtResource("2_mwe5s")
 
-[node name="welcome" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_sbyor")
-
-[node name="ding" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_ternn")
-
-[node name="recv" type="AudioStreamPlayer" parent="."]
+[node name="recv" type="AudioStreamPlayer" parent="message"]
 stream = ExtResource("11_ro1u8")
 
-[node name="newmsg" type="AudioStreamPlayer" parent="."]
+[node name="newmsg" type="AudioStreamPlayer" parent="message"]
 stream = ExtResource("12_7g8x6")
+
+[node name="notify" type="Node" parent="."]
+
+[node name="email" type="AudioStreamPlayer" parent="notify"]
+stream = ExtResource("8_k3npl")
+
+[node name="notify" type="AudioStreamPlayer" parent="notify"]
+stream = ExtResource("10_xuyyx")
+
+[node name="ding" type="AudioStreamPlayer" parent="notify"]
+stream = ExtResource("10_ternn")
+
+[node name="welcome" type="AudioStreamPlayer" parent="notify"]
+stream = ExtResource("9_sbyor")
+
+[node name="comming" type="AudioStreamPlayer" parent="notify"]
+stream = ExtResource("7_jl6ta")
+
+[node name="online" type="AudioStreamPlayer" parent="notify"]
+stream = ExtResource("3_mvr1c")
+
+[node name="game" type="Node" parent="."]
+
+[node name="xiangqi" type="Node" parent="game"]

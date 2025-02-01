@@ -100,7 +100,7 @@ const TRANSITION_TYPES = {
 func _init():
 	# 添加场景字典
 	var scenes = {
-        "loading": "res://scenes/element/loading_screen.tscn",
+        "loading": "res://scenes/1common/loading_screen.tscn",
 		"login": "res://scenes/login.tscn",
 		"register": "res://scenes/register.tscn",
 		"home": "res://scenes/home.tscn",
@@ -112,7 +112,7 @@ func _init():
 		"roomlist":"res://scenes/room/room_list.tscn",
 		"matching":"res://scenes/match/matching.tscn",
 		"matchSuccess":"res://scenes/game/match_success.tscn",
-		"leaderboard":"res://scenes/element/leaderboard.tscn",
+		"leaderboard":"res://scenes/1common/leaderboard.tscn",
 		"xiangqi":"res://scenes/game/xiangqi/S/s_test.tscn",
 		# # 如果有重复的场景名称，将被跳过并输出警告
 		# "login": "res://scenes/another_login.tscn"  ,

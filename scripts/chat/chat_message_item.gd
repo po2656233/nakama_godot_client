@@ -181,7 +181,7 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	if show_time:
 		time_label.text = time_str
 	if content.has("headicon") and content["headicon"] != null:
-		head_icon.texture = await Network.load_texture_async(content["headicon"])
+		head_icon.texture = await Util.load_texture_async(content["headicon"])
 	else:
 		head_icon.visible = false
 

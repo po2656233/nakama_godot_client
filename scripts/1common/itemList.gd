@@ -87,14 +87,14 @@ func _on_add_item_data(friend):
 			self.set_item_text(i, friend.user.username)
 			isExist = true
 			if friend.user.avatar_url:
-				var ret = await Network.load_texture_async(friend.user.avatar_url)
+				var ret = await Util.load_texture_async(friend.user.avatar_url)
 				if ret:
 					self.set_item_icon(i, ret)
 			break
 	if not isExist:
 		var index = self.add_item(friend.user.username)
 		if friend.user.avatar_url:
-			var ret = await Network.load_texture_async(friend.user.avatar_url)
+			var ret = await Util.load_texture_async(friend.user.avatar_url)
 			if ret:
 				self.set_item_icon(index, ret)
 		self.set_item_metadata(index, friend)
@@ -116,7 +116,7 @@ func _on_modify_item_data(friend):
 			self.set_item_metadata(i,friend)
 			self.set_item_text(i, friend.user.username)
 			if friend.user.avatar_url:
-				var ret = await Network.load_texture_async(friend.user.avatar_url)
+				var ret = await Util.load_texture_async(friend.user.avatar_url)
 				if ret:
 					self.set_item_icon(i, ret)
 			break
@@ -138,7 +138,7 @@ func _on_item_selected(index: int):
 	var friend = self.get_item_metadata(selected_index)
 	if friend:
 		print("选中项索引：", index,"-->", friend.user)
-		await Network.set_current_channel(friend.channel, true) 
+		await Online.nakama_client.set_current_channel(friend.channel, true) 
 	pass
  
 func _on_item_list_gui_input(event: InputEvent):
@@ -217,7 +217,7 @@ func _add_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("新增好友", friend)
 			if friend:
-				var ret = await Network.add_friends_async([friend.user.id])
+				var ret = await Online.nakama_client.add_friends_async(Online.nakama_session,[friend.user.id])
 				if ret:
 					_on_add_item_data(friend)
 				else:
@@ -239,13 +239,13 @@ func _refuse_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("拒绝好友", friend)
 			if friend: 
-				ret = await Network.refuse_friends_async(friend.user.id)
+				ret = await Online.nakama_client.refuse_friends_async(friend.user.id)
 				SignalManager.FreshFriendListSIG.emit()
 		1:
 			print("拒绝俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
-				ret = await Network.remove_group(group.id)
+				ret = await Online.nakama_client.remove_group(group.id)
 				SignalManager.FreshClubListSIG.emit()
 		2:
 			print("拒绝组员")
@@ -266,13 +266,13 @@ func _block_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("拉黑好友", friend)
 			if friend: 
-				ret = await Network.refuse_friends_async(friend.user.id)
+				ret = await Online.nakama_client.refuse_friends_async(friend.user.id)
 				SignalManager.FreshFriendListSIG.emit()
 		1:
 			print("拉黑俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
-				ret = await Network.remove_group(group.id)
+				ret = await Online.nakama_client.remove_group(group.id)
 				SignalManager.FreshClubListSIG.emit()
 		2:
 			print("拉黑组员")
@@ -293,12 +293,12 @@ func _delete_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("删除好友", friend)
 			if friend:
-				ret = await Network.remove_friend(friend.user.id)
+				ret = await Online.nakama_client.remove_friend(friend.user.id)
 		1:
 			print("删除俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
-				ret = await Network.remove_group(group.id)
+				ret = await Online.nakama_client.remove_group(group.id)
 		2:
 			print("删除组员")
 		3:

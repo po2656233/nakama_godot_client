@@ -33,7 +33,7 @@ func setup(data: Dictionary):
 	else:
 		$MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Description.visible = false
 	if data["avatar"]:
-		$MarginContainer/HBoxContainer/GroupIcon.texture = await Network.load_texture_async(data["avatar"])
+		$MarginContainer/HBoxContainer/GroupIcon.texture = await Util.load_texture_async(data["avatar"])
 	else:
 		$MarginContainer/HBoxContainer/GroupIcon.visible = false
 	
@@ -71,11 +71,11 @@ func _show_leave_confirmation():
 	dialog.popup_centered()
 	
 	dialog.confirmed.connect(func():
-		var ret = await Network.leave_group(group_data["id"])
+		var ret = await Online.nakama_client.leave_group(group_data["id"])
 		if ret:
 			group_left.emit(group_data)
 		else:
-			ret = await Network.remove_group(group_data["id"])
+			ret = await Online.nakama_client.remove_group(group_data["id"])
 			if ret:
 				group_left.emit(group_data)
 			else:

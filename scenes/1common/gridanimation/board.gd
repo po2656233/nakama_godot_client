@@ -1,6 +1,6 @@
 extends Control
 
-var gridScene = preload("res://scenes/element/gridanimation/grid.tscn")
+var gridScene = preload("res://scenes/1common/gridanimation/grid.tscn")
 var allGrid = []
 @export var widthLen = 10
 var count = 0

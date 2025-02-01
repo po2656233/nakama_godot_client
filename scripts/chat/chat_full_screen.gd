@@ -142,46 +142,60 @@ func animate_to_normal():
 	if tween:
 		tween.kill()
 	tween = create_tween()
-	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_trans(Tween.TRANS_SINE)  # 使用更平滑的正弦过渡
 	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)  # 启用并行动画
 	
-	# 动画过渡到原始状态
+	# 同时过渡位置和大小
 	tween.tween_property(self, "position", original_state.position, transition_duration)
-	tween.parallel().tween_property(self, "size", original_state.size, transition_duration)
+	tween.tween_property(self, "size", original_state.size, transition_duration)
 	
-	tween.tween_callback(func():
+	# 同时过渡锚点
+	tween.tween_property(self, "anchor_left", original_state.anchors.left, transition_duration)
+	tween.tween_property(self, "anchor_right", original_state.anchors.right, transition_duration)
+	tween.tween_property(self, "anchor_top", original_state.anchors.top, transition_duration)
+	tween.tween_property(self, "anchor_bottom", original_state.anchors.bottom, transition_duration)
+	
+	# 同时过渡边距
+	tween.tween_property(self, "offset_left", original_state.margins.left, transition_duration)
+	tween.tween_property(self, "offset_right", original_state.margins.right, transition_duration)
+	tween.tween_property(self, "offset_top", original_state.margins.top, transition_duration)
+	tween.tween_property(self, "offset_bottom", original_state.margins.bottom, transition_duration)
+	
+	# 动画完成后恢复状态
+	tween.chain().tween_callback(func():
 		restore_original_state()
 	)
-	pass
 
 func restore_original_state():
 	if !original_state.parent:
 		return
 		
-	var current_parent = get_parent()
-	if current_parent:
-		current_parent.remove_child(self)
+	# 创建一个新的tween用于淡入淡出效果
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE)  # 使用更平滑的正弦过渡
+	tween.set_ease(Tween.EASE_IN_OUT)
 	
-	# 恢复到原始父节点
-	original_state.parent.add_child(self)
-	WindowDrag.unregister_drag_zone(original_state.parent)
+	# 先轻微淡出
+	tween.tween_property(self, "modulate:a", 0.9, 0.1)
 	
-	# 恢复原始属性
-	position = original_state.position
-	size = original_state.size
-	anchor_left = original_state.anchors.left
-	anchor_right = original_state.anchors.right
-	anchor_top = original_state.anchors.top
-	anchor_bottom = original_state.anchors.bottom
-	offset_left = original_state.margins.left
-	offset_right = original_state.margins.right
-	offset_top = original_state.margins.top
-	offset_bottom = original_state.margins.bottom
+	tween.tween_callback(func():
+		var current_parent = get_parent()
+		if current_parent:
+			current_parent.remove_child(self)
+		
+		# 恢复到原始父节点
+		original_state.parent.add_child(self)
+		WindowDrag.unregister_drag_zone(original_state.parent)
+		
+		# 重置顶层显示
+		top_level = false
+	)
 	
-	
-	# 重置顶层显示
-	top_level = false
+	# 淡入效果
+	tween.tween_property(self, "modulate:a", 1.0, 0.2)
 	
 	is_fullscreen = false
 	fullscreenSIG.emit(false)
-	pass

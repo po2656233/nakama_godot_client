@@ -37,9 +37,9 @@ func _on_add_pressed():
 	queue_free()
 
 func _on_input_focus_entered():
-	if Network.isMobile():
+	if Util.isMobile():
 		DisplayServer.virtual_keyboard_show("中文输入法") 
 
 func _on_input_focus_exited():
-	if Network.isMobile():
+	if Util.isMobile():
 		DisplayServer.virtual_keyboard_hide() 

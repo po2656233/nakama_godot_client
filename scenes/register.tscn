@@ -1,12 +1,11 @@
-[gd_scene load_steps=29 format=3 uid="uid://cjg8aljwb2qbb"]
+[gd_scene load_steps=27 format=3 uid="uid://cjg8aljwb2qbb"]
 
 [ext_resource type="Texture2D" uid="uid://bfhp8oh83rlcj" path="res://assets/login/register.jpg" id="1_mo4gw"]
 [ext_resource type="Script" path="res://scripts/register.gd" id="1_sij6y"]
-[ext_resource type="Texture2D" uid="uid://dde5sblcnwyx7" path="res://assets/login/btn_gx_1.png" id="2_lg3fp"]
-[ext_resource type="Texture2D" uid="uid://dexs2dkgy4ocr" path="res://assets/login/btn_gx_0.png" id="3_8vfe4"]
 [ext_resource type="Texture2D" uid="uid://c43vdrflfxmrg" path="res://assets/login/closeeye.svg" id="3_jcxa0"]
 [ext_resource type="Texture2D" uid="uid://cylapxjt4grlm" path="res://assets/login/btn_yhxy.png" id="4_vt4ww"]
 [ext_resource type="Texture2D" uid="uid://b3w6o68ukeere" path="res://assets/login/openeye.svg" id="4_yx6uh"]
+[ext_resource type="Theme" uid="uid://kra0w10s7t24" path="res://theme/checkbutton.tres" id="5_wyo8s"]
 [ext_resource type="Texture2D" uid="uid://r3uh6ep8dsff" path="res://assets/hall/db_cbl_0.png" id="9_njh8n"]
 [ext_resource type="Texture2D" uid="uid://brkgpsvkueqq3" path="res://assets/hall/db_cbl_0_0.png" id="10_dkx4k"]
 
@@ -56,10 +55,6 @@ Button/colors/font_color = Color(0.952941, 0.882353, 0.478431, 1)
 Button/styles/hover = SubResource("StyleBoxFlat_hq65j")
 Button/styles/normal = SubResource("StyleBoxFlat_lssyb")
 Button/styles/pressed = SubResource("StyleBoxFlat_e0m6t")
-
-[sub_resource type="Theme" id="Theme_3rlbi"]
-CheckBox/icons/checked = ExtResource("2_lg3fp")
-CheckBox/icons/unchecked = ExtResource("3_8vfe4")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgg4k"]
 bg_color = Color(0.980392, 0.980392, 0.156863, 1)
@@ -275,7 +270,7 @@ layout_mode = 2
 
 [node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainerRead"]
 layout_mode = 2
-theme = SubResource("Theme_3rlbi")
+theme = ExtResource("5_wyo8s")
 
 [node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainerRead"]
 layout_mode = 2

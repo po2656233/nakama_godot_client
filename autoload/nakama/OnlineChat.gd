@@ -1,0 +1,657 @@
+extends Node
+
+# Nakama Online.nakama_client instance
+# var Online.nakama_client: NakamaClient
+# var Online.nakama_session: NakamaSession
+# var Online.nakama_socket: NakamaSocket
+var _current_channel: NakamaRTAPI.Channel
+var _cursor_list_channel = null
+var _world_channel = null
+# Game data
+var player_data: NakamaAPI.ApiUser
+var pets_data: Dictionary = {}
+var home_data: Dictionary = {}
+
+signal player_data_updated
+signal chat_message_received(message: Dictionary)
+signal chat_presence_changed(joins: Array, leaves: Array)
+signal chat_history_received(messages: Array)
+signal changeChannelSIG(id:String)
+
+# 聊天内容结构
+var DEFAULT_MESSAGE = {
+	"kind": 0,#2聊天 1俱乐部 0世界
+	"type": 0,
+	"headicon": "",
+	"path": "",
+	"content": "",
+	"file": "",
+	"size": 0,
+	"thumbnail": "",
+	"duration": 0,
+}
+
+
+
+# # 初始化
+# func _ready() -> void:
+# 	connection_failed.connect(_on_connection_failed)
+	# initialize_client()
+
+		
+
+# func initialize_client() -> void:
+# 	# 1.重置client
+# 	if Online.nakama_client:
+# 		if Online.nakama_session:			# 退出登录
+# 			Online.nakama_client.session_logout_async(Online.nakama_session)
+# 		Online.nakama_client.cancel_free()
+# 		Online.nakama_client = null
+# 	Online.nakama_client = Nakama.create_client(SERVER_KEY, HOST, PORT, SCHEME)
+# 	# 2. 关闭现有的 WebSocket 连接
+# 	if Online.nakama_socket:
+# 		if Online.nakama_socket.is_connected_to_host():
+# 			Online.nakama_socket.close()
+# 		Online.nakama_socket = null
+	
+# 	# 3. 创建新的 WebSocket 连接
+# 	Online.nakama_socket = Nakama.create_socket_from(Online.nakama_client)
+# 	connect_signals()
+
+# 	# 4. 尝试恢复会话
+# 	var success = await restore_session()
+# 	if success:
+# 		connection_established.emit()
+# 	# else:
+# 	# 	await authenticate_device()
+# 	# 5.重置世界渠道,方便重新加入世界渠道
+# 	_world_channel = null
+# 	pass
+
+# func connect_signals() -> void:
+# 	if Online.nakama_socket:
+# 		if not Online.nakama_socket.is_connected("connection_error",_on_connection_failed):
+# 			Online.nakama_socket.connection_error.connect(_on_connection_failed)
+# 		if not Online.nakama_socket.is_connected("connected",_on_connection_succeeded):
+# 			Online.nakama_socket.connected.connect(_on_connection_succeeded)
+# 		if not Online.nakama_socket.is_connected("received_error",_on_received_error):
+# 			Online.nakama_socket.received_error.connect(_on_received_error)
+
+# func logout():
+# 	remove_session()
+
+# func check_network():
+# 	if OS.has_feature("mobile"):
+# 		# 检查网络连接状态
+# 		if OS.get_network_connected_type() == -1:
+# 			push_error("没有网络连接")
+# 			return false
+			
+# 		# 输出网络类型
+# 		var network_type = OS.get_network_connected_type()
+# 		match network_type:
+# 			0: print("未知网络类型")
+# 			1: print("以太网连接")
+# 			2: print("WIFI连接")
+# 			3: print("移动数据连接")
+# 			4: print("移动数据2G")
+# 			5: print("移动数据3G")
+# 			6: print("移动数据4G")
+# 	return true
+	
+
+# 设置当前聊天频道
+func set_current_channel(channel: NakamaRTAPI.Channel,isLoadhistory:bool=false):
+	if _current_channel == channel:
+		return
+	_cursor_list_channel = null
+	_current_channel = channel
+	if channel:
+		changeChannelSIG.emit(channel.id)
+		if isLoadhistory:
+			await get_chat_history(channel.id)
+	pass
+
+func get_cursor_for_list_channel():
+	return _cursor_list_channel
+
+# Authentication
+func authenticate_device(username: String="", created:bool=false) -> bool:
+	var device_id = OS.get_unique_id()
+	var result = await Online.nakama_client.authenticate_device_async(device_id,username,created)
+	
+	if result.is_exception():
+		return false
+	return true
+
+
+# Authentication
+func authenticate_email(username: String,password: String,email: String="",  created:bool=false) -> bool:
+	if username.is_empty() and password.is_empty():
+		return await self.authenticate_device(username,created)
+	
+	if password.is_empty():
+		push_error("password is empty")
+		return false
+	
+	if email.is_empty():
+		email = username+"@game.com"
+	var result = await Online.nakama_client.authenticate_email_async(email,password,username,created)
+	if result.is_exception() or not result.is_valid():
+		print("发送登录请求失败",result.get_exception().message)
+		return false
+	return true
+
+##############################################################
+# 加入聊天频道
+func join_chat_channel(channel_id: String, persistence: bool = true, hidden: bool = false) -> Error:
+	var result = await Online.nakama_socket.join_chat_async(channel_id, persistence, hidden)
+	if result.is_exception():
+		print("Failed to join chat channel: ", result.get_exception().message)
+		return FAILED
+	
+	set_current_channel(result)
+	return OK
+
+# 发送消息
+func send_message(content: Dictionary) -> Error:
+	if not _current_channel:
+		print("Not in a chat channel")
+		return FAILED
+	print("发送前确认:",_current_channel.id," 内容:",content)
+	var result = await Online.nakama_socket.write_chat_message_async(_current_channel.id, content)
+	if result.is_exception():
+		print("Failed to send message: ", result.get_exception().message)
+		return FAILED
+	return OK
+
+
+
+# 获取聊天历史
+func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false,cursor = null) -> Error:
+	if channelId.is_empty():
+		print("Not in a chat channel or socket is wrong")
+		return FAILED
+ 
+	# 	# 先尝试加入频道
+	# var join_try = await Online.nakama_client.join_chat_async(channelId)
+	# if join_try.is_exception():
+	# 	print("无法加入频道: ", join_try.get_exception().message)
+	# 	# 处理错误，比如通知用户或创建新频道
+	# 	return FAILED
+
+
+	print("获取聊天历史",channelId," -->", limit, "-->",forward)
+	if cursor == null:
+		cursor = _cursor_list_channel
+	var result = await Online.nakama_client.list_channel_messages_async(Online.nakama_session, channelId, limit, forward, cursor)
+	if result.is_exception():
+		print("Failed to get chat history: ", result.get_exception().message)
+		return FAILED
+
+
+	var messages = []
+	for message in result.messages:
+		var content = JSON.parse_string(message.content)
+		if content:
+			messages.append(message)
+	
+	chat_history_received.emit(messages)
+	if result.next_cursor:
+		_cursor_list_channel = result.next_cursor
+		# print("获取历史记录游标",_cursor_list_channel)
+	if messages.size()<limit-1:
+		return FAILED
+	return OK
+
+func get_chat_history_all(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false) -> Error:
+	if channelId.is_empty():
+		print("Not in a chat channel or socket is wrong")
+		return FAILED
+	while true:
+		var result = await get_chat_history(channelId, limit, forward)
+		if result == FAILED:
+			break
+	return OK
+
+func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
+	if not message or not message.content:
+		return DEFAULT_MESSAGE
+	var content = JSON.parse_string(message.content)
+	if content:
+		return {
+			"kind": Util.safe_get(content, "kind", DEFAULT_MESSAGE.kind),
+			"type": Util.safe_get(content, "type", DEFAULT_MESSAGE.type),
+			"headicon": Util.safe_get(content, "headicon", DEFAULT_MESSAGE.headicon),
+			"username": message.username,
+			"content": content,
+			"path": Util.safe_get(content, "path", DEFAULT_MESSAGE.path),
+			"file": Util.safe_get(content,"file", DEFAULT_MESSAGE.file),
+			"size":Util.safe_get(content,"size", DEFAULT_MESSAGE.size),
+			"thumbnail": Util.safe_get(content,"thumbnail", DEFAULT_MESSAGE.thumbnail),
+			"duration": Util.safe_get(content,"duration", DEFAULT_MESSAGE.duration),
+		}
+	return DEFAULT_MESSAGE
+
+
+# 上传文件
+func upload_file(file_path: String) -> Dictionary:
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if not file:
+		return {"error": "Failed to open file"}
+	
+	var file_data = file.get_buffer(file.get_length())
+	var file_name = file_path.get_file()
+	
+	var result = await Online.nakama_client.write_storage_objects_async(Online.nakama_session, [{
+		"collection": "chat_files",
+		"key": file_name,
+		"value": {"path": file_path},
+		"permission_read": 2,  # Public read
+		"permission_write": 1  # Owner write
+	}])
+	
+	if result.is_exception():
+		return {"error": result.get_exception().message}
+	
+	return {
+		"path": file_path,
+		"name": file_name,
+		"size": file_data.size()
+	}
+
+# 下载文件
+func download_file(file_info: Dictionary) -> Dictionary:
+	var result = await Online.nakama_client.read_storage_objects_async(Online.nakama_session, [{
+		"collection": "chat_files",
+		"key": file_info.name
+	}])
+	
+	if result.is_exception():
+		return {"error": result.get_exception().message}
+	
+	if result.objects.is_empty():
+		return {"error": "File not found"}
+	
+	var file_data = result.objects[0].value
+	return file_data
+
+# 处理接收到的消息
+func _on_channel_message(message: NakamaAPI.ApiChannelMessage):
+	chat_message_received.emit(message) 
+
+# 处理频道状态变化
+func _on_channel_presence(presence: NakamaRTAPI.ChannelPresenceEvent):
+	chat_presence_changed.emit(presence.joins, presence.leaves)
+
+# 清理
+func _notification(what: int):
+	if what == NOTIFICATION_PREDELETE:
+		if Online.nakama_socket and Online.nakama_socket.is_connected_to_host():
+			Online.nakama_socket.close()
+			Online.nakama_socket = null
+	pass
+
+
+# Data Management
+func load_player_data() -> void:
+	var result = await Online.nakama_client.read_storage_objects_async(Online.nakama_session, [{
+		"collection": "player_data",
+		"key": "profile",
+		"user_id": Online.nakama_session.user_id
+	}])
+	print("读取玩家数据: ", result)
+	if not result.is_exception():
+		if result.objects.size() > 0:
+			player_data = JSON.parse_string(result.objects[0].value)
+		else:
+			var ret = await Online.nakama_client.get_account_async(Online.nakama_session)
+			if ret.is_exception():
+				push_error("获取用户信息失败: " + ret.get_exception().message)
+				return
+			player_data = ret.user
+			print('用户信息1',player_data)	
+			await save_player_data()
+		print("已读取玩家数据: ", player_data)
+	player_data_updated.emit()
+
+func save_player_data() -> void:
+	var objects = [{
+		"collection": "player_data",
+		"key": "profile",
+		"value": JSON.stringify(player_data),
+		"permission_read": 1,
+		"permission_write": 1
+	}]
+	
+	await Online.nakama_client.write_storage_objects_async(Online.nakama_session, objects)
+
+# 获取当前用户 ID
+func get_my_id() -> String:
+	if not player_data:
+		return ""
+	return player_data.id
+
+# 获取当前用户名
+func get_my_name() -> String:
+	if not player_data:
+		return ""
+	return player_data.username
+
+# 好友和俱乐部管理
+# 通过用户名搜索用户
+func search_users(username: String):
+	var result = await Online.nakama_client.get_users_async(Online.nakama_session,[], [username])
+	if result.is_exception():
+		print("Error searching users: ", result.get_exception().message)
+		return
+	print("查找用户: ", result)
+	return result
+
+func search_users_rpc(username: String):
+	var result = await Online.nakama_client.rpc_async(Online.nakama_session,  "search_username", username)
+	if result.is_exception():
+		print("Error searching users: ", result.get_exception().message)
+		return
+	print("查找用户RPC: ", result)
+	return JSON.parse_string(result.payload)
+
+func search_groups(groupname: String):
+	var result = await Online.nakama_client.list_groups_async(Online.nakama_session, groupname)
+	if result.is_exception():
+		print("Error searching users: ", result.get_exception().message)
+		return null
+	print("查找俱乐部: ", result)
+	return result
+
+# 获取好友列表
+func get_friends_list():
+	# 获取好友列表并订阅他们的状态
+	var result = await Online.nakama_client.list_friends_async(Online.nakama_session)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return
+	
+	var friend_ids = []
+	var friend_names = []
+	for friend in result.friends:
+		friend_ids.append(friend.user.id)
+		friend_names.append(friend.user.username)
+	
+	# 订阅好友状态
+	if not friend_ids.is_empty(): 
+		var status_result = await Online.nakama_socket.follow_users_async(friend_ids,friend_names)
+		if status_result.is_exception():
+			print("Error following users: ", status_result.get_exception().message)
+	# print("好友列表: ", ret)
+	return result
+
+
+# 获取俱乐部列表
+func get_group_list(uid: String):
+	var result = await Online.nakama_client.list_user_groups_async(Online.nakama_session,uid)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return
+	print("俱乐部列表: ", result)
+	return result
+
+
+# 获取俱乐部成员列表
+func get_group_member_list_async(group_id: String):
+	var result = await Online.nakama_client.list_group_users_async(Online.nakama_session,group_id)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return null
+	print("俱乐部成员信息: ", result)
+	return result
+
+		
+# 添加好友
+func add_friends_async(friend_ids: Array)->bool:
+	if friend_ids.size() == 0:
+		return false
+	var result = await Online.nakama_client.add_friends_async(Online.nakama_session, friend_ids)
+	if result.is_exception():
+		print("Error add_friends_async: ", result.get_exception().message)
+		return false
+	print("添加好友: ", result)
+	return true
+
+		
+# 创建俱乐部 
+func create_group_async(name1: String, description : String = "", avatar_url = null):
+	var result = await Online.nakama_client.create_group_async(Online.nakama_session, name1, description, avatar_url,"zh",false)
+	if result.is_exception():
+		print("Error create_group_async: ", result.get_exception().message)
+		return null
+	print("添加俱乐部: ", result)
+	return result
+
+
+# 创建世界频道 一般不能使用
+func create_world_async():
+	var result = await Online.nakama_client.create_group_async(Online.nakama_session, "world", "世界渠道", null,"zh", true)
+	if result.is_exception():
+		print("Error create_world_async: ", result.get_exception().message)
+		return null
+	print("添加俱乐部: ", result)
+	# SignalManager.FreshClubListSIG.emit()
+	return result
+
+
+func get_world_channel():
+	return _world_channel
+	
+
+func load_world_channel():
+	if _world_channel:
+		return _world_channel
+	var result = await search_groups("world")
+	if not result:
+		return null
+	for group in result.groups:
+		# var group = info.group
+		print("查找世界频道: ", group)
+		if group.name == "world":
+			var ret1 = await Online.nakama_client.join_group_async(Online.nakama_session, group.id)
+			print("加入世界频道: ", ret1)
+			if not ret1:
+				PopupManager.show_dynamic("加入世界频道失败")
+				print("加入世界频道失败")
+				return null
+			var ret = await add_channel_async(group.id, 2)
+			if not ret:
+				print("加入世界渠道失败")
+				PopupManager.show_dynamic("加入世界渠道失败")
+				return null
+			print("添加世界渠道频道: ", ret)
+			_world_channel = ret
+			get_chat_history_all(_world_channel.id)
+			return ret
+	return null
+
+func add_channel_async(targetId: String,tab:int = 0):
+	if Online.nakama_socket:
+		var chType = null
+		if tab == 1:
+			chType = NakamaSocket.ChannelType.Room
+		elif tab == 2:
+			chType = NakamaSocket.ChannelType.Group
+		else:
+			chType = NakamaSocket.ChannelType.DirectMessage
+		var result = await Online.nakama_socket.join_chat_async(targetId,chType,true)
+		if result.is_exception():
+			push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型", chType)
+			return null
+		print("添加频道: ", result)
+		return result
+	return null
+
+func add_group_async(group_name: String):
+	var result = await Online.nakama_client.list_groups_async(Online.nakama_session,group_name)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return null
+	for group in result.groups:
+		var ret = await Online.nakama_client.join_group_async(Online.nakama_session,group.id)
+		if ret.is_exception():
+			push_error("Error add_group_async: ", ret.get_exception().message)
+			return null
+		print("添加俱乐部: ", ret)
+		return ret 
+	return null
+
+
+func add_group_users_async(group_id: String,p_ids: PackedStringArray):
+	if group_id.is_empty() or p_ids.size() <= 0:
+		return false
+	var result = await Online.nakama_client.add_group_users_async(Online.nakama_session,group_id,p_ids)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return false
+	print("添加俱乐部成员: ", result)
+	return true
+
+# 降级权限
+func demote_group_users_async(group_id : String, p_ids : Array):
+	if group_id.is_empty() or p_ids.size() <= 0:
+		return false
+	var result = await Online.nakama_client.demote_group_users_async(Online.nakama_session,group_id,p_ids)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return false
+	print("设置管理员: ", result)
+	return true
+
+# 提升权限
+func promote_group_users_async(group_id : String, p_ids: Array):
+	if group_id.is_empty() or p_ids.size() <= 0:
+		return false
+	var result = await Online.nakama_client.promote_group_users_async(Online.nakama_session,group_id,p_ids)
+	if result.is_exception():
+		print("Error getting friends list: ", result.get_exception().message)
+		return false
+	print("设置管理员: ", result)
+	return true
+
+# 订阅好友
+func follow_users_async(p_ids : PackedStringArray, p_usernames : PackedStringArray):
+	if Online.nakama_socket:
+		await Online.nakama_socket.unfollow_users_async(p_ids)
+		var result = await Online.nakama_socket.follow_users_async(p_ids, p_usernames)
+		if result.is_exception():
+			push_error("Error follow_users_async: ", result.get_exception().message)
+			return null
+		print("订阅好友: ", result)
+		return result
+	return null
+
+func update_status_async(_status:String):
+	if Online.nakama_socket:
+		var result = await Online.nakama_socket.update_status_async(_status)
+		if result.is_exception():
+			push_error("Error update_status_async: ", result.get_exception().message)
+			return null
+		print("变更状态: ", result)
+		return result
+	return null
+
+
+
+# 阻止好友
+func refuse_friends_async(friend_id: String)->bool:
+	var result = await Online.nakama_client.block_friends_async(Online.nakama_session, [friend_id])
+	if result.is_exception():
+		print("Error refuse_friends_async: ", result.get_exception().message)
+		return false
+	print("拒绝好友: ", result)
+	return true
+
+# 群组中禁言
+func ban_group_users_async(group_id: String,user_id: String)->bool:
+	var result = await Online.nakama_client.ban_group_users_async(Online.nakama_session, group_id, [user_id])
+	if result.is_exception():
+		print("Error ban_group_users_async: ", result.get_exception().message)
+		return false
+	print("群组中禁言: ", result)
+	return true
+
+# 离开群组
+func leave_group(group_id: String)->bool:
+	var result = await Online.nakama_client.leave_group_async(Online.nakama_session, group_id)
+	if result.is_exception():
+		print("Error leave_group: ", result.get_exception().message)
+		return false
+	print("离开俱乐部: ", result)
+	return true
+
+
+# 删除好友
+func remove_friend(user_id: String)->bool:
+	var result = await Online.nakama_client.delete_friends_async(Online.nakama_session, [user_id])
+	if result.is_exception():
+		print("Error removing friend: ", result.get_exception().message)
+		return false
+	print("删除好友成功!!!")
+	return true
+
+func remove_group(group_id: String)->bool:
+	var result = await Online.nakama_client.delete_group_async(Online.nakama_session, group_id)
+	if result.is_exception():
+		print("Error removing group: ", result.get_exception().message)
+		return false
+	print("删除俱乐部!!!")
+	return true
+
+func remove_gourp_user(group_id: String,user_id: String)->bool:
+	var result = await Online.nakama_client.kick_group_users_async(Online.nakama_session, group_id, [user_id])
+	if result.is_exception():
+		print("Error removing group: ", result.get_exception().message)
+		return false
+	print("删除俱乐部用户!!!",result)
+	return true
+
+
+func remove_channel_message(channel_id:String,message_id: String)->bool:
+	if Online.nakama_socket:
+		var result= await Online.nakama_socket.remove_chat_message_async(channel_id,message_id)
+		if result.is_exception():
+			print("Error removing group: ", result.get_exception().message)
+			return false
+		return true 
+	return false
+
+# 修改消息
+func reback_channel_message(channel_id:String,message_id: String,data:Dictionary)->bool:
+	if Online.nakama_socket:
+		var result= await Online.nakama_socket.update_chat_message_async(channel_id,message_id,data)
+		if result.is_exception():
+			print("Error removing group: ", result.get_exception().message)
+			return false
+		return true
+	return false
+
+func sendDataRPC(funcName:String,payload = null):
+	if Online.nakama_socket:
+		var result= await Online.nakama_socket.rpc_async(funcName,payload)
+		if result.is_exception():
+			print("Error removing group: ", result.get_exception().message)
+			return null
+		return result
+	return null
+#########################
+
+
+
+
+# Signal Handlers
+func _on_connection_failed():
+	PopupManager.show_dynamic("网络连接失败")
+
+func _on_connection_succeeded():
+	PopupManager.show_dynamic("网络连接成功")
+	# connection_established.emit()
+
+func _on_received_error(error: String):
+	push_error("Nakama error: " + error)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b6x8yd4hj6n8w"]
 
 [ext_resource type="Script" path="res://scripts/room/waiting_room.gd" id="1_2w3vq"]
-[ext_resource type="PackedScene" uid="uid://ryqfmggkqpxe" path="res://scenes/element/countdown_timer.tscn" id="2_bgkmg"]
+[ext_resource type="PackedScene" uid="uid://ryqfmggkqpxe" path="res://scenes/1common/countdown_timer.tscn" id="2_bgkmg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.0901961, 0.152941, 0.219608, 1)

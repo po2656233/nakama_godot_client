@@ -8,7 +8,7 @@ func setup(user_data: Dictionary):
 	$VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer/Signature.text = user_data["signature"]
 	
 	if user_data["avatar"]:
-		$VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/Avatar.texture =await Network.load_texture_async(user_data["avatar"]) 
+		$VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/Avatar.texture =await Util.load_texture_async(user_data["avatar"]) 
 	
 	$VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level/Value.text = str(user_data["level"])
 	$VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score/Value.text = str(user_data["score"])

@@ -7,19 +7,19 @@
 [ext_resource type="Texture2D" uid="uid://rotxygefh46c" path="res://assets/login/closeeye1.svg" id="3_nqb36"]
 [ext_resource type="Texture2D" uid="uid://das5kp4ny2ggy" path="res://assets/login/btn_zhdl_g.png" id="4_1a3i5"]
 [ext_resource type="Texture2D" uid="uid://cdb4i86phwax2" path="res://assets/login/btn_zhdl_b.png" id="4_8q84o"]
-[ext_resource type="Texture2D" uid="uid://c5kurqa0v1yt" path="res://assets/login/btn_wxdl.png" id="4_33ucq"]
 [ext_resource type="Texture2D" uid="uid://fs1orn7q0e5k" path="res://assets/login/openeye1.svg" id="4_ll34x"]
-[ext_resource type="Texture2D" uid="uid://i075xh78ak6i" path="res://assets/login/btn_wxdl_y.png" id="6_6rye6"]
-[ext_resource type="Texture2D" uid="uid://dpblp8kgjws5q" path="res://assets/login/btn_wxdl_b.png" id="7_4kxbs"]
 [ext_resource type="Texture2D" uid="uid://cylapxjt4grlm" path="res://assets/login/btn_yhxy.png" id="8_7tra2"]
 [ext_resource type="Texture2D" uid="uid://dde5sblcnwyx7" path="res://assets/login/btn_gx_1.png" id="8_bvhrx"]
+[ext_resource type="Texture2D" uid="uid://bj0l36mrupq0o" path="res://assets/login/btn_dev_login.png" id="11_nvxh0"]
 [ext_resource type="Texture2D" uid="uid://lf12jh1ljgln" path="res://assets/login/btn_sjzc.png" id="11_yi4me"]
+[ext_resource type="Texture2D" uid="uid://cnoq5phyhurpx" path="res://assets/login/btn_dev_login_y.png" id="12_166ht"]
 [ext_resource type="Texture2D" uid="uid://bu75rlaxk1ygf" path="res://assets/login/btn_sjzc_g.png" id="12_nqafn"]
 [ext_resource type="Texture2D" uid="uid://d2nhkgy08lqdw" path="res://assets/login/btn_wjmm.png" id="12_s581t"]
+[ext_resource type="Texture2D" uid="uid://lbkvewybq4xb" path="res://assets/login/btn_dev_login_b.png" id="13_141h3"]
 [ext_resource type="Texture2D" uid="uid://cqkipfykw0yy7" path="res://assets/login/btn_sjzc_y.png" id="15_7rdsb"]
 [ext_resource type="Texture2D" uid="uid://cw7chhk7pvbk5" path="res://assets/login/btn_wjmm_g.png" id="16_bvtl1"]
 [ext_resource type="Texture2D" uid="uid://brmmu1rqvldj2" path="res://assets/login/btn_wjmm_y.png" id="18_kgkuh"]
-[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://scenes/element/loading_screen.tscn" id="20_abw8h"]
+[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://scenes/1common/loading_screen.tscn" id="20_abw8h"]
 
 [sub_resource type="SystemFont" id="SystemFont_84gu5"]
 
@@ -207,9 +207,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "设备登录"
-texture_normal = ExtResource("4_33ucq")
-texture_pressed = ExtResource("6_6rye6")
-texture_hover = ExtResource("7_4kxbs")
+texture_normal = ExtResource("11_nvxh0")
+texture_pressed = ExtResource("12_166ht")
+texture_hover = ExtResource("13_141h3")
 stretch_mode = 0
 
 [node name="HBoxContainerRegister" type="HBoxContainer" parent="."]

@@ -37,8 +37,8 @@ func setup(data: Dictionary):
 		note_label.text = "(%s)" % data["note"]
 	else: 
 		note_label.text = ""
-	var isMe = data["id"] == Network.player_data.id
-	print("isMe = ",data["id"], " myID:", Network.player_data.id)
+	var isMe = data["id"] == OnlineChat.player_data.id
+	print("isMe = ",data["id"], " myID:", OnlineChat.player_data.id)
 	if isMe:
 		return
 	managerBtn.visible = true
@@ -55,7 +55,7 @@ func setup(data: Dictionary):
 			isAdmin = false
 	popup.id_pressed.connect(_on_manage_option_selected)
 	if data["avatar"]:
-		$MarginContainer/HBoxContainer/Avatar.texture = await Network.load_texture_async(data["avatar"]) 
+		$MarginContainer/HBoxContainer/Avatar.texture = await Util.load_texture_async(data["avatar"]) 
 	pass
 
 func _on_gui_input(event):

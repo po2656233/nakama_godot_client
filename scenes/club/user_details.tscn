@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/club/user_details.gd" id="1_kept2"]
 [ext_resource type="Texture2D" uid="uid://dyudb8ry74m70" path="res://assets/default_avatar.svg" id="2_v7o7n"]
-[ext_resource type="Script" path="res://scripts/unify/copyable_label.gd" id="3_ljiin"]
+[ext_resource type="Script" path="res://scripts/1common/copyable_label.gd" id="3_ljiin"]
 
 [node name="UserDetails" type="Control"]
 layout_mode = 3

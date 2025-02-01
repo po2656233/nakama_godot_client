@@ -113,7 +113,7 @@ func _on_cancel_button_pressed():
 		tween.kill()
 	countdown.stop()
 	countdown.hide()
-	remove_player(Network.get_my_name())
+	remove_player(Online.nakama_client.get_my_name())
 	SceneManager.switch_to_scene("roomlist")
 
 func _debug_add_test_players():

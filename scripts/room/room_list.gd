@@ -280,9 +280,9 @@ func _apply_filters(rooms: Array) -> Array:
 
 	# 如果显示我创建的，只显示我创建的房间
 	if show_myrooms.button_pressed:
-		if not Network.player_data:
+		if not OnlineChat.player_data:
 			return []
-		rooms = room_data.filter(func(r): return r.creator_id == Network.player_data.id)
+		rooms = room_data.filter(func(r): return r.creator_id == OnlineChat.player_data.id)
 	
 	
 	var filtered = []
@@ -473,7 +473,7 @@ func wait_for_room_to_start():
 	var waitingStart = room_for_waiting.instantiate()
 	add_child(waitingStart)
 	waitingStart.reset(room_info.room_id, room_info.max_players)
-	waitingStart.add_player(Network.get_my_name())
+	waitingStart.add_player(Online.nakama_client.get_my_name())
 	for playerName in room_info.players:
 		waitingStart.add_player(playerName)
 	# 测试人员退出

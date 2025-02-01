@@ -22,7 +22,10 @@ config/icon="res://assets/bg/img_gg.png"
 [autoload]
 
 Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
-Network="*res://autoload/network.gd"
+Online="*res://autoload/nakama/Online.gd"
+OnlineLogin="*res://autoload/nakama/OnlineLogin.gd"
+OnlineChat="*res://autoload/nakama/OnlineChat.gd"
+OnlineMatch="*res://autoload/nakama/OnlineMatch.gd"
 Transitions="*res://addons/transitions/Transitions.gd"
 FancyFade="*res://addons/transitions/FancyFade.gd"
 FadeScene="*res://addons/transitions/FadeScene.gd"
@@ -33,6 +36,7 @@ PopupManager="*res://autoload/popup_manager.gd"
 SceneManager="*res://autoload/scene_manager.gd"
 SignalManager="*res://autoload/signal_manager.gd"
 SettingsManager="*res://autoload/settings_manager.gd"
+Util="*res://autoload/Util.gd"
 
 [display]
 

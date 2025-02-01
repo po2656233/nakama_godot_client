@@ -6,8 +6,8 @@ var RequestItemScene = preload("res://scenes/approval/request_item.tscn")
 @onready var request_list = %RequestList
 
 func _ready():
-	if Network.player_data:
-		var approvals = DataManager.get_instance().get_uid_approval(Network.player_data.id)
+	if OnlineChat.player_data:
+		var approvals = DataManager.get_instance().get_uid_approval(OnlineChat.player_data.id)
 		import_requests(approvals)
 	
 func _exit_tree() -> void:

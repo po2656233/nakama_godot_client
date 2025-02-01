@@ -51,7 +51,7 @@ func _on_create_pressed():
 	if group_name.is_empty():
 		return
 	 
-	var group = await Network.create_group_async(group_name, group_desc, selected_avatar)
+	var group = await Online.nakama_client.create_group_async(Online.nakama_session,group_name, group_desc, selected_avatar)
 	if not group:
 		PopupManager.show_message("创建群组失败")
 		return 
@@ -75,9 +75,9 @@ func _on_create_pressed():
 
 
 func _on_input_focus_entered():
-	if Network.isMobile():
+	if Util.isMobile():
 		DisplayServer.virtual_keyboard_show("中文输入法") 
 
 func _on_input_focus_exited():
-	if Network.isMobile():
+	if Util.isMobile():
 		DisplayServer.virtual_keyboard_hide() 

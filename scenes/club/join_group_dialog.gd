@@ -15,7 +15,7 @@ func _on_join_pressed():
 	
 	if group_name.is_empty():
 		return
-	var ret = await Network.add_group_async(group_name)
+	var ret = await Online.nakama_client.add_group_async(group_name)
 	if not ret:
 		PopupManager.show_message("加入俱乐部失败")
 		return 

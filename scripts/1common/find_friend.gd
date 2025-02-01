@@ -51,7 +51,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 		return
 	isNothing = false
 	if isClub:
-		var result = await Network.search_groups(new_text)
+		var result = await Online.nakama_client.search_groups(new_text)
 		print("俱乐部搜索",result)
 		_list.clear()
 		if result == null or result.groups.size() == 0:
@@ -61,13 +61,13 @@ func _on_line_edit_find_text_submitted(new_text:String):
 		for club in result.groups:
 			var texture:Texture2D
 			if club.avatar_url:
-				texture = await Network.load_texture_async(club.avatar_url)
+				texture = await Util.load_texture_async(club.avatar_url)
 			# var index = _list.add_item_with_buttons(user.username,texture,"添加",Callable(Network,"add_friends_async").bind(user.id))
 			var index = _list.add_item(club.name,texture)
 			if index != -1:
 				_list.set_item_metadata(index,club)
 	else:
-		var result = await Network.search_users(new_text)
+		var result = await Online.nakama_client.search_users(new_text)
 		print("好友搜索",result)
 		_list.clear()
 		if result == null or result.users.size() == 0:
@@ -77,7 +77,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 		for user in result.users:
 			var texture:Texture2D
 			if user.avatar_url:
-				texture = await Network.load_texture_async(user.avatar_url)
+				texture = await Util.load_texture_async(user.avatar_url)
 			# var index = _list.add_item_with_buttons(user.username,texture,"添加",Callable(Network,"add_friends_async").bind(user.id))
 			var index = _list.add_item(user.username,texture)
 			if index != -1:
@@ -120,10 +120,10 @@ func _on_item_list_item_clicked(index:int, _at_position:Vector2, _mouse_button_i
 func _on_tb_add_pressed() -> void:
 	var selected_items = _list.get_selected_items()
 	var ids = []
-	if not Network.player_data:
+	if not OnlineChat.player_data:
 		PopupManager.show_message("未登录")
 		return
-	var uid = Network.player_data.id
+	var uid = OnlineChat.player_data.id
 	for item in selected_items:
 		var info = _list.get_item_metadata(selected_index)
 		if info:
@@ -136,7 +136,7 @@ func _on_tb_add_pressed() -> void:
 	if ids.size() == 0:
 		# 创建俱乐部
 		if isClub:
-			var result = await Network.create_group_async(_search_box.text)
+			var result = await Online.nakama_client.create_group_async(Online.nakama_session,_search_box.text)
 			if result:
 				PopupManager.show_message("创建俱乐部成功")
 			else:
@@ -148,11 +148,11 @@ func _on_tb_add_pressed() -> void:
 	# 添加俱乐部
 	if isClub:
 		for id in ids:
-			await Network.add_group_async(id)
+			await Online.nakama_client.add_group_async(id)
 		return
 
 	# 添加好友
-	var ret = await Network.add_friends_async(ids)	
+	var ret = await Online.nakama_client.add_friends_async(ids)	
 	if ret:
 		PopupManager.show_message("已添加,请等待对方通过")
 		_list.clear()

@@ -9,7 +9,7 @@ const MESSAGES_PER_PAGE = 20 # 每次加载的消息数量
 var isToTop = false
 var message_index = 0
 var last_message_time: int = 0 # 最后一条消息的时间戳
-var today_timestamp = Network.get_today_start_timestamp()
+var today_timestamp = Util.get_today_start_timestamp()
 var myUsername = "我"
 var myHeadicon = ""
 var uid = ""
@@ -99,15 +99,15 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	# var show_time = false
 	var show_time = true # 显示时间
 	var timeEquation = timestamp - last_message_time
-	var curMsgTime = Network.convert_to_china_time(timestamp)
-	var lastMsgTime = Network.convert_to_china_time(last_message_time)
+	var curMsgTime = Util.convert_to_china_time(timestamp)
+	var lastMsgTime = Util.convert_to_china_time(last_message_time)
 	
 	if last_message_time >= 0 and (timeEquation > TIME_INTERVAL_THRESHOLD or timestamp - today_timestamp > TIME_INTERVAL_THRESHOLD or curMsgTime.hour < lastMsgTime.hour):
 		# 添加时间分割标签
 		add_time_separator(curMsgTime)
 		show_time = true
 		if timestamp - today_timestamp > TIME_INTERVAL_THRESHOLD:
-			today_timestamp = Network.get_today_start_timestamp()
+			today_timestamp = Util.get_today_start_timestamp()
 
 	# 创建新的消息项
 	# 获取当前消息容器中的子控件数量
@@ -226,7 +226,7 @@ func cleanup_overflow_messages(scroll: ScrollContainer):
 func _on_message_revoked(message_item):
 	if message_item.current_content.content:
 		message_item.current_content.content = "[已撤回]"
-	var ret = await Network.reback_channel_message(message_item.channel_id, message_item.message_id,message_item.current_content)
+	var ret = await OnlineChat.reback_channel_message(message_item.channel_id, message_item.message_id,message_item.current_content)
 	# 如果成功，可以更新消息显示
 	if ret:
 		message_item.text_label.text = "[已撤回]"
@@ -236,7 +236,7 @@ func _on_message_revoked(message_item):
 
 # 处理消息删除
 func _on_message_deleted(message_item):
-	await Network.remove_channel_message(message_item.channel_id, message_item.message_id)
+	await OnlineChat.remove_channel_message(message_item.channel_id, message_item.message_id)
 	 # 创建渐隐动画
 	message_item.visible = false
 	delete_message(message_item.channel_id, message_item.message_id)
@@ -250,7 +250,7 @@ func delete_message(channel_id: String, message_id: String):
 	var messages = DataManager.get_instance().get_chat_history(uid,channel_id)
 	if messages.is_empty():
 		return
-	Network.remove_message_by_id(messages, message_id)
+	OnlineChat.remove_message_by_id(messages, message_id)
 	DataManager.get_instance().set_chat_history(uid,channel_id, messages)
 	# 从ID缓存中删除
 	if channel_id in message_id_cache:
@@ -368,7 +368,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 
 # 加载本地历史记录
 func load_local_history():
-	message_id_cache = Network.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
+	message_id_cache = Util.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
 	print("加载本地历史记录:",message_id_cache)
 	# var channelList = DataManager.get_instance().get_channel_list(uid)
 	# print("加载本地玩家渠道:",channelList)
@@ -381,7 +381,7 @@ func get_channel_messages(channel_id: String) -> Array:
 	var messages = DataManager.get_instance().get_chat_history(uid,channel_id)
 	if messages == null:
 		return []
-	return Network.sort_dictionary_array(messages, "create_time",true)
+	return Util.sort_dictionary_array(messages, "create_time",true)
 
 
 # 刷新当前channel的显示

@@ -34,14 +34,14 @@ func update_member_list():
 	# 拉取最新数据
 	members = []
 	var isAdmin = false
-	var result = await Network.get_group_member_list_async(group_id)
+	var result = await Online.nakama_client.get_group_member_list_async(group_id)
 	if result:
-		print("更新俱乐部信息:", result," 当前玩家ID:",Network.player_data.id)
+		print("更新俱乐部信息:", result," 当前玩家ID:",OnlineChat.player_data.id)
 		for info in result.group_users:
 			if info.state == 3:
 				continue
 			var member = info.user
-			if member.id == Network.player_data.id and (info.state == 0 or info.state == 1):
+			if member.id == OnlineChat.player_data.id and (info.state == 0 or info.state == 1):
 				isAdmin = true
 			members.append({
 				"id": member.id, 
@@ -117,10 +117,10 @@ func _on_new_member_added(member_data: Dictionary):
 			return 
 	# 查找用户ID
 	if not member_data["id"].is_empty() and member_data["id"].length() <16:
-		var result = await Network.search_users(member_data["id"])
+		var result = await Online.nakama_client.search_users(member_data["id"])
 		print("好友搜索",result,member_data["id"])
 		if result and result.users.size() > 0:
-			var ret = await Network.add_group_users_async(group_id, [result.users[0].id])
+			var ret = await Online.nakama_client.add_group_users_async(Online.nakama_session, group_id, [result.users[0].id])
 			if not ret:
 				PopupManager.show_message("添加失败")
 				return	
@@ -128,7 +128,7 @@ func _on_new_member_added(member_data: Dictionary):
 	update_member_list()
 
 func _on_member_deleted(member_id: String):
-	var ret = await Network.remove_gourp_user(group_id, member_id)
+	var ret = await Online.nakama_client.remove_gourp_user(group_id, member_id)
 	if not ret:
 		PopupManager.show_message("删除失败")
 		return
@@ -140,7 +140,7 @@ func _on_member_deleted(member_id: String):
 	# queue_free() 
 
 func _on_member_band(member_id: String):
-	var ret = await Network.ban_group_users_async(group_id, member_id)
+	var ret = await Online.nakama_client.ban_group_users_async(group_id, member_id)
 	if not ret:
 		PopupManager.show_message("拉黑失败")
 		return
@@ -149,7 +149,7 @@ func _on_member_band(member_id: String):
 	pass
 
 func _on_member_demote(member_id: String):
-	var ret = await Network.demote_group_users_async(group_id, [member_id])
+	var ret = await Online.nakama_client.demote_group_users_async(Online.nakama_session,group_id, [member_id])
 	if not ret:
 		PopupManager.show_message("降级失败")
 		return
@@ -158,7 +158,7 @@ func _on_member_demote(member_id: String):
 	pass
 
 func _on_member_promote(member_id: String):
-	var ret = await Network.promote_group_users_async(group_id, [member_id])
+	var ret = await Online.nakama_client.promote_group_users_async(Online.nakama_session,group_id, [member_id])
 	if not ret:
 		PopupManager.show_message("升级失败")
 		return
@@ -167,11 +167,11 @@ func _on_member_promote(member_id: String):
 	pass
 
 func _on_member_add_friend(member_id: String):
-	var data = DataManager.get_instance().get_uid_friendInfo(Network.player_data.id, member_id)
+	var data = DataManager.get_instance().get_uid_friendInfo(OnlineChat.player_data.id, member_id)
 	if data:
 		PopupManager.show_message("对方已是好友")
 		return
-	var ret = await Network.add_friends_async([member_id])
+	var ret = await Online.nakama_client.add_friends_async(Online.nakama_session,[member_id])
 	if not ret:
 		PopupManager.show_message("添加好友失败")
 		return

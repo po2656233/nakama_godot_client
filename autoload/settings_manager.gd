@@ -4,8 +4,8 @@ extends Node
 signal settings_changed
 
 var settings_ui: Control = null
-var settings_scene = preload("res://scenes/element/setting.tscn")
-var music_scene = preload("res://scenes/element/music.tscn")
+var settings_scene = preload("res://scenes/1common/setting.tscn")
+var music_scene = preload("res://scenes/1common/music.tscn")
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS # 让设置在游戏暂停时也能工作

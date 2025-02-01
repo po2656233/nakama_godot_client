@@ -1,14 +1,17 @@
 extends Node
 
 @onready var bgMusic = $background
-@onready var sendMusic = $send
-@onready var recvMusic = $recv
-@onready var comingMusic = $comming
-@onready var welcomegMusic = $welcome
-@onready var emailMusic = $email
-@onready var notifyMusic = $notify
-@onready var onlineMusic = $online
-@onready var newmsgMusic = $newmsg
+
+@onready var sendMusic = $message/send
+@onready var recvMusic = $message/recv
+@onready var newmsgMusic = $message/newmsg
+
+@onready var comingMusic = $notify/comming
+@onready var welcomegMusic = $notify/welcome
+@onready var emailMusic = $notify/email
+@onready var notifyMusic = $notify/notify
+@onready var onlineMusic = $notify/online
+
 var isMute = false 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -43,29 +46,29 @@ func _on_recv_notify(args) -> void:
 
 # 新消息声音
 func _on_new_msg(_args) -> void:
-	if isMute:
-		return
+	# if isMute:
+	# 	return
 	newmsgMusic.play()
 	pass
 
 # 发送声音
 func _on_send_msg(_args) -> void:
-	if isMute:
-		return
+	# if isMute:
+	# 	return
 	sendMusic.play()
 	pass
 
 # 接收声音
 func _on_recv_msg(_args) -> void:
-	if isMute:
-		return
+	# if isMute:
+	# 	return
 	recvMusic.play()
 	pass
 
 # 上线声音
 func _on_online_msg() -> void:
-	if isMute:
-		return
+	# if isMute:
+	# 	return
 	onlineMusic.play()
 	pass
 

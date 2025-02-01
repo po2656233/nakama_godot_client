@@ -48,21 +48,21 @@ var first_clubs = true
 var first_world = true
 
 # func _init() -> void:
-# 	# if Network.get_world_channel() == null:
-# 	# 	await Network.create_world_async()
+# 	# if OnlineChat.get_world_channel() == null:
+# 	# 	await OnlineChat.create_world_async()
 # 	# pass
 
 # 初始化 
 func _ready():
-	if not Network.player_data:
+	if not OnlineChat.player_data:
 		PopupManager.show_message("未登录")
 		return
 	SignalManager.LoadingSIG.emit(1)
 	# 获取基础信息
-	myHeadicon = Network.player_data.avatar_url
-	myUsername = Network.player_data.username
-	uid = Network.player_data.id
-	is_mobile = Network.isMobile()
+	myHeadicon = OnlineChat.player_data.avatar_url
+	myUsername = OnlineChat.player_data.username
+	uid = OnlineChat.player_data.id
+	is_mobile = Util.isMobile()
 
 	# 虚拟键盘高度
 	origin_height = keyboardContainer.position.y
@@ -78,8 +78,8 @@ func _ready():
 		button.text = "全屏切换"
 		button.pressed.connect(_on_fullscreen_toggle)
 		add_child(button)
-	button.visible = Network.isFullScreen()
-	light_switch.visible = Network.isFullScreen()
+	button.visible = Util.isFullScreen()
+	light_switch.visible = Util.isFullScreen()
 
 	set_rotation_pivot()		# 设置旋转中心点
 
@@ -95,14 +95,11 @@ func _ready():
 	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) #刷新俱乐部列表
 	SignalManager.AddClubSIG.connect(_on_add_club) #添加俱乐部
 	SignalManager.UpdateClubSIG.connect(_on_update_club) #更新俱乐部
-	Network.changeChannelSIG.connect(_on_change_channel)
-	  
-	Network._socket.received_channel_presence.connect(_on_channel_presence)
-	Network._socket.received_channel_message.connect(_on_received_message)
-	Network._socket.received_status_presence.connect(_on_status_presence) #监听好友状态
-	Network._socket.received_notification.connect(_on_received_notify) #监听好友状态
+	OnlineChat.changeChannelSIG.connect(_on_change_channel)
 	
-	Network.chat_history_received.connect(_on_history_message)
+	_on_socket_connected()
+	# Online.socket_connected.connect(_on_socket_connected)
+	OnlineChat.chat_history_received.connect(_on_history_message)
 
 	# 加载世界频道
 	# toWork()
@@ -146,7 +143,7 @@ func _on_virtual_keyboard_height_changed(keyboard_height):
 ####################线程开启加载数据##################################
 func initData():
 	# 加载世界频道
-	var world = await Network.load_world_channel()
+	var world = await OnlineChat.load_world_channel()
 	if world:
 		_on_change_channel(world.id)
 
@@ -160,6 +157,15 @@ func initData():
 	# get_club_list()
 	pass
 ######################################################
+func _on_socket_connected():
+	print("连接成功,监听聊天 通知等消息")
+	if Online.nakama_socket:
+		Online.nakama_socket.received_channel_presence.connect(_on_channel_presence)
+		Online.nakama_socket.received_channel_message.connect(_on_received_message)
+		Online.nakama_socket.received_status_presence.connect(_on_status_presence) #监听好友状态
+		Online.nakama_socket.received_notification.connect(_on_received_notify) #监听好友状态
+	pass
+
 func _on_show_addfriend_pressed() -> void:
 	if addfirendPanle.visible:
 		addfirendPanle.hide()
@@ -191,7 +197,7 @@ func _on_add_club(club):
 
 func _on_update_club(clubName):
 	print("更新俱乐部的信息-->:", clubName)
-	var result =await Network.search_groups(clubName)
+	var result =await OnlineChat.search_groups(clubName)
 	if result:
 		for group in result.groups:
 			clubListItem._on_group_updated({
@@ -320,7 +326,7 @@ func _on_received_notify(notify):
 			# changeOnline(notify.sender_id, true)
 			pass
 		NotifyStatus.WANT_FRIEND:
-			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
 			{
 				"type":"用户",
 				"level":0,
@@ -334,7 +340,7 @@ func _on_received_notify(notify):
 			})
 			SignalManager.NewNotifySIG.emit()
 		NotifyStatus.ACCEPT_FRIEND:
-			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
 			{
 				"type":"用户",
 				"level":0,
@@ -349,7 +355,7 @@ func _on_received_notify(notify):
 			# SignalManager.NewNotifySIG.emit()
 			SignalManager.FreshFriendListSIG.emit()
 		NotifyStatus.ACCEPT_GROUP:
-			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
 			{
 				"type":"俱乐部",
 				"level":0,
@@ -364,7 +370,7 @@ func _on_received_notify(notify):
 			SignalManager.NewNotifySIG.emit()
 			pass
 		NotifyStatus.WANT_GROUP:
-			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
 			{
 				"type":"俱乐部",
 				"level":0,
@@ -384,7 +390,7 @@ func _on_received_notify(notify):
 		NotifyStatus.SERVER_CLOSE:
 			pass
 		NotifyStatus.BANNED:
-			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
 			{
 				"type":"俱乐部",
 				"level":0,
@@ -422,14 +428,14 @@ func _on_btn_send_pressed() -> void:
 	# 发送消息
 	var channel = getCurChannelData()
 	if channel: 
-		Network.set_current_channel(channel)
-		var msg = Network.getMsgData(null)
+		OnlineChat.set_current_channel(channel)
+		var msg = OnlineChat.getMsgData(null)
 		msg.content = sendTextEdit.text.strip_edges()
 		msg.kind = mainPanle.current_tab
 		msg.type = ContentType.TEXT
-		msg.headicon = Network.player_data.avatar_url
+		msg.headicon = OnlineChat.player_data.avatar_url
 		print("发送消息:", msg)
-		var ret = await Network.send_message(msg)
+		var ret = await OnlineChat.send_message(msg)
 		if ret == OK:
 			SignalManager.SendMessageSIG.emit(msg)
 			sendTextEdit.clear()
@@ -461,13 +467,13 @@ func _load_more_history(forward: bool):
 		return
 
 	# 发起加载请求
-	await Network.get_chat_history(current_channel_id, MESSAGES_PER_PAGE, forward)
+	await OnlineChat.get_chat_history(current_channel_id, MESSAGES_PER_PAGE, forward)
 	pass
 
 #################################################################
 # 获取好友列表
 func get_friends_list():
-	var friendlist = await Network.get_friends_list()
+	var friendlist = await OnlineChat.get_friends_list()
 	if friendlist and friendlist.friends.size() > 0:
 		friendListItem.clear()
 		var friendIds = []
@@ -481,7 +487,7 @@ func get_friends_list():
 				continue
 			# 区分是否是互为好友 
 			if friend.state == 0:
-				var ret = await Network.add_channel_async(friend.user.id,0)
+				var ret = await OnlineChat.add_channel_async(friend.user.id,0)
 				if ret:
 					var username = user.username
 					var friend_status = "在线" if user.online else "离线"
@@ -495,7 +501,7 @@ func get_friends_list():
 					var index = friendListItem.add_item(username)
 					# 加载头像
 					if user.avatar_url:
-						var texture = await Network.load_texture_async(user.avatar_url)
+						var texture = await Util.load_texture_async(user.avatar_url)
 						if texture:
 							friendListItem.set_item_icon(index, texture)
 						pass
@@ -516,7 +522,7 @@ func get_friends_list():
 				SignalManager.NewNotifySIG.emit(null)
 				pass
 			# 状态
-			DataManager.get_instance().add_uid_approval(Network.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
 			{
 				"type":"用户",
 				"level":0,
@@ -529,7 +535,7 @@ func get_friends_list():
 				"status":friend.state,
 			})
 			pass
-		await Network.update_status_async("online")
+		await OnlineChat.update_status_async("online")
 	print("获取好友列表")
 	pass
 ####
@@ -537,7 +543,7 @@ func add_club(group):
 	if group.name == "world": 
 		return
 	# print("俱乐部信息:",group)
-	var ret = await Network.add_channel_async(group.id,2)
+	var ret = await OnlineChat.add_channel_async(group.id,2)
 	if ret:
 		clubListItem._on_group_joined(
 			{
@@ -561,11 +567,11 @@ func add_club(group):
 #######################获取俱乐部###############################
 func update_club(group):
 	# 获取成员列表
-	var retsult = await Network.get_group_member_list_async(group.id)
+	var retsult = await OnlineChat.get_group_member_list_async(group.id)
 	var dataList = []
 	var isAdmin = false
 	for info1 in retsult.group_users:
-		if info1.user.id == Network.player_data.id and (info1.state == 0 or info1.state == 1):
+		if info1.user.id == OnlineChat.player_data.id and (info1.state == 0 or info1.state == 1):
 			isAdmin = true
 			continue
 		if info1.state == 3:# 申请加入群组
@@ -584,14 +590,14 @@ func update_club(group):
 	# 是管理员
 	if isAdmin and dataList.size() > 0:
 		for data in dataList:
-			DataManager.get_instance().add_uid_approval(Network.player_data.id,data)
+			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,data)
 	DataManager.get_instance().add_uid_club(uid, group) 
 	pass
 
 
 #######################获取俱乐部列表###############################
 func get_club_list():
-	var result = await Network.get_group_list(uid)
+	var result = await OnlineChat.get_group_list(uid)
 	if result == null:
 		return
 	print("俱乐部数量:",result.user_groups.size())
@@ -622,7 +628,7 @@ func getCurChannelData():
 	match kind:
 		MessageKind.WORLD:
 			# 世界
-			channel = Network.get_world_channel() 
+			channel = OnlineChat.get_world_channel() 
 			pass
 		MessageKind.CHAT:
 			# 好友
@@ -708,9 +714,9 @@ func _on_light_button_pressed() -> void:
 func _on_tab_container_tab_selected(tab:int) -> void:
 	if tab == 0 and first_world:
 		first_world = false
-		var world = Network.get_world_channel()
+		var world = OnlineChat.get_world_channel()
 		if world:
-			await Network.get_chat_history(world.id)
+			await OnlineChat.get_chat_history(world.id)
 	elif tab == 1 and first_clubs:
 		first_clubs = false
 		# get_club_list()

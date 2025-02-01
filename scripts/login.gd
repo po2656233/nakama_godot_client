@@ -20,7 +20,7 @@ var origin_height = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# 基础信息
-	is_mobile = Network.isMobile()
+	is_mobile = Util.isMobile()
 	origin_height = keyboardContainer.position.y
 
 	# 禁用 SSL 验证 【todo 正式环境建议解除】
@@ -30,15 +30,6 @@ func _ready() -> void:
 	
 	print("当前运行的节点名",SceneManager.get_current_scene_name())
 	WindowDrag.register_drag_zone(self)
-	Network.initialize_client()
-	print("Network 初始化")
-	# 验证 PopupManager 是否可用
-	if not PopupManager:
-		print("PopupManager 未正确初始化")
-	else:
-		print("PopupManager 已正确初始化")
-
-	
 	if ProjectSettings.has_setting("username"):
 		usernameEdit.text = ProjectSettings.get("username")
 	# # 创建HTTP请求节点
@@ -67,7 +58,17 @@ func _on_tr_login_pressed() -> void:
 
 func _on_tr_wxlogin_pressed() -> void:
 	# login()
-	wechatLogin()
+	# wechatLogin()
+	loading.show()
+	if await OnlineLogin.do_device_login() or await OnlineLogin.do_device_login("",true):
+		SignalManager.LoadingSIG.emit(20)
+		await OnlineChat.load_player_data()  
+		SignalManager.LoadingSIG.emit(100)
+		SceneManager.switch_to_scene("home","tile_reveal")
+	else:
+		loading.hide()
+		PopupManager.show_message("登录失败，请检查网络连接")
+
 	pass # Replace with function body.
 
 # 处理HTTP响应
@@ -92,16 +93,15 @@ func login()->void:
 		PopupManager.show_message("请阅读并同意用户协议")
 		return
 	loading.show()
-	if await Network.authenticate_email(usernameEdit.text, passwordEdit.text):
+	if await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
 		SignalManager.LoadingSIG.emit(20)
-		await Network.load_player_data()  
+		await OnlineChat.load_player_data()  
 		SignalManager.LoadingSIG.emit(100)
-
 		# ProjectSettings.set("username",usernameEdit.text)
 		# FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
 	else:
 		loading.hide()
-		PopupManager.show_message("账号或密码错误","提示",false)
+		# PopupManager.show_message("账号或密码错误","提示",false)
 		print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
 	pass # Replace with function body.
  
