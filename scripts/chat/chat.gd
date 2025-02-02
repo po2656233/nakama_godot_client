@@ -244,31 +244,30 @@ func _on_history_message(msgList):
 	print("收到历史消息:", msgList.size())
 	# 校验是否有新消息
 	var channel_id = ""
-	var haveNew = msgList.size() == 0
+	var haveNew = false
 	for msg in msgList:
 		channel_id = msg.channel_id
 		if add_message_to_history(msg.channel_id, msg):
 			haveNew = true
-		if message_id_cache[channel_id] and message_id_cache[channel_id].finish_history:
-			break
+		# if message_id_cache[channel_id] and message_id_cache[channel_id].finish_history:
+		# 	break
 		pass
-	# 判断是否已经拉完
-	if channel_id != "" and not message_id_cache[channel_id].finish_history:
-		var isFull = msgList.size() != MESSAGES_PER_PAGE
-		if isFull and message_id_cache[channel_id]:
-			message_id_cache[channel_id].finish_history = true
-			print("渠道" + channel_id + "历史消息加载完毕")
-			DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
-			pass
-		showLoadMore(!isFull)
-	else:
-		showLoadMore(false)
+	# # 判断是否已经拉完
+	# if channel_id != "" and not message_id_cache[channel_id].finish_history:
+	# 	var isFull = msgList.size() != MESSAGES_PER_PAGE
+	# 	if isFull and message_id_cache[channel_id]:
+	# 		message_id_cache[channel_id].finish_history = true
+	# 		print("渠道" + channel_id + "历史消息加载完毕")
+	# 		DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
+	# 		pass
+	# 	showLoadMore(!isFull)
+	# else:
+	# 	showLoadMore(false)
 	# 刷新当前显示的频道信息
 	if haveNew:
 		print("有新消息")
 		refresh_current_channel_display()
-	else:
-		ensure_scroll_to()
+	# ensure_scroll_to()
 	pass
 #############################################################
 

@@ -1,6 +1,7 @@
 extends Node
-
-const CREDENTIALS_FILENAME = 'user://credentials.json'
+const USER_DIR = 'user://'
+const CREDENTIALS = 'credentials.json'
+const CREDENTIALS_FILENAME = USER_DIR + CREDENTIALS
 
 var email: String = ''
 var password: String = ''
@@ -46,8 +47,11 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 	if mypassword != '':
 		password = mypassword
 		
-	if email.is_empty() or password.is_empty():
-		PopupManager.show_dynamic("账号/密码不能为空")
+	if email.is_empty() :
+		PopupManager.show_dynamic("账号不能为空")
+		return false
+	if password.is_empty():
+		PopupManager.show_dynamic("密码不能为空")
 		return false
 	if email.find('@') == -1:
 		email = email+"@game.com"
@@ -96,6 +100,18 @@ func do_device_login(username: String="", created:bool=false, save_credentials: 
 	print("设备登录",result)
 	return true
 
+
+func logout():
+	if Online.nakama_client and Online.nakama_session:
+		Online.nakama_client.session_logout_async(Online.nakama_session)
+		# 清除当前 session
+		Online.set_nakama_session(null)
+		var dir = DirAccess.open(USER_DIR)
+		if dir:
+			dir.remove(CREDENTIALS)
+			print("Credentials removed")
+		print("Logged out successfully")	
+
 func register_account(myEmail,myPassword,save_credentials=false) -> void:
 	email = myEmail.strip_edges()
 	password = myPassword.strip_edges()
@@ -126,4 +142,4 @@ func register_account(myEmail,myPassword,save_credentials=false) -> void:
 			_save_credentials()
 		Online.nakama_session = nakama_session
 		PopupManager.show_dynamic("创建账号成功!")
-		SceneManager.switch_to_scene("MatchScreen")
+		SceneManager.switch_to_scene("home")

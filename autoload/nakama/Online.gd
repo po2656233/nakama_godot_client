@@ -65,6 +65,7 @@ func connect_nakama_socket() -> void:
 	socket_connected.emit(nakama_socket)
 	pass
 
+
 func is_nakama_socket_connected() -> bool:
 	return nakama_socket != null && nakama_socket.is_connected_to_host()
 

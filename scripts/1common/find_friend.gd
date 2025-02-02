@@ -51,7 +51,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 		return
 	isNothing = false
 	if isClub:
-		var result = await Online.nakama_client.search_groups(new_text)
+		var result = await OnlineChat.search_groups(new_text)
 		print("俱乐部搜索",result)
 		_list.clear()
 		if result == null or result.groups.size() == 0:
@@ -67,7 +67,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 			if index != -1:
 				_list.set_item_metadata(index,club)
 	else:
-		var result = await Online.nakama_client.search_users(new_text)
+		var result = await OnlineChat.search_users(new_text)
 		print("好友搜索",result)
 		_list.clear()
 		if result == null or result.users.size() == 0:
@@ -136,7 +136,7 @@ func _on_tb_add_pressed() -> void:
 	if ids.size() == 0:
 		# 创建俱乐部
 		if isClub:
-			var result = await Online.nakama_client.create_group_async(Online.nakama_session,_search_box.text)
+			var result = await OnlineChat.create_group_async(_search_box.text)
 			if result:
 				PopupManager.show_message("创建俱乐部成功")
 			else:
@@ -148,11 +148,11 @@ func _on_tb_add_pressed() -> void:
 	# 添加俱乐部
 	if isClub:
 		for id in ids:
-			await Online.nakama_client.add_group_async(id)
+			await OnlineChat.add_group_async(id)
 		return
 
 	# 添加好友
-	var ret = await Online.nakama_client.add_friends_async(ids)	
+	var ret = await OnlineChat.add_friends_async(ids)	
 	if ret:
 		PopupManager.show_message("已添加,请等待对方通过")
 		_list.clear()

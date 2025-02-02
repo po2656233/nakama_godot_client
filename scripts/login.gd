@@ -61,14 +61,13 @@ func _on_tr_wxlogin_pressed() -> void:
 	# wechatLogin()
 	loading.show()
 	if await OnlineLogin.do_device_login() or await OnlineLogin.do_device_login("",true):
-		SignalManager.LoadingSIG.emit(20)
+		SignalManager.LoadingSIG.emit(10)
 		await OnlineChat.load_player_data()  
 		SignalManager.LoadingSIG.emit(100)
 		SceneManager.switch_to_scene("home","tile_reveal")
 	else:
 		loading.hide()
 		PopupManager.show_message("登录失败，请检查网络连接")
-
 	pass # Replace with function body.
 
 # 处理HTTP响应
@@ -94,7 +93,7 @@ func login()->void:
 		return
 	loading.show()
 	if await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
-		SignalManager.LoadingSIG.emit(20)
+		SignalManager.LoadingSIG.emit(10)
 		await OnlineChat.load_player_data()  
 		SignalManager.LoadingSIG.emit(100)
 		# ProjectSettings.set("username",usernameEdit.text)

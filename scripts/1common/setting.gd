@@ -148,7 +148,7 @@ func on_setting_pressed(index: int) -> void:
 			# popup_menu.set_item_icon(index, volume if isMute else novolume)
 			pass
 		2:#返回登录页
-			Online.nakama_client.logout() 
+			OnlineLogin.logout() 
 			SceneManager.switch_to_scene("login",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
 		# 	pass
 		3:# 退出

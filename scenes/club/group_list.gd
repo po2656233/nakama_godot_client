@@ -86,7 +86,7 @@ func update_group_list():
 		var group_item = group_item_scene.instantiate()
 		$VBoxContainer/ScrollContainer/GroupContainer.add_child(group_item)
 		group_item.setup(group)
-		group_item.tooltip_text = group["description"]+"\n创建时间:" + Online.nakama_client.get_chinese_time_str(group["create_time"])
+		group_item.tooltip_text = group["description"]+"\n创建时间:" + Util.get_chinese_time_str(group["create_time"])
 		group_item.group_selected.connect(func(data): _on_group_selected(data, group_item))
 		group_item.group_clicked.connect(func(): _on_cliecked_group(group_item))
 		group_item.group_left.connect(_on_group_left)

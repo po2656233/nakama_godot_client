@@ -203,6 +203,27 @@ func remove_message_by_id(messages: Array, target_message_id: String):
 	return false 
 
 
+
+
+# func check_network():
+# 	if OS.has_feature("mobile"):
+# 		# 检查网络连接状态
+# 		if OS.get_network_connected_type() == -1:
+# 			push_error("没有网络连接")
+# 			return false
+			
+# 		# 输出网络类型
+# 		var network_type = OS.get_network_type()
+# 		match network_type:
+# 			0: print("未知网络类型")
+# 			1: print("以太网连接")
+# 			2: print("WIFI连接")
+# 			3: print("移动数据连接")
+# 			4: print("移动数据2G")
+# 			5: print("移动数据3G")
+# 			6: print("移动数据4G")
+# 	return true
+
 func isMobile()->bool:
 	var systemName = OS.get_name()
 	return systemName == "Android" or systemName == "iOS"

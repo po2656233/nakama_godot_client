@@ -231,7 +231,7 @@ func _setup_text_message(text: String):
 	text_label.size = Vector2.ZERO
 	
 	# 等待一帧以确保文本已经正确布局
-	await get_tree().process_frame
+	# await get_tree().process_frame
 	
 	# 获取文本的实际尺寸
 	var font = text_label.get_theme_font("normal_font")

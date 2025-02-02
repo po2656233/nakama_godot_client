@@ -154,7 +154,7 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	# 更新最后消息时间
 	last_message_time = timestamp
 	message_index += 1
-
+	ensure_scroll_to()
 	pass
 
 # 添加时间分割线
@@ -364,6 +364,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 	var msgCount = DataManager.get_instance().add_chat_history(uid, channel_id, msg)
 	print("当前消息数量",msgCount) 
 	DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
+	ensure_scroll_to()
 	return true
 
 # 加载本地历史记录
@@ -396,14 +397,12 @@ func refresh_current_channel_display() -> void:
 		var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 		var code = msg.code if msg.has("code") else 0
 		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time),code)
-	# 滚动到底部
-	ensure_scroll_to()
 	pass
 
 func message_to_show(msg:NakamaAPI.ApiChannelMessage):
 	var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 	add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time),msg.code)
-	ensure_scroll_to()
+	pass
 
 # 获取channel的最后一条消息
 func get_channel_last_message(channel_id: String) -> NakamaAPI.ApiChannelMessage:
@@ -462,11 +461,10 @@ func ensure_scroll_to():
 		# 直接滚动到最底部
 		if isToTop:
 			scroll.scroll_vertical = 0
-			print("滑到顶部")
+			# print("滑到顶部")
 		else:
-			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value
-			print("滑到底部")
-
+			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value+50
+			# print("滑到底部")
 	pass
 
 

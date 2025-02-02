@@ -562,6 +562,8 @@ func _on_room_selected(room_info: Dictionary):
 
 func _on_room_created(room_info: Dictionary):
 	# 添加到房间列表
+	# OnlineMatch.create_match(Online.nakama_socket)
+	# Online.nakama_client.list_matches_async(Online.nakama_session,-1,-1,20,false,"","")
 	if not room_data.any(func(r): return r.room_id == room_info.room_id):
 		room_data.push_front(room_info)
 		_save_data()

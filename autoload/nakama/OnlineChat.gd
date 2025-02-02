@@ -18,6 +18,7 @@ signal chat_presence_changed(joins: Array, leaves: Array)
 signal chat_history_received(messages: Array)
 signal changeChannelSIG(id:String)
 
+var history_msg_count = {}
 # 聊天内容结构
 var DEFAULT_MESSAGE = {
 	"kind": 0,#2聊天 1俱乐部 0世界
@@ -31,74 +32,6 @@ var DEFAULT_MESSAGE = {
 	"duration": 0,
 }
 
-
-
-# # 初始化
-# func _ready() -> void:
-# 	connection_failed.connect(_on_connection_failed)
-	# initialize_client()
-
-		
-
-# func initialize_client() -> void:
-# 	# 1.重置client
-# 	if Online.nakama_client:
-# 		if Online.nakama_session:			# 退出登录
-# 			Online.nakama_client.session_logout_async(Online.nakama_session)
-# 		Online.nakama_client.cancel_free()
-# 		Online.nakama_client = null
-# 	Online.nakama_client = Nakama.create_client(SERVER_KEY, HOST, PORT, SCHEME)
-# 	# 2. 关闭现有的 WebSocket 连接
-# 	if Online.nakama_socket:
-# 		if Online.nakama_socket.is_connected_to_host():
-# 			Online.nakama_socket.close()
-# 		Online.nakama_socket = null
-	
-# 	# 3. 创建新的 WebSocket 连接
-# 	Online.nakama_socket = Nakama.create_socket_from(Online.nakama_client)
-# 	connect_signals()
-
-# 	# 4. 尝试恢复会话
-# 	var success = await restore_session()
-# 	if success:
-# 		connection_established.emit()
-# 	# else:
-# 	# 	await authenticate_device()
-# 	# 5.重置世界渠道,方便重新加入世界渠道
-# 	_world_channel = null
-# 	pass
-
-# func connect_signals() -> void:
-# 	if Online.nakama_socket:
-# 		if not Online.nakama_socket.is_connected("connection_error",_on_connection_failed):
-# 			Online.nakama_socket.connection_error.connect(_on_connection_failed)
-# 		if not Online.nakama_socket.is_connected("connected",_on_connection_succeeded):
-# 			Online.nakama_socket.connected.connect(_on_connection_succeeded)
-# 		if not Online.nakama_socket.is_connected("received_error",_on_received_error):
-# 			Online.nakama_socket.received_error.connect(_on_received_error)
-
-# func logout():
-# 	remove_session()
-
-# func check_network():
-# 	if OS.has_feature("mobile"):
-# 		# 检查网络连接状态
-# 		if OS.get_network_connected_type() == -1:
-# 			push_error("没有网络连接")
-# 			return false
-			
-# 		# 输出网络类型
-# 		var network_type = OS.get_network_connected_type()
-# 		match network_type:
-# 			0: print("未知网络类型")
-# 			1: print("以太网连接")
-# 			2: print("WIFI连接")
-# 			3: print("移动数据连接")
-# 			4: print("移动数据2G")
-# 			5: print("移动数据3G")
-# 			6: print("移动数据4G")
-# 	return true
-	
 
 # 设置当前聊天频道
 func set_current_channel(channel: NakamaRTAPI.Channel,isLoadhistory:bool=false):
@@ -181,7 +114,7 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 	# 	return FAILED
 
 
-	print("获取聊天历史",channelId," -->", limit, "-->",forward)
+	# print("获取聊天历史",channelId," -->", limit, "-->",forward)
 	if cursor == null:
 		cursor = _cursor_list_channel
 	var result = await Online.nakama_client.list_channel_messages_async(Online.nakama_session, channelId, limit, forward, cursor)
@@ -189,7 +122,7 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 		print("Failed to get chat history: ", result.get_exception().message)
 		return FAILED
 
-
+	print("获取当前历史大小:",result.messages.size())
 	var messages = []
 	for message in result.messages:
 		var content = JSON.parse_string(message.content)
@@ -200,9 +133,47 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 	if result.next_cursor:
 		_cursor_list_channel = result.next_cursor
 		# print("获取历史记录游标",_cursor_list_channel)
-	if messages.size()<limit-1:
-		return FAILED
+	if history_msg_count.has(channelId):
+		if history_msg_count[channelId] != limit and history_msg_count[channelId] == messages.size():
+			return FAILED
+	history_msg_count[channelId] = messages.size()
 	return OK
+
+
+func fetch_older_messages(channel_id: String, cursor: String, limit: int = 20):
+	var result = await Online.nakama_client.list_channel_messages_async(Online.nakama_session, channel_id, limit, true, cursor)
+	if result.is_exception():
+		print("Failed to get chat history: ", result.get_exception().message)
+		return null
+
+	var messages = []
+	for message in result.messages:
+		var content = JSON.parse_string(message.content)
+		if content:
+			messages.append(message)
+	print("获取当前历史大小:",messages.size()," 上一游标:", result.prev_cursor," 下一游标:", result.next_cursor)
+	chat_history_received.emit(messages)
+	return result.next_cursor
+
+func fetch_full_chat_history(channel_id: String, limit: int = 20):
+	var result = await Online.nakama_client.list_channel_messages_async(Online.nakama_session, channel_id, limit, true, "")
+	# print("Fetched initial messages: ", result.messages.size())
+	if result.is_exception():
+		print("Failed to get chat history: ", result.get_exception().message)
+		return
+	print("获取当前历史大小(首次):",result.messages.size()," prev_cursor:",result.prev_cursor," next_cursor:", result.next_cursor)
+	var messages = []
+	for message in result.messages:
+		var content = JSON.parse_string(message.content)
+		if content:
+			messages.append(message)
+	
+	chat_history_received.emit(messages)
+	var next_cursor = result.next_cursor
+	while next_cursor:
+		next_cursor = await fetch_older_messages(channel_id, next_cursor, limit)
+	pass
+
 
 func get_chat_history_all(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false) -> Error:
 	if channelId.is_empty():
@@ -467,7 +438,8 @@ func load_world_channel():
 				return null
 			print("添加世界渠道频道: ", ret)
 			_world_channel = ret
-			get_chat_history_all(_world_channel.id)
+			fetch_full_chat_history(_world_channel.id)
+			# get_chat_history_all(_world_channel.id)
 			return ret
 	return null
 
@@ -480,9 +452,10 @@ func add_channel_async(targetId: String,tab:int = 0):
 			chType = NakamaSocket.ChannelType.Group
 		else:
 			chType = NakamaSocket.ChannelType.DirectMessage
-		var result = await Online.nakama_socket.join_chat_async(targetId,chType,true)
+		var result = await Online.nakama_socket.join_chat_async(targetId,chType)
 		if result.is_exception():
-			push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型", chType)
+			print("Error add_channel_async: ",result.get_exception().message, result," ID:",  targetId," 类型:", chType)
+			# push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型:", chType)
 			return null
 		print("添加频道: ", result)
 		return result
@@ -635,16 +608,6 @@ func reback_channel_message(channel_id:String,message_id: String,data:Dictionary
 
 #########################
 
-
-
-
-# Signal Handlers
-func _on_connection_failed():
-	PopupManager.show_dynamic("网络连接失败")
-
-func _on_connection_succeeded():
-	PopupManager.show_dynamic("网络连接成功")
-	# connection_established.emit()
 
 func _on_received_error(error: String):
 	push_error("Nakama error: " + error)

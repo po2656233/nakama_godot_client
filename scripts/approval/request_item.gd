@@ -103,12 +103,12 @@ func get_request_info() -> Dictionary:
 func _on_approve_button_pressed() -> void:
 	_status = Status.APPROVED
 	if _type == "用户":
-		if await Online.nakama_client.add_friends_async(Online.nakama_session,[_uid]):
+		if await OnlineChat.add_friends_async([_uid]):
 			approve()
 			SignalManager.FreshFriendListSIG.emit()
 			return	
 	elif _type == "俱乐部":
-		if await Online.nakama_client.add_group_users_async(Online.nakama_session, _gid, [_uid]):
+		if await OnlineChat.add_group_users_async(_gid, [_uid]):
 			approve()
 			SignalManager.FreshClubListSIG.emit()
 			return
@@ -129,7 +129,7 @@ func _on_reject_button_pressed() -> void:
 	if _type == "用户":
 		if _status == Status.REJECTED:
 			_status = Status.ABSOLE
-			if await Online.nakama_client.remove_friend(_uid):
+			if await OnlineChat.remove_friend(_uid):
 				_approval_time = Time.get_datetime_string_from_system().split(".")[0]
 				$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
 				_update_status_display()
@@ -138,7 +138,7 @@ func _on_reject_button_pressed() -> void:
 				DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,get_request_info())
 			return
 		_status = Status.REJECTED
-		if await Online.nakama_client.refuse_friends_async(_uid):
+		if await OnlineChat.refuse_friends_async(_uid):
 			_approval_time = Time.get_datetime_string_from_system().split(".")[0]
 			$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
 			_update_status_display()
@@ -147,7 +147,7 @@ func _on_reject_button_pressed() -> void:
 			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,get_request_info())
 	elif _type == "俱乐部":
 		_status = Status.REJECTED
-		if await Online.nakama_client.remove_gourp_user(_gid,_uid):
+		if await OnlineChat.remove_gourp_user(_gid,_uid):
 			_approval_time = Time.get_datetime_string_from_system().split(".")[0]
 			$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
 			_update_status_display()
