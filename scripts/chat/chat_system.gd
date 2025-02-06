@@ -429,7 +429,7 @@ func clear_messages_item():
 func ensure_scroll_to():
 	if not messages_container:
 		return
-	# await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.1).timeout
 	if messages_container.get_parent() is ScrollContainer:
 		var scroll = messages_container.get_parent() as ScrollContainer
 		

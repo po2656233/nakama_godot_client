@@ -202,8 +202,8 @@ func _ready():
 	SceneManager.set_previous_name("roomlist")
 	# WindowDrag.register_drag_zone(self)
 	var width = get_viewport_rect().size.x
-	if width>300:
-		room_container.columns = (width-250)/ 300
+	if width>500:
+		room_container.columns = (width-350)/ 500
 
 	# 创建房间
 	create_room_dialog.room_created.connect(_on_room_created)

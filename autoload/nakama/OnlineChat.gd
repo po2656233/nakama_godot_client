@@ -40,9 +40,11 @@ func set_current_channel(channel: NakamaRTAPI.Channel,isLoadhistory:bool=false):
 	_cursor_list_channel = null
 	_current_channel = channel
 	if channel:
+		print("切换频道信号:",channel," 是否加载历史信息:",isLoadhistory)
 		changeChannelSIG.emit(channel.id)
 		if isLoadhistory:
-			await get_chat_history(channel.id)
+			await fetch_full_chat_history(channel.id)
+			# await get_chat_history(channel.id, 20, true)
 	pass
 
 func get_cursor_for_list_channel():
@@ -76,15 +78,6 @@ func authenticate_email(username: String,password: String,email: String="",  cre
 	return true
 
 ##############################################################
-# 加入聊天频道
-func join_chat_channel(channel_id: String, persistence: bool = true, hidden: bool = false) -> Error:
-	var result = await Online.nakama_socket.join_chat_async(channel_id, persistence, hidden)
-	if result.is_exception():
-		print("Failed to join chat channel: ", result.get_exception().message)
-		return FAILED
-	
-	set_current_channel(result)
-	return OK
 
 # 发送消息
 func send_message(content: Dictionary) -> Error:
@@ -96,6 +89,7 @@ func send_message(content: Dictionary) -> Error:
 	if result.is_exception():
 		print("Failed to send message: ", result.get_exception().message)
 		return FAILED
+	print("发送反馈:",result)
 	return OK
 
 
@@ -141,6 +135,8 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 
 
 func fetch_older_messages(channel_id: String, cursor: String, limit: int = 20):
+	if not Online.nakama_client:
+		return null
 	var result = await Online.nakama_client.list_channel_messages_async(Online.nakama_session, channel_id, limit, true, cursor)
 	if result.is_exception():
 		print("Failed to get chat history: ", result.get_exception().message)
@@ -156,7 +152,7 @@ func fetch_older_messages(channel_id: String, cursor: String, limit: int = 20):
 	return result.next_cursor
 
 func fetch_full_chat_history(channel_id: String, limit: int = 20):
-	var result = await Online.nakama_client.list_channel_messages_async(Online.nakama_session, channel_id, limit, true, "")
+	var result = await Online.nakama_client.list_channel_messages_async(Online.nakama_session, channel_id, limit, true, null)
 	# print("Fetched initial messages: ", result.messages.size())
 	if result.is_exception():
 		print("Failed to get chat history: ", result.get_exception().message)
@@ -167,11 +163,12 @@ func fetch_full_chat_history(channel_id: String, limit: int = 20):
 		var content = JSON.parse_string(message.content)
 		if content:
 			messages.append(message)
-	
 	chat_history_received.emit(messages)
 	var next_cursor = result.next_cursor
 	while next_cursor:
-		next_cursor = await fetch_older_messages(channel_id, next_cursor, limit)
+		var prev_cursor = next_cursor
+		next_cursor = await fetch_older_messages(channel_id, prev_cursor, limit)
+	SignalManager.RecvFinishSIG.emit()
 	pass
 
 
@@ -443,19 +440,18 @@ func load_world_channel():
 			return ret
 	return null
 
+# 加入聊天频道
 func add_channel_async(targetId: String,tab:int = 0):
 	if Online.nakama_socket:
-		var chType = null
+		var chType = NakamaSocket.ChannelType.DirectMessage
 		if tab == 1:
 			chType = NakamaSocket.ChannelType.Room
 		elif tab == 2:
 			chType = NakamaSocket.ChannelType.Group
-		else:
-			chType = NakamaSocket.ChannelType.DirectMessage
-		var result = await Online.nakama_socket.join_chat_async(targetId,chType)
+		var result = await Online.nakama_socket.join_chat_async(targetId, chType, true)
 		if result.is_exception():
-			print("Error add_channel_async: ",result.get_exception().message, result," ID:",  targetId," 类型:", chType)
-			# push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型:", chType)
+			# print("Error add_channel_async: ",result.get_exception().message, result," ID:",  targetId," 类型:", chType)
+			push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型:", chType)
 			return null
 		print("添加频道: ", result)
 		return result
@@ -604,10 +600,3 @@ func reback_channel_message(channel_id:String,message_id: String,data:Dictionary
 			return false
 		return true
 	return false
-
-
-#########################
-
-
-func _on_received_error(error: String):
-	push_error("Nakama error: " + error)

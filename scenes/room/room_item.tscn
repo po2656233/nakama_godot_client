@@ -16,12 +16,14 @@ corner_radius_bottom_left = 10
 draw_center = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_3t4jk"]
-font_size = 14
-font_color = Color(0.673416, 0.832612, 0.917436, 1)
+font_size = 25
+font_color = Color(0.168627, 0.109804, 0.690196, 0.756863)
+outline_color = Color(1, 0.647059, 0.482353, 1)
 shadow_size = 3
 shadow_color = Color(0.482353, 0.482353, 0.482353, 0.866667)
 
 [sub_resource type="LabelSettings" id="LabelSettings_20nq0"]
+font_size = 28
 font_color = Color(0.99524, 0.928726, 0, 1)
 outline_size = 3
 outline_color = Color(0.201527, 0.201527, 0.201527, 1)
@@ -29,7 +31,7 @@ shadow_size = 2
 shadow_color = Color(0.577836, 0.713973, 0.579438, 0.807843)
 
 [sub_resource type="LabelSettings" id="LabelSettings_2tp5m"]
-font_size = 20
+font_size = 25
 font_color = Color(0.375987, 0.31869, 0.379707, 1)
 outline_size = 5
 outline_color = Color(0.756863, 0.74902, 0.584314, 1)
@@ -37,7 +39,7 @@ shadow_size = 3
 shadow_color = Color(0.385493, 0.385492, 0.385492, 0.952941)
 
 [sub_resource type="LabelSettings" id="LabelSettings_u0kmr"]
-font_size = 12
+font_size = 15
 font_color = Color(0.634316, 0.727066, 0.566808, 1)
 outline_color = Color(0.194349, 0.194349, 0.194349, 1)
 shadow_size = 3
@@ -59,10 +61,12 @@ corner_radius_bottom_left = 5
 
 [node name="RoomItem" type="PanelContainer"]
 clip_contents = true
-custom_minimum_size = Vector2(280, 250)
-offset_right = 290.0
-offset_bottom = 247.0
+custom_minimum_size = Vector2(450, 400)
+offset_right = 450.0
+offset_bottom = 400.0
 pivot_offset = Vector2(350, 60)
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 script = ExtResource("1_room")
 
@@ -75,9 +79,9 @@ expand_mode = 1
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_bottom = 20
 
 [node name="Panel" type="Panel" parent="MarginContainer"]
 layout_mode = 2
@@ -88,14 +92,15 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -75.5
-offset_top = 41.0
-offset_right = -56.5
-offset_bottom = 67.0
+offset_left = -114.0
+offset_top = 64.0
+offset_right = -32.0
+offset_bottom = 99.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 text = "ID:"
 label_settings = SubResource("LabelSettings_3t4jk")
+vertical_alignment = 1
 
 [node name="RoomName" type="Label" parent="MarginContainer/Panel"]
 layout_mode = 1
@@ -112,20 +117,31 @@ horizontal_alignment = 1
 
 [node name="GameName" type="Label" parent="MarginContainer/Panel"]
 layout_mode = 1
-offset_left = -16.0
-offset_top = -7.0
-offset_right = 48.0
-offset_bottom = 16.0
+anchors_preset = -1
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 12.09
+offset_top = 2.932
+offset_right = 92.09
+offset_bottom = 30.932
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
 text = "游戏类型"
 
 [node name="BaseScoreTR" type="TextureRect" parent="MarginContainer/Panel"]
+custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
-offset_left = 12.0
-offset_top = 142.0
-offset_right = 12.0
-offset_bottom = 207.0
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 53.09
+offset_top = 270.49
+offset_right = 85.09
+offset_bottom = 338.49
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("3_fftwn")
@@ -133,40 +149,62 @@ expand_mode = 4
 stretch_mode = 2
 
 [node name="BaseScore" type="Label" parent="MarginContainer/Panel"]
-layout_mode = 2
-offset_left = 45.0
-offset_top = 162.0
-offset_right = 188.0
-offset_bottom = 196.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 89.09
+offset_top = 278.932
+offset_right = 249.09
+offset_bottom = 313.932
+grow_vertical = 0
 text = "110111111 分"
 label_settings = SubResource("LabelSettings_2tp5m")
 
 [node name="PlayerCount" type="Label" parent="MarginContainer/Panel"]
 layout_mode = 2
-offset_left = 168.0
-offset_top = 112.0
-offset_right = 216.0
-offset_bottom = 135.0
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 275.09
+offset_top = 195.49
+offset_right = 320.09
+offset_bottom = 220.49
 text = "人数："
 label_settings = SubResource("LabelSettings_u0kmr")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Status" type="Label" parent="MarginContainer/Panel"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-offset_left = 150.0
-offset_top = 38.0
-offset_right = 200.0
-offset_bottom = 61.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 272.09
+offset_top = 218.49
+offset_right = 320.09
+offset_bottom = 282.49
 text = "状态"
-horizontal_alignment = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
 
 [node name="Lock" type="TextureRect" parent="MarginContainer/Panel"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(25, 30)
 layout_mode = 2
-offset_left = 186.0
-offset_top = 138.0
-offset_right = 206.0
-offset_bottom = 158.0
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 308.09
+offset_top = 236.932
+offset_right = 333.09
+offset_bottom = 266.932
 size_flags_horizontal = 8
 size_flags_vertical = 0
 texture = ExtResource("2_hrbh1")

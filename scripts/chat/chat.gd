@@ -95,6 +95,7 @@ func _ready():
 	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) #刷新俱乐部列表
 	SignalManager.AddClubSIG.connect(_on_add_club) #添加俱乐部
 	SignalManager.UpdateClubSIG.connect(_on_update_club) #更新俱乐部
+	SignalManager.RecvFinishSIG.connect(_on_recv_finish) #收到完成消息
 	OnlineChat.changeChannelSIG.connect(_on_change_channel)
 	
 	_on_socket_connected()
@@ -149,7 +150,7 @@ func initData():
 
 	# 加载本地历史消息
 	load_local_history()
-	SignalManager.LoadingSIG.emit(100)
+	
 	# # 获取好友列表
 	# get_friends_list()
 
@@ -225,7 +226,9 @@ func _on_change_channel(channel_id):
 	refresh_current_channel_display()
 	pass
 
-
+# 接收完历史消息后
+func _on_recv_finish():
+	pass
 
 # 收到消息--------------------------
 func _on_received_message(msg):
@@ -267,7 +270,7 @@ func _on_history_message(msgList):
 	if haveNew:
 		print("有新消息")
 		refresh_current_channel_display()
-	# ensure_scroll_to()
+	ensure_scroll_to()
 	pass
 #############################################################
 
@@ -541,7 +544,7 @@ func get_friends_list():
 func add_club(group):
 	if group.name == "world": 
 		return
-	# print("俱乐部信息:",group)
+	print("俱乐部信息:",group)
 	var ret = await OnlineChat.add_channel_async(group.id,2)
 	if ret:
 		clubListItem._on_group_joined(

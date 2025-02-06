@@ -7,11 +7,14 @@ var progress: float = 0.0
 var target_progress: float = 0.0
 var current: float = 0.0
 
+var next_scene: String = "home"
+
 func _ready():
 	# 初始化进度条
 	progress_bar.value = 0
 	update_progress_label(0)
 	SignalManager.LoadingSIG.connect(_on_loading)
+	
 	# example_loading()
 
 func _process(delta):
@@ -20,23 +23,39 @@ func _process(delta):
 		progress = min(progress + delta * 100, target_progress)
 		progress_bar.value = progress
 		update_progress_label(progress)
-	if progress >= 100:
-		progress = 0.0
-		target_progress = 0.0
-		current = 0.0
-		var timer = get_tree().create_timer(0.1)
-		await timer.timeout
-		SceneManager.switch_to_scene("home","custom",0.5) 
-		queue_free()
 
+
+func init_data():
+	progress = 0.0
+	target_progress = 0.0
+	current = 0.0
+	# var timer = get_tree().create_timer(0.1)
+	# await timer.timeout
+	# SceneManager.switch_to_scene(next_scene,"custom",0.5) 
+	# queue_free()
+	pass
+
+func close_loading():
+	var timer = get_tree().create_timer(0.1)
+	await timer.timeout
+	SceneManager.switch_to_scene(next_scene,"custom",0.5) 
+	queue_free()
+	pass
+
+
+func set_next_scene(scene_name: String):
+	next_scene = scene_name
+	pass
 
 func set_progress(value: float):
 	# 设置目标进度值（0-100）
 	target_progress = clamp(value, 0, 100)
+	pass
 
 func update_progress_label(value: float):
 	# 更新进度文本
 	progress_label.text = "Loading... %d%%" % [round(value)]
+	pass
 
 # 示例：如何使用此加载界面
 func example_loading():
@@ -64,3 +83,6 @@ func example_loading():
 
 func _on_loading(value):
 	set_progress(value)
+	if value == 100:
+		close_loading()
+	pass

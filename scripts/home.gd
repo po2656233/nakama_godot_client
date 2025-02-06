@@ -6,13 +6,11 @@ func _ready():
 	SceneManager.set_current_scene("home")
 	SettingsManager.show_settings(1)
 
-	print("当前运行的节点名",SceneManager.get_current_scene_name())
+	print("当前运行的节点名", SceneManager.get_current_scene_name())
 	WindowDrag.register_drag_zone(self)
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(chatPanle)
 	pass
- 
-
 
 
 func _on_btn_store_pressed() -> void:

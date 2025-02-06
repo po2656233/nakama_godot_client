@@ -71,11 +71,11 @@ func _show_leave_confirmation():
 	dialog.popup_centered()
 	
 	dialog.confirmed.connect(func():
-		var ret = await Online.nakama_client.leave_group(group_data["id"])
+		var ret = await OnlineChat.leave_group(group_data["id"])
 		if ret:
 			group_left.emit(group_data)
 		else:
-			ret = await Online.nakama_client.remove_group(group_data["id"])
+			ret = await OnlineChat.remove_group(group_data["id"])
 			if ret:
 				group_left.emit(group_data)
 			else:

@@ -16,6 +16,9 @@ signal SendMessageSIG(args)
 # 接收消息
 @warning_ignore("unused_signal")
 signal RecvMessageSIG(args)
+# 接收完全部消息
+@warning_ignore("unused_signal")
+signal RecvFinishSIG()
 # 上线
 @warning_ignore("unused_signal")
 signal OnlineSIG()

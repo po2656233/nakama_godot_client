@@ -69,7 +69,7 @@ func _on_create_pressed():
 	# 				"create_time":group.create_time,
 	# 				"update_time":group.update_time,
 	# 			}
-	# # 模拟创建新群组
+	# 模拟创建新群组
 	# group_created.emit(new_group)
 	queue_free()
 

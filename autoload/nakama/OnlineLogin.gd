@@ -31,6 +31,8 @@ func _save_credentials() -> void:
 	}
 	file.store_line(JSON.stringify(credentials))
 	file.close()
+	print("保存账号密码成功")
+	PopupManager.show_dynamic("保存账号密码成功")
 
 func _show_screen(info: Dictionary = {}) -> void:
 	_reconnect = info.get('reconnect', false)
@@ -41,12 +43,13 @@ func _show_screen(info: Dictionary = {}) -> void:
 		do_login()
 	pass
 
+
+
 func do_login(myemail: String = '', mypassword: String = '', save_credentials: bool = false) -> bool:
 	if myemail != '':
 		email = myemail
 	if mypassword != '':
 		password = mypassword
-		
 	if email.is_empty() :
 		PopupManager.show_dynamic("账号不能为空")
 		return false
@@ -61,7 +64,6 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 		PopupManager.show_dynamic("登录中...")
 	
 	var nakama_session = await Online.nakama_client.authenticate_email_async(email, password, null, false)
-	
 	if nakama_session.is_exception():
 		PopupManager.show_dynamic("登录失败")
 		print(nakama_session.get_exception().message)
@@ -89,7 +91,6 @@ func do_device_login(username: String="", created:bool=false, save_credentials: 
 	if username != "":
 		p_username = username
 	var result = await Online.nakama_client.authenticate_device_async(device_id,p_username,created)
-	
 	if result.is_exception():
 		# PopupManager.show_dynamic("设备登录失败")
 		push_error("Socket connection failed: " + result.get_exception().message)
@@ -102,14 +103,16 @@ func do_device_login(username: String="", created:bool=false, save_credentials: 
 
 
 func logout():
+	if Online.nakama_socket:
+		Online.nakama_socket.close()
+		Online.nakama_socket = null
 	if Online.nakama_client and Online.nakama_session:
 		Online.nakama_client.session_logout_async(Online.nakama_session)
 		# 清除当前 session
 		Online.set_nakama_session(null)
 		var dir = DirAccess.open(USER_DIR)
-		if dir:
-			dir.remove(CREDENTIALS)
-			print("Credentials removed")
+		if dir and OK == dir.remove(CREDENTIALS_FILENAME):
+			PopupManager.show_dynamic("清除缓存成功")
 		print("Logged out successfully")	
 
 func register_account(myEmail,myPassword,save_credentials=false) -> void:

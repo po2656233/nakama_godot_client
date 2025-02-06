@@ -106,7 +106,7 @@ func _on_cliecked_group(item: Node):
 	if item != null:
 		item.setup_panel_style(true)
 		var clubInfo = item.get_group_data()
-		await Online.nakama_client.set_current_channel(clubInfo.channel, true) 
+		await OnlineChat.set_current_channel(clubInfo.channel, true) 
 	current_selected_item = item
 
 func _on_group_selected(group_data: Dictionary, item: Node):
@@ -150,14 +150,28 @@ func _on_join_button_pressed():
 	var dialog = join_group_dialog_scene.instantiate()
 	add_child(dialog)
 	# dialog.group_joined.connect(_on_group_joined)
+	pass
 
 func _on_create_button_pressed():
 	var dialog = create_group_dialog_scene.instantiate()
 	add_child(dialog)
-	dialog.group_created.connect(_on_group_created)
+	# dialog.group_created.connect(_on_group_created)
+	pass
  
-func _on_group_created(group_data):
-	groups.append(group_data)
+func _on_group_created(group):
+	groups.append({
+				"id": group.id,
+				"name": group.name,
+				"channelId":"",
+				"avatar":group.avatar_url,
+				"description": group.description,
+				"member_count": group.edge_count,
+				"max_count": group.max_count,
+				"notification_enabled": group.open,
+				"owner_id":group.creator_id,
+				"create_time":group.create_time,
+				"update_time":group.update_time,
+			})
 	filtered_groups = groups.duplicate()
 	update_group_list()
 	pass

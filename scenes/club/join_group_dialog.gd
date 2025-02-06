@@ -12,7 +12,6 @@ func _on_cancel_pressed():
 
 func _on_join_pressed():
 	var group_name = $Panel/MarginContainer/VBoxContainer/GroupIDInput.text.strip_edges()
-	
 	if group_name.is_empty():
 		return
 	var ret = await OnlineChat.add_group_async(group_name)

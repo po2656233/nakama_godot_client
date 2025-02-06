@@ -60,11 +60,11 @@ func _on_tr_wxlogin_pressed() -> void:
 	# login()
 	# wechatLogin()
 	loading.show()
-	if await OnlineLogin.do_device_login() or await OnlineLogin.do_device_login("",true):
+	loading.set_next_scene("home")
+	if await OnlineLogin.do_device_login("",false,true) or await OnlineLogin.do_device_login("",true):
 		SignalManager.LoadingSIG.emit(10)
 		await OnlineChat.load_player_data()  
 		SignalManager.LoadingSIG.emit(100)
-		SceneManager.switch_to_scene("home","tile_reveal")
 	else:
 		loading.hide()
 		PopupManager.show_message("登录失败，请检查网络连接")

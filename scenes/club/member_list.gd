@@ -34,7 +34,7 @@ func update_member_list():
 	# 拉取最新数据
 	members = []
 	var isAdmin = false
-	var result = await Online.nakama_client.get_group_member_list_async(group_id)
+	var result = await OnlineChat.get_group_member_list_async(group_id)
 	if result:
 		print("更新俱乐部信息:", result," 当前玩家ID:",OnlineChat.player_data.id)
 		for info in result.group_users:
@@ -117,7 +117,7 @@ func _on_new_member_added(member_data: Dictionary):
 			return 
 	# 查找用户ID
 	if not member_data["id"].is_empty() and member_data["id"].length() <16:
-		var result = await Online.nakama_client.search_users(member_data["id"])
+		var result = await OnlineChat.search_users(member_data["id"])
 		print("好友搜索",result,member_data["id"])
 		if result and result.users.size() > 0:
 			var ret = await Online.nakama_client.add_group_users_async(Online.nakama_session, group_id, [result.users[0].id])
@@ -128,7 +128,7 @@ func _on_new_member_added(member_data: Dictionary):
 	update_member_list()
 
 func _on_member_deleted(member_id: String):
-	var ret = await Online.nakama_client.remove_gourp_user(group_id, member_id)
+	var ret = await OnlineChat.remove_gourp_user(group_id, member_id)
 	if not ret:
 		PopupManager.show_message("删除失败")
 		return
@@ -140,7 +140,7 @@ func _on_member_deleted(member_id: String):
 	# queue_free() 
 
 func _on_member_band(member_id: String):
-	var ret = await Online.nakama_client.ban_group_users_async(group_id, member_id)
+	var ret = await OnlineChat.ban_group_users_async(group_id, member_id)
 	if not ret:
 		PopupManager.show_message("拉黑失败")
 		return

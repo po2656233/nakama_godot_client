@@ -314,7 +314,6 @@ size_flags_horizontal = 3
 
 [node name="RoomContainer" type="GridContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_constants/h_separation = 25
 theme_override_constants/v_separation = 15
 columns = 3
