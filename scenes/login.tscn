@@ -201,7 +201,7 @@ texture_pressed = ExtResource("4_1a3i5")
 texture_hover = ExtResource("4_8q84o")
 stretch_mode = 0
 
-[node name="TR_wxlogin" type="TextureButton" parent="Panel/HBoxContainer"]
+[node name="TR_devlogin" type="TextureButton" parent="Panel/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -250,5 +250,5 @@ layout_mode = 1
 [connection signal="button_down" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit/TextureButton" to="." method="_on_texture_button_button_down"]
 [connection signal="button_up" from="Panel/VBoxContainer/HBoxContainerPsw/LineEdit/TextureButton" to="." method="_on_texture_button_button_up"]
 [connection signal="pressed" from="Panel/HBoxContainer/TR_login" to="." method="_on_tr_login_pressed"]
-[connection signal="pressed" from="Panel/HBoxContainer/TR_wxlogin" to="." method="_on_tr_wxlogin_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/TR_devlogin" to="." method="_on_tr_devlogin_pressed"]
 [connection signal="pressed" from="HBoxContainerRegister/TB_register" to="." method="_on_tb_register_pressed"]

@@ -12,7 +12,6 @@ func _ready():
 	WindowDrag.unregister_drag_zone(chatPanle)
 	pass
 
-
 func _on_btn_store_pressed() -> void:
 	pass # Replace with function body.
 

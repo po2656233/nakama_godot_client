@@ -54,14 +54,13 @@ var first_world = true
 
 # 初始化 
 func _ready():
-	if not OnlineChat.player_data:
+	if not OnlineLogin.player_data:
 		PopupManager.show_message("未登录")
 		return
-	SignalManager.LoadingSIG.emit(1)
 	# 获取基础信息
-	myHeadicon = OnlineChat.player_data.avatar_url
-	myUsername = OnlineChat.player_data.username
-	uid = OnlineChat.player_data.id
+	myHeadicon = OnlineLogin.get_my_headIcon()
+	myUsername = OnlineLogin.get_my_name()
+	uid = OnlineLogin.get_my_id()
 	is_mobile = Util.isMobile()
 
 	# 虚拟键盘高度
@@ -328,7 +327,7 @@ func _on_received_notify(notify):
 			# changeOnline(notify.sender_id, true)
 			pass
 		NotifyStatus.WANT_FRIEND:
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),
 			{
 				"type":"用户",
 				"level":0,
@@ -342,7 +341,7 @@ func _on_received_notify(notify):
 			})
 			SignalManager.NewNotifySIG.emit()
 		NotifyStatus.ACCEPT_FRIEND:
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),
 			{
 				"type":"用户",
 				"level":0,
@@ -357,7 +356,7 @@ func _on_received_notify(notify):
 			# SignalManager.NewNotifySIG.emit()
 			SignalManager.FreshFriendListSIG.emit()
 		NotifyStatus.ACCEPT_GROUP:
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),
 			{
 				"type":"俱乐部",
 				"level":0,
@@ -372,7 +371,7 @@ func _on_received_notify(notify):
 			SignalManager.NewNotifySIG.emit()
 			pass
 		NotifyStatus.WANT_GROUP:
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),
 			{
 				"type":"俱乐部",
 				"level":0,
@@ -392,7 +391,7 @@ func _on_received_notify(notify):
 		NotifyStatus.SERVER_CLOSE:
 			pass
 		NotifyStatus.BANNED:
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),
 			{
 				"type":"俱乐部",
 				"level":0,
@@ -435,7 +434,7 @@ func _on_btn_send_pressed() -> void:
 		msg.content = sendTextEdit.text.strip_edges()
 		msg.kind = mainPanle.current_tab
 		msg.type = ContentType.TEXT
-		msg.headicon = OnlineChat.player_data.avatar_url
+		msg.headicon = OnlineLogin.get_my_headIcon()
 		print("发送消息:", msg)
 		var ret = await OnlineChat.send_message(msg)
 		if ret == OK:
@@ -524,7 +523,7 @@ func get_friends_list():
 				SignalManager.NewNotifySIG.emit(null)
 				pass
 			# 状态
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),
 			{
 				"type":"用户",
 				"level":0,
@@ -573,7 +572,7 @@ func update_club(group):
 	var dataList = []
 	var isAdmin = false
 	for info1 in retsult.group_users:
-		if info1.user.id == OnlineChat.player_data.id and (info1.state == 0 or info1.state == 1):
+		if info1.user.id == OnlineLogin.get_my_id() and (info1.state == 0 or info1.state == 1):
 			isAdmin = true
 			continue
 		if info1.state == 3:# 申请加入群组
@@ -592,8 +591,8 @@ func update_club(group):
 	# 是管理员
 	if isAdmin and dataList.size() > 0:
 		for data in dataList:
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,data)
-	DataManager.get_instance().add_uid_club(uid, group) 
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),data)
+	DataManager.get_instance().add_uid_club(OnlineLogin.get_my_id(), group) 
 	pass
 
 

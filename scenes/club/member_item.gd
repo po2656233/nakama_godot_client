@@ -37,8 +37,8 @@ func setup(data: Dictionary):
 		note_label.text = "(%s)" % data["note"]
 	else: 
 		note_label.text = ""
-	var isMe = data["id"] == OnlineChat.player_data.id
-	print("isMe = ",data["id"], " myID:", OnlineChat.player_data.id)
+	var isMe = data["id"] == OnlineLogin.get_my_id()
+	print("isMe = ",data["id"], " myID:", OnlineLogin.get_my_id())
 	if isMe:
 		return
 	managerBtn.visible = true

@@ -21,24 +21,22 @@ func _process(delta):
 	# 平滑更新进度条
 	if progress < target_progress:
 		progress = min(progress + delta * 100, target_progress)
-		progress_bar.value = progress
-		update_progress_label(progress)
+	progress_bar.value = progress
+	update_progress_label(progress)
+	if progress == 100:
+		close_loading()
 
 
 func init_data():
 	progress = 0.0
 	target_progress = 0.0
 	current = 0.0
-	# var timer = get_tree().create_timer(0.1)
-	# await timer.timeout
-	# SceneManager.switch_to_scene(next_scene,"custom",0.5) 
-	# queue_free()
 	pass
 
 func close_loading():
 	var timer = get_tree().create_timer(0.1)
 	await timer.timeout
-	SceneManager.switch_to_scene(next_scene,"custom",0.5) 
+	SceneManager.switch_to_scene(next_scene,"custom",0.2) 
 	queue_free()
 	pass
 
@@ -56,6 +54,15 @@ func update_progress_label(value: float):
 	# 更新进度文本
 	progress_label.text = "Loading... %d%%" % [round(value)]
 	pass
+
+
+# 加载进度
+func _on_loading(value):
+	set_progress(value)
+	pass
+
+
+
 
 # 示例：如何使用此加载界面
 func example_loading():
@@ -80,9 +87,3 @@ func example_loading():
 	timer = get_tree().create_timer(0.5)
 	await timer.timeout
 	print("Loading completed!")
-
-func _on_loading(value):
-	set_progress(value)
-	if value == 100:
-		close_loading()
-	pass

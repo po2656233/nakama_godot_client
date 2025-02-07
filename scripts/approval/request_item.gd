@@ -121,7 +121,7 @@ func approve() -> void:
 	_update_status_display()
 	_update_buttons()
 	approved.emit()
-	DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,get_request_info())
+	DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
 	pass
 
 
@@ -135,7 +135,7 @@ func _on_reject_button_pressed() -> void:
 				_update_status_display()
 				_update_buttons()
 				rejected.emit()
-				DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,get_request_info())
+				DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
 			return
 		_status = Status.REJECTED
 		if await OnlineChat.refuse_friends_async(_uid):
@@ -144,7 +144,7 @@ func _on_reject_button_pressed() -> void:
 			_update_status_display()
 			_update_buttons()
 			rejected.emit()
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,get_request_info())
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
 	elif _type == "俱乐部":
 		_status = Status.REJECTED
 		if await OnlineChat.remove_gourp_user(_gid,_uid):
@@ -153,7 +153,7 @@ func _on_reject_button_pressed() -> void:
 			_update_status_display()
 			_update_buttons()
 			rejected.emit()
-			DataManager.get_instance().add_uid_approval(OnlineChat.player_data.id,get_request_info())
+			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
 		pass
 	else:
 		PopupManager.show_message("网络错误，请重试", "提示")

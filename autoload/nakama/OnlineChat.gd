@@ -1,22 +1,13 @@
 extends Node
 
-# Nakama Online.nakama_client instance
-# var Online.nakama_client: NakamaClient
-# var Online.nakama_session: NakamaSession
-# var Online.nakama_socket: NakamaSocket
-var _current_channel: NakamaRTAPI.Channel
-var _cursor_list_channel = null
-var _world_channel = null
-# Game data
-var player_data: NakamaAPI.ApiUser
-var pets_data: Dictionary = {}
-var home_data: Dictionary = {}
-
-signal player_data_updated
 signal chat_message_received(message: Dictionary)
 signal chat_presence_changed(joins: Array, leaves: Array)
 signal chat_history_received(messages: Array)
 signal changeChannelSIG(id:String)
+
+var _current_channel: NakamaRTAPI.Channel
+var _cursor_list_channel = null
+var _world_channel = null
 
 var history_msg_count = {}
 # 聊天内容结构
@@ -54,7 +45,6 @@ func get_cursor_for_list_channel():
 func authenticate_device(username: String="", created:bool=false) -> bool:
 	var device_id = OS.get_unique_id()
 	var result = await Online.nakama_client.authenticate_device_async(device_id,username,created)
-	
 	if result.is_exception():
 		return false
 	return true
@@ -262,49 +252,6 @@ func _notification(what: int):
 
 
 # Data Management
-func load_player_data() -> void:
-	var result = await Online.nakama_client.read_storage_objects_async(Online.nakama_session, [{
-		"collection": "player_data",
-		"key": "profile",
-		"user_id": Online.nakama_session.user_id
-	}])
-	print("读取玩家数据: ", result)
-	if not result.is_exception():
-		if result.objects.size() > 0:
-			player_data = JSON.parse_string(result.objects[0].value)
-		else:
-			var ret = await Online.nakama_client.get_account_async(Online.nakama_session)
-			if ret.is_exception():
-				push_error("获取用户信息失败: " + ret.get_exception().message)
-				return
-			player_data = ret.user
-			print('用户信息1',player_data)	
-			await save_player_data()
-		print("已读取玩家数据: ", player_data)
-	player_data_updated.emit()
-
-func save_player_data() -> void:
-	var objects = [{
-		"collection": "player_data",
-		"key": "profile",
-		"value": JSON.stringify(player_data),
-		"permission_read": 1,
-		"permission_write": 1
-	}]
-	
-	await Online.nakama_client.write_storage_objects_async(Online.nakama_session, objects)
-
-# 获取当前用户 ID
-func get_my_id() -> String:
-	if not player_data:
-		return ""
-	return player_data.id
-
-# 获取当前用户名
-func get_my_name() -> String:
-	if not player_data:
-		return ""
-	return player_data.username
 
 # 好友和俱乐部管理
 # 通过用户名搜索用户

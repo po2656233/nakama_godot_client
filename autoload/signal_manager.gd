@@ -80,6 +80,10 @@ signal GameMusicSIG(id,isMute)
 @warning_ignore("unused_signal")
 signal LoadingSIG(value) 
 
+# 切换场景
+@warning_ignore("unused_signal")
+signal ChangeSceneSIG(sceneName, transition_way, dissolve_time, dissolve_image) 
+
 ####################游戏#############################
 # 开始游戏
 @warning_ignore("unused_signal")

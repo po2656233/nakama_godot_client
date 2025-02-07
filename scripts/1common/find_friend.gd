@@ -120,10 +120,10 @@ func _on_item_list_item_clicked(index:int, _at_position:Vector2, _mouse_button_i
 func _on_tb_add_pressed() -> void:
 	var selected_items = _list.get_selected_items()
 	var ids = []
-	if not OnlineChat.player_data:
+	if not OnlineLogin.player_data:
 		PopupManager.show_message("未登录")
 		return
-	var uid = OnlineChat.player_data.id
+	var uid = OnlineLogin.get_my_id()
 	for item in selected_items:
 		var info = _list.get_item_metadata(selected_index)
 		if info:

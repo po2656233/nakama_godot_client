@@ -123,7 +123,8 @@ func _init():
 	print_all_scenes()
 
 ###############################################################
-# func _ready():
+func _ready():
+	SignalManager.ChangeSceneSIG.connect(switch_to_scene)
 # 	# 添加场景字典
 # 	var scenes = {
 # 		"login": "res://scenes/login.tscn",
@@ -139,6 +140,7 @@ func _init():
 # 	add_scenes_from_dict(scenes)
 # 	scan_scenes_directory("res://scenes")
 # 	print_all_scenes()
+	pass
 
 ###############################################################
 # 获取转换效果的键值

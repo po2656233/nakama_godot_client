@@ -52,23 +52,15 @@ func _on_tb_register_pressed() -> void:
 	SceneManager.switch_to_scene("register","tile_reveal")
 	pass # Replace with function body.
 
-
 func _on_tr_login_pressed() -> void:
 	login()
+	pass
 
-func _on_tr_wxlogin_pressed() -> void:
-	# login()
+func _on_tr_devlogin_pressed() -> void:
+	deviceLogin()
 	# wechatLogin()
-	loading.show()
-	loading.set_next_scene("home")
-	if await OnlineLogin.do_device_login("",false,true) or await OnlineLogin.do_device_login("",true):
-		SignalManager.LoadingSIG.emit(10)
-		await OnlineChat.load_player_data()  
-		SignalManager.LoadingSIG.emit(100)
-	else:
-		loading.hide()
-		PopupManager.show_message("登录失败，请检查网络连接")
-	pass # Replace with function body.
+	pass
+
 
 # 处理HTTP响应
 func _on_request_completed(result, _response_code, _headers, body):
@@ -86,6 +78,8 @@ func _input(event):
 			login()
 			get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
+###################################登录#######################################################
+# 账密登录
 func login()->void:
 	print("Login: " + usernameEdit.text + " " + passwordEdit.text)
 	if not checkbox.is_pressed():
@@ -93,18 +87,21 @@ func login()->void:
 		return
 	loading.show()
 	if await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
-		SignalManager.LoadingSIG.emit(10)
-		await OnlineChat.load_player_data()  
-		SignalManager.LoadingSIG.emit(100)
-		# ProjectSettings.set("username",usernameEdit.text)
-		# FancyFade.custom_fade(home_scene.instantiate(), 1.5, DISSOLVE_IMAGE)
-	else:
-		loading.hide()
-		# PopupManager.show_message("账号或密码错误","提示",false)
-		print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
+		return
+	loading.hide()
+	# PopupManager.show_message("账号或密码错误","提示",false)
+	print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
 	pass # Replace with function body.
  
-###########################################################################################
+# 设备登录
+func deviceLogin()->void:
+	loading.show()
+	if await OnlineLogin.do_device_login("",false,true) or await OnlineLogin.do_device_login("",true):
+		return
+	loading.hide()
+	PopupManager.show_message("登录失败，请检查网络连接")
+	pass # Replace with function body.
+
 # 微信登录(暂不使用)
 func wechatLogin()->void:
 	var auth_url = "https://open.weixin.qq.com/connect/qrconnect"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=14 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
@@ -29,6 +29,25 @@ outline_size = 3
 outline_color = Color(0.201527, 0.201527, 0.201527, 1)
 shadow_size = 2
 shadow_color = Color(0.577836, 0.713973, 0.579438, 0.807843)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8os5m"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.65098, 0.72549, 0.639216, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.300986, 0.615095, 0.454209, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.47451, 0.435294, 0.454902, 0.6)
+shadow_size = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_2tp5m"]
 font_size = 25
@@ -128,8 +147,12 @@ offset_right = 92.09
 offset_bottom = 30.932
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_shadow_color = Color(0.396485, 0.897576, 0.637114, 1)
+theme_override_colors/font_outline_color = Color(0.702754, 0.66326, 0.281439, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_8os5m")
 text = "游戏类型"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BaseScoreTR" type="TextureRect" parent="MarginContainer/Panel"]
 custom_minimum_size = Vector2(25, 0)
@@ -185,10 +208,10 @@ anchor_left = -0.049
 anchor_top = -0.026
 anchor_right = -0.049
 anchor_bottom = -0.026
-offset_left = 272.09
-offset_top = 218.49
-offset_right = 320.09
-offset_bottom = 282.49
+offset_left = 248.09
+offset_top = 74.49
+offset_right = 328.09
+offset_bottom = 106.49
 text = "状态"
 horizontal_alignment = 1
 vertical_alignment = 1

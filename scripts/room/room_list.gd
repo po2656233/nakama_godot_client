@@ -1,10 +1,10 @@
 extends Control
 
-signal room_selected(room_data: Dictionary)
+signal room_selected(room_list_info: Dictionary)
 
 const roomItem = preload("res://scenes/room/room_item.tscn")
 const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
-const SAVE_PATH = "user://room_data.json"
+const SAVE_PATH = "user://room_list_info.json"
 
 @onready var search_input = $VBoxContainer/SearchBar/SearchInput
 @onready var status_filter = $VBoxContainer/SearchBar/FilterOptions/StatusFilter
@@ -38,7 +38,7 @@ var pre_room_id = ""
 var pre_room_count = 0
 var selected_room_info = {}
 var tween:Tween
-var room_data = [
+var room_list_info = [
 	{
 		"room_id": "R001",
 		"room_name": "欢乐场",
@@ -202,8 +202,8 @@ func _ready():
 	SceneManager.set_previous_name("roomlist")
 	# WindowDrag.register_drag_zone(self)
 	var width = get_viewport_rect().size.x
-	if width>500:
-		room_container.columns = (width-350)/ 500
+	if width>400:
+		room_container.columns = (width-350)/ 400
 
 	# 创建房间
 	create_room_dialog.room_created.connect(_on_room_created)
@@ -236,7 +236,15 @@ func _refresh_room_list():
 		child.queue_free()
 	
 	# 应用过滤器和排序
-	var filtered_rooms = _apply_filters(room_data)
+
+	# 获取房间列表--TODO TODO
+	# var result = await Online.nakama_client.list_matches_async(Online.nakama_session,0,100,20,true,"","")
+	# if result.is_exception():
+	# 	print("房间列表获取失败:",result.get_exception().message)
+	# 	return
+	# print("房间列表数据--->",result)
+	# return
+	var filtered_rooms = _apply_filters(room_list_info)
 	filtered_rooms = _sort_rooms(filtered_rooms)
 
 	if filtered_rooms.size() == 0:
@@ -271,7 +279,7 @@ func _apply_filters(rooms: Array) -> Array:
 	
 	# 如果显示收藏，只显示收藏的房间
 	if show_favorites.button_pressed:
-		favorite_rooms = room_data.filter(func(r): return r.favorite)
+		favorite_rooms = room_list_info.filter(func(r): return r.favorite)
 		rooms = favorite_rooms.duplicate()
 	
 	# 如果显示历史，只显示历史记录
@@ -280,9 +288,9 @@ func _apply_filters(rooms: Array) -> Array:
 
 	# 如果显示我创建的，只显示我创建的房间
 	if show_myrooms.button_pressed:
-		if not OnlineChat.player_data:
+		if not OnlineLogin.player_data:
 			return []
-		rooms = room_data.filter(func(r): return r.creator_id == OnlineChat.player_data.id)
+		rooms = room_list_info.filter(func(r): return r.creator_id == OnlineLogin.get_my_id())
 	
 	
 	var filtered = []
@@ -356,9 +364,9 @@ func _sort_rooms(rooms: Array) -> Array:
 	return sorted
 
 func _update_stats():
-	var total_rooms = room_data.size()
-	var active_rooms = room_data.filter(func(r): return r.status != "已满员").size()
-	var total_players = room_data.reduce(func(acc, r): return acc + r.player_count, 0)
+	var total_rooms = room_list_info.size()
+	var active_rooms = room_list_info.filter(func(r): return r.status != "已满员").size()
+	var total_players = room_list_info.reduce(func(acc, r): return acc + r.player_count, 0)
 	
 	total_rooms_label.text = "总房间数: %d" % total_rooms
 	active_rooms_label.text = "活跃房间: %d" % active_rooms
@@ -482,6 +490,7 @@ func wait_for_room_to_start():
 	# waitingStart.remove_player(room_info.players[0])
 	pass # Replace with function body.
 
+# 加入房间
 func _on_join_room(room_info: Dictionary):
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
@@ -503,18 +512,19 @@ func _on_join_room(room_info: Dictionary):
 		wait_for_room_to_start()
 	pass
 
-
+# 收藏房间
 func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 	room_info["favorite"] = is_favorite
 	if is_favorite:
-		var index = room_data.find(func(r): return r.room_id == room_info.room_id)
+		var index = room_list_info.find(func(r): return r.room_id == room_info.room_id)
 		if index != -1:
-			room_data[index] = room_info
-	favorite_rooms = room_data.filter(func(r): return r.favorite)
+			room_list_info[index] = room_info
+	favorite_rooms = room_list_info.filter(func(r): return r.favorite)
 	print("收藏的房间列表: ", favorite_rooms)
 	_save_data()
 	_refresh_room_list()
 
+# 选择房间
 func _on_room_selected(room_info: Dictionary):
 	# 更新详情面板
 	for child in detail_info.get_children():
@@ -559,18 +569,19 @@ func _on_room_selected(room_info: Dictionary):
 	tween.tween_property(detail_panel, "modulate:a", 1.0, 0.3)
 	pass
 
-
+# 创建房间
 func _on_room_created(room_info: Dictionary):
 	# 添加到房间列表
 	# OnlineMatch.create_match(Online.nakama_socket)
 	# Online.nakama_client.list_matches_async(Online.nakama_session,-1,-1,20,false,"","")
-	if not room_data.any(func(r): return r.room_id == room_info.room_id):
-		room_data.push_front(room_info)
+	if not room_list_info.any(func(r): return r.room_id == room_info.room_id):
+		room_list_info.push_front(room_info)
 		_save_data()
 		_refresh_room_list()
 		_update_stats()
 
 
+# 确认房间密码
 func _on_confirm_btn_pressed() -> void:
 	# 校验房间密码
 	if jion_input.text != "1234":
@@ -580,7 +591,7 @@ func _on_confirm_btn_pressed() -> void:
 	pass
 
 
-
+# 取消房间
 func _on_cancle_btn_pressed() -> void:
 	selected_room_info = {}
 	jion_dialog.visible = false

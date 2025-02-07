@@ -36,12 +36,12 @@ func update_member_list():
 	var isAdmin = false
 	var result = await OnlineChat.get_group_member_list_async(group_id)
 	if result:
-		print("更新俱乐部信息:", result," 当前玩家ID:",OnlineChat.player_data.id)
+		print("更新俱乐部信息:", result," 当前玩家ID:",OnlineLogin.get_my_id())
 		for info in result.group_users:
 			if info.state == 3:
 				continue
 			var member = info.user
-			if member.id == OnlineChat.player_data.id and (info.state == 0 or info.state == 1):
+			if member.id == OnlineLogin.get_my_id() and (info.state == 0 or info.state == 1):
 				isAdmin = true
 			members.append({
 				"id": member.id, 
@@ -167,7 +167,7 @@ func _on_member_promote(member_id: String):
 	pass
 
 func _on_member_add_friend(member_id: String):
-	var data = DataManager.get_instance().get_uid_friendInfo(OnlineChat.player_data.id, member_id)
+	var data = DataManager.get_instance().get_uid_friendInfo(OnlineLogin.get_my_id(), member_id)
 	if data:
 		PopupManager.show_message("对方已是好友")
 		return

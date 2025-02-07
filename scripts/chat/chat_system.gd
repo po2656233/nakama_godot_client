@@ -356,6 +356,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 	# 检查消息是否已存在
 	if has_message(channel_id, message_id):
 		# print("消息 %s 已经存在于渠道 %s" % [message_id, channel_id])
+		ensure_scroll_to()
 		return false
 
 	# 添加消息到历史记录和ID缓存
@@ -429,7 +430,7 @@ func clear_messages_item():
 func ensure_scroll_to():
 	if not messages_container:
 		return
-	await get_tree().create_timer(0.1).timeout
+	# await get_tree().create_timer(0.1).timeout
 	if messages_container.get_parent() is ScrollContainer:
 		var scroll = messages_container.get_parent() as ScrollContainer
 		
@@ -456,14 +457,14 @@ func ensure_scroll_to():
 			# 检查并清理超出可见区域的消息(未完善暂不采用)
 			# cleanup_overflow_messages(scroll)
 		#等待一帧以确保UI已更新
-		await get_tree().process_frame
+		# await get_tree().process_frame
 
 		# 直接滚动到最底部
 		if isToTop:
 			scroll.scroll_vertical = 0
 			# print("滑到顶部")
 		else:
-			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value+50
+			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value
 			# print("滑到底部")
 	pass
 
