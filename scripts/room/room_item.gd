@@ -96,11 +96,11 @@ func _on_mouse_entered():
 	hover_tween = create_tween()
 	hover_tween.tween_property(self, "scale", Vector2(1.02, 1.02), 0.2).set_trans(Tween.TRANS_CUBIC)
 	
-	# 添加光晕效果
-	var style = get_theme_stylebox("panel").duplicate()
-	style.shadow_size = 5
-	style.shadow_color = Color(0.2, 0.4, 0.8, 0.3)
-	add_theme_stylebox_override("panel", style)
+	# # 添加光晕效果
+	# var style = get_theme_stylebox("panel").duplicate()
+	# style.shadow_size = 5
+	# style.shadow_color = Color(0.2, 0.4, 0.8, 0.3)
+	# add_theme_stylebox_override("panel", style)
 
 func _on_mouse_exited():
 	if not is_instance_valid(self):
@@ -111,9 +111,9 @@ func _on_mouse_exited():
 	hover_tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.2).set_trans(Tween.TRANS_CUBIC)
 	
 	# 移除光晕效果
-	var style = load(room_style_path)
-	if style:
-		add_theme_stylebox_override("panel", style)
+	# var style = load(room_style_path)
+	# if style:
+	# 	add_theme_stylebox_override("panel", style)
 
 func _on_gui_input(event: InputEvent):
 	if not is_instance_valid(self):

@@ -39,158 +39,158 @@ var pre_room_count = 0
 var selected_room_info = {}
 var tween:Tween
 var room_list_info = [
-	{
-		"room_id": "R001",
-		"room_name": "欢乐场",
-		"is_locked": true,
-		"game_name": "德州扑克",
-		"game_type": 1,
-		"creator_id": "xxxxxx01",
-		"base_score": 100,
-		"entry_score": 1000,
-		"current_round": 5,
-		"player_count": 9,
-		"max_players": 10,
-		"status": "等待中",
-		"create_time": "2024-01-08 10:00:00",
-		"description": "适合新手的休闲场，气氛轻松友好",
-		"rules": ["基础规则", "休闲模式", "15分钟限时"],
-		"players": ["玩家1", "玩家2", "玩家3", "玩家4", "玩家5", "玩家6", "玩家7", "玩家8", "玩家9"],
-		"favorite": false,
-	},
-	{
-		"room_name": "21点新手场",
-		"game_name": "21点",
-		"game_type": 2,
-		"room_id": "R006",
-		"is_locked": false,
-		"creator_id": "xxxxxx01",
-		"base_score": 50,
-		"entry_score": 500,
-		"current_round": 1,
-		"player_count": 2,
-		"max_players": 5,
-		"status": "等待中",
-		"create_time": "2024-01-08 10:45:00",
-		"description": "适合新手的21点游戏房间",
-		"rules": ["基础规则", "新手教学"],
-		"players": ["新手A", "新手B"],
-		"favorite": true,
-	},
-	{
-		"room_name": "五子棋竞技场",
-		"game_name": "五子棋",
-		"game_type": 3,
-		"room_id": "R007",
-		"is_locked": false,
-		"creator_id": "xxxxxx01",
-		"base_score": 200,
-		"entry_score": 2000,
-		"current_round": 3,
-		"player_count": 1,
-		"max_players": 2,
-		"status": "等待中",
-		"create_time": "2024-01-08 10:40:00",
-		"description": "五子棋爱好者的对战平台",
-		"rules": ["标准规则", "15分钟限时"],
-		"players": ["棋手1"],
-		"favorite": true,
-	},
-	{
-		"room_name": "象棋大师场",
-		"game_name": "象棋",
-		"game_type": 4,
-		"room_id": "R008",
-		"is_locked": true,
-		"creator_id": "xxxxxx01",
-		"base_score": 300,
-		"entry_score": 3000,
-		"current_round": 2,
-		"player_count": 2,
-		"max_players": 2,
-		"status": "进行中",
-		"create_time": "2024-01-08 10:35:00",
-		"description": "象棋大师的竞技场所",
-		"rules": ["标准规则", "30分钟限时"],
-		"players": ["棋手A", "棋手B"],
-		"favorite": true,
-	},
-	{
-		"room_name": "围棋道场",
-		"game_name": "围棋",
-		"game_type": 5,
-		"room_id": "R009",
-		"is_locked": false,
-		"creator_id": "xxxxxx01",
-		"base_score": 500,
-		"entry_score": 5000,
-		"current_round": 1,
-		"player_count": 2,
-		"max_players": 2,
-		"status": "进行中",
-		"create_time": "2024-01-08 10:30:00",
-		"description": "围棋爱好者的修炼场所",
-		"rules": ["中国规则", "60分钟限时"],
-		"players": ["黑棋手", "白棋手"],
-		"favorite": true,
-	},
-	{
-		"room_name": "军棋道场",
-		"game_name": "军棋",
-		"game_type": 6,
-		"room_id": "R010",
-		"is_locked": false,
-		"creator_id": "xxxxxx01",
-		"base_score": 500,
-		"entry_score": 5000,
-		"current_round": 1,
-		"player_count": 2,
-		"max_players": 2,
-		"status": "进行中",
-		"create_time": "2024-01-08 10:30:00",
-		"description": "围棋爱好者的修炼场所",
-		"rules": ["中国规则", "60分钟限时"],
-		"players": ["黑棋手", "白棋手"],
-		"favorite": true,
-	},
-	{
-		"room_name": "飞机棋道场",
-		"game_name": "飞机棋",
-		"game_type": 7,
-		"room_id": "R011",
-		"is_locked": false,
-		"creator_id": "xxxxxx01",
-		"base_score": 500,
-		"entry_score": 5000,
-		"current_round": 1,
-		"player_count": 2,
-		"max_players": 2,
-		"status": "进行中",
-		"create_time": "2024-01-08 10:30:00",
-		"description": "围棋爱好者的修炼场所",
-		"rules": ["中国规则", "60分钟限时"],
-		"players": ["黑棋手", "白棋手"],
-		"favorite": true,
-	},
-	{
-		"room_name": "大富翁道场",
-		"game_name": "大富翁",
-		"game_type": 8,
-		"room_id": "R012",
-		"is_locked": false,
-		"creator_id": "xxxxxx01",
-		"base_score": 500,
-		"entry_score": 5000,
-		"current_round": 1,
-		"player_count": 2,
-		"max_players": 2,
-		"status": "进行中",
-		"create_time": "2024-01-08 10:30:00",
-		"description": "围棋爱好者的修炼场所",
-		"rules": ["中国规则", "60分钟限时"],
-		"players": ["黑棋手", "白棋手"],
-		"favorite": true,
-	}
+	# {
+	# 	"room_id": "R001",
+	# 	"room_name": "欢乐场",
+	# 	"is_locked": true,
+	# 	"game_name": "德州扑克",
+	# 	"game_type": 1,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 100,
+	# 	"entry_score": 1000,
+	# 	"current_round": 5,
+	# 	"player_count": 9,
+	# 	"max_players": 10,
+	# 	"status": "等待中",
+	# 	"create_time": "2024-01-08 10:00:00",
+	# 	"description": "适合新手的休闲场，气氛轻松友好",
+	# 	"rules": ["基础规则", "休闲模式", "15分钟限时"],
+	# 	"players": ["玩家1", "玩家2", "玩家3", "玩家4", "玩家5", "玩家6", "玩家7", "玩家8", "玩家9"],
+	# 	"favorite": false,
+	# },
+	# {
+	# 	"room_name": "21点新手场",
+	# 	"game_name": "21点",
+	# 	"game_type": 2,
+	# 	"room_id": "R006",
+	# 	"is_locked": false,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 50,
+	# 	"entry_score": 500,
+	# 	"current_round": 1,
+	# 	"player_count": 2,
+	# 	"max_players": 5,
+	# 	"status": "等待中",
+	# 	"create_time": "2024-01-08 10:45:00",
+	# 	"description": "适合新手的21点游戏房间",
+	# 	"rules": ["基础规则", "新手教学"],
+	# 	"players": ["新手A", "新手B"],
+	# 	"favorite": true,
+	# },
+	# {
+	# 	"room_name": "五子棋竞技场",
+	# 	"game_name": "五子棋",
+	# 	"game_type": 3,
+	# 	"room_id": "R007",
+	# 	"is_locked": false,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 200,
+	# 	"entry_score": 2000,
+	# 	"current_round": 3,
+	# 	"player_count": 1,
+	# 	"max_players": 2,
+	# 	"status": "等待中",
+	# 	"create_time": "2024-01-08 10:40:00",
+	# 	"description": "五子棋爱好者的对战平台",
+	# 	"rules": ["标准规则", "15分钟限时"],
+	# 	"players": ["棋手1"],
+	# 	"favorite": true,
+	# },
+	# {
+	# 	"room_name": "象棋大师场",
+	# 	"game_name": "象棋",
+	# 	"game_type": 4,
+	# 	"room_id": "R008",
+	# 	"is_locked": true,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 300,
+	# 	"entry_score": 3000,
+	# 	"current_round": 2,
+	# 	"player_count": 2,
+	# 	"max_players": 2,
+	# 	"status": "进行中",
+	# 	"create_time": "2024-01-08 10:35:00",
+	# 	"description": "象棋大师的竞技场所",
+	# 	"rules": ["标准规则", "30分钟限时"],
+	# 	"players": ["棋手A", "棋手B"],
+	# 	"favorite": true,
+	# },
+	# {
+	# 	"room_name": "围棋道场",
+	# 	"game_name": "围棋",
+	# 	"game_type": 5,
+	# 	"room_id": "R009",
+	# 	"is_locked": false,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 500,
+	# 	"entry_score": 5000,
+	# 	"current_round": 1,
+	# 	"player_count": 2,
+	# 	"max_players": 2,
+	# 	"status": "进行中",
+	# 	"create_time": "2024-01-08 10:30:00",
+	# 	"description": "围棋爱好者的修炼场所",
+	# 	"rules": ["中国规则", "60分钟限时"],
+	# 	"players": ["黑棋手", "白棋手"],
+	# 	"favorite": true,
+	# },
+	# {
+	# 	"room_name": "军棋道场",
+	# 	"game_name": "军棋",
+	# 	"game_type": 6,
+	# 	"room_id": "R010",
+	# 	"is_locked": false,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 500,
+	# 	"entry_score": 5000,
+	# 	"current_round": 1,
+	# 	"player_count": 2,
+	# 	"max_players": 2,
+	# 	"status": "进行中",
+	# 	"create_time": "2024-01-08 10:30:00",
+	# 	"description": "围棋爱好者的修炼场所",
+	# 	"rules": ["中国规则", "60分钟限时"],
+	# 	"players": ["黑棋手", "白棋手"],
+	# 	"favorite": true,
+	# },
+	# {
+	# 	"room_name": "飞机棋道场",
+	# 	"game_name": "飞机棋",
+	# 	"game_type": 7,
+	# 	"room_id": "R011",
+	# 	"is_locked": false,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 500,
+	# 	"entry_score": 5000,
+	# 	"current_round": 1,
+	# 	"player_count": 2,
+	# 	"max_players": 2,
+	# 	"status": "进行中",
+	# 	"create_time": "2024-01-08 10:30:00",
+	# 	"description": "围棋爱好者的修炼场所",
+	# 	"rules": ["中国规则", "60分钟限时"],
+	# 	"players": ["黑棋手", "白棋手"],
+	# 	"favorite": true,
+	# },
+	# {
+	# 	"room_name": "大富翁道场",
+	# 	"game_name": "大富翁",
+	# 	"game_type": 8,
+	# 	"room_id": "R012",
+	# 	"is_locked": false,
+	# 	"creator_id": "xxxxxx01",
+	# 	"base_score": 500,
+	# 	"entry_score": 5000,
+	# 	"current_round": 1,
+	# 	"player_count": 2,
+	# 	"max_players": 2,
+	# 	"status": "进行中",
+	# 	"create_time": "2024-01-08 10:30:00",
+	# 	"description": "围棋爱好者的修炼场所",
+	# 	"rules": ["中国规则", "60分钟限时"],
+	# 	"players": ["黑棋手", "白棋手"],
+	# 	"favorite": true,
+	# }
 ]
 
 
@@ -228,22 +228,55 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	refresh_timer.timeout.connect(_on_refresh_timer_timeout)
 	room_selected.connect(_on_room_selected)
+	if Online.nakama_socket:
+		Online.nakama_socket.received_matchmaker_matched.connect(_on_received_matchmaker_matched)
+		Online.nakama_socket.received_match_state.connect(_on_received_match_state)
+		Online.nakama_socket.received_match_presence.connect(_on_received_match_presence)
+		Online.nakama_socket.received_status_presence.connect(_on_received_status_presence)
+		
 
 
 func _refresh_room_list():
 	# 清除现有房间
 	for child in room_container.get_children():
 		child.queue_free()
-	
+	room_list_info.clear()
 	# 应用过滤器和排序
 
 	# 获取房间列表--TODO TODO
-	# var result = await Online.nakama_client.list_matches_async(Online.nakama_session,0,100,20,true,"","")
-	# if result.is_exception():
-	# 	print("房间列表获取失败:",result.get_exception().message)
-	# 	return
+	var result = await Online.nakama_client.list_matches_async(Online.nakama_session,0,100,100,true,"","")
+	if result.is_exception():
+		print("房间列表获取失败:",result.get_exception().message)
+		return
 	# print("房间列表数据--->",result)
-	# return
+	for data in result.matches:
+		print("房间信息:",data)
+		# var index = room_list_info.find(func(r): return r.id == data.match_id)
+		# if index != -1:
+		# 	room_list_info.remove_at(index)
+		room_list_info.append({
+			"id": data.match_id,
+			"room_id": data.match_id.split("-")[0],
+			"room_name": data.label,
+			"is_locked": data.authoritative,
+			"game_name": data.label,
+			"game_type": 1,
+			"creator_id": "xxxxxx01",
+			"base_score": 100,
+			"entry_score": 1000,
+			"current_round": 5,
+			"player_count": data.size if data.size and data.size > 0 else 0,
+			"max_players": 10,
+			"status": "等待中",
+			"create_time": "2024-01-08 10:00:00",
+			"description": "适合新手的休闲场，气氛轻松友好",
+			"rules": [],
+			"players": [],
+			"favorite": false,	
+		})
+		
+	if room_list_info.size() == 0:
+		return
 	var filtered_rooms = _apply_filters(room_list_info)
 	filtered_rooms = _sort_rooms(filtered_rooms)
 
@@ -269,7 +302,7 @@ func _refresh_room_list():
 		room_item.show()
 		# room_item.modulate.a = 0
 		# tween.chain().tween_property(room_item, "modulate:a", 1.0, 0.2)
-		
+	pass
 
 
 func _apply_filters(rooms: Array) -> Array:
@@ -388,7 +421,26 @@ func _load_saved_data():
 		if data:
 			favorite_rooms = data.favorite_rooms
 			room_history = data.room_history
+	pass
 
+###############################################################
+func _on_received_matchmaker_matched(matchmaker_matched):
+	print("收到匹配的数据:", matchmaker_matched)
+	pass
+
+func _on_received_match_state(match_state):
+	print("收到匹配状态:", match_state)
+	pass
+
+func _on_received_match_presence(match_presence):
+	print("收到匹配的玩家数据:", match_presence)
+	pass
+
+func _on_received_status_presence(status_presence):	
+	print("收到状态的玩家数据:", status_presence)
+	pass
+
+###############################################################
 func _on_search_changed(_new_text: String):
 	_refresh_room_list()
 
@@ -570,15 +622,44 @@ func _on_room_selected(room_info: Dictionary):
 	pass
 
 # 创建房间
-func _on_room_created(room_info: Dictionary):
-	# 添加到房间列表
-	# OnlineMatch.create_match(Online.nakama_socket)
-	# Online.nakama_client.list_matches_async(Online.nakama_session,-1,-1,20,false,"","")
-	if not room_list_info.any(func(r): return r.room_id == room_info.room_id):
-		room_list_info.push_front(room_info)
-		_save_data()
+func _on_room_created(_room_info: Dictionary):
+	if Online.nakama_socket:
+		# 匹配创建参数
+		# var match_maker_ticket = await Online.nakama_socket.add_matchmaker_async( 
+		# 		"*",   	# 匹配属性
+		# 			2,                  # 最小玩家数
+		# 			100,                # 最大玩家数
+		# 			{
+		# 		"game_mode": "battle_royale",
+		# 		"map": "desert_island",
+		# 		"game_type": "pvp"
+		# 	}    # 额外查询参数
+		# )
+		# print("匹配创建成功，票据: ", match_maker_ticket)
+
+		# 服务端创建
+		var res = await Online.nakama_client.rpc_async(Online.nakama_session,"create_match",JSON.stringify(_room_info))
+		if res.is_exception():
+			print("创建房间失败:",res.get_exception().message)
+			PopupManager.show_dynamic("创建房间失败")
+			return
+		print("创建服务端托管成功",res)
+		var timer = get_tree().create_timer(1.0)
+		await timer.timeout
 		_refresh_room_list()
-		_update_stats()
+		# 本地创建
+		# var reslut = await Online.nakama_socket.create_match_async(room_data.room_name)
+		# if reslut.is_exception():
+		# 	print("创建房间失败:",reslut.get_exception().message)
+		# 	PopupManager.show_dynamic("创建房间失败")
+		# 	return
+		# print("创建本地托管成功",reslut)
+	# 添加到房间列表
+	# if not room_list_info.any(func(r): return r.room_id == room_info.room_id):
+	# 	room_list_info.push_front(room_info)
+	# 	_save_data()
+	# 	_refresh_room_list()
+	# 	_update_stats()
 
 
 # 确认房间密码

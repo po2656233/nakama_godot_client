@@ -45,11 +45,8 @@ signal player_left (player)
 signal match_ready (players)
 signal match_not_ready ()
 
-class Player:
-	var session_id: String
+class Player extends NakamaRTAPI.UserPresence:
 	var peer_id: int
-	var username: String
-
 	func _init(_session_id: String, _username: String, _peer_id: int) -> void:
 		session_id = _session_id
 		username = _username
@@ -67,6 +64,8 @@ class Player:
 			username = username,
 			peer_id = peer_id,
 		}
+pass
+
 
 static func serialize_players(_players: Dictionary) -> Dictionary:
 	var result := {}
@@ -105,18 +104,22 @@ func _set_nakama_socket(_nakama_socket: NakamaSocket) -> void:
 		get_tree().get_multiplayer().multiplayer_peer = nakama_multiplayer_bridge.multiplayer_peer
 	pass
 
+
+###############################################################
 func _ready() -> void:
 	var tree = get_tree()
 	tree.get_multiplayer().multiplayer_peer.peer_connected.connect(_on_network_peer_connected)
 	tree.get_multiplayer().multiplayer_peer.peer_disconnected.connect(_on_network_peer_disconnected)
 	pass
 
+# 创建匹配
 func create_match(_nakama_socket: NakamaSocket) -> void:
 	leave()
 	_set_nakama_socket(_nakama_socket)
 	match_mode = MatchMode.CREATE
 
 	nakama_multiplayer_bridge.create_match()
+
 
 func join_match(_nakama_socket: NakamaSocket, _match_id: String) -> void:
 	leave()
@@ -267,3 +270,24 @@ func _on_network_peer_disconnected(peer_id: int) -> void:
 		players.erase(peer_id)
 	_check_enough_players()
 	pass
+
+##############################################################################################################################
+# 创建匹配 RPC
+func createMatch(id:String,game_name:String,min_size:int=1,max_size:int=100,limit:int=100,authoritative:bool=false,query:String="*"):
+	var matchInfo = {
+			"label":id,
+			"name":game_name,
+			"limit":limit,
+			"authoritative":authoritative,
+			"minSize":min_size,
+			"maxSize":max_size,
+			"query":query,
+		}
+	var res = await Online.nakama_client.rpc_async(Online.nakama_session,"create_match",JSON.stringify(matchInfo))
+	#print('创建比赛 ',res)
+	print("创建匹配", res)
+	return 
+
+# 加入游戏
+func joinMatch(p_match_id : String, p_metadata = null):
+	return await Online.nakama_socket.join_match_async(p_match_id,p_metadata)

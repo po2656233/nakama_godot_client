@@ -75,9 +75,15 @@ func _on_create_pressed():
 		await get_tree().create_timer(2.0).timeout
 		show()
 		return
+	if room_name_option.text == "":
+		PopupManager.show_message("请输入房间名称")
+		await get_tree().create_timer(2.0).timeout
+		show()
+		return
 
 	var room_data = {
-		"room_id": "0000xxxx",
+		"room_id": "",
+		"label":room_name_option.text,
 		"room_name": room_name_option.text,
 		"game_type": game_type_option.get_selected_id(),
 		"game_name": game_type_option.get_item_text(game_type_option.selected),

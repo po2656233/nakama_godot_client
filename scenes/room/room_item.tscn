@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=15 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
@@ -11,6 +11,10 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_d6prt"]
+font_size = 18
+font_color = Color(1, 1, 0.619608, 0.890196)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3edv"]
 draw_center = false
@@ -94,6 +98,17 @@ layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("2_mcopm")
 expand_mode = 1
+
+[node name="author" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "@小小 "
+label_settings = SubResource("LabelSettings_d6prt")
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 20
+visible_ratio = 20.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -179,9 +194,9 @@ anchor_top = -0.026
 anchor_right = -0.049
 anchor_bottom = -0.026
 offset_left = 89.09
-offset_top = 278.932
+offset_top = 280.932
 offset_right = 249.09
-offset_bottom = 313.932
+offset_bottom = 315.932
 grow_vertical = 0
 text = "110111111 分"
 label_settings = SubResource("LabelSettings_2tp5m")
