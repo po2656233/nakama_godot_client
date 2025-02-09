@@ -62,28 +62,25 @@ func _ready():
 	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
 
 	# 获取游戏列表
-	var result = await Online.sendDataRPC("list_games")
-	print("获取游戏列表",result)
-	if result and result.id == "list_games":
-		var games = JSON.parse_string(result.payload)
-		for item in games:
-			var description = ""
-			if item.special:
-				description += "[b]特色：[/b][color=read]\n"+item.special+"[/color]\n\n"
-			if item.rules:
-				description += "[b]规则介绍：[/b][color=read]\n"+item.rules+"[/color]\n\n"
-			games_data.append({
-				"id": item.id,
-				"kid": item.kid,
-				"name": item.en_name,
-				"title": item.name,
-				"description": description,
-				"image": item.logo,
-				"version": item.updated_at,
-				"max_player": item.max_player,
-				"lessscore": item.lessscore,
-				"state": item.state,
-			})
+	var games = await OnlineGame.getGameList()
+	for item in games:
+		var description = ""
+		if item.special:
+			description += "[b]特色：[/b][color=read]\n"+item.special+"[/color]\n\n"
+		if item.rules:
+			description += "[b]规则介绍：[/b][color=read]\n"+item.rules+"[/color]\n\n"
+		games_data.append({
+			"id": item.id,
+			"kid": item.kid,
+			"name": item.en_name,
+			"title": item.name,
+			"description": description,
+			"image": item.logo,
+			"version": item.updated_at,
+			"max_player": item.max_player,
+			"lessscore": item.lessscore,
+			"state": item.state,
+		})
 	# 添加游戏
 	for item in games_data:
 		on_add_game_data(item)

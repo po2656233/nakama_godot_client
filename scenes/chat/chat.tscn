@@ -244,9 +244,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_b4wfc")
 script = ExtResource("2_m52is")
-toggle_button_path = null
-animate_transition = null
-transition_duration = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

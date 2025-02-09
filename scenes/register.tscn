@@ -134,6 +134,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_valiv")
 placeholder_text = "请输入用户名(1~8位)"
+max_length = 8
 
 [node name="HBoxContainerPsw" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -155,6 +156,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入密码(8~16位)"
+max_length = 16
 virtual_keyboard_type = 6
 secret = true
 
@@ -195,6 +197,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入确认密码"
+max_length = 16
 virtual_keyboard_type = 6
 secret = true
 
@@ -235,6 +238,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入手机号码"
+max_length = 16
 virtual_keyboard_type = 4
 
 [node name="HBoxContainerVcode" type="HBoxContainer" parent="Panel/VBoxContainer"]
@@ -257,6 +261,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入验证码"
+max_length = 8
 virtual_keyboard_type = 2
 
 [node name="btn_vcode" type="Button" parent="Panel/VBoxContainer/HBoxContainerVcode"]

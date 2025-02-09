@@ -130,7 +130,6 @@ func _on_virtual_keyboard_height_changed(keyboard_height):
 		var viewport_size = get_viewport_rect().size
 		var editY = sendTextEdit.size.y 
 		var editGlobalY = sendTextEdit.global_position.y 
-
 		var target_position = viewport_size.y - keyboard_height - editY - 20
 		
 		# 如果输入框被键盘遮挡，调整VBoxContainer的位置

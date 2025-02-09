@@ -214,22 +214,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 alignment = 1
 icon_alignment = 1
 selected = 0
-item_count = 8
+item_count = 1
 popup/item_0/text = "全部游戏"
-popup/item_1/text = "德州扑克"
-popup/item_1/id = 1
-popup/item_2/text = "斗地主"
-popup/item_2/id = 2
-popup/item_3/text = "麻将"
-popup/item_3/id = 3
-popup/item_4/text = "21点"
-popup/item_4/id = 4
-popup/item_5/text = "五子棋"
-popup/item_5/id = 5
-popup/item_6/text = "象棋"
-popup/item_6/id = 6
-popup/item_7/text = "围棋"
-popup/item_7/id = 7
 
 [node name="StatusFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
 custom_minimum_size = Vector2(120, 40)
@@ -434,5 +420,7 @@ autostart = true
 [node name="CreateRoomDialog" parent="." instance=ExtResource("3_b0c4m")]
 visible = false
 
+[connection signal="focus_entered" from="VBoxContainer/SearchBar/SearchInput" to="." method="_on_search_input_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/SearchBar/SearchInput" to="." method="_on_search_input_focus_exited"]
 [connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/confirmBtn" to="." method="_on_confirm_btn_pressed"]
 [connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/cancleBtn" to="." method="_on_cancle_btn_pressed"]

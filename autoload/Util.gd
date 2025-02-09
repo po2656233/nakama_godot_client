@@ -195,15 +195,18 @@ func get_today_start_timestamp() -> int:
 func get_chinese_time_str(timestamp: String, show_seconds: bool = true) -> String:
 	return format_china_time(Time.get_unix_time_from_datetime_string(timestamp),show_seconds)
 
-func remove_message_by_id(messages: Array, target_message_id: String):
-	for i in range(messages.size() - 1, -1, -1):
-		if messages[i].message_id == target_message_id:
-			messages.remove_at(i)
-			return true
-	return false 
 
-
-
+# 获取当前时间戳
+func get_current_timestamp() -> String:
+	var time_dict = Time.get_time_dict_from_system()
+	var date_dict = Time.get_date_dict_from_system()
+    
+	# 格式化时间为 HH:MM:SS
+	var time_str = "%02d:%02d:%02d" % [time_dict.hour, time_dict.minute, time_dict.second]
+	 
+	# 格式化日期为 YYYY-MM-DD
+	var date_str = "%04d-%02d-%02d" % [date_dict.year, date_dict.month, date_dict.day]
+	return "%s %s" % [date_str, time_str]  # 输出示例：2024-03-15 14:30:45
 
 # func check_network():
 # 	if OS.has_feature("mobile"):

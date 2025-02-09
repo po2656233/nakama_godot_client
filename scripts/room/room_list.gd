@@ -40,101 +40,6 @@ var selected_room_info = {}
 var tween:Tween
 var room_list_info = [
 	# {
-	# 	"room_id": "R001",
-	# 	"room_name": "欢乐场",
-	# 	"is_locked": true,
-	# 	"game_name": "德州扑克",
-	# 	"game_type": 1,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 100,
-	# 	"entry_score": 1000,
-	# 	"current_round": 5,
-	# 	"player_count": 9,
-	# 	"max_players": 10,
-	# 	"status": "等待中",
-	# 	"create_time": "2024-01-08 10:00:00",
-	# 	"description": "适合新手的休闲场，气氛轻松友好",
-	# 	"rules": ["基础规则", "休闲模式", "15分钟限时"],
-	# 	"players": ["玩家1", "玩家2", "玩家3", "玩家4", "玩家5", "玩家6", "玩家7", "玩家8", "玩家9"],
-	# 	"favorite": false,
-	# },
-	# {
-	# 	"room_name": "21点新手场",
-	# 	"game_name": "21点",
-	# 	"game_type": 2,
-	# 	"room_id": "R006",
-	# 	"is_locked": false,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 50,
-	# 	"entry_score": 500,
-	# 	"current_round": 1,
-	# 	"player_count": 2,
-	# 	"max_players": 5,
-	# 	"status": "等待中",
-	# 	"create_time": "2024-01-08 10:45:00",
-	# 	"description": "适合新手的21点游戏房间",
-	# 	"rules": ["基础规则", "新手教学"],
-	# 	"players": ["新手A", "新手B"],
-	# 	"favorite": true,
-	# },
-	# {
-	# 	"room_name": "五子棋竞技场",
-	# 	"game_name": "五子棋",
-	# 	"game_type": 3,
-	# 	"room_id": "R007",
-	# 	"is_locked": false,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 200,
-	# 	"entry_score": 2000,
-	# 	"current_round": 3,
-	# 	"player_count": 1,
-	# 	"max_players": 2,
-	# 	"status": "等待中",
-	# 	"create_time": "2024-01-08 10:40:00",
-	# 	"description": "五子棋爱好者的对战平台",
-	# 	"rules": ["标准规则", "15分钟限时"],
-	# 	"players": ["棋手1"],
-	# 	"favorite": true,
-	# },
-	# {
-	# 	"room_name": "象棋大师场",
-	# 	"game_name": "象棋",
-	# 	"game_type": 4,
-	# 	"room_id": "R008",
-	# 	"is_locked": true,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 300,
-	# 	"entry_score": 3000,
-	# 	"current_round": 2,
-	# 	"player_count": 2,
-	# 	"max_players": 2,
-	# 	"status": "进行中",
-	# 	"create_time": "2024-01-08 10:35:00",
-	# 	"description": "象棋大师的竞技场所",
-	# 	"rules": ["标准规则", "30分钟限时"],
-	# 	"players": ["棋手A", "棋手B"],
-	# 	"favorite": true,
-	# },
-	# {
-	# 	"room_name": "围棋道场",
-	# 	"game_name": "围棋",
-	# 	"game_type": 5,
-	# 	"room_id": "R009",
-	# 	"is_locked": false,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 500,
-	# 	"entry_score": 5000,
-	# 	"current_round": 1,
-	# 	"player_count": 2,
-	# 	"max_players": 2,
-	# 	"status": "进行中",
-	# 	"create_time": "2024-01-08 10:30:00",
-	# 	"description": "围棋爱好者的修炼场所",
-	# 	"rules": ["中国规则", "60分钟限时"],
-	# 	"players": ["黑棋手", "白棋手"],
-	# 	"favorite": true,
-	# },
-	# {
 	# 	"room_name": "军棋道场",
 	# 	"game_name": "军棋",
 	# 	"game_type": 6,
@@ -226,30 +131,44 @@ func _ready():
 	show_history.toggled.connect(_on_show_history_toggled)
 	show_myrooms.toggled.connect(_on_show_myrooms_toggled)
 	create_button.pressed.connect(_on_create_pressed)
-	refresh_timer.timeout.connect(_on_refresh_timer_timeout)
+	# refresh_timer.timeout.connect(_on_refresh_timer_timeout)
 	room_selected.connect(_on_room_selected)
 	if Online.nakama_socket:
 		Online.nakama_socket.received_matchmaker_matched.connect(_on_received_matchmaker_matched)
 		Online.nakama_socket.received_match_state.connect(_on_received_match_state)
 		Online.nakama_socket.received_match_presence.connect(_on_received_match_presence)
 		Online.nakama_socket.received_status_presence.connect(_on_received_status_presence)
-		
+		var games = await OnlineGame.getGameList()
+		for game in games:
+			game_type_filter.add_item(game.name,game.id)
+	pass
 
 
 func _refresh_room_list():
+	if not Online.nakama_socket:
+		PopupManager.show_dynamic("未连接到服务器")
+		return
 	# 清除现有房间
 	for child in room_container.get_children():
 		child.queue_free()
 	room_list_info.clear()
-	# 应用过滤器和排序
 
 	# 获取房间列表--TODO TODO
-	var result = await Online.nakama_client.list_matches_async(Online.nakama_session,0,100,100,true,"","")
-	if result.is_exception():
+	var result = await Online.nakama_socket.rpc_async("match_list",{
+			"limit":100,
+			"authoritative":true,
+			"minSize":0,
+			"maxSize":100,
+			"query":"*",
+		})
+	if result.is_exception() or not result.payload: 
 		print("房间列表获取失败:",result.get_exception().message)
 		return
-	# print("房间列表数据--->",result)
-	for data in result.matches:
+	print("房间列表数据--->",result)
+	var matchs = JSON.parse_string(result.payload)
+	if matchs.size() == 0:
+		return 
+	for data in matchs:
 		print("房间信息:",data)
 		# var index = room_list_info.find(func(r): return r.id == data.match_id)
 		# if index != -1:
@@ -257,31 +176,31 @@ func _refresh_room_list():
 		room_list_info.append({
 			"id": data.match_id,
 			"room_id": data.match_id.split("-")[0],
-			"room_name": data.label,
-			"is_locked": data.authoritative,
-			"game_name": data.label,
-			"game_type": 1,
-			"creator_id": "xxxxxx01",
-			"base_score": 100,
-			"entry_score": 1000,
-			"current_round": 5,
-			"player_count": data.size if data.size and data.size > 0 else 0,
-			"max_players": 10,
-			"status": "等待中",
-			"create_time": "2024-01-08 10:00:00",
-			"description": "适合新手的休闲场，气氛轻松友好",
-			"rules": [],
-			"players": [],
+			"room_name": data.MatchData.room_name,
+			"is_locked": true if data.MatchData.room_psw != "" else false,
+			"game_name": data.MatchData.game_name,
+			"game_type": data.MatchData.game_type,
+			"creator_id": data.MatchData.creator_id,
+			"author": data.MatchData.author if data.MatchData.has("author") else "",
+			"base_score": data.MatchData.base_score,
+			"entry_score": data.MatchData.entry_score,
+			"current_round": data.MatchData.current_round,
+			"player_count": data.size if data.has("size")  else 0,
+			"max_players": data.MatchData.max_players,
+			"status": data.MatchData.status,
+			"create_time": data.MatchData.create_time,
+			"description": data.MatchData.description,
+			"rules": data.MatchData.rules,
+			"players": data.MatchData.players,
 			"favorite": false,	
 		})
-		
+	print("\n")
 	if room_list_info.size() == 0:
 		return
+		
+	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_list_info)
 	filtered_rooms = _sort_rooms(filtered_rooms)
-
-	if filtered_rooms.size() == 0:
-		return
 
 	# if tween:
 	# 	tween.kill()
@@ -324,8 +243,7 @@ func _apply_filters(rooms: Array) -> Array:
 		if not OnlineLogin.player_data:
 			return []
 		rooms = room_list_info.filter(func(r): return r.creator_id == OnlineLogin.get_my_id())
-	
-	
+
 	var filtered = []
 	for room in rooms:
 		# 搜索文本过滤
@@ -335,7 +253,6 @@ func _apply_filters(rooms: Array) -> Array:
 				continue
 
 		# 是否我创建的过滤
-		
 		# 状态过滤
 		match status_id:
 			1: # 等待中
@@ -351,35 +268,34 @@ func _apply_filters(rooms: Array) -> Array:
 		# 游戏类型过滤
 		match game_type_id:
 			1: # 德州扑克
-				if room.game_type != "德州扑克":
+				if room.game_name != "德州扑克":
 					continue
 			2: # 斗地主
-				if room.game_type != "斗地主":
+				if room.game_name != "斗地主":
 					continue
 			3: # 麻将
-				if room.game_type != "麻将":
+				if room.game_name != "麻将":
 					continue
 			4: # 21点
-				if room.game_type != "21点":
+				if room.game_name != "21点":
 					continue
 			5: # 五子棋
-				if room.game_type != "五子棋":
+				if room.game_name != "五子棋":
 					continue
 			6: # 象棋
-				if room.game_type != "象棋":
+				if room.game_name != "象棋":
 					continue
 			7: # 围棋
-				if room.game_type != "围棋":
+				if room.game_name != "围棋":
 					continue
-		
+			_: # 全部
+				pass
 		filtered.append(room)
-	
 	return filtered
 
 func _sort_rooms(rooms: Array) -> Array:
 	var sort_id = sort_options.selected
 	var sorted = rooms.duplicate()
-	
 	match sort_id:
 		1: # 底分升序
 			sorted.sort_custom(func(a, b): return a.base_score < b.base_score)
@@ -393,7 +309,6 @@ func _sort_rooms(rooms: Array) -> Array:
 			sorted.sort_custom(func(a, b): return a.create_time > b.create_time)
 		6: # 创建时间
 			sorted.sort_custom(func(a, b): return not a.is_locked and b.is_locked)
-	
 	return sorted
 
 func _update_stats():
@@ -404,6 +319,7 @@ func _update_stats():
 	total_rooms_label.text = "总房间数: %d" % total_rooms
 	active_rooms_label.text = "活跃房间: %d" % active_rooms
 	total_players_label.text = "在线玩家: %d" % total_players
+	pass
 
 func _save_data():
 	var save_data = {
@@ -412,6 +328,7 @@ func _save_data():
 	}
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	file.store_string(JSON.stringify(save_data))
+	pass
 
 func _load_saved_data():
 	if FileAccess.file_exists(SAVE_PATH):
@@ -533,22 +450,25 @@ func wait_for_room_to_start():
 	var waitingStart = room_for_waiting.instantiate()
 	add_child(waitingStart)
 	waitingStart.reset(room_info.room_id, room_info.max_players)
-	waitingStart.add_player(OnlineChat.get_my_name())
+	waitingStart.add_player(OnlineLogin.get_my_name())
 	for playerName in room_info.players:
 		waitingStart.add_player(playerName)
-	# 测试人员退出
-	# var timer = get_tree().create_timer(3.0)
-	# await timer.timeout
-	# waitingStart.remove_player(room_info.players[0])
 	pass # Replace with function body.
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
-		print("房间已满员")
 		return
-
+	if not Online.nakama_socket:
+		PopupManager.show_dynamic("未连接服务器")
+		return
+	var p_metadata = room_info.room_psw if room_info.has("room_psw") else null
+	var result = await Online.nakama_socket.join_match_async(room_info.id,p_metadata)
+	if result.is_exception():
+		PopupManager.show_dynamic("加入房间失败 "+result.get_exception().message)
+		return
+	print("加入房间成功",result)
 	selected_room_info = room_info
 
 	# 添加到历史记录
@@ -625,20 +545,11 @@ func _on_room_selected(room_info: Dictionary):
 func _on_room_created(_room_info: Dictionary):
 	if Online.nakama_socket:
 		# 匹配创建参数
-		# var match_maker_ticket = await Online.nakama_socket.add_matchmaker_async( 
-		# 		"*",   	# 匹配属性
-		# 			2,                  # 最小玩家数
-		# 			100,                # 最大玩家数
-		# 			{
-		# 		"game_mode": "battle_royale",
-		# 		"map": "desert_island",
-		# 		"game_type": "pvp"
-		# 	}    # 额外查询参数
-		# )
+		# var match_maker_ticket = await Online.nakama_socket.add_matchmaker_async()
 		# print("匹配创建成功，票据: ", match_maker_ticket)
 
 		# 服务端创建
-		var res = await Online.nakama_client.rpc_async(Online.nakama_session,"create_match",JSON.stringify(_room_info))
+		var res = await Online.nakama_socket.rpc_async("create_match",_room_info)
 		if res.is_exception():
 			print("创建房间失败:",res.get_exception().message)
 			PopupManager.show_dynamic("创建房间失败")
@@ -660,6 +571,7 @@ func _on_room_created(_room_info: Dictionary):
 	# 	_save_data()
 	# 	_refresh_room_list()
 	# 	_update_stats()
+	pass
 
 
 # 确认房间密码
@@ -677,4 +589,17 @@ func _on_cancle_btn_pressed() -> void:
 	selected_room_info = {}
 	jion_dialog.visible = false
 	jion_input.text = ""
+	pass # Replace with function body.
+
+
+func _on_search_input_focus_entered() -> void:
+	# 获取目标编辑控件的全局位置和大小
+	if Util.isMobile():
+		DisplayServer.virtual_keyboard_show("中文输入法") 
+	pass # Replace with function body.
+
+
+func _on_search_input_focus_exited() -> void:
+	if Util.isMobile():
+		DisplayServer.virtual_keyboard_hide()
 	pass # Replace with function body.

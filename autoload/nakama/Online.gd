@@ -77,3 +77,4 @@ func sendDataRPC(funcName:String,payload = null):
 			return null
 		return result
 	return null
+

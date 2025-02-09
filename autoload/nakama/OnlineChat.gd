@@ -547,3 +547,11 @@ func reback_channel_message(channel_id:String,message_id: String,data:Dictionary
 			return false
 		return true
 	return false
+
+
+func remove_message_by_id(messages: Array, target_message_id: String):
+	for i in range(messages.size() - 1, -1, -1):
+		if messages[i].message_id == target_message_id:
+			messages.remove_at(i)
+			return true
+	return false 

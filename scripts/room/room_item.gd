@@ -10,6 +10,7 @@ extends PanelContainer
 @onready var join_button = $MarginContainer/HBoxContainer/JoinButton
 @onready var favorite_button = $MarginContainer/HBoxContainer/FavoriteButton
 @onready var room_lock = $MarginContainer/Panel/Lock
+@onready var author = $author
 
 var room_style_path = "res://styles/room_panel_style.tres"
 var waiting_style_path = "res://styles/waiting_style.tres"
@@ -52,6 +53,7 @@ func setup(data: Dictionary):
 	player_count_label.text = "%d/%d" % [data.get("player_count", 0), data.get("max_players", 0)]
 	status_label.text = data.get("status", "")
 	room_lock.visible = data.get("is_locked", false)
+	author.text = "@"+data.get("author", "")+" "
 	# 根据状态设置状态标签样式
 	var style_path: String
 	match data.get("status", ""):
@@ -162,5 +164,5 @@ func _start_pulse_animation():
 			pulse_tween.kill()
 		pulse_tween = create_tween()
 		pulse_tween.set_loops()
-		pulse_tween.tween_property(status_label, "modulate:a", 0.5, 1.0)
-		pulse_tween.tween_property(status_label, "modulate:a", 1.0, 1.0)
+		pulse_tween.tween_property(status_label, "modulate:a", 0.2, 1.5)
+		pulse_tween.tween_property(status_label, "modulate:a", 1.5, 1.5)
