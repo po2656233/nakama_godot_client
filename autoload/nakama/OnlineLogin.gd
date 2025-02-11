@@ -202,6 +202,8 @@ func save_player_data() -> void:
 	await Online.nakama_client.write_storage_objects_async(Online.nakama_session, objects)
 	pass
 
+func get_my_info() -> NakamaAPI.ApiUser:
+	return player_data
 # 获取当前用户 ID
 func get_my_id() -> String:
 	if not player_data:

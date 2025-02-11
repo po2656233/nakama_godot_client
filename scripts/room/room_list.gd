@@ -55,46 +55,9 @@ var room_list_info = [
 	# 	"create_time": "2024-01-08 10:30:00",
 	# 	"description": "围棋爱好者的修炼场所",
 	# 	"rules": ["中国规则", "60分钟限时"],
-	# 	"players": ["黑棋手", "白棋手"],
+	# 	"players": [{"uid": "xxxxxx01", "username": "黑棋手","headIcon":""}, {"uid": "xxxxxx02", "username": "白棋手"}],
 	# 	"favorite": true,
 	# },
-	# {
-	# 	"room_name": "飞机棋道场",
-	# 	"game_name": "飞机棋",
-	# 	"game_type": 7,
-	# 	"room_id": "R011",
-	# 	"is_locked": false,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 500,
-	# 	"entry_score": 5000,
-	# 	"current_round": 1,
-	# 	"player_count": 2,
-	# 	"max_players": 2,
-	# 	"status": "进行中",
-	# 	"create_time": "2024-01-08 10:30:00",
-	# 	"description": "围棋爱好者的修炼场所",
-	# 	"rules": ["中国规则", "60分钟限时"],
-	# 	"players": ["黑棋手", "白棋手"],
-	# 	"favorite": true,
-	# },
-	# {
-	# 	"room_name": "大富翁道场",
-	# 	"game_name": "大富翁",
-	# 	"game_type": 8,
-	# 	"room_id": "R012",
-	# 	"is_locked": false,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 500,
-	# 	"entry_score": 5000,
-	# 	"current_round": 1,
-	# 	"player_count": 2,
-	# 	"max_players": 2,
-	# 	"status": "进行中",
-	# 	"create_time": "2024-01-08 10:30:00",
-	# 	"description": "围棋爱好者的修炼场所",
-	# 	"rules": ["中国规则", "60分钟限时"],
-	# 	"players": ["黑棋手", "白棋手"],
-	# 	"favorite": true,
 	# }
 ]
 
@@ -194,7 +157,7 @@ func _refresh_room_list():
 			"players": data.MatchData.players,
 			"favorite": false,	
 		})
-	print("\n")
+	print("------结束\n")
 	if room_list_info.size() == 0:
 		return
 		
@@ -227,7 +190,7 @@ func _refresh_room_list():
 func _apply_filters(rooms: Array) -> Array:
 	var search_text = search_input.text.to_lower()
 	var status_id = status_filter.selected
-	var game_type_id = game_type_filter.selected
+	var selected_id = game_type_filter.selected
 	
 	# 如果显示收藏，只显示收藏的房间
 	if show_favorites.button_pressed:
@@ -266,30 +229,9 @@ func _apply_filters(rooms: Array) -> Array:
 					continue
 		
 		# 游戏类型过滤
-		match game_type_id:
-			1: # 德州扑克
-				if room.game_name != "德州扑克":
-					continue
-			2: # 斗地主
-				if room.game_name != "斗地主":
-					continue
-			3: # 麻将
-				if room.game_name != "麻将":
-					continue
-			4: # 21点
-				if room.game_name != "21点":
-					continue
-			5: # 五子棋
-				if room.game_name != "五子棋":
-					continue
-			6: # 象棋
-				if room.game_name != "象棋":
-					continue
-			7: # 围棋
-				if room.game_name != "围棋":
-					continue
-			_: # 全部
-				pass
+		if selected_id != 0 and game_type_filter.get_item_text(selected_id) != room.game_name:
+			continue
+
 		filtered.append(room)
 	return filtered
 
@@ -450,9 +392,9 @@ func wait_for_room_to_start():
 	var waitingStart = room_for_waiting.instantiate()
 	add_child(waitingStart)
 	waitingStart.reset(room_info.room_id, room_info.max_players)
-	waitingStart.add_player(OnlineLogin.get_my_name())
-	for playerName in room_info.players:
-		waitingStart.add_player(playerName)
+	waitingStart.add_player(OnlineLogin.get_my_id(), OnlineLogin.get_my_name(), OnlineLogin.get_my_headIcon())
+	for player in room_info.players:
+		waitingStart.add_player(player.uid, player.username, player.headIcon)
 	pass # Replace with function body.
 
 # 加入房间
@@ -523,7 +465,7 @@ func _on_room_selected(room_info: Dictionary):
 	labels.append_array(room_info.rules.map(func(rule): return "- " + rule))
 	labels.append("")
 	labels.append("当前玩家:")
-	labels.append_array(room_info.players.map(func(player): return "- " + player))
+	labels.append_array(room_info.players.map(func(player): return "- " + player.username))
 	
 	for text in labels:
 		var label = Label.new()

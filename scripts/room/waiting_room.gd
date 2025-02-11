@@ -49,12 +49,12 @@ func reset(roomId: String = "",playerMax:int=10):
 	pass
 
 # 加入房间
-func add_player(player_name: String):
+func add_player(player_uid,player_name: String,player_avatar = null):
 	if current_players.size() >= max_players:
 		PopupManager.show_dynamic("房间已满，无法加入")
 		return
 	var player_item = player_scene.instantiate()
-	player_item.get_node("PlayerName").text = player_name
+	player_item.set_player_info(player_uid,player_name,player_avatar)
 	player_list.add_child(player_item)
 	current_players.append(player_name)
 	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
@@ -116,11 +116,11 @@ func _on_cancel_button_pressed():
 	remove_player(OnlineLogin.get_my_name())
 	SceneManager.switch_to_scene("roomlist","cross",0.5)
 
-func _debug_add_test_players():
-	# 仅用于测试：模拟其他玩家陆续加入
-	var timer = get_tree().create_timer(2.0)
-	timer.timeout.connect(func(): add_player("玩家2"))
+# func _debug_add_test_players():
+# 	# 仅用于测试：模拟其他玩家陆续加入
+# 	var timer = get_tree().create_timer(2.0)
+# 	timer.timeout.connect(func(): add_player("玩家2"))
 	
-	timer = get_tree().create_timer(4.0)
-	timer.timeout.connect(func(): add_player("玩家3"))
-	pass
+# 	timer = get_tree().create_timer(4.0)
+# 	timer.timeout.connect(func(): add_player("玩家3"))
+# 	pass
