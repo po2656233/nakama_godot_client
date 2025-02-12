@@ -73,7 +73,7 @@ func sendDataRPC(funcName:String,payload = null):
 	if nakama_socket:
 		var result= await nakama_socket.rpc_async(funcName,payload)
 		if result.is_exception():
-			print("Error removing group: ", result.get_exception().message)
+			print("RPC发送响应异常: ", result.get_exception().message)
 			return null
 		return result
 	return null

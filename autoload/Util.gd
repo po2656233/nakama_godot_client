@@ -234,3 +234,11 @@ func isMobile()->bool:
 
 func isFullScreen()->bool:
 	return  DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+
+
+func norepeat(arr:Array) -> Array:
+	arr = arr.duplicate(true) # 使用副本而不是对原数组进行操作
+	var dict:Dictionary = {}
+	for item in arr:
+		dict[item] = item
+	return dict.keys() # dict.values()也可以

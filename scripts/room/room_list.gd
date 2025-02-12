@@ -7,11 +7,8 @@ const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
 const SAVE_PATH = "user://room_list_info.json"
 
 @onready var search_input = $VBoxContainer/SearchBar/SearchInput
-@onready var status_filter = $VBoxContainer/SearchBar/FilterOptions/StatusFilter
-@onready var game_type_filter = $VBoxContainer/SearchBar/FilterOptions/GameTypeFilter
 @onready var sort_options = $VBoxContainer/SearchBar/FilterOptions/SortOptions
 @onready var show_favorites = $VBoxContainer/SearchBar/ShowFavorites
-@onready var show_history = $VBoxContainer/SearchBar/ShowHistory
 @onready var show_myrooms = $VBoxContainer/SearchBar/ShowMyRooms
 @onready var create_button = $VBoxContainer/SearchBar/CreateButton
 @onready var room_container = $VBoxContainer/MarginContainer2/HBoxContainer/ScrollContainer/RoomContainer
@@ -34,9 +31,11 @@ const SAVE_PATH = "user://room_list_info.json"
 
 var favorite_rooms = []
 var room_history = []
+var my_rooms = []
 var pre_room_id = ""
 var pre_room_count = 0
 var selected_room_info = {}
+var already_selectd_favorite = false
 var tween:Tween
 var room_list_info = [
 	# {
@@ -82,16 +81,14 @@ func _ready():
 	_load_saved_data()
 	
 	jion_dialog.visible = false
+	print("初始化房间列表数据:")
 	_refresh_room_list()
 	_update_stats()
 
 	# 绑定事件
 	search_input.text_changed.connect(_on_search_changed)
-	status_filter.item_selected.connect(_on_filter_changed)
-	game_type_filter.item_selected.connect(_on_filter_changed)
 	sort_options.item_selected.connect(_on_sort_changed)
 	show_favorites.toggled.connect(_on_show_favorites_toggled)
-	show_history.toggled.connect(_on_show_history_toggled)
 	show_myrooms.toggled.connect(_on_show_myrooms_toggled)
 	create_button.pressed.connect(_on_create_pressed)
 	# refresh_timer.timeout.connect(_on_refresh_timer_timeout)
@@ -101,41 +98,19 @@ func _ready():
 		Online.nakama_socket.received_match_state.connect(_on_received_match_state)
 		Online.nakama_socket.received_match_presence.connect(_on_received_match_presence)
 		Online.nakama_socket.received_status_presence.connect(_on_received_status_presence)
-		var games = await OnlineGame.getGameList()
-		for game in games:
-			game_type_filter.add_item(game.name,game.id)
 	pass
 
 
 func _refresh_room_list():
-	if not Online.nakama_socket:
-		PopupManager.show_dynamic("未连接到服务器")
-		return
 	# 清除现有房间
 	for child in room_container.get_children():
 		child.queue_free()
 	room_list_info.clear()
 
-	# 获取房间列表--TODO TODO
-	var result = await Online.nakama_socket.rpc_async("match_list",{
-			"limit":100,
-			"authoritative":true,
-			"minSize":0,
-			"maxSize":100,
-			"query":"*",
-		})
-	if result.is_exception() or not result.payload: 
-		print("房间列表获取失败:",result.get_exception().message)
-		return
-	print("房间列表数据--->",result)
-	var matchs = JSON.parse_string(result.payload)
-	if matchs.size() == 0:
-		return 
+	# 获取房间列表
+	var matchs = await OnlineGame.getMatchList()
 	for data in matchs:
 		print("房间信息:",data)
-		# var index = room_list_info.find(func(r): return r.id == data.match_id)
-		# if index != -1:
-		# 	room_list_info.remove_at(index)
 		room_list_info.append({
 			"id": data.match_id,
 			"room_id": data.match_id.split("-")[0],
@@ -155,7 +130,6 @@ func _refresh_room_list():
 			"description": data.MatchData.description,
 			"rules": data.MatchData.rules,
 			"players": data.MatchData.players,
-			"favorite": false,	
 		})
 	print("------结束\n")
 	if room_list_info.size() == 0:
@@ -164,7 +138,7 @@ func _refresh_room_list():
 	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_list_info)
 	filtered_rooms = _sort_rooms(filtered_rooms)
-
+	print("过滤后的房间列表:", filtered_rooms)
 	# if tween:
 	# 	tween.kill()
 	# tween = get_tree().create_tween()
@@ -178,7 +152,7 @@ func _refresh_room_list():
 		room_item.favorite_toggled.connect(_on_room_favorite_toggled.bind(data))
 		
 		# 设置收藏状态
-		room_item.is_favorite = data.favorite 
+		room_item.is_favorite = favorite_rooms.any(func(id): return id == data.id)
 		
 		# 添加进入动画
 		room_item.show()
@@ -189,23 +163,16 @@ func _refresh_room_list():
 
 func _apply_filters(rooms: Array) -> Array:
 	var search_text = search_input.text.to_lower()
-	var status_id = status_filter.selected
-	var selected_id = game_type_filter.selected
-	
 	# 如果显示收藏，只显示收藏的房间
-	if show_favorites.button_pressed:
-		favorite_rooms = room_list_info.filter(func(r): return r.favorite)
-		rooms = favorite_rooms.duplicate()
-	
-	# 如果显示历史，只显示历史记录
-	if show_history.button_pressed:
-		rooms = room_history.duplicate()
+	if show_favorites.button_pressed: 
+		rooms = room_list_info.filter(func(r): return r.id in favorite_rooms)
 
 	# 如果显示我创建的，只显示我创建的房间
-	if show_myrooms.button_pressed:
+	if show_myrooms.button_pressed: 	
 		if not OnlineLogin.player_data:
 			return []
-		rooms = room_list_info.filter(func(r): return r.creator_id == OnlineLogin.get_my_id())
+		my_rooms = room_list_info.filter(func(r): return r.creator_id == OnlineLogin.get_my_id())
+		rooms = my_rooms.duplicate()
 
 	var filtered = []
 	for room in rooms:
@@ -214,24 +181,6 @@ func _apply_filters(rooms: Array) -> Array:
 			var room_text = "%s%s%s" % [room.room_name, room.game_type, room.room_id]
 			if not room_text.to_lower().contains(search_text):
 				continue
-
-		# 是否我创建的过滤
-		# 状态过滤
-		match status_id:
-			1: # 等待中
-				if room.status != "等待中":
-					continue
-			2: # 进行中
-				if room.status != "进行中":
-					continue
-			3: # 已满员
-				if room.status != "已满员":
-					continue
-		
-		# 游戏类型过滤
-		if selected_id != 0 and game_type_filter.get_item_text(selected_id) != room.game_name:
-			continue
-
 		filtered.append(room)
 	return filtered
 
@@ -266,6 +215,7 @@ func _update_stats():
 func _save_data():
 	var save_data = {
 		"favorite_rooms": favorite_rooms,
+		"my_rooms": my_rooms,
 		"room_history": room_history
 	}
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -280,6 +230,7 @@ func _load_saved_data():
 		if data:
 			favorite_rooms = data.favorite_rooms
 			room_history = data.room_history
+			my_rooms = data.my_rooms
 	pass
 
 ###############################################################
@@ -301,30 +252,42 @@ func _on_received_status_presence(status_presence):
 
 ###############################################################
 func _on_search_changed(_new_text: String):
+	print("搜索关键字:", _new_text)
 	_refresh_room_list()
 
-func _on_filter_changed(_index: int):
-	_refresh_room_list()
 
 func _on_sort_changed(_index: int):
+	print("排序方式:", _index)
 	_refresh_room_list()
 
+# 收藏房间
+func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
+	if is_favorite:
+		var index = favorite_rooms.find(func(id): return id == room_info.id)
+		if index == -1:
+			favorite_rooms.push_front(room_info.id)
+	else:
+		favorite_rooms.erase(room_info.id)
+	print("收藏的房间列表: ", favorite_rooms)
+	_save_data()
+	_refresh_room_list()
+
+# 显示收藏房间
 func _on_show_favorites_toggled(button_pressed: bool):
+	print("显示收藏:", button_pressed)
+	if show_myrooms.button_pressed:
+		if  not button_pressed:
+			return
+		show_myrooms.button_pressed = false
+		return 
 	if button_pressed:
-		show_history.button_pressed = false
 		show_myrooms.button_pressed = false
 	_refresh_room_list()
 
-func _on_show_history_toggled(button_pressed: bool):
-	if button_pressed:
-		show_favorites.button_pressed = false
-		show_myrooms.button_pressed = false
-	_refresh_room_list()
-
+# 显示我创建的房间
 func _on_show_myrooms_toggled(button_pressed: bool):
 	if button_pressed:
 		show_favorites.button_pressed = false
-		show_history.button_pressed = false
 		# 左右移动
 		if tween:
 			tween.kill()
@@ -338,7 +301,9 @@ func _on_show_myrooms_toggled(button_pressed: bool):
 		tween.chain().tween_property(show_myrooms, "position:x", original_x, 0.05)
 		tween.chain().tween_property(show_myrooms, "position:x", original_x + 30, 0.05)
 		tween.chain().tween_property(show_myrooms, "position:x", original_x, 0.05)
+	print("显示我创建的:", button_pressed)
 	_refresh_room_list()
+	
 
 func _on_create_pressed():
 	# 添加刷新动画
@@ -376,9 +341,9 @@ func _on_create_pressed():
 	# _update_stats()
 	pass
 
-func _on_refresh_timer_timeout():
-	_refresh_room_list()
-	_update_stats()
+# func _on_refresh_timer_timeout():
+# 	_refresh_room_list()
+# 	_update_stats()
 
 func _on_room_clicked(room_info: Dictionary):
 	# emit_signal("room_selected", room_info)
@@ -397,46 +362,6 @@ func wait_for_room_to_start():
 		waitingStart.add_player(player.uid, player.username, player.headIcon)
 	pass # Replace with function body.
 
-# 加入房间
-func _on_join_room(room_info: Dictionary):
-	if room_info.max_players == room_info.player_count:
-		PopupManager.show_dynamic("房间已满员")
-		return
-	if not Online.nakama_socket:
-		PopupManager.show_dynamic("未连接服务器")
-		return
-	var p_metadata = room_info.room_psw if room_info.has("room_psw") else null
-	var result = await Online.nakama_socket.join_match_async(room_info.id,p_metadata)
-	if result.is_exception():
-		PopupManager.show_dynamic("加入房间失败 "+result.get_exception().message)
-		return
-	print("加入房间成功",result)
-	selected_room_info = room_info
-
-	# 添加到历史记录
-	if not room_history.any(func(r): return r.room_id == room_info.room_id):
-		room_history.push_front(room_info)
-		if room_history.size() > 10: # 限制历史记录数量
-			room_history.pop_back()
-		_save_data()
-	if room_info.is_locked:
-		jion_dialog.visible = true
-		jion_room.text = "%s\nID:%s"%[room_info.room_name,room_info.room_id]
-	else:
-		wait_for_room_to_start()
-	pass
-
-# 收藏房间
-func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
-	room_info["favorite"] = is_favorite
-	if is_favorite:
-		var index = room_list_info.find(func(r): return r.room_id == room_info.room_id)
-		if index != -1:
-			room_list_info[index] = room_info
-	favorite_rooms = room_list_info.filter(func(r): return r.favorite)
-	print("收藏的房间列表: ", favorite_rooms)
-	_save_data()
-	_refresh_room_list()
 
 # 选择房间
 func _on_room_selected(room_info: Dictionary):
@@ -483,6 +408,36 @@ func _on_room_selected(room_info: Dictionary):
 	tween.tween_property(detail_panel, "modulate:a", 1.0, 0.3)
 	pass
 
+
+# 加入房间
+func _on_join_room(room_info: Dictionary):
+	if room_info.max_players == room_info.player_count:
+		PopupManager.show_dynamic("房间已满员")
+		return
+	if not Online.nakama_socket:
+		PopupManager.show_dynamic("未连接服务器")
+		return
+	var p_metadata = room_info.room_psw if room_info.has("room_psw") else null
+	var result = await Online.nakama_socket.join_match_async(room_info.id,p_metadata)
+	if result.is_exception():
+		PopupManager.show_dynamic("加入房间失败 "+result.get_exception().message)
+		return
+	print("加入房间成功",result)
+	selected_room_info = room_info
+
+	# 添加到历史记录
+	if not room_history.any(func(r): return r.room_id == room_info.room_id):
+		room_history.push_front(room_info)
+		if room_history.size() > 10: # 限制历史记录数量
+			room_history.pop_back()
+		_save_data()
+	if room_info.is_locked:
+		jion_dialog.visible = true
+		jion_room.text = "%s\nID:%s"%[room_info.room_name,room_info.room_id]
+	else:
+		wait_for_room_to_start()
+	pass
+
 # 创建房间
 func _on_room_created(_room_info: Dictionary):
 	if Online.nakama_socket:
@@ -500,19 +455,6 @@ func _on_room_created(_room_info: Dictionary):
 		var timer = get_tree().create_timer(1.0)
 		await timer.timeout
 		_refresh_room_list()
-		# 本地创建
-		# var reslut = await Online.nakama_socket.create_match_async(room_data.room_name)
-		# if reslut.is_exception():
-		# 	print("创建房间失败:",reslut.get_exception().message)
-		# 	PopupManager.show_dynamic("创建房间失败")
-		# 	return
-		# print("创建本地托管成功",reslut)
-	# 添加到房间列表
-	# if not room_list_info.any(func(r): return r.room_id == room_info.room_id):
-	# 	room_list_info.push_front(room_info)
-	# 	_save_data()
-	# 	_refresh_room_list()
-	# 	_update_stats()
 	pass
 
 

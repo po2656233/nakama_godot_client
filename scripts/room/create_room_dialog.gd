@@ -105,7 +105,6 @@ func _create_room():
 		"description": "暂无游戏相关描述",
 		"rules": ["基础规则"],
 		"players": [],
-		"favorite": false,
 	}
 	print("创建房间数据: ", room_data)
 

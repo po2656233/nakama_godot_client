@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
-[ext_resource type="Texture2D" uid="uid://bhjwhm86nw8hx" path="res://assets/room/room0202.png" id="2_mcopm"]
-[ext_resource type="Texture2D" uid="uid://cg5r875ad5l1s" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
+[ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_mcopm"]
+[ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.567014, 0.771032, 0.875651, 1)
@@ -13,6 +13,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="SystemFont" id="SystemFont_iwbqy"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_d6prt"]
 font = SubResource("SystemFont_iwbqy")
@@ -22,6 +23,7 @@ font_color = Color(0.525101, 0.525101, 0.525101, 1)
 draw_center = false
 
 [sub_resource type="SystemFont" id="SystemFont_toid0"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_3t4jk"]
 font = SubResource("SystemFont_toid0")
@@ -41,6 +43,7 @@ shadow_size = 10
 shadow_color = Color(0.207488, 0.287536, 0.2092, 0.807843)
 
 [sub_resource type="SystemFont" id="SystemFont_0rn8l"]
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8os5m"]
 content_margin_left = 3.0
@@ -63,13 +66,14 @@ shadow_size = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_2tp5m"]
 font_size = 25
-font_color = Color(0.375987, 0.31869, 0.379707, 1)
+font_color = Color(1, 0.917647, 0.976471, 1)
 outline_size = 5
-outline_color = Color(0.756863, 0.74902, 0.584314, 1)
+outline_color = Color(0.507852, 0.192499, 0.509968, 1)
 shadow_size = 3
 shadow_color = Color(0.385493, 0.385492, 0.385492, 0.952941)
 
 [sub_resource type="SystemFont" id="SystemFont_w2vb5"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_u0kmr"]
 font = SubResource("SystemFont_w2vb5")
@@ -78,12 +82,14 @@ font_color = Color(0.634316, 0.727066, 0.566808, 1)
 shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_dk6k1"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_je7d3"]
 font = SubResource("SystemFont_dk6k1")
 font_color = Color(0.324847, 0.384107, 0.619454, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_mksyy"]
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_favorite"]
 bg_color = Color(0.839698, 0.401707, 0.135815, 0.741176)
@@ -93,6 +99,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="SystemFont" id="SystemFont_iw4mb"]
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
 bg_color = Color(0.996078, 0.819608, 0.313726, 1)
@@ -199,9 +206,9 @@ anchor_top = -0.026
 anchor_right = -0.049
 anchor_bottom = -0.026
 offset_left = 53.09
-offset_top = 270.49
+offset_top = 265.49
 offset_right = 85.09
-offset_bottom = 338.49
+offset_bottom = 333.49
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("3_fftwn")
@@ -216,9 +223,9 @@ anchor_top = -0.026
 anchor_right = -0.049
 anchor_bottom = -0.026
 offset_left = 89.09
-offset_top = 280.932
+offset_top = 278.932
 offset_right = 249.09
-offset_bottom = 315.932
+offset_bottom = 313.932
 grow_vertical = 0
 text = "110111111 分"
 label_settings = SubResource("LabelSettings_2tp5m")

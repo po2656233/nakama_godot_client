@@ -1,7 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=21 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
+[ext_resource type="Texture2D" uid="uid://cxk66i3uvuq4n" path="res://assets/room/txt_h_xzfj.png" id="2_s5adk"]
 [ext_resource type="PackedScene" uid="uid://15qsfdusk3fu" path="res://scenes/room/create_room_dialog.tscn" id="3_b0c4m"]
+[ext_resource type="Texture2D" uid="uid://b1fb8ru33w7ws" path="res://assets/room/txt_h_cjfj.png" id="3_lsncr"]
 
 [sub_resource type="SystemFont" id="SystemFont_pptvu"]
 
@@ -201,43 +203,20 @@ alignment = 1
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_search")
-placeholder_text = "搜索房间..."
+placeholder_text = "查找..."
+right_icon = ExtResource("2_s5adk")
 
 [node name="FilterOptions" type="HBoxContainer" parent="VBoxContainer/SearchBar"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="GameTypeFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
-custom_minimum_size = Vector2(120, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
-alignment = 1
-icon_alignment = 1
-selected = 0
-item_count = 1
-popup/item_0/text = "全部游戏"
-
-[node name="StatusFilter" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
-custom_minimum_size = Vector2(120, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
-alignment = 1
-selected = 0
-item_count = 4
-popup/item_0/text = "全部状态"
-popup/item_1/text = "等待中"
-popup/item_1/id = 1
-popup/item_2/text = "进行中"
-popup/item_2/id = 2
-popup/item_3/text = "已满员"
-popup/item_3/id = 3
-
 [node name="SortOptions" type="OptionButton" parent="VBoxContainer/SearchBar/FilterOptions"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 alignment = 1
-icon_alignment = 1
+icon_alignment = 2
 selected = 0
 item_count = 7
 popup/item_0/text = "默认排序"
@@ -255,22 +234,17 @@ popup/item_6/text = "未加锁"
 popup/item_6/id = 6
 
 [node name="ShowFavorites" type="Button" parent="VBoxContainer/SearchBar"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 toggle_mode = true
 text = "显示收藏"
 
-[node name="ShowHistory" type="Button" parent="VBoxContainer/SearchBar"]
-custom_minimum_size = Vector2(120, 40)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
-toggle_mode = true
-text = "显示历史"
-
 [node name="ShowMyRooms" type="Button" parent="VBoxContainer/SearchBar"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 theme_override_styles/hover = SubResource("StyleBoxFlat_osyog")
 theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 toggle_mode = true
@@ -281,7 +255,8 @@ custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxFlat_6alr2")
 theme_override_styles/normal = SubResource("StyleBoxFlat_refresh")
-text = "创建房间"
+icon = ExtResource("3_lsncr")
+vertical_icon_alignment = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
