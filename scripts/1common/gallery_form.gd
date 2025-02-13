@@ -1,6 +1,6 @@
 extends Control
 
-@export var items_per_page: int = 4
+@export var items_per_page: int = 8
 @export var button_size: Vector2 = Vector2(200, 200)
 @export var spacing: float = 20.0
 
@@ -15,7 +15,7 @@ var items: Array = []
 
 func _ready():
 	# # Sample items - replace with your actual items
-	for i in range(10):
+	for i in range(20):
 		items.append({
 			"image_path": "res://icon.svg",
 			"text": "Item " + str(i + 1)

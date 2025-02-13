@@ -1,9 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=41 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
 [ext_resource type="Texture2D" uid="uid://cxk66i3uvuq4n" path="res://assets/room/txt_h_xzfj.png" id="2_s5adk"]
 [ext_resource type="PackedScene" uid="uid://15qsfdusk3fu" path="res://scenes/room/create_room_dialog.tscn" id="3_b0c4m"]
 [ext_resource type="Texture2D" uid="uid://b1fb8ru33w7ws" path="res://assets/room/txt_h_cjfj.png" id="3_lsncr"]
+[ext_resource type="Texture2D" uid="uid://o4a8tnql62kj" path="res://assets/currency/previous.png" id="4_3eqgt"]
+[ext_resource type="Texture2D" uid="uid://helwyqm75ruj" path="res://assets/currency/next.png" id="5_b1rxo"]
 
 [sub_resource type="SystemFont" id="SystemFont_pptvu"]
 
@@ -59,6 +61,46 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fomqo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjhvc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yj5ea"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_swdqx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kck36"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ummi1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qsjwc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2wg5s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_memf7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pwp1m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m08ic"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oqnu6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vh8b8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wayxa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ktk7d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vobp4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mmej4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mhwp5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s1pny"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ehslu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7y3c"]
 bg_color = Color(0.298507, 0.424749, 0.492482, 1)
@@ -117,6 +159,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2k3vw")
+items_per_page = 8
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -252,23 +295,67 @@ vertical_icon_alignment = 2
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
 layout_mode = 2
-theme_override_constants/separation = 20
+size_flags_vertical = 3
+alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="PrevButton" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fomqo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fjhvc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_yj5ea")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_swdqx")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_kck36")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ummi1")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qsjwc")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_2wg5s")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_memf7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pwp1m")
+icon = ExtResource("4_3eqgt")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 20
+alignment = 1
 
-[node name="RoomContainer" type="GridContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/ScrollContainer"]
+[node name="RoomContainer" type="FlowContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 25
-theme_override_constants/v_separation = 15
-columns = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 35
+theme_override_constants/v_separation = 20
+
+[node name="PageLabel" type="Label" parent="VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "1/1"
+horizontal_alignment = 1
+
+[node name="NextButton" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_m08ic")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_oqnu6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vh8b8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wayxa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ktk7d")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_vobp4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_mmej4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mhwp5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_s1pny")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ehslu")
+icon = ExtResource("5_b1rxo")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 visible = false
@@ -350,5 +437,7 @@ visible = false
 
 [connection signal="focus_entered" from="VBoxContainer/SearchBar/SearchInput" to="." method="_on_search_input_focus_entered"]
 [connection signal="focus_exited" from="VBoxContainer/SearchBar/SearchInput" to="." method="_on_search_input_focus_exited"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/HBoxContainer/PrevButton" to="." method="_on_prev_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/confirmBtn" to="." method="_on_confirm_btn_pressed"]
 [connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/cancleBtn" to="." method="_on_cancle_btn_pressed"]

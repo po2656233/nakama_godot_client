@@ -91,13 +91,16 @@ expand_icon = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
+alignment = 1
 
-[node name="ItemContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="ItemContainer" type="FlowContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_constants/separation = 20
+theme_override_constants/h_separation = 35
+theme_override_constants/v_separation = 20
 alignment = 1
+last_wrap_alignment = 2
+vertical = true
 
 [node name="PageLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)

@@ -114,7 +114,7 @@ func _on_cancel_button_pressed():
 	countdown.stop()
 	countdown.hide()
 	remove_player(OnlineLogin.get_my_name())
-	SceneManager.switch_to_scene("roomlist","cross",0.5)
+	SceneManager.switch_to_scene("roomlist","cross",0.1)
 
 # func _debug_add_test_players():
 # 	# 仅用于测试：模拟其他玩家陆续加入

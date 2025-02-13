@@ -10,7 +10,6 @@ const SAVE_PATH = "user://room_list_info.json"
 @onready var show_favorites = $VBoxContainer/SearchBar/ShowFavorites
 @onready var show_myrooms = $VBoxContainer/SearchBar/ShowMyRooms
 @onready var create_button = $VBoxContainer/SearchBar/CreateButton
-@onready var room_container = $VBoxContainer/MarginContainer2/HBoxContainer/ScrollContainer/RoomContainer
 
 # 统计信息标签
 @onready var total_rooms_label = $VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer/TotalRooms
@@ -25,9 +24,24 @@ const SAVE_PATH = "user://room_list_info.json"
 @onready var jion_room = $CenterContainer/Panel/RoomID
 @onready var jion_input = $CenterContainer/Panel/RoomPsw
 
+# 房间列表
+@onready var room_container = $VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer/RoomContainer
+@onready var prev_button = $VBoxContainer/MarginContainer2/HBoxContainer/PrevButton
+@onready var next_button = $VBoxContainer/MarginContainer2/HBoxContainer/NextButton
+@onready var page_label = $VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer/PageLabel
+
 var favorite_rooms = []
 var room_history = []
 var my_rooms = []
+
+@export var items_per_page: int = 4
+@export var button_size: Vector2 = Vector2(200, 200)
+@export var spacing: float = 20.0
+
+var current_page: int = 0
+var total_pages: int = 0
+# var items: Array = []
+
 var pre_room_id = ""
 var pre_room_count = 0
 var selected_room_info = {}
@@ -66,15 +80,22 @@ func _ready():
 	# WindowDrag.register_drag_zone(self)
 
 	# 适配房间子项的列数
-	var width = get_viewport_rect().size.x
-	if width>350:
-		room_container.columns = (width-250)/ 350
-
+	# var width = get_viewport_rect().size.x
+	# var columns = 2
+	# if width>450:
+	# 	columns = width/ 450
+	# var space = columns*35
+	# if width>space:
+	# 	columns = ceil((width-space)/450)
+	# room_container.columns = columns
+	# items_per_page = columns
+	if not Util.isFullScreen():
+		items_per_page = 2
 	# 加载保存的数据
 	_load_saved_data()
 	
 	jion_dialog.visible = false
-	print("初始化房间列表数据:")
+	print("初始化房间列表数据!!!")
 	_refresh_room_list()
 	_update_stats()
 
@@ -93,17 +114,8 @@ func _ready():
 	pass
 
 
-func _refresh_room_list():
-	# 清除现有房间
-	for child in room_container.get_children():
-		child.queue_free()
-	room_list_info.clear()
-
-	# 获取房间列表
-	var matchs = await OnlineGame.getMatchList()
-	for data in matchs:
-		# print("房间信息:",data)
-		room_list_info.append({
+func append(data):
+	room_list_info.append({
 			"id": data.match_id,
 			"room_id": data.match_id.split("-")[0],
 			"room_name": data.MatchData.room_name,
@@ -123,21 +135,47 @@ func _refresh_room_list():
 			"rules": data.MatchData.rules,
 			"players": data.MatchData.players,
 		})
+	pass
+
+# 获取房间列表
+func loadRooms():
+	var matchs = await OnlineGame.getMatchList()
+	for data in matchs:
+		append(data)
+	update_total_pages()
+	pass
+
+# 更新总页数
+func update_total_pages():
+	total_pages = ceil(float(room_list_info.size()) / items_per_page)
+
+
+# 刷新房间列表
+func _refresh_room_list():
+	# 清除现有房间
+	for child in room_container.get_children():
+		child.queue_free()
+	room_list_info.clear()
+	# 加载房间数据
+	await loadRooms()
 	if room_list_info.size() == 0:
 		return
 		
 	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_list_info)
 	filtered_rooms = _sort_rooms(filtered_rooms)
-	# print("过滤后的房间列表:", filtered_rooms)
-	# if tween:
-	# 	tween.kill()
-	# tween = get_tree().create_tween()
+
+	var start_idx = current_page * items_per_page
+	var end_idx = min(start_idx + items_per_page, room_list_info.size())
+
 	# 创建房间列表项
-	for data in filtered_rooms:
+	for i in range(start_idx, end_idx):
+		var data = filtered_rooms[i]
 		var room_item = roomItem.instantiate()
 		room_container.add_child(room_item)
 		room_item.setup(data)
+		room_item.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		room_item.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		room_item.join_room.connect(_on_join_room)
 		room_item.favorite_toggled.connect(_on_room_favorite_toggled.bind(data))
 		
@@ -148,6 +186,10 @@ func _refresh_room_list():
 		room_item.show()
 		# room_item.modulate.a = 0
 		# tween.chain().tween_property(room_item, "modulate:a", 1.0, 0.2)
+		# Update navigation buttons and page label
+	prev_button.disabled = current_page == 0
+	next_button.disabled = current_page >= total_pages - 1
+	page_label.text = "%d/%d" % [current_page + 1, total_pages]
 	pass
 
 
@@ -413,6 +455,15 @@ func _on_cancle_btn_pressed() -> void:
 	jion_input.text = ""
 	pass # Replace with function body.
 
+func _on_prev_button_pressed():
+	if current_page > 0:
+		current_page -= 1
+		_refresh_room_list()
+
+func _on_next_button_pressed():
+	if current_page < total_pages - 1:
+		current_page += 1
+		_refresh_room_list()
 
 func _on_search_input_focus_entered() -> void:
 	# 获取目标编辑控件的全局位置和大小
