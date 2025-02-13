@@ -101,8 +101,11 @@ func _on_close_completed() -> void:
 
 func _on_confirm_pressed() -> void:
 	print("Confirm pressed.")
+	if not is_instance_valid(self):
+		return
 	confirmed.emit()
 	close()
+	pass
 
 func _on_cancel_pressed() -> void:
 	canceled.emit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=19 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
 [ext_resource type="Texture2D" uid="uid://cxk66i3uvuq4n" path="res://assets/room/txt_h_xzfj.png" id="2_s5adk"]
@@ -59,15 +59,6 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_854nt"]
-bg_color = Color(0.188235, 0.207843, 0.278431, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="SystemFont" id="SystemFont_vxb51"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7y3c"]
 bg_color = Color(0.298507, 0.424749, 0.492482, 1)
@@ -216,7 +207,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 alignment = 1
-icon_alignment = 2
+icon_alignment = 1
 selected = 0
 item_count = 7
 popup/item_0/text = "默认排序"
@@ -278,40 +269,6 @@ layout_mode = 2
 theme_override_constants/h_separation = 25
 theme_override_constants/v_separation = 15
 columns = 3
-
-[node name="DetailPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_854nt")
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer"]
-layout_mode = 2
-follow_focus = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 15
-
-[node name="Title" type="Label" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_vxb51")
-theme_override_font_sizes/font_size = 24
-text = "房间详情"
-horizontal_alignment = 1
-
-[node name="RoomInfo" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 visible = false
@@ -387,10 +344,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_te5nl")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ny8e5")
 theme_override_styles/normal = SubResource("StyleBoxFlat_02g8e")
 text = "取消"
-
-[node name="RefreshTimer" type="Timer" parent="."]
-wait_time = 30.0
-autostart = true
 
 [node name="CreateRoomDialog" parent="." instance=ExtResource("3_b0c4m")]
 visible = false

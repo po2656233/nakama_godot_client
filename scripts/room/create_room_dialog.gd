@@ -76,7 +76,7 @@ func _on_create_pressed():
 		show()
 		return
 	PopupManager.show_confirm("确定创建吗？", _create_room, "确认")
-	pass
+	# pass
 	# queue_free()
 
 func _create_room():
@@ -109,7 +109,7 @@ func _create_room():
 	print("创建房间数据: ", room_data)
 
 	room_created.emit(room_data)
-	hide()
+	queue_free()
 
 
 # 添加验证方法

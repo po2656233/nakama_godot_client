@@ -22,6 +22,7 @@ var active_popups: Dictionary = {}
 var canvas_layer: CanvasLayer
 var dynamic_text:Label
 var is_visible: bool = false
+
 ## 初始化
 func _ready() -> void:
 	# 设置为始终处理（即使游戏暂停）
@@ -56,12 +57,15 @@ func show_confirm(message: String, callback: Callable, title: String = "确认")
 	if callback:
 		# 使用lambda连接信号，这样可以在确认后调用回调
 		print("确认框")
+		var callFunc = func(popup_id: String):
+				if popup and popup_id == str(popup.get_instance_id()):
+					print("开始回调")
+					callback.call()
+				pass
+		if popup_confirmed.is_connected(callFunc):
+			popup_confirmed.disconnect(callFunc)
 		popup_confirmed.connect(
-			func(popup_id: String): 
-				print('ok')
-				if popup_id == str(popup.get_instance_id()):
-					print("确认了")
-					callback.call(),
+			callFunc, 
 			CONNECT_ONE_SHOT
 		)
 
@@ -107,7 +111,7 @@ func _setup_popup(popup: Node, title: String = "", message: String = "",auto_clo
 	   
 	# 连接信号
 	if popup.has_signal("confirmed"):
-		popup.confirmed.connect(func(): popup_confirmed.emit(popup_id))
+		popup.confirmed.connect(_on_confirm_pressed.bind(popup_id))
 	if popup.has_signal("canceled"):
 		popup.canceled.connect(func(): popup_canceled.emit(popup_id))
 	if popup.has_signal("closed"):
@@ -119,3 +123,9 @@ func _setup_popup(popup: Node, title: String = "", message: String = "",auto_clo
 
 func isVisible() -> bool:
 	return  is_visible
+
+func _on_confirm_pressed(popup_id) -> void:
+	if not is_instance_valid(self):
+		return
+	popup_confirmed.emit(popup_id)
+	pass

@@ -1,6 +1,5 @@
 extends Control
 
-signal room_selected(room_list_info: Dictionary)
 
 const roomItem = preload("res://scenes/room/room_item.tscn")
 const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
@@ -12,9 +11,6 @@ const SAVE_PATH = "user://room_list_info.json"
 @onready var show_myrooms = $VBoxContainer/SearchBar/ShowMyRooms
 @onready var create_button = $VBoxContainer/SearchBar/CreateButton
 @onready var room_container = $VBoxContainer/MarginContainer2/HBoxContainer/ScrollContainer/RoomContainer
-@onready var detail_panel = $VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel
-@onready var detail_info = $VBoxContainer/MarginContainer2/HBoxContainer/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer/RoomInfo
-@onready var refresh_timer = $RefreshTimer
 
 # 统计信息标签
 @onready var total_rooms_label = $VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer/TotalRooms
@@ -68,15 +64,12 @@ func _ready():
 	SettingsManager.show_settings()
 	SceneManager.set_previous_name("roomlist")
 	# WindowDrag.register_drag_zone(self)
-	var width = get_viewport_rect().size.x
-	if width>400:
-		room_container.columns = (width-350)/ 400
 
-	# 创建房间
-	create_room_dialog.room_created.connect(_on_room_created)
-	# 初始化动画
-	detail_panel.modulate.a = 0
-	
+	# 适配房间子项的列数
+	var width = get_viewport_rect().size.x
+	if width>350:
+		room_container.columns = (width-250)/ 350
+
 	# 加载保存的数据
 	_load_saved_data()
 	
@@ -86,13 +79,12 @@ func _ready():
 	_update_stats()
 
 	# 绑定事件
+	create_room_dialog.room_created.connect(_on_room_created)# 创建房间
 	search_input.text_changed.connect(_on_search_changed)
 	sort_options.item_selected.connect(_on_sort_changed)
 	show_favorites.toggled.connect(_on_show_favorites_toggled)
 	show_myrooms.toggled.connect(_on_show_myrooms_toggled)
 	create_button.pressed.connect(_on_create_pressed)
-	# refresh_timer.timeout.connect(_on_refresh_timer_timeout)
-	room_selected.connect(_on_room_selected)
 	if Online.nakama_socket:
 		Online.nakama_socket.received_matchmaker_matched.connect(_on_received_matchmaker_matched)
 		Online.nakama_socket.received_match_state.connect(_on_received_match_state)
@@ -110,7 +102,7 @@ func _refresh_room_list():
 	# 获取房间列表
 	var matchs = await OnlineGame.getMatchList()
 	for data in matchs:
-		print("房间信息:",data)
+		# print("房间信息:",data)
 		room_list_info.append({
 			"id": data.match_id,
 			"room_id": data.match_id.split("-")[0],
@@ -131,14 +123,13 @@ func _refresh_room_list():
 			"rules": data.MatchData.rules,
 			"players": data.MatchData.players,
 		})
-	print("------结束\n")
 	if room_list_info.size() == 0:
 		return
 		
 	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_list_info)
 	filtered_rooms = _sort_rooms(filtered_rooms)
-	print("过滤后的房间列表:", filtered_rooms)
+	# print("过滤后的房间列表:", filtered_rooms)
 	# if tween:
 	# 	tween.kill()
 	# tween = get_tree().create_tween()
@@ -147,7 +138,6 @@ func _refresh_room_list():
 		var room_item = roomItem.instantiate()
 		room_container.add_child(room_item)
 		room_item.setup(data)
-		room_item.room_clicked.connect(_on_room_clicked)
 		room_item.join_room.connect(_on_join_room)
 		room_item.favorite_toggled.connect(_on_room_favorite_toggled.bind(data))
 		
@@ -198,7 +188,7 @@ func _sort_rooms(rooms: Array) -> Array:
 			sorted.sort_custom(func(a, b): return a.player_count > b.player_count)
 		5: # 创建时间
 			sorted.sort_custom(func(a, b): return a.create_time > b.create_time)
-		6: # 创建时间
+		6: # 需要密码
 			sorted.sort_custom(func(a, b): return not a.is_locked and b.is_locked)
 	return sorted
 
@@ -341,14 +331,6 @@ func _on_create_pressed():
 	# _update_stats()
 	pass
 
-# func _on_refresh_timer_timeout():
-# 	_refresh_room_list()
-# 	_update_stats()
-
-func _on_room_clicked(room_info: Dictionary):
-	# emit_signal("room_selected", room_info)
-	room_selected.emit(room_info)
-	pass
 
 # 等待房间开始
 func wait_for_room_to_start():
@@ -363,50 +345,6 @@ func wait_for_room_to_start():
 	pass # Replace with function body.
 
 
-# 选择房间
-func _on_room_selected(room_info: Dictionary):
-	# 更新详情面板
-	for child in detail_info.get_children():
-		child.queue_free()
-
-	# 创建新的Label 
-	var labels = [
-		"房间名称: " + room_info.room_name,
-		"游戏类型: " + room_info.game_name,
-		"房间ID: " + room_info.room_id,
-		"底分: " + str(room_info.base_score),
-		"入场分: " + str(room_info.entry_score),
-		"当前场数: " + str(room_info.current_round),
-		# "玩家数量: %d/%d" % [room_info.player_count, room_info.max_players],
-		"创建时间: " + room_info.create_time,
-		# "房间状态: " + room_info.status,
-		"",
-		"房间描述:",
-		room_info.description,
-		"",
-		"规则:",
-	]
-	
-	labels.append_array(room_info.rules.map(func(rule): return "- " + rule))
-	labels.append("")
-	labels.append("当前玩家:")
-	labels.append_array(room_info.players.map(func(player): return "- " + player.username))
-	
-	for text in labels:
-		var label = Label.new()
-		label.text = text
-		detail_info.add_child(label)
-	
-	# 显示详情面板动画
-	detail_panel.visible = pre_room_id != room_info.room_id or 1 == pre_room_count%2 
-	pre_room_count = 0 if pre_room_id != room_info.room_id else pre_room_count+1
-
-	pre_room_id = room_info.room_id
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.tween_property(detail_panel, "modulate:a", 1.0, 0.3)
-	pass
 
 
 # 加入房间

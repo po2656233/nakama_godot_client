@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=40 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
 [ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_mcopm"]
 [ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
+[ext_resource type="Shader" path="res://shaders/flow_light.gdshader" id="5_p3dne"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.567014, 0.771032, 0.875651, 1)
@@ -108,6 +109,123 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uxbdl"]
+resource_local_to_scene = true
+shader = ExtResource("5_p3dne")
+shader_parameter/progress = 2.0
+shader_parameter/angle = 2.206
+shader_parameter/n = 0.163
+
+[sub_resource type="Gradient" id="Gradient_yvwfo"]
+offsets = PackedFloat32Array(0, 0.996241)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rm5a5"]
+gradient = SubResource("Gradient_yvwfo")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpdpq"]
+bg_color = Color(0.309804, 0.278431, 0.584314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awtvm"]
+content_margin_top = 5.0
+bg_color = Color(0.298039, 0.647059, 0.784314, 0.992157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="SystemFont" id="SystemFont_exu74"]
+
+[sub_resource type="SystemFont" id="SystemFont_giqyn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_r0qha"]
+font = SubResource("SystemFont_giqyn")
+font_size = 25
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3evx1"]
+bg_color = Color(0.596213, 0.932839, 0.818206, 1)
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e6ix7"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1rv88"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5apy1"]
+content_margin_left = 15.0
+draw_center = false
+
+[sub_resource type="Animation" id="Animation_6stlh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_flip"]
+resource_name = "flip"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 1), Vector2(1, 1)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Front/FlowLight:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.233333, 1.5)
+}
+
+[sub_resource type="Animation" id="Animation_hover"]
+resource_name = "hover"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.466667),
+"transitions": PackedFloat32Array(0.287175, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
+_data = {
+"RESET": SubResource("Animation_6stlh"),
+"flip": SubResource("Animation_flip"),
+"hover": SubResource("Animation_hover")
+}
+
 [node name="RoomItem" type="PanelContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(450, 400)
@@ -119,13 +237,7 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 script = ExtResource("1_room")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 2
-size_flags_vertical = 3
-texture = ExtResource("2_mcopm")
-expand_mode = 1
-
-[node name="author" type="Label" parent="."]
+[node name="Author" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
@@ -136,18 +248,26 @@ vertical_alignment = 1
 visible_characters = 20
 visible_ratio = 20.0
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Front" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_mcopm")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Front"]
+layout_mode = 2
+offset_right = 450.0
+offset_bottom = 400.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Panel" type="Panel" parent="MarginContainer"]
+[node name="Panel" type="Panel" parent="Front/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a3edv")
 
-[node name="RoomID" type="Label" parent="MarginContainer/Panel"]
+[node name="RoomID" type="Label" parent="Front/MarginContainer/Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -163,7 +283,7 @@ label_settings = SubResource("LabelSettings_3t4jk")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RoomName" type="Label" parent="MarginContainer/Panel"]
+[node name="RoomName" type="Label" parent="Front/MarginContainer/Panel"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -177,7 +297,7 @@ label_settings = SubResource("LabelSettings_20nq0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameName" type="Label" parent="MarginContainer/Panel"]
+[node name="GameName" type="Label" parent="Front/MarginContainer/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.049
@@ -198,7 +318,7 @@ text = "游戏类型"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BaseScoreTR" type="TextureRect" parent="MarginContainer/Panel"]
+[node name="BaseScoreTR" type="TextureRect" parent="Front/MarginContainer/Panel"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 anchor_left = -0.049
@@ -215,7 +335,7 @@ texture = ExtResource("3_fftwn")
 expand_mode = 4
 stretch_mode = 2
 
-[node name="BaseScore" type="Label" parent="MarginContainer/Panel"]
+[node name="BaseScore" type="Label" parent="Front/MarginContainer/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.049
@@ -230,7 +350,7 @@ grow_vertical = 0
 text = "110111111 分"
 label_settings = SubResource("LabelSettings_2tp5m")
 
-[node name="PlayerCount" type="Label" parent="MarginContainer/Panel"]
+[node name="PlayerCount" type="Label" parent="Front/MarginContainer/Panel"]
 layout_mode = 2
 anchor_left = -0.049
 anchor_top = -0.026
@@ -245,7 +365,7 @@ label_settings = SubResource("LabelSettings_u0kmr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Status" type="Label" parent="MarginContainer/Panel"]
+[node name="Status" type="Label" parent="Front/MarginContainer/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.049
@@ -262,7 +382,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
 
-[node name="Lock" type="TextureRect" parent="MarginContainer/Panel"]
+[node name="Lock" type="TextureRect" parent="Front/MarginContainer/Panel"]
 custom_minimum_size = Vector2(25, 30)
 layout_mode = 2
 anchor_left = -0.049
@@ -278,13 +398,13 @@ size_flags_vertical = 0
 texture = ExtResource("2_hrbh1")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Front/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="FavoriteButton" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="FavoriteButton" type="Button" parent="Front/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_mksyy")
@@ -293,7 +413,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_favorite")
 toggle_mode = true
 text = "☆ 收藏"
 
-[node name="JoinButton" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="JoinButton" type="Button" parent="Front/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -302,4 +422,91 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 text = "加入房间"
 
-[connection signal="gui_input" from="MarginContainer/Panel" to="." method="_on_gui_input"]
+[node name="FlowLight" type="TextureRect" parent="Front"]
+material = SubResource("ShaderMaterial_uxbdl")
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_rm5a5")
+
+[node name="Back" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DetailPanel" type="PanelContainer" parent="Back"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+offset_right = 450.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gpdpq")
+
+[node name="MarginContainer" type="MarginContainer" parent="Back/DetailPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Back/DetailPanel/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_awtvm")
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Back/DetailPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_exu74")
+text = "房间详情"
+label_settings = SubResource("LabelSettings_r0qha")
+horizontal_alignment = 1
+
+[node name="RoomInfo" type="RichTextLabel" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+focus_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+theme_override_styles/fill = SubResource("StyleBoxFlat_3evx1")
+theme_override_styles/background = SubResource("StyleBoxFlat_e6ix7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_1rv88")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5apy1")
+bbcode_enabled = true
+fit_content = true
+selection_enabled = true
+
+[node name="FlowLight" type="TextureRect" parent="Back/DetailPanel/MarginContainer"]
+material = SubResource("ShaderMaterial_uxbdl")
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_rm5a5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1")
+}
+
+[connection signal="gui_input" from="Front/MarginContainer/Panel" to="." method="_on_gui_input"]
