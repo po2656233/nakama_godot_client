@@ -1,0 +1,443 @@
+// TODO message结构的属性名请使用 驼峰小写字母开始
+// TODO enum枚举的属性名请使用 驼峰大写字母开始
+syntax = "proto3";
+option go_package = "/gate";
+package pb;
+import "common/baseinfo.proto";
+/////////////[优秀如你]-->Req:请求 Resp:反馈<--[交互专用]///////////////////////////////////
+/////////////[优秀如你]-->Req:请求 Resp:反馈<--[交互专用]///////////////////////////////////
+/////////////////选择操作///////////////////////////////////
+//获取分类列表
+message GetClassListReq{
+}
+message GetClassListResp{
+  ClassList items = 1;
+}
+//获取房间列表
+message GetRoomListReq{
+  int64 uid = 1;
+  int32 pageNum = 2;        // 分页码
+  int32 pageSize = 3;        // 单页数目 默认20
+}
+message GetRoomListResp{
+  RoomList items = 1;
+}
+//获取牌桌列表(同获取游戏列表)
+message GetTableListReq{
+  int64 rid = 1;
+  string creatorId = 2;
+  string order = 3;
+  string name = 4;
+  bool isDesc = 5;  // 降序
+  int32 pageNum = 6;        // 分页码 默认20
+  int32 pageSize = 7;        // 分页码 默认20
+}
+message GetTableListResp{
+  repeated TableInfo items = 1;
+  int32 pageNum = 2;        // 分页码 默认20
+  int32 pageSize = 3;        // 分页码 默认20
+  int32 total = 4;        // 总数
+}
+// 获取单张桌信息
+message GetTableReq{
+  int64 tid = 1;
+}
+message GetTableResp{
+  TableInfo info = 1;
+}
+//获取游戏列表
+message GetGameListReq{
+  int64 kid = 1;// =-1时，表示取所有游戏信息
+}
+message GetGameListResp{
+  GameList items = 1;
+}
+//获取任务列表
+message GetTaskListReq{
+  int64 uid = 1;
+}
+message GetTaskListResp{
+  TaskList items = 1;
+}
+// 获取用户简要信息
+message GetUserInfoReq{
+  int64 uid = 1;
+  string username = 2;
+}
+message GetUserInfoResp{
+  UserInfo info = 1;
+}
+////////////////选择分类//////////////////////////////////////
+//选择分类
+message ChooseClassReq{
+  int32 id = 1;             //分类编号
+}
+message ChooseClassResp{
+  int32 id = 1;             // 分类编号
+  RoomList rooms = 2;       // 房间列表
+  int32 pageNum = 3;        // 分页码 默认20
+}
+//选择房间
+message JoinRoomReq{
+  int64 roomId = 1;         // 房间ID
+  string roomKey = 2;       // 房间密码
+  int32 pageNum = 3;        // 请求页数
+}
+message JoinRoomResp{
+  int64 roomId = 1;         // 房间ID
+  TableList tables = 2;     // 桌台列表
+  int32 pageNum = 3;        // 请求页数
+}
+//选择桌台
+message ChooseTableReq{
+  int64 tableId = 1;         // 桌台ID
+}
+message ChooseTableResp{
+  int64 tableId = 1;          // 桌台ID
+  int64 chairId = 2;         // 桌台编号
+  GameInfo info = 3;          // 游戏信息
+}
+//////////////////////////////////////////////////
+//创建房间---------------
+message CreateRoomReq {
+  int64  hostId = 1;  // 房主ID
+  RoomLevel  level = 2;   // 房间级别(类型)
+  string  name = 3;   // 房间名称
+  string  roomKey = 4;// 房间钥匙
+  int64  enterScore = 5;// 准入分数
+  int64 taxation = 6;
+  int64 maxTable = 7;
+  int64 maxPerson = 8;
+  string  remark = 9;//备注
+}
+message CreateRoomResp {
+    RoomInfo info = 1;
+}
+//配置游戏(房卡模式)
+message CreateTableReq {
+  int64 rid = 1;          // 房间ID
+  int64 gid = 2;          // 游戏ID
+  string name = 3;
+  string key = 4;
+  int32 mode = 5;
+  int32 section = 6;
+  int64 enterScore = 7;
+  int64 baseScore = 8;
+  bool allowLookOn = 9;
+  int32 commission = 10;
+  int32 maxSitter = 11;
+  int32 maxRound = 12; // 等于-1时，表示无限制
+  int64 opentime = 13; // =0表示无限制
+  int64 closetime = 14; // =0表示无限制
+  string remark = 15;
+}
+message CreateTableResp {
+  TableInfo table = 1;
+}
+// 删除桌牌
+message DeleteTableReq {
+  int64 tid = 1;
+  int64 hostId = 2;
+}
+message DeleteTableResp {
+  int64 tid = 1;
+  int64 rid = 2;
+  int64 hostId = 3;
+}
+// 修改用户昵称
+message FixNickNameReq{
+  int64 uid = 1;
+  string name = 2;
+}
+message FixNickNameResp{
+  int64 uid = 1;
+  string name = 2;
+}
+//////////////////////签到///////////////////////////////////////////
+//签到
+message CheckInReq{
+  int64 userID = 1;
+  string remark = 2;//备注
+}
+message CheckInResp{
+  int64 userID = 1;
+  string remark = 2;//备注
+  int64 timestamp = 3;//签到时间戳
+  GoodsList awardList = 4;//签到奖励
+}
+//获取签到
+message GetCheckInReq{
+}
+message GetCheckInResp{
+  int64 userID = 1;
+  repeated CheckInResp allCheckin = 2;//所有签到次数
+  int32 pageNum = 3;//页码 默认20条一页
+}
+//////////////////////武将/////////////////////////////////////////
+// [招募]抽取武将
+message DrawHeroReq{
+  int32 amount = 1;//抽取的数量
+}
+message DrawHeroResp{
+  int64 userID = 1;
+  repeated HeroInfo heroList = 2;//根据数量返回武将
+}
+// [布阵]获取我的英雄(武将)
+message GetMyHeroReq{
+}
+message GetMyHeroResp{
+  int64 userID = 1;
+  repeated HeroInfo heroList = 2;//我的武将列表
+}
+// [选将]或[更换]选择携带的武将
+message ChooseHeroReq{
+  int32 position = 1;//武将的位置
+  int64 heroID = 2;
+}
+message ChooseHeroResp{
+  int32 position = 1;//武将的位置
+  HeroInfo hero = 2;//已选的英雄列表
+}
+// [下阵]选择携带的武将
+message DownHeroReq{
+  int32 position = 1;//武将的位置
+  int64 heroID = 2;
+}
+message DownHeroReqResp{
+  int32 position = 1;//武将的位置
+  int64 heroID = 2;
+}
+//获取全部英雄(武将)
+message GetAllHeroReq{
+}
+message GetAllHeroResp{
+  repeated HeroInfo heroList = 1;// 全部英雄列表
+}
+// 查找英雄
+message CheckHeroReq{
+  repeated int32 heroIDs = 1; // 根据ID列表查询
+  string  name = 2; // 根据ID名称查询
+  int32  sex = 3;   // 根据性别查询
+  string  country = 4; // 根据国家查询
+  int32 faction = 5;// 根据阵营查询
+}
+message CheckHeroResp{
+  repeated HeroInfo heroList = 1;
+}
+// 查看游戏玩法
+message HowPlayReq{
+  int64 gameId = 1;
+}
+message HowPlayResp{
+  int64 gameId = 1;
+  string howToPlay = 2;
+}
+//////////////////////充值///////////////////////////////////////////
+//充值
+message RechargeReq {
+  int64 userID = 1;
+  int64 byiD = 2;
+  int64 payment = 3;   // 金钱 (客户端统一 */100)
+  int32 method = 4;    // 充值方式
+  int32 switch = 5;    // 0:(余额)不转换 1:转元宝 2:转铜钱
+  string reason = 6;   // 备注详情
+}
+message RechargeResp {
+  int64  userID = 1;
+  int64  byiD = 2;
+  int64  preMoney = 3;  // 充值前的金钱 (客户端统一 */100)
+  int64  payment = 4;   // 充值金额(客户端统一 */100)
+  int64  money = 5;     // 当前金额(客户端统一 */100)
+  int64  yuanBao = 6;   // 当前金额(客户端统一 */100)
+  int64  coin = 7;      // 当前金额(客户端统一 */100)
+  int32  method = 8;    // 充值方式
+  bool   isSuccess = 9; //
+  string order = 10;     //
+  int64  timeStamp = 11; //
+  string reason = 12;   // 备注详情
+}
+//获取充值纪录
+message GetRechargesReq {
+}
+message GetRechargesResp {
+  int64 userID = 1;
+  repeated RechargeResp allRecharges = 2;
+  int32 pageNum = 3;//页码 默认20条一页
+}
+//更新余额
+message UpdateMoneyReq{
+}
+message UpdateMoneyResp{
+  int64 userID = 1;
+  int64 money = 2;//当前玩家余额
+}
+//换成金币
+message BarterCoinReq{
+  int64 toCoin = 1;       // 转成数额
+}
+message BarterCoinResp{
+  int64 userID = 1;
+  int64 coin = 2;
+  int64 yuanbao = 3;
+  int64 money = 4;//当前玩家余额
+}
+//换成元宝
+message BarterYuanBaoReq{
+  int64 toYuanbao = 1;       // 转成数额
+}
+message BarterYuanBaoResp{
+  int64 userID = 1;
+  int64 coin = 2;
+  int64 yuanbao = 3;
+  int64 money = 4;//当前玩家余额
+}
+//换成money
+message BarterMoneyReq{
+  int64 toMoney = 1;       // 转成数额
+}
+message BarterMoneyResp{
+  int64 userID = 1;
+  int64 coin = 2;
+  int64 yuanbao = 3;
+  int64 money = 4;//当前玩家余额
+}
+/////////////////物品/////////////////////////
+//获取商品信息
+message GetGoodsReq {
+  int64 id = 1;        //标识 =0时 无效
+}
+message GetGoodsResp {
+  int64 userID = 1;
+  GoodsInfo info = 2;
+}
+//获取所有商品信息
+message GetAllGoodsReq {
+}
+message GetAllGoodsResp {
+  int64 userID = 1;
+  GoodsList infos = 2;
+  int32 pageNum = 3;//页码 默认20条一页
+}
+//购买商品
+message BuyGoodsReq {
+  int64 id = 1;         //标识
+  int64 payment = 2;    //付款 (客户端统一 */100)
+  int64 count = 3;      // 玩家单次购得的数量)
+}
+message BuyGoodsResp {
+  int64 userID = 1;
+  GoodsInfo info = 2;
+}
+//查看背包
+message CheckKnapsackReq {
+  int64 id = 1;    //背包标识
+  int32 number = 2;    //编码 (页码) 0时表示获取全部
+}
+message CheckKnapsackResp {
+  int64 userID = 1;
+  KnapsackInfo info = 2;
+}
+//物品转换 仅支持通用房卡和超级房卡的转换,游戏房卡之间不能置换
+message BarterReq{
+  int64 id = 1;         // 物品ID
+  int64 toID = 2;       // 目标商品ID
+  int32 amount = 3;      // 置换的个数
+}
+message BarterResp{
+  int64 userID = 1;
+  KnapsackInfo info = 2; //返回最新包裹信息
+}
+//转至商城
+message ToShoppingResp{
+  int64  id = 1;         // 物品ID
+  int32  count = 2;      // 个数
+  string reason = 3;     // 转至商城的原因(提示)
+}
+//////////////////邮箱建议////////////////////////////////////
+//邮箱信息
+message EmailReq {
+  int32 pageNum = 1;//页码 默认5条一页;
+}
+message EmailResp {
+  int64 userID = 1;  //玩家ID
+  repeated EmailInfo infos = 2;//页码 默认5条一页
+  int32 pageNum = 3;//页码 默认5条一页
+}
+//领取奖励
+message ClaimReq {
+  int64 emailID = 1;//邮箱ID
+}
+message ClaimResp {
+  int64 userID = 1;   //玩家ID
+  int64 emailID = 2;   //邮箱ID
+}
+//建议
+message SuggestReq {
+  string content = 1;//内容 200字
+}
+message SuggestResp {
+  int64 userID = 1;   //玩家ID
+  EmailInfo feedback = 2;//反馈
+}
+//读取邮件
+message EmailReadReq {
+  int64 emailID = 1;//邮箱ID
+}
+message EmailReadResp {
+  int64 userID = 1;   //玩家ID
+  int64 emailID = 2;   //邮箱ID
+}
+//删除邮件
+message EmailDelReq {
+  int64 emailID = 1;//邮箱ID
+}
+message EmailDelResp {
+  int64 userID = 1;   //玩家ID
+  int64 emailID = 2;   //邮箱ID
+}
+////////////////////notify/////////////////////////////
+// 踢出[暂保留]
+message NotifyBeOutResp {
+  int64 userID = 1;  //玩家ID
+  int64 gameID = 2; //游戏标识
+  int32 code = 3;    //操作码 0:时间到被剔除 1:刷子
+  string hints = 4;    //被踢出的原因
+}
+// 财产变化通知
+message NotifyBalanceChangeResp{
+  int64 userID = 1;
+  int64 yuanBao = 2;          // 元宝 (客户端统一 */100)
+  int64 alterYuanBao = 3;     // 增减了多少元宝 (客户端统一 */100)
+  int64 coin = 4;             // 铜钱 (客户端统一 */100)
+  int64 alterCoin = 5;        // 增减了多少铜钱 (客户端统一 */100)
+  int32 code = 6;             // 操作原因 1:结算 2:充值 3:平台扣除 4:平台奖励 5:冻结 6:返还
+  string reason = 7;          // 备注详情
+}
+//公告
+message NotifyNoticeReq {
+  int64 gameID = 1;       // 游戏标识 =0大厅
+  string title = 2;       // 标题
+  string content = 3;     // 内容
+  NTFLevel  level = 4;    // 个人只能发送 喇叭
+  int32 timeout = 5;      // 总时长 0<= 默认一分钟
+}
+message NotifyNoticeResp {
+  int64 userID = 1;      //玩家ID =0时为所有玩家
+  int64 gameID = 2;      //游戏标识 =0大厅
+  NTFLevel  level = 3;    //公告级别
+  TimeInfo timeInfo = 4;  //时间
+  string title = 5;       //标题
+  string content = 6;     //内容
+}
+//////////////result////////////////////////////////////
+//结果反馈
+message ResultResp{
+  int32 state = 1;      //状态:0成功 1失败
+  string hints = 2;      //提示信息
+}
+//结果反馈(弹窗)
+message ResultPopResp{
+  int32 flag = 1;      //状态:0成功 1失败
+  string title = 2;      //标题
+  string hints = 3;      //提示信息
+}

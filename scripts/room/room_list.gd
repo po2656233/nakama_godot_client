@@ -1,12 +1,11 @@
 extends Control
 
-
 const roomItem = preload("res://scenes/room/room_item.tscn")
-# const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
 const SAVE_PATH = "user://room_list_info.json"
 
 @onready var search_input = $VBoxContainer/SearchBar/SearchInput
-@onready var sort_options = $VBoxContainer/SearchBar/FilterOptions/SortOptions
+# @onready var sort_options = $VBoxContainer/SearchBar/SortOptions
+@onready var game_options = $VBoxContainer/SearchBar/GameOptions
 @onready var show_favorites = $VBoxContainer/SearchBar/ShowFavorites
 @onready var show_myrooms = $VBoxContainer/SearchBar/ShowMyRooms
 @onready var create_button = $VBoxContainer/SearchBar/CreateButton
@@ -96,16 +95,17 @@ func _ready():
 		items_per_page = 2
 	# 加载保存的数据
 	_load_saved_data()
-	
+	var games = await OnlineGame.getGameList()
+	for game in games:
+		game_options.add_item(game.name,game.id)
 	jion_dialog.visible = false
 	print("初始化房间列表数据!!!")
 	_refresh_room_list()
 	_update_stats()
 
 	# 绑定事件
-
 	search_input.text_changed.connect(_on_search_changed)
-	sort_options.item_selected.connect(_on_sort_changed)
+	# sort_options.item_selected.connect(_on_sort_changed)
 	show_favorites.toggled.connect(_on_show_favorites_toggled)
 	show_myrooms.toggled.connect(_on_show_myrooms_toggled)
 	create_button.pressed.connect(_on_create_pressed)
@@ -120,35 +120,43 @@ func _ready():
 
 # 添加房间数据
 func append(data):
+	print("添加 房间数据:", data)
 	room_list_info.append({
-			"id": data.match_id,
-			"room_id": data.match_id.split("-")[0],
-			"room_name": data.MatchData.room_name,
-			"is_locked": true if data.MatchData.room_psw != "" else false,
-			"game_name": data.MatchData.game_name,
-			"game_type": data.MatchData.game_type,
-			"creator_id": data.MatchData.creator_id,
-			"author": data.MatchData.author if data.MatchData.has("author") else "",
-			"base_score": data.MatchData.base_score,
-			"entry_score": data.MatchData.entry_score,
-			"current_round": data.MatchData.current_round,
-			"player_count": data.size if data.has("size")  else 0,
-			"max_players": data.MatchData.max_players,
-			"status": data.MatchData.status,
-			"create_time": data.MatchData.create_time,
-			"description": data.MatchData.description,
-			"rules": data.MatchData.rules,
-			"players": data.MatchData.players,
+			"id": data.get("id",0),
+			"room_id": str(data.get("id",0)).md5_text().substr(8, 16),
+			"room_name": data.get("name",""),
+			"room_key": data.get("key",""), 
+			"is_locked": data.get("isLock",false),
+			"game_name": OnlineGame.getGameName(data.gid),
+			"game_type": data.get("gid",0),
+			"creator_id": data.get("creatorId",""),
+			"author": data.get("creator",""),
+			"base_score": data.get("baseScore",0),
+			"enter_score": data.get("enterScore",0),
+			"current_round": data.get("maxRound",0),
+			"player_count": data.get("playerCount",0),
+			"max_players": data.get("maxSitter",0),
+			"status": data.get("state",""),
+			"create_time": data.get("openTime",""),
+			"description": data.get("description",""),
+			"players": data.get("players",[]),
 		})
 	pass
 
 # 获取房间列表
 func loadRooms():
 	room_list_info.clear()
-	var matchs = await OnlineGame.getMatchList()
-	for data in matchs:
+	var result = await OnlineGame.getTabelList({
+		"creatorId": "",
+		"order":"",
+		"name":"",
+		"isDesc":true,
+		"pageNum":1,
+		"pageSize":20
+	})
+	for data in result.items:
 		append(data)
-	update_total_pages(room_list_info.size())
+	update_total_pages(result.total)
 	pass
 
 # 更新总页数
@@ -169,7 +177,7 @@ func _refresh_room_list():
 		
 	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_list_info)
-	filtered_rooms = _sort_rooms(filtered_rooms)
+	# filtered_rooms = _sort_rooms(filtered_rooms)
 	if filtered_rooms.size() == 0:
 		page_label.text = "0/0"
 		return
@@ -185,7 +193,7 @@ func _refresh_room_list():
 		var data = filtered_rooms[i]
 		var room_item = roomItem.instantiate()
 		room_container.add_child(room_item)
-		print(i," - 房间数据:", data)
+		# print(i," - 房间数据:", data)
 		room_item.setup(data)
 		room_item.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		room_item.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -224,39 +232,42 @@ func _apply_filters(rooms: Array) -> Array:
 		rooms = my_rooms.duplicate()
 
 	var filtered = []
+	var selectGameType = game_options.selected
 	for room in rooms:
 		# 搜索文本过滤
 		if search_text:
 			var room_text = "%s%s%s" % [room.room_name, room.game_type, room.room_id]
 			if not room_text.to_lower().contains(search_text):
 				continue
+		if selectGameType > 0 and room.game_type != selectGameType:
+			continue	
 		filtered.append(room)
-	print("过滤后的房间数量: ", filtered.size())
+	print("过滤后的房间数量: ", filtered.size(),"  ",selectGameType)
 	update_total_pages(filtered.size())
 	return filtered
 
-func _sort_rooms(rooms: Array) -> Array:
-	var sort_id = sort_options.selected
-	var sorted = rooms.duplicate()
-	match sort_id:
-		1: # 底分升序
-			sorted.sort_custom(func(a, b): return a.base_score < b.base_score)
-		2: # 底分降序
-			sorted.sort_custom(func(a, b): return a.base_score > b.base_score)
-		3: # 人数升序
-			sorted.sort_custom(func(a, b): return a.player_count < b.player_count)
-		4: # 人数降序
-			sorted.sort_custom(func(a, b): return a.player_count > b.player_count)
-		5: # 创建时间
-			sorted.sort_custom(func(a, b): return a.create_time > b.create_time)
-		6: # 需要密码
-			sorted.sort_custom(func(a, b): return not a.is_locked and b.is_locked)
-	return sorted
+# func _sort_rooms(rooms: Array) -> Array:
+# 	var sort_id = sort_options.selected
+# 	var sorted = rooms.duplicate()
+# 	match sort_id:
+# 		1: # 底分升序
+# 			sorted.sort_custom(func(a, b): return a.base_score < b.base_score)
+# 		2: # 底分降序
+# 			sorted.sort_custom(func(a, b): return a.base_score > b.base_score)
+# 		3: # 人数升序
+# 			sorted.sort_custom(func(a, b): return a.player_count < b.player_count)
+# 		4: # 人数降序
+# 			sorted.sort_custom(func(a, b): return a.player_count > b.player_count)
+# 		5: # 创建时间
+# 			sorted.sort_custom(func(a, b): return a.create_time > b.create_time)
+# 		6: # 需要密码
+# 			sorted.sort_custom(func(a, b): return not a.is_locked and b.is_locked)
+# 	return sorted
 
 # 更新统计信息
 func _update_stats():
 	var total_rooms = room_list_info.size()
-	var active_rooms = room_list_info.filter(func(r): return r.status != "已满员").size()
+	var active_rooms = room_list_info.filter(func(r): return r.status != 2).size()
 	var total_players = room_list_info.reduce(func(acc, r): return acc + r.player_count, 0)
 	
 	total_rooms_label.text = "总房间数: %d" % total_rooms
@@ -310,10 +321,13 @@ func _on_search_changed(_new_text: String):
 	_refresh_room_list()
 
 
-func _on_sort_changed(_index: int):
-	print("排序方式:", _index)
-	_refresh_room_list()
+# func _on_sort_changed(_index: int):
+# 	print("排序方式:", _index)
+# 	_refresh_room_list()
 
+func _on_game_options_item_selected(_index: int):
+	print("游戏类型:", _index)
+	_refresh_room_list()
 # 收藏房间
 func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 	if is_favorite:
@@ -345,16 +359,16 @@ func _on_show_myrooms_toggled(button_pressed: bool):
 		# 左右移动
 		if tween:
 			tween.kill()
-		tween = create_tween()
+		tween = get_tree().create_tween()
 		tween.set_ease(Tween.EASE_IN_OUT)
 		tween.set_trans(Tween.TRANS_SINE)
 		# 获取按钮当前的x位置
 		var original_x = show_myrooms.position.x
 		# 向右移动30像素
-		tween.chain().tween_property(show_myrooms, "position:x", original_x - 30, 0.05)
-		tween.chain().tween_property(show_myrooms, "position:x", original_x, 0.05)
-		tween.chain().tween_property(show_myrooms, "position:x", original_x + 30, 0.05)
-		tween.chain().tween_property(show_myrooms, "position:x", original_x, 0.05)
+		tween.tween_property(show_myrooms, "position:x", original_x - 30, 0.05)
+		tween.tween_property(show_myrooms, "position:x", original_x, 0.05)
+		tween.tween_property(show_myrooms, "position:x", original_x + 30, 0.05)
+		tween.tween_property(show_myrooms, "position:x", original_x, 0.05)
 	print("显示我创建的:", button_pressed)
 	_refresh_room_list()
 	
@@ -364,7 +378,7 @@ func _on_create_pressed():
 	# 左右移动
 	if tween:
 		tween.kill()
-	tween = create_tween()
+	tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_SINE)
 	# # 获取按钮当前的x位置
@@ -401,7 +415,7 @@ func wait_for_room_to_start():
 	if selected_room_info:
 		var room_info = selected_room_info
 		# 进入房间
-		waitingStart.reset(room_info.room_id, room_info.max_players)
+		waitingStart.reset( room_info.room_id, room_info.max_players)
 		room_info.players.push_front({"uid": OnlineLogin.get_my_id(), "username": OnlineLogin.get_my_name(), "headIcon": OnlineLogin.get_my_headIcon()})
 		for player in room_info.players:
 			print("正在等待的玩家:", player)
@@ -426,13 +440,15 @@ func _on_join_room(room_info: Dictionary):
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
 		return
-
-	var p_metadata = room_info.room_psw if room_info.has("room_psw") else null
-	var result = await OnlineMatch.joinMatch(room_info.id,p_metadata)
-	if result.is_exception():
-		PopupManager.show_dynamic("加入房间失败 "+result.get_exception().message)
-		return
-	print("加入房间成功",result)
+	# todo: 加入房间 TODO
+	# var result = await OnlineMatch.joinTable({
+	# 	"roomId": room_info.id, 
+	# 	"roomKey": room_info.room_key
+	# 	})
+	# if result.is_exception():
+	# 	PopupManager.show_dynamic("加入房间失败 "+result.get_exception().message)
+	# 	return
+	# print("加入房间成功",result)
 	selected_room_info = room_info
 
 	# 添加到历史记录
@@ -450,28 +466,16 @@ func _on_join_room(room_info: Dictionary):
 
 # 创建房间
 func _on_room_created(_room_info: Dictionary):
-	if Online.nakama_socket:
-		# 匹配创建参数
-		# var match_maker_ticket = await Online.nakama_socket.add_matchmaker_async()
-		# print("匹配创建成功，票据: ", match_maker_ticket)
-
-		# 服务端创建
-		var res = await Online.nakama_socket.rpc_async("create_match",_room_info)
-		if res.is_exception():
-			print("创建房间失败:",res.get_exception().message)
-			PopupManager.show_dynamic("创建房间失败")
-			return
-		print("创建服务端托管成功",res)
-		var timer = get_tree().create_timer(1.0)
-		await timer.timeout
-		_refresh_room_list()
+	var timer = get_tree().create_timer(1.0)
+	await timer.timeout
+	_refresh_room_list()
 	pass
 
 
 # 确认房间密码
 func _on_confirm_btn_pressed() -> void:
 	# 校验房间密码
-	selected_room_info.psw = jion_input.text
+	selected_room_info.room_key = jion_input.text
 	_on_join_room(selected_room_info)
 	pass
 

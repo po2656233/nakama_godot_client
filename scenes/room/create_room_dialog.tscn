@@ -166,6 +166,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="SystemFont" id="SystemFont_53ous"]
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_tx74p"]
 subpixel_positioning = 0

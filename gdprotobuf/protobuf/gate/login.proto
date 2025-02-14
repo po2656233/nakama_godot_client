@@ -1,0 +1,83 @@
+syntax = "proto3";
+option go_package = "/gate";
+package pb;
+import "common/baseinfo.proto";
+/////////////[优秀如你]-->Req:请求 Resp:反馈<--[交互专用]///////////////////////////////////
+// 走web服时,该项忽略
+//注册
+message RegisterReq{
+  string name = 1;            //用户
+  string password = 2;        //密码
+  string securityCode = 3;    //验证码
+  string machineCode = 4;     //机器码
+  string invitationCode = 5;  //邀请码
+  //选填
+  int32 gender = 6;       //性别
+  int32 age = 7;          //年龄
+  int32 faceID = 8;       //头像
+  string passPortID = 9;  //证件号
+  string realName = 10;    //真实名字
+  string phoneNum = 11;    //手机
+  string email = 12;       //邮箱
+  string address = 13;     //住址
+}
+message RegisterResp{
+  //  UserInfo info = 1;
+  int32  sdkId = 2;    // sdk id
+  int32  pid = 3;      // 包id
+  string openId = 4;   // sdk的openid 即uid
+  int32  serverId = 5; // 所在游戏服id
+  string ip = 6;       // 请求ip
+}
+//登录
+message LoginReq{
+  string account = 1;    //账号
+  string password = 2;    //密码
+  string securityCode = 3;  //验证码
+  string machineCode = 4;  //机器码
+}
+message LoginResp{
+  MasterInfo mainInfo = 1;
+  int64 inRoomID = 2;   //所在房间ID(=0时,为系统房间)
+  int64 inTableNum = 3;   //所在游戏ID(=0时,不在任何游戏中)
+  string token = 4;
+}
+//异地
+message AllopatricResp{
+  int64 userID = 1;
+}
+//重连
+message ReconnectReq{
+  string account = 1;       //账号
+  string password = 2;      //密码
+  string machineCode = 3;   //机器码
+}
+message ReconnectResp{
+  MasterInfo mainInfo = 1;
+  int64 inRoomID = 2;    //所在房间ID(=0时,系统房)
+  int64 inTableNum = 3;  //所在桌子编号(=0时,没有进桌)
+  string token = 4;
+}
+message ResetPasswordReq{
+  string account = 1;       //账号
+  string password = 2;      //密码
+  string machineCode = 3;   //机器码
+}
+message ResetPasswordResp{
+  bool success = 1;
+  string message1 = 2;
+}
+//登出
+message LogoutReq{
+  int64 uid = 1;
+}
+message LogoutResp{
+  int64 uid = 1;
+  int64 timestamp = 2;
+}
+//////////////heart//////////////////////////////////////////
+//心跳包 默认20秒 网关等待读取数据时长为35秒
+message PingReq{
+}
+message PongResp{
+}

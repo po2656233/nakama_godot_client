@@ -425,6 +425,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 text = "加入房间"
 
 [node name="FlowLight" type="TextureRect" parent="Front"]
+visible = false
 material = SubResource("ShaderMaterial_uxbdl")
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -442,6 +443,7 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_rm5a5")
 
 [node name="Back" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 

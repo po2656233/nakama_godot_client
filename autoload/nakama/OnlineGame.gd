@@ -1,30 +1,32 @@
 extends Node
+const loginProto = preload("res://gdprotobuf/login.gd")
+const homeProto = preload("res://gdprotobuf/home.gd")
 var games_data = []
 var kind_names = {
-    1: "对战类",
-    2: "百人类",
-    3: "房卡类",
-    4: "竞猜类",
-    5: "电玩城",
-    6: "电竞类",
-    7: "体育类",
-    8: "益智类",
-    9: "RPG类",
-    10: "PK类",
-    11: "麻将类"
+	1: "对战类",
+	2: "百人类",
+	3: "房卡类",
+	4: "竞猜类",
+	5: "电玩城",
+	6: "电竞类",
+	7: "体育类",
+	8: "益智类",
+	9: "RPG类",
+	10: "PK类",
+	11: "麻将类"
 }
 var kind_en_names = {
-    1: "fight",
-    2: "multiplayer",
-    3: "sameTable",
-    4: "guess",
-    5: "gamesCity",
-    6: "esports",
-    7: "sport",
-    8: "education",
-    9: "RolePlayingGame",
-    10: "PlayerKilling",
-    11: "mahjong"
+	1: "fight",
+	2: "multiplayer",
+	3: "sameTable",
+	4: "guess",
+	5: "gamesCity",
+	6: "esports",
+	7: "sport",
+	8: "education",
+	9: "RolePlayingGame",
+	10: "PlayerKilling",
+	11: "mahjong"
 }
 #####################################################################
 # 有效的RPC函数
@@ -62,7 +64,21 @@ func RpcListData(funcName, payload:Dictionary={}, sort_field:String=""):
 			)
 		return sorted
 	return []
+####################################################################################
+func joinTable(payload):
+	# var request = homeProto.ChooseTableReq.new()
+	# request.set_tableName(tableName)
+	# request.set_password(payload.get("password",""))
+	# var result = await RpcData("enter_table",request)
+	# return result
+	return 
 
+
+
+
+
+
+########################################################################################
 # 获取游戏列表
 func getGameList(kind:int=-1):
 	if games_data.size() > 0:
@@ -72,9 +88,17 @@ func getGameList(kind:int=-1):
 		games_data = result
 	return result
 
-# 获取匹配列表
-func getMatchList(payload:Dictionary={"limit":100,"authoritative":true,"minSize":0,"maxSize":100,"query":"*"}):
-	var result = await RpcListData("match_list",payload)
+# 获取牌桌列表
+func getTabelList(payload:Dictionary):
+	var request = homeProto.GetTableListReq.new()
+	request.set_creatorId(payload.get("creatorId",""))
+	request.set_order(payload.get("order",""))
+	request.set_name(payload.get("name",""))
+	request.set_isDesc(payload.get("isDesc",false))
+	request.set_pageNum(payload.get("pageNum",2))
+	request.set_pageSize(payload.get("pageSize",20))
+	var result = await RpcData("table_list",payload)
+	print("牌桌列表 反馈:",result)
 	return result
 
 # 获取游戏名称
@@ -91,4 +115,3 @@ func getKindName(kind:int):
 # 获取游戏类型英文名
 func getKindEnName(kind:int):
 	return kind_en_names.get(kind, "other")
-

@@ -45,7 +45,7 @@ window/size/borderless=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/codeandweb.texturepacker/plugin.cfg", "res://addons/gdcef/plugin.cfg", "res://addons/transitions/plugin.cfg")
+enabled=PackedStringArray("res://addons/codeandweb.texturepacker/plugin.cfg", "res://addons/gdcef/plugin.cfg", "res://addons/gdscript_formatter/plugin.cfg", "res://addons/protobuf/plugin.cfg", "res://addons/transitions/plugin.cfg")
 
 [input]
 

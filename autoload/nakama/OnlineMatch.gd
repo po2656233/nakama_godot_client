@@ -272,6 +272,11 @@ func _on_network_peer_disconnected(peer_id: int) -> void:
 	pass
 
 ##############################################################################################################################
+# 获取匹配列表
+func getMatchList(payload:Dictionary={"limit":100,"authoritative":true,"minSize":0,"maxSize":100,"query":"*"}):
+	var result = await OnlineGame.RpcListData("match_list",payload)
+	return result
+ 
 # 创建匹配 RPC
 func createMatch(id:String,game_name:String,min_size:int=1,max_size:int=100,limit:int=100,authoritative:bool=false,query:String="*"):
 	var matchInfo = {

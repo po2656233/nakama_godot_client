@@ -1,0 +1,186 @@
+syntax = "proto3";
+option go_package = "/game";
+package pb;
+import "common/baseinfo.proto";
+//-----------------------------------------------------------------------------------------
+/////////////[优秀如你]-->Req:请求 Resp:反馈<--[交互专用]///////////////////////////////////
+/////////////[优秀如你]-->Req:请求 Resp:反馈<--[交互专用]///////////////////////////////////
+/////////////[优秀如你]-->Req:请求 Resp:反馈<--[交互专用]///////////////////////////////////
+//-----------------------------------------------------------------------------------------
+//入场协议 对战类 [EnterXXXGameResp]
+//受游戏本身特性影响,PlayerInfo有本地化需求
+//请查看对应的子游戏协议文件 中的 EnterXXXGameResp
+//若无本地化需求,统一走 EnterGameResp协议
+//进入游戏
+message EnterGameReq {
+  int64 roomID = 1;                 // 房间ID 注: =0时,为系统房
+  int64 tableID = 2;                // 牌桌标识
+  int64 score = 3;                  // 携带积分
+}
+message EnterGameResp {
+  int64 roomID = 1;                 // 房间ID 注: =0时,为系统房
+  int64 tableID = 2;                // 牌桌标识
+  int32 chairID = 3;                // 椅子编号
+  PlayerSimpleInfo userInfo = 4;    // 玩家信息
+}
+// 加入全服游戏准备队列 也是反馈 JoinGameReadyQueueResp
+message JoinAllReadyQueueReq {
+  int64 roomID = 1;                 // 房间ID 注: =0时,为系统房
+  int64 gameID = 2;                 // 游戏ID
+}
+//加入游戏准备队列
+message JoinGameReadyQueueReq {
+  int64 roomID = 1;                 // 房间ID 注: =0时,为系统房
+  int64 gameID = 2;                 // 游戏ID
+}
+message JoinGameReadyQueueResp {
+  int64 roomID = 1;                 // 房间ID 注: =0时,为系统房
+  int64 tableID = 2;                // 牌桌信息
+  repeated PlayerSimpleInfo playerList = 3;    // 玩家信息
+}
+// 等待游戏开局
+message WaitGameStartResp {
+  int64 roomID = 1;                 // 房间ID 注: =0时,为系统房
+  int64 tableID = 2;                // 牌桌信息
+  int64 gameID = 3;                 // 游戏ID
+  int64 waitTimeOut = 4;            // 等待时长
+}
+//入场协议 对战类 [EnterXXXGameResp]
+//受游戏本身特性影响,PlayerInfo有本地化需求
+//请查看对应的子游戏协议文件 中的 EnterXXXGameResp
+//若无本地化需求,统一走 EnterGameResp协议
+//退出游戏
+message ExitGameReq {
+}
+message ExitGameResp {
+  int64 roomID = 1;
+  int64 tableID = 2; //游戏标识
+}
+//解散桌位(桌位上的游戏将处于关闭状态)
+message DisbandedTableReq {
+  int64 roomID = 1; //房间ID
+  int64 tableID = 2; //游戏标识
+}
+message DisbandedTableResp {
+  int64 roomID = 1; //房间ID
+  int64 tableID = 2; //游戏标识
+}
+//解散游戏
+message DisbandedGameReq {
+  int64 roomID = 1; //房间ID
+  int64 gameID = 2; //游戏标识
+}
+message DisbandedGameResp {
+  int64 roomID = 1; //房间ID
+  int64 gameID = 2; //游戏标识
+  repeated int64 tableIDs = 3; //对应的桌列表
+}
+//换桌
+message ChangeTableReq {
+}
+message ChangeTableResp {
+  int64 roomID = 1; //游戏标识
+  int32 tableID = 2; //桌子ID
+  int64 chairID = 3; //椅子ID
+}
+//找回游戏密码 [创建者|群主]权限
+message GetBackPasswordReq {
+  int64 roomID = 1; //房间标识
+}
+message GetBackPasswordResp {
+  int64 roomID = 1; //游戏标识
+  int64 hostID = 2; //房主标识
+  string password = 3;//
+}
+/////////////玩家行为(与游戏弱相关的行为)/////////////////////
+// [排行榜]
+message RankingListReq {
+  int32 kindId = 1; // 类别
+  int32 topCount = 2; // =>0 默认20
+}
+message RankingListResp {
+  repeated PlayerSimpleInfo persons = 1;    //玩家信息
+}
+// 托管[暂保留]
+message TrusteeReq {
+  bool isTrustee = 1; //是否托管
+}
+message TrusteeResp {
+  int64 userID = 1; // 玩家ID
+  bool isTrustee = 2; //是否托管
+}
+//扔骰子
+message RollDiceReq {
+  int32 diceCount = 1; //骰子的个数
+}
+message RollDiceResp {
+  int32 diceCount = 1;  //骰子的个数
+  int64 uid = 2;
+  bytes dice = 3;       //骰子具体个数,起抓牌位置
+}
+//请求游戏结束（注:返回牌局记录后,游戏随即销毁）
+message GameOverReq {
+  int64 gid = 1; //注:不能为0
+}
+message GameOverResp {
+  int64 gid = 1; //注:不能为0
+  InningList innings = 2;//牌局信息
+  int32 pageNum = 3;//页码 默认20条一页;
+}
+///////////////////金币变化///////////////////////////////
+//更新金币
+message UpdateGoldReq{
+}
+message UpdateGoldResp{
+  int64 uid = 1;
+  int64 gold = 2;//当前玩家金币
+}
+///////////////////游戏记录///////////////////////////////
+//添加游戏记录
+message AddRecordReq{
+  int64 uid = 1;              // 充值者ID
+  int64 tid = 2;             // 牌桌ID
+  int64 payment = 3;          // 支付
+  int32 code = 4;             // 操作码
+  string order = 5;           // 订单号(牌局号)
+  string result = 6;          // 游戏结果信息
+  string remark = 7;         // 备注信息
+}
+message AddRecordResp{
+  int64 uid = 1;              // 充值者ID
+  int64 tid = 2;             // 牌桌ID
+  int64 perGold = 3;          // 支付之前
+  int64 payment = 4;          // 支付
+  int64 gold = 5;             // 金币
+  int32 code = 6;             // 操作码
+  string order = 7;           // 订单号(牌局号)
+  string result = 8;          // 游戏结果信息
+  string remark = 9;         // 备注信息
+}
+//减少游戏局数
+message DecreaseGameRunReq{
+  int64 tid = 1;             // 牌桌ID
+  int32 amount = 2;
+}
+message DecreaseGameRunResp{
+  int64 tid = 1;             // 牌桌ID
+  int32 remain = 2;          // 剩余次数
+}
+//获取游戏记录(牌桌ID)
+message GetRecordResp{
+  int64 uid = 1;  //玩家ID
+  int64 tid = 2; //牌桌ID
+  int64 startTimeStamp = 3;
+  int64 endTimeStamp = 4;
+  repeated InningInfo innings = 5;//牌局信息
+  int32 pageNum = 6;//页码 默认20条一页
+}
+//获取牌局记录 注: 房主权限
+message GetInningsInfoReq{
+  int64 gameID = 1; //游戏标识 =0时,表示所有参与过的游戏
+}
+message GetInningsInfoResp{
+  int64 gameID = 1; //游戏标识 =0时,表示所有参与过的游戏
+  repeated InningInfo innings = 2;//牌局信息
+  int32 pageNum = 3;//页码 默认20条一页
+}

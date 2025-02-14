@@ -17,7 +17,7 @@ extends Window
 @onready var cancel_button = $MarginContainer/Panel/VBoxContainer/ButtonSection/CancelButton
 @onready var create_button = $MarginContainer/Panel/VBoxContainer/ButtonSection/CreateButton
 
-signal room_created(room_data: Dictionary)
+signal room_created(room_data)
 
 func _ready():
 	# 设置窗口为模态
@@ -82,35 +82,34 @@ func _on_create_pressed():
 	pass
 
 func _create_room():
-	var room_data = {
-		"room_id": "",
-		"room_name": room_name_option.text,
-		"room_psw": room_psw_option.text,
-		"game_type": game_type_option.get_selected_id(),
-		"game_name": game_type_option.get_item_text(game_type_option.selected),
-		"max_players": players_spin_box.value,
-		"allow_spectators": spectator_check.button_pressed,
-		"entry_score": entry_score_spin_box.value,
-		"base_score": base_score_spin_box.value,
-		"has_tax": tax_check.button_pressed,
-		"tax_rate": tax_slider.value if tax_check.button_pressed else 0,
-		"game_mode": game_mode_option.get_selected_id(),
-		"game_mode_text": game_mode_option.get_item_text(game_mode_option.selected),
-		"match_rule":game_section.get_selected_id(),
-		"match_rule_text": game_section.get_item_text(game_section.selected),
-		"creator_id": OnlineLogin.get_my_id(),
-		"author": OnlineLogin.get_my_name(),
-		"current_round": 0,
-		"player_count": 0,
-		"status": "等待中",
-		"create_time": Util.get_current_timestamp(),
-		"description": "暂无游戏相关描述",
-		"rules": ["基础规则"],
-		"players": [],
-	}
-	print("创建房间数据: ", room_data)
+	if Online.nakama_socket:
+		# 匹配创建参数
+		# var match_maker_ticket = await Online.nakama_socket.add_matchmaker_async()
+		# print("匹配创建成功，票据: ", match_maker_ticket)
 
-	room_created.emit(room_data)
+		# 服务端创建牌桌
+		var res = await Online.nakama_socket.rpc_async("create_table",{
+			"id": -1,
+			"gid": game_type_option.get_selected_id(),
+			"name": room_name_option.text,
+			"key": room_psw_option.text,
+			"mode": game_mode_option.get_selected_id(),
+			"section":game_section.get_selected_id(),
+			"enterScore": entry_score_spin_box.value,
+			"baseScore": base_score_spin_box.value,
+			"allowLookOn": spectator_check.button_pressed,
+			"commission": tax_slider.value if tax_check.button_pressed else 0,
+			"maxSitter": players_spin_box.value,
+			"maxRound": -1,
+			"openTime": 0,
+			"closeTime": 0,
+		})
+		if res.is_exception():
+			print("创建房间失败:",res.get_exception().message)
+			PopupManager.show_dynamic("创建房间失败")
+			return
+		print("创建服务端托管成功",res)
+		room_created.emit({})
 	pass
 
 

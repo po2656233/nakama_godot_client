@@ -25,7 +25,7 @@ var room_style_path = "res://styles/room_panel_style.tres"
 var waiting_style_path = "res://styles/waiting_style.tres"
 var playing_style_path = "res://styles/playing_style.tres"
 var full_style_path = "res://styles/full_style.tres"
-var default_style_path = "res://styles/default_style.tres"
+# var default_style_path = "res://styles/default_style.tres"
 
 var hover_tween: Tween
 var pulse_tween: Tween
@@ -45,6 +45,7 @@ var is_animating = false
 var is_dragging = false
 var drag_start_position = Vector2.ZERO
 var min_swipe_distance = 200  # 最小滑动距离
+var status_name = ["未知状态","等待中","进行中","已满员"]
 
 func _ready():
 	# 初始化收藏按钮样式
@@ -68,27 +69,27 @@ func setup(data: Dictionary):
 	room_id_label.text = data.get("room_id", "")
 	base_score_label.text = str(data.get("base_score", 0))+" 分"
 	player_count_label.text = "%d/%d" % [data.get("player_count", 0), data.get("max_players", 0)]
-	status_label.text = data.get("status", "")
+	status_label.text = status_name[data.get("status", 0)]
 	room_lock.visible = data.get("is_locked", false)
 	author.text = "@"+data.get("author", "")+" "
 	# 根据状态设置状态标签样式
 	var style_path: String
-	match data.get("status", ""):
-		"等待中":
+	match data.get("status", 0):  #"等待中" "进行中"  "已满员"
+		0:
 			style_path = waiting_style_path
-		"进行中":
+		1:
 			style_path = playing_style_path
-		"已满员":
+		2:
 			style_path = full_style_path
 		_:
-			style_path = default_style_path
+			style_path = waiting_style_path
 	
 	var style = load(style_path)
 	if style:
 		status_label.add_theme_stylebox_override("normal", style)
 	
 	# 根据状态设置加入按钮
-	join_button.disabled = data.get("status", "") == "已满员"
+	join_button.disabled = data.get("status", "") == 2
 	if join_button.disabled:
 		join_button.text = "房间已满"
 	
@@ -98,12 +99,12 @@ func setup(data: Dictionary):
 	content += getBBCodeContent("房间ID", data.get("room_id", ""))
 	content += getBBCodeContent("底分", str(data.get("base_score", 0)))
 	content += getBBCodeContent("入场分", str(data.get("entry_score", 0)))
-	content += getBBCodeContent("房间状态", data.get("status", ""))
+	content += getBBCodeContent("房间状态", status_name[data.get("status", 0)])
 	content += getBBCodeContent("最大人数", str(data.get("max_players", 0)))
 	content += getBBCodeContent("创建时间", data.get("create_time", ""))
 	content += getBBCodeContent("房间描述", data.get("description", ""))
-	var rules = data.get("rules", []).map(func(rule): return "- " + rule)
-	content += getBBCodeContent("规则", rules)
+	# var rules = data.get("rules", []).map(func(rule): return "- " + rule)
+	# content += getBBCodeContent("规则", rules)
 	var players = data.get("players", []).map(func(player): return "- " + player.username)
 	content += getBBCodeContent("当前玩家", players)
 	detail_info.clear()
@@ -195,14 +196,15 @@ func _on_favorite_button_toggled(_button_pressed: bool):
 	rotation_tween.tween_property(favorite_button, "rotation", target_rotation, 0.3)
 
 func _start_pulse_animation():
-	if not is_instance_valid(status_label):
-		return
-	if room_data.has("status") and room_data.status == "等待中":
+	# if not is_instance_valid(status_label):
+	# 	return
+	if room_data.has("status") and room_data.status == 1:
 		if pulse_tween:
 			pulse_tween.kill()
 		pulse_tween = create_tween()
+		pulse_tween.bind_node(self)
 		pulse_tween.set_loops()
-		pulse_tween.tween_property(status_label, "modulate:a", 0.2, 1.5)
+		pulse_tween.tween_property(status_label, "modulate:a", 0.5, 1.5)
 		pulse_tween.tween_property(status_label, "modulate:a", 1.5, 1.5)
 
 

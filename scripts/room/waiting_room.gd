@@ -88,10 +88,12 @@ func remove_player(player_name: String):
 func start_waiting_animation():
 	if tween:
 		tween.kill()
-	tween = get_tree().create_tween()
+	tween = create_tween()
+	tween.bind_node(self)
+	tween.set_loops()
 	tween.tween_property(waiting_animation, "modulate:a", 0.3, 1.0)
 	tween.tween_property(waiting_animation, "modulate:a", 1.0, 1.0)
-	tween.set_loops()
+	
 
 # 计时器回调
 func _on_countdown_timeout():
