@@ -1,10 +1,11 @@
 extends Control
 
+signal quitRoomSIG()
 var player_scene = preload("res://scenes/room/player_item.tscn") 
 var tween:Tween
 var max_players = 4
 var last_wait_time = 5
-var time_left:float = 0.0
+var time_left:float = 20.0
 var room_id = ""
 var current_players = []
 @onready var player_list = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerList
@@ -30,6 +31,7 @@ func _ready():
 
 # 重置房间信息
 func reset(roomId: String = "",playerMax:int=10):
+	time_left = 20.0
 	cancleBtn.disabled = false
 	max_players = playerMax
 	room_id = roomId
@@ -69,10 +71,13 @@ func remove_player(player_name: String):
 	if  time_left <= 1.0:
 		return
 	for player_item in player_list.get_children():
-		if player_item.get_node("PlayerName").text == player_name:
+		print("离开房间",player_item.getUserName())
+		if player_item.getUserName() == player_name:
 			player_list.remove_child(player_item)
 			current_players.erase(player_name)
-			PopupManager.show_dynamic("%s  已离开房间"%[player_name])
+			print("离开房间", player_name, " 剩下", current_players)
+			if OnlineLogin.get_my_name() != player_name:
+				PopupManager.show_dynamic("%s  已离开房间"%[player_name])
 			countdown.stop()
 			countdown.hide()
 			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
@@ -114,7 +119,7 @@ func _on_cancel_button_pressed():
 	countdown.stop()
 	countdown.hide()
 	remove_player(OnlineLogin.get_my_name())
-	SceneManager.switch_to_scene("roomlist","cross",0.1)
+	quitRoomSIG.emit()
 
 # func _debug_add_test_players():
 # 	# 仅用于测试：模拟其他玩家陆续加入

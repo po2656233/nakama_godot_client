@@ -2,7 +2,7 @@ extends Control
 
 
 const roomItem = preload("res://scenes/room/room_item.tscn")
-const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
+# const room_for_waiting = preload("res://scenes/room/waiting_room.tscn")
 const SAVE_PATH = "user://room_list_info.json"
 
 @onready var search_input = $VBoxContainer/SearchBar/SearchInput
@@ -24,14 +24,17 @@ const SAVE_PATH = "user://room_list_info.json"
 @onready var jion_room = $CenterContainer/Panel/RoomID
 @onready var jion_input = $CenterContainer/Panel/RoomPsw
 
+# 等待游戏开始
+@onready var waitingStart = $WaitingRoom
+
 # 房间列表
-@onready var room_container = $VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer/RoomContainer
-@onready var prev_button = $VBoxContainer/MarginContainer2/HBoxContainer/PrevButton
-@onready var next_button = $VBoxContainer/MarginContainer2/HBoxContainer/NextButton
-@onready var page_label = $VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer/PageLabel
+@onready var room_container = $VBoxContainer/RoomContainer/ScrollContainer/RoomList
+@onready var prev_button = $PrevButton
+@onready var next_button = $NextButton
+@onready var page_label = $PageLabel
 
 var favorite_rooms = []
-var room_history = []
+# var room_history = []
 var my_rooms = []
 
 @export var items_per_page: int = 4
@@ -100,12 +103,14 @@ func _ready():
 	_update_stats()
 
 	# 绑定事件
-	create_room_dialog.room_created.connect(_on_room_created)# 创建房间
+
 	search_input.text_changed.connect(_on_search_changed)
 	sort_options.item_selected.connect(_on_sort_changed)
 	show_favorites.toggled.connect(_on_show_favorites_toggled)
 	show_myrooms.toggled.connect(_on_show_myrooms_toggled)
 	create_button.pressed.connect(_on_create_pressed)
+	create_room_dialog.room_created.connect(_on_room_created)# 创建房间
+	waitingStart.quitRoomSIG.connect(_on_cancel_waiting)
 	if Online.nakama_socket:
 		Online.nakama_socket.received_matchmaker_matched.connect(_on_received_matchmaker_matched)
 		Online.nakama_socket.received_match_state.connect(_on_received_match_state)
@@ -113,7 +118,7 @@ func _ready():
 		Online.nakama_socket.received_status_presence.connect(_on_received_status_presence)
 	pass
 
-
+# 添加房间数据
 func append(data):
 	room_list_info.append({
 			"id": data.match_id,
@@ -139,15 +144,18 @@ func append(data):
 
 # 获取房间列表
 func loadRooms():
+	room_list_info.clear()
 	var matchs = await OnlineGame.getMatchList()
 	for data in matchs:
 		append(data)
-	update_total_pages()
+	update_total_pages(room_list_info.size())
 	pass
 
 # 更新总页数
-func update_total_pages():
-	total_pages = ceil(float(room_list_info.size()) / items_per_page)
+func update_total_pages(list_size:int):
+	total_pages = ceil(float(list_size) / items_per_page)
+	if current_page >= total_pages:
+		current_page = max(0, total_pages - 1)
 
 
 # 刷新房间列表
@@ -155,24 +163,29 @@ func _refresh_room_list():
 	# 清除现有房间
 	for child in room_container.get_children():
 		child.queue_free()
-	room_list_info.clear()
+	
 	# 加载房间数据
 	await loadRooms()
-	if room_list_info.size() == 0:
-		return
 		
 	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_list_info)
 	filtered_rooms = _sort_rooms(filtered_rooms)
+	if filtered_rooms.size() == 0:
+		page_label.text = "0/0"
+		return
 
+	# 房间当前页的起始和结束索引
 	var start_idx = current_page * items_per_page
-	var end_idx = min(start_idx + items_per_page, room_list_info.size())
-
+	var end_idx = min(start_idx + items_per_page, filtered_rooms.size())
+	# if filtered_rooms.size()<=end_idx:
+	# 	page_label.text = "0/0"
+	# 	return
 	# 创建房间列表项
 	for i in range(start_idx, end_idx):
 		var data = filtered_rooms[i]
 		var room_item = roomItem.instantiate()
 		room_container.add_child(room_item)
+		print(i," - 房间数据:", data)
 		room_item.setup(data)
 		room_item.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		room_item.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -187,13 +200,17 @@ func _refresh_room_list():
 		# room_item.modulate.a = 0
 		# tween.chain().tween_property(room_item, "modulate:a", 1.0, 0.2)
 		# Update navigation buttons and page label
+		# 房间分页比值
 	prev_button.disabled = current_page == 0
 	next_button.disabled = current_page >= total_pages - 1
+
 	page_label.text = "%d/%d" % [current_page + 1, total_pages]
 	pass
 
 
 func _apply_filters(rooms: Array) -> Array:
+	if 0 == rooms.size():
+		return []
 	var search_text = search_input.text.to_lower()
 	# 如果显示收藏，只显示收藏的房间
 	if show_favorites.button_pressed: 
@@ -214,6 +231,8 @@ func _apply_filters(rooms: Array) -> Array:
 			if not room_text.to_lower().contains(search_text):
 				continue
 		filtered.append(room)
+	print("过滤后的房间数量: ", filtered.size())
+	update_total_pages(filtered.size())
 	return filtered
 
 func _sort_rooms(rooms: Array) -> Array:
@@ -234,6 +253,7 @@ func _sort_rooms(rooms: Array) -> Array:
 			sorted.sort_custom(func(a, b): return not a.is_locked and b.is_locked)
 	return sorted
 
+# 更新统计信息
 func _update_stats():
 	var total_rooms = room_list_info.size()
 	var active_rooms = room_list_info.filter(func(r): return r.status != "已满员").size()
@@ -244,16 +264,18 @@ func _update_stats():
 	total_players_label.text = "在线玩家: %d" % total_players
 	pass
 
+# 保存数据
 func _save_data():
 	var save_data = {
 		"favorite_rooms": favorite_rooms,
 		"my_rooms": my_rooms,
-		"room_history": room_history
+		# "room_history": room_history
 	}
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	file.store_string(JSON.stringify(save_data))
 	pass
 
+# 加载保存的数据
 func _load_saved_data():
 	if FileAccess.file_exists(SAVE_PATH):
 		var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
@@ -261,7 +283,7 @@ func _load_saved_data():
 		var data = JSON.parse_string(json_string)
 		if data:
 			favorite_rooms = data.favorite_rooms
-			room_history = data.room_history
+			# room_history = data.room_history
 			my_rooms = data.my_rooms
 	pass
 
@@ -376,29 +398,37 @@ func _on_create_pressed():
 
 # 等待房间开始
 func wait_for_room_to_start():
-	var room_info = selected_room_info
-	# 进入房间
-	var waitingStart = room_for_waiting.instantiate()
-	add_child(waitingStart)
-	waitingStart.reset(room_info.room_id, room_info.max_players)
-	waitingStart.add_player(OnlineLogin.get_my_id(), OnlineLogin.get_my_name(), OnlineLogin.get_my_headIcon())
-	for player in room_info.players:
-		waitingStart.add_player(player.uid, player.username, player.headIcon)
+	if selected_room_info:
+		var room_info = selected_room_info
+		# 进入房间
+		waitingStart.reset(room_info.room_id, room_info.max_players)
+		room_info.players.push_front({"uid": OnlineLogin.get_my_id(), "username": OnlineLogin.get_my_name(), "headIcon": OnlineLogin.get_my_headIcon()})
+		for player in room_info.players:
+			print("正在等待的玩家:", player)
+			waitingStart.add_player(player.uid, player.username, player.headIcon)
+		waitingStart.show()
 	pass # Replace with function body.
 
-
-
+# 取消等待
+func _on_cancel_waiting():
+	var result = await OnlineMatch.leaveMatch(selected_room_info.id)
+	if result.is_exception():
+		PopupManager.show_dynamic("离开房间失败 "+result.get_exception().message)
+		return
+	waitingStart.hide()
+	if selected_room_info:
+		selected_room_info.players.pop_front()
+		_refresh_room_list()
+	pass
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
 		return
-	if not Online.nakama_socket:
-		PopupManager.show_dynamic("未连接服务器")
-		return
+
 	var p_metadata = room_info.room_psw if room_info.has("room_psw") else null
-	var result = await Online.nakama_socket.join_match_async(room_info.id,p_metadata)
+	var result = await OnlineMatch.joinMatch(room_info.id,p_metadata)
 	if result.is_exception():
 		PopupManager.show_dynamic("加入房间失败 "+result.get_exception().message)
 		return
@@ -406,11 +436,11 @@ func _on_join_room(room_info: Dictionary):
 	selected_room_info = room_info
 
 	# 添加到历史记录
-	if not room_history.any(func(r): return r.room_id == room_info.room_id):
-		room_history.push_front(room_info)
-		if room_history.size() > 10: # 限制历史记录数量
-			room_history.pop_back()
-		_save_data()
+	# if not room_history.any(func(r): return r.room_id == room_info.room_id):
+	# 	room_history.push_front(room_info)
+	# 	if room_history.size() > 10: # 限制历史记录数量
+	# 		room_history.pop_back()
+		# _save_data()
 	if room_info.is_locked:
 		jion_dialog.visible = true
 		jion_room.text = "%s\nID:%s"%[room_info.room_name,room_info.room_id]
@@ -441,10 +471,8 @@ func _on_room_created(_room_info: Dictionary):
 # 确认房间密码
 func _on_confirm_btn_pressed() -> void:
 	# 校验房间密码
-	if jion_input.text != "1234":
-		PopupManager.show_dynamic("房间密码错误")
-		return
-	wait_for_room_to_start()
+	selected_room_info.psw = jion_input.text
+	_on_join_room(selected_room_info)
 	pass
 
 
@@ -454,6 +482,8 @@ func _on_cancle_btn_pressed() -> void:
 	jion_dialog.visible = false
 	jion_input.text = ""
 	pass # Replace with function body.
+
+
 
 func _on_prev_button_pressed():
 	if current_page > 0:

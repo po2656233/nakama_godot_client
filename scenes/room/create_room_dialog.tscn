@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://15qsfdusk3fu"]
+[gd_scene load_steps=30 format=3 uid="uid://15qsfdusk3fu"]
 
 [ext_resource type="Script" path="res://scripts/room/create_room_dialog.gd" id="1_2gsk4"]
 
@@ -165,6 +165,8 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="SystemFont" id="SystemFont_53ous"]
+
 [sub_resource type="SystemFont" id="SystemFont_tx74p"]
 subpixel_positioning = 0
 
@@ -305,7 +307,6 @@ horizontal_alignment = 2
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 theme_override_colors/font_hover_pressed_color = Color(0.517647, 0.376471, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.501961, 1, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.392157, 0, 1)
@@ -363,8 +364,18 @@ horizontal_alignment = 2
 
 [node name="GameSectionOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
 layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.180392, 0.972549, 0.968627, 1)
 theme_override_colors/font_color = Color(0.180392, 0.972549, 0.968627, 1)
-theme_override_font_sizes/font_size = 19
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0.976471, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = SubResource("SystemFont_53ous")
+theme_override_font_sizes/font_size = 20
+theme_override_constants/arrow_margin = 10
+theme_override_constants/modulate_arrow = 80
 alignment = 1
 selected = 0
 item_count = 3
@@ -382,9 +393,17 @@ horizontal_alignment = 2
 
 [node name="GameModeOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.835763, 0.939271, 7.70092e-07, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.988235, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.988235, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.988235, 0.941176, 0, 1)
+theme_override_colors/font_color = Color(0.988235, 0.941176, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = SubResource("SystemFont_tx74p")
 theme_override_font_sizes/font_size = 20
+theme_override_constants/arrow_margin = 10
+theme_override_constants/modulate_arrow = 80
 alignment = 1
 selected = 0
 item_count = 3
@@ -408,8 +427,9 @@ alignment = 2
 [node name="PlayersSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption"]
 layout_mode = 2
 size_flags_horizontal = 3
-prefix = " "
+value = 2.0
 suffix = " 人"
+select_all_on_focus = true
 
 [node name="SpectatorCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption"]
 layout_mode = 2
@@ -444,6 +464,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_vqlca")
 max_value = 1e+10
+value = 10000.0
 prefix = "携带入场:"
 suffix = "分"
 
@@ -498,6 +519,7 @@ custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="item_selected" from="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/GameTypeOption" to="." method="_on_game_type_selected"]
 [connection signal="focus_entered" from="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomNameOption" to="." method="_on_text_edit_focus_entered"]
 [connection signal="focus_exited" from="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomNameOption" to="." method="_on_text_edit_focus_exited"]
 [connection signal="focus_entered" from="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomPasswordOption" to="." method="_on_text_edit_focus_entered"]

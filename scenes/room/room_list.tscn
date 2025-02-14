@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=44 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
 [ext_resource type="Texture2D" uid="uid://cxk66i3uvuq4n" path="res://assets/room/txt_h_xzfj.png" id="2_s5adk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b1fb8ru33w7ws" path="res://assets/room/txt_h_cjfj.png" id="3_lsncr"]
 [ext_resource type="Texture2D" uid="uid://o4a8tnql62kj" path="res://assets/currency/previous.png" id="4_3eqgt"]
 [ext_resource type="Texture2D" uid="uid://helwyqm75ruj" path="res://assets/currency/next.png" id="5_b1rxo"]
+[ext_resource type="PackedScene" uid="uid://b6x8yd4hj6n8w" path="res://scenes/room/waiting_room.tscn" id="7_10o3b"]
 
 [sub_resource type="SystemFont" id="SystemFont_pptvu"]
 
@@ -102,6 +103,12 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ehslu"]
 
+[sub_resource type="SystemFont" id="SystemFont_o30ds"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_31qvp"]
+font = SubResource("SystemFont_o30ds")
+font_size = 25
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7y3c"]
 bg_color = Color(0.298507, 0.424749, 0.492482, 1)
 border_width_left = 4
@@ -159,7 +166,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2k3vw")
-items_per_page = 8
+items_per_page = 6
+button_size = null
+spacing = null
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -192,7 +201,7 @@ theme_override_constants/separation = 10
 [node name="Title" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "游戏房间列表"
+text = "房间列表"
 label_settings = SubResource("LabelSettings_mhfmw")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -292,19 +301,34 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_refresh")
 icon = ExtResource("3_lsncr")
 vertical_icon_alignment = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+[node name="RoomContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 90
+theme_override_constants/margin_right = 90
+theme_override_constants/margin_bottom = 35
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/RoomContainer"]
 layout_mode = 2
+
+[node name="RoomList" type="FlowContainer" parent="VBoxContainer/RoomContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/h_separation = 35
+theme_override_constants/v_separation = 20
 alignment = 1
 
-[node name="PrevButton" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(100, 50)
-layout_mode = 2
+[node name="PrevButton" type="Button" parent="."]
+custom_minimum_size = Vector2(85, 50)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -104.0
+offset_right = 85.0
+offset_bottom = 283.0
+grow_vertical = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_fomqo")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fjhvc")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_yj5ea")
@@ -320,27 +344,19 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="RoomContainer" type="FlowContainer" parent="VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/h_separation = 35
-theme_override_constants/v_separation = 20
-
-[node name="PageLabel" type="Label" parent="VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "1/1"
-horizontal_alignment = 1
-
-[node name="NextButton" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
+[node name="NextButton" type="Button" parent="."]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -104.0
+offset_bottom = 283.0
+grow_horizontal = 0
+grow_vertical = 2
 size_flags_horizontal = 8
 theme_override_styles/focus = SubResource("StyleBoxEmpty_m08ic")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_oqnu6")
@@ -356,6 +372,21 @@ icon = ExtResource("5_b1rxo")
 flat = true
 icon_alignment = 1
 expand_icon = true
+
+[node name="PageLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "1/1"
+label_settings = SubResource("LabelSettings_31qvp")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 visible = false
@@ -435,9 +466,13 @@ text = "取消"
 [node name="CreateRoomDialog" parent="." instance=ExtResource("3_b0c4m")]
 visible = false
 
+[node name="WaitingRoom" parent="." instance=ExtResource("7_10o3b")]
+visible = false
+layout_mode = 1
+
 [connection signal="focus_entered" from="VBoxContainer/SearchBar/SearchInput" to="." method="_on_search_input_focus_entered"]
 [connection signal="focus_exited" from="VBoxContainer/SearchBar/SearchInput" to="." method="_on_search_input_focus_exited"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer2/HBoxContainer/PrevButton" to="." method="_on_prev_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer2/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="PrevButton" to="." method="_on_prev_button_pressed"]
+[connection signal="pressed" from="NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/confirmBtn" to="." method="_on_confirm_btn_pressed"]
 [connection signal="pressed" from="CenterContainer/Panel/HBoxContainer/cancleBtn" to="." method="_on_cancle_btn_pressed"]

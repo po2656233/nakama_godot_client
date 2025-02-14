@@ -13,3 +13,12 @@ func set_player_info(player_uid, player_name,player_avatar = null):
         color_rect.visible = false
         $PlayerAvatar.texture = await Util.load_texture(player_avatar)
     pass
+
+func getUserName():
+    return $PlayerName.text
+
+func getUserId():
+    return uid
+
+func getAvatar():   
+    return $PlayerAvatar.texture

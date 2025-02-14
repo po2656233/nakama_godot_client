@@ -139,8 +139,10 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="SystemFont" id="SystemFont_exu74"]
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_giqyn"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_r0qha"]
 font = SubResource("SystemFont_giqyn")
@@ -440,7 +442,6 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_rm5a5")
 
 [node name="Back" type="TextureRect" parent="."]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 
@@ -500,7 +501,6 @@ selection_enabled = true
 material = SubResource("ShaderMaterial_uxbdl")
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 4
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_rm5a5")
 

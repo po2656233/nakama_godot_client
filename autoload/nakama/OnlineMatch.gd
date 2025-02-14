@@ -288,6 +288,16 @@ func createMatch(id:String,game_name:String,min_size:int=1,max_size:int=100,limi
 	print("创建匹配", res)
 	return 
 
-# 加入游戏
+# 加入匹配
 func joinMatch(p_match_id : String, p_metadata = null):
+	if not Online.nakama_socket:
+		PopupManager.show_dynamic("未连接服务器")
+		return
 	return await Online.nakama_socket.join_match_async(p_match_id,p_metadata)
+
+# 离开匹配
+func leaveMatch(p_match_id : String):
+	if not Online.nakama_socket:
+		PopupManager.show_dynamic("未连接服务器")
+		return
+	return await Online.nakama_socket.leave_match_async(p_match_id)

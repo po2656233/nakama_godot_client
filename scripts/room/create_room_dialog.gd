@@ -33,7 +33,8 @@ func _ready():
 	var games = await OnlineGame.getGameList()
 	for game in games:
 		game_type_option.add_item(game.name,game.id)
-	
+		game_type_option.set_item_metadata(game_type_option.get_item_count() - 1, game) 
+	_on_game_type_selected(0)
 	# # 设置窗口在屏幕中央
 	# var screen_size = DisplayServer.screen_get_size()
 	# position = (screen_size - size) / 2
@@ -57,27 +58,28 @@ func _on_tax_toggled(button_pressed: bool):
 func _on_tax_value_changed(value: float):
 	tax_value_label.text = "%.1f%%" % value
 
+
+func _on_game_type_selected(index: int):
+	var game = game_type_option.get_item_metadata(index)
+	if game and game.max_player != -1:
+		players_spin_box.max_value = game.max_player
+		players_spin_box.value = game.max_player
+		players_spin_box.editable = false
+		print("max_player: ", game.max_player)
+	else:
+		players_spin_box.editable = true
+		players_spin_box.value = game.max_player
+
 func _on_cancel_pressed():
 	hide()
-	# queue_free()
 
 func _on_create_pressed():
 	hide()
 	# 模拟创建房间回包
-	var gametype = game_type_option.get_selected_id()
-	if gametype == -1:
-		PopupManager.show_message("请选择游戏类型")
-		await get_tree().create_timer(1.5).timeout
-		show()
-		return
-	if room_name_option.text == "":
-		PopupManager.show_message("请输入房间名称")
-		await get_tree().create_timer(1.5).timeout
-		show()
+	if not await _validate_room_data():
 		return
 	PopupManager.show_confirm("确定创建吗？", _create_room, "确认")
-	# pass
-	# queue_free()
+	pass
 
 func _create_room():
 	var room_data = {
@@ -109,13 +111,33 @@ func _create_room():
 	print("创建房间数据: ", room_data)
 
 	room_created.emit(room_data)
-	queue_free()
+	pass
 
 
 # 添加验证方法
 func _validate_room_data() -> bool:
+	var gametype = game_type_option.get_selected_id()
+	if gametype == -1:
+		PopupManager.show_message("请选择游戏类型")
+		await get_tree().create_timer(1.5).timeout
+		show()
+		return false
+	if room_name_option.text == "":
+		PopupManager.show_message("请输入房间名称")
+		await get_tree().create_timer(1.5).timeout
+		show()
+		return false
 	if entry_score_spin_box.value <= 0:
 		_show_error("请设置有效的入场分")
+		return false
+	if players_spin_box.value < 1:
+		_show_error("最少需要1名玩家")
+		return false
+	if base_score_spin_box.value < 0:
+		_show_error("底分不能为负数")
+		return false
+	if tax_check.button_pressed and tax_slider.value < 0:
+		_show_error("税率不能为负数")
 		return false
 	return true
 
@@ -124,6 +146,7 @@ func _show_error(message: String):
 	add_child(dialog)
 	dialog.dialog_text = message
 	dialog.popup_centered()
+
 
 
 func _on_close_requested() -> void:

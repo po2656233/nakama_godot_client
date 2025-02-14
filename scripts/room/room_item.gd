@@ -99,7 +99,7 @@ func setup(data: Dictionary):
 	content += getBBCodeContent("底分", str(data.get("base_score", 0)))
 	content += getBBCodeContent("入场分", str(data.get("entry_score", 0)))
 	content += getBBCodeContent("房间状态", data.get("status", ""))
-	content += getBBCodeContent("最大人数:", str(data.get("max_players", 0)))
+	content += getBBCodeContent("最大人数", str(data.get("max_players", 0)))
 	content += getBBCodeContent("创建时间", data.get("create_time", ""))
 	content += getBBCodeContent("房间描述", data.get("description", ""))
 	var rules = data.get("rules", []).map(func(rule): return "- " + rule)
