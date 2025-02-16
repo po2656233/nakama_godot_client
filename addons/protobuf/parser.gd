@@ -1962,6 +1962,7 @@ class Translator:
 			cls_pref += tabulate("func _init():\n", nesting)
 			text += cls_pref
 			nesting += 1
+			text += tabulate("@warning_ignore(\"unused_variable\")\n", nesting)
 			text += tabulate("var service\n", nesting)
 			text += tabulate("\n", nesting)
 			var field_text : String = ""

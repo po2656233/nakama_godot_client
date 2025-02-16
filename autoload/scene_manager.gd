@@ -184,7 +184,7 @@ func scan_scenes_directory(path: String) -> void:
 func add_scene(scene_name: String, scene_path: String) -> bool:
 	# 如果场景名已存在，则跳过
 	if scene_paths.has(scene_name):
-		push_warning("场景名称 '%s' 已存在，跳过添加。" % scene_name)
+		# push_warning("场景名称 '%s' 已存在，跳过添加。" % scene_name)
 		return false
 		
 	# 添加新场景

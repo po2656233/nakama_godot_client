@@ -65,15 +65,17 @@ func RpcListData(funcName, payload:Dictionary={}, sort_field:String=""):
 		return sorted
 	return []
 ####################################################################################
+func favoriteTable(payload):
+	var result = await self.RpcData("favorite_table",payload)
+	return result
+
 func joinTable(payload):
-	# var request = homeProto.ChooseTableReq.new()
-	# request.set_tableName(tableName)
-	# request.set_password(payload.get("password",""))
-	# var result = await RpcData("enter_table",request)
-	# return result
-	return 
+	var result = await self.RpcData("join_table",payload)
+	return result
 
-
+func leaveTable(payload):
+	var result = await self.RpcData("leave_table",payload)
+	return result
 
 
 

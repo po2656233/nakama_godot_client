@@ -82,15 +82,16 @@ func _ready():
 	# WindowDrag.register_drag_zone(self)
 
 	# 适配房间子项的列数
-	# var width = get_viewport_rect().size.x
-	# var columns = 2
-	# if width>450:
-	# 	columns = width/ 450
-	# var space = columns*35
-	# if width>space:
-	# 	columns = ceil((width-space)/450)
+	var width = get_viewport_rect().size.x
+	var columns = 2
+	if width>450:
+		columns = width/ 450
+	var space = (columns-1)*35+2*85
+	if width>space:
+		columns = floor((width-space)/450)
+		items_per_page = 2*columns # 展示两行
 	# room_container.columns = columns
-	# items_per_page = columns
+
 	if not Util.isFullScreen():
 		items_per_page = 2
 	# 加载保存的数据
@@ -425,9 +426,10 @@ func wait_for_room_to_start():
 
 # 取消等待
 func _on_cancel_waiting():
-	var result = await OnlineMatch.leaveMatch(selected_room_info.id)
-	if result.is_exception():
-		PopupManager.show_dynamic("离开房间失败 "+result.get_exception().message)
+	var result = await OnlineGame.leaveTable({
+		"tid": selected_room_info.id,
+	})
+	if not result:
 		return
 	waitingStart.hide()
 	if selected_room_info:
@@ -441,14 +443,13 @@ func _on_join_room(room_info: Dictionary):
 		PopupManager.show_dynamic("房间已满员")
 		return
 	# todo: 加入房间 TODO
-	# var result = await OnlineMatch.joinTable({
-	# 	"roomId": room_info.id, 
-	# 	"roomKey": room_info.room_key
-	# 	})
-	# if result.is_exception():
-	# 	PopupManager.show_dynamic("加入房间失败 "+result.get_exception().message)
-	# 	return
-	# print("加入房间成功",result)
+	var result = await OnlineGame.joinTable({
+		"tableId": room_info.id, 
+		"tableKey": room_info.room_key
+		})
+	if not result:
+		return
+	print("加入房间成功",result)
 	selected_room_info = room_info
 
 	# 添加到历史记录

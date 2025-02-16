@@ -785,6 +785,7 @@ enum PHZOperate {
 
 class UserFullInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__userID = PBField.new("userID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -1148,6 +1149,7 @@ class UserFullInfo:
 	
 class UserInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__userID = PBField.new("userID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -1343,6 +1345,7 @@ class UserInfo:
 	
 class PlayerInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__userID = PBField.new("userID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -1622,6 +1625,7 @@ class PlayerInfo:
 	
 class PlayerSimpleInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__uid = PBField.new("uid", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -1733,6 +1737,7 @@ class PlayerSimpleInfo:
 	
 class HeroInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -1971,6 +1976,7 @@ class HeroInfo:
 	
 class WeaponInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -2096,6 +2102,7 @@ class WeaponInfo:
 	
 class GoodsInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -2235,6 +2242,7 @@ class GoodsInfo:
 	
 class KnapsackInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -2358,6 +2366,7 @@ class KnapsackInfo:
 	
 class EmailInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__emailID = PBField.new("emailID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -2513,6 +2522,7 @@ class EmailInfo:
 	
 class RoomInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -2680,6 +2690,7 @@ class RoomInfo:
 	
 class TableInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -2987,6 +2998,7 @@ class TableInfo:
 	
 class ClubApplyInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -3058,6 +3070,7 @@ class ClubApplyInfo:
 	
 class TimeInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__timeStamp = PBField.new("timeStamp", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -3141,6 +3154,7 @@ class TimeInfo:
 	
 class InningInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__gameID = PBField.new("gameID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -3280,6 +3294,7 @@ class InningInfo:
 	
 class CardInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__cards = PBField.new("cards", PB_DATA_TYPE.BYTES, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.BYTES])
@@ -3349,6 +3364,7 @@ class CardInfo:
 	
 class AreaInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -3432,6 +3448,7 @@ class AreaInfo:
 	
 class GameInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -3585,6 +3602,7 @@ class GameInfo:
 	
 class GameRecord:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__gameInfo = PBField.new("gameInfo", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
@@ -3644,6 +3662,7 @@ class GameRecord:
 	
 class GameRecordList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __list_default: Array[GameRecord] = []
@@ -3689,6 +3708,7 @@ class GameRecordList:
 	
 class MasterInfo:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__userInfo = PBField.new("userInfo", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
@@ -3764,6 +3784,7 @@ class MasterInfo:
 	
 class TaskItem:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -3833,6 +3854,7 @@ class TaskItem:
 	
 class ClassItem:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__id = PBField.new("id", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -3902,6 +3924,7 @@ class ClassItem:
 	
 class TaskList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __task_default: Array[TaskItem] = []
@@ -3947,6 +3970,7 @@ class TaskList:
 	
 class ClassList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __classify_default: Array[ClassItem] = []
@@ -3992,6 +4016,7 @@ class ClassList:
 	
 class PlayerList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __items_default: Array[PlayerInfo] = []
@@ -4037,6 +4062,7 @@ class PlayerList:
 	
 class GoodsList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __items_default: Array[GoodsInfo] = []
@@ -4082,6 +4108,7 @@ class GoodsList:
 	
 class RoomList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __items_default: Array[RoomInfo] = []
@@ -4127,6 +4154,7 @@ class RoomList:
 	
 class TableList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __items_default: Array[TableInfo] = []
@@ -4172,6 +4200,7 @@ class TableList:
 	
 class GameList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __items_default: Array[GameInfo] = []
@@ -4217,6 +4246,7 @@ class GameList:
 	
 class InningList:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __items_default: Array[InningInfo] = []

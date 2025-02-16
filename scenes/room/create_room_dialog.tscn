@@ -430,7 +430,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 value = 2.0
 suffix = " 人"
-select_all_on_focus = true
 
 [node name="SpectatorCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption"]
 layout_mode = 2

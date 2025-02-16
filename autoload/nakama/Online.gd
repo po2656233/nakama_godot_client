@@ -20,6 +20,8 @@ signal session_changed (nakama_session)
 signal session_connected (nakama_session)
 signal socket_connected (nakama_socket)
 
+
+
 func _ready() -> void:
 	# Don't stop processing messages from Nakama when the game is paused.
 	Nakama.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -69,12 +71,18 @@ func connect_nakama_socket() -> void:
 func is_nakama_socket_connected() -> bool:
 	return nakama_socket != null && nakama_socket.is_connected_to_host()
 
-func sendDataRPC(funcName:String,payload = null):
+
+# RPC 发送函数
+func sendDataRPC(funcName: String, payload = null):
 	if nakama_socket:
-		var result= await nakama_socket.rpc_async(funcName,payload)
+		var result = await nakama_socket.rpc_async(funcName, payload)
 		if result.is_exception():
-			print("RPC发送响应异常: ", result.get_exception().message)
+			# 显示中文提示信息
+			var msg = result.get_exception().message
+			PopupManager.show_dynamic("%s 失败: %s" % [Errors.FuncMapping.get(funcName, funcName), Errors.ResponeMapping.get(msg, msg)],150.0)
+			print("%s 响应异常: %s"%[funcName, msg])
 			return null
 		return result
 	return null
+
 

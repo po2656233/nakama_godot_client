@@ -187,6 +187,12 @@ func _on_join_button_pressed():
 	print("加入房间：", room_data.get("room_name", ""))
 
 func _on_favorite_button_toggled(_button_pressed: bool):
+	var result = await OnlineGame.favoriteTable({
+		"tableId": room_data.get("id", 0),
+		"isFavorite": !is_favorite,
+		})
+	if not result:
+		return
 	is_favorite = !is_favorite
 	favorite_toggled.emit(is_favorite)
 	

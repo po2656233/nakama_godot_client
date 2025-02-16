@@ -89,10 +89,11 @@ message JoinRoomResp{
   int32 pageNum = 3;        // 请求页数
 }
 //选择桌台
-message ChooseTableReq{
+message JoinTableReq{
   int64 tableId = 1;         // 桌台ID
+  string tableKey = 2;         // 桌台ID
 }
-message ChooseTableResp{
+message JoinTableResp{
   int64 tableId = 1;          // 桌台ID
   int64 chairId = 2;         // 桌台编号
   GameInfo info = 3;          // 游戏信息

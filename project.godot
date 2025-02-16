@@ -38,6 +38,7 @@ SceneManager="*res://autoload/scene_manager.gd"
 SignalManager="*res://autoload/signal_manager.gd"
 SettingsManager="*res://autoload/settings_manager.gd"
 Util="*res://autoload/Util.gd"
+Errors="*res://autoload/error_setting.gd"
 
 [display]
 

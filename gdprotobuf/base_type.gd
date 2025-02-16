@@ -663,6 +663,7 @@ class PBPacker:
 
 class None:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 	var data = {}
@@ -690,6 +691,7 @@ class None:
 	
 class Bool:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__value = PBField.new("value", PB_DATA_TYPE.BOOL, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.BOOL])
@@ -731,6 +733,7 @@ class Bool:
 	
 class Int32:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__value = PBField.new("value", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -772,6 +775,7 @@ class Int32:
 	
 class Int64:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__value = PBField.new("value", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -813,6 +817,7 @@ class Int64:
 	
 class Double:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__value = PBField.new("value", PB_DATA_TYPE.DOUBLE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE])
@@ -854,6 +859,7 @@ class Double:
 	
 class String:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__value = PBField.new("value", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
@@ -895,6 +901,7 @@ class String:
 	
 class Int64Int32:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__key = PBField.new("key", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -950,6 +957,7 @@ class Int64Int32:
 	
 class Int64Int64:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__key = PBField.new("key", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
@@ -1005,6 +1013,7 @@ class Int64Int64:
 	
 class Int32Int32:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__key = PBField.new("key", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -1060,6 +1069,7 @@ class Int32Int32:
 	
 class Int32Int64:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__key = PBField.new("key", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -1115,6 +1125,7 @@ class Int32Int64:
 	
 class Int32List:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __list_default: Array[int] = []
@@ -1157,6 +1168,7 @@ class Int32List:
 	
 class Int64List:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __list_default: Array[int] = []
@@ -1199,6 +1211,7 @@ class Int64List:
 	
 class Int32Map:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __value_default: Array = []
@@ -1238,6 +1251,7 @@ class Int32Map:
 	
 	class map_type_value:
 		func _init():
+			@warning_ignore("unused_variable")
 			var service
 			
 			__key = PBField.new("key", PB_DATA_TYPE.INT32, PB_RULE.REQUIRED, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -1316,6 +1330,7 @@ class Int32Map:
 	
 class Int32Int64Map:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __value_default: Array = []
@@ -1355,6 +1370,7 @@ class Int32Int64Map:
 	
 	class map_type_value:
 		func _init():
+			@warning_ignore("unused_variable")
 			var service
 			
 			__key = PBField.new("key", PB_DATA_TYPE.INT32, PB_RULE.REQUIRED, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -1433,6 +1449,7 @@ class Int32Int64Map:
 	
 class StringKeyValue:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__key = PBField.new("key", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
