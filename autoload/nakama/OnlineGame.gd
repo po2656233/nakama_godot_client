@@ -90,6 +90,12 @@ func getGameList(kind:int=-1):
 		games_data = result
 	return result
 
+# 获取收藏列表
+func getFavoriteList():
+	var result = await RpcData("favorite_list")
+	return result
+
+
 # 获取牌桌列表
 func getTabelList(payload:Dictionary):
 	var request = homeProto.GetTableListReq.new()
@@ -100,7 +106,7 @@ func getTabelList(payload:Dictionary):
 	request.set_pageNum(payload.get("pageNum",2))
 	request.set_pageSize(payload.get("pageSize",20))
 	var result = await RpcData("table_list",payload)
-	print("牌桌列表 反馈:",result)
+	# print("牌桌列表 反馈:",result)
 	return result
 
 # 获取游戏名称

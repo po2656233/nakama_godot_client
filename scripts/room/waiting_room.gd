@@ -7,6 +7,7 @@ var max_players = 4
 var last_wait_time = 5
 var time_left:float = 20.0
 var room_id = ""
+var rid = 0
 var current_players = []
 @onready var player_list = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerList
 @onready var waiting_animation = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WaitingAnimation
@@ -35,6 +36,7 @@ func reset(roomId: String = "",playerMax:int=10):
 	cancleBtn.disabled = false
 	max_players = playerMax
 	room_id = roomId
+	current_players = []
 	if playerMax > 3:
 		if playerMax%5 == 0:
 			player_list.columns = floor(playerMax/5.0)
@@ -59,6 +61,7 @@ func add_player(player_uid,player_name: String,player_avatar = null):
 	player_item.set_player_info(player_uid,player_name,player_avatar)
 	player_list.add_child(player_item)
 	current_players.append(player_name)
+	print("加入房间", player_name, " 剩下", current_players)
 	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 	if current_players.size() >= max_players:
 		room_info.text += "  [color=red](满)[/color]"
@@ -67,17 +70,18 @@ func add_player(player_uid,player_name: String,player_avatar = null):
 		SignalManager.FullRoomSIG.emit(room_id)
 
 # 离开房间
-func remove_player(player_name: String):
+func remove_player(uid: String):
 	if  time_left <= 1.0:
 		return
 	for player_item in player_list.get_children():
-		print("离开房间",player_item.getUserName())
-		if player_item.getUserName() == player_name:
+		var playerUid = player_item.getUserId()
+		if playerUid == uid:
+			var username =  player_item.getUserName()
+			current_players.erase(username)
 			player_list.remove_child(player_item)
-			current_players.erase(player_name)
-			print("离开房间", player_name, " 剩下", current_players)
-			if OnlineLogin.get_my_name() != player_name:
-				PopupManager.show_dynamic("%s  已离开房间"%[player_name])
+			print("离开房间", username, " 剩下", current_players)
+			if playerUid != uid:
+				PopupManager.show_dynamic("%s  已离开房间"%[username])
 			countdown.stop()
 			countdown.hide()
 			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
@@ -120,7 +124,6 @@ func _on_cancel_button_pressed():
 		tween.kill()
 	countdown.stop()
 	countdown.hide()
-	remove_player(OnlineLogin.get_my_name())
 	quitRoomSIG.emit()
 
 # func _debug_add_test_players():

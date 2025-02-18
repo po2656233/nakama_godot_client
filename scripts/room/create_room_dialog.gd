@@ -60,15 +60,19 @@ func _on_tax_value_changed(value: float):
 
 
 func _on_game_type_selected(index: int):
+	if game_type_option.item_count == 0:
+		return
 	var game = game_type_option.get_item_metadata(index)
-	if game and game.max_player != -1:
-		players_spin_box.max_value = game.max_player
-		players_spin_box.value = game.max_player
-		players_spin_box.editable = false
-		print("max_player: ", game.max_player)
-	else:
-		players_spin_box.editable = true
-		players_spin_box.value = game.max_player
+	if game:
+		if game.max_player != -1:
+			players_spin_box.max_value = game.max_player
+			players_spin_box.value = game.max_player
+			players_spin_box.editable = false
+			print("max_player: ", game.max_player)
+		else:
+			players_spin_box.value = game.max_player
+			players_spin_box.editable = true
+
 
 func _on_cancel_pressed():
 	hide()

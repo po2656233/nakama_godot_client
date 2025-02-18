@@ -1,0 +1,10 @@
+[config]
+
+name="WifiPlugin"
+binary_type="local"
+binary="WifiPlugin.aar"
+
+[dependencies]
+
+remote=[]
+local=[]

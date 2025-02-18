@@ -10,8 +10,9 @@ func set_player_info(player_uid, player_name,player_avatar = null):
     uid = player_uid
     $PlayerName.text = player_name
     if player_avatar:
-        color_rect.visible = false
-        $PlayerAvatar.texture = await Util.load_texture(player_avatar)
+        if color_rect: 
+            color_rect.visible = false
+        $PlayerAvatar/TextureRect.texture = await Util.load_texture_async(player_avatar)
     pass
 
 func getUserName():
@@ -21,4 +22,4 @@ func getUserId():
     return uid
 
 func getAvatar():   
-    return $PlayerAvatar.texture
+    return $PlayerAvatar/TextureRect.texture

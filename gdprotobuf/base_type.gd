@@ -857,48 +857,6 @@ class Double:
 			return PB_ERR.PARSE_INCOMPLETE
 		return result
 	
-class String:
-	func _init():
-		@warning_ignore("unused_variable")
-		var service
-		
-		__value = PBField.new("value", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
-		service = PBServiceField.new()
-		service.field = __value
-		data[__value.tag] = service
-		
-	var data = {}
-	
-	var __value: PBField
-	func get_value() -> String:
-		return __value.value
-	func clear_value() -> void:
-		data[1].state = PB_SERVICE_STATE.UNFILLED
-		__value.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
-	func set_value(value : String) -> void:
-		__value.value = value
-	
-	func _to_string() -> String:
-		return PBPacker.message_to_string(data)
-		
-	func to_bytes() -> PackedByteArray:
-		return PBPacker.pack_message(data)
-		
-	func from_bytes(bytes : PackedByteArray, offset : int = 0, limit : int = -1) -> int:
-		var cur_limit = bytes.size()
-		if limit != -1:
-			cur_limit = limit
-		var result = PBPacker.unpack_message(data, bytes, offset, cur_limit)
-		if result == cur_limit:
-			if PBPacker.check_required(data):
-				if limit == -1:
-					return PB_ERR.NO_ERRORS
-			else:
-				return PB_ERR.REQUIRED_FIELDS
-		elif limit == -1 && result > 0:
-			return PB_ERR.PARSE_INCOMPLETE
-		return result
-	
 class Int64Int32:
 	func _init():
 		@warning_ignore("unused_variable")

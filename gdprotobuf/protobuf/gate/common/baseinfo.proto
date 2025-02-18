@@ -299,15 +299,16 @@ message TableInfo{
   int32    state = 9;       // 状态
   int32    mode = 10;        // 模式
   int32    section = 11;     // 赛制
-  int32    maxSitter = 12;   // 客人数量(即:当前玩家数量)
-  int64    enterScore = 13;   // 初始积分(携带的积分)
-  int64    baseScore = 14;   // 初始积分(携带的积分)
-  int64    openTime = 15;   // 开启时间
-  int64    closeTime = 16;   // 关停时间
-  string   creatorId = 17;
-  string   name = 18;        // 桌牌名称
-  string   creator = 19;
-  string   description = 20;
+  int32    sitCount = 12;   // 客人数量(即:当前玩家数量)
+  int32    maxSitter = 13;   // 最大客人数量
+  int64    enterScore = 14;   // 初始积分(携带的积分)
+  int64    baseScore = 15;   // 初始积分(携带的积分)
+  int64    openTime = 16;   // 开启时间
+  int64    closeTime = 17;   // 关停时间
+  string   creatorId = 18;
+  string   name = 19;        // 桌牌名称
+  string   creator = 20;
+  string   description = 21;
 }
 //////////////////////////////////[聊天信息]/////////////////////////////////////////
 message ClubApplyInfo {

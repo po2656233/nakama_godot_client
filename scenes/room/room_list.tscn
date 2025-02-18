@@ -167,8 +167,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2k3vw")
 items_per_page = 6
-button_size = null
-spacing = null
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1

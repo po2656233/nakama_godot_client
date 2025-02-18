@@ -95,12 +95,19 @@ signal CancleGameSIG(gid)
 @warning_ignore("unused_signal")
 signal ExitGameSIG(gid) 
 
+# 创建房间
+@warning_ignore("unused_signal")
+signal CreateRoomSIG(rid) 
+# 删除房间
+@warning_ignore("unused_signal")
+signal RemoveRoomSIG(rid) 
+
 # 加入房间
 @warning_ignore("unused_signal")
 signal JoinRoomSIG(rid) 
 # 退出房间
 @warning_ignore("unused_signal")
-signal ExitRoomSIG(rid) 
+signal LeaveRoomSIG(rid) 
 
 # 房间满员
 @warning_ignore("unused_signal")

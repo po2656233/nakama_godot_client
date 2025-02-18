@@ -2748,47 +2748,52 @@ class TableInfo:
 		service.field = __section
 		data[__section.tag] = service
 		
-		__maxSitter = PBField.new("maxSitter", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 12, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
+		__sitCount = PBField.new("sitCount", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 12, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
+		service = PBServiceField.new()
+		service.field = __sitCount
+		data[__sitCount.tag] = service
+		
+		__maxSitter = PBField.new("maxSitter", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 13, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
 		service = PBServiceField.new()
 		service.field = __maxSitter
 		data[__maxSitter.tag] = service
 		
-		__enterScore = PBField.new("enterScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 13, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__enterScore = PBField.new("enterScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 14, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
 		service = PBServiceField.new()
 		service.field = __enterScore
 		data[__enterScore.tag] = service
 		
-		__baseScore = PBField.new("baseScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 14, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__baseScore = PBField.new("baseScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 15, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
 		service = PBServiceField.new()
 		service.field = __baseScore
 		data[__baseScore.tag] = service
 		
-		__openTime = PBField.new("openTime", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 15, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__openTime = PBField.new("openTime", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 16, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
 		service = PBServiceField.new()
 		service.field = __openTime
 		data[__openTime.tag] = service
 		
-		__closeTime = PBField.new("closeTime", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 16, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__closeTime = PBField.new("closeTime", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 17, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
 		service = PBServiceField.new()
 		service.field = __closeTime
 		data[__closeTime.tag] = service
 		
-		__creatorId = PBField.new("creatorId", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 17, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		__creatorId = PBField.new("creatorId", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 18, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
 		service = PBServiceField.new()
 		service.field = __creatorId
 		data[__creatorId.tag] = service
 		
-		__name = PBField.new("name", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 18, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		__name = PBField.new("name", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 19, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
 		service = PBServiceField.new()
 		service.field = __name
 		data[__name.tag] = service
 		
-		__creator = PBField.new("creator", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 19, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		__creator = PBField.new("creator", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 20, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
 		service = PBServiceField.new()
 		service.field = __creator
 		data[__creator.tag] = service
 		
-		__description = PBField.new("description", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 20, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		__description = PBField.new("description", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 21, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
 		service = PBServiceField.new()
 		service.field = __description
 		data[__description.tag] = service
@@ -2894,11 +2899,20 @@ class TableInfo:
 	func set_section(value : int) -> void:
 		__section.value = value
 	
+	var __sitCount: PBField
+	func get_sitCount() -> int:
+		return __sitCount.value
+	func clear_sitCount() -> void:
+		data[12].state = PB_SERVICE_STATE.UNFILLED
+		__sitCount.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT32]
+	func set_sitCount(value : int) -> void:
+		__sitCount.value = value
+	
 	var __maxSitter: PBField
 	func get_maxSitter() -> int:
 		return __maxSitter.value
 	func clear_maxSitter() -> void:
-		data[12].state = PB_SERVICE_STATE.UNFILLED
+		data[13].state = PB_SERVICE_STATE.UNFILLED
 		__maxSitter.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT32]
 	func set_maxSitter(value : int) -> void:
 		__maxSitter.value = value
@@ -2907,7 +2921,7 @@ class TableInfo:
 	func get_enterScore() -> int:
 		return __enterScore.value
 	func clear_enterScore() -> void:
-		data[13].state = PB_SERVICE_STATE.UNFILLED
+		data[14].state = PB_SERVICE_STATE.UNFILLED
 		__enterScore.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
 	func set_enterScore(value : int) -> void:
 		__enterScore.value = value
@@ -2916,7 +2930,7 @@ class TableInfo:
 	func get_baseScore() -> int:
 		return __baseScore.value
 	func clear_baseScore() -> void:
-		data[14].state = PB_SERVICE_STATE.UNFILLED
+		data[15].state = PB_SERVICE_STATE.UNFILLED
 		__baseScore.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
 	func set_baseScore(value : int) -> void:
 		__baseScore.value = value
@@ -2925,7 +2939,7 @@ class TableInfo:
 	func get_openTime() -> int:
 		return __openTime.value
 	func clear_openTime() -> void:
-		data[15].state = PB_SERVICE_STATE.UNFILLED
+		data[16].state = PB_SERVICE_STATE.UNFILLED
 		__openTime.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
 	func set_openTime(value : int) -> void:
 		__openTime.value = value
@@ -2934,7 +2948,7 @@ class TableInfo:
 	func get_closeTime() -> int:
 		return __closeTime.value
 	func clear_closeTime() -> void:
-		data[16].state = PB_SERVICE_STATE.UNFILLED
+		data[17].state = PB_SERVICE_STATE.UNFILLED
 		__closeTime.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
 	func set_closeTime(value : int) -> void:
 		__closeTime.value = value
@@ -2943,7 +2957,7 @@ class TableInfo:
 	func get_creatorId() -> String:
 		return __creatorId.value
 	func clear_creatorId() -> void:
-		data[17].state = PB_SERVICE_STATE.UNFILLED
+		data[18].state = PB_SERVICE_STATE.UNFILLED
 		__creatorId.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
 	func set_creatorId(value : String) -> void:
 		__creatorId.value = value
@@ -2952,7 +2966,7 @@ class TableInfo:
 	func get_name() -> String:
 		return __name.value
 	func clear_name() -> void:
-		data[18].state = PB_SERVICE_STATE.UNFILLED
+		data[19].state = PB_SERVICE_STATE.UNFILLED
 		__name.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
 	func set_name(value : String) -> void:
 		__name.value = value
@@ -2961,7 +2975,7 @@ class TableInfo:
 	func get_creator() -> String:
 		return __creator.value
 	func clear_creator() -> void:
-		data[19].state = PB_SERVICE_STATE.UNFILLED
+		data[20].state = PB_SERVICE_STATE.UNFILLED
 		__creator.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
 	func set_creator(value : String) -> void:
 		__creator.value = value
@@ -2970,7 +2984,7 @@ class TableInfo:
 	func get_description() -> String:
 		return __description.value
 	func clear_description() -> void:
-		data[20].state = PB_SERVICE_STATE.UNFILLED
+		data[21].state = PB_SERVICE_STATE.UNFILLED
 		__description.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
 	func set_description(value : String) -> void:
 		__description.value = value

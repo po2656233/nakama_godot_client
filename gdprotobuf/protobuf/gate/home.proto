@@ -67,6 +67,13 @@ message GetUserInfoReq{
 message GetUserInfoResp{
   UserInfo info = 1;
 }
+// 获取收藏列表
+message GetTableFavoriteListReq{
+  string uid = 1;
+}
+message GetTableFavoriteListResp{
+  repeated int64 tidList = 1;
+}
 ////////////////选择分类//////////////////////////////////////
 //选择分类
 message ChooseClassReq{
@@ -96,7 +103,27 @@ message JoinTableReq{
 message JoinTableResp{
   int64 tableId = 1;          // 桌台ID
   int64 chairId = 2;         // 桌台编号
-  GameInfo info = 3;          // 游戏信息
+  string uid = 3;            // 游戏信息
+  string username = 4;       // 玩家名称
+}
+// 收藏牌桌
+message FavoriteTableReq{
+  int64 tableId = 1;      // 桌台ID
+  string uid = 2;         //
+  bool isFavorite = 3;
+}
+message FavoriteTableResp{
+  int64 tableId = 1;      // 桌台ID
+  string uid = 2;         //
+  bool isFavorite = 3;
+}
+message LeaveTableReq{
+  int64 tableId = 1;         // 桌台ID
+}
+message LeaveTableResp{
+  int64 tableId = 1;          // 桌台ID
+  int64 chairId = 2;         // 桌台编号
+  string uid = 3;            // 游戏信息
 }
 //////////////////////////////////////////////////
 //创建房间---------------
