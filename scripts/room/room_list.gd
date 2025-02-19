@@ -56,7 +56,7 @@ var favorite_list = []
 func _ready():
 	SettingsManager.show_settings()
 	SceneManager.set_previous_name("roomlist")
-	# WindowDrag.register_drag_zone(self)
+	WindowDrag.register_drag_zone(self)
 
 	# 适配房间子项的列数
 	var width = get_viewport_rect().size.x
@@ -91,8 +91,9 @@ func _ready():
 	waitingStart.quitRoomSIG.connect(_on_cancel_waiting)
 	SignalManager.CreateRoomSIG.connect(_recv_created_room)
 	SignalManager.RemoveRoomSIG.connect(_recv_remove_room)
-	SignalManager.JoinRoomSIG.connect(_recv_join_room)
+	# SignalManager.JoinRoomSIG.connect(_recv_join_room)
 	# SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
+	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
 	SignalManager.MatchPresenceEventSIG.connect(_on_received_match_presence)
 	SignalManager.TableOnlineSIG.connect(_on_received_table_online)
 	pass
@@ -429,8 +430,14 @@ func _recv_remove_room(data: Dictionary):
 		remove(data)
 	pass
 
-func _recv_join_room(data: Dictionary):
-	print("加入房间:", data)
+func _on_received_match_state(data):
+	if data.op_code == 101:
+		var obj = JSON.parse_string(data.data)
+		for info in obj.infos:
+			if waitingStart.room_id == info.mid:
+				waitingStart.add_player(info.uid, info.username)
+		pass
+	print("匹配状态:", data)
 	pass
 
 func _on_received_match_presence(data):

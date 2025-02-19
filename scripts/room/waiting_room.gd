@@ -36,6 +36,8 @@ func reset(roomId: String = "",playerMax:int=10):
 	max_players = playerMax
 	room_id = roomId
 	current_players = []
+	for child in player_list.get_children():
+		child.queue_free()
 	if playerMax > 3:
 		if playerMax%5 == 0:
 			player_list.columns = floor(playerMax/5.0)
@@ -104,7 +106,7 @@ func _on_countdown_timeout():
 		# cancleBtn.disabled = true
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
-		SceneManager.switch_to_scene("xiangqi")
+		SceneManager.switch_to_scene("home")
 
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):

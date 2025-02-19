@@ -1,6 +1,6 @@
 [gd_scene load_steps=40 format=3 uid="uid://b6j8g4q3y7m5n"]
 
-[ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_room"]
+[ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_gnanh"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
 [ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_mcopm"]
 [ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
@@ -237,7 +237,7 @@ pivot_offset = Vector2(350, 60)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
-script = ExtResource("1_room")
+script = ExtResource("1_gnanh")
 
 [node name="Author" type="Label" parent="."]
 layout_mode = 2

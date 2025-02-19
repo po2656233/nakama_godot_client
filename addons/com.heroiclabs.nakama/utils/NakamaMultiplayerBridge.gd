@@ -231,7 +231,11 @@ func _generate_id(session_id: String) -> int:
 
 func _map_id_to_session(peer_id: int, session_id: String) -> void:
 	_id_map[peer_id] = session_id
-	_users[session_id].peer_id = peer_id
+	if not _users.has(session_id):
+		_users[session_id] = User.new(peer_id)  # 初始化嵌套字典
+	else:
+		_users[session_id].peer_id = peer_id
+	pass
 
 func _host_add_peer(presence) -> void:
 	var peer_id = _generate_id(presence.session_id)

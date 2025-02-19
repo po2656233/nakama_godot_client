@@ -300,6 +300,13 @@ func joinMatch(p_match_id : String, p_metadata = null):
 		return
 	return await Online.nakama_socket.join_match_async(p_match_id,p_metadata)
 
+# 加入匹配
+func joinMatched(p_metadata):
+	if not Online.nakama_socket:
+		PopupManager.show_dynamic("未连接服务器")
+		return
+	return await Online.nakama_socket.join_matched_async(p_metadata)
+
 # 离开匹配
 func leaveMatch(p_match_id : String):
 	if not Online.nakama_socket:

@@ -191,6 +191,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_8pgp0")
 script = ExtResource("1_tlue5")
+gamename = null
+maxplayer = null
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
