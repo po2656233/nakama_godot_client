@@ -125,6 +125,12 @@ message LeaveTableResp{
   int64 chairId = 2;         // 桌台编号
   string uid = 3;            // 游戏信息
 }
+message JoinMatchReq{
+  string mid = 1;         // 桌台ID
+}
+message JoinMatchResp{
+  repeated MatchInfo infos = 1; // 匹配信息
+}
 //////////////////////////////////////////////////
 //创建房间---------------
 message CreateRoomReq {

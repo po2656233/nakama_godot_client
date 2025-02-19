@@ -2798,6 +2798,11 @@ class TableInfo:
 		service.field = __description
 		data[__description.tag] = service
 		
+		__mid = PBField.new("mid", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 22, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		service = PBServiceField.new()
+		service.field = __mid
+		data[__mid.tag] = service
+		
 	var data = {}
 	
 	var __id: PBField
@@ -2988,6 +2993,99 @@ class TableInfo:
 		__description.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
 	func set_description(value : String) -> void:
 		__description.value = value
+	
+	var __mid: PBField
+	func get_mid() -> String:
+		return __mid.value
+	func clear_mid() -> void:
+		data[22].state = PB_SERVICE_STATE.UNFILLED
+		__mid.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_mid(value : String) -> void:
+		__mid.value = value
+	
+	func _to_string() -> String:
+		return PBPacker.message_to_string(data)
+		
+	func to_bytes() -> PackedByteArray:
+		return PBPacker.pack_message(data)
+		
+	func from_bytes(bytes : PackedByteArray, offset : int = 0, limit : int = -1) -> int:
+		var cur_limit = bytes.size()
+		if limit != -1:
+			cur_limit = limit
+		var result = PBPacker.unpack_message(data, bytes, offset, cur_limit)
+		if result == cur_limit:
+			if PBPacker.check_required(data):
+				if limit == -1:
+					return PB_ERR.NO_ERRORS
+			else:
+				return PB_ERR.REQUIRED_FIELDS
+		elif limit == -1 && result > 0:
+			return PB_ERR.PARSE_INCOMPLETE
+		return result
+	
+class MatchInfo:
+	func _init():
+		@warning_ignore("unused_variable")
+		var service
+		
+		__mid = PBField.new("mid", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		service = PBServiceField.new()
+		service.field = __mid
+		data[__mid.tag] = service
+		
+		__uid = PBField.new("uid", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		service = PBServiceField.new()
+		service.field = __uid
+		data[__uid.tag] = service
+		
+		__username = PBField.new("username", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 3, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		service = PBServiceField.new()
+		service.field = __username
+		data[__username.tag] = service
+		
+		__headicon = PBField.new("headicon", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 4, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		service = PBServiceField.new()
+		service.field = __headicon
+		data[__headicon.tag] = service
+		
+	var data = {}
+	
+	var __mid: PBField
+	func get_mid() -> String:
+		return __mid.value
+	func clear_mid() -> void:
+		data[1].state = PB_SERVICE_STATE.UNFILLED
+		__mid.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_mid(value : String) -> void:
+		__mid.value = value
+	
+	var __uid: PBField
+	func get_uid() -> String:
+		return __uid.value
+	func clear_uid() -> void:
+		data[2].state = PB_SERVICE_STATE.UNFILLED
+		__uid.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_uid(value : String) -> void:
+		__uid.value = value
+	
+	var __username: PBField
+	func get_username() -> String:
+		return __username.value
+	func clear_username() -> void:
+		data[3].state = PB_SERVICE_STATE.UNFILLED
+		__username.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_username(value : String) -> void:
+		__username.value = value
+	
+	var __headicon: PBField
+	func get_headicon() -> String:
+		return __headicon.value
+	func clear_headicon() -> void:
+		data[4].state = PB_SERVICE_STATE.UNFILLED
+		__headicon.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_headicon(value : String) -> void:
+		__headicon.value = value
 	
 	func _to_string() -> String:
 		return PBPacker.message_to_string(data)

@@ -64,7 +64,7 @@ func RpcListData(funcName, payload:Dictionary={}, sort_field:String=""):
 			)
 		return sorted
 	return []
-####################################################################################
+#########################RPC###########################################################
 func favoriteTable(payload):
 	var result = await self.RpcData("favorite_table",payload)
 	return result
@@ -77,9 +77,25 @@ func leaveTable(payload):
 	var result = await self.RpcData("leave_table",payload)
 	return result
 
+###########################################################################
+func joinMatch(mid,payload=null):
+	if Online.nakama_socket:
+		var result = await Online.nakama_socket.join_match_async(mid,payload)
+		if result.is_exception():
+			PopupManager.show_dynamic("加入匹配失败 "+result.get_exception().message)
+			return false
+		return true
+	return false
 
-
-
+func LeaveMatch(mid):
+	if Online.nakama_socket:
+		var result = await Online.nakama_socket.leave_match_async(mid)
+		if result.is_exception():
+			print("退出匹配失败 ",result.get_exception().message)
+			PopupManager.show_dynamic("退出匹配失败 "+result.get_exception().message)
+			return false
+		return true
+	return false
 ########################################################################################
 # 获取游戏列表
 func getGameList(kind:int=-1):

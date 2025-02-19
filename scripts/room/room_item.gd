@@ -63,10 +63,10 @@ func getBBCodeContent(field, value):
 	
 
 func setup(data: Dictionary):
-	room_data = data
+	room_data = data.duplicate()
 	room_name_label.text = data.get("room_name", "")
 	game_name_label.text = data.get("game_name", "")
-	room_id_label.text = data.get("room_id", "")
+	room_id_label.text = data.get("room_id", "").substr(0, 16)
 	base_score_label.text = str(data.get("base_score", 0))+" 分"
 	player_count_label.text = "%d/%d" % [data.get("player_count", 0), data.get("max_players", 0)]
 	status_label.text = status_name[data.get("status", 0)]
@@ -96,18 +96,17 @@ func setup(data: Dictionary):
 	# 设置详情面板数据
 	var content = getBBCodeContent("房间名称", data.get("room_name", ""))
 	content += getBBCodeContent("游戏类型", data.get("game_name", ""))
-	content += getBBCodeContent("房间ID", data.get("room_id", ""))
+	content += getBBCodeContent("房间ID", data.get("room_id", "").substr(0, 16))
 	content += getBBCodeContent("底分", str(data.get("base_score", 0)))
 	content += getBBCodeContent("入场分", str(data.get("entry_score", 0)))
 	content += getBBCodeContent("房间状态", status_name[data.get("status", 0)])
+	content += getBBCodeContent("当前人数", str(data.get("player_count", 0)))
 	content += getBBCodeContent("最大人数", str(data.get("max_players", 0)))
 	content += getBBCodeContent("创建时间", data.get("create_time", ""))
 	content += getBBCodeContent("房间描述", data.get("description", ""))
 	# var rules = data.get("rules", []).map(func(rule): return "- " + rule)
 	# content += getBBCodeContent("规则", rules)
-	var players = data.get("players", []).map(func(player): return "- " + player.username)
-	content += getBBCodeContent("当前玩家", players)
-	detail_info.clear()
+	# var players = data.get("players", []).map(func(player): return "- " + player.username)
 	detail_info.text = content
 
 	# 设置完数据后启动脉冲动画

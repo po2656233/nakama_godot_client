@@ -35,6 +35,8 @@ func _ready() -> void:
 
 # 保存账号密码
 func on_credentials() -> void:
+	if login_method == 'dev':
+		return
 	var file = FileAccess.open(CREDENTIALS_FILENAME, FileAccess.WRITE)
 	var credentials = {
 		email = email,

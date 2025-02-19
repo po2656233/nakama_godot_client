@@ -371,7 +371,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 # 加载本地历史记录
 func load_local_history():
 	message_id_cache = Util.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
-	print("加载本地历史记录:",message_id_cache)
+	# print("加载本地历史记录:",message_id_cache)
 	# var channelList = DataManager.get_instance().get_channel_list(uid)
 	# print("加载本地玩家渠道:",channelList)
 	ensure_scroll_to()

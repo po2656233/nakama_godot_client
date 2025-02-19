@@ -137,7 +137,7 @@ func fetch_older_messages(channel_id: String, cursor: String, limit: int = 20):
 		var content = JSON.parse_string(message.content)
 		if content:
 			messages.append(message)
-	print("获取当前历史大小:",messages.size()," 上一游标:", result.prev_cursor," 下一游标:", result.next_cursor)
+	# print("获取当前历史大小:",messages.size()," 上一游标:", result.prev_cursor," 下一游标:", result.next_cursor)
 	chat_history_received.emit(messages)
 	return result.next_cursor
 
@@ -147,7 +147,7 @@ func fetch_full_chat_history(channel_id: String, limit: int = 20):
 	if result.is_exception():
 		print("Failed to get chat history: ", result.get_exception().message)
 		return
-	print("获取当前历史大小(首次):",result.messages.size()," prev_cursor:",result.prev_cursor," next_cursor:", result.next_cursor)
+	# print("获取当前历史大小(首次):",result.messages.size()," prev_cursor:",result.prev_cursor," next_cursor:", result.next_cursor)
 	var messages = []
 	for message in result.messages:
 		var content = JSON.parse_string(message.content)
@@ -294,10 +294,10 @@ func get_friends_list():
 		friend_names.append(friend.user.username)
 	
 	# 订阅好友状态
-	if not friend_ids.is_empty(): 
-		var status_result = await Online.nakama_socket.follow_users_async(friend_ids,friend_names)
-		if status_result.is_exception():
-			print("Error following users: ", status_result.get_exception().message)
+	# if not friend_ids.is_empty() and friend_names.size() == friend_ids.size(): 
+	# 	var status_result = await Online.nakama_socket.follow_users_async(friend_ids,friend_names)
+	# 	if status_result.is_exception():
+	# 		print("Error following users: ", status_result.get_exception().message)
 	# print("好友列表: ", ret)
 	return result
 

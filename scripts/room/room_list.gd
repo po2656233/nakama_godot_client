@@ -49,28 +49,7 @@ var pre_room_count = 0
 var selected_room_info = {}
 var already_selectd_favorite = false
 var tween:Tween
-var room_list_info = [
-	# {
-	# 	"room_name": "军棋道场",
-	# 	"game_name": "军棋",
-	# 	"game_type": 6,
-	# 	"room_id": "R010",
-	# 	"is_locked": false,
-	# 	"creator_id": "xxxxxx01",
-	# 	"base_score": 500,
-	# 	"entry_score": 5000,
-	# 	"current_round": 1,
-	# 	"player_count": 2,
-	# 	"max_players": 2,
-	# 	"status": "进行中",
-	# 	"create_time": "2024-01-08 10:30:00",
-	# 	"description": "围棋爱好者的修炼场所",
-	# 	"rules": ["中国规则", "60分钟限时"],
-	# 	"players": [{"uid": "xxxxxx01", "username": "黑棋手","headIcon":""}, {"uid": "xxxxxx02", "username": "白棋手"}],
-	# 	"favorite": true,
-	# },
-	# }
-]
+var room_list_info = []
 var favorite_list = []
 
 # 准备
@@ -113,7 +92,9 @@ func _ready():
 	SignalManager.CreateRoomSIG.connect(_recv_created_room)
 	SignalManager.RemoveRoomSIG.connect(_recv_remove_room)
 	SignalManager.JoinRoomSIG.connect(_recv_join_room)
-	SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
+	# SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
+	SignalManager.MatchPresenceEventSIG.connect(_on_received_match_presence)
+	SignalManager.TableOnlineSIG.connect(_on_received_table_online)
 	pass
 
 # 添加房间数据
@@ -121,7 +102,7 @@ func append(data):
 	# print("添加 房间数据:", data)
 	room_list_info.append({
 			"id": data.get("id",0),
-			"room_id": str(data.get("id",0)).md5_text().substr(8, 16),
+			"room_id": data.get("mid",0), #str().md5_text().substr(8, 16),
 			"room_name": data.get("name",""),
 			"room_key": data.get("key",""), 
 			"is_locked": data.get("isLock",false),
@@ -135,7 +116,7 @@ func append(data):
 			"player_count": data.get("sitCount",0),
 			"max_players": data.get("maxSitter",0),
 			"status": data.get("state",""),
-			"create_time": data.get("openTime",""),
+			"create_time": Util.format_china_time(data.get("openTime",0),true) ,
 			"description": data.get("description",""),
 			"players": data.get("players",[]),
 		})
@@ -157,7 +138,7 @@ func loadRooms(creatorId="",order="",name1="",isDesc=true):
 		"pageNum":1,
 		"pageSize":20
 	})
-	if not result:
+	if not result or not result.has("items"):
 		return
 	for data in result.items:
 		append(data)
@@ -279,6 +260,16 @@ func _update_stats():
 	total_rooms_label.text = "总房间数: %d" % total_rooms
 	active_rooms_label.text = "活跃房间: %d" % active_rooms
 	total_players_label.text = "在线玩家: %d" % total_players
+	pass
+
+func _update_items(room_info):
+	if not room_info:
+		return
+	for child in room_container.get_children():
+		if child.room_data.room_id == room_info.room_id:
+			print("更新房间:", room_info)
+			child.setup(room_info)
+			return
 	pass
 
 # 保存数据
@@ -437,50 +428,61 @@ func _recv_remove_room(data: Dictionary):
 	if index == -1:
 		remove(data)
 	pass
-# 接收加入房间消息
+
 func _recv_join_room(data: Dictionary):
-	var index = -1
+	print("加入房间:", data)
+	pass
+
+func _on_received_match_presence(data):
+	var joins = []
+	var leaves = []
+	for adder in data.joins:
+		joins.append({
+			"uid": adder.user_id,
+			"username": adder.username
+		})
+		if waitingStart.room_id == data.match_id:
+			waitingStart.add_player(adder.user_id, adder.username)
+	for adder in data.leaves:
+		leaves.append({
+			"uid": adder.user_id,
+			"username": adder.username
+		})
+		if waitingStart.room_id == data.match_id:
+			waitingStart.remove_player(adder.user_id)
 	for i in range(room_list_info.size()):
-		if room_list_info[i].id == data.get("tableId",0):
-			index = i
-			room_list_info[i].player_count = data.get("chairId",0)
-			if waitingStart.room_id == room_list_info[i].room_id:
-				waitingStart.add_player(data.get("uid",""), data.get("username",""), data.get("headIcon",""))
-			print("加入房间后 人数:", room_list_info[i].player_count)
-			break
-	
-	for child in room_container.get_children():
-		if child is PanelContainer and child.room_data.id == data.tableId:
-			child.setup(room_list_info[index])
+		var info = room_list_info[i]
+		if info.room_id == data.match_id:
+			info.players.append_array(joins)
+			for j in leaves:
+				info.players.erase(j)
+			info.player_count = info.players.size()
+			room_list_info[i] = info
+			_update_items(info)
+			return 
+	pass
+
+func _on_received_table_online(data):
+	print("桌子在线:", data.mid)
+		# 清除现有房间
+	for info in room_list_info:
+		if info.room_id == data.mid:
+			info.player_count = data.online
+			_update_items(info)
 			return
 	pass
-# 接收离开房间消息
-func _recv_leave_room(data: Dictionary):
-	var index = -1
-	for i in range(room_list_info.size()):
-		if room_list_info[i].id == data.get("tableId",0):
-			index = i
-			room_list_info[i].player_count = data.get("chairId",0)
-			if waitingStart.room_id == room_list_info[i].room_id:
-				waitingStart.remove_player(data.get("uid",""))
-			print("离开房间后 人数:", room_list_info[i].player_count)
-			break
-	
-	for child in room_container.get_children():
-		if child is PanelContainer and child.room_data.id == data.tableId:
-			child.setup(room_list_info[index])
-			return
-	pass
+
 #################################################################
 
 # 取消等待
 func _on_cancel_waiting():
-	var result = await OnlineGame.leaveTable({
-		"tableId": selected_room_info.id,
-	})
+	print("离开房间:", selected_room_info.room_id)
+	var result = await OnlineGame.LeaveMatch(selected_room_info.room_id)
 	if not result:
+		print("离开房间失败")
 		return
 	waitingStart.hide()
+	waitingStart.remove_player(OnlineLogin.get_my_id())
 	if selected_room_info:
 		for i in range(selected_room_info.players.size()):
 			if selected_room_info.players[i].uid == OnlineLogin.get_my_id():
@@ -502,16 +504,14 @@ func _on_join_room(room_info: Dictionary):
 		waitingStart.add_player(player.uid, player.username, player.headIcon)
 
 	# 进入房间
-	var result = await OnlineGame.joinTable({
-		"tableId": room_info.id, 
-		"tableKey": room_info.room_key
-		})
+	var result = await OnlineGame.joinMatch(room_info.room_id,{
+		"name": room_info.room_name,
+	})
 	if not result:
 		#失败则返回 不用处理接口里统一处理了
 		return
 	print("加入房间成功",result)
 	selected_room_info = room_info
-
 	if room_info.is_locked:
 		jion_dialog.visible = true
 		jion_room.text = "%s\nID:%s"%[room_info.room_name,room_info.room_id]

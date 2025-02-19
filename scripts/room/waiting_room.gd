@@ -7,7 +7,6 @@ var max_players = 4
 var last_wait_time = 5
 var time_left:float = 20.0
 var room_id = ""
-var rid = 0
 var current_players = []
 @onready var player_list = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerList
 @onready var waiting_animation = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WaitingAnimation
@@ -62,7 +61,7 @@ func add_player(player_uid,player_name: String,player_avatar = null):
 	player_list.add_child(player_item)
 	current_players.append(player_name)
 	print("加入房间", player_name, " 剩下", current_players)
-	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
+	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 	if current_players.size() >= max_players:
 		room_info.text += "  [color=red](满)[/color]"
 		countdown.show()

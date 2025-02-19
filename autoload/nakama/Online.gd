@@ -25,7 +25,7 @@ var nakama_socket: NakamaSocket
 const BASE_RETRY_DELAY := 3.0  # 基础重试延迟（秒）
 const MAX_RETRY_DELAY := 15.0  # 最大重试延迟（秒）
 const MAX_RETRY_COUNT := 0	 # 0表示无限重试
-const RETRY_COUNT := 3	 # 0表示无限重试
+const RETRY_COUNT := 1	 # 重试次数
 # 状态变量
 var _retry_count := 0
 var _current_delay := BASE_RETRY_DELAY
@@ -40,7 +40,8 @@ enum EnBroadcast{
 	CreateTable = 1,
 	RemoveTable = 2,
 	JoinTable = 3,
-	LeaveTable = 4
+	LeaveTable = 4,
+	TableOnline = 5,
 }   
 
 # 初始化
@@ -119,6 +120,7 @@ func _connect_socket() -> void:
 	
 	connection_state_changed.emit("connected")
 	_reset_reconnect_state()
+	
 	# 监听socket事件
 	nakama_socket.connection_error.connect(_on_socket_disconnected)
 	nakama_socket.connected.connect(_on_socket_connected)
@@ -127,6 +129,8 @@ func _connect_socket() -> void:
 	nakama_socket.received_match_presence.connect(_on_received_match_presence)
 	nakama_socket.received_status_presence.connect(_on_received_status_presence)
 	nakama_socket.received_notification.connect(_on_received_notification)	
+	nakama_socket.received_channel_presence.connect(_on_channel_presence)
+	nakama_socket.received_channel_message.connect(_on_received_message)
 	pass
 
 # 断开socket
@@ -151,6 +155,7 @@ func _on_socket_connected() -> void:
 
 func _on_reset_session():
 	_disconnect_socket()
+	# 绑定登录失败后，继续重连
 	if OnlineLogin.login_failed.is_connected(_start_reconnect):
 		OnlineLogin.login_failed.disconnect(_start_reconnect)
 	OnlineLogin.login_failed.connect(_start_reconnect)
@@ -177,26 +182,31 @@ func _on_connection_state_changed(state: String):
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):
 	print("收到匹配的数据:", matchmaker_matched)
+	SignalManager.MatchMakerSIG.emit(matchmaker_matched)
 	pass
 
 # 收到匹配状态
 func _on_received_match_state(match_state):
 	print("收到匹配状态:", match_state)
+	SignalManager.MatchStateEventSIG.emit(match_state)
 	pass
 
 # 收到匹配玩家数据
 func _on_received_match_presence(match_presence):
 	print("收到匹配的玩家数据:", match_presence)
+	SignalManager.MatchPresenceEventSIG.emit(match_presence)
 	pass
 
 # 收到状态数据
 func _on_received_status_presence(status_presence):	
 	print("收到状态的玩家数据:", status_presence)
+	SignalManager.StatusPresenceEventSIG.emit(status_presence)
 	pass
 
 # 收到通知
 func _on_received_notification(notification1):
-	print("收到通知:", notification1)
+	print("收到通知:",notification1.subject," 内容:", notification1)
+	# SignalManager.NewNotifySIG.emit(notification1)
 	match notification1.subject:
 		"broadcast":
 			do_broadcast(notification1)
@@ -214,6 +224,19 @@ func _on_received_notification(notification1):
 			pass
 	pass
 
+func _on_channel_presence(channel_presence):
+	print("收到频道数据:", channel_presence)
+	pass
+
+func _on_received_message(channel_message):
+	print("收到消息:", channel_message)
+	SignalManager.ChannelMessageSIG.emit(channel_message)
+	pass
+
+# func _on_received_error(error):
+# 	print("收到错误:", error)
+# 	pass
+
 ########################全局信号转发####################################
 func do_broadcast(notification1):
 	var content = JSON.parse_string(notification1.content)
@@ -229,6 +252,9 @@ func do_broadcast(notification1):
 			pass
 		EnBroadcast.LeaveTable:
 			SignalManager.LeaveRoomSIG.emit(content)
+			pass
+		EnBroadcast.TableOnline:
+			SignalManager.TableOnlineSIG.emit(content)
 			pass
 		_:
 			push_warning("未知的广播类型:",notification1.code)
@@ -247,6 +273,7 @@ func _start_reconnect() -> void:
 		connection_state_changed.emit("waiting_to_reconnect")
 
 func _attempt_reconnect() -> void:
+	# 超过重试次数后，重新登录
 	if nakama_session and nakama_session.is_valid() and _retry_count < RETRY_COUNT:
 		connection_state_changed.emit("reconnecting")
 		print("尝试重连")

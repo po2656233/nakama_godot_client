@@ -1,5 +1,6 @@
 extends HBoxContainer
 
+
 @onready var color_rect = $PlayerAvatar/ColorRect
 var uid = ""
 func _ready():
@@ -11,7 +12,7 @@ func set_player_info(player_uid, player_name,player_avatar = null):
     $PlayerName.text = player_name
     if player_avatar:
         if color_rect: 
-            color_rect.visible = false
+            color_rect.hide()
         $PlayerAvatar/TextureRect.texture = await Util.load_texture_async(player_avatar)
     pass
 

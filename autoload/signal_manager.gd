@@ -109,6 +109,26 @@ signal JoinRoomSIG(rid)
 @warning_ignore("unused_signal")
 signal LeaveRoomSIG(rid) 
 
+# 桌子上的在线人数
+@warning_ignore("unused_signal")
+signal TableOnlineSIG(count) 
+
+# 匹配事件
+@warning_ignore("unused_signal")
+signal MatchPresenceEventSIG(evt) 
+
+# 匹配事件
+@warning_ignore("unused_signal")
+signal MatchMakerSIG(evt) 
+
+# 匹配状态
+@warning_ignore("unused_signal")
+signal MatchStateEventSIG(evt) 
+
+# 玩家状态事件
+@warning_ignore("unused_signal")
+signal StatusPresenceEventSIG(evt) 
+
 # 房间满员
 @warning_ignore("unused_signal")
 signal FullRoomSIG(rid) 

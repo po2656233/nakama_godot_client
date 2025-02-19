@@ -309,6 +309,13 @@ message TableInfo{
   string   name = 19;        // 桌牌名称
   string   creator = 20;
   string   description = 21;
+  string   mid = 22;      // 匹配ID
+}
+message MatchInfo{
+  string mid = 1;
+  string uid = 2;
+  string username = 3;
+  string headicon = 4;
 }
 //////////////////////////////////[聊天信息]/////////////////////////////////////////
 message ClubApplyInfo {
