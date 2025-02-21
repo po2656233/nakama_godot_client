@@ -285,6 +285,7 @@ func _attempt_reconnect() -> void:
 	if nakama_session and nakama_session.is_valid() and _retry_count < RETRY_COUNT:
 		connection_state_changed.emit("reconnecting")
 		print("尝试重连")
+		_retry_count += 1
 		await _connect_socket()
 	else:
 		if nakama_session:

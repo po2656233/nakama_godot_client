@@ -8,7 +8,7 @@ var game_card_scene = preload("res://scenes/gamelist/game_card.tscn")
 @onready var match_sucess = $MatchSuccess
 
 var game_id:int = -1
-
+var curMatchId = ""
 # 示例游戏数据
 # var games_data =[]
 var games_data =[
@@ -83,6 +83,7 @@ func _ready():
 			"state": item.state,
 		})
 	# 添加游戏
+	
 	for item in games_data:
 		on_add_game_data(item)
 	
@@ -121,9 +122,9 @@ func _on_match_cancel():
 	pass
 
 # 匹配成功
-func _on_match_sucess(_data):
-	match_sucess.reset(game_id,matching.maxplayer)
-	await get_tree().create_timer(1.5).timeout
+func _on_match_sucess(matchData):
+	curMatchId = matchData.match_id
+	match_sucess.reset(game_id, curMatchId, matching.maxplayer)
 	matching.hide()
 	match_sucess.start(1.0)
 	match_sucess.popup_centered()
@@ -131,12 +132,17 @@ func _on_match_sucess(_data):
 
 # 游戏取消
 func _on_game_cancel(_game_id):
+	await OnlineMatch.leaveMatch(curMatchId)
+	print("取消准备游戏 match_id:", curMatchId)
+	await get_tree().create_timer(1.5).timeout
+	PopupManager.show_dynamic("游戏已取消")
 	match_sucess.hide()
 	switch_controls(matching, scrollContainer)
 	pass
 
 # 游戏开始
 func _on_game_start(_game_id):
+	await get_tree().create_timer(1.0).timeout
 	PopupManager.show_dynamic("游戏开始")
 	SceneManager.switch_to_scene("xiangqi","custom",0.5)
 	pass

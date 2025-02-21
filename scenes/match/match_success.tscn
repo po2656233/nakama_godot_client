@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://riqfmggkqpfx"]
+[gd_scene load_steps=17 format=3 uid="uid://riqfmggkqpfx"]
 
 [ext_resource type="Script" path="res://scripts/match/match_success.gd" id="1_xxxxx"]
 [ext_resource type="AudioStream" uid="uid://8kbicuvoslr" path="res://assets/music/ding.mp3" id="2_bys0a"]
+[ext_resource type="Texture2D" uid="uid://ccvgj06knupmo" path="res://assets/room/item.png" id="2_fc1y7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxxxx"]
 bg_color = Color(0.133333, 0.133333, 0.180392, 0.960784)
@@ -11,13 +12,39 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_x2c8t"]
-font_size = 20
+font_size = 28
 font_color = Color(1, 1, 0.517647, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_3u3mi"]
+font_size = 20
 font_color = Color(0.533037, 0.533037, 0.533037, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_ooq0r"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnmft"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omtad"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqrgh"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvtgn"]
+draw_center = false
+
+[sub_resource type="SystemFont" id="SystemFont_2eegr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85xwb"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78plf"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20rj2"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnayj"]
 draw_center = false
 
 [node name="MatchSuccess" type="Window"]
@@ -29,8 +56,6 @@ exclusive = true
 unresizable = true
 borderless = true
 script = ExtResource("1_xxxxx")
-countdown = null
-gamename = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -50,7 +75,7 @@ grow_vertical = 2
 theme_override_constants/separation = 10
 
 [node name="HeaderLabel" type="Label" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "匹配成功"
@@ -69,7 +94,10 @@ label_settings = SubResource("LabelSettings_3u3mi")
 [node name="TimerLabel" type="RichTextLabel" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
 bbcode_enabled = true
+text = "进入游戏倒计时: 00 秒   "
 fit_content = true
 autowrap_mode = 0
 
@@ -88,17 +116,37 @@ theme_override_constants/separation = 20
 alignment = 1
 
 [node name="AcceptButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(135, 65)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_hover_color = Color(0.972549, 0.976471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.882353, 0.882353, 1)
+theme_override_colors/font_color = Color(0.0194218, 0.654311, 0.588068, 1)
+theme_override_fonts/font = SubResource("SystemFont_ooq0r")
+theme_override_font_sizes/font_size = 24
 theme_override_styles/focus = SubResource("StyleBoxFlat_cnmft")
+theme_override_styles/hover = SubResource("StyleBoxFlat_omtad")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uqrgh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vvtgn")
 text = "接受"
+icon = ExtResource("2_fc1y7")
+flat = true
+icon_alignment = 1
 
 [node name="DeclineButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(135, 65)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_pressed_color = Color(0.470076, 0.470076, 0.470076, 1)
+theme_override_colors/font_color = Color(0.566092, 1.38376e-06, 3.36915e-07, 1)
+theme_override_fonts/font = SubResource("SystemFont_2eegr")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxFlat_85xwb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_78plf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_20rj2")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tnayj")
 text = "拒绝"
+icon = ExtResource("2_fc1y7")
+flat = true
+icon_alignment = 1
 
 [node name="empty" type="Panel" parent="Panel/VBoxContainer"]
 layout_mode = 2

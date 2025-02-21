@@ -170,6 +170,8 @@ func _on_match_maker_event(p_matched: NakamaRTAPI.MatchmakerMatched):
 		players.append(player)
 	# if players.size() == maxplayer:服务器已经处理了
 	_on_match_success()
+	await get_tree().create_timer(1.0).timeout
+	match_sucess.emit(p_matched)
 	pass
 
 func _on_match_success():
@@ -183,7 +185,7 @@ func _on_match_success():
 	success_sound.play()
 	
 	# 这里添加切换到游戏场景的代码
-	match_sucess.emit(players)
+	
 	print("切换到游戏场景")
 
 func _on_match_failed():

@@ -32,6 +32,8 @@ func _ready() -> void:
 	WindowDrag.register_drag_zone(self)
 	if ProjectSettings.has_setting("username"):
 		usernameEdit.text = ProjectSettings.get("username")
+	# 登录成功后的跳转
+	loading.set_next_scene("home")
 	# # 创建HTTP请求节点
 	# http_request = HTTPRequest.new()
 	# add_child(http_request)

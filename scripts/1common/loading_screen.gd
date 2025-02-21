@@ -43,6 +43,7 @@ func close_loading():
 
 func set_next_scene(scene_name: String):
 	next_scene = scene_name
+	SceneManager.set_previous_name(next_scene)
 	pass
 
 func set_progress(value: float):

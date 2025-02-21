@@ -28,16 +28,16 @@ func _on_btn_zhanji_pressed() -> void:
 
 # 任务
 func _on_btn_renwu_pressed() -> void:
-	SceneManager.switch_to_scene("game","custom",0.5) 
+	SceneManager.switch_to_scene("game","custom",0.2) 
 	pass # Replace with function body.
 
 # 比赛
 func _on_btn_match_pressed() -> void:
-	SceneManager.switch_to_scene("roomlist","vertical-paint-brush",0.5) 
+	SceneManager.switch_to_scene("roomlist","vertical-paint-brush",0.2) 
 	pass # Replace with function body.
 
 # 匹配
 func _on_btn_start_pressed() -> void:
-	SceneManager.switch_to_scene("gamelist","horizontal-paint-brush",0.5) 
+	SceneManager.switch_to_scene("gamelist","horizontal-paint-brush",0.2) 
 	pass # Replace with function body.
 
