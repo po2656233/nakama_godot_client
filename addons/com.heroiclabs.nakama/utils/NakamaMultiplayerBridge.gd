@@ -234,7 +234,8 @@ func _map_id_to_session(peer_id: int, session_id: String) -> void:
 	if not _users.has(session_id):
 		_users[session_id] = User.new(peer_id)  # 初始化嵌套字典
 	else:
-		_users[session_id].peer_id = peer_id
+		#_users[session_id].peer_id = peer_id
+		pass
 	pass
 
 func _host_add_peer(presence) -> void:
@@ -278,8 +279,12 @@ func _on_nakama_socket_received_match_presence(event) -> void:
 
 		# If we are the host, and they don't yet have a peer id, then let's
 		# generate a new id for them and send all the necessary messages.
-		if _my_peer_id == 1 and _users[presence.session_id].peer_id == 0:
-			_host_add_peer(presence)
+		print("添加的匹配对象: ", presence)
+		_users[presence.session_id] = {
+			"peer_id": _generate_id(presence.session_id),
+		}
+		if _my_peer_id == 1 and presence.session_id != _my_session_id:
+			_host_add_peer(presence) 
 
 	for presence in event.leaves:
 		if not _users.has(presence.session_id):

@@ -12,6 +12,7 @@ signal timeleft(value) #还剩余多少时间
 @onready var timer = $Timer
 @onready var texiao = $DragonBones
 var time_left: float = 20.0
+var warn_left: float = 10.0
 var is_running: bool = false
 
 func _ready():
@@ -41,9 +42,10 @@ func update_time_label():
 		time_label.text = "%02d:%02d" % [minutes, seconds]
 	pass
 
-func start(total_time:float = 20.0):
+func start(totalTime:float = 20.0,warnTime:float = 10.0):
 	is_running = true
-	time_left = total_time
+	time_left = totalTime
+	warn_left = warnTime
 	timer.start()
 	update_time_label()
 	pass

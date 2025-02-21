@@ -159,9 +159,6 @@ func _refresh_room_list():
 	# 清除现有房间
 	for child in room_container.get_children():
 		child.queue_free()
-	
-	# 加载房间数据
-	await loadRooms()
 		
 	# 应用过滤器和排序
 	var filtered_rooms = _apply_filters(room_list_info)
@@ -286,6 +283,8 @@ func _save_data():
 
 # 加载保存的数据
 func _load_saved_data():
+	# 加载房间数据
+	await loadRooms()
 	if FileAccess.file_exists(SAVE_PATH):
 		var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 		var json_string = file.get_as_text()
@@ -346,8 +345,8 @@ func _on_show_favorites_toggled(button_pressed: bool):
 
 # 显示我创建的房间
 func _on_show_myrooms_toggled(button_pressed: bool):
+	await loadRooms(OnlineLogin.get_my_id()if button_pressed else "")
 	if button_pressed:
-		await loadRooms(OnlineLogin.get_my_id())
 		my_rooms = room_list_info
 		show_favorites.button_pressed = false
 		# 左右移动
@@ -422,12 +421,16 @@ func _recv_created_room(data: Dictionary):
 	var index = room_list_info.find(func(r): return r.id == data.id)
 	if index == -1:
 		append(data)
+		total_pages += 1
 	pass
 # 接收删除房间消息
 func _recv_remove_room(data: Dictionary):
 	var index = room_list_info.find(func(r): return r.id == data.id)
 	if index == -1:
 		remove(data)
+		total_pages -= 1
+		if total_pages < 0:
+			total_pages = 0
 	pass
 
 func _on_received_match_state(data):

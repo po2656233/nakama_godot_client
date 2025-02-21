@@ -60,9 +60,6 @@ blend_mode = 1
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hkqvs"]
 blend_mode = 1
 
-[sub_resource type="LabelSettings" id="LabelSettings_5s5my"]
-font_color = Color(0.299859, 0.709815, 0.648078, 1)
-
 [sub_resource type="SystemFont" id="SystemFont_803ka"]
 subpixel_positioning = 0
 
@@ -120,7 +117,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Front/MarginContainer/GameImage/FlowLight:material:shader_parameter/progress")
+tracks/1/path = NodePath("Front/GameFront/FlowLight:material:shader_parameter/progress")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -152,6 +149,9 @@ _data = {
 "hover": SubResource("Animation_hover")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_5s5my"]
+font_color = Color(0.299859, 0.709815, 0.648078, 1)
+
 [node name="GameCard" type="PanelContainer"]
 custom_minimum_size = Vector2(450, 0)
 anchors_preset = 15
@@ -171,19 +171,15 @@ script = ExtResource("1_xxxxx")
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="MarginContainer" type="MarginContainer" parent="Front"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="GameImage" type="TextureRect" parent="Front/MarginContainer"]
+[node name="GameFront" type="TextureRect" parent="Front"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_vertical = 3
 mouse_filter = 2
 texture = ExtResource("2_wmhxu")
 stretch_mode = 3
 
-[node name="GameTitle" type="Label" parent="Front/MarginContainer/GameImage"]
+[node name="GameTitle" type="Label" parent="Front/GameFront"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.101
@@ -200,7 +196,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
-[node name="FlowLight" type="TextureRect" parent="Front/MarginContainer/GameImage"]
+[node name="GameImage" type="TextureRect" parent="Front/GameFront"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 73.0
+offset_top = -89.0
+offset_right = -69.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FlowLight" type="TextureRect" parent="Front/GameFront"]
 material = SubResource("ShaderMaterial_06hqm")
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -216,7 +225,7 @@ size_flags_horizontal = 4
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_t1jci")
 
-[node name="DragonBonesDibeichang" type="DragonBones" parent="Front/MarginContainer"]
+[node name="DragonBonesDibeichang" type="DragonBones" parent="Front/GameFront"]
 factory = ExtResource("2_45j2b")
 instantiate_dragon_bones_data_name = "dibeichang"
 instantiate_armature_name = "armatureName"
@@ -229,13 +238,12 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
-visible = false
 material = SubResource("CanvasItemMaterial_ag7gp")
-position = Vector2(577, 452)
+position = Vector2(232, 1242)
 script = ExtResource("4_2lxpo")
 scaleY = 1.7
 
-[node name="DragonBonesPuke" type="DragonBones" parent="Front/MarginContainer"]
+[node name="DragonBonesPuke" type="DragonBones" parent="Front/GameFront"]
 factory = ExtResource("3_7okkc")
 instantiate_dragon_bones_data_name = "puke"
 instantiate_armature_name = "armatureName"
@@ -248,14 +256,13 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
-visible = false
 material = SubResource("CanvasItemMaterial_8cwjc")
-position = Vector2(553, 547)
+position = Vector2(208, 1337)
 script = ExtResource("4_2lxpo")
 scaleX = 2.2
 scaleY = 1.5
 
-[node name="DragonBonesJiangbei" type="DragonBones" parent="Front/MarginContainer"]
+[node name="DragonBonesJiangbei" type="DragonBones" parent="Front/GameFront"]
 factory = ExtResource("4_gloe0")
 instantiate_dragon_bones_data_name = "jiangbei"
 instantiate_armature_name = "armatureName"
@@ -268,14 +275,13 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
-visible = false
 material = SubResource("CanvasItemMaterial_ctnco")
-position = Vector2(607, 561)
+position = Vector2(262, 1351)
 script = ExtResource("4_2lxpo")
 scaleX = 1.8
 scaleY = 1.5
 
-[node name="DragonBonesBaoX1" type="DragonBones" parent="Front/MarginContainer"]
+[node name="DragonBonesBaoX1" type="DragonBones" parent="Front/GameFront"]
 factory = ExtResource("8_gcjtt")
 instantiate_dragon_bones_data_name = "lhdb_chujichang"
 instantiate_armature_name = "armatureName"
@@ -288,13 +294,12 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
-visible = false
 material = SubResource("CanvasItemMaterial_lsj51")
-position = Vector2(583, 470)
+position = Vector2(238, 1260)
 script = ExtResource("4_2lxpo")
 scaleY = 1.7
 
-[node name="DragonBonesBaoX2" type="DragonBones" parent="Front/MarginContainer"]
+[node name="DragonBonesBaoX2" type="DragonBones" parent="Front/GameFront"]
 factory = ExtResource("9_ahfpy")
 instantiate_dragon_bones_data_name = "lhdb_gaojichang_1"
 instantiate_armature_name = "armatureName"
@@ -307,13 +312,12 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
-visible = false
 material = SubResource("CanvasItemMaterial_o1mi4")
-position = Vector2(581, 456)
+position = Vector2(236, 1246)
 script = ExtResource("4_2lxpo")
 scaleY = 1.7
 
-[node name="DragonBonesBaoX3" type="DragonBones" parent="Front/MarginContainer"]
+[node name="DragonBonesBaoX3" type="DragonBones" parent="Front/GameFront"]
 factory = ExtResource("10_0c0hg")
 instantiate_dragon_bones_data_name = "lhdb_zhizunchang"
 instantiate_armature_name = "armatureName"
@@ -326,13 +330,12 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
-visible = false
 material = SubResource("CanvasItemMaterial_7pd0r")
-position = Vector2(578, 504)
+position = Vector2(233, 1294)
 script = ExtResource("4_2lxpo")
 scaleY = 1.7
 
-[node name="DragonBonesBaoX4" type="DragonBones" parent="Front/MarginContainer"]
+[node name="DragonBonesBaoX4" type="DragonBones" parent="Front/GameFront"]
 factory = ExtResource("11_ekkxy")
 instantiate_dragon_bones_data_name = "lhdb_zhongjichang"
 instantiate_armature_name = "armatureName"
@@ -345,21 +348,13 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
-visible = false
 material = SubResource("CanvasItemMaterial_hkqvs")
-position = Vector2(580, 502)
+position = Vector2(235, 1292)
 script = ExtResource("4_2lxpo")
 scaleY = 1.7
 
-[node name="Version" type="Label" parent="Front/MarginContainer"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-size_flags_vertical = 8
-label_settings = SubResource("LabelSettings_5s5my")
-horizontal_alignment = 1
-vertical_alignment = 2
-
 [node name="Back" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -444,3 +439,11 @@ texture = SubResource("GradientTexture2D_t1jci")
 libraries = {
 "": SubResource("AnimationLibrary_1")
 }
+
+[node name="Version" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
+label_settings = SubResource("LabelSettings_5s5my")
+horizontal_alignment = 1
+vertical_alignment = 2

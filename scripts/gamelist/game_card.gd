@@ -2,26 +2,28 @@ extends PanelContainer
 
 signal game_selected(itemNode)
 
-@onready var description = $Back/GameBack/MarginContainer/Description
-@onready var gameTitle = $Front/MarginContainer/GameImage/GameTitle
-@onready var gameImage = $Front/MarginContainer/GameImage
+@onready var gameTitle = $Front/GameFront/GameTitle
+@onready var gameImage = $Front/GameFront/GameImage
 @onready var gameBack = $Back
+@onready var gameFrontImage = $Front/GameFront
 @onready var gameBackImage = $Back/GameBack
+
 
 @onready var gameFront = $Front
 @onready var introduceTitle = $Back/GameBack/Introduce
+@onready var description = $Back/GameBack/MarginContainer/Description
 @onready var animation = $AnimationPlayer
 # @onready var dragonBonesDibeichang = $Front/MarginContainer/DragonBonesDibeichang
 # @onready var dragonBonesJiangbei = $Front/MarginContainer/DragonBonesJiangbei
 # @onready var dragonBonesPuke = $Front/MarginContainer/DragonBonesPuke
-@onready var version = $Front/MarginContainer/Version
-@onready var dragonBones1 = $Front/MarginContainer/DragonBonesDibeichang
-@onready var dragonBones2 = 	$Front/MarginContainer/DragonBonesJiangbei
-@onready var dragonBones3 = 	$Front/MarginContainer/DragonBonesPuke
-@onready var dragonBones4 = 	$Front/MarginContainer/DragonBonesBaoX1
-@onready var dragonBones5 = 	$Front/MarginContainer/DragonBonesBaoX2
-@onready var dragonBones6 = 	$Front/MarginContainer/DragonBonesBaoX3
-@onready var dragonBones7 = 	$Front/MarginContainer/DragonBonesBaoX4
+@onready var version = $Version
+@onready var dragonBones1 = $Front/GameFront/DragonBonesDibeichang
+@onready var dragonBones2 = 	$Front/GameFront/DragonBonesJiangbei
+@onready var dragonBones3 = 	$Front/GameFront/DragonBonesPuke
+@onready var dragonBones4 = 	$Front/GameFront/DragonBonesBaoX1
+@onready var dragonBones5 = 	$Front/GameFront/DragonBonesBaoX2
+@onready var dragonBones6 = 	$Front/GameFront/DragonBonesBaoX3
+@onready var dragonBones7 = 	$Front/GameFront/DragonBonesBaoX4
 
 var gameLogos = []
 var game_data = {}
@@ -39,28 +41,28 @@ func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
+	gameFrontImage.texture = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 
 func setup(data):
 	game_data = data
 	gameTitle.text = data.title
 	introduceTitle.text = data.name
 	description.text = data.description
-	var img = load("res://assets/game/flagItem/"+str(randi() % 5)+".png")
-	gameImage.texture = img
+	var img = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 	gameBackImage.texture = img
-	
 	if data.image:
-		# gameImage.texture = await Util.load_texture_async(data.image,350,300)
 		for dragonBones in gameLogos:
 			DataManager.safe_free_node(dragonBones)
+		gameImage.texture = await Util.load_texture_async(data.image,300,300)
 	else:
-		# gameImage.visible = false
+		# gameImage.texture = img
 		var logoLen = gameLogos.size()
 		var index = randi() % logoLen
 		for i in range(logoLen):#gameLogos:
 			var dragonBones = gameLogos[i]
 			if i == index:
 				dragonBones.visible = true
+				print(data.title,"-->", index)
 			else:
 				DataManager.safe_free_node(dragonBones)
 	if data.version:

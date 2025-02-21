@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://riqfmggkqpfx"]
+[gd_scene load_steps=7 format=3 uid="uid://riqfmggkqpfx"]
 
 [ext_resource type="Script" path="res://scripts/match/match_success.gd" id="1_xxxxx"]
+[ext_resource type="AudioStream" uid="uid://8kbicuvoslr" path="res://assets/music/ding.mp3" id="2_bys0a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxxxx"]
 bg_color = Color(0.133333, 0.133333, 0.180392, 0.960784)
@@ -28,6 +29,8 @@ exclusive = true
 unresizable = true
 borderless = true
 script = ExtResource("1_xxxxx")
+countdown = null
+gamename = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -63,11 +66,12 @@ layout_mode = 2
 size_flags_horizontal = 0
 label_settings = SubResource("LabelSettings_3u3mi")
 
-[node name="TimerLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="TimerLabel" type="RichTextLabel" parent="Panel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
-text = "进入游戏倒计时: 13 秒   "
-horizontal_alignment = 1
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
 
 [node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -98,3 +102,6 @@ text = "拒绝"
 
 [node name="empty" type="Panel" parent="Panel/VBoxContainer"]
 layout_mode = 2
+
+[node name="TimeoutSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_bys0a")

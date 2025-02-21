@@ -64,6 +64,15 @@ func RpcListData(funcName, payload:Dictionary={}, sort_field:String=""):
 			)
 		return sorted
 	return []
+##################################################################################
+
+func sendToMatch(p_match_id, p_op_code : int, p_data : String, p_presences = null):
+	if Online.nakama_socket:
+		print("readyGame:",p_match_id, p_op_code, p_data, p_presences)
+		return await Online.nakama_socket.send_match_state_async(p_match_id, p_op_code, p_data, p_presences)
+	return
+
+
 #########################RPC###########################################################
 func favoriteTable(payload):
 	var result = await self.RpcData("favorite_table",payload)

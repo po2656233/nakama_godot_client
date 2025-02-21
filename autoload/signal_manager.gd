@@ -121,6 +121,11 @@ signal MatchPresenceEventSIG(evt)
 @warning_ignore("unused_signal")
 signal MatchMakerSIG(evt) 
 
+
+# 匹配失败
+@warning_ignore("unused_signal")
+signal MatchMakerFailedSIG() 
+
 # 匹配状态
 @warning_ignore("unused_signal")
 signal MatchStateEventSIG(evt) 

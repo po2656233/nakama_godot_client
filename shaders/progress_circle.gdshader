@@ -1,9 +1,13 @@
 shader_type canvas_item;
-
+// 接收外部参数
 uniform vec4 color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform float thickness : hint_range(0, 1) = 0.1;
 uniform float progress : hint_range(0, 1) = 0.0;
 uniform float glow_strength : hint_range(0, 1) = 0.5;
+// 哈希函数（常用伪随机算法）
+//float rand(vec2 seed) {
+    //return fract(sin(dot(seed.xy, vec2(12.9898,78.233))) * 43758.5453);
+//}
 
 void fragment() {
     // 将UV坐标转换为中心为原点的坐标系

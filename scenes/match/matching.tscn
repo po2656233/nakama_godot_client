@@ -196,14 +196,14 @@ maxplayer = null
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.553
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.553
 anchor_bottom = 0.5
-offset_left = -214.0
+offset_left = -275.056
 offset_top = -292.0
-offset_right = 336.0
+offset_right = 274.944
 offset_bottom = 308.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -215,9 +215,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -132.0
-offset_top = 6.0
+offset_top = 10.0
 offset_right = 133.0
-offset_bottom = 530.0
+offset_bottom = 575.0
 grow_horizontal = 2
 theme_override_constants/separation = 25
 
@@ -257,7 +257,7 @@ color = Color(0.538823, 0.436949, 0.762096, 1)
 [node name="VSplitContainer" type="VSplitContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
+theme_override_constants/separation = 25
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -265,7 +265,7 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 25
 
 [node name="StartButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(120, 25)
+custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
@@ -277,7 +277,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_u8v4p")
 text = "开始匹配"
 
 [node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(120, 25)
+custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10

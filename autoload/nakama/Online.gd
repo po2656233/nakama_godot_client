@@ -22,6 +22,7 @@ var nakama_socket: NakamaSocket
 
 
 # 重连配置
+const RECONNECT_INTERVAL := 15
 const BASE_RETRY_DELAY := 3.0  # 基础重试延迟（秒）
 const MAX_RETRY_DELAY := 15.0  # 最大重试延迟（秒）
 const MAX_RETRY_COUNT := 0	 # 0表示无限重试
@@ -57,9 +58,13 @@ func _ready() -> void:
 # 初始化重连定时器
 func _setup_reconnect_timer() -> void:
 	_reconnect_timer = Timer.new()
-	_reconnect_timer.one_shot = true
-	_reconnect_timer.timeout.connect(_attempt_reconnect)
+	# _reconnect_timer.one_shot = true
+	_reconnect_timer.timeout.connect(sendPing)
+	# _reconnect_timer.timeout.connect(_attempt_reconnect)
 	add_child(_reconnect_timer)
+	_reconnect_timer.start(RECONNECT_INTERVAL)
+	sendPing()
+	pass
 
 # 获取NakamaClient
 func get_nakama_client() -> NakamaClient:
@@ -112,7 +117,7 @@ func _connect_socket() -> void:
 		return
 	nakama_socket = Nakama.create_socket_from(nakama_client)
 	var result = await nakama_socket.connect_async(nakama_session)
-	if result.is_exception():
+	if (result is int and result == 18) or result.is_exception():
 		connection_state_changed.emit("socket_error")
 		print("网络连接出错",result.get_exception().message)
 		_start_reconnect()
@@ -149,6 +154,7 @@ func _on_socket_disconnected(err) -> void:
 func _on_socket_connected() -> void:
 	connection_state_changed.emit("connected")
 	print("网络已连接")
+	await sendDataRPC("ping")
 	# if lastSend.funcName != "":
 	# 	sendDataRPC(lastSend.funcName, lastSend.payload)
 	_reset_reconnect_state()
@@ -264,13 +270,15 @@ func do_broadcast(notification1):
 
 ####################重连#####################################	
 func _start_reconnect() -> void:
-	if _reconnect_timer.is_stopped() and (MAX_RETRY_COUNT == 0 or _retry_count < MAX_RETRY_COUNT):
-		_reconnect_timer.wait_time = _current_delay
-		_reconnect_timer.start()
-		_current_delay = min(_current_delay * 2, MAX_RETRY_DELAY)
-		_retry_count += 1
-		print("等待重连")
-		connection_state_changed.emit("waiting_to_reconnect")
+	_attempt_reconnect()
+	# if _reconnect_timer.is_stopped() and (MAX_RETRY_COUNT == 0 or _retry_count < MAX_RETRY_COUNT):
+	# 	_reconnect_timer.wait_time = _current_delay
+	# 	_reconnect_timer.start()
+	# 	_current_delay = min(_current_delay * 2, MAX_RETRY_DELAY)
+	# 	_retry_count += 1
+	# 	print("等待重连")
+	# 	connection_state_changed.emit("waiting_to_reconnect")
+	pass
 
 func _attempt_reconnect() -> void:
 	# 超过重试次数后，重新登录
@@ -309,16 +317,21 @@ func force_reconnect() -> void:
 
 
 ############################主动发送数据############################################################
+func sendPing():
+	if nakama_socket:
+		var result = await nakama_socket.rpc_async("ping")
+		if result.is_exception():
+			force_reconnect()
+			return 
+	return
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):
+	
 	if nakama_socket:
 		var result = await nakama_socket.rpc_async(funcName, payload)
 		if result.is_exception():
 			# 显示中文提示信息
-			var msg = result.get_exception().message
-			PopupManager.show_dynamic("%s 失败: %s" % [Errors.FuncMapping.get(funcName, funcName), Errors.ResponeMapping.get(msg, msg)],150.0)
-			print("%s 响应异常: %s"%[funcName, msg])
-			dowithErr(Errors.ResponeMapping.get(msg, msg))
+			dowithErr(result,funcName)
 			lastSend.funcName = funcName
 			lastSend.payload = payload
 			return null
@@ -327,7 +340,13 @@ func sendDataRPC(funcName: String, payload = null):
 		return result
 	return null
 
-func dowithErr(msg):
+func dowithErr(result,funcName=""):
+	if not result.is_exception():
+		return
+	var msg = result.get_exception().message
+	msg = Errors.ResponeMapping.get(msg, msg)
+	PopupManager.show_dynamic("%s 失败: %s" % [Errors.FuncMapping.get(funcName, funcName), msg],150.0)
+	print("%s 响应异常: %s"%[funcName, msg])
 	match msg:
 		"网络断开":
 			force_reconnect()

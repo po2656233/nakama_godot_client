@@ -130,6 +130,9 @@ func join_match(_nakama_socket: NakamaSocket, _match_id: String) -> void:
 
 func start_matchmaking(_nakama_socket: NakamaSocket, data: Dictionary = {}) -> void:
 	leave()
+	if not _nakama_socket:
+		PopupManager.show_dynamic("网络断开")
+		return
 	_set_nakama_socket(_nakama_socket)
 	match_mode = MatchMode.MATCHMAKER
 
@@ -155,6 +158,7 @@ func start_matchmaking(_nakama_socket: NakamaSocket, data: Dictionary = {}) -> v
 			data['query'] = query
 
 	match_state = MatchState.MATCHING
+	print("\n匹配相关信息:",data,"\n")
 	var result = await nakama_socket.add_matchmaker_async(data.get('query', '*'), data['min_count'], data['max_count'], data.get('string_properties', {}), data.get('numeric_properties', {}))
 	if result.is_exception():
 		leave()
@@ -185,7 +189,13 @@ func leave(close_socket: bool = false) -> void:
 	match_mode = MatchMode.NONE
 	pass
 
+func set_match_id(new_match_id: String):
+	match_id = new_match_id
+	pass
+
 func get_match_id() -> String:
+	if match_id != '':
+		return match_id
 	if nakama_multiplayer_bridge:
 		return nakama_multiplayer_bridge.match_id
 	return ''
@@ -217,11 +227,11 @@ func _check_enough_players() -> void:
 	pass
 
 func _on_match_joined() -> void:
-	var my_peer_id = OS.get_unique_id()
-	# var my_peer_id = get_tree().get_unique_id()
-	var presence: NakamaRTAPI.UserPresence = nakama_multiplayer_bridge.get_user_presence_for_peer(my_peer_id.to_int())
-	var player = Player.from_presence(presence, my_peer_id.to_int())
-	players[my_peer_id] = player
+	#var my_peer_id = nakama_multiplayer_bridge._generate_id(Online.get_user_id())
+	## var my_peer_id = get_tree().get_unique_id()
+	#var presence: NakamaRTAPI.UserPresence = nakama_multiplayer_bridge.get_user_presence_for_peer(my_peer_id)
+	#var player = Player.from_presence(presence, my_peer_id)
+	#players[my_peer_id] = player
 	match_joined.emit(nakama_multiplayer_bridge.match_id, match_mode)
 	pass
 
@@ -295,21 +305,64 @@ func createMatch(id:String,game_name:String,min_size:int=1,max_size:int=100,limi
 
 # 加入匹配
 func joinMatch(p_match_id : String, p_metadata = null):
-	if not Online.nakama_socket:
-		PopupManager.show_dynamic("未连接服务器")
-		return
 	return await Online.nakama_socket.join_match_async(p_match_id,p_metadata)
 
-# 加入匹配
-func joinMatched(p_metadata):
-	if not Online.nakama_socket:
-		PopupManager.show_dynamic("未连接服务器")
-		return
+# 加入匹配 与MatchmakerAdd回包一起使用
+func joinMatched(p_metadata = null):
 	return await Online.nakama_socket.join_matched_async(p_metadata)
 
+# 加入匹配
+func joinMatchmaker(data):
+	LeaveMatchmaker()
+	if data.has('min_count'):
+		data['min_count'] = max(min_players, data['min_count'])
+	else:
+		data['min_count'] = min_players
+
+	if data.has('max_count'):
+		data['max_count'] = min(max_players, data['max_count'])
+	else:
+		data['max_count'] = max_players
+
+	if client_version != '':
+		if not data.has('string_properties'):
+			data['string_properties'] = {}
+		data['string_properties']['client_version'] = client_version
+
+		var query = '+properties.client_version:' + client_version
+		if data.has('query'):
+			data['query'] += ' ' + query
+		else:
+			data['query'] = query
+
+	print("\n匹配相关信息:",data,"\n")
+	var result = await Online.nakama_socket.add_matchmaker_async(data.get('query', '*'), data['min_count'], data['max_count'], data.get('string_properties', {}), data.get('numeric_properties', {}))
+	if result.is_exception():
+		PopupManager.show_dynamic("匹配失败 "+result.get_exception().message)
+		SignalManager.MatchMakerFailedSIG.emit()
+		Online.dowithErr(result)
+		return result
+	matchmaker_ticket = result.ticket
+	pass
+func LeaveMatchmaker(ticket_id : String=""):
+	if ticket_id == "":
+		ticket_id = matchmaker_ticket
+	if ticket_id == "":
+		return	
+	return await Online.nakama_socket.remove_matchmaker_async(ticket_id)
+
+
 # 离开匹配
-func leaveMatch(p_match_id : String):
-	if not Online.nakama_socket:
-		PopupManager.show_dynamic("未连接服务器")
+func leaveMatch(p_match_id : String = ""):
+	if p_match_id == "":
+		p_match_id = match_id
+	if p_match_id == "":
 		return
-	return await Online.nakama_socket.leave_match_async(p_match_id)
+	var result = await Online.nakama_socket.leave_match_async(p_match_id)
+	if result.is_exception():
+		PopupManager.show_dynamic("离开匹配失败 "+result.get_exception().message)
+		Online.dowithErr(result)
+		return result
+	match_id = ""
+	matchmaker_ticket = ""
+	pass

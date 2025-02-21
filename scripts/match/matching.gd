@@ -6,11 +6,11 @@ extends Control
 # 信号
 signal match_start()
 signal match_cancel()
-signal match_sucess()
+signal match_sucess(data)
 
 
 # 匹配状态
-enum MatchState { IDLE, MATCHING, SUCCESS, FAILED }
+enum MatchState {IDLE, MATCHING, SUCCESS, FAILED}
 var current_state: MatchState = MatchState.IDLE
 
 # 计时相关变量
@@ -25,7 +25,12 @@ var progress_value: float = 0.0
 var base_text = "正在匹配中"
 var dots = [".", ".", "."]
 var time = 0.0
-var dot_speed = 3.0  # 动画速度
+var accumulator := 0.0
+var dot_speed = 3.0 # 动画速度
+# 已匹配的玩家数量
+var players = []
+const HIGHT_LIMIT = 10000000
+
 # 节点引用
 @onready var game_name = $Panel/VBoxContainer/NameLabel
 @onready var timer_label = $Panel/VBoxContainer/TimerLabel
@@ -47,25 +52,29 @@ func _ready():
 	cancel_button.pressed.connect(_on_cancel_button_pressed)
 	start_button.pressed.connect(_on_start_button_pressed)
 	match_start.connect(_on_start_button_pressed)
-	SignalManager.MatchStateEventSIG.connect(_on_match_state_event)
-	SignalManager.MatchPresenceEventSIG.connect(_on_match_presence_event)
+
 	SignalManager.MatchMakerSIG.connect(_on_match_maker_event)
-	
+	SignalManager.MatchMakerFailedSIG.connect(_on_match_failed)
 	pass
 
 
 func _process(delta):
+			
 	if is_matching:
-		elapsed_time += delta 
+		accumulator += delta
+		elapsed_time += delta
 		update_timer_display()
 		# 更新进度圈
 		progress_rotation += delta * progress_speed
 		progress_value = fmod(progress_rotation, 1.0)
+		if accumulator >= 2.0:
+			accumulator = fmod(accumulator, 2.0) # 保留余数防止误差累积
+			progress_circle.material.set_shader_parameter("color", Color(randf(), randf(), randf(), 1.0))
 		progress_circle.material.set_shader_parameter("progress", progress_value)
 		#
 		time += delta
-		var dot_count = int(fmod(time * dot_speed, 4))  # 0到3之间循环
-		status_label.text = base_text + "".rpad(dot_count,"." )
+		var dot_count = int(fmod(time * dot_speed, 4)) # 0到3之间循环
+		status_label.text = base_text + "".rpad(dot_count, ".")
 	pass
 
 func start_matching():
@@ -83,8 +92,22 @@ func start_matching():
 	progress_circle.visible = true
 	progress_rotation = 0
 	progress_value = 0
-
-	OnlineMatch.create_match(Online.nakama_socket)
+	var minplayer = 1
+	if maxplayer < minplayer:
+		maxplayer = HIGHT_LIMIT
+	OnlineMatch.joinMatchmaker({
+		"query": " +properties.game:%s " %gamename,
+		"min_count": minplayer,
+		"max_count": maxplayer,
+		"string_properties": {
+			"game": gamename,
+		},
+		"numeric_properties": {
+			"maxplayer": maxplayer,
+			"vip": 1,
+		}
+		})
+	# OnlineMatch.create_match(Online.nakama_socket)
 	# var result = await OnlineMatch.create_match(Online.nakama_socket)
 	# if result.is_exception():
 	# 	_on_match_failed()
@@ -110,6 +133,8 @@ func stop_matching():
 	match_cancel.emit()
 
 func reset_ui():
+	OnlineMatch.LeaveMatchmaker()
+	OnlineMatch.leaveMatch()
 	game_name.text = gamename
 	status_label.text = "等待开始匹配..."
 	timer_label.text = "00:00"
@@ -131,16 +156,20 @@ func _on_start_button_pressed():
 	start_matching()
 
 
-func _on_match_state_event(state):
-	print("匹配 state:", state)
-	pass
-
-func _on_match_presence_event(state):
-	print("匹配 presence:", state)
-	pass
-
-func _on_match_maker_event(state):
-	print("匹配 maker:", state)
+# 匹配成功事件
+func _on_match_maker_event(p_matched: NakamaRTAPI.MatchmakerMatched):
+	print("匹配 maker:", p_matched)
+	players.clear()
+	var joined_match: NakamaRTAPI.Match = await OnlineMatch.joinMatched(p_matched)
+	if joined_match.is_exception():
+		_on_match_failed()
+		print("错误信息: ", joined_match.get_exception().message)
+		return
+	OnlineMatch.set_match_id(joined_match.match_id)
+	for player in p_matched.users:
+		players.append(player)
+	# if players.size() == maxplayer:服务器已经处理了
+	_on_match_success()
 	pass
 
 func _on_match_success():
@@ -154,7 +183,7 @@ func _on_match_success():
 	success_sound.play()
 	
 	# 这里添加切换到游戏场景的代码
-	match_sucess.emit()
+	match_sucess.emit(players)
 	print("切换到游戏场景")
 
 func _on_match_failed():
