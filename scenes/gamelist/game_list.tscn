@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://riqfmggkqpfd"]
+[gd_scene load_steps=7 format=3 uid="uid://riqfmggkqpfd"]
 
 [ext_resource type="Script" path="res://scripts/gamelist/game_list.gd" id="1_xxxxx"]
 [ext_resource type="PackedScene" uid="uid://b6x8j0p7n6xj" path="res://scenes/match/matching.tscn" id="2_kgill"]
 [ext_resource type="PackedScene" uid="uid://riqfmggkqpfx" path="res://scenes/match/match_success.tscn" id="3_8wtxj"]
+[ext_resource type="AudioStream" uid="uid://crmef6a2tkncv" path="res://assets/music/welcome.mp3" id="4_uvn8a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.205356, 0.473676, 0.592367, 1)
@@ -78,8 +79,10 @@ offset_bottom = 0.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
 size_flags_stretch_ratio = 3.0
-gamename = null
-maxplayer = null
 
 [node name="MatchSuccess" parent="." instance=ExtResource("3_8wtxj")]
 visible = false
+
+[node name="WelcomeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_uvn8a")
+pitch_scale = 0.66

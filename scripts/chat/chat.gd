@@ -317,7 +317,7 @@ func _on_channel_presence(presence):
 	pass
 
 func _on_received_notify(notify):
-	print("收到通知:", notify)
+	print("收到通知: ooo", notify)
 	var content = JSON.parse_string(notify.content)
 	print("收到通知内容:", content)
 	var status = notify.code as NotifyStatus

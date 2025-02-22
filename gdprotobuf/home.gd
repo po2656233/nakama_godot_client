@@ -1466,22 +1466,39 @@ class GetTableFavoriteListResp:
 		@warning_ignore("unused_variable")
 		var service
 		
-		var __tidList_default: Array[int] = []
-		__tidList = PBField.new("tidList", PB_DATA_TYPE.INT64, PB_RULE.REPEATED, 1, true, __tidList_default)
+		var __items_default: Array[TableInfo] = []
+		__items = PBField.new("items", PB_DATA_TYPE.MESSAGE, PB_RULE.REPEATED, 1, true, __items_default)
 		service = PBServiceField.new()
-		service.field = __tidList
-		data[__tidList.tag] = service
+		service.field = __items
+		service.func_ref = Callable(self, "add_items")
+		data[__items.tag] = service
+		
+		__total = PBField.new("total", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		service = PBServiceField.new()
+		service.field = __total
+		data[__total.tag] = service
 		
 	var data = {}
 	
-	var __tidList: PBField
-	func get_tidList() -> Array[int]:
-		return __tidList.value
-	func clear_tidList() -> void:
+	var __items: PBField
+	func get_items() -> Array[TableInfo]:
+		return __items.value
+	func clear_items() -> void:
 		data[1].state = PB_SERVICE_STATE.UNFILLED
-		__tidList.value = []
-	func add_tidList(value : int) -> void:
-		__tidList.value.append(value)
+		__items.value = []
+	func add_items() -> TableInfo:
+		var element = TableInfo.new()
+		__items.value.append(element)
+		return element
+	
+	var __total: PBField
+	func get_total() -> int:
+		return __total.value
+	func clear_total() -> void:
+		data[2].state = PB_SERVICE_STATE.UNFILLED
+		__total.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
+	func set_total(value : int) -> void:
+		__total.value = value
 	
 	func _to_string() -> String:
 		return PBPacker.message_to_string(data)
@@ -2687,6 +2704,11 @@ class CreateTableResp:
 		service.func_ref = Callable(self, "new_table")
 		data[__table.tag] = service
 		
+		__total = PBField.new("total", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		service = PBServiceField.new()
+		service.field = __total
+		data[__total.tag] = service
+		
 	var data = {}
 	
 	var __table: PBField
@@ -2698,6 +2720,15 @@ class CreateTableResp:
 	func new_table() -> TableInfo:
 		__table.value = TableInfo.new()
 		return __table.value
+	
+	var __total: PBField
+	func get_total() -> int:
+		return __total.value
+	func clear_total() -> void:
+		data[2].state = PB_SERVICE_STATE.UNFILLED
+		__total.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
+	func set_total(value : int) -> void:
+		__total.value = value
 	
 	func _to_string() -> String:
 		return PBPacker.message_to_string(data)
@@ -2796,6 +2827,11 @@ class DeleteTableResp:
 		service.field = __hostId
 		data[__hostId.tag] = service
 		
+		__total = PBField.new("total", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 4, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		service = PBServiceField.new()
+		service.field = __total
+		data[__total.tag] = service
+		
 	var data = {}
 	
 	var __tid: PBField
@@ -2824,6 +2860,15 @@ class DeleteTableResp:
 		__hostId.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
 	func set_hostId(value : int) -> void:
 		__hostId.value = value
+	
+	var __total: PBField
+	func get_total() -> int:
+		return __total.value
+	func clear_total() -> void:
+		data[4].state = PB_SERVICE_STATE.UNFILLED
+		__total.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
+	func set_total(value : int) -> void:
+		__total.value = value
 	
 	func _to_string() -> String:
 		return PBPacker.message_to_string(data)

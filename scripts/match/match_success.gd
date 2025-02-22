@@ -9,13 +9,17 @@ extends Window
 @onready var accept_button = $Panel/VBoxContainer/ButtonContainer/AcceptButton
 @onready var decline_button = $Panel/VBoxContainer/ButtonContainer/DeclineButton
 @onready var time_sound = $TimeoutSound
+@onready var fail_sound = $FailSound
+@onready var success_sound = $SuccessSound
+
+
 var png = preload("res://assets/game/snake1.png")
 var png1 = preload("res://assets/game/snake2.png")
 var timer = Timer.new()
 var player_icons: Array[TextureRect] = []
 var player_total = 0
 var timer_value: int = 10
-var timer_warn: int = 6
+var timer_warn: int = 8
 var game_id = 0 # 当前的游戏ID
 var match_id = ""
 var ready_count = 0
@@ -54,15 +58,17 @@ func setup_player_icons():
 		player_icons.append(icon)
 
 # 添加一个玩家
-func add_player(is_ready = true):
+func add_player(is_ready=true):
 	ready_count += 1
 	if ready_count > player_total:
 		return
 	if is_ready:
+		success_sound.play()
 		player_icons[ready_count - 1].modulate = Color(1, 0.84, 0) # Gold color
 	else:
 		timer.stop()
 		time_sound.stop()
+		fail_sound.play()
 		player_icons[ready_count - 1].texture = png1
 		player_icons[ready_count - 1].modulate = Color(1, 1, 1)
 	pass
@@ -110,6 +116,7 @@ func check_ready():
 		# 匹配成功
 		print("匹配到游戏 时间:%d 准备人数:%d 总人数:%d" % [timer_value, ready_count, player_total])
 		visible = false
+		SignalManager.StartGameSIG.emit(game_id)
 		reset(game_id, "", player_total)
 		return true
 	return false
@@ -122,7 +129,8 @@ func _on_timer_timeout():
 	timer_value -= 1
 	if timer_value > 0 and ready_count < player_total:
 		if timer_value <= timer_warn:
-			time_sound.play()
+			if not accept_button.disabled:
+				time_sound.play()
 			timer_label.text = base_text_2 % timer_value
 		else:
 			timer_label.text = base_text_1 % timer_value
@@ -136,8 +144,17 @@ func _on_timer_timeout():
 func _on_accept_pressed():
 	# Todo 请求服务端
 	print("准备游戏 match_id:", match_id)
-	await OnlineGame.sendToMatch(match_id, MatchState.GameReady, "0")
-
+	accept_button.disabled = true
+	decline_button.visible = false
+	time_sound.stop()
+	var ret = await OnlineGame.sendToMatch(match_id, MatchState.GameReady, "0")
+	if ret and ret.is_exception():
+		accept_button.disabled = false
+		decline_button.visible = true
+		accept_button.text = "准备"
+		print("准备游戏成功",ret)
+	else:
+		accept_button.text = "已准备"
 
 func _on_decline_pressed():
 	# Handle decline logic
@@ -146,25 +163,18 @@ func _on_decline_pressed():
 	pass
 
 
-
 func _on_match_state_event(state):
 	if isStart:
 		return
 	match state.op_code:
 		MatchState.GameReady:
 			add_player()
-			var data = JSON.parse_string(state.data)
-			if data.userId == OnlineLogin.get_my_id():
-				accept_button.disabled = true
-				decline_button.visible = false
-				accept_button.text = "已准备"
-				time_sound.stop()
 		MatchState.GameReadyCancel:
 			add_player(false)
 			PopupManager.show_dynamic("玩家取消准备")
 			SignalManager.CancleGameSIG.emit(game_id)
 		MatchState.GameStart:
 			isStart = true
-			SignalManager.StartGameSIG.emit(game_id)
+	
 			
 	return

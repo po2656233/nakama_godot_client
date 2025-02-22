@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 const CHESS_POSITION = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
 
@@ -9,9 +9,9 @@ var V_CHESS_POSITION:chess_position
 
 var chess_position_array=[]
 var pre_chess:chess_position
-var size:int=58
+var size1:int=58
 func _ready() -> void:
-	
+	# SettingsManager.show_settings() 
 	add_position()
 	add_player_chess()
 	
@@ -21,7 +21,7 @@ func add_position()->void:
 		for y in 10:
 			V_CHESS_POSITION=CHESS_POSITION.instantiate()
 			chessposition.add_child(V_CHESS_POSITION)
-			V_CHESS_POSITION.position=Vector2(x*size,y*size)
+			V_CHESS_POSITION.position=Vector2(x*size1,y*size1)
 			V_CHESS_POSITION.V_position=Vector2(x,y)
 			V_CHESS_POSITION.connect("move",move)
 			if y>=5:
@@ -77,7 +77,7 @@ func add_player_chess_array(chess:Array)->void:
 		if i>=1 and i<8:
 			var results=reture_chess(i-1)
 			b_chessposition.add_child(results)
-			results.position=Vector2(start_x*size,start_y*size)
+			results.position=Vector2(start_x*size1,start_y*size1)
 			results.change(chess_position_array[start_x][start_y].chess_color)
 			chess_position_array[start_x][start_y].play=results
 		start_x+=1
@@ -175,9 +175,9 @@ func game_over()->void:
 
 
 func _on_button_button_down() -> void:
-	get_tree().change_scene_to_file("res://scenes/game/xiangqi/S/s_test.tscn")
+	get_tree().change_scene_to_file("res://scenes/game/xiangqi/S/xiangqi.tscn")
 
 
 func _on_reback_btn_pressed() -> void:
-	get_tree().change_scene_to_file(SceneManager.get_previous_scene_path())
+	SceneManager.change_scene("home")
 	pass # Replace with function body.

@@ -42,6 +42,7 @@ func RpcData(funcName, payload:Dictionary={}):
 	# 	print("无效的RPC函数名:",funcName)
 	# 	return []
 	var result = await Online.sendDataRPC(funcName,payload)
+	# print(" RPC反馈: ",funcName,"->",result)
 	if result and result.id == funcName:
 		return JSON.parse_string(result.payload)
 	return null
@@ -72,8 +73,9 @@ func sendToMatch(p_match_id, p_op_code : int, p_data : String, p_presences = nul
 		var result = await Online.nakama_socket.send_match_state_async(p_match_id, p_op_code, p_data, p_presences)
 		if result.is_exception():
 			PopupManager.show_dynamic("数据异常 " + result.get_exception().message)
-			return
-	return
+			return null
+		return result
+	return null
 
 #########################RPC###########################################################
 func favoriteTable(payload):
@@ -130,7 +132,7 @@ func getTabelList(payload:Dictionary):
 	request.set_order(payload.get("order",""))
 	request.set_name(payload.get("name",""))
 	request.set_isDesc(payload.get("isDesc",false))
-	request.set_pageNum(payload.get("pageNum",2))
+	request.set_pageNum(payload.get("pageNum",1))
 	request.set_pageSize(payload.get("pageSize",20))
 	var result = await RpcData("table_list",payload)
 	# print("牌桌列表 反馈:",result)

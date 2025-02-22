@@ -1,8 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://riqfmggkqpfx"]
+[gd_scene load_steps=19 format=3 uid="uid://riqfmggkqpfx"]
 
 [ext_resource type="Script" path="res://scripts/match/match_success.gd" id="1_xxxxx"]
 [ext_resource type="AudioStream" uid="uid://8kbicuvoslr" path="res://assets/music/ding.mp3" id="2_bys0a"]
 [ext_resource type="Texture2D" uid="uid://ccvgj06knupmo" path="res://assets/room/item.png" id="2_fc1y7"]
+[ext_resource type="AudioStream" uid="uid://dbasenfbnvkls" path="res://assets/music/fail.mp3" id="4_c5q6k"]
+[ext_resource type="AudioStream" uid="uid://lfduu664w0tu" path="res://assets/music/drip.mp3" id="5_ymcy0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxxxx"]
 bg_color = Color(0.133333, 0.133333, 0.180392, 0.960784)
@@ -56,6 +58,8 @@ exclusive = true
 unresizable = true
 borderless = true
 script = ExtResource("1_xxxxx")
+countdown = null
+gamename = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -153,3 +157,11 @@ layout_mode = 2
 
 [node name="TimeoutSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_bys0a")
+
+[node name="FailSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_c5q6k")
+volume_db = -1.202
+pitch_scale = 0.9
+
+[node name="SuccessSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ymcy0")
