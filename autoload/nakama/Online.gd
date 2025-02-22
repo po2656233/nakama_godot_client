@@ -119,7 +119,7 @@ func _connect_socket() -> void:
 	var result = await nakama_socket.connect_async(nakama_session)
 	if (result is int and result == 18) or result.is_exception():
 		connection_state_changed.emit("socket_error")
-		print("网络连接出错",result.get_exception().message)
+		print("网络连接出错",result)
 		_start_reconnect()
 		return
 	
@@ -346,7 +346,7 @@ func dowithErr(result,funcName=""):
 		return
 	var msg = result.get_exception().message
 	msg = Errors.ResponeMapping.get(msg, msg)
-	PopupManager.show_dynamic("%s 失败: %s" % [Errors.FuncMapping.get(funcName, funcName), msg],150.0)
+	PopupManager.show_dynamic("%s失败: %s" % [Errors.FuncMapping.get(funcName, funcName), msg],150.0)
 	print("%s 响应异常: %s"%[funcName, msg])
 	match msg:
 		"网络断开":

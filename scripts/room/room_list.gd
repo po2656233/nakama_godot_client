@@ -71,7 +71,7 @@ var curSelect = SearchType.all
 func _ready():
 	SettingsManager.show_settings()
 	SceneManager.set_previous_name("roomlist")
-	# WindowDrag.register_drag_zone(self)
+	WindowDrag.register_drag_zone(self)
 
 	# 适配房间子项的列数
 	var width = get_viewport_rect().size.x
@@ -104,8 +104,8 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	create_room_dialog.room_created.connect(_on_room_created) # 创建房间
 	waitingStart.quitRoomSIG.connect(_on_cancel_waiting)
-	SignalManager.CreateRoomSIG.connect(append_room)
-	SignalManager.RemoveRoomSIG.connect(remove_room)
+	SignalManager.CreateRoomSIG.connect(_on_append_room)
+	SignalManager.RemoveRoomSIG.connect(_on_remove_room)
 	# SignalManager.JoinRoomSIG.connect(_recv_join_room)
 	# SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
 	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
@@ -122,7 +122,7 @@ func load_data():
 
 # 添加房间数据
 func append_room(data):
-	# print("添加 房间数据:", data)
+	print("添加 房间数据:", data)
 	var item = {
 			"id": data.get("id", 0),
 			"room_id": data.get("mid", 0), # str().md5_text().substr(8, 16),
@@ -176,14 +176,14 @@ func append_room(data):
 		pass
 	pass
 
-func remove_room(data):
-	var index = room_list_info.find(func(r): return r.id == data.id)
+func remove_room(room_id):
+	var index = room_list_info.find(func(r): return r.id == room_id)
 	if index != -1:
 		room_list_info.remove_at(index)
-	index = my_rooms.find(func(r): return r.id == data.id)
+	index = my_rooms.find(func(r): return r.id == room_id)
 	if index != -1:
 		my_rooms.remove_at(index)
-	index = favorite_rooms.find(func(r): return r.id == data.id)
+	index = favorite_rooms.find(func(r): return r.id == room_id)
 	if index != -1:
 		favorite_rooms.remove_at(index)
 	total_pages -= 1
@@ -359,7 +359,7 @@ func _apply_filters(rooms: Array) -> Array:
 
 # 更新统计信息
 func _update_stats():
-	var total_rooms = room_list_info.size()
+	var total_rooms = all_count  #room_list_info.size()
 	var active_rooms = room_list_info.filter(func(r): return r.status != 2).size()
 	var total_players = room_list_info.reduce(func(acc, r): return acc + r.player_count, 0)
 	
@@ -517,6 +517,38 @@ func _on_create_pressed():
 # 	pass # Replace with function body.
 
 #################################################################
+func _on_append_room(info):
+	var data = info.get("table", {})
+	var item = {
+			"id": data.get("id", 0),
+			"room_id": data.get("mid", 0), # str().md5_text().substr(8, 16),
+			"room_name": data.get("name", ""),
+			"room_key": data.get("key", ""),
+			"is_locked": data.get("isLock", false),
+			"game_name": OnlineGame.getGameName(data.get("gid", 0)),
+			"game_type": data.get("gid", 0),
+			"creator_id": data.get("creatorId", ""),
+			"author": data.get("creator", ""),
+			"base_score": data.get("baseScore", 0),
+			"enter_score": data.get("enterScore", 0),
+			"current_round": data.get("maxRound", 0),
+			"player_count": data.get("sitCount", 0),
+			"max_players": data.get("maxSitter", 0),
+			"status": data.get("state", 0),
+			"create_time": Util.format_china_time(data.get("openTime", 0), true),
+			"description": data.get("description", ""),
+			"players": data.get("players", []),
+		}
+	print(item.id, "添加房间:", item.room_name)
+	room_list_info.append(item)
+	room_list_info.sort_custom(func(a, b): return a.id > b.id)
+	all_count = info.get("total", 0)
+	_refresh_room_list()
+
+func _on_remove_room(data):
+	if data.has("table"):
+		remove_room(data.table.id)
+
 func _on_received_match_state(data):
 	if data.op_code == 101:
 		var obj = JSON.parse_string(data.data)
@@ -587,30 +619,41 @@ func _on_cancel_waiting():
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
+	
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
 		return
-	
+	selected_room_info = room_info
+	if room_info.is_locked and jion_input.text == "":
+		jion_dialog.visible = true
+		jion_room.text = "%s\nID:%s" % [room_info.room_name, room_info.room_id.substr(0,16)]
+		return
+	print("加入房间-key:", jion_input.text)
 	# 初始化等待房间
 	waitingStart.reset(room_info.room_id, room_info.max_players)
 	for player in room_info.players:
 		print("正在等待的玩家:", player)
 		waitingStart.add_player(player.uid, player.username, player.get("headIcon", ""))
 
+	var ret = await OnlineGame.joinTable({
+		"tableId": room_info.id,
+		"tableKey": jion_input.text
+	})
+	if ret == null or not ret.has("tableId") or ret.tableId != room_info.id:
+		print("加入房间失败", ret)
+		return 
+
 	# 进入房间
 	var result = await OnlineGame.joinMatch(room_info.room_id, {
 		"name": room_info.room_name,
+		"key": room_info.room_key
 	})
 	if not result:
 		#失败则返回 不用处理接口里统一处理了
 		return
 	print("加入房间成功", result)
-	selected_room_info = room_info
-	if room_info.is_locked:
-		jion_dialog.visible = true
-		jion_room.text = "%s\nID:%s" % [room_info.room_name, room_info.room_id.substr(0,16)]
-	else:
-		waitingStart.show()
+	
+	waitingStart.show()
 	pass
 
 # 创建房间
@@ -623,6 +666,9 @@ func _on_room_created(_room_info: Dictionary):
 
 # 确认房间密码
 func _on_confirm_btn_pressed() -> void:
+	if jion_input.text == "":
+		PopupManager.show_dynamic("请输入房间密码")
+		return
 	# 校验房间密码
 	selected_room_info.room_key = jion_input.text
 	_on_join_room(selected_room_info)
