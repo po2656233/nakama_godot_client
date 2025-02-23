@@ -1,10 +1,11 @@
-[gd_scene load_steps=40 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=41 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_gnanh"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
 [ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_mcopm"]
 [ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
 [ext_resource type="Shader" path="res://shaders/flow_light.gdshader" id="5_p3dne"]
+[ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_3km0x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.567014, 0.771032, 0.875651, 1)
@@ -505,9 +506,19 @@ layout_mode = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_rm5a5")
 
+[node name="RemoveBtn" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture_normal = ExtResource("6_3km0x")
+ignore_texture_size = true
+stretch_mode = 0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_1")
 }
 
 [connection signal="gui_input" from="Front/MarginContainer/Panel" to="." method="_on_gui_input"]
+[connection signal="pressed" from="RemoveBtn" to="." method="_on_texture_button_pressed"]

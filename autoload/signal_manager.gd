@@ -101,6 +101,12 @@ signal CreateRoomSIG(rid)
 # 删除房间
 @warning_ignore("unused_signal")
 signal RemoveRoomSIG(rid) 
+# 加入房间成功
+@warning_ignore("unused_signal")
+signal JoinErrorMusicSIG(rid)
+@warning_ignore("unused_signal")
+signal JoinSuccessMusicSIG() 
+
 
 # 加入房间
 @warning_ignore("unused_signal")

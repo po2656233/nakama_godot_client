@@ -16,6 +16,7 @@ signal favorite_toggled(is_favorite: bool)
 @onready var favorite_button = $Front/MarginContainer/HBoxContainer/FavoriteButton
 @onready var room_lock = $Front/MarginContainer/Panel/Lock
 @onready var author = $Author
+@onready var remove_button = $RemoveBtn
 
 @onready var roomBack = $Back
 @onready var detail_panel = $Back/DetailPanel
@@ -72,6 +73,7 @@ func setup(data: Dictionary):
 	status_label.text = status_name[data.get("status", 0)]
 	room_lock.visible = data.get("is_locked", false)
 	author.text = "@"+data.get("author", "")+" "
+	remove_button.visible = data.get("author", "") == OnlineLogin.get_my_name()
 	# 根据状态设置状态标签样式
 	var style_path: String
 	match data.get("status", 0):  #"等待中" "进行中"  "已满员"
@@ -193,12 +195,16 @@ func _on_favorite_button_toggled(_button_pressed: bool):
 	if not result:
 		return
 	is_favorite = !is_favorite
-	favorite_toggled.emit(is_favorite)
+	
 	
 	# 添加收藏动画
 	var rotation_tween = create_tween()
-	var target_rotation = PI if is_favorite else 0.0
-	rotation_tween.tween_property(favorite_button, "rotation", target_rotation, 0.3)
+	if is_favorite:
+		rotation_tween.tween_property(favorite_button, "rotation", PI * 2, 0.5)
+	else:
+		rotation_tween.tween_property(favorite_button, "rotation", -PI * 2, 0.5)
+	await get_tree().create_timer(0.5).timeout
+	favorite_toggled.emit(is_favorite)
 
 func _start_pulse_animation():
 	# if not is_instance_valid(status_label):
@@ -229,3 +235,11 @@ func flip():
 	
 	await animation.animation_finished
 	is_animating = false
+
+func _on_texture_button_pressed() -> void:
+	var result = await OnlineGame.removeTable({"tid":room_data.id})
+	if result == null or (result and not result.has("tid")):
+		return
+	PopupManager.show_dynamic("删除成功")
+
+	pass # Replace with function body.

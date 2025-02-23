@@ -50,6 +50,7 @@ func setup(data):
 	description.text = data.description
 	var img = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 	gameBackImage.texture = img
+	# gameImage.texture = img
 	if data.image:
 		for dragonBones in gameLogos:
 			DataManager.safe_free_node(dragonBones)

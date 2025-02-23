@@ -22,6 +22,7 @@ font_size = 20
 font_color = Color(0.533037, 0.533037, 0.533037, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_ooq0r"]
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnmft"]
 draw_center = false
@@ -36,6 +37,7 @@ draw_center = false
 draw_center = false
 
 [sub_resource type="SystemFont" id="SystemFont_2eegr"]
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85xwb"]
 draw_center = false

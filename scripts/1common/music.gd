@@ -12,6 +12,9 @@ extends Node
 @onready var notifyMusic = $notify/notify
 @onready var onlineMusic = $notify/online
 
+@onready var joinSuccessMusic = $room/joinSuccess
+@onready var joinErrorMusic = $room/joinError
+
 var isMute = false 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,6 +29,9 @@ func _ready() -> void:
 	SignalManager.BackgroundMusicSIG.connect(_on_backgroundMusic)
 	SignalManager.GameMusicSIG.connect(_on_gameMusic)
 	SignalManager.MuteSIG.connect(_on_mute)
+	SignalManager.JoinSuccessMusicSIG.connect(_on_joinSuccessMusic)
+	SignalManager.JoinErrorMusicSIG.connect(_on_joinErrorMusic)
+	
 	pass # Replace with function body.
 
 
@@ -78,6 +84,27 @@ func _on_email_notify(args) -> void:
 		emailMusic.play()
 	pass
 
+# 加入房间声音
+func _on_joinSuccessMusic() -> void:
+	# if isMute:
+	# 	return
+	joinSuccessMusic.play()
+	pass
+
+func _on_joinErrorMusic() -> void:
+	# if isMute:
+	# 	return
+	joinErrorMusic.play()
+	pass
+
+# 通知声音
+func _on_welcomegMusic() -> void:
+	# if isMute:
+	# 	return
+	welcomegMusic.play()
+	pass
+
+
 # 游戏音乐(根据不同游戏播放)
 func _on_gameMusic(_id,args) -> void:
 	if args:
@@ -101,6 +128,8 @@ func _on_mute(args) -> void:
 	isMute = args
 	mute_audio_players(self)
 	pass
+
+
 
 func mute_audio_players(node):
 	# 检查当前节点

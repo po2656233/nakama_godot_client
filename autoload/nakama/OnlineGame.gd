@@ -90,6 +90,13 @@ func leaveTable(payload):
 	var result = await self.RpcData("leave_table",payload)
 	return result
 
+func createTable(payload):
+	var result = await self.RpcData("create_table",payload)
+	return result
+
+func removeTable(payload):
+	var result = await self.RpcData("remove_table",payload)
+	return result
 ###########################################################################
 func joinMatch(mid,payload=null):
 	if Online.nakama_socket:

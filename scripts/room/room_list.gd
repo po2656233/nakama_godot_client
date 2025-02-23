@@ -41,12 +41,12 @@ var my_count = 0
 var favorite_count = 0
 
 
-@export var items_per_page: int = 4
+@export var items_per_page: int = 8
 @export var button_size: Vector2 = Vector2(200, 200)
 @export var spacing: float = 20.0
 
 # 网络请求的单页数据
-var page_size: int = 6
+var page_size: int = 8
 
 # 本地处理的分页
 var current_page: int = 0
@@ -71,7 +71,7 @@ var curSelect = SearchType.all
 func _ready():
 	SettingsManager.show_settings()
 	SceneManager.set_previous_name("roomlist")
-	WindowDrag.register_drag_zone(self)
+	# WindowDrag.register_drag_zone(self)
 
 	# 适配房间子项的列数
 	var width = get_viewport_rect().size.x
@@ -176,16 +176,21 @@ func append_room(data):
 		pass
 	pass
 
-func remove_room(room_id):
-	var index = room_list_info.find(func(r): return r.id == room_id)
-	if index != -1:
-		room_list_info.remove_at(index)
-	index = my_rooms.find(func(r): return r.id == room_id)
-	if index != -1:
-		my_rooms.remove_at(index)
-	index = favorite_rooms.find(func(r): return r.id == room_id)
-	if index != -1:
-		favorite_rooms.remove_at(index)
+func remove_room(room_data):
+	var room_id = room_data.get("tid", 0)
+	print("删除:", room_id)
+	for i in range(room_list_info.size()):
+		if room_list_info[i].id == room_id:
+			room_list_info.remove_at(i)
+			break
+	for i in range(my_rooms.size()):
+		if my_rooms[i].id == room_id:
+			my_rooms.remove_at(i)
+			break
+	for i in range(favorite_rooms.size()):
+		if favorite_rooms[i].id == room_id:
+			favorite_rooms.remove_at(i)
+			break
 	total_pages -= 1
 	if total_pages < 0:
 		total_pages = 0
@@ -375,7 +380,8 @@ func _update_items(room_info):
 		if child.room_data.room_id == room_info.room_id:
 			print("更新房间:", room_info)
 			child.setup(room_info)
-			return
+			break
+	_refresh_room_list()
 	pass
 
 
@@ -546,8 +552,10 @@ func _on_append_room(info):
 	_refresh_room_list()
 
 func _on_remove_room(data):
-	if data.has("table"):
-		remove_room(data.table.id)
+	remove_room(data)
+
+func _recv_leave_room(data):
+	print("离开房间---:", data)
 
 func _on_received_match_state(data):
 	if data.op_code == 101:
@@ -640,6 +648,7 @@ func _on_join_room(room_info: Dictionary):
 		"tableKey": jion_input.text
 	})
 	if ret == null or not ret.has("tableId") or ret.tableId != room_info.id:
+		SignalManager.JoinErrorMusicSIG.emit()
 		print("加入房间失败", ret)
 		return 
 
@@ -652,7 +661,7 @@ func _on_join_room(room_info: Dictionary):
 		#失败则返回 不用处理接口里统一处理了
 		return
 	print("加入房间成功", result)
-	
+	SignalManager.JoinSuccessMusicSIG.emit()
 	waitingStart.show()
 	pass
 
@@ -696,7 +705,7 @@ func _on_next_button_pressed():
 	var current_size = room_list_info.size()
 	var plan_size = (current_page + 1) * items_per_page
 	print("当前房间数量:", current_size, "计划房间数量:", plan_size, "当前页:", current_page, "总页数:", page_size)
-	if plan_size > current_size && plan_size > page_size:
+	if plan_size > current_size && plan_size >= page_size:
 		var page = ceil(float(plan_size) / page_size)
 		print("加载下一页:", page)
 		await loadRooms(page)

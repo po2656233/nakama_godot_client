@@ -4,6 +4,7 @@ extends Node
 var FuncMapping = {
 	"leave_table": "离开房间",
 	"join_table": "加入房间",
+	"remove_table": "",
 	"favorite_table": "收藏房间",
 	"send_message": "发送消息",
 	# 添加更多映射...
