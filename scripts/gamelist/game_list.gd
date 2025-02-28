@@ -144,11 +144,12 @@ func _on_game_cancel(_game_id):
 	pass
 
 # 游戏开始
-func _on_game_start(_game_id):
+func _on_game_start(game_id_1):
 	welcome_sound.play()
 	await get_tree().create_timer(1.0).timeout
 	PopupManager.show_dynamic("游戏开始")
-	SceneManager.switch_to_scene("xiangqi","custom",0.5)
+	var gameEnName = OnlineGame.getGameEnName(game_id_1)
+	SceneManager.ToGameScene(gameEnName)
 	pass
 
 

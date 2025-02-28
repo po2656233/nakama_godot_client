@@ -109,7 +109,7 @@ func _on_countdown_timeout():
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
 		
-		SceneManager.switch_to_scene(game_name)
+		SceneManager.SceneManager.ToGameScene(game_name)
 
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):

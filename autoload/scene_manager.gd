@@ -325,6 +325,15 @@ func go_back() -> void:
 	switch_to_scene(nodeName)
 	pass
 
+func ToGameScene(gameName: String) -> void:
+	var scene_path = get_scene_path(gameName)
+	if scene_path == "":
+		PopupManager.show_dynamic("%s 正在招商中..." % gameName)
+		switch_to_scene("home")
+		return
+	switch_to_scene(gameName)
+	pass
+	
 # 切换场景
 func switch_to_scene(scene_name: String, transition_way:String = "cross", dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_name == "":
@@ -338,6 +347,7 @@ func _transition_scene(scene_path: String,  transition_way:String = "cross",diss
 	if scene_path == "":
 		PopupManager.show_dynamic("场景路径为空")
 		push_error("场景路径为空")
+		go_back()
 		return
 	print("切换场景: ", scene_path)
 	var resObj = load(scene_path)
