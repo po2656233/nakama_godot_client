@@ -66,6 +66,8 @@ func _ready():
 	var games = await OnlineGame.getGameList()
 	for item in games:
 		print(item)
+		if item.max_player < 2:# 单机游戏不参与匹配
+			continue
 		var description = "[center][b]%s[/b][/center]\n\n"%[item.name]
 		if item.special:
 			description += "[color=blue][b]特色：[/b][/color]\n"+item.special+"\n\n"
@@ -133,7 +135,7 @@ func _on_match_sucess(matchData):
 
 # 游戏取消
 func _on_game_cancel(_game_id):
-	await OnlineMatch.leaveMatch(curMatchId)
+	await OnlineMatch.LeaveMatch(curMatchId)
 	print("取消准备游戏 match_id:", curMatchId)
 	await get_tree().create_timer(1.5).timeout
 	PopupManager.show_dynamic("游戏已取消")

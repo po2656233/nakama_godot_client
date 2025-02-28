@@ -8,6 +8,29 @@ var scene_order = []
 var current_scene_index = -1
 # 上一个场景
 var previous_name = ""
+var scenes = {
+        "loading": "res://scenes/1common/loading_screen.tscn",
+		"login": "res://scenes/login.tscn",
+		"register": "res://scenes/register.tscn",
+		"home": "res://scenes/home.tscn",
+		"game": "res://scenes/game/game.tscn",
+		"match": "res://scenes/match/match.tscn",
+		"email":"res://scenes/email/mail.tscn",
+		"approval":"res://scenes/approval/approval_form.tscn",
+		"gamelist":"res://scenes/gamelist/game_list.tscn",
+		"roomlist":"res://scenes/room/room_list.tscn",
+		"matching":"res://scenes/match/matching.tscn",
+		"matchSuccess":"res://scenes/game/match_success.tscn",
+		"leaderboard":"res://scenes/1common/leaderboard.tscn",
+		"xiangqi":"res://scenes/game/xiangqi/S/xiangqi.tscn",
+		"tetris":"res://scenes/game/tetris/tetris.tscn",
+		"mahjong_matching":"res://scenes/game/mahjong_matching/level/main_game.tscn",
+		# "xiangqi":"scenes\game\\tetris.tscn",
+		# # 如果有重复的场景名称，将被跳过并输出警告
+		# "login": "res://scenes/another_login.tscn"  ,
+	}
+
+
 var DISSOLVE_IMAGE = preload('res://addons/transitions/images/blurry-noise.png')
 # 场景转换效果类型映射
 const TRANSITION_TYPES = {
@@ -99,25 +122,6 @@ const TRANSITION_TYPES = {
 
 func _init():
 	# 添加场景字典
-	var scenes = {
-        "loading": "res://scenes/1common/loading_screen.tscn",
-		"login": "res://scenes/login.tscn",
-		"register": "res://scenes/register.tscn",
-		"home": "res://scenes/home.tscn",
-		"game": "res://scenes/game/game.tscn",
-		"match": "res://scenes/match/match.tscn",
-		"email":"res://scenes/email/mail.tscn",
-		"approval":"res://scenes/approval/approval_form.tscn",
-		"gamelist":"res://scenes/gamelist/game_list.tscn",
-		"roomlist":"res://scenes/room/room_list.tscn",
-		"matching":"res://scenes/match/matching.tscn",
-		"matchSuccess":"res://scenes/game/match_success.tscn",
-		"leaderboard":"res://scenes/1common/leaderboard.tscn",
-		"xiangqi":"res://scenes/game/xiangqi/S/xiangqi.tscn",
-		# # 如果有重复的场景名称，将被跳过并输出警告
-		# "login": "res://scenes/another_login.tscn"  ,
-	}
-
 	add_scenes_from_dict(scenes)
 	scan_scenes_directory("res://scenes")
 	print_all_scenes()
@@ -315,7 +319,9 @@ func get_running_scene_name() -> String:
 func go_back() -> void:
 	var nodeName = get_previous_scene_name()
 	if nodeName == "":
-		return
+		nodeName = "home"
+	OnlineMatch.LeaveMatch()
+	OnlineGame.LeaveGame()
 	switch_to_scene(nodeName)
 	pass
 

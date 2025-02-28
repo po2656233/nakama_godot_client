@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca8nh034fytl5"]
+
+[ext_resource type="Script" uid="uid://ch2cvc2oycb62" path="res://scripts/game/tetris/line.gd" id="1_7guty"]
+
+[node name="Line" type="Node2D"]
+script = ExtResource("1_7guty")

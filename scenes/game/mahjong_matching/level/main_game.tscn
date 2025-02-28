@@ -1,0 +1,178 @@
+[gd_scene load_steps=23 format=3 uid="uid://dynv7y3by6dvx"]
+
+[ext_resource type="Script" uid="uid://cukh66rap3bfu" path="res://scripts/game/mahjong_matching/Gameplay/main_game.gd" id="1_uepjk"]
+[ext_resource type="AudioStream" uid="uid://bgwa7ulxvccos" path="res://assets/game/mahjong_matching/bgm/gamemain.mp3" id="2_k03hu"]
+[ext_resource type="Script" uid="uid://celp0jlvjppy6" path="res://scripts/game/mahjong_matching/UI/MainUI.gd" id="3_4lpbs"]
+[ext_resource type="AudioStream" uid="uid://dbyhjti0cbqj6" path="res://assets/game/mahjong_matching/SE/click1.wav" id="4_adoqc"]
+[ext_resource type="Texture2D" uid="uid://cu8a0x6e6p8pb" path="res://assets/game/mahjong_matching/UI/background.png" id="5_8m4uc"]
+[ext_resource type="Theme" uid="uid://vb12ay5d7wb4" path="res://assets/game/mahjong_matching/theme/start_ui.tres" id="6_0co5h"]
+[ext_resource type="FontFile" uid="uid://d3u5428h3aenu" path="res://assets/game/mahjong_matching/fonts/Kaph-Regular.ttf" id="7_t1qxl"]
+[ext_resource type="Texture2D" uid="uid://ddxrytjrtx6rk" path="res://assets/game/mahjong_matching/UI/Icon_Small_Arrow.png" id="8_ut2ts"]
+[ext_resource type="Texture2D" uid="uid://dpxuk5wf3r3pc" path="res://assets/game/mahjong_matching/UI/Icon_Small_WhiteOutline_Return.png" id="9_wx40a"]
+[ext_resource type="Script" uid="uid://e5u7433tegge" path="res://scripts/game/mahjong_matching/UI/GameEnd.gd" id="10_42wx2"]
+[ext_resource type="Texture2D" uid="uid://cne4lrxa5gqit" path="res://assets/game/mahjong_matching/UI/Box_Flowers.png" id="11_w6s0c"]
+[ext_resource type="Texture2D" uid="uid://bpxomjf2wxb1w" path="res://assets/game/mahjong_matching/UI/Banner_Premade_LevelComplete.svg" id="12_716xp"]
+[ext_resource type="Theme" uid="uid://conkpxj3qsywe" path="res://assets/game/mahjong_matching/theme/button_blue.tres" id="13_w1237"]
+[ext_resource type="Theme" uid="uid://cyhtfq7v4nxvx" path="res://assets/game/mahjong_matching/theme/button_pink.tres" id="14_q02nj"]
+[ext_resource type="AudioStream" uid="uid://dol0sxioangkv" path="res://assets/game/mahjong_matching/SE/Minimalist1.wav" id="15_3f6xu"]
+[ext_resource type="AudioStream" uid="uid://d17ubsnaepu6p" path="res://assets/game/mahjong_matching/SE/Minimalist4.wav" id="16_mnkei"]
+[ext_resource type="AudioStream" uid="uid://c0x73jlj0mpfs" path="res://assets/game/mahjong_matching/SE/Minimalist3.wav" id="17_vpa8r"]
+[ext_resource type="AudioStream" uid="uid://divxfthhx63xl" path="res://assets/game/mahjong_matching/SE/Minimalist5.wav" id="18_xmr5p"]
+[ext_resource type="AudioStream" uid="uid://dyk50m2vxmhel" path="res://assets/game/mahjong_matching/SE/Minimalist6.wav" id="19_wpo5r"]
+[ext_resource type="AudioStream" uid="uid://lfduu664w0tu" path="res://assets/music/drip.mp3" id="20_gm60u"]
+[ext_resource type="AudioStream" uid="uid://ds7d53u3dldct" path="res://assets/game/mahjong_matching/SE/Minimalist2.wav" id="21_0hs6y"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iv14f"]
+
+[node name="MainGame" type="Node2D"]
+script = ExtResource("1_uepjk")
+
+[node name="BgmPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_k03hu")
+
+[node name="UI" type="Node2D" parent="."]
+script = ExtResource("3_4lpbs")
+
+[node name="ClickButtonPlayer" type="AudioStreamPlayer2D" parent="UI"]
+stream = ExtResource("4_adoqc")
+
+[node name="background" type="TextureRect" parent="UI"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("5_8m4uc")
+expand_mode = 1
+
+[node name="remainCount" type="Label" parent="UI"]
+offset_left = 1728.0
+offset_top = 120.0
+offset_right = 1839.0
+offset_bottom = 175.0
+theme = ExtResource("6_0co5h")
+theme_override_fonts/font = ExtResource("7_t1qxl")
+theme_override_font_sizes/font_size = 48
+text = "136"
+
+[node name="remainCountTitle" type="Label" parent="UI"]
+offset_left = 1224.0
+offset_top = 120.0
+offset_right = 1703.0
+offset_bottom = 175.0
+theme = ExtResource("6_0co5h")
+theme_override_fonts/font = ExtResource("7_t1qxl")
+text = "Remain Count:"
+
+[node name="achieveCount" type="Label" parent="UI"]
+offset_left = 1728.0
+offset_top = 56.0
+offset_right = 1839.0
+offset_bottom = 144.0
+theme = ExtResource("6_0co5h")
+theme_override_fonts/font = ExtResource("7_t1qxl")
+theme_override_font_sizes/font_size = 48
+text = "0
+"
+
+[node name="achieveCountTitle" type="Label" parent="UI"]
+offset_left = 1200.0
+offset_top = 56.0
+offset_right = 1701.0
+offset_bottom = 111.0
+theme = ExtResource("6_0co5h")
+theme_override_fonts/font = ExtResource("7_t1qxl")
+theme_override_font_sizes/font_size = 48
+text = "Achieve Count:"
+
+[node name="backButton" type="Button" parent="UI"]
+offset_left = 56.0
+offset_top = 32.0
+offset_right = 206.0
+offset_bottom = 182.0
+theme = ExtResource("6_0co5h")
+theme_override_constants/icon_max_width = 100
+icon = ExtResource("8_ut2ts")
+icon_alignment = 1
+
+[node name="restartButton" type="Button" parent="UI"]
+offset_left = 264.0
+offset_top = 32.0
+offset_right = 414.0
+offset_bottom = 182.0
+theme = ExtResource("6_0co5h")
+icon = ExtResource("9_wx40a")
+icon_alignment = 1
+
+[node name="achieveBoxContainer" type="Node2D" parent="UI"]
+position = Vector2(1601, 211)
+scale = Vector2(0.7, 0.7)
+
+[node name="GameEnd" type="Node2D" parent="UI"]
+visible = false
+script = ExtResource("10_42wx2")
+
+[node name="BoxFlowers" type="Sprite2D" parent="UI/GameEnd"]
+position = Vector2(976, 592)
+scale = Vector2(0.494744, 0.494744)
+texture = ExtResource("11_w6s0c")
+
+[node name="BannerPremadeLevelComplete" type="Sprite2D" parent="UI/GameEnd"]
+position = Vector2(968, 232)
+scale = Vector2(0.374016, 0.374016)
+texture = ExtResource("12_716xp")
+
+[node name="QuitButton" type="Button" parent="UI/GameEnd"]
+offset_left = 800.0
+offset_top = 680.0
+offset_right = 1150.0
+offset_bottom = 800.0
+theme = ExtResource("13_w1237")
+text = "Quit"
+
+[node name="AgainButton" type="Button" parent="UI/GameEnd"]
+offset_left = 800.0
+offset_top = 456.0
+offset_right = 1150.0
+offset_bottom = 576.0
+theme = ExtResource("14_q02nj")
+text = "Again
+"
+
+[node name="BoardLine" type="StaticBody2D" parent="."]
+scale = Vector2(1.2, 1.2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoardLine"]
+position = Vector2(1070.83, 810.833)
+shape = SubResource("WorldBoundaryShape2D_iv14f")
+one_way_collision = true
+
+[node name="Board" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(364, 252)
+scale = Vector2(1.44, 1.44)
+
+[node name="SE" type="Node2D" parent="."]
+
+[node name="ClickPlayer1" type="AudioStreamPlayer2D" parent="SE"]
+stream = ExtResource("15_3f6xu")
+
+[node name="ClickPlayer4" type="AudioStreamPlayer2D" parent="SE"]
+stream = ExtResource("16_mnkei")
+
+[node name="ClickPlayer3" type="AudioStreamPlayer2D" parent="SE"]
+stream = ExtResource("17_vpa8r")
+
+[node name="ClickPlayer5" type="AudioStreamPlayer2D" parent="SE"]
+stream = ExtResource("18_xmr5p")
+
+[node name="ClickPlayer6" type="AudioStreamPlayer2D" parent="SE"]
+stream = ExtResource("19_wpo5r")
+
+[node name="MergePlayer" type="AudioStreamPlayer2D" parent="SE"]
+stream = ExtResource("20_gm60u")
+
+[node name="ClickPlayer2" type="AudioStreamPlayer2D" parent="SE"]
+stream = ExtResource("21_0hs6y")
+
+[connection signal="pressed" from="UI/backButton" to="UI" method="_on_back_button_pressed"]
+[connection signal="pressed" from="UI/restartButton" to="UI" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/GameEnd/QuitButton" to="UI/GameEnd" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/GameEnd/AgainButton" to="UI/GameEnd" method="_on_again_button_pressed"]

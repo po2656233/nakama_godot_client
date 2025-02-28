@@ -133,7 +133,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_c05wv")
 placeholder_text = "请输入密码"
-virtual_keyboard_type = 6
 secret = true
 
 [node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerPsw/LineEdit"]

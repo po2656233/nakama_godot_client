@@ -146,6 +146,7 @@ func start_matchmaking(_nakama_socket: NakamaSocket, data: Dictionary = {}) -> v
 	else:
 		data['max_count'] = max_players
 
+	data['max_count'] = max(data['max_count'],data['min_count'])
 	if client_version != '':
 		if not data.has('string_properties'):
 			data['string_properties'] = {}
@@ -156,7 +157,7 @@ func start_matchmaking(_nakama_socket: NakamaSocket, data: Dictionary = {}) -> v
 			data['query'] += ' ' + query
 		else:
 			data['query'] = query
-
+	
 	match_state = MatchState.MATCHING
 	print("\n匹配相关信息:",data,"\n")
 	var result = await nakama_socket.add_matchmaker_async(data.get('query', '*'), data['min_count'], data['max_count'], data.get('string_properties', {}), data.get('numeric_properties', {}))
@@ -323,7 +324,7 @@ func joinMatchmaker(data):
 		data['max_count'] = min(max_players, data['max_count'])
 	else:
 		data['max_count'] = max_players
-
+	data['max_count'] = max(data['max_count'],data['min_count'])
 	if client_version != '':
 		if not data.has('string_properties'):
 			data['string_properties'] = {}
@@ -353,7 +354,7 @@ func LeaveMatchmaker(ticket_id : String=""):
 
 
 # 离开匹配
-func leaveMatch(p_match_id : String = ""):
+func LeaveMatch(p_match_id : String = ""):
 	if p_match_id == "":
 		p_match_id = match_id
 	if p_match_id == "":

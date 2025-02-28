@@ -79,6 +79,8 @@ offset_bottom = 0.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
 size_flags_stretch_ratio = 3.0
+gamename = ""
+maxplayer = 1
 
 [node name="MatchSuccess" parent="." instance=ExtResource("3_8wtxj")]
 visible = false

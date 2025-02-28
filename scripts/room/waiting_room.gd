@@ -7,6 +7,7 @@ var max_players = 4
 var last_wait_time = 5
 var time_left:float = 20.0
 var room_id = ""
+var game_name = ""
 var current_players = []
 @onready var player_list = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerList
 @onready var waiting_animation = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WaitingAnimation
@@ -30,11 +31,12 @@ func _ready():
 	pass
 
 # 重置房间信息
-func reset(roomId: String = "",playerMax:int=10):
+func reset(name1: String,roomId: String = "",playerMax:int=10):
 	time_left = 20.0
 	cancleBtn.disabled = false
 	max_players = playerMax
 	room_id = roomId
+	game_name = name1
 	current_players = []
 	for child in player_list.get_children():
 		child.queue_free()
@@ -106,7 +108,8 @@ func _on_countdown_timeout():
 		# cancleBtn.disabled = true
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
-		SceneManager.switch_to_scene("home")
+		
+		SceneManager.switch_to_scene(game_name)
 
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):

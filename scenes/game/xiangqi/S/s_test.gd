@@ -179,5 +179,5 @@ func _on_button_button_down() -> void:
 
 
 func _on_reback_btn_pressed() -> void:
-	SceneManager.change_scene("home")
+	SceneManager.go_back()
 	pass # Replace with function body.

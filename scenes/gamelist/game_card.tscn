@@ -238,6 +238,7 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_ag7gp")
 position = Vector2(232, 1242)
 script = ExtResource("4_2lxpo")
@@ -256,6 +257,7 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_8cwjc")
 position = Vector2(208, 1337)
 script = ExtResource("4_2lxpo")
@@ -275,6 +277,7 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_ctnco")
 position = Vector2(262, 1351)
 script = ExtResource("4_2lxpo")
@@ -294,6 +297,7 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_lsj51")
 position = Vector2(238, 1260)
 script = ExtResource("4_2lxpo")
@@ -312,6 +316,7 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_o1mi4")
 position = Vector2(236, 1246)
 script = ExtResource("4_2lxpo")
@@ -330,6 +335,7 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_7pd0r")
 position = Vector2(233, 1294)
 script = ExtResource("4_2lxpo")
@@ -348,6 +354,7 @@ armature_settings = {
 "use_parent_material": true,
 "visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_hkqvs")
 position = Vector2(235, 1292)
 script = ExtResource("4_2lxpo")

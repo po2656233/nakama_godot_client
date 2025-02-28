@@ -49,6 +49,10 @@ window/size/borderless=true
 
 enabled=PackedStringArray("res://addons/gdcef/plugin.cfg", "res://addons/protobuf/plugin.cfg", "res://addons/transitions/plugin.cfg")
 
+[gui]
+
+theme/custom_font="res://assets/font/SourceHanSansSC-Normal.otf"
+
 [input]
 
 ui_left={

@@ -17,6 +17,7 @@ output.json
 
 # IntelliJ
 *.iml
+*.uid
 .idea/
 .godot/
 misc.xml
@@ -26,6 +27,7 @@ render.experimental.xml
 # Keystore files
 *.jks
 *.keystore
+
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json

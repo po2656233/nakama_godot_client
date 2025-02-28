@@ -638,7 +638,8 @@ func _on_join_room(room_info: Dictionary):
 		return
 	print("加入房间-key:", jion_input.text)
 	# 初始化等待房间
-	waitingStart.reset(room_info.room_id, room_info.max_players)
+	var enName = OnlineGame.getGameEnName(room_info.game_type) 
+	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
 	for player in room_info.players:
 		print("正在等待的玩家:", player)
 		waitingStart.add_player(player.uid, player.username, player.get("headIcon", ""))

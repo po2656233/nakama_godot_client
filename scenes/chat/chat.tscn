@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=40 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -33,6 +33,9 @@ draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_orn7s"]
 bg_color = Color(0.129412, 0.290196, 0.380392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymw4y"]
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss6pv"]
 bg_color = Color(0.266667, 0.462745, 0.592157, 1)
@@ -275,16 +278,16 @@ theme_override_fonts/font = SubResource("SystemFont_2knlu")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
 theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
+theme_override_styles/tabbar_background = SubResource("StyleBoxFlat_ymw4y")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ss6pv")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
 tab_alignment = 1
-current_tab = 2
+current_tab = 0
 drag_to_rearrange_enabled = true
 
 [node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -434,6 +437,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 

@@ -1,6 +1,7 @@
 extends Node
 const loginProto = preload("res://gdprotobuf/login.gd")
 const homeProto = preload("res://gdprotobuf/home.gd")
+var local_match_id = ""
 var games_data = []
 var kind_names = {
 	1: "对战类",
@@ -104,11 +105,15 @@ func joinMatch(mid,payload=null):
 		if result.is_exception():
 			PopupManager.show_dynamic("加入匹配失败 "+result.get_exception().message)
 			return false
+
+		local_match_id = mid
 		return true
 	return false
 
 func LeaveMatch(mid):
-	if Online.nakama_socket:
+	if mid == "":
+		mid = local_match_id
+	if Online.nakama_socket and mid != "":
 		var result = await Online.nakama_socket.leave_match_async(mid)
 		if result.is_exception():
 			print("退出匹配失败 ",result.get_exception().message)
@@ -116,6 +121,10 @@ func LeaveMatch(mid):
 			return false
 		return true
 	return false
+
+func LeaveGame():
+	LeaveMatch("")
+	pass
 ########################################################################################
 # 获取游戏列表
 func getGameList(kind:int=-1):
@@ -151,6 +160,28 @@ func getGameName(game_id:int):
 		if game.id == game_id:
 			return game.name
 	return ""
+
+# 获取游戏名称
+func getGameEnName(game_id:int):
+	for game in games_data:
+		if game.id == game_id:
+			return game.en_name
+	return ""
+
+# 获取游戏名称
+func getGameEnName_by(gamename:String):
+	for game in games_data:
+		if game.name == gamename:
+			return game.en_name
+	return ""
+
+
+# 获取游戏名称
+func getGameID(enName:String):
+	for game in games_data:
+		if game.en_name == enName:
+			return game.id
+	return -1
 
 # 获取游戏类型信息
 func getKindName(kind:int):
