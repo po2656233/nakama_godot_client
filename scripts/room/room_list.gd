@@ -110,7 +110,7 @@ func _ready():
 	# SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
 	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
 	SignalManager.MatchPresenceEventSIG.connect(_on_received_match_presence)
-	SignalManager.TableOnlineSIG.connect(_on_received_table_online)
+	SignalManager.OnlineCountSIG.connect(_on_received_table_online)
 	pass
 
 func load_data():
@@ -319,48 +319,77 @@ func _refresh_room_list():
 	page_label.text = "%d/%d" % [current_page + 1, total_pages]
 	pass
 
+# 优化：提取重复的动画逻辑到单独的函数
+func _animate_button(button, property: String, values: Array, duration: float = 0.1) -> void:
+	if tween:
+		tween.kill()
+	tween = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	for value in values:
+		tween.tween_property(button, property, value, duration)
 
+# 优化：简化按钮动画逻辑
+func _on_show_favorites_toggled(button_pressed: bool):
+	print("显示收藏:", button_pressed)
+	if button_pressed:
+		show_myrooms.button_pressed = false
+		curSelect = SearchType.favorite
+		await loadRooms()
+		var original_y = show_favorites.position.y
+		_animate_button(show_favorites, "position:y", [original_y - 30, original_y, original_y + 30, original_y])
+	else:
+		show_favorites.button_pressed = false
+		show_myrooms.button_pressed = false
+		curSelect = SearchType.all
+		_refresh_room_list()
+
+func _on_show_myrooms_toggled(button_pressed: bool):
+	if button_pressed:
+		show_favorites.button_pressed = false
+		curSelect = SearchType.my
+		my_rooms.clear()
+		await loadRooms()
+		var original_x = show_myrooms.position.x
+		_animate_button(show_myrooms, "position:x", [original_x - 30, original_x, original_x + 30, original_x])
+	else:
+		show_favorites.button_pressed = false
+		show_myrooms.button_pressed = false
+		curSelect = SearchType.all
+		_refresh_room_list()
+
+func _on_create_pressed():
+	_animate_button(create_button, "rotation_degrees", [-15, 15, -15, 15, 0], 0.1)
+	create_room_dialog.popup_centered()
+	print("公开匹配")
+
+# 优化：减少重复的过滤逻辑
 func _apply_filters(rooms: Array) -> Array:
-	if 0 == rooms.size():
+	if rooms.size() == 0:
 		return []
-
-	# 如果显示收藏，只显示收藏的房间
-	if curSelect == SearchType.favorite:
-		rooms = favorite_rooms
-	elif curSelect == SearchType.my:
-		rooms = my_rooms
 
 	var filtered = []
 	var search_text = search_input.text.to_lower()
 	var selectGameType = game_options.selected
+
 	for room in rooms:
-		# 搜索文本过滤
-		if search_text:
-			var room_text = "%s%s%s" % [room.room_name, room.game_name, room.room_id]
-			if not room_text.to_lower().contains(search_text):
-				continue
+		if search_text and not ("%s%s%s" % [room.room_name, room.game_name, room.room_id]).to_lower().contains(search_text):
+			continue
 		if selectGameType > 0 and room.game_type != selectGameType:
 			continue
 		filtered.append(room)
 	return filtered
 
-# func _sort_rooms(rooms: Array) -> Array:
-# 	var sort_id = sort_options.selected
-# 	var sorted = rooms.duplicate()
-# 	match sort_id:
-# 		1: # 底分升序
-# 			sorted.sort_custom(func(a, b): return a.base_score < b.base_score)
-# 		2: # 底分降序
-# 			sorted.sort_custom(func(a, b): return a.base_score > b.base_score)
-# 		3: # 人数升序
-# 			sorted.sort_custom(func(a, b): return a.player_count < b.player_count)
-# 		4: # 人数降序
-# 			sorted.sort_custom(func(a, b): return a.player_count > b.player_count)
-# 		5: # 创建时间
-# 			sorted.sort_custom(func(a, b): return a.create_time > b.create_time)
-# 		6: # 需要密码
-# 			sorted.sort_custom(func(a, b): return not a.is_locked and b.is_locked)
-# 	return sorted
+# 优化：简化房间数据更新逻辑
+func _update_items(room_info):
+	if not room_info:
+		return
+	for child in room_container.get_children():
+		if child.room_data.room_id == room_info.room_id:
+			print("更新房间:", room_info)
+			child.setup(room_info)
+			break
+	_refresh_room_list()
 
 # 更新统计信息
 func _update_stats():
@@ -372,18 +401,6 @@ func _update_stats():
 	active_rooms_label.text = "活跃房间: %d" % active_rooms
 	total_players_label.text = "在线玩家: %d" % total_players
 	pass
-
-func _update_items(room_info):
-	if not room_info:
-		return
-	for child in room_container.get_children():
-		if child.room_data.room_id == room_info.room_id:
-			print("更新房间:", room_info)
-			child.setup(room_info)
-			break
-	_refresh_room_list()
-	pass
-
 
 ###############################################################
 func _on_search_changed(_new_text: String):
@@ -419,108 +436,58 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 	pass
 
 # 显示收藏房间
-func _on_show_favorites_toggled(button_pressed: bool):
-	print("显示收藏:", button_pressed)
-	if button_pressed:
-		show_myrooms.button_pressed = false
-		curSelect = SearchType.favorite
-		await loadRooms()
-		# 上下移动
-		if tween:
-			tween.kill()
-		tween = get_tree().create_tween()
-		tween.set_ease(Tween.EASE_IN_OUT)
-		tween.set_trans(Tween.TRANS_SINE)
-		# 获取按钮当前的x位置
-		var original_y = show_favorites.position.y
-		# 向右移动30像素
-		tween.tween_property(show_favorites, "position:y", original_y - 30, 0.05)
-		tween.tween_property(show_favorites, "position:y", original_y, 0.05)
-		tween.tween_property(show_favorites, "position:y", original_y + 30, 0.05)
-		tween.tween_property(show_favorites, "position:y", original_y, 0.05)
-	else:
-		show_favorites.button_pressed = false
-		show_myrooms.button_pressed = false
-		curSelect = SearchType.all
-		_refresh_room_list()
-	pass
 
-# 显示我创建的房间
-func _on_show_myrooms_toggled(button_pressed: bool):
-	if button_pressed:
-		show_favorites.button_pressed = false
-		curSelect = SearchType.my
-		my_rooms.clear()
-		await loadRooms()
-		# 左右移动
-		if tween:
-			tween.kill()
-		tween = get_tree().create_tween()
-		tween.set_ease(Tween.EASE_IN_OUT)
-		tween.set_trans(Tween.TRANS_SINE)
-		# 获取按钮当前的x位置
-		var original_x = show_myrooms.position.x
-		# 向右移动30像素
-		tween.tween_property(show_myrooms, "position:x", original_x - 30, 0.05)
-		tween.tween_property(show_myrooms, "position:x", original_x, 0.05)
-		tween.tween_property(show_myrooms, "position:x", original_x + 30, 0.05)
-		tween.tween_property(show_myrooms, "position:x", original_x, 0.05)
-		print("显示我创建的:", button_pressed)
-	else:
-		show_favorites.button_pressed = false
-		show_myrooms.button_pressed = false
-		curSelect = SearchType.all
-		_refresh_room_list()
-	
-
-func _on_create_pressed():
-	# 添加刷新动画
-	# 左右移动
-	if tween:
-		tween.kill()
-	tween = get_tree().create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
-	# # 获取按钮当前的x位置
-	# var original_x = create_button.position.x
-	# # 向右移动30像素
-	# tween.tween_property(create_button, "position:x", original_x - 30, 0.15)
-	# tween.tween_property(create_button, "position:x", original_x, 0.15)
-	# tween.tween_property(create_button, "position:x", original_x + 30, 0.15)
-	# tween.tween_property(create_button, "position:x", original_x, 0.15)
-
-	# # 招手
-	# var rotation_tween = create_tween()
-	# tween.set_ease(Tween.EASE_IN_OUT)
-	# tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(create_button, "rotation_degrees", -15, 0.1)
-	tween.tween_property(create_button, "rotation_degrees", 15, 0.2)
-	tween.tween_property(create_button, "rotation_degrees", -15, 0.1)
-	tween.tween_property(create_button, "rotation_degrees", 15, 0.2)
-	tween.tween_property(create_button, "rotation_degrees", 0, 0.1)
-	# # 旋转
-	# var rotation_tween = create_tween()
-	# tween.tween_property(create_button, "rotation", PI * 2, 0.5)
-	# tween.tween_property(create_button, "rotation", 0, 0)
-	create_room_dialog.popup_centered()
-	print("公开匹配")
-	# 这里可以添加从服务器刷新数据的逻辑
-	# _refresh_room_list()
-	# _update_stats()
+# 确认房间密码
+func _on_confirm_btn_pressed() -> void:
+	if jion_input.text == "":
+		PopupManager.show_dynamic("请输入房间密码")
+		return
+	# 校验房间密码
+	selected_room_info.room_key = jion_input.text
+	_on_join_room(selected_room_info)
 	pass
 
 
-# # 等待房间开始
-# func wait_for_room_to_start():
-# 	if selected_room_info:
-# 		var room_info = selected_room_info
-# 		# 进入房间
-# 		waitingStart.reset(room_info.room_id, room_info.max_players)
-# 		for player in room_info.players:
-# 			print("正在等待的玩家:", player)
-# 			waitingStart.add_player(player.uid, player.username, player.headIcon)
-# 		waitingStart.show()
-# 	pass # Replace with function body.
+# 取消房间
+func _on_cancle_btn_pressed() -> void:
+	selected_room_info = {}
+	jion_dialog.visible = false
+	jion_input.text = ""
+	pass # Replace with function body.
+
+
+func _on_prev_button_pressed():
+	if current_page > 0:
+		current_page -= 1
+		_refresh_room_list()
+	pass
+
+func _on_next_button_pressed():
+	if current_page < total_pages - 1:
+		current_page += 1 # 它从0开始
+	# 判断是否需要加载下一页
+	var current_size = room_list_info.size()
+	var plan_size = (current_page + 1) * items_per_page
+	print("当前房间数量:", current_size, "计划房间数量:", plan_size, "当前页:", current_page, "总页数:", page_size)
+	if plan_size > current_size && plan_size >= page_size:
+		var page = ceil(float(plan_size) / page_size)
+		print("加载下一页:", page)
+		await loadRooms(page)
+	else:
+		_refresh_room_list()
+	pass
+
+func _on_search_input_focus_entered() -> void:
+	# 获取目标编辑控件的全局位置和大小
+	if Util.isMobile():
+		DisplayServer.virtual_keyboard_show("中文输入法")
+	pass # Replace with function body.
+
+
+func _on_search_input_focus_exited() -> void:
+	if Util.isMobile():
+		DisplayServer.virtual_keyboard_hide()
+	pass # Replace with function body.
 
 #################################################################
 func _on_append_room(info):
@@ -662,7 +629,7 @@ func _on_join_room(room_info: Dictionary):
 		#失败则返回 不用处理接口里统一处理了
 		return
 	print("加入房间成功", result)
-	SignalManager.JoinSuccessMusicSIG.emit()
+	SignalManager.JoinSuccessMusicSIG.emit(room_info.room_id)
 	waitingStart.show()
 	pass
 
@@ -674,54 +641,4 @@ func _on_room_created(_room_info: Dictionary):
 	pass
 
 
-# 确认房间密码
-func _on_confirm_btn_pressed() -> void:
-	if jion_input.text == "":
-		PopupManager.show_dynamic("请输入房间密码")
-		return
-	# 校验房间密码
-	selected_room_info.room_key = jion_input.text
-	_on_join_room(selected_room_info)
-	pass
 
-
-# 取消房间
-func _on_cancle_btn_pressed() -> void:
-	selected_room_info = {}
-	jion_dialog.visible = false
-	jion_input.text = ""
-	pass # Replace with function body.
-
-
-func _on_prev_button_pressed():
-	if current_page > 0:
-		current_page -= 1
-		_refresh_room_list()
-	pass
-
-func _on_next_button_pressed():
-	if current_page < total_pages - 1:
-		current_page += 1 # 它从0开始
-	# 判断是否需要加载下一页
-	var current_size = room_list_info.size()
-	var plan_size = (current_page + 1) * items_per_page
-	print("当前房间数量:", current_size, "计划房间数量:", plan_size, "当前页:", current_page, "总页数:", page_size)
-	if plan_size > current_size && plan_size >= page_size:
-		var page = ceil(float(plan_size) / page_size)
-		print("加载下一页:", page)
-		await loadRooms(page)
-	else:
-		_refresh_room_list()
-	pass
-
-func _on_search_input_focus_entered() -> void:
-	# 获取目标编辑控件的全局位置和大小
-	if Util.isMobile():
-		DisplayServer.virtual_keyboard_show("中文输入法")
-	pass # Replace with function body.
-
-
-func _on_search_input_focus_exited() -> void:
-	if Util.isMobile():
-		DisplayServer.virtual_keyboard_hide()
-	pass # Replace with function body.

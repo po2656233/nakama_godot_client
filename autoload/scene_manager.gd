@@ -22,7 +22,9 @@ var scenes = {
 		"matching":"res://scenes/match/matching.tscn",
 		"matchSuccess":"res://scenes/game/match_success.tscn",
 		"leaderboard":"res://scenes/1common/leaderboard.tscn",
-		"xiangqi":"res://scenes/game/xiangqi/S/xiangqi.tscn",
+		
+		# 游戏初始场景映射
+		"ChineseChess":"res://scenes/game/xiangqi/S/xiangqi.tscn",
 		"tetris":"res://scenes/game/tetris/tetris.tscn",
 		"mahjong_matching":"res://scenes/game/mahjong_matching/level/main_game.tscn",
 		# "xiangqi":"scenes\game\\tetris.tscn",
@@ -329,7 +331,8 @@ func ToGameScene(gameName: String) -> void:
 	var scene_path = get_scene_path(gameName)
 	if scene_path == "":
 		PopupManager.show_dynamic("%s 正在招商中..." % gameName)
-		switch_to_scene("home")
+		print("%s 正在招商中..." % gameName)
+		go_back()
 		return
 	switch_to_scene(gameName)
 	pass
@@ -567,6 +570,7 @@ func remove_scene(scene_instance: Node) -> void:
 		var parent = scene_instance.get_parent()
 		if parent:
 			parent.queue_free()  # 这将同时移除容器和场景实例
+	pass
 
 
 # 打印所有场景信息

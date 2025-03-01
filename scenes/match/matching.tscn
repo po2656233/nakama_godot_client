@@ -1,10 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://b6x8j0p7n6xj"]
+[gd_scene load_steps=20 format=3 uid="uid://b6x8j0p7n6xj"]
 
 [ext_resource type="Script" path="res://scripts/match/matching.gd" id="1_tlue5"]
 [ext_resource type="Shader" path="res://shaders/progress_circle.gdshader" id="2_p1m5x"]
-[ext_resource type="AudioStream" uid="uid://b1ktw2bak7xc7" path="res://assets/music/success1.mp3" id="3_2xsol"]
-[ext_resource type="AudioStream" uid="uid://dbasenfbnvkls" path="res://assets/music/fail.mp3" id="4_kkpyf"]
-[ext_resource type="AudioStream" uid="uid://8kbicuvoslr" path="res://assets/music/ding.mp3" id="5_0qu45"]
 
 [sub_resource type="Theme" id="Theme_8pgp0"]
 
@@ -194,8 +191,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_8pgp0")
 script = ExtResource("1_tlue5")
-gamename = null
-maxplayer = null
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -295,13 +290,3 @@ text = "取消"
 libraries = {
 "": SubResource("AnimationLibrary_8p4vq")
 }
-
-[node name="SuccessSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_2xsol")
-
-[node name="FailSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_kkpyf")
-
-[node name="TimeSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_0qu45")
-volume_db = -1.0

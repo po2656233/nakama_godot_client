@@ -236,7 +236,7 @@ func _on_channel_presence(channel_presence):
 
 func _on_received_message(channel_message):
 	print("收到消息:", channel_message)
-	SignalManager.ChannelMessageSIG.emit(channel_message)
+	SignalManager.RecvMessageSIG.emit(channel_message)
 	pass
 
 # func _on_received_error(error):
@@ -260,7 +260,7 @@ func do_broadcast(notification1):
 			SignalManager.LeaveRoomSIG.emit(content)
 			pass
 		EnBroadcast.TableOnline:
-			SignalManager.TableOnlineSIG.emit(content)
+			SignalManager.OnlineCountSIG.emit(content)
 			pass
 		_:
 			push_warning("未知的广播类型:",notification1.code)

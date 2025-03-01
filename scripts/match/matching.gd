@@ -4,15 +4,10 @@ extends Control
 @export var gamename: String = ""
 @export var maxplayer: int = 1
 
-@onready var successSound = $SuccessSound
-@onready var failSound = $FailSound
-@onready var timeSound = $TimeSound
-
 # 信号
 signal match_start()
 signal match_cancel()
 signal match_sucess(data)
-
 
 # 匹配状态
 enum MatchState {IDLE, MATCHING, SUCCESS, FAILED}
@@ -44,9 +39,7 @@ const HIGHT_LIMIT = 10000000
 @onready var cancel_button = $Panel/VBoxContainer/HBoxContainer/CancelButton
 @onready var start_button = $Panel/VBoxContainer/HBoxContainer/StartButton
 @onready var animation_player = $AnimationPlayer
-@onready var time_sound = $TimeSound
-@onready var success_sound = $SuccessSound
-@onready var fail_sound = $FailSound
+
 
 
 # 初始化
@@ -63,8 +56,7 @@ func _ready():
 	pass
 
 
-func _process(delta):
-			
+func _process(delta):	
 	if is_matching:
 		accumulator += delta
 		elapsed_time += delta
@@ -75,7 +67,7 @@ func _process(delta):
 		if accumulator >= 2.0:
 			accumulator = fmod(accumulator, 2.0) # 保留余数防止误差累积
 			progress_circle.material.set_shader_parameter("color", Color(randf(), randf(), randf(), 1.0))
-			time_sound.play()
+			SignalManager.MatchingTimeMusicSIG.emit(false)
 		progress_circle.material.set_shader_parameter("progress", progress_value)
 		#
 		time += delta
@@ -92,7 +84,7 @@ func start_matching():
 	cancel_button.visible = true
 	start_button.visible = false
 	animation_player.play("matching_pulse")
-	time_sound.stop()
+	SignalManager.MatchingTimeMusicSIG.emit(true)
 	# 显示进度动画
 	progress_circle.visible = true
 	accumulator = 0
@@ -135,7 +127,7 @@ func stop_matching():
 	current_state = MatchState.IDLE
 	reset_ui()
 	animation_player.stop()
-	time_sound.stop()
+	SignalManager.MatchingTimeMusicSIG.emit(true)
 	match_cancel.emit()
 
 func reset_ui():
@@ -187,8 +179,8 @@ func _on_match_success():
 	cancel_button.visible = false
 	animation_player.play("success_flash")
 	progress_circle.visible = false
-	time_sound.stop()
-	success_sound.play()
+	SignalManager.MatchingTimeMusicSIG.emit(true)
+	SignalManager.MatchingOkMusicSIG.emit()
 	
 	# 这里添加切换到游戏场景的代码
 	
@@ -202,5 +194,5 @@ func _on_match_failed():
 	start_button.visible = true
 	animation_player.play("failed_shake")
 	progress_circle.visible = false
-	time_sound.stop()
-	fail_sound.play()
+	SignalManager.MatchingTimeMusicSIG.emit(true)
+	SignalManager.MatchingFailedMusicSIG.emit()

@@ -108,8 +108,7 @@ func _on_countdown_timeout():
 		# cancleBtn.disabled = true
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
-		
-		SceneManager.SceneManager.ToGameScene(game_name)
+		SceneManager.ToGameScene(game_name)
 
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):

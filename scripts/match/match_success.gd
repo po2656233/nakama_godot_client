@@ -8,10 +8,6 @@ extends Window
 @onready var ready_label = $Panel/VBoxContainer/HBoxContainer/ReadyLabel
 @onready var accept_button = $Panel/VBoxContainer/ButtonContainer/AcceptButton
 @onready var decline_button = $Panel/VBoxContainer/ButtonContainer/DeclineButton
-@onready var time_sound = $TimeoutSound
-@onready var fail_sound = $FailSound
-@onready var success_sound = $SuccessSound
-
 
 var png = preload("res://assets/game/snake1.png")
 var png1 = preload("res://assets/game/snake2.png")
@@ -63,12 +59,12 @@ func add_player(is_ready=true):
 	if ready_count > player_total:
 		return
 	if is_ready:
-		success_sound.play()
+		SignalManager.MatchSuccessOkMusicSIG.emit()
 		player_icons[ready_count - 1].modulate = Color(1, 0.84, 0) # Gold color
 	else:
 		timer.stop()
-		time_sound.stop()
-		fail_sound.play()
+		SignalManager.MatchSuccessTimeMusicSIG.emit(true)
+		SignalManager.MatchSuccessFailedMusicSIG.emit()
 		player_icons[ready_count - 1].texture = png1
 		player_icons[ready_count - 1].modulate = Color(1, 1, 1)
 	pass
@@ -78,13 +74,13 @@ func reset(gid: int, matchId: String, playerMax: int = 10, readyCount: int = 0):
 	game_id = gid
 	match_id = matchId
 	player_total = playerMax
-	time_sound.stop()
 	timer.stop()
 	player_icons.clear()
 	isStart = false
 	accept_button.disabled = false
 	decline_button.visible = true
 	accept_button.text = "准备"
+	SignalManager.MatchSuccessTimeMusicSIG.emit(true)
 	# 清除子项
 	for child in grid_container.get_children():
 		child.queue_free()
@@ -130,7 +126,7 @@ func _on_timer_timeout():
 	if timer_value > 0 and ready_count < player_total:
 		if timer_value <= timer_warn:
 			if not accept_button.disabled:
-				time_sound.play()
+				SignalManager.MatchSuccessTimeMusicSIG.emit(false)
 			timer_label.text = base_text_2 % timer_value
 		else:
 			timer_label.text = base_text_1 % timer_value
@@ -146,7 +142,7 @@ func _on_accept_pressed():
 	print("准备游戏 match_id:", match_id)
 	accept_button.disabled = true
 	decline_button.visible = false
-	time_sound.stop()
+	SignalManager.MatchSuccessTimeMusicSIG.emit(true)
 	var ret = await OnlineGame.sendToMatch(match_id, MatchState.GameReady, "0")
 	if ret and ret.is_exception():
 		accept_button.disabled = false

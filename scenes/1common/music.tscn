@@ -28,6 +28,9 @@ script = ExtResource("1_gf1mb")
 [node name="background" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_04t5u")
 
+[node name="welcome" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_sbyor")
+
 [node name="message" type="Node" parent="."]
 
 [node name="send" type="AudioStreamPlayer" parent="message"]
@@ -80,19 +83,19 @@ pitch_scale = 0.66
 
 [node name="matching" type="Node" parent="match"]
 
-[node name="SuccessSound" type="AudioStreamPlayer" parent="match/matching"]
-stream = ExtResource("15_ani0j")
-
-[node name="FailSound" type="AudioStreamPlayer" parent="match/matching"]
-stream = ExtResource("16_aocxn")
-
 [node name="TimeSound" type="AudioStreamPlayer" parent="match/matching"]
 stream = ExtResource("10_ternn")
 volume_db = -1.0
 
+[node name="FailSound" type="AudioStreamPlayer" parent="match/matching"]
+stream = ExtResource("16_aocxn")
+
+[node name="SuccessSound" type="AudioStreamPlayer" parent="match/matching"]
+stream = ExtResource("15_ani0j")
+
 [node name="matchsuccess" type="Node" parent="match"]
 
-[node name="TimeoutSound" type="AudioStreamPlayer" parent="match/matchsuccess"]
+[node name="TimeSound" type="AudioStreamPlayer" parent="match/matchsuccess"]
 stream = ExtResource("10_ternn")
 
 [node name="FailSound" type="AudioStreamPlayer" parent="match/matchsuccess"]

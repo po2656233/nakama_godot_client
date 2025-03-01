@@ -6,7 +6,6 @@ var game_card_scene = preload("res://scenes/gamelist/game_card.tscn")
 @onready var scrollContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer
 @onready var matching = $Matching
 @onready var match_sucess = $MatchSuccess
-@onready var welcome_sound = $WelcomeSound
 
 var game_id:int = -1
 var curMatchId = ""
@@ -145,7 +144,7 @@ func _on_game_cancel(_game_id):
 
 # 游戏开始
 func _on_game_start(game_id_1):
-	welcome_sound.play()
+	SignalManager.WelcomeMusicSIG.emit()
 	await get_tree().create_timer(1.0).timeout
 	PopupManager.show_dynamic("游戏开始")
 	var gameEnName = OnlineGame.getGameEnName(game_id_1)

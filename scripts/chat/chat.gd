@@ -238,6 +238,7 @@ func _on_received_message(msg):
 			SignalManager.RecvMessageSIG.emit(msg)
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
+		ensure_scroll_to()
 	pass
 
 # 收到历史消息----------------------
@@ -268,7 +269,7 @@ func _on_history_message(msgList):
 	if haveNew:
 		print("有新消息")
 		refresh_current_channel_display()
-	ensure_scroll_to()
+	
 	pass
 #############################################################
 

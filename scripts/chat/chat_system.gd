@@ -38,17 +38,17 @@ enum MessageCode {
 	ChatUpdate = 1,
 	ChatRemove = 2,
 	JoinedGroup = 3,
-	AddedToGroup = 4,#已经添加到组
-	LeftGroup = 5,#已经离开组
-	KickedFromGroup = 6,#被踢Group
-	PromotedInGroup = 7, #在小组内晋升
-	BannedInGroup = 8,# 在群组中被禁止
-	DemotedInGroup = 9, #在小组内降职
+	AddedToGroup = 4, # 已经添加到组
+	LeftGroup = 5, # 已经离开组
+	KickedFromGroup = 6, # 被踢Group
+	PromotedInGroup = 7, # 在小组内晋升
+	BannedInGroup = 8, # 在群组中被禁止
+	DemotedInGroup = 9, # 在小组内降职
 }
 # 使用字典存储所有channel的消息历史
 var message_id_cache: Dictionary = {} # Dictionary<String, Dictionary> 用于快速查找消息ID
 var current_channel_id: String = ""
-var messages_container:VBoxContainer
+var messages_container: VBoxContainer
 
 @onready var friend_container = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
 @onready var club_container = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer/talkhistory
@@ -75,21 +75,19 @@ func changePanel(tab):
 	pass
 	
 	
-
-
 ################################################################
 ################	 聊天系统相关函数   ########################
 ################################################################
 # 添加新消息
-func add_message(chanId: String, msgId: String, content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0,code: int = 0):
+func add_message(chanId: String, msgId: String, content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0, code: int = 0):
 	if messages_container == null:
 		print("消息容器为空")
 		return
 	
 	# 检查消息类型	
-	var msgcode =  code as MessageCode
+	var msgcode = code as MessageCode
 	if msgcode > MessageCode.ChatRemove:
-		add_center_message(localContent(nickname,msgcode))
+		add_center_message(localContent(nickname, msgcode))
 		return
 
 	if timestamp == 0:
@@ -154,7 +152,6 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	# 更新最后消息时间
 	last_message_time = timestamp
 	message_index += 1
-	ensure_scroll_to()
 	pass
 
 # 添加时间分割线
@@ -226,13 +223,13 @@ func cleanup_overflow_messages(scroll: ScrollContainer):
 func _on_message_revoked(message_item):
 	if message_item.current_content.content:
 		message_item.current_content.content = "[已撤回]"
-	var ret = await OnlineChat.reback_channel_message(message_item.channel_id, message_item.message_id,message_item.current_content)
+	var ret = await OnlineChat.reback_channel_message(message_item.channel_id, message_item.message_id, message_item.current_content)
 	# 如果成功，可以更新消息显示
 	if ret:
 		message_item.text_label.text = "[已撤回]"
 		message_item.text_label.modulate = Color(0.5, 0.5, 0.5)
 		modify_message(message_item.channel_id, message_item.message_id, "[已撤回]")
-	pass 
+	pass
 
 # 处理消息删除
 func _on_message_deleted(message_item):
@@ -242,23 +239,22 @@ func _on_message_deleted(message_item):
 	delete_message(message_item.channel_id, message_item.message_id)
 
 
-
 # 删除消息的主函数
 func delete_message(channel_id: String, message_id: String):
 	# 从历史记录中删除
 	# 获取当前channel的消息
-	var messages = DataManager.get_instance().get_chat_history(uid,channel_id)
+	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
 	if messages.is_empty():
 		return
 	OnlineChat.remove_message_by_id(messages, message_id)
-	DataManager.get_instance().set_chat_history(uid,channel_id, messages)
+	DataManager.get_instance().set_chat_history(uid, channel_id, messages)
 	# 从ID缓存中删除
 	if channel_id in message_id_cache:
 		message_id_cache[channel_id].erase(message_id)
 
-func modify_message(channel_id: String, message_id: String,content: String):
+func modify_message(channel_id: String, message_id: String, content: String):
 	# 从历史记录中删除
-	var messages = DataManager.get_instance().get_chat_history(uid,channel_id)
+	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
 	 # 使用从后向前遍历的方法（最安全）
 	for i in range(messages.size() - 1, -1, -1):
 		if messages[i].message_id == message_id:
@@ -279,33 +275,33 @@ func modify_message(channel_id: String, message_id: String,content: String):
 			# 替换消息
 			messages[i] = new_msg
 			print("更新后的消息: ", messages[i])
-	DataManager.get_instance().set_chat_history(uid,channel_id, messages)
+	DataManager.get_instance().set_chat_history(uid, channel_id, messages)
 	pass
 
  
 # 检查消息是否已存在
 func has_message(channel_id: String, message_id: String) -> bool:
-	var messages = DataManager.get_instance().get_chat_history(uid,channel_id)
+	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
 	if messages == null:
 		return false
 	for item in messages:
 		if item.message_id == message_id:
 			return true
-	if not channel_id in message_id_cache: 
+	if not channel_id in message_id_cache:
 		return false
 	return message_id in message_id_cache[channel_id]
  
 
-func localContent(username:String,code:MessageCode):
+func localContent(username: String, code: MessageCode):
 	match code:
 		MessageCode.JoinedGroup:
-			return username+"加入了群聊"
+			return username + "加入了群聊"
 		MessageCode.AddedToGroup:
-			return username+"已加入群聊"
+			return username + "已加入群聊"
 		MessageCode.KickedFromGroup:
-			return username+"已被踢出群聊"
+			return username + "已被踢出群聊"
 		MessageCode.LeftGroup:
-			return username+"已离开群聊"
+			return username + "已离开群聊"
 	return ""
 
 func localMsg(msg):
@@ -313,23 +309,23 @@ func localMsg(msg):
 	match code:
 		MessageCode.JoinedGroup:
 			msg._content = JSON.stringify({
-				"type":ContentType.TEXT,
-				"content":msg.username+"加入了群聊"
+				"type": ContentType.TEXT,
+				"content": msg.username + "加入了群聊"
 				})
 		MessageCode.AddedToGroup:
 			msg._content = JSON.stringify({
-					"type":ContentType.TEXT,
-					"content":msg.username+"已加入群聊"
+					"type": ContentType.TEXT,
+					"content": msg.username + "已加入群聊"
 				})
 		MessageCode.KickedFromGroup:
 			msg._content = JSON.stringify({
-				"type":ContentType.TEXT,
-				"content":msg.username+"已被踢出群聊"
+				"type": ContentType.TEXT,
+				"content": msg.username + "已被踢出群聊"
 				})
 		MessageCode.LeftGroup:
 			msg._content = JSON.stringify({
-				"type":ContentType.TEXT,
-				"content":msg.username+"已离开群聊"
+				"type": ContentType.TEXT,
+				"content": msg.username + "已离开群聊"
 				})
 		_:
 			pass
@@ -351,39 +347,37 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 			"finish_history": false
 		}
 		DataManager.get_instance().add_channel_list(uid, channel_id)
-		print("渠道---> "+str(channel_id)+" 初始化完毕")
+		print("渠道---> " + str(channel_id) + " 初始化完毕")
 
 	# 检查消息是否已存在
 	if has_message(channel_id, message_id):
 		# print("消息 %s 已经存在于渠道 %s" % [message_id, channel_id])
-		ensure_scroll_to()
 		return false
 
 	# 添加消息到历史记录和ID缓存
 	message_id_cache[channel_id].message_id = true
 
 	var msgCount = DataManager.get_instance().add_chat_history(uid, channel_id, msg)
-	print("当前消息数量",msgCount) 
-	DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
-	ensure_scroll_to()
+	print("当前消息数量", msgCount)
+	DataManager.get_instance().set_data(uid + "_msg_cache", message_id_cache)
 	return true
 
 # 加载本地历史记录
 func load_local_history():
-	message_id_cache = Util.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
+	# message_id_cache = Util.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
 	# print("加载本地历史记录:",message_id_cache)
 	# var channelList = DataManager.get_instance().get_channel_list(uid)
 	# print("加载本地玩家渠道:",channelList)
-	ensure_scroll_to()
+	# ensure_scroll_to()
 	pass
 
 # 获取指定channel的所有历史消息
 func get_channel_messages(channel_id: String) -> Array:
 	# 排序
-	var messages = DataManager.get_instance().get_chat_history(uid,channel_id)
+	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
 	if messages == null:
 		return []
-	return Util.sort_dictionary_array(messages, "create_time",true)
+	return Util.sort_dictionary_array(messages, "create_time", true)
 
 
 # 刷新当前channel的显示
@@ -394,15 +388,16 @@ func refresh_current_channel_display() -> void:
 	# 获取并显示当前channel的所有消息
 	var messages = get_channel_messages(current_channel_id)
 	for message in messages:
-		var msg = message if typeof(message) != TYPE_STRING else DataManager.get_instance().parse_message(message) 
+		var msg = message if typeof(message) != TYPE_STRING else DataManager.get_instance().parse_message(message)
 		var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 		var code = msg.code if msg.has("code") else 0
-		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time),code)
+		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time), code)
+	ensure_scroll_to()
 	pass
 
-func message_to_show(msg:NakamaAPI.ApiChannelMessage):
+func message_to_show(msg: NakamaAPI.ApiChannelMessage):
 	var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
-	add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time),msg.code)
+	add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time), msg.code)
 	pass
 
 # 获取channel的最后一条消息
@@ -453,19 +448,19 @@ func ensure_scroll_to():
 			# 限制滚动范围
 			current_scroll = clamp(current_scroll, min_scroll, max_scroll)
 			scroll_bar.value = current_scroll
-			print("滑到底部")
+			print("滑到底部1")
 			# 检查并清理超出可见区域的消息(未完善暂不采用)
 			# cleanup_overflow_messages(scroll)
 		#等待一帧以确保UI已更新
-		# await get_tree().process_frame
+		await get_tree().process_frame
 
 		# 直接滚动到最底部
 		if isToTop:
 			scroll.scroll_vertical = 0
 			# print("滑到顶部")
 		else:
-			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value
-			# print("滑到底部")
+			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value + content_height + visible_height
+			print("滑到底部2")
 	pass
 
 
@@ -485,9 +480,9 @@ func ensure_scroll_to():
 # 		sendTextEdit.text = ""  # 清空输入框
 
 # 发送图片消息
-func send_image_message(msgId:String, image_path: String, kind: int = 0):
+func send_image_message(msgId: String, image_path: String, kind: int = 0):
 	var content = {
-		"headicon":myHeadicon,
+		"headicon": myHeadicon,
 		"kind": kind,
 		"type": ContentType.IMAGE,
 		"path": image_path,
@@ -495,9 +490,9 @@ func send_image_message(msgId:String, image_path: String, kind: int = 0):
 	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送视频消息
-func send_video_message(msgId:String, video_path: String, thumbnail_path: String, duration: float):
+func send_video_message(msgId: String, video_path: String, thumbnail_path: String, duration: float):
 	var content = {
-		"headicon":myHeadicon,
+		"headicon": myHeadicon,
 		"type": ContentType.VIDEO,
 		"path": video_path,
 		"thumbnail": thumbnail_path,
@@ -506,9 +501,9 @@ func send_video_message(msgId:String, video_path: String, thumbnail_path: String
 	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送语音消息
-func send_voice_message(msgId:String, voice_path: String, duration: float):
+func send_voice_message(msgId: String, voice_path: String, duration: float):
 	var content = {
-		"headicon":myHeadicon,
+		"headicon": myHeadicon,
 		"type": ContentType.VOICE,
 		"path": voice_path,
 		"duration": duration,
@@ -516,9 +511,9 @@ func send_voice_message(msgId:String, voice_path: String, duration: float):
 	add_message(current_channel_id, msgId, content, myUsername, true)
 
 # 发送文件消息
-func send_file_message(msgId:String, file_path: String, file_name: String, file_size: int):
+func send_file_message(msgId: String, file_path: String, file_name: String, file_size: int):
 	var content = {
-		"headicon":myHeadicon,
+		"headicon": myHeadicon,
 		"type": ContentType.FILE,
 		"path": file_path,
 		"file": file_name,

@@ -1,19 +1,29 @@
 extends Node
 
 @onready var bgMusic = $background
+@onready var welcomeMusic = $welcome
 
 @onready var sendMusic = $message/send
 @onready var recvMusic = $message/recv
 @onready var newmsgMusic = $message/newmsg
 
 @onready var comingMusic = $notify/comming
-@onready var welcomegMusic = $notify/welcome
 @onready var emailMusic = $notify/email
 @onready var notifyMusic = $notify/notify
 @onready var onlineMusic = $notify/online
-
+# 加入房间
 @onready var joinSuccessMusic = $room/joinSuccess
 @onready var joinErrorMusic = $room/joinError
+
+# 匹配音效
+@onready var matchingOkMusic = $match/matching/SuccessSound
+@onready var matchingFailedMusic = $match/matching/FailSound
+@onready var matchingTimeMusic = $match/matching/TimeSound
+
+# 匹配成功音效
+@onready var matchSuccessOkMusic = $match/matchsuccess/SuccessSound
+@onready var matchSuccessFailedMusic = $match/matchsuccess/FailSound
+@onready var matchSuccessTimeMusic = $match/matchsuccess/TimeSound
 
 var isMute = false 
 # Called when the node enters the scene tree for the first time.
@@ -31,7 +41,16 @@ func _ready() -> void:
 	SignalManager.MuteSIG.connect(_on_mute)
 	SignalManager.JoinSuccessMusicSIG.connect(_on_joinSuccessMusic)
 	SignalManager.JoinErrorMusicSIG.connect(_on_joinErrorMusic)
+	SignalManager.WelcomeMusicSIG.connect(_on_welcomegMusic)
 	
+	SignalManager.MatchingOkMusicSIG.connect(_on_matchingOkMusic)
+	SignalManager.MatchingFailedMusicSIG.connect(_on_matchingFailedMusic)
+	SignalManager.MatchingTimeMusicSIG.connect(_on_matchingTimeMusic)
+
+	SignalManager.MatchSuccessOkMusicSIG.connect(_on_matchSuccessOkMusic)
+	SignalManager.MatchSuccessFailedMusicSIG.connect(_on_matchSuccessFailedMusic)
+	SignalManager.MatchSuccessTimeMusicSIG.connect(_on_matchSuccessTimeMusic)
+
 	pass # Replace with function body.
 
 
@@ -85,7 +104,7 @@ func _on_email_notify(args) -> void:
 	pass
 
 # 加入房间声音
-func _on_joinSuccessMusic() -> void:
+func _on_joinSuccessMusic(_rid) -> void:
 	# if isMute:
 	# 	return
 	joinSuccessMusic.play()
@@ -101,10 +120,47 @@ func _on_joinErrorMusic() -> void:
 func _on_welcomegMusic() -> void:
 	# if isMute:
 	# 	return
-	welcomegMusic.play()
+	welcomeMusic.play()
+	pass
+########################匹配################################################
+func _on_matchingOkMusic() -> void:
+	# if isMute:
+	# 	return
+	matchingOkMusic.play()
 	pass
 
+func _on_matchingFailedMusic() -> void:
+	# if isMute:
+	# 	return
+	matchingFailedMusic.play()
+	pass
 
+func _on_matchingTimeMusic() -> void:	
+	# if isMute:
+	#	return
+	matchingTimeMusic.play()
+
+# 匹配成功
+func _on_matchSuccessOkMusic() -> void:
+	# if isMute:
+	# 	return
+	matchSuccessOkMusic.play()
+	pass
+
+func _on_matchSuccessFailedMusic() -> void:
+	# if isMute:
+	# 	return
+	matchSuccessFailedMusic.play()
+	pass
+
+func _on_matchSuccessTimeMusic() -> void:
+	# if isMute:
+	# 	return
+	matchSuccessTimeMusic.play()
+
+
+
+#########################################################################
 # 游戏音乐(根据不同游戏播放)
 func _on_gameMusic(_id,args) -> void:
 	if args:

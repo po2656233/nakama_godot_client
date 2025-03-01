@@ -72,7 +72,7 @@ signal MuteSIG(isMute)
 # 背景音乐
 @warning_ignore("unused_signal")
 signal BackgroundMusicSIG(isMute)
-# 背景音乐
+# 游戏音乐
 @warning_ignore("unused_signal")
 signal GameMusicSIG(id,isMute)
 
@@ -95,51 +95,68 @@ signal CancleGameSIG(gid)
 @warning_ignore("unused_signal")
 signal ExitGameSIG(gid) 
 
+####################房间##############################
 # 创建房间
 @warning_ignore("unused_signal")
 signal CreateRoomSIG(rid) 
 # 删除房间
 @warning_ignore("unused_signal")
 signal RemoveRoomSIG(rid) 
-# 加入房间成功
-@warning_ignore("unused_signal")
-signal JoinErrorMusicSIG(rid)
-@warning_ignore("unused_signal")
-signal JoinSuccessMusicSIG() 
-
-
 # 加入房间
 @warning_ignore("unused_signal")
 signal JoinRoomSIG(rid) 
 # 退出房间
 @warning_ignore("unused_signal")
 signal LeaveRoomSIG(rid) 
+# 房间满员
+@warning_ignore("unused_signal")
+signal FullRoomSIG(rid) 
+
+# 加入房间失败
+@warning_ignore("unused_signal")
+signal JoinErrorMusicSIG(rid)
+# 加入房间成功
+@warning_ignore("unused_signal")
+signal JoinSuccessMusicSIG(rid) 
 
 # 桌子上的在线人数
 @warning_ignore("unused_signal")
-signal TableOnlineSIG(count) 
-
+signal OnlineCountSIG(count) 
+###################事件###################################
 # 匹配事件
 @warning_ignore("unused_signal")
 signal MatchPresenceEventSIG(evt) 
-
 # 匹配事件
 @warning_ignore("unused_signal")
 signal MatchMakerSIG(evt) 
-
-
+# 匹配状态
+@warning_ignore("unused_signal")
+signal MatchStateEventSIG(evt) 
+# 玩家状态事件
+@warning_ignore("unused_signal")
+signal StatusPresenceEventSIG(evt) 
+###################匹配###################################
 # 匹配失败
 @warning_ignore("unused_signal")
 signal MatchMakerFailedSIG() 
 
-# 匹配状态
+# 正在匹配的成功音效
 @warning_ignore("unused_signal")
-signal MatchStateEventSIG(evt) 
+signal MatchingOkMusicSIG() 
+# 正在匹配的取消音效
+@warning_ignore("unused_signal")
+signal MatchingFailedMusicSIG() 
+# 正在匹配的时间音效
+@warning_ignore("unused_signal")
+signal MatchingTimeMusicSIG(isStop) 
 
-# 玩家状态事件
+# 匹配成功的成功音效
 @warning_ignore("unused_signal")
-signal StatusPresenceEventSIG(evt) 
+signal MatchSuccessOkMusicSIG() 
+# 匹配成功的取消音效
+@warning_ignore("unused_signal")
+signal MatchSuccessFailedMusicSIG() 
+# 匹配成功的时间音效
+@warning_ignore("unused_signal")
+signal MatchSuccessTimeMusicSIG(isStop) 
 
-# 房间满员
-@warning_ignore("unused_signal")
-signal FullRoomSIG(rid) 
