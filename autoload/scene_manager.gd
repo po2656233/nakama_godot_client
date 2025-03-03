@@ -8,8 +8,9 @@ var scene_order = []
 var current_scene_index = -1
 # 上一个场景
 var previous_name = ""
-var scenes = {
-        "loading": "res://scenes/1common/loading_screen.tscn",
+const HOME_NODE = "home"
+var scenes ={
+		"loading": "res://scenes/1common/loading_screen.tscn",
 		"login": "res://scenes/login.tscn",
 		"register": "res://scenes/register.tscn",
 		"home": "res://scenes/home.tscn",
@@ -24,7 +25,7 @@ var scenes = {
 		"leaderboard":"res://scenes/1common/leaderboard.tscn",
 		
 		# 游戏初始场景映射
-		"ChineseChess":"res://scenes/game/xiangqi/S/xiangqi.tscn",
+		"chinesechess":"res://scenes/game/xiangqi/S/s_test.tscn",
 		"tetris":"res://scenes/game/tetris/tetris.tscn",
 		"mahjong_matching":"res://scenes/game/mahjong_matching/level/main_game.tscn",
 		# "xiangqi":"scenes\game\\tetris.tscn",
@@ -319,21 +320,20 @@ func get_running_scene_name() -> String:
 
 # 返回上一个场景
 func go_back() -> void:
-	var nodeName = get_previous_scene_name()
-	if nodeName == "":
-		nodeName = "home"
-	OnlineMatch.LeaveMatch()
-	OnlineGame.LeaveGame()
-	switch_to_scene(nodeName)
+	var nodePath = get_previous_scene_path()
+	if nodePath == "":
+		nodePath = get_scene_path(HOME_NODE)
+	await OnlineMatch.LeaveMatch()
+	get_tree().change_scene_to_file(nodePath)
 	pass
 
 func ToGameScene(gameName: String) -> void:
+	gameName = gameName.to_lower()
 	var scene_path = get_scene_path(gameName)
 	if scene_path == "":
 		PopupManager.show_dynamic("%s 正在招商中..." % gameName)
 		print("%s 正在招商中..." % gameName)
-		go_back()
-		return
+		gameName = HOME_NODE
 	switch_to_scene(gameName)
 	pass
 	

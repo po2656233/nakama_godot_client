@@ -134,7 +134,7 @@ func _connect_socket() -> void:
 	nakama_socket.received_match_presence.connect(_on_received_match_presence)
 	nakama_socket.received_status_presence.connect(_on_received_status_presence)
 	nakama_socket.received_notification.connect(_on_received_notification)	
-	nakama_socket.received_channel_presence.connect(_on_channel_presence)
+	# nakama_socket.received_channel_presence.connect(_on_channel_presence)
 	nakama_socket.received_channel_message.connect(_on_received_message)
 	pass
 
@@ -231,7 +231,8 @@ func _on_received_notification(notification1):
 	pass
 
 func _on_channel_presence(channel_presence):
-	print("收到频道数据:", channel_presence)
+	var _1 = channel_presence
+	# print("收到频道数据:", channel_presence,OnlineLogin.get_my_name())
 	pass
 
 func _on_received_message(channel_message):

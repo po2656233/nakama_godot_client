@@ -10,6 +10,7 @@ func _ready():
 	WindowDrag.register_drag_zone(self)
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(chatPanle)
+	
 	pass
 
 func _on_btn_store_pressed() -> void:

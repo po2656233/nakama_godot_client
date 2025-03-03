@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cxivocmfljq0l"]
 
 [ext_resource type="Texture2D" uid="uid://dofvojmuljtjf" path="res://assets/game/tetris/Red.png" id="1_f8pdg"]
-[ext_resource type="Script" uid="uid://dvj8qincti0i1" path="res://scripts/game/tetris/piece_data.gd" id="2_75svq"]
+[ext_resource type="Script" path="res://scripts/game/tetris/piece_data.gd" id="2_75svq"]
 
 [resource]
 script = ExtResource("2_75svq")

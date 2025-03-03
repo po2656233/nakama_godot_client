@@ -28,6 +28,9 @@ extends Node
 var isMute = false 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	SignalManager.BackgroundMusicSIG.connect(_on_backgroundMusic)
+	SignalManager.WelcomeMusicSIG.connect(_on_welcomegMusic)
+
 	SignalManager.NewMessageSIG.connect(_on_new_msg)
 	SignalManager.SendMessageSIG.connect(_on_send_msg)
 	SignalManager.RecvMessageSIG.connect(_on_recv_msg)
@@ -36,12 +39,10 @@ func _ready() -> void:
 	SignalManager.NewEmailSIG.connect(_on_email_notify)
 	SignalManager.NewNotifySIG.connect(_on_recv_notify)
 
-	SignalManager.BackgroundMusicSIG.connect(_on_backgroundMusic)
 	SignalManager.GameMusicSIG.connect(_on_gameMusic)
 	SignalManager.MuteSIG.connect(_on_mute)
 	SignalManager.JoinSuccessMusicSIG.connect(_on_joinSuccessMusic)
 	SignalManager.JoinErrorMusicSIG.connect(_on_joinErrorMusic)
-	SignalManager.WelcomeMusicSIG.connect(_on_welcomegMusic)
 	
 	SignalManager.MatchingOkMusicSIG.connect(_on_matchingOkMusic)
 	SignalManager.MatchingFailedMusicSIG.connect(_on_matchingFailedMusic)
@@ -135,10 +136,13 @@ func _on_matchingFailedMusic() -> void:
 	matchingFailedMusic.play()
 	pass
 
-func _on_matchingTimeMusic() -> void:	
+func _on_matchingTimeMusic(isStop) -> void:	
 	# if isMute:
 	#	return
-	matchingTimeMusic.play()
+	if isStop:
+		matchingTimeMusic.stop()
+	else:
+		matchingTimeMusic.play()
 
 # 匹配成功
 func _on_matchSuccessOkMusic() -> void:
@@ -153,10 +157,13 @@ func _on_matchSuccessFailedMusic() -> void:
 	matchSuccessFailedMusic.play()
 	pass
 
-func _on_matchSuccessTimeMusic() -> void:
+func _on_matchSuccessTimeMusic(isStop) -> void:
 	# if isMute:
 	# 	return
-	matchSuccessTimeMusic.play()
+	if isStop:
+		matchSuccessTimeMusic.stop()
+	else:
+		matchSuccessTimeMusic.play()
 
 
 

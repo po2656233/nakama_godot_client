@@ -54,4 +54,3 @@ var data = {
 
 var clockwise_rotation_matrix = [Vector2(0, -1), Vector2(1, 0)]
 var counter_clockwise_rotation_matrix = [Vector2(0,1), Vector2(-1, 0)]
-

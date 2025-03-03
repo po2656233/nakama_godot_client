@@ -8,14 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dh8pl7whao7o6" path="res://assets/xiangqi/music/pieces_del.mp3" id="6_1ep10"]
 [ext_resource type="AudioStream" uid="uid://cv2ilwrgi35m3" path="res://assets/xiangqi/music/pieces_down_no.mp3" id="7_ayalg"]
 
-[node name="S_test" type="Panel"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="S_test" type="Node2D"]
 script = ExtResource("1_3g5qc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -73,7 +66,6 @@ theme_override_font_sizes/font_size = 50
 text = "再来一局"
 
 [node name="RebackBtn" type="Button" parent="."]
-layout_mode = 0
 offset_left = 398.0
 offset_top = -320.0
 offset_right = 566.0
@@ -83,7 +75,6 @@ theme_override_font_sizes/font_size = 50
 text = "返回"
 
 [node name="Button" type="Button" parent="."]
-layout_mode = 0
 offset_left = -467.0
 offset_top = -17.0
 offset_right = -395.0

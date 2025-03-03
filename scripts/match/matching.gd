@@ -131,8 +131,7 @@ func stop_matching():
 	match_cancel.emit()
 
 func reset_ui():
-	OnlineMatch.LeaveMatchmaker()
-	OnlineMatch.LeaveMatch()
+	await OnlineMatch.LeaveMatch()
 	game_name.text = gamename
 	status_label.text = "等待开始匹配..."
 	timer_label.text = "00:00"

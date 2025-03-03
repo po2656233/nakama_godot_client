@@ -306,6 +306,7 @@ func createMatch(id:String,game_name:String,min_size:int=1,max_size:int=100,limi
 
 # 加入匹配
 func joinMatch(p_match_id : String, p_metadata = null):
+	match_id = p_match_id
 	return await Online.nakama_socket.join_match_async(p_match_id,p_metadata)
 
 # 加入匹配 与MatchmakerAdd回包一起使用
@@ -344,12 +345,14 @@ func joinMatchmaker(data):
 		Online.dowithErr(result)
 		return result
 	matchmaker_ticket = result.ticket
+	print("\n匹配Ticket:",result," 玩家信息:",OnlineLogin.get_my_name())
 	pass
 func LeaveMatchmaker(ticket_id : String=""):
 	if ticket_id == "":
 		ticket_id = matchmaker_ticket
 	if ticket_id == "":
 		return	
+	print("\n移除Ticket:",ticket_id," 玩家信息:",OnlineLogin.get_my_name())
 	return await Online.nakama_socket.remove_matchmaker_async(ticket_id)
 
 
@@ -359,6 +362,7 @@ func LeaveMatch(p_match_id : String = ""):
 		p_match_id = match_id
 	if p_match_id == "":
 		return
+	LeaveMatchmaker()
 	var result = await Online.nakama_socket.leave_match_async(p_match_id)
 	if result.is_exception():
 		PopupManager.show_dynamic("离开匹配失败 "+result.get_exception().message)

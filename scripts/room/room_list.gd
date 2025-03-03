@@ -578,10 +578,7 @@ func _on_received_table_online(data):
 # 取消等待
 func _on_cancel_waiting():
 	print("离开房间:", selected_room_info.room_id)
-	var result = await OnlineGame.LeaveMatch(selected_room_info.room_id)
-	if not result:
-		print("离开房间失败")
-		return
+	await OnlineMatch.LeaveMatch(selected_room_info.room_id)
 	waitingStart.hide()
 	waitingStart.remove_player(OnlineLogin.get_my_id())
 	if selected_room_info:
@@ -621,7 +618,7 @@ func _on_join_room(room_info: Dictionary):
 		return 
 
 	# 进入房间
-	var result = await OnlineGame.joinMatch(room_info.room_id, {
+	var result = await OnlineMatch.joinMatch(room_info.room_id, {
 		"name": room_info.room_name,
 		"key": room_info.room_key
 	})

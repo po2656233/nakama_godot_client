@@ -23,6 +23,9 @@ signal RecvFinishSIG()
 @warning_ignore("unused_signal")
 signal OnlineSIG()
 
+# 欢迎
+@warning_ignore("unused_signal")
+signal WelcomeMusicSIG()
 ###################社交###########################
 # 添加好友
 @warning_ignore("unused_signal")

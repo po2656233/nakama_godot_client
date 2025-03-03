@@ -83,3 +83,5 @@ maxplayer = 1
 
 [node name="MatchSuccess" parent="." instance=ExtResource("3_8wtxj")]
 visible = false
+countdown = 20
+gamename = ""

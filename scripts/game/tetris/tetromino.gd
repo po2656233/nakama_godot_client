@@ -162,17 +162,17 @@ func _input(event):
 			#return
 				# 如果触屏从左向右移动
 				#move_right()
-	if Input.is_action_just_pressed("left") or left:
+	if Input.is_action_just_pressed("ui_left") or left:
 		move(Vector2.LEFT)
-	elif Input.is_action_just_pressed("right")or right:
+	elif Input.is_action_just_pressed("ui_right")or right:
 		move(Vector2.RIGHT)
-	elif Input.is_action_just_pressed("down") :
+	elif Input.is_action_just_pressed("ui_down") :
 		move(Vector2.DOWN)
 	elif Input.is_action_just_pressed("hard_drop"):
 		hard_drop()
-	elif Input.is_action_just_pressed("rotate_left")or down:
+	elif Input.is_action_just_pressed("ui_up")or down:
 		rotate_tetromino(-1)
-	elif Input.is_action_just_pressed("rotate_right") or up:
+	elif up:
 		rotate_tetromino(1)
 
 func is_half_arc(points: Array) -> bool:

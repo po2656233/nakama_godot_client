@@ -31,6 +31,7 @@ func show_settings(state: int = 0):
 	elif state == 2:
 		settings_ui.simple()
 	settings_ui.show()
+	# await get_tree().process_frame
 	pass
 
 func hide_settings():

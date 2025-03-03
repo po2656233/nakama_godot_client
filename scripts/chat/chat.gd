@@ -65,7 +65,8 @@ func _ready():
 
 	# 虚拟键盘高度
 	origin_height = keyboardContainer.position.y
-
+	await get_tree().process_frame
+	
 	# 创建全屏按钮
 	if toggle_button_path:
 		button = get_node(toggle_button_path)
@@ -80,8 +81,9 @@ func _ready():
 	button.visible = Util.isFullScreen()
 	light_switch.visible = Util.isFullScreen()
 
-	set_rotation_pivot()		# 设置旋转中心点
 
+	set_rotation_pivot()		# 设置旋转中心点
+	
 	# 线程开启加载俱乐部成员
 	# startThread()
 	call_deferred("initData")

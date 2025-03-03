@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 const CHESS_POSITION = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
 
@@ -180,4 +180,6 @@ func _on_button_button_down() -> void:
 
 func _on_reback_btn_pressed() -> void:
 	SceneManager.go_back()
+	# queue_free()
+	
 	pass # Replace with function body.
