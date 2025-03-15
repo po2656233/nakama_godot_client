@@ -47,15 +47,12 @@ var first_friends = true
 var first_clubs = true
 var first_world = true
 
-# func _init() -> void:
-# 	# if OnlineChat.get_world_channel() == null:
-# 	# 	await OnlineChat.create_world_async()
-# 	# pass
 
 # 初始化 
 func _ready():
 	if not OnlineLogin.player_data:
 		PopupManager.show_message("未登录")
+		OnlineLogin.relogin()
 		return
 	# 获取基础信息
 	myHeadicon = OnlineLogin.get_my_headIcon()
@@ -719,7 +716,9 @@ func _on_tab_container_tab_selected(tab:int) -> void:
 		first_world = false
 		var world = OnlineChat.get_world_channel()
 		if world:
-			await OnlineChat.get_chat_history(world.id)
+			print("加载世界频道",world.id)
+			_on_change_channel(world.id)
+			# await OnlineChat.get_chat_history(world.id)
 	elif tab == 1 and first_clubs:
 		first_clubs = false
 		# get_club_list()

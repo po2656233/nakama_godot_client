@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://duk1crphy5j8f"]
 
-[ext_resource type="Script" path="res://scripts/1common/find_friend.gd" id="1_54668"]
+[ext_resource type="Script" uid="uid://b8fwefc1knge1" path="res://scripts/1common/find_friend.gd" id="1_54668"]
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="2_a7bd4"]
 [ext_resource type="Texture2D" uid="uid://edm34hfg0egi" path="res://assets/hall/btn_jia.png" id="3_on8jn"]
-[ext_resource type="Script" path="res://scripts/1common/itemlist_ctrl.gd" id="3_qwje4"]
+[ext_resource type="Script" uid="uid://c7ivuidqgh6st" path="res://scripts/1common/itemlist_ctrl.gd" id="3_qwje4"]
 [ext_resource type="Texture2D" uid="uid://c3nkmrq40xd4p" path="res://assets/hall/btn_jia _xuant.png" id="4_o61lp"]
 [ext_resource type="Texture2D" uid="uid://iuonmkrhiqvo" path="res://assets/hall/btn_jia_enx.png" id="5_g27v3"]
 
@@ -90,9 +90,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/font_selected_color = Color(0.776471, 0.862745, 0.729412, 1)
 theme_override_colors/font_hovered_color = Color(0.968627, 0.807843, 0, 1)
-theme_override_constants/icon_margin = 10
-theme_override_constants/line_separation = 10
 theme_override_constants/v_separation = 2
+theme_override_constants/line_separation = 10
+theme_override_constants/icon_margin = 10
 theme_override_constants/h_separation = 20
 theme_override_styles/focus = SubResource("StyleBoxFlat_mdyjj")
 theme_override_styles/panel = SubResource("StyleBoxFlat_dsmle")

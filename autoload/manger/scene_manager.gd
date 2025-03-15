@@ -125,7 +125,7 @@ const TRANSITION_TYPES = {
 
 func _init():
 	# 添加场景字典
-	add_scenes_from_dict(scenes)
+	set_scenes_from_dict(scenes)
 	scan_scenes_directory("res://scenes")
 	print_all_scenes()
 
@@ -201,7 +201,7 @@ func add_scene(scene_name: String, scene_path: String) -> bool:
 
 # 添加场景字典，保持字典中的顺序，跳过重复场景
 # @param scenes_dict: 包含场景名称和路径的字典
-func add_scenes_from_dict(scenes_dict: Dictionary) -> void:
+func set_scenes_from_dict(scenes_dict: Dictionary) -> void:
 	# 清空现有的场景数据
 	scene_paths.clear()
 	scene_order.clear()
@@ -241,7 +241,15 @@ func get_current_scene_name() -> String:
 # 设置上一个场景的名称 便于返回
 func set_previous_name(sceneName: String) -> void:
 	previous_name = sceneName
+	print("设置上一个场景: ", previous_name)
 	pass
+
+func has_scene(scene_name: String) -> bool:
+	return scene_paths.has(scene_name)
+
+func check_scene(scene_name: String) -> bool:
+	var path = get_scene_path(scene_name)
+	return FileAccess.file_exists(path)
 
 func get_previous_scene_name() -> String:
 	print("上一个场景: ", previous_name)
@@ -323,6 +331,7 @@ func go_back() -> void:
 	var nodePath = get_previous_scene_path()
 	if nodePath == "":
 		nodePath = get_scene_path(HOME_NODE)
+	print("上一个场景: ", nodePath)
 	await OnlineMatch.LeaveMatch()
 	get_tree().change_scene_to_file(nodePath)
 	pass

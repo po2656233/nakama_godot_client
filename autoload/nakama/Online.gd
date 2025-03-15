@@ -328,7 +328,7 @@ func sendPing():
 	return
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):
-	
+	print("发送RPC:", funcName, payload)
 	if nakama_socket:
 		var result = await nakama_socket.rpc_async(funcName, payload)
 		if result.is_exception():
@@ -346,6 +346,7 @@ func dowithErr(result,funcName=""):
 	if not result.is_exception():
 		return
 	var msg = result.get_exception().message
+	print("RPC异常:",result)
 	msg = Errors.ResponeMapping.get(msg, msg)
 	PopupManager.show_dynamic("%s失败: %s" % [Errors.FuncMapping.get(funcName, funcName), msg],150.0)
 	print("%s 响应异常: %s"%[funcName, msg])

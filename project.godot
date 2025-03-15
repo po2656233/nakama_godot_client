@@ -14,7 +14,7 @@ config/name="zhezhizhonghua"
 config/description="游乐场"
 config/version="1.0.1"
 run/main_scene="res://scenes/login.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0.345098, 0.698039, 0.635294, 1)
 boot_splash/image="res://assets/login/chenguang.png"
 config/icon="res://assets/bg/img_gg.png"
@@ -30,19 +30,17 @@ OnlineGame="*res://autoload/nakama/OnlineGame.gd"
 Transitions="*res://addons/transitions/Transitions.gd"
 FancyFade="*res://addons/transitions/FancyFade.gd"
 FadeScene="*res://addons/transitions/FadeScene.gd"
-WindowDrag="*res://autoload/window_drag.gd"
-MailSystem="*res://autoload/mail_system.gd"
-DataMgr="*res://autoload/data_manager.gd"
-PopupManager="*res://autoload/popup_manager.gd"
-SceneManager="*res://autoload/scene_manager.gd"
-SignalManager="*res://autoload/signal_manager.gd"
-SettingsManager="*res://autoload/settings_manager.gd"
+WindowDrag="*res://autoload/game/window_drag.gd"
+MailSystem="*res://autoload/manger/mail_system.gd"
+DataMgr="*res://autoload/manger/data_manager.gd"
+PopupManager="*res://autoload/game/popup_manager.gd"
+SceneManager="*res://autoload/manger/scene_manager.gd"
+SignalManager="*res://autoload/manger/signal_manager.gd"
+SettingsManager="*res://autoload/manger/settings_manager.gd"
 Util="*res://autoload/Util.gd"
 Errors="*res://autoload/error_setting.gd"
-NetworkManager="res://autoload/network_manager.gd"
+NetworkManager="res://autoload/manger/network_manager.gd"
 Shared="*res://scripts/game/tetris/shared.gd"
-BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
-BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 
 [display]
 
@@ -50,7 +48,7 @@ window/size/borderless=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/beehave/plugin.cfg", "res://addons/gdcef/plugin.cfg", "res://addons/protobuf/plugin.cfg", "res://addons/transitions/plugin.cfg")
+enabled=PackedStringArray("res://addons/protobuf/plugin.cfg", "res://addons/transitions/plugin.cfg")
 
 [gui]
 

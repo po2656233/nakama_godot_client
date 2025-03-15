@@ -88,6 +88,9 @@ signal LoadingSIG(value)
 signal ChangeSceneSIG(sceneName, transition_way, dissolve_time, dissolve_image) 
 
 ####################游戏#############################
+# 加载游戏
+@warning_ignore("unused_signal")
+signal LoadingGameSIG(gameName) 
 # 开始游戏
 @warning_ignore("unused_signal")
 signal StartGameSIG(gid) 

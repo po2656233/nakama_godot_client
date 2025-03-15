@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6c8g4q5rj3x4"]
 
-[ext_resource type="Script" path="res://scripts/announcements/announcement_controller.gd" id="1_u4r2p"]
+[ext_resource type="Script" uid="uid://dlyce25tegr6a" path="res://scripts/announcements/announcement_controller.gd" id="1_u4r2p"]
 
 [node name="AnnouncementScene" type="Control"]
 layout_mode = 3

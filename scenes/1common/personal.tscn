@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://g1t7o7n75x1q"]
 
 [ext_resource type="Texture2D" uid="uid://bwk6gbfvjlu16" path="res://assets/hall/btn_cjfj_db.png" id="1_2tdhu"]
-[ext_resource type="Script" path="res://scripts/1common/personal.gd" id="1_njnbb"]
+[ext_resource type="Script" uid="uid://byswlnfvef00" path="res://scripts/1common/personal.gd" id="1_njnbb"]
 [ext_resource type="Texture2D" uid="uid://d22ptqlov36ls" path="res://assets/level/ic_user_level_2.svg" id="2_j40up"]
-[ext_resource type="Script" path="res://scripts/1common/copyable_label.gd" id="3_5yb0g"]
+[ext_resource type="Script" uid="uid://fiimvlqcebki" path="res://scripts/1common/copyable_label.gd" id="3_5yb0g"]
 [ext_resource type="Texture2D" uid="uid://bm1b8ohee0fxx" path="res://assets/currency/ico_gold.png" id="4_8sk8a"]
 [ext_resource type="Texture2D" uid="uid://7dk7k4jslg33" path="res://assets/currency/ico_diamond.png" id="5_pyy1w"]
 [ext_resource type="Texture2D" uid="uid://bs6g7jxg3b6fb" path="res://assets/currency/level4.png" id="6_xc6go"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bgbatvnfppinv"]
 
-[ext_resource type="Script" path="res://scripts/approval/request_item.gd" id="1_y4k3r"]
+[ext_resource type="Script" uid="uid://bg8b13ujlikgm" path="res://scripts/approval/request_item.gd" id="1_y4k3r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jicjk"]
 draw_center = false

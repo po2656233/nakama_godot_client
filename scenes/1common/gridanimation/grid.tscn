@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://jv1kbck8xfey"]
 
-[ext_resource type="Script" path="res://scenes/1common/gridanimation/grid.gd" id="1_30fcj"]
+[ext_resource type="Script" uid="uid://bupguo1aw42m6" path="res://scenes/1common/gridanimation/grid.gd" id="1_30fcj"]
 [ext_resource type="AudioStream" uid="uid://drplx5ptho557" path="res://scenes/1common/gridanimation/bo.mp3" id="2_sf2dm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2oyd"]

@@ -1,17 +1,17 @@
-[gd_scene load_steps=38 format=3 uid="uid://riqfmggkqpfd"]
+[gd_scene load_steps=38 format=3 uid="uid://riqfmggkqpff"]
 
-[ext_resource type="Script" path="res://scripts/gamelist/game_card.gd" id="1_xxxxx"]
-[ext_resource type="DragonBonesFactory" path="res://sprites/dibeichang/dibeichang_ske.dbfactory" id="2_45j2b"]
+[ext_resource type="Script" uid="uid://d0tg71u454mo8" path="res://scripts/gamelist/game_card.gd" id="1_xxxxx"]
+[ext_resource type="DragonBonesFactory" uid="uid://cicdoqjdsynxc" path="res://sprites/dibeichang/dibeichang_ske.dbfactory" id="2_45j2b"]
 [ext_resource type="Texture2D" uid="uid://djkmgrs6wsojl" path="res://assets/game/flagItem/3.png" id="2_wmhxu"]
-[ext_resource type="DragonBonesFactory" path="res://sprites/puke/puke_ske.dbfactory" id="3_7okkc"]
-[ext_resource type="Script" path="res://scripts/gamelist/dragon_bones.gd" id="4_2lxpo"]
-[ext_resource type="DragonBonesFactory" path="res://sprites/jiangbei/jiangbei_ske.dbfactory" id="4_gloe0"]
-[ext_resource type="Script" path="res://scripts/gamelist/description.gd" id="6_6l74d"]
-[ext_resource type="Shader" path="res://shaders/flow_light.gdshader" id="7_keqs5"]
-[ext_resource type="DragonBonesFactory" path="res://sprites/baoxiang1/lhdb_chujichang_ske.dbfactory" id="8_gcjtt"]
-[ext_resource type="DragonBonesFactory" path="res://sprites/baoxiang2/lhdb_gaojichang_1_ske.dbfactory" id="9_ahfpy"]
-[ext_resource type="DragonBonesFactory" path="res://sprites/baoxiang3/lhdb_zhizunchang_ske.dbfactory" id="10_0c0hg"]
-[ext_resource type="DragonBonesFactory" path="res://sprites/baoxiang4/lhdb_zhongjichang_ske.dbfactory" id="11_ekkxy"]
+[ext_resource type="DragonBonesFactory" uid="uid://s3o2gr0826v4" path="res://sprites/puke/puke_ske.dbfactory" id="3_7okkc"]
+[ext_resource type="Script" uid="uid://v282l3wda1un" path="res://scripts/gamelist/dragon_bones.gd" id="4_2lxpo"]
+[ext_resource type="DragonBonesFactory" uid="uid://dgjv2vifuj6ro" path="res://sprites/jiangbei/jiangbei_ske.dbfactory" id="4_gloe0"]
+[ext_resource type="Script" uid="uid://6apsvbh4ylww" path="res://scripts/gamelist/description.gd" id="6_6l74d"]
+[ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shaders/flow_light.gdshader" id="7_keqs5"]
+[ext_resource type="DragonBonesFactory" uid="uid://ba10jeacbbkbj" path="res://sprites/baoxiang1/lhdb_chujichang_ske.dbfactory" id="8_gcjtt"]
+[ext_resource type="DragonBonesFactory" uid="uid://dy3my0454rvqt" path="res://sprites/baoxiang2/lhdb_gaojichang_1_ske.dbfactory" id="9_ahfpy"]
+[ext_resource type="DragonBonesFactory" uid="uid://cv5b87wdv2s1h" path="res://sprites/baoxiang3/lhdb_zhizunchang_ske.dbfactory" id="10_0c0hg"]
+[ext_resource type="DragonBonesFactory" uid="uid://0ws1r06fpbsm" path="res://sprites/baoxiang4/lhdb_zhongjichang_ske.dbfactory" id="11_ekkxy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.133333, 0.101961, 0.286275, 0.203922)
@@ -144,9 +144,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
 _data = {
-"RESET": SubResource("Animation_6stlh"),
-"flip": SubResource("Animation_flip"),
-"hover": SubResource("Animation_hover")
+&"RESET": SubResource("Animation_6stlh"),
+&"flip": SubResource("Animation_flip"),
+&"hover": SubResource("Animation_hover")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_5s5my"]
@@ -230,13 +230,13 @@ factory = ExtResource("2_45j2b")
 instantiate_dragon_bones_data_name = "dibeichang"
 instantiate_armature_name = "armatureName"
 armature_settings = {
-"clip_children": 0,
-"current_animation": "animation",
-"material": null,
-"slots_inherit_material": false,
+&"clip_children": 0,
+&"current_animation": "animation",
+&"material": null,
+&"slots_inherit_material": false,
 "sub_armatures": {},
-"use_parent_material": true,
-"visibility_layerF": null
+&"use_parent_material": true,
+&"visibility_layerF": null
 }
 visible = false
 material = SubResource("CanvasItemMaterial_ag7gp")
@@ -249,13 +249,13 @@ factory = ExtResource("3_7okkc")
 instantiate_dragon_bones_data_name = "puke"
 instantiate_armature_name = "armatureName"
 armature_settings = {
-"clip_children": 0,
-"current_animation": "animation",
-"material": null,
-"slots_inherit_material": false,
+&"clip_children": 0,
+&"current_animation": "animation",
+&"material": null,
+&"slots_inherit_material": false,
 "sub_armatures": {},
-"use_parent_material": true,
-"visibility_layerF": null
+&"use_parent_material": true,
+&"visibility_layerF": null
 }
 visible = false
 material = SubResource("CanvasItemMaterial_8cwjc")
@@ -269,13 +269,13 @@ factory = ExtResource("4_gloe0")
 instantiate_dragon_bones_data_name = "jiangbei"
 instantiate_armature_name = "armatureName"
 armature_settings = {
-"clip_children": 0,
-"current_animation": "animation",
-"material": null,
-"slots_inherit_material": false,
+&"clip_children": 0,
+&"current_animation": "animation",
+&"material": null,
+&"slots_inherit_material": false,
 "sub_armatures": {},
-"use_parent_material": true,
-"visibility_layerF": null
+&"use_parent_material": true,
+&"visibility_layerF": null
 }
 visible = false
 material = SubResource("CanvasItemMaterial_ctnco")
@@ -289,13 +289,13 @@ factory = ExtResource("8_gcjtt")
 instantiate_dragon_bones_data_name = "lhdb_chujichang"
 instantiate_armature_name = "armatureName"
 armature_settings = {
-"clip_children": 0,
-"current_animation": "animation",
-"material": null,
-"slots_inherit_material": false,
+&"clip_children": 0,
+&"current_animation": "animation",
+&"material": null,
+&"slots_inherit_material": false,
 "sub_armatures": {},
-"use_parent_material": true,
-"visibility_layerF": null
+&"use_parent_material": true,
+&"visibility_layerF": null
 }
 visible = false
 material = SubResource("CanvasItemMaterial_lsj51")
@@ -308,13 +308,13 @@ factory = ExtResource("9_ahfpy")
 instantiate_dragon_bones_data_name = "lhdb_gaojichang_1"
 instantiate_armature_name = "armatureName"
 armature_settings = {
-"clip_children": 0,
-"current_animation": "animation",
-"material": null,
-"slots_inherit_material": false,
+&"clip_children": 0,
+&"current_animation": "animation",
+&"material": null,
+&"slots_inherit_material": false,
 "sub_armatures": {},
-"use_parent_material": true,
-"visibility_layerF": null
+&"use_parent_material": true,
+&"visibility_layerF": null
 }
 visible = false
 material = SubResource("CanvasItemMaterial_o1mi4")
@@ -327,13 +327,13 @@ factory = ExtResource("10_0c0hg")
 instantiate_dragon_bones_data_name = "lhdb_zhizunchang"
 instantiate_armature_name = "armatureName"
 armature_settings = {
-"clip_children": 0,
-"current_animation": "animation",
-"material": null,
-"slots_inherit_material": false,
+&"clip_children": 0,
+&"current_animation": "animation",
+&"material": null,
+&"slots_inherit_material": false,
 "sub_armatures": {},
-"use_parent_material": true,
-"visibility_layerF": null
+&"use_parent_material": true,
+&"visibility_layerF": null
 }
 visible = false
 material = SubResource("CanvasItemMaterial_7pd0r")
@@ -346,13 +346,13 @@ factory = ExtResource("11_ekkxy")
 instantiate_dragon_bones_data_name = "lhdb_zhongjichang"
 instantiate_armature_name = "armatureName"
 armature_settings = {
-"clip_children": 0,
-"current_animation": "animation",
-"material": null,
-"slots_inherit_material": false,
+&"clip_children": 0,
+&"current_animation": "animation",
+&"material": null,
+&"slots_inherit_material": false,
 "sub_armatures": {},
-"use_parent_material": true,
-"visibility_layerF": null
+&"use_parent_material": true,
+&"visibility_layerF": null
 }
 visible = false
 material = SubResource("CanvasItemMaterial_hkqvs")
@@ -444,7 +444,7 @@ texture = SubResource("GradientTexture2D_t1jci")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_1")
+&"": SubResource("AnimationLibrary_1")
 }
 
 [node name="Version" type="Label" parent="."]

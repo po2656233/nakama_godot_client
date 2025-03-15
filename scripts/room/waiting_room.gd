@@ -14,6 +14,7 @@ var current_players = []
 @onready var room_info = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RoomInfo
 @onready var countdown = $CenterContainer/PanelContainer/Control/CountdownTimer
 @onready var cancleBtn = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CancelButton
+@onready var loading_scene = $LoadingScreen
 
 func _ready():
 	# 初始化房间信息
@@ -27,6 +28,7 @@ func _ready():
 	 #     _debug_add_test_players()
 	countdown.timeout.connect(_on_countdown_timeout)
 	countdown.timeleft.connect(_on_countdown_timeleft)
+	SignalManager.LoadingSIG.connect(_on_loading_value)
 	
 	pass
 
@@ -108,7 +110,8 @@ func _on_countdown_timeout():
 		# cancleBtn.disabled = true
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
-		SceneManager.ToGameScene(game_name)
+		SceneManager.set_previous_name("roomlist")
+		SignalManager.LoadingGameSIG.emit(game_name)
 
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):
@@ -118,6 +121,11 @@ func _on_countdown_timeleft(timeleft:float):
 		cancleBtn.disabled = true
 		if tween:
 			tween.kill()
+	pass
+
+func _on_loading_value(value:float):
+	if value == -1.0:
+		_on_cancel_button_pressed()
 	pass
 
 # 点击取消按钮

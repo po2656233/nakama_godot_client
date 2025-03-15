@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://ryqfmggkqpxe"]
 
-[ext_resource type="Script" path="res://scripts/1common/countdown_timer.gd" id="1_xxxxx"]
+[ext_resource type="Script" uid="uid://737754m2v3g3" path="res://scripts/1common/countdown_timer.gd" id="1_xxxxx"]
 [ext_resource type="AudioStream" uid="uid://r6as7qelxqcx" path="res://assets/music/tick.mp3" id="2_cmetn"]
 [ext_resource type="AudioStream" uid="uid://8kbicuvoslr" path="res://assets/music/ding.mp3" id="3_yjwb7"]
 [ext_resource type="AudioStream" uid="uid://bc3v74o1tqsa7" path="res://assets/music/lingling.mp3" id="4_yv3yn"]
@@ -71,8 +71,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
 _data = {
-"RESET": SubResource("Animation_2"),
-"pulse": SubResource("Animation_1")
+&"RESET": SubResource("Animation_2"),
+&"pulse": SubResource("Animation_1")
 }
 
 [node name="CountdownTimer" type="Node2D"]

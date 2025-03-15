@@ -6,6 +6,7 @@ extends Control
 @onready var keyboardContainer = $Panel/VBoxContainer
 @onready var loading = $LoadingScreen
 
+
 # 微信登录
 const WECHAT_APPID = "wxcf2136ff70f7726a"
 const REDIRECT_URI = "http://60.205.90.152:8080/callback"

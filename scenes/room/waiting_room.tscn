@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6x8yd4hj6n8w"]
+[gd_scene load_steps=9 format=3 uid="uid://b6x8yd4hj6n8w"]
 
-[ext_resource type="Script" path="res://scripts/room/waiting_room.gd" id="1_2w3vq"]
+[ext_resource type="Script" uid="uid://dxhmj6rq15hvf" path="res://scripts/room/waiting_room.gd" id="1_2w3vq"]
 [ext_resource type="PackedScene" uid="uid://ryqfmggkqpxe" path="res://scenes/1common/countdown_timer.tscn" id="2_bgkmg"]
+[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://scenes/1common/loading_screen.tscn" id="3_h1ti0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.0901961, 0.152941, 0.219608, 1)
@@ -170,5 +171,9 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_oxmux")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_6rmcv")
 theme_override_styles/normal = SubResource("StyleBoxFlat_io71a")
 text = "取消等待"
+
+[node name="LoadingScreen" parent="." instance=ExtResource("3_h1ti0")]
+visible = false
+layout_mode = 1
 
 [connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

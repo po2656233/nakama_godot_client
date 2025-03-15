@@ -1,9 +1,9 @@
 [gd_scene load_steps=22 format=3 uid="uid://b88upmlmmwyiv"]
 
-[ext_resource type="Script" path="res://scripts/1common/setting.gd" id="1_ng6nc"]
+[ext_resource type="Script" uid="uid://bs04xax23soka" path="res://scripts/1common/setting.gd" id="1_ng6nc"]
 [ext_resource type="Texture2D" uid="uid://b3y5q5trn4jgq" path="res://assets/currency/notify.svg" id="2_p0qrl"]
 [ext_resource type="Texture2D" uid="uid://cf4xc2d6vqokl" path="res://assets/hall/full.png" id="3_u7pao"]
-[ext_resource type="Script" path="res://scripts/1common/btn_shake.gd" id="3_yogt2"]
+[ext_resource type="Script" uid="uid://16kfsr57a687" path="res://scripts/1common/btn_shake.gd" id="3_yogt2"]
 [ext_resource type="Texture2D" uid="uid://cmlsq7dtg6762" path="res://assets/currency/notification.svg" id="4_5fqi1"]
 [ext_resource type="Texture2D" uid="uid://by06wukfv2agi" path="res://assets/hall/setting.png" id="4_6kece"]
 [ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://assets/currency/email.svg" id="6_xkbed"]

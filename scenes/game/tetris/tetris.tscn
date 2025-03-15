@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dj1olp7v7y623" path="res://assets/game/tetris/Border.png" id="1_nuxsd"]
 [ext_resource type="Texture2D" uid="uid://dddenph2txf1h" path="res://assets/game/tetris/Grid.png" id="2_8uhot"]
-[ext_resource type="Script" path="res://scripts/game/tetris/board.gd" id="3_iagnp"]
+[ext_resource type="Script" uid="uid://drt3aieqjg0x0" path="res://scripts/game/tetris/board.gd" id="3_iagnp"]
 [ext_resource type="PackedScene" uid="uid://c4j05v6wfo823" path="res://scenes/game/tetris/tetromino.tscn" id="4_vop11"]
-[ext_resource type="Script" path="res://scripts/game/tetris/piece_spawner.gd" id="5_wc88g"]
+[ext_resource type="Script" uid="uid://mciyoo8ahaac" path="res://scripts/game/tetris/piece_spawner.gd" id="5_wc88g"]
 [ext_resource type="PackedScene" uid="uid://ct2meksk8huhw" path="res://scenes/game/tetris/ui.tscn" id="6_6icgs"]
 [ext_resource type="FontFile" uid="uid://dke7jbtml1fil" path="res://assets/xiangqi/font/SmileySans-Oblique.ttf" id="7_6blyb"]
 

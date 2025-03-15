@@ -10,7 +10,7 @@ func _process(_delta):
 	pass
 
 func _on_back_button_pressed():
-	$ClickButtonPlayer.play()
+	# $ClickButtonPlayer.play()
 	SceneManager.go_back()
 	# get_tree().change_scene_to_file("res://scenes/game/mahjong_matching/level/start_ui.tscn")
 	pass

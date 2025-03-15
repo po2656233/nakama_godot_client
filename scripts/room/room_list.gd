@@ -124,7 +124,7 @@ func load_data():
 func append_room(data):
 	print("添加 房间数据:", data)
 	var item = {
-			"id": data.get("id", 0),
+			"id": int(data.get("id", 0)),
 			"room_id": data.get("mid", 0), # str().md5_text().substr(8, 16),
 			"room_name": data.get("name", ""),
 			"room_key": data.get("key", ""),
@@ -609,7 +609,7 @@ func _on_join_room(room_info: Dictionary):
 		waitingStart.add_player(player.uid, player.username, player.get("headIcon", ""))
 
 	var ret = await OnlineGame.joinTable({
-		"tableId": room_info.id,
+		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
 	})
 	if ret == null or not ret.has("tableId") or ret.tableId != room_info.id:
@@ -636,6 +636,3 @@ func _on_room_created(_room_info: Dictionary):
 	await timer.timeout
 	_refresh_room_list()
 	pass
-
-
-

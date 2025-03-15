@@ -93,7 +93,7 @@ func initialize_board():
 			row.append(piece)
 		board.append(row)
 	# 打印棋盘，用于调试
-	print_board()
+	# print_board()
 	# 更新棋盘
 	for xIndex in range(board_size.x):
 		var colNodes = []
@@ -280,4 +280,3 @@ func set_afterdrag_pos():
 	
 	reset_all_z_index()
 	lastMoveDir = null
-

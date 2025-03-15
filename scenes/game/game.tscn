@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dfbeqh2tgjje3"]
 
-[ext_resource type="Script" path="res://scripts/game/game.gd" id="1_j1cfq"]
+[ext_resource type="Script" uid="uid://0v17b0ijtxtu" path="res://scripts/game/game.gd" id="1_j1cfq"]
 [ext_resource type="Texture2D" uid="uid://r3q2cfqvy4ye" path="res://assets/lobby/redbj.jpg" id="2_kwnfe"]
 [ext_resource type="Theme" uid="uid://wv2nwe1arwch" path="res://theme/btn.tres" id="3_tymeq"]
 [ext_resource type="Texture2D" uid="uid://bl0qqmk45se0a" path="res://assets/lobby/head.png" id="4_t67r1"]

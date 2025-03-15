@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://15qsfdusk3fu"]
 
-[ext_resource type="Script" path="res://scripts/room/create_room_dialog.gd" id="1_2gsk4"]
+[ext_resource type="Script" uid="uid://nnsf5i14kxmo" path="res://scripts/room/create_room_dialog.gd" id="1_2gsk4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7mx"]
 bg_color = Color(0.165511, 0.526981, 0.734506, 1)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b6ap652uaw1dh"]
 
-[ext_resource type="Script" path="res://scenes/game/xiangqi/M/chess_position.gd" id="1_70f5p"]
+[ext_resource type="Script" uid="uid://cfmoshhunslu8" path="res://scenes/game/xiangqi/M/chess_position.gd" id="1_70f5p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ef6oi"]
 radius = 27.0185

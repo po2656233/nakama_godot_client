@@ -1,10 +1,10 @@
 [gd_scene load_steps=41 format=3 uid="uid://b6j8g4q3y7m5n"]
 
-[ext_resource type="Script" path="res://scripts/room/room_item.gd" id="1_gnanh"]
+[ext_resource type="Script" uid="uid://dmrgiya8yo0qa" path="res://scripts/room/room_item.gd" id="1_gnanh"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
 [ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_mcopm"]
 [ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
-[ext_resource type="Shader" path="res://shaders/flow_light.gdshader" id="5_p3dne"]
+[ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shaders/flow_light.gdshader" id="5_p3dne"]
 [ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_3km0x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
@@ -224,9 +224,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
 _data = {
-"RESET": SubResource("Animation_6stlh"),
-"flip": SubResource("Animation_flip"),
-"hover": SubResource("Animation_hover")
+&"RESET": SubResource("Animation_6stlh"),
+&"flip": SubResource("Animation_flip"),
+&"hover": SubResource("Animation_hover")
 }
 
 [node name="RoomItem" type="PanelContainer"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://btvhpsmpk8tg3"]
 
-[ext_resource type="Script" path="res://scenes/game/xiangqi/M/player_move.gd" id="1_80evl"]
+[ext_resource type="Script" uid="uid://c61y58ypb1glj" path="res://scenes/game/xiangqi/M/player_move.gd" id="1_80evl"]
 [ext_resource type="Texture2D" uid="uid://cja1ctr56n2xu" path="res://assets/xiangqi/r_box.png" id="1_rcm2p"]
 [ext_resource type="Texture2D" uid="uid://ba85vwbdu8rdt" path="res://assets/xiangqi/b_box.png" id="3_igjsx"]
 
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lrrep"]
 _data = {
-"RESET": SubResource("Animation_cng8m"),
-"blink": SubResource("Animation_thw30")
+&"RESET": SubResource("Animation_cng8m"),
+&"blink": SubResource("Animation_thw30")
 }
 
 [node name="player_move" type="Sprite2D"]

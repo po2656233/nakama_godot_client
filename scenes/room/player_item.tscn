@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c8p4xkj6p2n8w"]
 
-[ext_resource type="Script" path="res://scripts/room/player_item.gd" id="1_q5idr"]
+[ext_resource type="Script" uid="uid://clrx0if7d7mpk" path="res://scripts/room/player_item.gd" id="1_q5idr"]
 
 [node name="PlayerItem" type="HBoxContainer"]
 anchors_preset = 15

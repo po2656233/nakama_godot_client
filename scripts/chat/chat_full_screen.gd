@@ -85,13 +85,13 @@ func animate_to_fullscreen(target_position: Vector2, target_size: Vector2):
 	tween.tween_property(self, "position", target_position, transition_duration)
 	tween.parallel().tween_property(self, "size", target_size, transition_duration)
 	tween.tween_callback(func():
-		var viewport = get_viewport()
+		var viewport=get_viewport()
 		if viewport and original_state.parent:
 			if get_parent() != viewport:
 				original_state.parent.remove_child(self)
 				viewport.add_child(self)
-			anchors_preset = Control.PRESET_FULL_RECT
-			is_fullscreen = true
+			anchors_preset=Control.PRESET_FULL_RECT
+			is_fullscreen=true
 			fullscreenSIG.emit(true)
 	)
 
@@ -100,32 +100,32 @@ func animate_to_normal():
 	WindowDrag.unregister_drag_zone(original_state.parent)
 	if tween: tween.kill()
 	tween = create_tween()
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
+	# tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
 	tween.tween_property(self, "position", original_state.position, transition_duration)
-	tween.tween_property(self, "size", original_state.size, transition_duration)
-	tween.tween_property(self, "anchor_left", original_state.anchors.left, transition_duration)
-	tween.tween_property(self, "anchor_right", original_state.anchors.right, transition_duration)
-	tween.tween_property(self, "anchor_top", original_state.anchors.top, transition_duration)
-	tween.tween_property(self, "anchor_bottom", original_state.anchors.bottom, transition_duration)
-	tween.tween_property(self, "offset_left", original_state.margins.left, transition_duration)
-	tween.tween_property(self, "offset_right", original_state.margins.right, transition_duration)
-	tween.tween_property(self, "offset_top", original_state.margins.top, transition_duration)
-	tween.tween_property(self, "offset_bottom", original_state.margins.bottom, transition_duration)
+	# tween.tween_property(self, "size", original_state.size, transition_duration)
+	# tween.tween_property(self, "anchor_left", original_state.anchors.left, transition_duration)
+	# tween.tween_property(self, "anchor_right", original_state.anchors.right, transition_duration)
+	# tween.tween_property(self, "anchor_top", original_state.anchors.top, transition_duration)
+	# tween.tween_property(self, "anchor_bottom", original_state.anchors.bottom, transition_duration)
+	# tween.tween_property(self, "offset_left", original_state.margins.left, transition_duration)
+	# tween.tween_property(self, "offset_right", original_state.margins.right, transition_duration)
+	# tween.tween_property(self, "offset_top", original_state.margins.top, transition_duration)
+	# tween.tween_property(self, "offset_bottom", original_state.margins.bottom, transition_duration)
 	tween.chain().tween_callback(restore_original_state)
 
 func restore_original_state():
 	if !original_state.parent: return
 	if tween: tween.kill()
 	tween = create_tween()
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "modulate:a", 0.9, 0.1)
 	tween.tween_callback(func():
-		var current_parent = get_parent()
+		var current_parent=get_parent()
 		if current_parent:
 			current_parent.remove_child(self)
 			original_state.parent.add_child(self)
 			WindowDrag.unregister_drag_zone(original_state.parent)
-			top_level = false
+			top_level=false
 	)
 	tween.tween_property(self, "modulate:a", 1.0, 0.2)
 	is_fullscreen = false

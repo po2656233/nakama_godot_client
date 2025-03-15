@@ -397,8 +397,8 @@ func add_channel_async(targetId: String,tab:int = 0):
 			chType = NakamaSocket.ChannelType.Group
 		var result = await Online.nakama_socket.join_chat_async(targetId, chType, true)
 		if result.is_exception():
-			# print("Error add_channel_async: ",result.get_exception().message, result," ID:",  targetId," 类型:", chType)
-			push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型:", chType)
+			print("Error add_channel_async: ",result.get_exception().message, " ID:",  targetId," 类型:", chType)
+			# push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型:", chType)
 			return null
 		print("添加频道: ", result)
 		return result

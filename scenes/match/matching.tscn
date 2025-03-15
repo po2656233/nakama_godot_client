@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=3 uid="uid://b6x8j0p7n6xj"]
 
-[ext_resource type="Script" path="res://scripts/match/matching.gd" id="1_tlue5"]
-[ext_resource type="Shader" path="res://shaders/progress_circle.gdshader" id="2_p1m5x"]
+[ext_resource type="Script" uid="uid://c6dck2wiksuux" path="res://scripts/match/matching.gd" id="1_tlue5"]
+[ext_resource type="Shader" uid="uid://bb85safeckk6b" path="res://shaders/progress_circle.gdshader" id="2_p1m5x"]
 
 [sub_resource type="Theme" id="Theme_8pgp0"]
 
@@ -174,10 +174,10 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8p4vq"]
 _data = {
-"RESET": SubResource("Animation_3rm6i"),
-"failed_shake": SubResource("Animation_x4p3r"),
-"matching_pulse": SubResource("Animation_n8p6r"),
-"success_flash": SubResource("Animation_k7m2p")
+&"RESET": SubResource("Animation_3rm6i"),
+&"failed_shake": SubResource("Animation_x4p3r"),
+&"matching_pulse": SubResource("Animation_n8p6r"),
+&"success_flash": SubResource("Animation_k7m2p")
 }
 
 [node name="Matching" type="Control"]

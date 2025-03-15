@@ -1,11 +1,11 @@
 [gd_scene load_steps=40 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
-[ext_resource type="Script" path="res://scripts/chat/chat.gd" id="2_m52is"]
+[ext_resource type="Script" uid="uid://coomdxyaqfwje" path="res://scripts/chat/chat.gd" id="2_m52is"]
 [ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://scenes/chat/find_friend.tscn" id="3_ndfss"]
-[ext_resource type="Script" path="res://scripts/1common/itemList.gd" id="4_3wj1b"]
-[ext_resource type="Script" path="res://scripts/1common/color_change_control.gd" id="5_vsklf"]
-[ext_resource type="Script" path="res://scripts/1common/TE_send.gd" id="5_yrxgh"]
+[ext_resource type="Script" uid="uid://bhtqigqpfmpu2" path="res://scripts/1common/itemList.gd" id="4_3wj1b"]
+[ext_resource type="Script" uid="uid://n2h2h626rma" path="res://scripts/1common/color_change_control.gd" id="5_vsklf"]
+[ext_resource type="Script" uid="uid://c4mi1r8k25wwe" path="res://scripts/1common/TE_send.gd" id="5_yrxgh"]
 [ext_resource type="PackedScene" uid="uid://riqfmggkqpf4" path="res://scenes/club/group_list.tscn" id="7_0cs3x"]
 [ext_resource type="Texture2D" uid="uid://dbfy6a2vu8372" path="res://assets/chat/upmore1.svg" id="7_8p5lf"]
 [ext_resource type="Texture2D" uid="uid://bs3sp7rcewbji" path="res://assets/currency/light3.png" id="9_001t8"]
@@ -303,7 +303,7 @@ size_flags_vertical = 3
 tooltip_text = "世界面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
-change_mode = 1
+factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk"]
@@ -369,6 +369,7 @@ size_flags_horizontal = 3
 tooltip_text = "俱乐部面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
+factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk"]
@@ -464,6 +465,7 @@ size_flags_horizontal = 3
 tooltip_text = "信息面板"
 theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
 script = ExtResource("5_vsklf")
+factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
@@ -538,10 +540,10 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
 text = "好友面板"
 alignment = 1
@@ -611,8 +613,8 @@ size_flags_horizontal = 3
 tooltip_text = "发送输入框文本至指定渠道"
 theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
 theme_override_colors/font_focus_color = Color(0, 0.866667, 0.964706, 1)
+theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ayyfq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")

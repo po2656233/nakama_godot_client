@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://riqfmggkqpf5"]
 
-[ext_resource type="Script" path="res://scenes/club/join_group_dialog.gd" id="1_p0n6w"]
+[ext_resource type="Script" uid="uid://cwvkqc46shgjy" path="res://scenes/club/join_group_dialog.gd" id="1_p0n6w"]
 
 [node name="JoinGroupDialog" type="Control"]
 layout_mode = 3

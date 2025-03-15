@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dafrom8owxnks"]
+[gd_scene load_steps=7 format=3 uid="uid://dqjajw7t07tj6"]
 
 [ext_resource type="Script" uid="uid://dt753f4xv4xtq" path="res://scripts/game/mahjong_matching/UI/StartUI.gd" id="1_44llw"]
 [ext_resource type="Texture2D" uid="uid://cu8a0x6e6p8pb" path="res://assets/game/mahjong_matching/UI/background.png" id="2_sqco0"]

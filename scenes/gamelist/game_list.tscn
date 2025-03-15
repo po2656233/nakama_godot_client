@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://riqfmggkqpfd"]
 
-[ext_resource type="Script" path="res://scripts/gamelist/game_list.gd" id="1_xxxxx"]
+[ext_resource type="Script" uid="uid://ceh38q6f7syuo" path="res://scripts/gamelist/game_list.gd" id="1_xxxxx"]
 [ext_resource type="PackedScene" uid="uid://b6x8j0p7n6xj" path="res://scenes/match/matching.tscn" id="2_kgill"]
 [ext_resource type="PackedScene" uid="uid://riqfmggkqpfx" path="res://scenes/match/match_success.tscn" id="3_8wtxj"]
 
@@ -78,8 +78,6 @@ offset_bottom = 0.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
 size_flags_stretch_ratio = 3.0
-gamename = ""
-maxplayer = 1
 
 [node name="MatchSuccess" parent="." instance=ExtResource("3_8wtxj")]
 visible = false
