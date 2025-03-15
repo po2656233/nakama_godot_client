@@ -1,22 +1,87 @@
-# Godot Wechatpay Android Plugin
-This is an Android plugin for Godot Engine 4.2, providing Godot client support for WeChat Pay's in-app payment. It also supports Tencent's AdView platform for interstitial ads. Additionally, it includes the ability to copy text to the Android clipboard and paste from the clipboard.
+<h1> 折纸屋 </h1>
 
-## Contents
-It inherits from the Godot Android plugin template, for basic usage and configuration, please refer to this repository:
-https://github.com/m4gr3d/Godot-Android-Plugin-Template
+<h3> <mark>融合社交与游戏的平台</mark> </h3>
 
-## Usage
-**Note:** [Android Studio](https://developer.android.com/studio) is the recommended IDE for
-developing Godot Android plugins. 
-You can install the latest version from https://developer.android.com/studio.
+>**欢迎来到 [折纸屋](https://www.zhezhizhonghua.com)，这是一个融合了社交与游戏的创新平台。在这里，您不仅可以享受丰富多彩的游戏体验，还可以与全球玩家互动，建立深厚的社交关系。**
 
-* Wechatpay:
-  * Open [plugin/src/main/java/org/godotengine/plugin/android/template/Wechatpay.java] and replace your AppID in line20 and line33,replace your PartnerID in line34.
-  * Now you can use function "WechatPaying" in Godot. When using it, you need to pass in four parameters(prepayid,nonStr,timestamp,sign), all of which are received from your backend server through the network. You can refer to the WeChat payment developer documentation for more information. https://pay.weixin.qq.com/docs/merchant/products/in-app-payment/development.html
+## 项目概述
 
-* TecentAd:
-  * Open [plugin/src/main/java/org/godotengine/plugin/android/template/GodotAndroidPlugin.kt] and replace your AppID in line54.
-  * Now you can use function "interAd" in Godot. When using it, you need to pass in one parameters(AdId),you can get this on Ad platform:https://adnet.qq.com/
+**折纸屋** 是一个集社交与游戏于一体的平台，旨在为用户提供沉浸式的娱乐体验。平台分为两大核心模块：**社交** 和 **游戏**。通过社交模块，用户可以建立和维护社交关系；通过游戏模块，用户可以参与多种类型的游戏，体验不同的赛制和挑战。
 
-* Copy & Paste:
-  * You can use function "copy" by  pass in one String you wanna copy. And function "paste" will return text from the clipboard.
+## 平台特色
+
+- **📱 跨平台支持**：支持PC、移动设备等多平台，随时随地畅玩游戏。
+- **🎤 实时语音聊天**：内置实时语音聊天功能，方便玩家在游戏中沟通。
+- **🎨 个性化定制**：丰富的角色和场景定制选项，打造独一无二的游戏体验。
+
+## 社交模块
+
+- **🌍 世界** 是一个全球社交广场，用户可以在这里发布动态、分享游戏心得、参与话题讨论，与全球玩家互动。
+
+- **🏠 俱乐部** 是用户组建或加入的兴趣小组。俱乐部成员可以共同参与游戏、组织活动、分享资源，打造专属的社交圈。
+
+- **👫 好友** 系统允许用户添加和管理好友关系。用户可以查看好友的游戏信息、在线状态，并与好友进行私聊或组队游戏。
+
+## 游戏模块
+#### 类型
+- **🎲 随机匹配型** 游戏模式允许用户快速匹配到其他玩家，进行即时对战。适合喜欢快节奏游戏的玩家。
+
+- **🏠 自主房间型** 游戏模式允许用户创建或加入自定义房间，选择不同的游戏模式和赛制，与好友或其他玩家进行对战。
+
+#### 模式
+- **🏆 积分模式**：玩家通过比赛积累积分，提升排名。
+- **💰 金币模式**：玩家通过比赛赢得金币，可用于购买游戏内道具。
+- **💎 钻石模式**：玩家通过比赛赢得钻石，可用于兑换稀有物品或参与高级赛事。
+
+#### 赛制
+- **📏 标准赛制**：常规比赛模式，适合日常娱乐。
+- **🏅 锦标赛制**：周期性比赛，设有丰厚奖励，适合竞技玩家。
+- **🌍 世界杯赛制**：全球性大赛，顶尖玩家同台竞技，争夺最高荣誉。
+
+### 游戏排行榜
+- **📊 游戏排行榜** 实时更新玩家的排名信息，展示全球顶尖玩家的成绩。用户可以通过排行榜了解自己的竞技水平，并挑战更高排名。
+
+### 个人游戏记录
+- **📝 个人游戏记录** 记录了用户的游戏历史、胜率、成就等信息。用户可以通过查看记录，分析自己的游戏表现，制定提升策略。
+
+## 其他功能
+
+### 成就系统
+- **🏅 成就系统** 鼓励用户完成各种挑战，解锁成就徽章，展示自己的游戏实力。
+
+### 商城系统
+- **🛒 商城系统** 提供丰富的游戏道具和装饰品，用户可以使用金币或钻石购买，个性化自己的游戏体验。
+
+### 客服支持
+- **📞 客服支持** 为用户提供全天候的咨询服务，解决游戏中的问题，确保良好的用户体验。
+
+## 如何开始
+
+1. **📝 [注册账号](https://www.zhezhizhonghua.com/register)**：访问我们的官网或下载客户端，注册一个新账号。
+2. **👤 完善个人资料**：设置您的昵称、头像等个人信息，开始您的社交之旅。
+3. **🎮 探索游戏**：进入游戏模块，选择您喜欢的游戏模式和赛制，开始您的游戏冒险。
+4. **👫 添加好友**：通过社交模块，添加好友，一起组队游戏，分享游戏乐趣。
+
+## 社区互动
+
+- **💬 [论坛](https://forum.zhezhizhonghua.com)**：加入我们的官方论坛，参与讨论，分享游戏心得。
+- **📱 社交媒体**：关注我们的社交媒体账号，获取最新资讯和活动信息。
+- **📢 用户反馈**：我们重视用户的每一条反馈，您可以通过客服或论坛提交建议。
+
+## 技术支持
+
+- **❓ [常见问题解答](https://www.zhezhizhonghua.com/faq)**：访问我们的FAQ页面，快速找到常见问题的解决方案。
+- **🛠️ 技术支持**：如遇技术问题，请联系我们的技术支持团队，我们将尽快为您解决。
+
+## 联系我们
+
+如有任何问题或建议，请通过以下方式联系我们：
+
+| 联系方式 | 详细信息 |
+| -------- | -------- |
+| 📧 邮箱   | [po2656233@qq.com](mailto:po2656233@qq.com) |
+| 📞 客服热线 | [+86 13500011584](tel:+8613500011584) |
+
+---
+
+**折纸屋** 期待您的加入，开启一段全新的社交与游戏之旅！
