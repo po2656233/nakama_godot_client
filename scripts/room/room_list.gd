@@ -85,10 +85,10 @@ func _ready():
 	# room_container.columns = columns
 
 	if not Util.isFullScreen():
-		items_per_page = 2
+		items_per_page = columns
 
 	# 加载保存的数据
-	print("初始化房间列表数据!!!")
+	print("初始化房间列表数据!!!page:%d,columns:%d,width:%d,space:%d"%[items_per_page,columns,width,space])
 	await load_data()
 	var games = await OnlineGame.getGameList()
 	for game in games:
@@ -209,8 +209,8 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 				"order": order,
 				"name": name1,
 				"isDesc": isDesc,
-				"pageNum": page,
-				"pageSize": page_size
+				"pageNum": int(page),
+				"pageSize": int(page_size)
 			})
 		SearchType.favorite:
 			favorite_rooms.clear()
@@ -222,8 +222,8 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 				"order": order,
 				"name": name1,
 				"isDesc": isDesc,
-				"pageNum": page,
-				"pageSize": page_size
+				"pageNum": int(page),
+				"pageSize": int(page_size)
 			})
 		pass
 	
@@ -579,7 +579,7 @@ func _on_received_table_online(data):
 func _on_cancel_waiting():
 	print("离开房间:", selected_room_info.room_id)
 	await OnlineMatch.LeaveMatch(selected_room_info.room_id)
-	waitingStart.hide()
+	waitingStart.Hide()
 	waitingStart.remove_player(OnlineLogin.get_my_id())
 	if selected_room_info:
 		for i in range(selected_room_info.players.size()):
@@ -627,7 +627,7 @@ func _on_join_room(room_info: Dictionary):
 		return
 	print("加入房间成功", result)
 	SignalManager.JoinSuccessMusicSIG.emit(room_info.room_id)
-	waitingStart.show()
+	waitingStart.Show()
 	pass
 
 # 创建房间

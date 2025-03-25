@@ -1,9 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://bensqtydtmcmw"]
+[gd_scene load_steps=31 format=3 uid="uid://bensqtydtmcmw"]
 
 [ext_resource type="Texture2D" uid="uid://d3bjst7etlnwq" path="res://assets/login/btn_zhdl.png" id="1_lxatw"]
 [ext_resource type="Script" uid="uid://dlb2f8kyfeex3" path="res://scripts/login.gd" id="1_ohvyb"]
 [ext_resource type="Texture2D" uid="uid://cspqqll154ltv" path="res://assets/login/bj_cao.jpg" id="1_xcnfk"]
 [ext_resource type="Texture2D" uid="uid://dexs2dkgy4ocr" path="res://assets/login/btn_gx_0.png" id="2_7flgm"]
+[ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://assets/lobby/shiling.png" id="3_gk31c"]
 [ext_resource type="Texture2D" uid="uid://rotxygefh46c" path="res://assets/login/closeeye1.svg" id="3_nqb36"]
 [ext_resource type="Texture2D" uid="uid://das5kp4ny2ggy" path="res://assets/login/btn_zhdl_g.png" id="4_1a3i5"]
 [ext_resource type="Texture2D" uid="uid://cdb4i86phwax2" path="res://assets/login/btn_zhdl_b.png" id="4_8q84o"]
@@ -76,6 +77,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_xcnfk")
+
+[node name="TR_ShiLing" type="TextureRect" parent="Panel/NinePatchRect"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 85.0
+offset_bottom = 100.0
+texture = ExtResource("3_gk31c")
+expand_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 1

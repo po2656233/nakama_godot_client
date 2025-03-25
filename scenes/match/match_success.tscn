@@ -57,8 +57,6 @@ exclusive = true
 unresizable = true
 borderless = true
 script = ExtResource("1_xxxxx")
-countdown = null
-gamename = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -122,8 +120,8 @@ alignment = 1
 custom_minimum_size = Vector2(135, 65)
 layout_mode = 2
 theme_override_colors/font_hover_color = Color(0.972549, 0.976471, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0.882353, 0.882353, 1)
 theme_override_colors/font_color = Color(0.0194218, 0.654311, 0.588068, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.882353, 0.882353, 1)
 theme_override_fonts/font = SubResource("SystemFont_ooq0r")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/focus = SubResource("StyleBoxFlat_cnmft")
@@ -138,8 +136,8 @@ icon_alignment = 1
 [node name="DeclineButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
 custom_minimum_size = Vector2(135, 65)
 layout_mode = 2
-theme_override_colors/font_pressed_color = Color(0.470076, 0.470076, 0.470076, 1)
 theme_override_colors/font_color = Color(0.566092, 1.38376e-06, 3.36915e-07, 1)
+theme_override_colors/font_pressed_color = Color(0.470076, 0.470076, 0.470076, 1)
 theme_override_fonts/font = SubResource("SystemFont_2eegr")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/focus = SubResource("StyleBoxFlat_85xwb")

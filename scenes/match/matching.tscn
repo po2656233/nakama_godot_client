@@ -288,5 +288,5 @@ text = "取消"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_8p4vq")
+&"": SubResource("AnimationLibrary_8p4vq")
 }

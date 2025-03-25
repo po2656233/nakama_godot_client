@@ -48,6 +48,7 @@ func _process(_delta: float) -> void:
 	pass
 
 
+
 # 隐藏指定索引的菜单项
 func hide_menu_item(index: int):
 	if index not in hidden_indices:
@@ -205,7 +206,9 @@ func _on_look_email()->void:
 	pass
 #######################################
 func showNotify(isShow:bool):
-	notifyBtn.visible = isShow
-	emailBtn.visible = isShow
+	if notifyBtn:
+		notifyBtn.visible = isShow
+	if emailBtn:
+		emailBtn.visible = isShow
 	# fullBtn.visible = isShow
 	pass

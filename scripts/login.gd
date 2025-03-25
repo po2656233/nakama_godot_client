@@ -88,20 +88,20 @@ func login()->void:
 	if not checkbox.is_pressed():
 		PopupManager.show_message("请阅读并同意用户协议")
 		return
-	loading.show()
+	loading.Show()
 	if await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
 		return
-	loading.hide()
+	loading.Hide()
 	# PopupManager.show_message("账号或密码错误","提示",false)
 	print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
 	pass # Replace with function body.
  
 # 设备登录
 func deviceLogin()->void:
-	loading.show()
+	loading.Show()
 	if await OnlineLogin.do_device_login("",false,true) or await OnlineLogin.do_device_login("",true):
 		return
-	loading.hide()
+	loading.Hide()
 	PopupManager.show_message("登录失败，请检查网络连接")
 	pass # Replace with function body.
 

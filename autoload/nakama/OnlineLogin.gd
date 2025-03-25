@@ -76,7 +76,7 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 	else:
 		PopupManager.show_dynamic("登录中...")
 	
-	SignalManager.LoadingSIG.emit(10)
+	SignalManager.LoadingSIG.emit(1)
 	var result = await Online.nakama_client.authenticate_email_async(email, password, null, false)
 	if result.is_exception():
 		PopupManager.show_dynamic("登录失败")

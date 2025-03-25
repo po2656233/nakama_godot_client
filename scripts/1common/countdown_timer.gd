@@ -16,7 +16,7 @@ var warn_left: float = 10.0
 var is_running: bool = false
 
 func _ready():
-	# start()
+	# start(13,9)
 	texiao.visible = false
 	pass
 	
@@ -24,7 +24,7 @@ func _process(_delta):
 	if time_left <= 10.0 and is_running:
 		var intensity = (10.0 - time_left) / 10.0
 		animation_player.speed_scale = 1.0 + intensity  # 减小动画速度变化范围
-		if not animation_player.is_playing():
+		if not animation_player.is_playing() and time_left <= warn_left:
 			animation_player.play("pulse")
 	
 
@@ -55,6 +55,8 @@ func stop():
 	timer.stop()
 	animation_player.stop()
 	update_time_label()
+	await get_tree().create_timer(1.0).timeout
+	texiao.visible = false
 	pass
 
 func _on_timer_timeout():
@@ -63,10 +65,9 @@ func _on_timer_timeout():
 	update_time_label()
 	timeleft.emit(time_left)
 	# 在最后10秒开始视觉和听觉反馈
-	animation_player.stop()
+	# animation_player.stop()
 	if time_left <= 10.0:
 		if time_left == 0.0:
-			texiao.visible = false
 			timerover_sound.play()
 			timeout.emit()
 			stop()
@@ -75,5 +76,4 @@ func _on_timer_timeout():
 			timeout_sound.play()  # 播放滴答声
 	else:
 		tick_sound.play()
-	
 	pass 

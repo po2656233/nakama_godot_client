@@ -80,9 +80,9 @@ func _ready():
 			"description": description,
 			"image": item.logo,
 			"version": item.updated_at,
-			"max_player": item.max_player,
+			"max_player": int(item.max_player),
 			"lessscore": item.lessscore,
-			"state": item.state,
+			"state": int(item.state),
 		})
 	# 添加游戏
 	

@@ -114,7 +114,7 @@ size_flags_vertical = 0
 
 [node name="CountdownTimer" parent="CenterContainer/PanelContainer/Control" instance=ExtResource("2_bgkmg")]
 visible = false
-position = Vector2(-5, 10)
+position = Vector2(0, 4.99998)
 scale = Vector2(0.4, 0.4)
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]

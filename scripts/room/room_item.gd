@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Panel
 
 signal room_selected(room_data: Dictionary)
 signal join_room(room_data: Dictionary)

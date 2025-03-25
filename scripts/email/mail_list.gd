@@ -1,10 +1,11 @@
 extends Control
 
+signal closeMailSIG()
+
 @onready var mail_list_container = $Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer
 @onready var mail_item_scene = preload("res://scenes/email/mail_item.tscn")
 # @onready var home_scene = preload("res://scenes/home.tscn").instantiate()
 @onready var clear_button = $Panel/ClearButton
-
 
 var mail_system: MailSystem
 
@@ -48,3 +49,5 @@ func _update_clear_button():
 			break
 	clear_button.disabled = not has_claimed
  
+func _on_close_button_pressed():
+	closeMailSIG.emit()

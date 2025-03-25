@@ -1,7 +1,6 @@
 extends Control
 
 
-
 @onready var progress_bar = $MarginContainer/VBoxContainer/ProgressBar
 @onready var progress_label = $MarginContainer/VBoxContainer/ProgressLabel
 
@@ -14,6 +13,7 @@ var next_scene: String = "home"
 # 预加载按钮节点和 HTTPRequest 节点
 const game_pack = ".zip"
 const local_path = "user://"
+const res_path = "res://"
 const resource_url = "http://60.205.90.152:5567/"
 const default_scene_path = "res://scenes/game/"
 const default_script_path = "res://scripts/game/"
@@ -24,13 +24,24 @@ var game_zip_path = ""
 var url_path = ""
 var http_request = HTTPRequest.new()
 var scene_files = []
+var is_http_request = false
+
+enum LOAD_TEPE{
+	LOADING = 1,
+	LOAD_GAME = 2
+}
+
+var load_type = LOAD_TEPE.LOADING
+
 func _ready():
+	
 	# 初始化进度条
+	init_data()
 	progress_bar.value = 0
 	update_progress_label(0)
 	add_child(http_request)
 	http_request.use_threads = true
-
+	
 
 	SignalManager.LoadingSIG.connect(_on_loading)
 	# 连接按钮的按下信号到加载函数
@@ -41,6 +52,13 @@ func _ready():
 	# example_loading()
 
 func _process(delta):
+	if is_http_request:
+		var total_size = http_request.get_body_size()
+		var current_size = http_request.get_downloaded_bytes()
+		print("下载进度:", total_size, " 已下载", current_size)
+		if total_size > 0:
+			progress = current_size / float(total_size) * 99
+
 	# 平滑更新进度条
 	if progress < target_progress:
 		progress = min(progress + delta * 100, target_progress)
@@ -57,7 +75,16 @@ func init_data():
 	progress = 0.0
 	target_progress = 0.0
 	current = 0.0
+	load_type = LOAD_TEPE.LOADING
 	pass
+
+func Show():
+	show()
+	SettingsManager.settings_toggle.emit()
+
+func Hide():
+	hide()
+	SettingsManager.settings_toggle.emit()
 
 func reback():
 	SceneManager.go_back()
@@ -67,7 +94,10 @@ func reback():
 func close_loading():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
-	SceneManager.switch_to_scene(next_scene,"custom",0.2) 
+	if load_type == LOAD_TEPE.LOADING:
+		SceneManager.switch_to_scene(next_scene, "custom", 0.2)
+	elif load_type == LOAD_TEPE.LOAD_GAME:
+		SceneManager.ToGameScene(next_scene)
 	queue_free()
 	pass
 
@@ -97,18 +127,22 @@ func _on_loading(value):
 # 加载游戏资源
 func _on_load_game(gameName):
 	# 发送 HTTP 请求下载资源
+	gameName = gameName.to_lower()
 	if not SceneManager.has_scene(gameName):
-		PopupManager.show_dynamic("当前游戏正在招商中...")
+		SignalManager.LoadingSIG.emit(-1)
+		PopupManager.show_dynamic("%s游戏正在招商中..."%[gameName])
 		return
 	game_name = gameName
+	load_type = LOAD_TEPE.LOAD_GAME
 	if SceneManager.check_scene(game_name):
 		set_next_scene(game_name)
 		SignalManager.LoadingSIG.emit(100)
 		return
-		
+	SignalManager.LoadingSIG.emit(1)
+	is_http_request = true
 	game_zip_path = local_path + game_name + game_pack
 	url_path = resource_url + game_name + game_pack
-	print("请求接口:", url_path)
+	print("请求接口:", url_path, " 游戏路径:", SceneManager.get_scene_path(game_name))
 	var error = http_request.request(url_path)
 	if error != OK:
 		SignalManager.LoadingSIG.emit(-1.0)
@@ -117,7 +151,7 @@ func _on_load_game(gameName):
 
 # 处理 HTTP 请求完成事件
 func _on_http_request_request_completed(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
-	SignalManager.LoadingSIG.emit(50)
+	is_http_request = false
 	if response_code == 200:
 		# 将下载的资源保存到本地
 		var file = FileAccess.open(game_zip_path, FileAccess.WRITE)
@@ -139,11 +173,12 @@ func _on_http_request_request_completed(_result: int, response_code: int, _heade
 # 加载本地资源
 func _load_local_resource():
 	# 动态加载本地保存的游戏资源
-	read_zip_file(game_zip_path,  "", afterUnzipFIN)
+	read_zip_file(game_zip_path, "", afterUnzipFIN)
 	pass
 
 # 加载主场景
-func loadMainScene(file_path)->bool:
+func loadMainScene(file_path) -> bool:
+	print("加载主场景: ", file_path)
 	var main_scene = ResourceLoader.load(file_path)
 	if main_scene:
 		var instance = main_scene.instantiate()
@@ -158,11 +193,13 @@ func afterUnzipFIN(zip_reader: ZIPReader):
 	var is_add_main_scene = false
 	var main_path = ""
 	for file_path in scene_files:
-		if SceneManager.get_scene_path(game_name) == file_path and loadMainScene(file_path):
+		print('解压出来的文件路径', file_path)
+		if SceneManager.get_scene_path(game_name) == res_path + file_path and loadMainScene(file_path):
 			is_add_main_scene = true
 			main_path = file_path
 			break
 			
+	# 如果忘记添加，则走默认路径
 	if not is_add_main_scene:
 		main_path = default_scene_path.path_join(game_name).path_join(game_name + ".tscn")
 		is_add_main_scene = loadMainScene(main_path)
@@ -172,8 +209,9 @@ func afterUnzipFIN(zip_reader: ZIPReader):
 		PopupManager.show_dynamic("缺乏主场景资源,游戏启动失败...")
 		return
 	# 添加道场景管理
-	SceneManager.add_scene(game_name, main_path)
 	SignalManager.LoadingSIG.emit(100)
+	await get_tree().process_frame
+	SceneManager.add_scene(game_name, main_path)
 	SceneManager.ToGameScene(game_name)
 	pass
 
@@ -187,7 +225,7 @@ func afterUnzip(_zip_reader: ZIPReader):
 	pass
 
 # 解压 ZIP 文件
-func read_zip_file(zip_path: String, parent_path: String,call_back: Callable):
+func read_zip_file(zip_path: String, parent_path: String, call_back: Callable):
 	var zip_reader := ZIPReader.new()
 	var err := zip_reader.open(zip_path)
 	if err != OK:
@@ -203,15 +241,17 @@ func read_zip_file(zip_path: String, parent_path: String,call_back: Callable):
 		var suffix = file_path.get_extension().to_lower()
 		var current_dir = ""
 		var temp_sub_path = parent_path
-		print('解压出来的文件路径', file_path)
+		print('解压出来的文件路径', file_path, ' 文件后缀', temp_sub_path)
+		fileLanding(file_path, file_data, suffix)
+		continue
 		# 检查文件后缀
 		match suffix:
 			"tscn": # 游戏场景路径
-				current_dir = default_scene_path 
+				current_dir = default_scene_path
 			"gd": # 脚本路径
-				current_dir = default_script_path 
+				current_dir = default_script_path
 			"png", "svg", "jpge", "jpg": # 资源路径
-				current_dir = default_assets_path 
+				current_dir = default_assets_path
 				if temp_sub_path == "":
 					temp_sub_path = "image"
 			"ogg", "wav", "mp3", "mp4":
@@ -224,8 +264,8 @@ func read_zip_file(zip_path: String, parent_path: String,call_back: Callable):
 				if file:
 					file.store_buffer(file_data)
 					file.close()
-				print('子路径',  file_path.get_base_dir())
-				read_zip_file(temp_zip_path,  file_path.get_base_dir(), afterUnzip )
+				print('子路径', file_path.get_base_dir())
+				read_zip_file(temp_zip_path, file_path.get_base_dir(), afterUnzip)
 				continue
 			_:
 				pass
@@ -239,7 +279,7 @@ func read_zip_file(zip_path: String, parent_path: String,call_back: Callable):
 	call_back.call(zip_reader)
 
 # 文件落地
-func fileLanding(file_path, file_data,suffix):
+func fileLanding(file_path, file_data, suffix):
 	print('新纳入的文件', file_path)
 	var file_dir = file_path.get_base_dir()
 	DirAccess.make_dir_recursive_absolute(file_dir)

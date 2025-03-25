@@ -9,6 +9,7 @@ var current_scene_index = -1
 # 上一个场景
 var previous_name = ""
 const HOME_NODE = "home"
+
 var scenes ={
 		"loading": "res://scenes/1common/loading_screen.tscn",
 		"login": "res://scenes/login.tscn",
@@ -28,12 +29,13 @@ var scenes ={
 		"chinesechess":"res://scenes/game/xiangqi/S/s_test.tscn",
 		"tetris":"res://scenes/game/tetris/tetris.tscn",
 		"mahjong_matching":"res://scenes/game/mahjong_matching/level/main_game.tscn",
+		"battle_city":"res://scenes/game/godot4BattleCity/welcome.tscn",
 		# "xiangqi":"scenes\game\\tetris.tscn",
 		# # 如果有重复的场景名称，将被跳过并输出警告
 		# "login": "res://scenes/another_login.tscn"  ,
 	}
 
-
+var reback_scene = preload("res://scenes/1common/reback.tscn")
 var DISSOLVE_IMAGE = preload('res://addons/transitions/images/blurry-noise.png')
 # 场景转换效果类型映射
 const TRANSITION_TYPES = {
@@ -343,7 +345,19 @@ func ToGameScene(gameName: String) -> void:
 		PopupManager.show_dynamic("%s 正在招商中..." % gameName)
 		print("%s 正在招商中..." % gameName)
 		gameName = HOME_NODE
+		pass
 	switch_to_scene(gameName)
+	if gameName != HOME_NODE:
+		await get_tree().process_frame
+		var root = get_tree().root
+		var last_scene = root.get_child(root.get_child_count()-1)
+		if last_scene:
+			var right_top = Vector2(get_viewport().size.x+5, 5)
+			var reback_ui = reback_scene.instantiate()
+			last_scene.add_child(reback_ui)
+			reback_ui.set_position(right_top)
+			print("设置返回按钮!!!",right_top)
+		pass
 	pass
 	
 # 切换场景
@@ -585,6 +599,7 @@ func remove_scene(scene_instance: Node) -> void:
 # 打印所有场景信息
 # 打印所有场景信息
 func print_all_scenes() -> void:
+
 	var _scenes =scene_paths
 	print("\n=== 场景列表 ===")
 	print("总数: ", _scenes.size(), " 个场景\n")
@@ -618,4 +633,12 @@ func print_all_scenes() -> void:
 	# 打印底部分隔线
 	print(separator)
 	print("\n")
+	var renderer = RenderingServer.get_video_adapter_name()
+	print("当前渲染器: ", renderer)
+		
+    # 判断是否包含 Vulkan 标识
+	if "Vulkan" in renderer:
+		print("✅ 支持 Vulkan")
+	else:
+		print("❌ 不支持 Vulkan，将回退到兼容模式")
 	pass

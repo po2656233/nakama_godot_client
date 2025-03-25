@@ -382,8 +382,9 @@ func load_world_channel():
 				return null
 			print("添加世界渠道频道: ", ret)
 			_world_channel = ret
-			fetch_full_chat_history(_world_channel.id)
+			# fetch_full_chat_history(_world_channel.id)
 			# get_chat_history_all(_world_channel.id)
+			fetch_older_messages(_world_channel.id,"")
 			return ret
 	return null
 

@@ -155,6 +155,7 @@ func _on_accept_pressed():
 func _on_decline_pressed():
 	# Handle decline logic
 	print("取消游戏 match_id:", match_id)
+	timer_label.text = base_text_2 % [0]
 	await OnlineGame.sendToMatch(match_id, MatchState.GameReadyCancel, "0")
 	pass
 

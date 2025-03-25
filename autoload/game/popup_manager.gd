@@ -54,20 +54,16 @@ func show_confirm(message: String, callback: Callable, title: String = "确认")
 	var popup = confirm_scene.instantiate()
 	print("提示")
 	_setup_popup(popup, title, message)
-	if callback:
-		# 使用lambda连接信号，这样可以在确认后调用回调
-		print("确认框")
-		var callFunc = func(popup_id: String):
-				if popup and popup_id == str(popup.get_instance_id()):
-					print("开始回调")
-					callback.call()
-				pass
-		if popup_confirmed.is_connected(callFunc):
-			popup_confirmed.disconnect(callFunc)
-		popup_confirmed.connect(
-			callFunc, 
-			CONNECT_ONE_SHOT
-		)
+	# 使用弱引用避免内存问题
+	var weak_popup = weakref(popup)
+	 # 修改回调处理方式
+	var popup_id = str(popup.get_instance_id())
+	popup.confirmed.connect(func():
+		if weak_popup.get_ref():  # 检查弹窗是否仍有效
+			print("开始回调")
+			callback.call()
+			close_popup(popup_id)
+	, CONNECT_ONE_SHOT)
 
 ## 显示自定义弹窗
 ## popup_scene_path: 自定义弹窗场景路径

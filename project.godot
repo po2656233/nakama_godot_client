@@ -10,12 +10,12 @@ config_version=5
 
 [application]
 
-config/name="zhezhizhonghua"
+config/name="zhenzhizhonghua"
 config/description="游乐场"
 config/version="1.0.1"
 run/main_scene="res://scenes/login.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/bg_color=Color(0.345098, 0.698039, 0.635294, 1)
+boot_splash/bg_color=Color(0.141176, 0.694118, 0.996078, 1)
 boot_splash/image="res://assets/login/chenguang.png"
 config/icon="res://assets/bg/img_gg.png"
 
@@ -81,8 +81,13 @@ hard_drop={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
 ]
 }
+select={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194309,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
 
 [rendering]
 
-renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+rendering/quality/driver/name="opengl3"

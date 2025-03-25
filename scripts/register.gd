@@ -96,6 +96,14 @@ func _on_texture_psw_button_up() -> void:
 	passwordEdit.secret = true
 	pass # Replace with function body.
 
+func _on_btn_vcode_pressed() -> void:
+	if phoneEdit.text == "":
+		PopupManager.show_message("请填写手机号码")
+		return
+	if not is_valid_phone_number(phoneEdit.text):
+		PopupManager.show_message("请输入有效的手机号码")
+		return
+	pass # Replace with function body.
 
 
 func _on_texture_qrpsw_button_up() -> void:
@@ -105,3 +113,4 @@ func _on_texture_qrpsw_button_up() -> void:
 func _on_texture_qrpsw_button_down() -> void:
 	qrpasswordEdit.secret = false
 	pass # Replace with function body.
+

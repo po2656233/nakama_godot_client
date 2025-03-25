@@ -229,7 +229,7 @@ _data = {
 &"hover": SubResource("Animation_hover")
 }
 
-[node name="RoomItem" type="PanelContainer"]
+[node name="RoomItem" type="Panel"]
 clip_contents = true
 custom_minimum_size = Vector2(450, 400)
 offset_right = 450.0
@@ -242,6 +242,10 @@ script = ExtResource("1_gnanh")
 
 [node name="Author" type="Label" parent="."]
 layout_mode = 2
+offset_left = 435.0
+offset_top = 376.0
+offset_right = 450.0
+offset_bottom = 400.0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "@"
@@ -253,6 +257,8 @@ visible_ratio = 20.0
 
 [node name="Front" type="TextureRect" parent="."]
 layout_mode = 2
+offset_right = 450.0
+offset_bottom = 400.0
 size_flags_vertical = 3
 texture = ExtResource("2_mcopm")
 expand_mode = 1
@@ -445,6 +451,8 @@ texture = SubResource("GradientTexture2D_rm5a5")
 [node name="Back" type="TextureRect" parent="."]
 visible = false
 layout_mode = 2
+offset_right = 450.0
+offset_bottom = 400.0
 mouse_filter = 2
 
 [node name="DetailPanel" type="PanelContainer" parent="Back"]
@@ -508,8 +516,16 @@ texture = SubResource("GradientTexture2D_rm5a5")
 
 [node name="RemoveBtn" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(45, 45)
-layout_mode = 2
-size_flags_horizontal = 8
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 50.0
+grow_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 0
 texture_normal = ExtResource("6_3km0x")
 ignore_texture_size = true
@@ -517,7 +533,7 @@ stretch_mode = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_1")
+&"": SubResource("AnimationLibrary_1")
 }
 
 [connection signal="gui_input" from="Front/MarginContainer/Panel" to="." method="_on_gui_input"]

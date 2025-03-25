@@ -1,7 +1,7 @@
 extends Window
 
-@onready var room_name_option = $MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomNameOption
-@onready var room_psw_option = $MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomPasswordOption
+@onready var room_name_option = $MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer/RoomNameOption
+@onready var room_psw_option = $MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer/HBoxContainer/RoomPasswordOption
 @onready var game_type_option = $MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/GameTypeOption
 @onready var players_spin_box = $MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption/PlayersSpinBox
 @onready var spectator_check = $MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption/SpectatorCheck
@@ -64,14 +64,15 @@ func _on_game_type_selected(index: int):
 		return
 	var game = game_type_option.get_item_metadata(index)
 	if game:
-		if game.max_player != -1:
-			players_spin_box.max_value = game.max_player
-			players_spin_box.value = game.max_player
+		var max_player = int(game.max_player)
+		if max_player != -1:
+			players_spin_box.max_value = max_player
+			players_spin_box.value = max_player
 			players_spin_box.editable = false
-			print("max_player: ", game.max_player)
 		else:
-			players_spin_box.value = game.max_player
+			players_spin_box.value = max_player
 			players_spin_box.editable = true
+		print("max_player: ", max_player)
 
 
 func _on_cancel_pressed():
@@ -80,7 +81,7 @@ func _on_cancel_pressed():
 func _on_create_pressed():
 	hide()
 	# 模拟创建房间回包
-	if not await _validate_room_data():
+	if not _validate_room_data():
 		return
 	PopupManager.show_confirm("确定创建吗？", _create_room, "确认")
 	pass
@@ -92,24 +93,24 @@ func _create_room():
 		# print("匹配创建成功，票据: ", match_maker_ticket)
 
 		# 服务端创建牌桌
-		var res = await Online.nakama_socket.rpc_async("create_table",{
-			"id": -1,
+		var res = await Online.sendDataRPC("create_table",{
+			"rid": -1,
 			"gid": game_type_option.get_selected_id(),
 			"name": room_name_option.text,
 			"key": room_psw_option.text,
 			"mode": game_mode_option.get_selected_id(),
 			"section":game_section.get_selected_id(),
-			"enterScore": entry_score_spin_box.value,
-			"baseScore": base_score_spin_box.value,
+			"enterScore": int(entry_score_spin_box.value),
+			"baseScore": int(base_score_spin_box.value),
 			"allowLookOn": spectator_check.button_pressed,
 			"commission": tax_slider.value if tax_check.button_pressed else 0,
-			"maxSitter": players_spin_box.value,
+			"maxSitter": int(players_spin_box.value),
 			"maxRound": -1,
 			"openTime": 0,
 			"closeTime": 0,
 		})
-		if res.is_exception():
-			print("创建房间失败:",res.get_exception().message)
+		if not res:
+			print("创建房间失败:")
 			PopupManager.show_dynamic("创建房间失败")
 			return
 		print("创建服务端托管成功",res)
@@ -121,34 +122,36 @@ func _create_room():
 func _validate_room_data() -> bool:
 	var gametype = game_type_option.get_selected_id()
 	if gametype == -1:
-		PopupManager.show_message("请选择游戏类型")
-		await get_tree().create_timer(1.5).timeout
-		show()
+		_show_error("请选择-游戏类型")
 		return false
 	if room_name_option.text == "":
-		PopupManager.show_message("请输入房间名称")
-		await get_tree().create_timer(1.5).timeout
-		show()
+		_show_error("请输入-房间名称")
 		return false
 	if entry_score_spin_box.value <= 0:
-		_show_error("请设置有效的入场分")
+		_show_error("请设置有效的-入场分")
 		return false
 	if players_spin_box.value < 1:
-		_show_error("最少需要1名玩家")
+		_show_error("游戏人数-不能少于1人")
 		return false
 	if base_score_spin_box.value < 0:
-		_show_error("底分不能为负数")
+		_show_error("底分-不能为负数")
 		return false
 	if tax_check.button_pressed and tax_slider.value < 0:
-		_show_error("税率不能为负数")
+		_show_error("税率-不能为负数")
 		return false
 	return true
 
+
+
 func _show_error(message: String):
-	var dialog = AcceptDialog.new()
-	add_child(dialog)
-	dialog.dialog_text = message
-	dialog.popup_centered()
+	PopupManager.show_message(message)
+	await get_tree().create_timer(1.5).timeout
+	show()
+	# var dialog = AcceptDialog.new()
+	# add_child(dialog)
+	# dialog.title = "提示"
+	# dialog.dialog_text = message
+	# dialog.popup_centered()
 
 
 

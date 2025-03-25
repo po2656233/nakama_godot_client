@@ -103,8 +103,3 @@ func get_all_pieces():
 		pieces.append_array(line.get_children())
 	return pieces
 
-
-
-func _on_button_pressed() -> void:
-	SceneManager.go_back()
-	pass # Replace with function body.

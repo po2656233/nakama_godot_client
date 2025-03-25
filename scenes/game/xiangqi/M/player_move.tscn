@@ -50,5 +50,5 @@ black = ExtResource("3_igjsx")
 
 [node name="movePlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_lrrep")
+&"": SubResource("AnimationLibrary_lrrep")
 }

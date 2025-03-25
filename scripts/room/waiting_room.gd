@@ -20,6 +20,7 @@ func _ready():
 	# 初始化房间信息
 	room_info.text = "[center]房间号:[b][color=yellow]0000[/color][/b]    最小人数:[b][color=red]10[/color][/b]人    当前:[color=green]10[/color]人[/center] (满)" #"房间号：" + str(randi() % 10000).pad_zeros(4)
 	
+
 	# 启动等待动画
 	start_waiting_animation()
 	
@@ -32,6 +33,15 @@ func _ready():
 	
 	pass
 
+func Show():
+	show()
+	SettingsManager.settings_toggle.emit()
+
+func Hide():
+	hide()
+	SettingsManager.settings_toggle.emit()
+	
+
 # 重置房间信息
 func reset(name1: String,roomId: String = "",playerMax:int=10):
 	time_left = 20.0
@@ -40,6 +50,7 @@ func reset(name1: String,roomId: String = "",playerMax:int=10):
 	room_id = roomId
 	game_name = name1
 	current_players = []
+	loading_scene.hide()
 	for child in player_list.get_children():
 		child.queue_free()
 	if playerMax > 3:
@@ -97,6 +108,7 @@ func remove_player(uid: String):
 func start_waiting_animation():
 	if tween:
 		tween.kill()
+	
 	tween = create_tween()
 	tween.bind_node(self)
 	tween.set_loops()
@@ -111,6 +123,7 @@ func _on_countdown_timeout():
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
 		SceneManager.set_previous_name("roomlist")
+		loading_scene.show()
 		SignalManager.LoadingGameSIG.emit(game_name)
 
 # 计时器回调
@@ -136,6 +149,7 @@ func _on_cancel_button_pressed():
 	countdown.stop()
 	countdown.hide()
 	quitRoomSIG.emit()
+	loading_scene.hide()
 	SignalManager.JoinErrorMusicSIG.emit()
 
 # func _debug_add_test_players():

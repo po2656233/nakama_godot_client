@@ -66,7 +66,6 @@ func _ready():
 
 
 func on_change_score(score: int):
-	print('连接上了')
 	if score < 1000:
 		rate_speed = 1.0
 	elif score < 2000 :

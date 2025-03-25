@@ -1,6 +1,6 @@
 [gd_scene load_steps=40 format=3 uid="uid://cibb7ou8lcdk1"]
 
-[ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://theme/chat.tres" id="1_b4wfc"]
+[ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://themes/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" uid="uid://coomdxyaqfwje" path="res://scripts/chat/chat.gd" id="2_m52is"]
 [ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://scenes/chat/find_friend.tscn" id="3_ndfss"]
 [ext_resource type="Script" uid="uid://bhtqigqpfmpu2" path="res://scripts/1common/itemList.gd" id="4_3wj1b"]
