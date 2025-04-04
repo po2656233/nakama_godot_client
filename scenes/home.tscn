@@ -459,6 +459,34 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_5rkik")
 
+[node name="UI" type="CanvasLayer" parent="PanelContainer/MarginContainer/VBoxContainer/Panel"]
+visible = false
+
+[node name="WebView" type="WebView" parent="PanelContainer/MarginContainer/VBoxContainer/Panel/UI"]
+full_window_size = false
+url = "https://tools.liumingye.cn/m3u8/#https://mediaserver.abnvideos.com/streams/abnchina.m3u8"
+transparent = true
+background_color = Color(1, 1, 1, 0)
+devtools = false
+focused_when_created = false
+allow_interactions_without_focus = false
+visible = false
+custom_minimum_size = Vector2(500, 320)
+anchors_preset = -1
+anchor_left = 0.456
+anchor_top = 0.19
+anchor_right = 0.937
+anchor_bottom = 0.846
+offset_left = 8.68799
+offset_top = 82.88
+offset_right = -3.42407
+offset_bottom = -3.20801
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+
 [connection signal="pressed" from="HBoxContainerHome/btn_start" to="." method="_on_btn_start_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_match" to="." method="_on_btn_match_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_renwu" to="." method="_on_btn_renwu_pressed"]

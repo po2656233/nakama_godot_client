@@ -41,4 +41,3 @@ func _on_btn_match_pressed() -> void:
 func _on_btn_start_pressed() -> void:
 	SceneManager.switch_to_scene("gamelist","horizontal-paint-brush",0.2) 
 	pass # Replace with function body.
-

@@ -10,6 +10,6 @@ var FuncMapping = {
 	# 添加更多映射...
 }
 var ResponeMapping = {
-    "RPC function not found": "服务器未处理",
+	"RPC function not found": "服务器未处理",
 	"Request cancelled.":"网络断开",
 }

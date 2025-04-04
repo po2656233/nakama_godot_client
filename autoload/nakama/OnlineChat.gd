@@ -256,6 +256,8 @@ func _notification(what: int):
 # 好友和俱乐部管理
 # 通过用户名搜索用户
 func search_users(username: String):
+	if not Online.nakama_session:
+		return null
 	var result = await Online.nakama_client.get_users_async(Online.nakama_session,[], [username])
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
@@ -264,14 +266,18 @@ func search_users(username: String):
 	return result
 
 func search_users_rpc(username: String):
+	if not Online.nakama_session:
+		return null
 	var result = await Online.nakama_client.rpc_async(Online.nakama_session,  "search_username", username)
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
-		return
+		return null
 	print("查找用户RPC: ", result)
 	return JSON.parse_string(result.payload)
 
 func search_groups(groupname: String):
+	if not Online.nakama_session:
+		return null
 	var result = await Online.nakama_client.list_groups_async(Online.nakama_session, groupname)
 	if result.is_exception():
 		print("Error searching users: ", result.get_exception().message)
