@@ -1,3 +1,0 @@
-# List of public projects using gdCEF
-
-https://github.com/face-hh/wattesigma.git

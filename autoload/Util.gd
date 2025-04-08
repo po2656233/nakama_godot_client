@@ -1,5 +1,15 @@
 extends Node
 
+func find_unique_name(parent: Node, prefix: String = '') -> String:
+	var name1: String
+	while true:
+		name1 = random_name(prefix)
+		if not parent.has_node(name1):
+			break
+	return name1
+
+func random_name(prefix: String) -> String:
+	return prefix + str(randi())
 
 #################################################################################
 # 异步加载 Texture2D
@@ -200,7 +210,7 @@ func get_chinese_time_str(timestamp: String, show_seconds: bool = true) -> Strin
 func get_current_timestamp() -> String:
 	var time_dict = Time.get_time_dict_from_system()
 	var date_dict = Time.get_date_dict_from_system()
-    
+	
 	# 格式化时间为 HH:MM:SS
 	var time_str = "%02d:%02d:%02d" % [time_dict.hour, time_dict.minute, time_dict.second]
 	 

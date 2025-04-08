@@ -136,6 +136,7 @@ func _connect_socket() -> void:
 	nakama_socket.received_notification.connect(_on_received_notification)	
 	# nakama_socket.received_channel_presence.connect(_on_channel_presence)
 	nakama_socket.received_channel_message.connect(_on_received_message)
+	OnlineMatch._set_nakama_socket(nakama_socket)
 	pass
 
 # 断开socket
@@ -187,13 +188,13 @@ func _on_connection_state_changed(state: String):
 
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):
-	print("收到匹配的数据:", matchmaker_matched)
+	#print("收到匹配的数据:", matchmaker_matched)
 	SignalManager.MatchMakerSIG.emit(matchmaker_matched)
 	pass
 
 # 收到匹配状态
 func _on_received_match_state(match_state):
-	print("收到匹配状态:", match_state)
+	#print("收到匹配状态:", match_state)
 	SignalManager.MatchStateEventSIG.emit(match_state)
 	pass
 
@@ -205,7 +206,7 @@ func _on_received_match_presence(match_presence):
 
 # 收到状态数据
 func _on_received_status_presence(status_presence):	
-	print("收到状态的玩家数据:", status_presence)
+	#print("收到状态的玩家数据:", status_presence)
 	SignalManager.StatusPresenceEventSIG.emit(status_presence)
 	pass
 
@@ -316,6 +317,14 @@ func force_reconnect() -> void:
 # 		if not is_socket_connected():
 # 			_start_reconnect()
 # 	pass
+##############################################################################################
+func connect_nakama_socket() -> void:
+	_connect_socket()
+	
+
+func is_nakama_socket_connected() -> bool:
+	#print("conncted")
+	return nakama_socket != null && nakama_socket.is_connected_to_host()
 
 
 ############################主动发送数据############################################################

@@ -30,6 +30,7 @@ var scenes ={
 		"tetris":"res://scenes/game/tetris/tetris.tscn",
 		"mahjong_matching":"res://scenes/game/mahjong_matching/level/main_game.tscn",
 		"battle_city":"res://scenes/game/godot4BattleCity/welcome.tscn",
+		"fishgame":"res://scenes/game/fishgame/Main.tscn",
 		# "xiangqi":"scenes\game\\tetris.tscn",
 		# # 如果有重复的场景名称，将被跳过并输出警告
 		# "login": "res://scenes/another_login.tscn"  ,
@@ -636,7 +637,7 @@ func print_all_scenes() -> void:
 	var renderer = RenderingServer.get_video_adapter_name()
 	print("当前渲染器: ", renderer)
 		
-    # 判断是否包含 Vulkan 标识
+	# 判断是否包含 Vulkan 标识
 	if "Vulkan" in renderer:
 		print("✅ 支持 Vulkan")
 	else:

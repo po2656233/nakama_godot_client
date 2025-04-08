@@ -318,13 +318,15 @@ func _on_received_notify(notify):
 				"type": "俱乐部",
 				"level": 0,
 				"uid": notify.sender_id,
-				"name": content.username,
+				"name": "",
 				"time": notify.create_time,
 				"group_id": "-",
 				"group_name": "-",
 				"update_time": "-",
 				"status": 2,
 			}
+	if content.has("username"):
+		approval_data["username"] = content.username
 	var status = notify.code as NotifyStatus
 	match status:
 		NotifyStatus.RECV_OFFLINE:

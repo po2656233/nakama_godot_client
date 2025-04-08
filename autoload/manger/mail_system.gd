@@ -75,5 +75,3 @@ func claim_mail_reward(mail_id: int) -> bool:
 			# sort()
 			return true
 	return false
-
-

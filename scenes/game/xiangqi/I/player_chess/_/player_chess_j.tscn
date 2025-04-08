@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://2hfel3ui8bkk"]
 
-[ext_resource type="Texture2D" uid="uid://reuou6bkkluq" path="res://assets/xiangqi/r_j.png" id="1_mkwxg"]
+[ext_resource type="Texture2D" uid="uid://reuou6bkkluq" path="res://assets/game/xiangqi/r_j.png" id="1_mkwxg"]
 [ext_resource type="Script" uid="uid://cq66rehl302dv" path="res://scenes/game/xiangqi/I/player_chess/_/player_chess_j.gd" id="2_jgar3"]
-[ext_resource type="Texture2D" uid="uid://dpjliqk4sadwp" path="res://assets/xiangqi/b_j.png" id="3_o32uf"]
+[ext_resource type="Texture2D" uid="uid://dpjliqk4sadwp" path="res://assets/game/xiangqi/b_j.png" id="3_o32uf"]
 
 [node name="player_chess_j" type="Sprite2D"]
 texture = ExtResource("1_mkwxg")

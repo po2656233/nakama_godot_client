@@ -1,4 +1,5 @@
 extends Node
+var online_play = false
 const loginProto = preload("res://gdprotobuf/login.gd")
 const homeProto = preload("res://gdprotobuf/home.gd")
 var local_match_id = ""
@@ -125,7 +126,7 @@ func getTabelList(payload:Dictionary):
 	request.set_pageNum(payload.get("pageNum",1))
 	request.set_pageSize(payload.get("pageSize",20))
 	var result = await RpcData("table_list",payload)
-	# print("牌桌列表 反馈:",result)
+	print("牌桌列表 反馈:",result)
 	return result
 
 # 获取游戏名称
@@ -149,7 +150,12 @@ func getGameEnName_by(gamename:String):
 			return game.en_name
 	return ""
 
-
+func getGameMaxPeople(game_id:int)->int:
+	for game in games_data:
+		if game.id == game_id:
+			return game.max_player
+	return 0
+	
 # 获取游戏名称
 func getGameID(enName:String):
 	for game in games_data:

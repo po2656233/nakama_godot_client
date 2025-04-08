@@ -1,0 +1,348 @@
+[gd_scene load_steps=23 format=3 uid="uid://cn4ssax8bfua3"]
+
+[ext_resource type="Script" uid="uid://duwjsgqg1sfk4" path="res://addons/virtual_joystick/scripts/virtual_joystick.gd" id="1_otik3"]
+[ext_resource type="Texture2D" uid="uid://d1kpl1ws5ywfr" path="res://addons/virtual_joystick/sprites/joystick.png" id="2_v2x7c"]
+[ext_resource type="Texture2D" uid="uid://b43x5d10e5s44" path="res://addons/virtual_joystick/sprites/stick.png" id="3_sngmj"]
+[ext_resource type="Texture2D" uid="uid://bc6paavcnnwf6" path="res://addons/virtual_joystick/sprites/stick_pressed.png" id="4_n6pya"]
+[ext_resource type="Texture2D" uid="uid://c4wsyfj8hjsoe" path="res://addons/virtual_joystick/textures/attack.svg" id="5_y5rfs"]
+[ext_resource type="Texture2D" uid="uid://dkpjnuy3kn0jw" path="res://addons/virtual_joystick/textures/attack_press.svg" id="6_lbygl"]
+[ext_resource type="Texture2D" uid="uid://dgrytpx05aslw" path="res://addons/virtual_joystick/textures/X.svg" id="7_ki73v"]
+[ext_resource type="Texture2D" uid="uid://b72cfuccmpr1i" path="res://addons/virtual_joystick/textures/X_press.svg" id="8_0rpfe"]
+[ext_resource type="Texture2D" uid="uid://wxvamnit4wop" path="res://addons/virtual_joystick/textures/add.svg" id="9_xye7w"]
+[ext_resource type="Texture2D" uid="uid://bo41nack8d6ut" path="res://addons/virtual_joystick/textures/Y.svg" id="10_7tkbt"]
+[ext_resource type="Texture2D" uid="uid://bnw67mjwdi0ru" path="res://addons/virtual_joystick/textures/Y_press.svg" id="11_yyxml"]
+[ext_resource type="Texture2D" uid="uid://dj5ughsxfwbo2" path="res://addons/virtual_joystick/textures/B.svg" id="12_v537s"]
+[ext_resource type="Texture2D" uid="uid://ciy36f0hxu7xp" path="res://addons/virtual_joystick/textures/B_press.svg" id="13_chgpf"]
+[ext_resource type="Texture2D" uid="uid://dn1h4brm34kjh" path="res://addons/virtual_joystick/textures/Z.svg" id="14_67kmq"]
+[ext_resource type="Texture2D" uid="uid://v574e6kb0ak3" path="res://addons/virtual_joystick/textures/Z_press.svg" id="15_vhoqs"]
+
+[sub_resource type="GDScript" id="GDScript_f5fmp"]
+resource_name = "joystick"
+script/source = "extends CanvasLayer
+@export_group(\"方向映射\")
+## 向左
+@export var action_left := \"ui_left\"
+## 向右
+@export var action_right := \"ui_right\"
+## 向上
+@export var action_up := \"ui_up\"
+## 向下
+@export var action_down := \"ui_down\"
+
+@export_group(\"功能映射\")
+## x键对应的用户自定义的映射
+@export var action_x := \"ui_null\"
+## y键对应的用户自定义的映射
+@export var action_y := \"ui_null\"
+## z键对应的用户自定义的映射
+@export var action_z := \"ui_null\"
+## a键对应的用户自定义的映射
+@export var action_a := \"ui_null\"
+## b键对应的用户自定义的映射
+@export var action_b := \"ui_null\"
+
+## 当不松手时,一直触发A所映射的键
+@export var a_keep_pressed := true
+## 当不松手时,一直触发B所映射的键
+@export var b_keep_pressed := false
+## 当不松手时,一直触发X所映射的键
+@export var x_keep_pressed := false
+## 当不松手时,一直触发Y所映射的键
+@export var y_keep_pressed := false
+## 当不松手时,一直触发Z所映射的键
+@export var z_keep_pressed := false
+
+
+var a_pressed = false
+var b_pressed = false
+var x_pressed = false
+var y_pressed = false
+var z_pressed = false
+
+@onready var virtual_joystick: Node2D = $VirtualJoystick
+@onready var a: TouchScreenButton = $A
+@onready var b: TouchScreenButton = $B
+@onready var x: TouchScreenButton = $X
+@onready var y: TouchScreenButton = $Y
+@onready var z: TouchScreenButton = $Z
+
+
+func _ready() -> void:
+	a.action = action_a
+	b.action = action_b
+	x.action = action_x
+	y.action = action_y
+	z.action = action_z
+	virtual_joystick.action_left = action_left
+	virtual_joystick.action_right = action_right
+	virtual_joystick.action_up = action_up
+	virtual_joystick.action_down = action_down
+	pass
+
+func _process(_delta):
+	if a_pressed and a_keep_pressed:
+		pressAction(action_a)
+	elif b_pressed and b_keep_pressed:
+		pressAction(action_b)
+	elif x_pressed and x_keep_pressed:
+		pressAction(action_x)
+	elif y_pressed and y_keep_pressed:
+		pressAction(action_y)
+	elif z_pressed and z_keep_pressed:
+		pressAction(action_z)
+	pass
+
+	
+func pressKey(key:Key):
+	# 按下事件
+	var press_event = InputEventKey.new()
+	press_event.physical_keycode = key
+	press_event.pressed = true
+	Input.parse_input_event(press_event)
+	pass
+
+func pressAction(action:String):
+	if not releaseAction(action):
+		return
+	#if Input.is_action_pressed(action):
+		#Input.action_release(action)
+	
+	 # 添加持续触发逻辑
+	var event = InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	event.strength = 1.0  # 保持压力值
+	
+	# 需要保持事件在输入队列中
+	Input.parse_input_event(event)
+	Input.action_press(action, 1.0)  # 保持持续按压状态
+
+func releaseAction(action:String)->bool:
+	if not action.is_empty() and action != \"ui_null\":
+		Input.action_release(action)
+		return true
+	return false
+
+func _on_a_pressed() -> void:
+	a_pressed = true
+	pressAction(action_a)
+	pass # Replace with function body.
+
+
+func _on_x_pressed() -> void:
+	x_pressed = true
+	pressAction(action_x)
+	pass # Replace with function body.
+
+
+func _on_y_pressed() -> void:
+	y_pressed = true
+	pressAction(action_y)
+	pass # Replace with function body.
+
+
+func _on_b_pressed() -> void:
+	b_pressed = true
+	pressAction(action_b)
+	pass # Replace with function body.
+
+
+func _on_z_pressed() -> void:
+	z_pressed = true
+	pressAction(action_z)
+	pass # Replace with function body.
+
+
+func _on_a_button_down() -> void:
+	a_pressed = true
+	pressAction(action_a)
+	pass # Replace with function body.
+
+
+func _on_x_button_down() -> void:
+	x_pressed = true
+	pressAction(action_x)
+	pass # Replace with function body.
+
+
+func _on_y_button_down() -> void:
+	y_pressed = true
+	pressAction(action_y)
+	pass # Replace with function body.
+
+
+func _on_b_button_down() -> void:
+	b_pressed = true
+	pressAction(action_b)
+	pass # Replace with function body.
+
+
+func _on_z_button_down() -> void:
+	z_pressed = true
+	pressAction(action_z)
+	pass # Replace with function body.
+
+
+func _on_a_button_up() -> void:
+	a_pressed = false
+	pass # Replace with function body.
+
+
+func _on_x_button_up() -> void:
+	x_pressed = false
+	pass # Replace with function body.
+
+
+func _on_y_button_up() -> void:
+	y_pressed = false
+	pass # Replace with function body.
+
+
+func _on_b_button_up() -> void:
+	b_pressed = false
+	pass # Replace with function body.
+
+
+func _on_z_button_up() -> void:
+	z_pressed = false
+	pass # Replace with function body.
+
+
+func _on_z_released() -> void:
+	z_pressed = false
+	pass # Replace with function body.
+
+
+func _on_x_released() -> void:
+	x_pressed = false
+	pass # Replace with function body.
+
+
+func _on_y_released() -> void:
+	y_pressed = false
+	pass # Replace with function body.
+
+
+func _on_b_released() -> void:
+	b_pressed = false
+	pass # Replace with function body.
+"
+
+[sub_resource type="BitMap" id="BitMap_ve3v5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bxl0k"]
+radius = 125.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_idrfl"]
+radius = 120.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lqbxo"]
+radius = 120.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jc337"]
+radius = 120.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_odx7s"]
+radius = 120.0
+
+[node name="VirtualJoystick" type="CanvasLayer"]
+script = SubResource("GDScript_f5fmp")
+
+[node name="VirtualJoystick" type="Node2D" parent="."]
+position = Vector2(68, 575)
+script = ExtResource("1_otik3")
+border = ExtResource("2_v2x7c")
+stick = ExtResource("3_sngmj")
+stick_pressed = ExtResource("4_n6pya")
+metadata/_custom_type_script = "uid://duwjsgqg1sfk4"
+
+[node name="A" type="TouchScreenButton" parent="."]
+position = Vector2(1044, 547)
+scale = Vector2(0.385, 0.42)
+texture_normal = ExtResource("5_y5rfs")
+texture_pressed = ExtResource("6_lbygl")
+bitmask = SubResource("BitMap_ve3v5")
+shape = SubResource("CircleShape2D_bxl0k")
+
+[node name="X" type="TouchScreenButton" parent="."]
+position = Vector2(1054, 469)
+scale = Vector2(0.4, 0.3)
+texture_normal = ExtResource("7_ki73v")
+texture_pressed = ExtResource("8_0rpfe")
+shape = SubResource("CircleShape2D_idrfl")
+
+[node name="add" type="TextureButton" parent="X"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -14.5
+offset_top = -70.0
+offset_right = 30.5
+offset_bottom = -25.0
+grow_horizontal = 2
+texture_normal = ExtResource("9_xye7w")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Y" type="TouchScreenButton" parent="."]
+position = Vector2(964, 502)
+scale = Vector2(0.402685, 0.3)
+texture_normal = ExtResource("10_7tkbt")
+texture_pressed = ExtResource("11_yyxml")
+shape = SubResource("CircleShape2D_lqbxo")
+
+[node name="add" type="TextureButton" parent="Y"]
+visible = false
+custom_minimum_size = Vector2(45, 45)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.5001
+offset_top = -50.0
+offset_right = -44.5001
+offset_bottom = -20.0
+grow_horizontal = 2
+texture_normal = ExtResource("9_xye7w")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="B" type="TouchScreenButton" parent="."]
+position = Vector2(945, 575)
+scale = Vector2(0.402, 0.3)
+texture_normal = ExtResource("12_v537s")
+texture_pressed = ExtResource("13_chgpf")
+shape = SubResource("CircleShape2D_jc337")
+
+[node name="add" type="TextureButton" parent="B"]
+visible = false
+custom_minimum_size = Vector2(45, 45)
+offset_left = -69.652
+offset_top = -13.3334
+offset_right = -24.652
+offset_bottom = 31.6666
+texture_normal = ExtResource("9_xye7w")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Z" type="TouchScreenButton" parent="."]
+visible = false
+position = Vector2(349, 291)
+scale = Vector2(0.4, 0.31016)
+texture_normal = ExtResource("14_67kmq")
+texture_pressed = ExtResource("15_vhoqs")
+shape = SubResource("CircleShape2D_odx7s")
+
+[node name="add" type="TextureButton" parent="Z"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.5
+offset_top = -70.931
+offset_right = 22.5
+offset_bottom = -25.931
+grow_horizontal = 2
+texture_normal = ExtResource("9_xye7w")
+ignore_texture_size = true
+stretch_mode = 0
