@@ -93,6 +93,7 @@ func _ready():
 	var games = await OnlineGame.getGameList()
 	for game in games:
 		game_options.add_item(game.name, game.id)
+		game_options.set_item_metadata(game_options.item_count-1, game)
 	jion_dialog.visible = false
 
 	
@@ -251,15 +252,15 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 
 
 # 更新总页数
-func update_total_pages():
-	var list_size = 0
-	match curSelect:
-		SearchType.all:
-			list_size = all_count
-		SearchType.favorite:
-			list_size = favorite_count
-		SearchType.my:
-			list_size = my_count
+func update_total_pages(list_size = 0):
+	if list_size == 0:
+		match curSelect:
+			SearchType.all:
+				list_size = all_count
+			SearchType.favorite:
+				list_size = favorite_count
+			SearchType.my:
+				list_size = my_count
 	total_pages = ceil(float(list_size) / items_per_page)
 	if current_page >= total_pages:
 		current_page = max(0, total_pages - 1)
@@ -285,7 +286,7 @@ func _refresh_room_list():
 	var filtered_rooms = _apply_filters(rooms)
 	# filtered_rooms = _sort_rooms(filtered_rooms)
 
-	update_total_pages()
+	update_total_pages( filtered_rooms.size())
 	# 房间当前页的起始和结束索引
 	var start_idx = current_page * items_per_page
 	var end_idx = min(start_idx + items_per_page, filtered_rooms.size())
@@ -370,13 +371,15 @@ func _apply_filters(rooms: Array) -> Array:
 
 	var filtered = []
 	var search_text = search_input.text.to_lower()
-	var selectGameType = game_options.selected
-
+	var selectGame = game_options.get_item_metadata(game_options.selected)
+	print("当前的游戏类型 ",selectGame)
+	print("房间信息 ",rooms)
 	for room in rooms:
 		if search_text and not ("%s%s%s" % [room.room_name, room.game_name, room.room_id]).to_lower().contains(search_text):
 			continue
-		if selectGameType > 0 and room.game_type != selectGameType:
+		if game_options.selected > 0 and int(room.game_type) != int(selectGame.id):
 			continue
+		print("过滤后的房间信息 ",room)
 		filtered.append(room)
 	return filtered
 
