@@ -252,8 +252,8 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 
 
 # 更新总页数
-func update_total_pages(list_size = 0):
-	if list_size == 0:
+func update_total_pages(list_size = -1):
+	if list_size == -1:
 		match curSelect:
 			SearchType.all:
 				list_size = all_count
@@ -286,7 +286,7 @@ func _refresh_room_list():
 	var filtered_rooms = _apply_filters(rooms)
 	# filtered_rooms = _sort_rooms(filtered_rooms)
 
-	update_total_pages( filtered_rooms.size())
+	update_total_pages( filtered_rooms.size() if game_options.selected>0 or search_input.text != "" else -1)
 	# 房间当前页的起始和结束索引
 	var start_idx = current_page * items_per_page
 	var end_idx = min(start_idx + items_per_page, filtered_rooms.size())
