@@ -20,7 +20,6 @@ func _ready():
 	# 初始化房间信息
 	room_info.text = "[center]房间号:[b][color=yellow]0000[/color][/b]    最小人数:[b][color=red]10[/color][/b]人    当前:[color=green]10[/color]人[/center] (满)" #"房间号：" + str(randi() % 10000).pad_zeros(4)
 	
-
 	# 启动等待动画
 	start_waiting_animation()
 	
@@ -30,7 +29,6 @@ func _ready():
 	countdown.timeout.connect(_on_countdown_timeout)
 	countdown.timeleft.connect(_on_countdown_timeleft)
 	SignalManager.LoadingSIG.connect(_on_loading_value)
-	
 	pass
 
 func Show():

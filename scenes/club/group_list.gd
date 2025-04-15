@@ -1,4 +1,5 @@
 extends Control
+@onready var scroll_container: ScrollContainer = $VBoxContainer/ScrollContainer
 
 var group_item_scene = preload("res://scenes/club/group_item.tscn")
 var member_list_scene = preload("res://scenes/club/member_list.tscn")
@@ -51,6 +52,8 @@ func _ready():
 
 	# 连接搜索信号
 	$VBoxContainer/SearchBar/MarginContainer/HBoxContainer/SearchInput.text_changed.connect(_on_search_text_changed)
+	SignalManager.OpenLightSIG.connect(_on_turnOnLight)
+	SignalManager.CloseLightSIG.connect(_on_turnOffLight)
 	pass
 
 func clear() :
@@ -205,6 +208,18 @@ func _on_notification_toggled(group_data, enabled):
 			group["notification_enabled"] = enabled
 			break
 
+func _on_turnOnLight():
+	var new_style = StyleBoxFlat.new()
+	new_style.bg_color = Color(0.137, 0.536, 0.85, 0.914)
+	scroll_container.set("theme_override_styles/panel", new_style)
+	pass
+
+func _on_turnOffLight():
+	var new_style = StyleBoxFlat.new()
+	new_style.bg_color = Color(0.042, 0.33, 0.544, 0.914)
+	scroll_container.set("theme_override_styles/panel", new_style)
+	pass
+##############################
 func GetCurrentItemData():
 	if not current_selected_item:
 		return null

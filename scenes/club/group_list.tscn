@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bla02a266wvaf" path="res://scenes/club/group_list.gd" id="1_lhinq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ej2n"]
-bg_color = Color(0.243137, 0.623529, 0.945098, 0.913725)
+bg_color = Color(0.041569, 0.330115, 0.543947, 0.913725)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10

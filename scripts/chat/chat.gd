@@ -4,7 +4,7 @@ extends "res://scripts/chat/chat_system.gd"
 @onready var addclubPanle = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/AddClub
 @onready var friendListItem = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList
 # @onready var clubListItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/ItemList
-
+@onready var tab_container: TabContainer = $MarginContainer/Panel/TabContainer
 @onready var clubListItem = $MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer/GroupList
 
 @onready var btn_upmoreChat = $MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore
@@ -50,6 +50,10 @@ var first_world = true
 
 # 初始化 
 func _ready():
+	tab_container.set_tab_title(0,"世界")
+	tab_container.set_tab_title(1,"俱乐部")
+	tab_container.set_tab_title(2,"好友")
+	
 	if not OnlineLogin.player_data:
 		PopupManager.show_message("未登录")
 		OnlineLogin.relogin()

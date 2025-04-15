@@ -57,6 +57,8 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 8.0
+expand_margin_right = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceaav"]
 bg_color = Color(0.945098, 0.901961, 0.243137, 0.945098)
@@ -67,9 +69,11 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_right = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulhag"]
-bg_color = Color(0.254902, 0.25098, 0.254902, 1)
+bg_color = Color(0.219608, 0.458824, 0.282353, 1)
 border_width_left = 10
 border_width_right = 10
 border_color = Color(0.8, 0.8, 0.8, 0)
@@ -275,7 +279,7 @@ theme_override_colors/font_hovered_color = Color(0, 0.458824, 0.745098, 1)
 theme_override_colors/font_selected_color = Color(1, 0.843137, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = SubResource("SystemFont_2knlu")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 20
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
 theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
 theme_override_styles/tabbar_background = SubResource("StyleBoxFlat_ymw4y")
@@ -284,10 +288,11 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 drag_to_rearrange_enabled = true
 
 [node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -312,8 +317,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 5.0
-offset_bottom = -3.0
+offset_top = 4.0
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 follow_focus = true
@@ -378,8 +383,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 5.0
-offset_bottom = -6.0
+offset_top = 1.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 2
@@ -438,7 +443,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -474,7 +478,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 5.0
+offset_top = 1.0
 offset_right = 1.0
 offset_bottom = -4.0
 grow_horizontal = 2
@@ -622,12 +626,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_1efha")
 text = "发送"
 
 [node name="light_switch" type="TextureButton" parent="MarginContainer/Panel"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(35, 35)
 layout_mode = 1
 offset_left = 14.0
 offset_top = 8.0
-offset_right = 64.0
-offset_bottom = 58.0
+offset_right = 49.0
+offset_bottom = 43.0
 texture_normal = ExtResource("9_001t8")
 texture_pressed = ExtResource("10_rl2rc")
 ignore_texture_size = true

@@ -1,0 +1,105 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0xciqvrqhyav"]
+
+[ext_resource type="Script" uid="uid://bprqqksj5ffy7" path="res://scripts/clublist/MainScene.gd" id="1_bfnd6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7urg"]
+bg_color = Color(0.121569, 0.168627, 0.243137, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25098)
+shadow_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_0p4ir"]
+font_size = 36
+font_color = Color(0.878431, 0.929412, 1, 1)
+outline_size = 2
+outline_color = Color(0.196078, 0.294118, 0.431373, 0.545098)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.501961)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qh3tb"]
+bg_color = Color(0.258824, 0.333333, 0.435294, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="MainScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bfnd6")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0784314, 0.121569, 0.196078, 1)
+
+[node name="ClubsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w7urg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ClubsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ClubsPanel/VBoxContainer"]
+layout_mode = 2
+text = "俱乐部列表"
+label_settings = SubResource("LabelSettings_0p4ir")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ClubsPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ClubsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_qh3tb")
+
+[node name="ClubsList" type="VBoxContainer" parent="ClubsPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="AnimationParticles" type="CPUParticles2D" parent="."]
+position = Vector2(640, 0)
+amount = 30
+lifetime = 8.0
+preprocess = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(640, 1)
+direction = Vector2(0, 1)
+spread = 0.0
+gravity = Vector2(0, 98)
+initial_velocity_min = 30.0
+initial_velocity_max = 50.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color = Color(0.403922, 0.596078, 0.8, 0.196078)

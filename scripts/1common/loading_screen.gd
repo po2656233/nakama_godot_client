@@ -34,7 +34,6 @@ enum LOAD_TEPE{
 var load_type = LOAD_TEPE.LOADING
 
 func _ready():
-	
 	# 初始化进度条
 	init_data()
 	progress_bar.value = 0
@@ -42,7 +41,6 @@ func _ready():
 	add_child(http_request)
 	http_request.use_threads = true
 	
-
 	SignalManager.LoadingSIG.connect(_on_loading)
 	# 连接按钮的按下信号到加载函数
 	SignalManager.LoadingGameSIG.connect(_on_load_game)

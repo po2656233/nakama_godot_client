@@ -16,6 +16,7 @@ var scenes ={
 		"register": "res://scenes/register.tscn",
 		"home": "res://scenes/home.tscn",
 		"game": "res://scenes/game/game.tscn",
+		"club":"res://scenes/clublist/ClubScene.tscn",
 		"match": "res://scenes/match/match.tscn",
 		"email":"res://scenes/email/mail.tscn",
 		"approval":"res://scenes/approval/approval_form.tscn",

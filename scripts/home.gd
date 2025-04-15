@@ -29,7 +29,7 @@ func _on_btn_zhanji_pressed() -> void:
 
 # 任务
 func _on_btn_renwu_pressed() -> void:
-	SceneManager.switch_to_scene("game","custom",0.2) 
+	SceneManager.switch_to_scene("club","custom",0.2) 
 	pass # Replace with function body.
 
 # 比赛

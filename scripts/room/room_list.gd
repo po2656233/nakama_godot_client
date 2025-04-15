@@ -159,10 +159,10 @@ func append_room(data):
 			index = i
 			break
 	if index != -1:
-		print("更新 房间数据:", data.get("id", 0))
+		print("更新 房间数据1:", data.get("id", 0))
 		rooms[index] = item
 	else:
-		print("添加 房间数据:", data.get("id", 0))
+		print("添加 房间数据1:", data.get("id", 0))
 		rooms.append(item)
 	match curSelect:
 		SearchType.all:
@@ -372,14 +372,11 @@ func _apply_filters(rooms: Array) -> Array:
 	var filtered = []
 	var search_text = search_input.text.to_lower()
 	var selectGame = game_options.get_item_metadata(game_options.selected)
-	print("当前的游戏类型 ",selectGame)
-	print("房间信息 ",rooms)
 	for room in rooms:
 		if search_text and not ("%s%s%s" % [room.room_name, room.game_name, room.room_id]).to_lower().contains(search_text):
 			continue
 		if game_options.selected > 0 and int(room.game_type) != int(selectGame.id):
 			continue
-		print("过滤后的房间信息 ",room)
 		filtered.append(room)
 	return filtered
 
@@ -594,6 +591,13 @@ func _on_cancel_waiting():
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
+	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
+	# 检查游戏本地是否存在，不存在则网络下载
+	if not SceneManager.has_scene(enName):
+		print('第一次加载游戏...',enName)
+		#SignalManager.LoadingGameSIG.emit(enName)
+	else:
+		print('已有游戏...',enName)
 	
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
@@ -605,7 +609,6 @@ func _on_join_room(room_info: Dictionary):
 		return
 	print("加入房间-key:", jion_input.text)
 	# 初始化等待房间
-	var enName = OnlineGame.getGameEnName(room_info.game_type) 
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
 	for player in room_info.players:
 		print("正在等待的玩家:", player)

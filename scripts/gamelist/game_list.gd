@@ -41,16 +41,16 @@ var games_data =[
 	# 	"version":"",
 	# 	"image": "",
 	# },
-	# {
-	# 	"id": 1004,
-	# 	"name":"解谜世界",
-	# 	"title": "Puzzle World",
-	# 	"description": "[center][b]解谜世界[/b][/center]\n\n进入一个充满智慧挑战的世界。解开错综复杂的谜题，探索隐藏的秘密，提升你的逻辑思维能力。\n\n[b]特色：[/b]\n- 渐进的难度曲线\n- 独特的解谜机制\n- 精美的艺术风格",
-	# 	# "image": preload("res://assets/placeholder.svg"),
-	# 	"selectTime": Time.get_datetime_dict_from_system(),
-	# 	"version":"",
-	# 	"image": "",
-	# }
+	 #{
+	 	#"id": 1004,
+	 	#"name":"解谜世界",
+	 	#"title": "Puzzle World",
+	 	#"description": "[center][b]解谜世界[/b][/center]\n\n进入一个充满智慧挑战的世界。解开错综复杂的谜题，探索隐藏的秘密，提升你的逻辑思维能力。\n\n[b]特色：[/b]\n- 渐进的难度曲线\n- 独特的解谜机制\n- 精美的艺术风格",
+	 	## "image": preload("res://assets/placeholder.svg"),
+	 	#"selectTime": Time.get_datetime_dict_from_system(),
+	 	#"version":"",
+	 	#"image": "",
+	 #}
 ]
 		
 func _ready(): 

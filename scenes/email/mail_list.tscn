@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://b2n4rqcyg1p8k"]
 
 [ext_resource type="Script" uid="uid://c4sa000slnabn" path="res://scripts/email/mail_list.gd" id="1_m2p4r"]
-[ext_resource type="Texture2D" uid="uid://dsft532lerydb" path="res://assets/hall/close1.svg" id="2_hodls"]
-[ext_resource type="Texture2D" uid="uid://d1efiudqjhbhq" path="res://assets/hall/close2.svg" id="3_fwx5c"]
-[ext_resource type="Texture2D" uid="uid://b6pkei3mevg1d" path="res://assets/hall/close3.svg" id="4_iw7jo"]
+[ext_resource type="Texture2D" uid="uid://bkdpqs4ogfryy" path="res://assets/currency/exit1.svg" id="2_fwx5c"]
+[ext_resource type="Texture2D" uid="uid://bw2cgr3jpklvy" path="res://assets/currency/exit3.svg" id="3_fwx5c"]
+[ext_resource type="Texture2D" uid="uid://wpvmdkf0f8oy" path="res://assets/currency/exit2.svg" id="4_iw7jo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaumh"]
 bg_color = Color(0.501961, 0.611765, 0.286275, 1)
@@ -82,31 +82,30 @@ theme_override_constants/separation = 10
 
 [node name="ClearButton" type="Button" parent="Panel"]
 clip_contents = true
-custom_minimum_size = Vector2(90, 50)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 1
-offset_left = 5.0
-offset_top = 9.0
-offset_right = 95.0
-offset_bottom = 59.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 105.0
+offset_bottom = 60.0
 theme_override_styles/hover = SubResource("StyleBoxFlat_rb341")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_okley")
 theme_override_styles/normal = SubResource("StyleBoxFlat_r6vpl")
-text = "清理
-已领取"
+text = "清理-已领取"
 
 [node name="CloseButton" type="TextureButton" parent="Panel"]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -65.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = 65.0
+offset_left = -60.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 60.0
 grow_horizontal = 0
-texture_normal = ExtResource("3_fwx5c")
-texture_pressed = ExtResource("2_hodls")
+texture_normal = ExtResource("2_fwx5c")
+texture_pressed = ExtResource("3_fwx5c")
 texture_hover = ExtResource("4_iw7jo")
 ignore_texture_size = true
 stretch_mode = 0

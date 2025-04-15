@@ -2,28 +2,28 @@ extends PanelContainer
 
 signal game_selected(itemNode)
 
-@onready var gameTitle = $Front/GameFront/GameTitle
-@onready var gameImage = $Front/GameFront/GameImage
+@onready var gameTitle = $Front/Control/GameFront/GameTitle
+@onready var gameImage = $Front/Control/GameFront/GameImage
 @onready var gameBack = $Back
-@onready var gameFrontImage = $Front/GameFront
-@onready var gameBackImage = $Back/GameBack
+@onready var gameFrontImage = $Front/Control/GameFront
+@onready var gameBackImage = $Back/Control/GameBack
 
 
 @onready var gameFront = $Front
-@onready var introduceTitle = $Back/GameBack/Introduce
-@onready var description = $Back/GameBack/MarginContainer/Description
+@onready var introduceTitle = $Back/Control/GameBack/Introduce
+@onready var description = $Back/Control/GameBack/MarginContainer/Description
 @onready var animation = $AnimationPlayer
-# @onready var dragonBonesDibeichang = $Front/MarginContainer/DragonBonesDibeichang
-# @onready var dragonBonesJiangbei = $Front/MarginContainer/DragonBonesJiangbei
-# @onready var dragonBonesPuke = $Front/MarginContainer/DragonBonesPuke
+# @onready var dragonBonesDibeichang = $Front/Control/MarginContainer/DragonBonesDibeichang
+# @onready var dragonBonesJiangbei = $Front/Control/MarginContainer/DragonBonesJiangbei
+# @onready var dragonBonesPuke = $Front/Control/MarginContainer/DragonBonesPuke
 @onready var version = $Version
-@onready var dragonBones1 = $Front/GameFront/DragonBonesDibeichang
-@onready var dragonBones2 = 	$Front/GameFront/DragonBonesJiangbei
-@onready var dragonBones3 = 	$Front/GameFront/DragonBonesPuke
-@onready var dragonBones4 = 	$Front/GameFront/DragonBonesBaoX1
-@onready var dragonBones5 = 	$Front/GameFront/DragonBonesBaoX2
-@onready var dragonBones6 = 	$Front/GameFront/DragonBonesBaoX3
-@onready var dragonBones7 = 	$Front/GameFront/DragonBonesBaoX4
+@onready var dragonBones1 = $Front/Control/GameFront/DragonBonesDibeichang
+@onready var dragonBones2 = 	$Front/Control/GameFront/DragonBonesJiangbei
+@onready var dragonBones3 = 	$Front/Control/GameFront/DragonBonesPuke
+@onready var dragonBones4 = 	$Front/Control/GameFront/DragonBonesBaoX1
+@onready var dragonBones5 = 	$Front/Control/GameFront/DragonBonesBaoX2
+@onready var dragonBones6 = 	$Front/Control/GameFront/DragonBonesBaoX3
+@onready var dragonBones7 = 	$Front/Control/GameFront/DragonBonesBaoX4
 
 var gameLogos = []
 var game_data = {}
@@ -34,14 +34,15 @@ var is_animating = false
 # 滑动相关变量
 var drag_start_position = Vector2.ZERO
 var is_dragging = false
-var min_swipe_distance = 200  # 最小滑动距离
+var min_swipe_distance = 100  # 最小滑动距离
 #
 func _ready():
 	gameLogos = [ dragonBones1, dragonBones2, dragonBones3, dragonBones4, dragonBones5, dragonBones6, dragonBones7]
+
+	gameFrontImage.texture = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
-	gameFrontImage.texture = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 
 func setup(data):
 	game_data = data
@@ -54,7 +55,7 @@ func setup(data):
 	if data.image:
 		for dragonBones in gameLogos:
 			DataManager.safe_free_node(dragonBones)
-		gameImage.texture = await Util.load_texture_async(data.image,300,300)
+		gameImage.texture = await Util.load_texture_async(data.image,250,250)
 	else:
 		# gameImage.texture = img
 		var logoLen = gameLogos.size()
@@ -87,8 +88,10 @@ func flip():
 	is_animating = false
 
 func _on_gui_input(event):
+	
 	# 处理滚轮事件
 	if event is InputEventMouseButton:
+		print('鼠标事件')
 		if event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
 			# 如果卡片是翻转状态且描述文本有滚动条
 			if description.get_v_scroll_bar().max_value > 0:
