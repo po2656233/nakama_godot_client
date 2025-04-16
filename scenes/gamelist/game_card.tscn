@@ -195,10 +195,10 @@ anchor_left = 0.213
 anchor_top = 0.131
 anchor_right = 0.793
 anchor_bottom = 0.236
-offset_left = -7.37602
-offset_top = 2.11199
+offset_left = -7.37601
+offset_top = 2.042
 offset_right = 2.46399
-offset_bottom = -1.92799
+offset_bottom = -14.848
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
@@ -247,6 +247,7 @@ armature_settings = {
 &"use_parent_material": true,
 &"visibility_layerF": null
 }
+visible = false
 material = SubResource("CanvasItemMaterial_ag7gp")
 position = Vector2(232, 1242)
 script = ExtResource("4_2lxpo")
@@ -369,6 +370,7 @@ script = ExtResource("4_2lxpo")
 scaleY = 1.7
 
 [node name="Back" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 15
@@ -399,10 +401,10 @@ anchor_left = 0.211
 anchor_top = 0.127
 anchor_right = 0.793
 anchor_bottom = 0.231
-offset_left = -0.0720062
-offset_top = 4.70399
+offset_left = -0.071991
+offset_top = 9.514
 offset_right = -0.536011
-offset_bottom = -5.688
+offset_bottom = -10.758
 grow_horizontal = 2
 grow_vertical = 2
 text = "游戏介绍11111111111111111111111"

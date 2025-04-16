@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dblj3g06fkrpo"]
+[gd_scene load_steps=27 format=3 uid="uid://dblj3g06fkrpo"]
 
 [ext_resource type="Texture2D" uid="uid://i7w64npn7npl" path="res://assets/lobby/bj.png" id="1_3pqew"]
 [ext_resource type="Script" uid="uid://5dq5tvsrslup" path="res://scripts/home.gd" id="1_4keq7"]
@@ -62,6 +62,9 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_ip4d6"]
+font_color = Color(0.490196, 0.34902, 0.552941, 0.6)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3l5m7"]
 bg_color = Color(0.203922, 0.670588, 0.717647, 1)
@@ -213,6 +216,22 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
 icon = ExtResource("5_hrlg5")
 icon_alignment = 1
 expand_icon = true
+
+[node name="cur_game_name" type="Label" parent="HBoxContainerHome/btn_start"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+tooltip_text = "快捷开始游戏；玩家需从竞技场、联盟、俱乐部等场景中预选或参与游戏。"
+mouse_filter = 1
+text = "预选游戏"
+label_settings = SubResource("LabelSettings_ip4d6")
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="btn_match" type="Button" parent="HBoxContainerHome"]
 clip_contents = true
@@ -463,6 +482,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_5rkik")
 [connection signal="pressed" from="HBoxContainerHome/btn_start" to="." method="_on_btn_start_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_match" to="." method="_on_btn_match_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_room" to="." method="_on_btn_renwu_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/tb_home" to="." method="_on_tb_home_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_zhanji" to="." method="_on_btn_zhanji_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_ranking" to="." method="_on_btn_ranking_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_store" to="." method="_on_btn_store_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bg4j5rkijtx26"]
+[gd_scene load_steps=8 format=3 uid="uid://bg4j5rkijtx26"]
 
 [ext_resource type="Script" uid="uid://cvfwq3svakh2l" path="res://scripts/clublist/ClubDetailScene.gd" id="1_oybbq"]
 
@@ -44,23 +44,6 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-
-[sub_resource type="SystemFont" id="SystemFont_oybbq"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_5wsdl"]
-font = SubResource("SystemFont_oybbq")
-font_size = 18
-font_color = Color(1, 1, 0.0156863, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_vnwtm"]
-font_color = Color(0.164706, 1, 1, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_jyjxc"]
-font_color = Color(0.996078, 0, 0.0627451, 0.984314)
-outline_size = 2
-shadow_size = 3
-shadow_color = Color(0.179855, 0.755461, 0.782156, 1)
 
 [node name="ClubDetailScene" type="Control"]
 layout_mode = 3
@@ -139,6 +122,75 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_j4uwh")
 
+[node name="ChatPanel" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+theme_override_styles/panel = SubResource("StyleBoxFlat_5grkc")
+
+[node name="InnerPanel" type="Panel" parent="HBoxContainer/ChatPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8f32n")
+
+[node name="ChatContainer" type="VBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChatTitleLabel" type="Label" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+layout_mode = 2
+text = "游戏聊天"
+label_settings = SubResource("LabelSettings_x2wud")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ChatMessages" type="ScrollContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_kymcp")
+
+[node name="MessagesList" type="VBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="ChatInputContainer" type="HBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ChatInput" type="LineEdit" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "输入消息..."
+
+[node name="SendButton" type="Button" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer"]
+layout_mode = 2
+text = "发送"
+
+[node name="BackButton" type="Button" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+layout_mode = 2
+text = "返回"
+
 [node name="MembersPanel" type="Panel" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -158,50 +210,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8f32n")
 
-[node name="MembersListContainer" type="VBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ClubNameLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/MembersListContainer"]
-layout_mode = 2
-text = "俱乐部名称"
-label_settings = SubResource("LabelSettings_x2wud")
-horizontal_alignment = 1
-
-[node name="MembersLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/MembersListContainer"]
-layout_mode = 2
-text = "成员列表"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/MembersPanel/InnerPanel/MembersListContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MembersPanel/InnerPanel/MembersListContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_kymcp")
-
-[node name="MembersList" type="VBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel/MembersListContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 10
-
-[node name="BackButton" type="Button" parent="HBoxContainer/MembersPanel/InnerPanel/MembersListContainer"]
-layout_mode = 2
-text = "返回"
-
 [node name="PlayerInfoContainer" type="VBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -215,7 +224,7 @@ grow_vertical = 2
 
 [node name="PlayerNameLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer"]
 layout_mode = 2
-text = "玩家名称"
+text = "玩家信息"
 label_settings = SubResource("LabelSettings_x2wud")
 horizontal_alignment = 1
 
@@ -232,83 +241,42 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_kymcp")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 15
+theme_override_constants/separation = 10
 
 [node name="InfoSection" type="GridContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent"]
 layout_mode = 2
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="LevelLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="Level" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "等级:"
 horizontal_alignment = 2
 
 [node name="LevelValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
 layout_mode = 2
-text = "45"
-label_settings = SubResource("LabelSettings_5wsdl")
+text = "1111"
 
-[node name="PointsLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="Points" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
 layout_mode = 2
 text = "积分:"
 horizontal_alignment = 2
 
 [node name="PointsValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
 layout_mode = 2
-text = "8,756"
-label_settings = SubResource("LabelSettings_vnwtm")
+text = "111"
 
-[node name="RankLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="Rank" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
 layout_mode = 2
 text = "最高排名:"
 horizontal_alignment = 2
 
 [node name="RankValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
 layout_mode = 2
-text = "#12"
-label_settings = SubResource("LabelSettings_jyjxc")
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent"]
+[node name="BackButton" type="Button" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="GamesLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent"]
-layout_mode = 2
-text = "游戏记录 (最近10场)"
-horizontal_alignment = 1
-
-[node name="GameRecordHeader" type="HBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent"]
-layout_mode = 2
-
-[node name="GameHeader" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/GameRecordHeader"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "游戏名称"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TimeHeader" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/GameRecordHeader"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "时间"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="IDHeader" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/GameRecordHeader"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "结果"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BackToListButton" type="Button" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer"]
-layout_mode = 2
-text = "返回成员列表"
+text = "返回"
 
 [node name="AnimationParticles" type="CPUParticles2D" parent="."]
 position = Vector2(640, 0)
@@ -326,5 +294,7 @@ scale_amount_min = 2.0
 scale_amount_max = 5.0
 color = Color(0.403922, 0.596078, 0.8, 0.196078)
 
-[connection signal="pressed" from="HBoxContainer/MembersPanel/InnerPanel/MembersListContainer/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/BackToListButton" to="." method="_on_back_to_list_button_pressed"]
+[connection signal="text_submitted" from="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/ChatInput" to="." method="_on_chat_input_text_submitted"]
+[connection signal="pressed" from="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/SendButton" to="." method="_on_send_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/BackButton" to="." method="_on_back_button_pressed"]

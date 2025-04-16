@@ -1,14 +1,24 @@
 extends Control
-@onready var inner_panel: Panel = $HBoxContainer/MembersPanel/InnerPanel
+#@onready var inner_panel: Panel = $HBoxContainer/MembersPanel/InnerPanel
 
 #@onready var scroll_container: ScrollContainer = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer
 @onready var player_info_content: VBoxContainer = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent
+
+@onready var chat_input: LineEdit = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/ChatInput
+@onready var send_button: Button = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/SendButton
+@onready var messages_list: VBoxContainer = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages/MessagesList
+@onready var members_panel: Panel = $HBoxContainer/MembersPanel
+@onready var chat_panel: Panel = $HBoxContainer/ChatPanel
+@onready var chat_messages: ScrollContainer = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages
+@onready var chat_input_container: HBoxContainer = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer
+@onready var chat_title_label: Label = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatTitleLabel
 
 var club_data = {}
 var member_item_scene = preload("res://scenes/clublist/MemberItem.tscn")
 var game_match_scene = preload("res://scenes/clublist/GameMatchTab.tscn")
 var current_player_popup = null
 var current_member_name = ""
+var is_in_game = false
 
 # 玩家统计数据（随机生成，仅作演示）
 var player_stats = {
@@ -25,23 +35,49 @@ var possible_games = [
 	"全面战争", "文明6", "Among Us", "糖豆人"
 ]
 
+# 聊天消息样式
+var message_style = {
+	"system": {
+		"color": Color(0.8, 0.8, 0.8, 1),
+		"font_size": 16
+	},
+	"player": {
+		"color": Color(1, 1, 1, 1),
+		"font_size": 16
+	},
+	"self": {
+		"color": Color(1, 1, 0.5, 1),
+		"font_size": 16
+	}
+}
+
 func _ready():
 	# 设置初始状态
 	modulate.a = 0
 	
+	switchPanel(true)
+	
 	# 入场动画
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1, 0.3)
+	
+	# 初始化聊天界面状态
+	update_chat_interface()
 
 func setup(club):
 	club_data = club
-	$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer/ClubNameLabel.text = club.name
+	#$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer/ClubNameLabel.text = club.name
 	
 	# 填充成员列表
-	populate_members_list()
+	#populate_members_list()
 	
 	# 填充游戏匹配标签
 	populate_game_tabs()
+
+func switchPanel(isChat:bool):
+	members_panel.visible = !isChat
+	chat_panel.visible = isChat
+	pass
 
 func populate_members_list():
 	var members_list = $HBoxContainer/MembersPanel/InnerPanel/MembersListContainer/ScrollContainer/MembersList
@@ -84,6 +120,11 @@ func populate_game_tabs():
 		game_tab.name = game_name
 		game_tab.setup(game_name)
 		
+		# 连接游戏状态变化信号
+		game_tab.join_queue_button_pressed.connect(_on_game_joined)
+		game_tab.leave_queue_button_pressed.connect(_on_game_left)
+		game_tab.show_player_info.connect(show_player_info)
+		
 		# 设置初始状态和动画
 		game_tab.modulate.a = 0
 		
@@ -105,7 +146,7 @@ func _on_member_clicked(member_name):
 	current_member_name = member_name
 	
 	# 隐藏成员列表，显示玩家信息
-	$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer.visible = false
+	#$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer.visible = false
 	
 	# 显示玩家信息并设置数据
 	show_player_info(member_name)
@@ -119,18 +160,18 @@ func _on_member_clicked(member_name):
 	tween.tween_property($HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer, "modulate:a", 1, 0.3)
 	tween.parallel().tween_property($HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer, "position:x", 0, 0.3)
 
-func _on_back_to_list_button_pressed():
+#func _on_back_to_list_button_pressed():
 	# 隐藏玩家信息，显示成员列表
-	$HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer.visible = false
-	
+	#$HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer.visible = false
 	# 添加动画效果
-	$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer.modulate.a = 0
-	$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer.visible = true
-	
-	var tween = create_tween()
-	tween.tween_property($HBoxContainer/MembersPanel/InnerPanel/MembersListContainer, "modulate:a", 1, 0.3)
+	#$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer.modulate.a = 0
+	#$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer.visible = true
+	#var tween = create_tween()
+	#tween.tween_property($HBoxContainer/MembersPanel/InnerPanel/MembersListContainer, "modulate:a", 1, 0.3)
 
 func show_player_info(player_name):
+	switchPanel(false)
+	
 	# 设置玩家名称
 	$HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/PlayerNameLabel.text = player_name
 	
@@ -251,3 +292,76 @@ func _format_number(number):
 			result = "," + result
 	
 	return result
+
+func _on_game_joined(game_name):
+	is_in_game = true
+	update_chat_interface()
+	add_system_message("你已加入游戏: " + game_name)
+	chat_title_label.text = "%s-聊天"%[game_name]
+
+func _on_game_left(game_name):
+	is_in_game = false
+	update_chat_interface()
+	add_system_message("你已离开游戏: " + game_name)
+	chat_title_label.text = "游戏聊天"
+
+func update_chat_interface():
+	# 根据游戏状态更新聊天界面
+	chat_input.editable = is_in_game
+	send_button.disabled = !is_in_game
+	
+	if is_in_game:
+		chat_messages.modulate = Color(1, 1, 1, 1)
+	else:
+		chat_messages.modulate = Color(0.5, 0.5, 0.5, 0.7)
+
+func _on_send_button_pressed():
+	send_message()
+
+func _on_chat_input_text_submitted(_new_text):
+	send_message()
+
+func send_message():
+	if !is_in_game:
+		return
+		
+	var message = chat_input.text.strip_edges()
+	if message.is_empty():
+		return
+		
+	# 添加自己的消息
+	add_message("我", message, "self")
+	
+	# 模拟其他玩家回复（仅作演示）
+	if randf() > 0.2:  # 30%概率有回复
+		var random_player = club_data.members[randi() % club_data.members.size()]
+		var random_responses = [
+			"好的，收到！",
+			"明白！",
+			"正在执行...",
+			"需要支援吗？",
+			"我这边准备好了！"
+		]
+		var response = random_responses[randi() % random_responses.size()]
+		add_message(random_player, response, "player")
+	
+	# 清空输入框
+	chat_input.text = ""
+
+func add_message(sender: String, content: String, type: String):
+	var message_label = Label.new()
+	message_label.text = sender + ": " + content
+	message_label.add_theme_color_override("font_color", message_style[type].color)
+	message_label.add_theme_font_size_override("font_size", message_style[type].font_size)
+	
+	# 添加到消息列表
+	messages_list.add_child(message_label)
+	
+	# 滚动到底部
+	var scroll_container = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages
+	await get_tree().process_frame
+	scroll_container.scroll_vertical = scroll_container.get_v_scroll_bar().max_value
+
+func add_system_message(content: String):
+	switchPanel(true)
+	add_message("系统", content, "system")

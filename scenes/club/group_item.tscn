@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://assets/currency/email.svg" id="2_alo0b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqodf"]
-bg_color = Color(0.0191054, 0.388241, 0.574974, 1)
+bg_color = Color(0.00999993, 0.286135, 0.429896, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5

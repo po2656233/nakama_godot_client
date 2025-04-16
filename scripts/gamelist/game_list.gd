@@ -149,6 +149,7 @@ func _on_game_start(game_id_1):
 	PopupManager.show_dynamic("游戏开始")
 	var gameEnName = OnlineGame.getGameEnName(game_id_1)
 	SceneManager.ToGameScene(gameEnName)
+	SignalManager.GameKeepSIG.emit(1,game_id_1,-1,curMatchId,gameEnName)
 	pass
 
 

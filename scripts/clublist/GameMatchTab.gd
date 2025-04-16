@@ -5,6 +5,9 @@ extends Control
 @onready var leave_queue_button: Button = $VBoxContainer/MarginContainer3/VBoxContainer/LeaveQueueButton
 @onready var players_count_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/PlayersCountLabel
 
+signal join_queue_button_pressed(game)
+signal leave_queue_button_pressed(game)
+signal show_player_info(info)
 
 var game_name = ""
 var max_players = 10
@@ -28,7 +31,8 @@ func _ready():
 	join_queue_button.mouse_exited.connect(_on_join_button_exit)
 	leave_queue_button.mouse_entered.connect(_on_leave_button_hover)
 	leave_queue_button.mouse_exited.connect(_on_leave_button_exit)
-	
+	SignalManager.JoinGameSIG.connect(_on_join_game)
+	SignalManager.LeaveGameSIG.connect(_on_leave_game)
 	# 定时更新匹配状态（模拟）
 	var timer = Timer.new()
 	add_child(timer)
@@ -73,7 +77,9 @@ func update_players_display():
 		var delay = i * 0.05
 		var tween = create_tween()
 		tween.tween_property(player_item, "modulate:a", 1, 0.3).set_delay(delay)
-	
+		player_item.player_info_requested.connect(_on_player_info)
+		
+		
 	# 更新匹配状态
 	if current_players.size() >= max_players:
 		game_status_label.text = "匹配状态: 游戏即将开始!"
@@ -100,6 +106,8 @@ func _on_join_queue_button_pressed():
 		var tween = create_tween()
 		tween.tween_property(button, "scale", Vector2(0.95, 0.95), 0.1)
 		tween.tween_property(button, "scale", Vector2(1, 1), 0.1)
+		join_queue_button_pressed.emit(game_name)
+		SignalManager.JoinGameSIG.emit(game_name)
 
 func _on_leave_queue_button_pressed():
 	if in_queue:
@@ -116,6 +124,12 @@ func _on_leave_queue_button_pressed():
 		var tween = create_tween()
 		tween.tween_property(button, "scale", Vector2(0.95, 0.95), 0.1)
 		tween.tween_property(button, "scale", Vector2(1, 1), 0.1)
+		leave_queue_button_pressed.emit(game_name)
+		SignalManager.LeaveGameSIG.emit(game_name)
+	
+func _on_player_info(info):
+	show_player_info.emit(info)
+	pass
 
 func _on_timer_timeout():
 	# 模拟随机玩家加入或离开
@@ -155,3 +169,12 @@ func _on_leave_button_exit():
 	var button = leave_queue_button
 	var tween = create_tween()
 	tween.tween_property(button, "scale", Vector2(1, 1), 0.1) 
+
+func _on_join_game(gameName):
+	join_queue_button.disabled = true
+	leave_queue_button.disabled = false if game_name == gameName else true
+
+func _on_leave_game(_gameName):
+	join_queue_button.disabled = false
+	leave_queue_button.disabled = true
+	pass

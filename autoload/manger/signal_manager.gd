@@ -91,6 +91,12 @@ signal ChangeSceneSIG(sceneName, transition_way, dissolve_time, dissolve_image)
 # 加载游戏
 @warning_ignore("unused_signal")
 signal LoadingGameSIG(gameName) 
+# 加入游戏
+@warning_ignore("unused_signal")
+signal JoinGameSIG(gid) 
+# 离开游戏
+@warning_ignore("unused_signal")
+signal LeaveGameSIG(gid) 
 # 开始游戏
 @warning_ignore("unused_signal")
 signal StartGameSIG(gid) 
@@ -100,7 +106,9 @@ signal CancleGameSIG(gid)
 # 退出游戏
 @warning_ignore("unused_signal")
 signal ExitGameSIG(gid) 
-
+# 开始游戏
+@warning_ignore("unused_signal")
+signal GameKeepSIG(mode,gid,rid,mid,gname) 
 ####################房间##############################
 # 创建房间
 @warning_ignore("unused_signal")

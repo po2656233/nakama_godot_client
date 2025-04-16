@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene load_steps=43 format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" uid="uid://dmrgiya8yo0qa" path="res://scripts/room/room_item.gd" id="1_gnanh"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
 [ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shaders/flow_light.gdshader" id="5_p3dne"]
 [ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_3km0x"]
+[ext_resource type="Texture2D" uid="uid://bg8gom42plpte" path="res://assets/hall/db_11.png" id="7_wx2ih"]
+[ext_resource type="Texture2D" uid="uid://cf4xc2d6vqokl" path="res://assets/hall/full.png" id="9_35w6i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.567014, 0.771032, 0.875651, 1)
@@ -530,6 +532,22 @@ size_flags_vertical = 0
 texture_normal = ExtResource("6_3km0x")
 ignore_texture_size = true
 stretch_mode = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("7_wx2ih")
+texture_progress = ExtResource("9_35w6i")
+tint_under = Color(0.485703, 0.485704, 0.485703, 1)
+tint_over = Color(1, 0.317647, 1, 1)
+tint_progress = Color(0.317647, 1, 1, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

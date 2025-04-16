@@ -16,10 +16,10 @@ var scenes ={
 		"register": "res://scenes/register.tscn",
 		"home": "res://scenes/home.tscn",
 		"game": "res://scenes/game/game.tscn",
-		"club":"res://scenes/clublist/ClubScene.tscn",
 		"match": "res://scenes/match/match.tscn",
 		"email":"res://scenes/email/mail.tscn",
 		"approval":"res://scenes/approval/approval_form.tscn",
+		"clublist":"res://scenes/clublist/ClubScene.tscn",
 		"gamelist":"res://scenes/gamelist/game_list.tscn",
 		"roomlist":"res://scenes/room/room_list.tscn",
 		"matching":"res://scenes/match/matching.tscn",
@@ -337,7 +337,19 @@ func go_back() -> void:
 		nodePath = get_scene_path(HOME_NODE)
 	print("上一个场景: ", nodePath)
 	await OnlineMatch.LeaveMatch()
-	get_tree().change_scene_to_file(nodePath)
+	# 获取当前场景根节点
+	var current_scene = get_tree().current_scene
+	# 加载新场景
+	var new_scene = load(nodePath).instantiate()
+
+	# 销毁旧场景（推荐队列释放）
+	current_scene.queue_free()  # [[3]]
+
+	# 添加新场景到根节点
+	get_tree().root.add_child(new_scene)
+	get_tree().current_scene = new_scene  # [[4,20]]
+
+	#get_tree().change_scene_to_file(nodePath)
 	pass
 
 func ToGameScene(gameName: String) -> void:

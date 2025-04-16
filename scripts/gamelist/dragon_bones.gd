@@ -14,7 +14,7 @@ func center_in_parent():
 	position = Vector2(
 		parent_rect.size.x / scaleX,
 		parent_rect.size.y / scaleY
-    )
+	)
 
 func _on_parent_resized():
 	center_in_parent()

@@ -149,8 +149,7 @@ func join_match(_nakama_socket: NakamaSocket, _match_id: String, p_metadata = nu
 		emit_signal("error", "Unable to join match")
 		print("unable to join match")
 	else:
-		print("Joined")
-		print(match_mode)
+		print("Joined",match_mode)
 		_on_nakama_match_join(data)
 	return data
 		

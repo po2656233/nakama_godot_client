@@ -46,6 +46,10 @@ Shared="*res://scripts/game/tetris/shared.gd"
 
 window/size/borderless=true
 
+[dotnet]
+
+project/assembly_name="zhenzhizhonghua"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/protobuf/plugin.cfg", "res://addons/snopek-state-machine/plugin.cfg", "res://addons/transitions/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")

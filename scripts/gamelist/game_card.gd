@@ -55,7 +55,7 @@ func setup(data):
 	if data.image:
 		for dragonBones in gameLogos:
 			DataManager.safe_free_node(dragonBones)
-		gameImage.texture = await Util.load_texture_async(data.image,250,250)
+		gameImage.texture = await Util.load_texture_async(data.image,225,225)
 	else:
 		# gameImage.texture = img
 		var logoLen = gameLogos.size()

@@ -53,7 +53,7 @@ theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "创建群组"
+text = "创建俱乐部"
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]

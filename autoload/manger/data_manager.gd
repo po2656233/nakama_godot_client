@@ -11,7 +11,7 @@ const uid_friend_key = "uid_friend_"
 const uid_club_key = "uid_club_"
 const ismute_key = "ismute_"
 const game_list_key = "game_list_"
-
+const current_game_key = "cur_game"
 # 缓存的数据
 var cached_data: Dictionary = {}
 
@@ -60,6 +60,7 @@ func _ready() -> void:
 	print("data manger init")
 	load_data()
 	SignalManager.NewNotifySIG.connect(_on_approval_notify)
+	SignalManager.GameKeepSIG.connect(_on_keep_game)
 
 # 信号通知
 func _notification(what):
@@ -75,13 +76,15 @@ func _notification(what):
 		# 注意：这个通知在当前版本可能不存在，作为未来可能的扩展
 		print("Game is crashing, attempting to save data...")
 		# save_data()
-
+########################################################
 func _on_approval_notify(data):
 	if data:
 		add_uid_approval(data["uid"], data)
 
+func _on_keep_game(mode,gid,rid,mid,gname) :
+		set_current_game(mode,gid,rid,mid,gname)
 
-
+###################################################
 # 保存数据
 func save_data() -> void:
 	# 使用临时文件进行保存，以防保存过程中崩溃导致数据损坏
@@ -119,6 +122,14 @@ func set_data(key: String, value) -> void:
 	# print("正在保存的数据 键:", key, " 值:", value)
 	save_data()  # 每次设置数据后自动保存
 
+func set_current_game(mode,gid,rid,mid,gname)->void:
+	set_data(current_game_key,{
+		"mode":mode,
+		"gid":gid,
+		"rid":rid,
+		"mid":mid,
+		"gname":gname,
+	})
 
 func set_chat_history(uid:String,channelId:String, msgList) -> void:
 	# 如果 chat_key 不存在，创建一个字典
@@ -279,7 +290,8 @@ func get_chat_history(uid:String, channelId:String, default_value = null):
 	return msgList
 
 
-
+func get_current_game():
+	return get_data(current_game_key)
 
 
 
