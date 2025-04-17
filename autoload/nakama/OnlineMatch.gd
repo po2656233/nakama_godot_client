@@ -19,6 +19,7 @@ var matchmaker_ticket: String: get = get_matchmaker_ticket#, set = _set_readonly
 var my_peer_id: int#: set = _set_readonly_variable
 
 var players: Dictionary
+var my_player:Player = null
 var _next_peer_id: int
 
 enum MatchState {
@@ -189,7 +190,7 @@ func start_matchmaking(_nakama_socket: NakamaSocket, data: Dictionary = {}) -> v
 		print("Unable to join matchmaking pool")
 	else:
 		matchmaker_ticket = result.ticket
-		print("Successfully joined pool")
+		print("Successfully joined pool,ticket:",matchmaker_ticket)
 
 func start_playing() -> void:
 	assert(match_state == MatchState.READY)
@@ -292,7 +293,7 @@ func _on_nakama_closed() -> void:
 func _on_nakama_match_created(data: NakamaRTAPI.Match) -> void:
 	match_id = data.match_id
 	my_session_id = data.self_user.session_id
-	var my_player = Player.from_presence(data.self_user, 1)
+	my_player = Player.from_presence(data.self_user, 1)
 	players[my_session_id] = my_player
 	my_peer_id = 1
 	_next_peer_id = 2
@@ -384,7 +385,7 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 		leave()
 		emit_signal("error", "Matchmaker error")
 		return
-	print("Matched")
+	print("Matched matchmarker:",data)
 	my_session_id = data.self_user.presence.session_id
 
 	# Use the list of users to assign peer ids.
@@ -420,7 +421,7 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 		# Handle the error here (e.g., return, show a message)
 		return
 	var json_result = test_json_conv.get_data()
-
+	print('玩家状态信息:',json_result)
 	var content = json_result
 	if data.op_code == MatchOpCode.CUSTOM_RPC:
 		if content['peer_id'] == 0 or content['peer_id'] == my_peer_id:

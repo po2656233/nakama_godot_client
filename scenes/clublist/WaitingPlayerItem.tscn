@@ -10,8 +10,10 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="SystemFont" id="SystemFont_tsrp1"]
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_g1krc"]
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1krc"]
 bg_color = Color(0.672718, 0.876476, 0.676299, 0.498039)

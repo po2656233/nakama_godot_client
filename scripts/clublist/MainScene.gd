@@ -30,7 +30,7 @@ func _ready():
 	# 初始化面板，设置为从上方进入
 	$ClubsPanel.modulate.a = 0
 	$ClubsPanel.position.y = -50
-	SceneManager.set_current_scene("club")
+	SceneManager.set_current_scene("clublist")
 	SettingsManager.show_settings()
 	# 使用动画效果显示面板
 	var tween = create_tween()

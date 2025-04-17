@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dldeajjaadgvk"]
+[gd_scene load_steps=19 format=3 uid="uid://olyw55q6qiff"]
 
 [ext_resource type="Script" uid="uid://cblwv2dvnr610" path="res://scripts/game/fishgame/Main.gd" id="1_m5bt5"]
 [ext_resource type="PackedScene" uid="uid://ca6oqqdx0x6j7" path="res://scenes/game/fishgame/Game.tscn" id="2_7ylcu"]

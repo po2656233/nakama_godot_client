@@ -291,7 +291,9 @@ func get_previous_scene_path() -> String:
 
 # 设置当前场景
 func set_current_scene(scene_name: String) -> void:
-	current_scene_index = scene_order.find(scene_name)
+	var index  = scene_order.find(scene_name)
+	if index != -1:
+		current_scene_index = index
 
 # 通过场景名称获取场景路径
 func get_scene_path(scene_name: String) -> String:

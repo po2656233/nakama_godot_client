@@ -1,8 +1,8 @@
 extends Control
 @onready var players_list = $VBoxContainer/MarginContainer2/VBoxContainer/ScrollContainer/WaitingPlayersList
 @onready var game_status_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/GameStatusLabel
-@onready var join_queue_button: Button = $VBoxContainer/MarginContainer3/VBoxContainer/JoinQueueButton
-@onready var leave_queue_button: Button = $VBoxContainer/MarginContainer3/VBoxContainer/LeaveQueueButton
+@onready var join_queue_button: Button = $VBoxContainer/MarginContainer3/OPContainer/JoinQueueButton
+@onready var leave_queue_button: Button = $VBoxContainer/MarginContainer3/OPContainer/LeaveQueueButton
 @onready var players_count_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/PlayersCountLabel
 
 signal join_queue_button_pressed(game)
@@ -10,6 +10,7 @@ signal leave_queue_button_pressed(game)
 signal show_player_info(info)
 
 var game_name = ""
+var select_game_name = ""
 var max_players = 10
 var current_players = []
 var in_queue = false
@@ -98,7 +99,7 @@ func _on_join_queue_button_pressed():
 		leave_queue_button.disabled = false
 		
 		# 添加自己到玩家列表中（带特效）
-		current_players.append("我")
+		current_players.push_front("我")
 		update_players_display()
 		
 		# 添加按钮点击动画
@@ -124,8 +125,12 @@ func _on_leave_queue_button_pressed():
 		var tween = create_tween()
 		tween.tween_property(button, "scale", Vector2(0.95, 0.95), 0.1)
 		tween.tween_property(button, "scale", Vector2(1, 1), 0.1)
-		leave_queue_button_pressed.emit(game_name)
-		SignalManager.LeaveGameSIG.emit(game_name)
+		
+	if select_game_name != "":
+		leave_queue_button_pressed.emit(select_game_name)
+		SignalManager.LeaveGameSIG.emit(select_game_name)
+	pass
+	
 	
 func _on_player_info(info):
 	show_player_info.emit(info)
@@ -171,10 +176,12 @@ func _on_leave_button_exit():
 	tween.tween_property(button, "scale", Vector2(1, 1), 0.1) 
 
 func _on_join_game(gameName):
+	select_game_name = gameName
 	join_queue_button.disabled = true
-	leave_queue_button.disabled = false if game_name == gameName else true
+	leave_queue_button.disabled = false
 
 func _on_leave_game(_gameName):
+	select_game_name = ""
 	join_queue_button.disabled = false
 	leave_queue_button.disabled = true
 	pass

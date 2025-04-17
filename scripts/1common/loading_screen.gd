@@ -204,10 +204,12 @@ func afterUnzipFIN(zip_reader: ZIPReader):
 
 	if not is_add_main_scene:
 		SignalManager.LoadingSIG.emit(-1)
-		PopupManager.show_dynamic("缺乏主场景资源,游戏启动失败...")
+		PopupManager.show_dynamic("缺乏主场景资源,游戏启动失败..."+main_path)
 		return
 	# 添加道场景管理
 	SignalManager.LoadingSIG.emit(100)
+	#restart_app()
+	#get_tree().reload_current_scene()
 	await get_tree().process_frame
 	SceneManager.add_scene(game_name, main_path)
 	SceneManager.ToGameScene(game_name)
@@ -290,7 +292,12 @@ func fileLanding(file_path, file_data, suffix):
 	else:
 		print("Failed to save: ", file_path)
 	pass
-
+	
+func restart_app():
+	var executable_path = OS.get_executable_path()  # 获取当前可执行文件路径
+	OS.execute(executable_path, [],[], false)          # 启动新实例
+	get_tree().quit()                                # 退出当前进程
+	
 # 示例：如何使用此加载界面
 func example_loading():
 	# 模拟加载过程

@@ -49,16 +49,29 @@ func _start_matchmaking() -> void:
 	ui_layer.hide_screen()
 	ui_layer.show_message("Looking for match...")
 	print("Looking for a match")
-	var data = {
-		min_count = min_players,
-		string_properties = {
-			game = "fish_game",
-			engine = "godot",
+	#var data = {
+		#min_count = min_players,
+		#string_properties = {
+			#game = "fish_game",
+			#engine = "godot",
+		#},
+		#query = "+properties.game:fish_game +properties.engine:godot",
+	#}
+	var gamename= "fish_game"
+	OnlineMatch.joinMatchmaker({
+		"query": " +properties.game:%s " %gamename,
+		"min_count": min_players,
+		"max_count": min_players,
+		"string_properties": {
+			"game": gamename,
 		},
-		query = "+properties.game:fish_game +properties.engine:godot",
-	}
+		"numeric_properties": {
+			"maxplayer": min_players,
+			"vip": 1,
+		}
+		})
 	print("Match_screen_start_matchmaking")
-	OnlineMatch.start_matchmaking(Online.nakama_socket, data)
+	#OnlineMatch.start_matchmaking(Online.nakama_socket, data)
 
 func _on_OnlineMatch_matchmaker_matched(_players: Dictionary):
 	print("Joined Match function")

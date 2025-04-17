@@ -62,12 +62,12 @@ func _on_button_pressed():
 	
 	# 如果是其他玩家，显示玩家信息
 	print('点击了',player_name)
-	if player_name != "我":
-		player_info_requested.emit(player_name)
-		#emit_signal("player_info_requested", player_name)
-	else:
+	player_info_requested.emit(player_name)
+	if player_name == "我":
 		# 自己可以切换准备状态
 		toggle_ready_status()
+		#emit_signal("player_info_requested", player_name)
+	pass
 
 func toggle_ready_status():
 	ready_status = !ready_status

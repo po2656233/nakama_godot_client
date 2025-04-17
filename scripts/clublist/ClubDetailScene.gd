@@ -3,6 +3,7 @@ extends Control
 
 #@onready var scroll_container: ScrollContainer = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer
 @onready var player_info_content: VBoxContainer = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent
+@onready var tab_container: TabContainer = $HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer/TabContainer
 
 @onready var chat_input: LineEdit = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/ChatInput
 @onready var send_button: Button = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/SendButton
@@ -12,6 +13,7 @@ extends Control
 @onready var chat_messages: ScrollContainer = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages
 @onready var chat_input_container: HBoxContainer = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer
 @onready var chat_title_label: Label = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatTitleLabel
+@onready var info_section: GridContainer = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection
 
 var club_data = {}
 var member_item_scene = preload("res://scenes/clublist/MemberItem.tscn")
@@ -54,13 +56,11 @@ var message_style = {
 func _ready():
 	# 设置初始状态
 	modulate.a = 0
-	
-	switchPanel(true)
-	
 	# 入场动画
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1, 0.3)
 	
+	switchPanel(true)
 	# 初始化聊天界面状态
 	update_chat_interface()
 
@@ -106,8 +106,6 @@ func populate_members_list():
 		tween.parallel().tween_property(member_item, "modulate:a", 1, 0.3).set_delay(delay)
 
 func populate_game_tabs():
-	var tab_container = $HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer/TabContainer
-	
 	# 清除现有标签
 	for child in tab_container.get_children():
 		child.queue_free()
@@ -133,6 +131,10 @@ func populate_game_tabs():
 		tween.tween_property(game_tab, "modulate:a", 1, 0.4).set_delay(delay)
 
 func _on_back_button_pressed():
+	if members_panel.visible:
+		switchPanel(true)
+		return
+
 	# 退出动画
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0, 0.3)
@@ -170,8 +172,11 @@ func _on_member_clicked(member_name):
 	#tween.tween_property($HBoxContainer/MembersPanel/InnerPanel/MembersListContainer, "modulate:a", 1, 0.3)
 
 func show_player_info(player_name):
-	switchPanel(false)
+	if player_name == "" or player_name == "我":
+		switchPanel(true)
+		return
 	
+	switchPanel(false)
 	# 设置玩家名称
 	$HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/PlayerNameLabel.text = player_name
 	
@@ -181,7 +186,6 @@ func show_player_info(player_name):
 	var rank = randi_range(player_stats.rank[0], player_stats.rank[1])
 	
 	# 设置玩家信息
-	var info_section = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection
 	info_section.get_node("LevelValue").text = str(level)
 	info_section.get_node("PointsValue").text = _format_number(points)
 	info_section.get_node("RankValue").text = "#" + str(rank)
@@ -193,14 +197,13 @@ func _setup_game_records():
 	var item_width = 80
 	## 清除现有记录
 	var count = player_info_content.get_child_count()
-	for i in range(count):
-		if i>3:
-			var child = player_info_content.get_child(i)
-			if child:
-				child.queue_free()
+	for i in range(1,count):
+		var child = player_info_content.get_child(i)
+		if child:
+			child.queue_free()
 	
 	# 创建10条最近游戏记录
-	for i in range(10):
+	for i in range(20):
 		# 随机游戏数据
 		var game_name = possible_games[randi() % possible_games.size()]
 		var game_result = randi() % 4
@@ -295,6 +298,7 @@ func _format_number(number):
 
 func _on_game_joined(game_name):
 	is_in_game = true
+	
 	update_chat_interface()
 	add_system_message("你已加入游戏: " + game_name)
 	chat_title_label.text = "%s-聊天"%[game_name]
