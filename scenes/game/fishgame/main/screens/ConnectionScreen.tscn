@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://bcdknopwa1n4y" path="res://assets/game/fishgame/theme.tres" id="1"]
 [ext_resource type="FontFile" uid="uid://dwljivvvhmowk" path="res://assets/game/fishgame/fonts/monogram.ttf" id="2"]
 [ext_resource type="FontFile" uid="uid://e1kojynk7rcm" path="res://assets/game/fishgame/fonts/monogram.tres" id="3"]
-[ext_resource type="Script" uid="uid://cfdepwget5g75" path="res://scripts/game/fishgame/main/screens/ConnectionScreen.gd" id="4"]
+[ext_resource type="Script" uid="uid://uesdwd8o26v6" path="res://scripts/game/fishgame/main/screens/ConnectionScreen.gd" id="4"]
 
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("2")])

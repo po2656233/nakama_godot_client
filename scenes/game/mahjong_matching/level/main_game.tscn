@@ -1,26 +1,25 @@
-[gd_scene load_steps=23 format=3 uid="uid://dynv7y3by6dvx"]
+[gd_scene load_steps=22 format=3 uid="uid://dynv7y3by6dvx"]
 
-[ext_resource type="Script" path="res://scripts/game/mahjong_matching/Gameplay/main_game.gd" id="1_2gask"]
-[ext_resource type="FontFile" uid="uid://d3u5428h3aenu" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="1_pyx26"]
-[ext_resource type="Texture2D" uid="uid://cu8a0x6e6p8pb" path="res://assets/game/mahjong_matching/image/UI/background.png" id="2_w08m4"]
-[ext_resource type="Script" path="res://scripts/game/mahjong_matching/UI/MainUI.gd" id="3_gqje3"]
-[ext_resource type="AudioStream" uid="uid://dbyhjti0cbqj6" path="res://assets/game/mahjong_matching/sound/SE/click1.wav" id="4_t2hyo"]
-[ext_resource type="AudioStream" uid="uid://bgwa7ulxvccos" path="res://assets/game/mahjong_matching/sound/bgm/gamemain.mp3" id="5_iytmj"]
-[ext_resource type="Theme" uid="uid://vb12ay5d7wb4" path="res://themes/game/mahjong_matching/theme/start_ui.tres" id="6_n8nu8"]
-[ext_resource type="Texture2D" uid="uid://ddxrytjrtx6rk" path="res://assets/game/mahjong_matching/image/UI/Icon_Small_Arrow.png" id="8_da4dy"]
-[ext_resource type="Texture2D" uid="uid://dpxuk5wf3r3pc" path="res://assets/game/mahjong_matching/image/UI/Icon_Small_WhiteOutline_Return.png" id="9_dainb"]
-[ext_resource type="Script" path="res://scripts/game/mahjong_matching/UI/GameEnd.gd" id="10_4jbsj"]
-[ext_resource type="AudioStream" uid="uid://dol0sxioangkv" path="res://assets/game/mahjong_matching/sound/SE/Minimalist1.wav" id="10_h4e4j"]
-[ext_resource type="Texture2D" uid="uid://cne4lrxa5gqit" path="res://assets/game/mahjong_matching/image/UI/Box_Flowers.png" id="11_0dvrn"]
-[ext_resource type="AudioStream" uid="uid://d17ubsnaepu6p" path="res://assets/game/mahjong_matching/sound/SE/Minimalist4.wav" id="11_oxhy8"]
-[ext_resource type="Texture2D" uid="uid://bpxomjf2wxb1w" path="res://assets/game/mahjong_matching/image/UI/Banner_Premade_LevelComplete.svg" id="12_45v6t"]
-[ext_resource type="AudioStream" uid="uid://c0x73jlj0mpfs" path="res://assets/game/mahjong_matching/sound/SE/Minimalist3.wav" id="12_holmc"]
-[ext_resource type="AudioStream" uid="uid://divxfthhx63xl" path="res://assets/game/mahjong_matching/sound/SE/Minimalist5.wav" id="13_rj6dq"]
-[ext_resource type="Theme" uid="uid://conkpxj3qsywe" path="res://themes/game/mahjong_matching/theme/button_blue.tres" id="13_we5s3"]
-[ext_resource type="Theme" uid="uid://cyhtfq7v4nxvx" path="res://themes/game/mahjong_matching/theme/button_pink.tres" id="14_37868"]
-[ext_resource type="AudioStream" uid="uid://dyk50m2vxmhel" path="res://assets/game/mahjong_matching/sound/SE/Minimalist6.wav" id="14_wlkr7"]
-[ext_resource type="AudioStream" uid="uid://dkk3sun0vqkbp" path="res://assets/game/mahjong_matching/sound/SE/merge.wav" id="15_pqmqm"]
-[ext_resource type="AudioStream" uid="uid://ds7d53u3dldct" path="res://assets/game/mahjong_matching/sound/SE/Minimalist2.wav" id="16_vve0v"]
+[ext_resource type="Script" uid="uid://wof3nujgv6fg" path="res://scripts/game/mahjong_matching/Gameplay/main_game.gd" id="1_2gask"]
+[ext_resource type="FontFile" uid="uid://d1ykbo1h8utc1" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="1_pyx26"]
+[ext_resource type="Texture2D" uid="uid://beldrkh4tidr8" path="res://assets/game/mahjong_matching/image/UI/background.png" id="2_w08m4"]
+[ext_resource type="Script" uid="uid://befh0soqqdkmp" path="res://scripts/game/mahjong_matching/UI/MainUI.gd" id="3_gqje3"]
+[ext_resource type="AudioStream" uid="uid://bn1ueose4ywy6" path="res://assets/game/mahjong_matching/sound/SE/click1.wav" id="4_t2hyo"]
+[ext_resource type="AudioStream" uid="uid://bklwt5kl85nqb" path="res://assets/game/mahjong_matching/sound/bgm/gamemain.mp3" id="5_iytmj"]
+[ext_resource type="Theme" uid="uid://vb12ay5d7wb4" path="res://themes/game/mahjong_matching/start_ui.tres" id="6_n8nu8"]
+[ext_resource type="Texture2D" uid="uid://bi33h4011vraw" path="res://assets/game/mahjong_matching/image/UI/Icon_Small_WhiteOutline_Return.png" id="9_dainb"]
+[ext_resource type="Script" uid="uid://cvk4qnwj216ex" path="res://scripts/game/mahjong_matching/UI/GameEnd.gd" id="10_4jbsj"]
+[ext_resource type="AudioStream" uid="uid://c8o27a5hkc7kw" path="res://assets/game/mahjong_matching/sound/SE/Minimalist1.wav" id="10_h4e4j"]
+[ext_resource type="Texture2D" uid="uid://co5531doidw3x" path="res://assets/game/mahjong_matching/image/UI/Box_Flowers.png" id="11_0dvrn"]
+[ext_resource type="AudioStream" uid="uid://c3khdl5w73yco" path="res://assets/game/mahjong_matching/sound/SE/Minimalist4.wav" id="11_oxhy8"]
+[ext_resource type="Texture2D" uid="uid://dha70cvehhuw1" path="res://assets/game/mahjong_matching/image/UI/Banner_Premade_LevelComplete.svg" id="12_45v6t"]
+[ext_resource type="AudioStream" uid="uid://bo771qel6wt0q" path="res://assets/game/mahjong_matching/sound/SE/Minimalist3.wav" id="12_holmc"]
+[ext_resource type="AudioStream" uid="uid://dq6cxn2eewcf4" path="res://assets/game/mahjong_matching/sound/SE/Minimalist5.wav" id="13_rj6dq"]
+[ext_resource type="Theme" uid="uid://conkpxj3qsywe" path="res://themes/game/mahjong_matching/button_blue.tres" id="13_we5s3"]
+[ext_resource type="Theme" uid="uid://cyhtfq7v4nxvx" path="res://themes/game/mahjong_matching/button_pink.tres" id="14_37868"]
+[ext_resource type="AudioStream" uid="uid://dhkunrd2stbwe" path="res://assets/game/mahjong_matching/sound/SE/Minimalist6.wav" id="14_wlkr7"]
+[ext_resource type="AudioStream" uid="uid://bujrcxsscoesh" path="res://assets/game/mahjong_matching/sound/SE/merge.wav" id="15_pqmqm"]
+[ext_resource type="AudioStream" uid="uid://ds62glrfg402i" path="res://assets/game/mahjong_matching/sound/SE/Minimalist2.wav" id="16_vve0v"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iv14f"]
 
@@ -81,16 +80,6 @@ theme = ExtResource("6_n8nu8")
 theme_override_fonts/font = ExtResource("1_pyx26")
 theme_override_font_sizes/font_size = 48
 text = "Achieve Count:"
-
-; [node name="backButton" type="Button" parent="UI"]
-; offset_left = 56.0
-; offset_top = 32.0
-; offset_right = 206.0
-; offset_bottom = 182.0
-; theme = ExtResource("6_n8nu8")
-; theme_override_constants/icon_max_width = 100
-; icon = ExtResource("8_da4dy")
-; icon_alignment = 1
 
 [node name="restartButton" type="Button" parent="UI"]
 offset_left = 264.0

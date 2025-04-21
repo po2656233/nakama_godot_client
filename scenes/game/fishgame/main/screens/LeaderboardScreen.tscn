@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://bcdknopwa1n4y" path="res://assets/game/fishgame/theme.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://cayvxiy4iyp3" path="res://scenes/game/fishgame/main/screens/LeaderboardRecord.tscn" id="2"]
-[ext_resource type="Script" uid="uid://cccp1kctdfmi7" path="res://scripts/game/fishgame/main/screens/LeaderboardScreen.gd" id="3"]
+[ext_resource type="Script" uid="uid://bf2wrqdmsn01a" path="res://scripts/game/fishgame/main/screens/LeaderboardScreen.gd" id="3"]
 
 [node name="LeaderboardScreen" type="Control"]
 layout_mode = 3

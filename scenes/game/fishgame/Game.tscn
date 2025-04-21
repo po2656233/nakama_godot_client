@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ca6oqqdx0x6j7"]
 
-[ext_resource type="Script" uid="uid://cyyj3ow6kkwbc" path="res://scripts/game/fishgame/Camera.gd" id="1"]
-[ext_resource type="Script" uid="uid://c58caahumy280" path="res://scripts/game/fishgame/Game.gd" id="2"]
+[ext_resource type="Script" uid="uid://cd66qu582mah" path="res://scripts/game/fishgame/Camera.gd" id="1"]
+[ext_resource type="Script" uid="uid://bxd22b2jc2b5h" path="res://scripts/game/fishgame/Game.gd" id="2"]
 
 [node name="Game" type="Node2D"]
 texture_filter = 1

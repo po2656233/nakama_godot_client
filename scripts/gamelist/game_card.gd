@@ -38,7 +38,10 @@ var min_swipe_distance = 100  # 最小滑动距离
 #
 func _ready():
 	gameLogos = [ dragonBones1, dragonBones2, dragonBones3, dragonBones4, dragonBones5, dragonBones6, dragonBones7]
-
+	var index = randi() % 5
+	if index == 1 and not Util.isFullScreen():
+		index = 3
+		
 	gameFrontImage.texture = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)

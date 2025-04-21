@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cakq24hemtqee"]
 
-[ext_resource type="Texture2D" uid="uid://co535gbhjkjdx" path="res://assets/game/mahjong_matching/image/texture/01.svg" id="1_ehf11"]
+[ext_resource type="Texture2D" uid="uid://cgi0sdge22ps0" path="res://assets/game/mahjong_matching/image/texture/01.svg" id="1_ehf11"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iqb5q"]
 size = Vector3(1, 1.25, 1.06104)

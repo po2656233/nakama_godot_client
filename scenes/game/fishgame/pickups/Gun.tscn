@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://btrrj3ou03vi1" path="res://assets/game/fishgame/sprites/gun.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://bmnok1dwyv3cl" path="res://scenes/game/fishgame/pickups/Pickup.tscn" id="2"]
-[ext_resource type="Script" uid="uid://no0nkhejru3y" path="res://scripts/game/fishgame/pickups/Gun.gd" id="3"]
+[ext_resource type="Script" uid="uid://cnkau0glb65mu" path="res://scripts/game/fishgame/pickups/Gun.gd" id="3"]
 [ext_resource type="AudioStream" uid="uid://gdu4rgvlqmh6" path="res://assets/game/fishgame/sounds/shoot.ogg" id="4"]
-[ext_resource type="Script" uid="uid://dwhivpetcoxg1" path="res://scripts/game/fishgame/components/Sounds.gd" id="5"]
+[ext_resource type="Script" uid="uid://d36hgrychenc4" path="res://scripts/game/fishgame/components/Sounds.gd" id="5"]
 [ext_resource type="AudioStream" uid="uid://d3hgd7crqibrc" path="res://assets/game/fishgame/sounds/empty.wav" id="6"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
@@ -85,8 +85,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j5owa"]
 _data = {
-"Idle": SubResource("3"),
-"Shoot": SubResource("4")
+&"Idle": SubResource("3"),
+&"Shoot": SubResource("4")
 }
 
 [node name="Gun" instance=ExtResource("2")]

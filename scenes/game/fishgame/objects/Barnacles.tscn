@@ -21,7 +21,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fupuh"]
 _data = {
-"Idle": SubResource("1")
+&"Idle": SubResource("1")
 }
 
 [node name="Barnacles" type="Node2D"]

@@ -13,14 +13,14 @@ extends Control
 @export var text_prefix := "经验值"  # 可自定义前缀文本
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	 # 初始化进度条
+	init_progress_bar()
 	print('当前玩家信息',OnlineLogin.player_data)
 	nickname.text = ''
 	username.text = OnlineLogin.get_my_name()
 	headIcon.texture = await  Util.load_texture_async(OnlineLogin.get_my_headIcon())
 	if username.text == '':
 		username.text = OnlineLogin.get_my_nickname()
-	 # 初始化进度条
-	init_progress_bar()
 	pass # Replace with function body.
 
 
@@ -38,6 +38,8 @@ func init_progress_bar():
 	progress_bar.value_changed.connect(update_progress_text)
 	# 初始化显示
 	update_progress_text(exp_current)
+
+
 
 # 更新经验值
 func update_exp(new_exp: float) -> void:

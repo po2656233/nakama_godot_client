@@ -81,7 +81,7 @@ func changePanel(tab):
 # 添加新消息
 func add_message(chanId: String, msgId: String, content: Dictionary, nickname: String, is_sent: bool, timestamp: int = 0, code: int = 0):
 	if messages_container == null:
-		print("消息容器为空")
+		print("消息容器为空 ",content)
 		return
 	
 	# 检查消息类型	
@@ -344,7 +344,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 	if not channel_id in message_id_cache:
 		message_id_cache[channel_id] = {
 			"message_id": false,
-			"finish_history": false
+			#"finish_history": false
 		}
 		DataManager.get_instance().add_channel_list(uid, channel_id)
 		print("渠道---> " + str(channel_id) + " 初始化完毕")
@@ -366,8 +366,8 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 func load_local_history():
 	message_id_cache = Util.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
 	print("加载本地历史记录:",message_id_cache)
-	# var channelList = DataManager.get_instance().get_channel_list(uid)
-	# print("加载本地玩家渠道:",channelList)
+	changePanel(MessageKind.WORLD) 
+	refresh_current_channel_display()
 	# ensure_scroll_to()
 	pass
 
@@ -381,17 +381,18 @@ func get_channel_messages(channel_id: String) -> Array:
 
 
 # 刷新当前channel的显示
-func refresh_current_channel_display() -> void:
+func refresh_current_channel_display(cid="") -> void:
 	# 清空当前显示
 	clear_messages_item()
-	
+	if cid == "":
+		cid = current_channel_id
 	# 获取并显示当前channel的所有消息
-	var messages = get_channel_messages(current_channel_id)
+	var messages = get_channel_messages(cid)
 	for message in messages:
 		var msg = message if typeof(message) != TYPE_STRING else DataManager.get_instance().parse_message(message)
 		var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 		var code = msg.code if msg.has("code") else 0
-		add_message(current_channel_id, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time), code)
+		add_message(cid, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time), code)
 	ensure_scroll_to()
 	pass
 

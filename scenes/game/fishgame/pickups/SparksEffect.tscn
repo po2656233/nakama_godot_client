@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://m05fnyo0e7my"]
 
-[ext_resource type="Script" uid="uid://3qeme71cwil1" path="res://scripts/game/fishgame/pickups/SparksEffect.gd" id="1"]
+[ext_resource type="Script" uid="uid://bj1ibjylri1nw" path="res://scripts/game/fishgame/pickups/SparksEffect.gd" id="1"]
 [ext_resource type="Gradient" path="res://themes/game/fishgame/pickups/SparksEffectGradient.tres" id="2"]
 
 [node name="SparksEffect" type="CPUParticles2D"]

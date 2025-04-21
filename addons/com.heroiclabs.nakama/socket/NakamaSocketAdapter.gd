@@ -44,6 +44,7 @@ func connect_to_host(p_uri : String, p_timeout : int):
 	var tls_options = TLSOptions.client_unsafe()
 	######################################################################
 	var err = _ws.connect_to_url(p_uri,tls_options)
+	#var err = _ws.connect_to_url(p_uri,null)
 	if err != OK:
 		logger.debug("Error connecting to host %s" % p_uri)
 		call_deferred("emit_signal", "received_error", err)
@@ -54,7 +55,10 @@ func connect_to_host(p_uri : String, p_timeout : int):
 # @param p_buffer - The buffer with the message to send.
 # @param p_reliable - If the message should be sent reliably (will be ignored by some protocols).
 func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
-	return _ws.send(p_buffer, WebSocketPeer.WRITE_MODE_TEXT)
+	var ret = _ws.send(p_buffer, WebSocketPeer.WRITE_MODE_TEXT)
+	if ret != OK:
+		print('网络错误',ret) 
+	return ret
 
 func _process(_delta):
 	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:

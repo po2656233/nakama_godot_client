@@ -1,7 +1,6 @@
 extends Node
 
 signal player_data_updated()
-signal login_success(method)
 signal login_failed()
 signal session_connected(session)
 
@@ -16,8 +15,11 @@ var _reconnect: bool = false
 var _save_credentials: bool = false
 var player_data: NakamaAPI.ApiUser = null
 
+var cur_progress_percent = 0
+
 # 初始化
 func _ready() -> void:
+	reset()
 	if FileAccess.file_exists(CREDENTIALS_FILENAME):
 		var file : FileAccess = FileAccess.open(CREDENTIALS_FILENAME, FileAccess.READ)
 		var test_json_conv : JSON = JSON.new()
@@ -28,10 +30,18 @@ func _ready() -> void:
 			email = result['email']
 			password = result['password']
 		file.close()
-	login_success.connect(_on_login_success)
+	player_data_updated.connect(_on_login_success)
 	session_connected.connect(_on_session_connected)
 	pass
 
+func reset():
+	email = ''
+	password = ''
+	player_data = null
+	login_method = ''
+	cur_progress_percent = 0
+	_save_credentials = false
+	pass
 
 # 保存账号密码
 func on_credentials() -> void:
@@ -76,21 +86,18 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 	else:
 		PopupManager.show_dynamic("登录中...")
 	
-	SignalManager.LoadingSIG.emit(1)
+	update_loading_progress(10)
 	var result = await Online.nakama_client.authenticate_email_async(email, password, null, false)
 	if result.is_exception():
-		PopupManager.show_dynamic("登录失败")
+
 		print(result.get_exception().message)
-		email = ''
-		password = ''
-		player_data = null
-		session_connected.emit(null)
-		login_failed.emit()
+		loginfail()
 		return false
 	
 	_save_credentials = save_credentials
-	login_success.emit('acc')
+	login_method = 'acc'
 	session_connected.emit(result)
+	update_loading_progress()
 	return true
 
 # 设备登录
@@ -99,16 +106,17 @@ func do_device_login(username: String="", created:bool=false, save_credentials: 
 	var p_username = null
 	if username != "":
 		p_username = username
+	update_loading_progress(10)
 	var result = await Online.nakama_client.authenticate_device_async(device_id,p_username,created)
 	if result.is_exception():
-		# PopupManager.show_dynamic("设备登录失败")
 		push_error("Socket connection failed: " + result.get_exception().message)
-		login_failed.emit()
+		loginfail()
 		return false
 	print("设备登录",result)
-	session_connected.emit(result)
 	_save_credentials = save_credentials
-	login_success.emit('dev')
+	login_method = 'dev'
+	session_connected.emit(result)
+	update_loading_progress()
 	return true
 
 # 重新登录
@@ -120,8 +128,7 @@ func relogin():
 
 # 退出
 func logout():
-	_save_credentials = false
-	player_data = null
+	reset()
 	if Online.nakama_client and Online.nakama_session:
 		Online.nakama_client.session_logout_async(Online.nakama_session)
 		session_connected.emit(null)
@@ -160,16 +167,18 @@ func register_account(myEmail,myPassword,save_credentials=false) -> void:
 	_save_credentials = save_credentials
 	session_connected.emit(result)
 	PopupManager.show_dynamic("创建账号成功!")
-	login_success.emit('acc')
+	login_method = 'acc'
 	pass
 
-
+func loginfail():
+	reset()
+	PopupManager.show_dynamic("登录失败")
+	login_failed.emit()
 
 # 登录成功
-func _on_login_success(method):
-	login_method = method
+func _on_login_success():
+	update_loading_progress(100)
 	on_credentials()
-	SignalManager.LoadingSIG.emit(100)
 	pass
 
 func _on_session_connected(session):
@@ -183,6 +192,7 @@ func load_player_data(session) -> void:
 		"key": "profile",
 		"user_id": session.user_id
 	}])
+	update_loading_progress()
 	print("读取玩家数据: ", result)
 	if not result.is_exception():
 		if result.objects.size() > 0:
@@ -194,10 +204,27 @@ func load_player_data(session) -> void:
 				return
 			player_data = ret.user
 			print('用户信息:',player_data)	
+			update_loading_progress()
 			await save_player_data(session)
+			
 		print("已读取玩家数据: ", player_data)
+	update_loading_progress()
 	player_data_updated.emit()
 	pass
+
+# 更新加载百分比
+func update_loading_progress(scope:int = 20):
+	if scope >= 100:
+		cur_progress_percent = 100
+	else:
+		if scope==0:
+			scope = 20
+		cur_progress_percent = cur_progress_percent + randi()%scope
+		if cur_progress_percent > 100:
+			cur_progress_percent = 100
+	SignalManager.LoadingSIG.emit(cur_progress_percent)
+	pass
+	
 
 func save_player_data(session) -> void:
 	var objects = [{
@@ -235,6 +262,7 @@ func get_my_headIcon():
 	if not player_data:
 		return ""
 	return player_data.avatar_url
-	
+
+
 
 ###################################################################################################

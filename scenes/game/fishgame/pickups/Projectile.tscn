@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://50oxtntd4exh"]
 
 [ext_resource type="Texture2D" uid="uid://btrrj3ou03vi1" path="res://assets/game/fishgame/sprites/gun.png" id="1"]
-[ext_resource type="Script" uid="uid://cpdd3kxeq4bs4" path="res://scripts/game/fishgame/pickups/Projectile.gd" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/game/fishgame/components/Hitbox.tscn" id="3"]
+[ext_resource type="Script" uid="uid://b1b5eavjhe5fq" path="res://scripts/game/fishgame/pickups/Projectile.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://sev5loavtd7v" path="res://scenes/game/fishgame/components/Hitbox.tscn" id="3"]
 
 [sub_resource type="Gradient" id="1"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.12549)
@@ -44,8 +44,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5xgwr"]
 _data = {
-"Hit": SubResource("3"),
-"Idle": SubResource("4")
+&"Hit": SubResource("3"),
+&"Idle": SubResource("4")
 }
 
 [node name="Projectile" type="Area2D"]
