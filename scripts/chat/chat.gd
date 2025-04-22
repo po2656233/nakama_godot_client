@@ -50,10 +50,10 @@ var first_world = true
 
 # 初始化 
 func _ready():
+
 	tab_container.set_tab_title(0,"世界")
 	tab_container.set_tab_title(1,"俱乐部")
 	tab_container.set_tab_title(2,"好友")
-	
 	if not OnlineLogin.player_data:
 		PopupManager.show_message("未登录")
 		OnlineLogin.relogin()
@@ -81,7 +81,6 @@ func _ready():
 		add_child(button)
 	button.visible = Util.isFullScreen()
 	light_switch.visible = Util.isFullScreen()
-
 
 	set_rotation_pivot() # 设置旋转中心点
 	
@@ -678,6 +677,7 @@ func _on_tab_container_tab_selected(tab: int) -> void:
 		if not world:
 			world = await OnlineChat.load_world_channel()
 		if world:
+			DataManager.get_instance().set_world_channel_id(world.id)
 			_on_change_channel(world.id)
 		print("加载世界频道")
 			# await OnlineChat.get_chat_history(world.id)

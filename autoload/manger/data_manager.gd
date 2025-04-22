@@ -6,6 +6,7 @@ class_name DataManager
 const SAVE_PATH = "user://game_data.save"
 const chat_key = "chat_history_"
 const uid_channel_key = "uid_channel_"
+const world_channel_id = "world_channel_id"
 const uid_approval_key = "uid_approval_"
 const uid_friend_key = "uid_friend_"
 const uid_club_key = "uid_club_"
@@ -130,6 +131,10 @@ func set_current_game(mode,gid,rid,mid,gname)->void:
 		"mid":mid,
 		"gname":gname,
 	})
+	
+func set_world_channel_id(id):
+	set_data(world_channel_id,id)
+	pass
 
 func set_chat_history(uid:String,channelId:String, msgList) -> void:
 	# 如果 chat_key 不存在，创建一个字典
@@ -289,6 +294,8 @@ func get_chat_history(uid:String, channelId:String, default_value = null):
 		msgList.append(msg)
 	return msgList
 
+func get_world_channel_id():
+	return get_data(world_channel_id)
 
 func get_current_game():
 	return get_data(current_game_key)

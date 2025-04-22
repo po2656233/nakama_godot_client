@@ -96,6 +96,7 @@ func setup(data: Dictionary):
 		join_button.text = "房间已满"
 	
 	# 设置详情面板数据
+	print('--->>>>',data)
 	var content = getBBCodeContent("房间名称", data.get("room_name", ""))
 	content += getBBCodeContent("游戏类型", data.get("game_name", ""))
 	content += getBBCodeContent("房间ID", data.get("room_id", "").substr(0, 16))

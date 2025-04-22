@@ -366,9 +366,10 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 func load_local_history():
 	message_id_cache = Util.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
 	print("加载本地历史记录:",message_id_cache)
-	changePanel(MessageKind.WORLD) 
-	refresh_current_channel_display()
-	# ensure_scroll_to()
+	var  world_channel_id = DataManager.get_instance().get_world_channel_id()
+	if world_channel_id:
+		changePanel(MessageKind.WORLD)
+		refresh_current_channel_display(world_channel_id)
 	pass
 
 # 获取指定channel的所有历史消息
@@ -377,6 +378,7 @@ func get_channel_messages(channel_id: String) -> Array:
 	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
 	if messages == null:
 		return []
+	#print('已保存于本地的消息记录:',messages)
 	return Util.sort_dictionary_array(messages, "create_time", true)
 
 

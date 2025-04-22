@@ -132,6 +132,8 @@ func append_room(data):
 			"is_locked": data.get("isLock", false),
 			"game_name": OnlineGame.getGameName(data.get("gid", 0)),
 			"game_type": data.get("gid", 0),
+			"game_mode": data.get("mode", 0),
+			"game_section": data.get("section", 0),
 			"creator_id": data.get("creatorId", ""),
 			"author": data.get("creator", ""),
 			"base_score": data.get("baseScore", 0),
