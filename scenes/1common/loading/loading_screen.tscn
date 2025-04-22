@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6j8y8j4q4q"]
 
-[ext_resource type="Script" uid="uid://66w06etg4sr6" path="res://scripts/1common/loading_screen.gd" id="1_jo5ms"]
-[ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://assets/bg/bg_login.jpg" id="2_e6bxd"]
+[ext_resource type="Script" uid="uid://66w06etg4sr6" path="res://scripts/1common/loading/loading_screen.gd" id="1_2gkkn"]
+[ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://assets/bg/bg_login.jpg" id="2_hsgnm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ngnld"]
 bg_color = Color(0.211765, 0.643137, 0.792157, 1)
@@ -39,7 +39,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jo5ms")
+script = ExtResource("1_2gkkn")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -48,7 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_e6bxd")
+texture = ExtResource("2_hsgnm")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

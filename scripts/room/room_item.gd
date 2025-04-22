@@ -97,16 +97,23 @@ func setup(data: Dictionary):
 	
 	# 设置详情面板数据
 	print('--->>>>',data)
-	var content = getBBCodeContent("房间名称", data.get("room_name", ""))
-	content += getBBCodeContent("游戏类型", data.get("game_name", ""))
-	content += getBBCodeContent("房间ID", data.get("room_id", "").substr(0, 16))
-	content += getBBCodeContent("底分", str(data.get("base_score", 0)))
-	content += getBBCodeContent("入场分", str(data.get("entry_score", 0)))
+	var content = getBBCodeContent("房间ID", data.get("room_id", "").substr(0, 16))
+	content += getBBCodeContent("房间名称", data.get("room_name", ""))
 	content += getBBCodeContent("房间状态", status_name[data.get("status", 0)])
+	content += getBBCodeContent("游戏类型", data.get("game_name", ""))
+	var modeName = ["积分","金币","钻石"]
+	var mode = data.get("mode", 0)
+	content += getBBCodeContent("游戏模式", modeName[mode])
+	var sectionName = ["标准","锦标赛","世界杯"]
+	var section = data.get("section", 0)
+	content += getBBCodeContent("游戏赛制", sectionName[section])
 	content += getBBCodeContent("当前人数", str(data.get("player_count", 0)))
 	content += getBBCodeContent("最大人数", str(data.get("max_players", 0)))
+	content += getBBCodeContent("底分", str(data.get("base_score", 0)))
+	content += getBBCodeContent("入场分", str(data.get("entry_score", 0)))
+	content += getBBCodeContent("创建人", data.get("author", ""))
 	content += getBBCodeContent("创建时间", data.get("create_time", ""))
-	content += getBBCodeContent("房间描述", data.get("description", ""))
+	content += getBBCodeContent("房间描述", data.get("description", "玩家独立房间"))
 	# var rules = data.get("rules", []).map(func(rule): return "- " + rule)
 	# content += getBBCodeContent("规则", rules)
 	# var players = data.get("players", []).map(func(player): return "- " + player.username)
@@ -239,9 +246,12 @@ func flip():
 	is_animating = false
 
 func _on_texture_button_pressed() -> void:
+	PopupManager.show_confirm("确定删除房间吗?",remove_room)
+	pass # Replace with function body.
+	
+func remove_room():
 	var result = await OnlineGame.removeTable({"tid":room_data.id})
 	if result == null or (result and not result.has("tid")):
+		PopupManager.show_dynamic("删除失败")
 		return
 	PopupManager.show_dynamic("删除成功")
-
-	pass # Replace with function body.

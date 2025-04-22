@@ -103,7 +103,7 @@ func _create_room():
 			"enterScore": int(entry_score_spin_box.value),
 			"baseScore": int(base_score_spin_box.value),
 			"allowLookOn": spectator_check.button_pressed,
-			"commission": tax_slider.value if tax_check.button_pressed else 0,
+			"commission": int(tax_slider.value) if tax_check.button_pressed else 0,
 			"maxSitter": int(players_spin_box.value),
 			"maxRound": -1,
 			"openTime": 0,
