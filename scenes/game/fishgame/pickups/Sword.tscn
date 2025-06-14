@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bmnok1dwyv3cl" path="res://scenes/game/fishgame/pickups/Pickup.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://crbg3ina60g5" path="res://assets/game/fishgame/sprites/sword.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://sev5loavtd7v" path="res://scenes/game/fishgame/components/Hitbox.tscn" id="3"]
-[ext_resource type="Script" uid="uid://bc3ermfql11wl" path="res://scripts/game/fishgame/pickups/Sword.gd" id="4"]
+[ext_resource type="Script" uid="uid://csskaqmw2lw03" path="res://scripts/game/fishgame/pickups/Sword.gd" id="4"]
 [ext_resource type="AudioStream" uid="uid://cvdovib4h48vb" path="res://assets/game/fishgame/sounds/sword.wav" id="5"]
-[ext_resource type="Script" uid="uid://d36hgrychenc4" path="res://scripts/game/fishgame/components/Sounds.gd" id="6"]
+[ext_resource type="Script" uid="uid://bu2v7cyp1yor7" path="res://scripts/game/fishgame/components/Sounds.gd" id="6"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(25.89, 65.296)

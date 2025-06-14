@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bmnok1dwyv3cl"]
 
-[ext_resource type="Script" uid="uid://daticn0wruduw" path="res://scripts/game/fishgame/pickups/Pickup.gd" id="1"]
+[ext_resource type="Script" uid="uid://ddrowb1bhxww4" path="res://scripts/game/fishgame/pickups/Pickup.gd" id="1"]
 
 [node name="Pickup" type="CharacterBody2D"]
 collision_layer = 8

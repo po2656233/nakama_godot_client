@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dmp056osbij34"]
 
-[ext_resource type="Script" uid="uid://bdix2pb4w6vvp" path="res://scripts/1common/popup/dynamic_text.gd" id="1_uvw4x"]
+[ext_resource type="Script" uid="uid://55dayth8hn02" path="res://scripts/1common/popup/dynamic_text.gd" id="1_uvw4x"]
 
 [node name="DynamicText" type="Label"]
 anchors_preset = 8

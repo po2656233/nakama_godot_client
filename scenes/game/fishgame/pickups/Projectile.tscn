@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://50oxtntd4exh"]
 
 [ext_resource type="Texture2D" uid="uid://btrrj3ou03vi1" path="res://assets/game/fishgame/sprites/gun.png" id="1"]
-[ext_resource type="Script" uid="uid://b1b5eavjhe5fq" path="res://scripts/game/fishgame/pickups/Projectile.gd" id="2"]
+[ext_resource type="Script" uid="uid://dt3gv6cly57ny" path="res://scripts/game/fishgame/pickups/Projectile.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://sev5loavtd7v" path="res://scenes/game/fishgame/components/Hitbox.tscn" id="3"]
 
 [sub_resource type="Gradient" id="1"]

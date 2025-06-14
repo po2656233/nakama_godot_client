@@ -65,9 +65,9 @@ func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
 	return FAILED
 
 func _process(_delta):
-	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
-		_ws.poll()
-
+	#if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
+		#_ws.poll()
+	_ws.poll()
 	var state = _ws.get_ready_state()
 	if _ws_last_state != state:
 		_ws_last_state = state
@@ -75,6 +75,7 @@ func _process(_delta):
 			connected.emit()
 		elif state == WebSocketPeer.STATE_CLOSED:
 			closed.emit()
+			set_process(false) 
 
 	if state == WebSocketPeer.STATE_CONNECTING:
 		if _start + _timeout < Time.get_unix_time_from_system():

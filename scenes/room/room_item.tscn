@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
 [ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shaders/flow_light.gdshader" id="5_p3dne"]
 [ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_3km0x"]
-[ext_resource type="Script" uid="uid://ctruswe2yawdk" path="res://scripts/1common/loading/loading_power.gd" id="6_a2pe3"]
-[ext_resource type="Texture2D" uid="uid://typtjsxo71yo" path="res://assets/currency/loading/progress_background.svg" id="7_35w6i"]
-[ext_resource type="Texture2D" uid="uid://bhe7w6ocb02vu" path="res://assets/currency/loading/progress_fill.svg" id="9_c7gui"]
+[ext_resource type="Script" uid="uid://cxgpm246fkbr5" path="res://scripts/1common/loading/loading_power.gd" id="6_a2pe3"]
+[ext_resource type="Texture2D" uid="uid://dc4cmgosgp2yt" path="res://assets/currency/loading/progress_background.svg" id="7_35w6i"]
+[ext_resource type="Texture2D" uid="uid://dnow512o4dgwy" path="res://assets/currency/loading/progress_fill.svg" id="9_c7gui"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.567014, 0.771032, 0.875651, 1)

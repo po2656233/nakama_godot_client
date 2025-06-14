@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://bvw6jincp27vy"]
 
-[ext_resource type="Script" uid="uid://cf1tr2a3yyjf4" path="res://scripts/game/fishgame/maps/Map.gd" id="1"]
+[ext_resource type="Script" uid="uid://bu7jb3juwrtnb" path="res://scripts/game/fishgame/maps/Map.gd" id="1"]
 [ext_resource type="TileSet" uid="uid://eael5sneujok" path="res://assets/game/fishgame/tilesets/tileset.tres" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/game/fishgame/objects/TimedGenerator.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://bax6ip8g5br3b" path="res://scenes/game/fishgame/objects/TimedGenerator.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://d0y3mbk78o4s8" path="res://scenes/game/fishgame/pickups/Gun.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://28kguvi6h41f" path="res://scenes/game/fishgame/pickups/Sword.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://bh2a3tnw644f8" path="res://scenes/game/fishgame/maps/StaticBackground.tscn" id="6"]
