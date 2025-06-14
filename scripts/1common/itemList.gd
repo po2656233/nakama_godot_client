@@ -142,7 +142,7 @@ func _on_item_selected(index: int):
 	pass
  
 func _on_item_list_gui_input(event: InputEvent):
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and selected_index != -1:
 		# 确保有项目被选中
 		if event.double_click:
 			showPopup(selected_index)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene load_steps=38 format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://themes/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" uid="uid://coomdxyaqfwje" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -127,21 +127,6 @@ draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8rtf"]
 draw_center = false
-
-[sub_resource type="Theme" id="Theme_mmcwa"]
-ItemList/constants/h_separation = 10
-ItemList/constants/icon_margin = 5
-ItemList/constants/line_separation = 5
-ItemList/constants/outline_size = 5
-ItemList/constants/v_separation = 25
-ItemList/font_sizes/font_size = 24
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ol08g"]
-bg_color = Color(0.132251, 0.293625, 0.383903, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgtgl"]
 bg_color = Color(0.0196078, 0.388235, 0.576471, 1)
@@ -288,10 +273,11 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 drag_to_rearrange_enabled = true
 
 [node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -442,7 +428,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -556,8 +541,6 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "好友列表"
-theme = SubResource("Theme_mmcwa")
-theme_override_styles/focus = SubResource("StyleBoxFlat_ol08g")
 theme_override_styles/panel = SubResource("StyleBoxFlat_hgtgl")
 theme_override_styles/hovered = SubResource("StyleBoxFlat_2w1l2")
 theme_override_styles/selected = SubResource("StyleBoxFlat_7agav")

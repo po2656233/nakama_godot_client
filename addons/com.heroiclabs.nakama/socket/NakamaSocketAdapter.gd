@@ -38,6 +38,8 @@ func close():
 # @param p_uri - The URI of the server.
 # @param p_timeout - The timeout for the connect attempt on the socket.
 func connect_to_host(p_uri : String, p_timeout : int):
+	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
+		_ws.close()
 	_timeout = p_timeout
 	_start = Time.get_unix_time_from_system()
 	############测试时使用 todo[注意:正式环境请关闭]########################
@@ -55,10 +57,12 @@ func connect_to_host(p_uri : String, p_timeout : int):
 # @param p_buffer - The buffer with the message to send.
 # @param p_reliable - If the message should be sent reliably (will be ignored by some protocols).
 func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
-	var ret = _ws.send(p_buffer, WebSocketPeer.WRITE_MODE_TEXT)
-	if ret != OK:
-		print('网络错误',ret) 
-	return ret
+	if _ws.get_ready_state() == WebSocketPeer.STATE_OPEN:
+		var ret = _ws.send(p_buffer, WebSocketPeer.WRITE_MODE_TEXT)
+		if ret != OK:
+			print('网络错误',ret) 
+		return ret
+	return FAILED
 
 func _process(_delta):
 	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
