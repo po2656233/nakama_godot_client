@@ -1,5 +1,35 @@
 extends Node
+# 通用异步调用封装
+# 参数:
+#   caller: 调用对象实例
+#   method_name: 异步方法名 (字符串)
+#   args: 参数数组
+#   on_success: 成功回调函数 (Callable)
+#   on_failure: 失败回调函数 (Callable)
+func Nakama_Call(caller:Object,method_name: String,args: Array,on_success: Callable,on_failure: Callable)->bool:
+	# 验证方法是否存在
+	if not caller or not caller.has_method(method_name):
+		push_error("Method not found: %s" % method_name)
+		on_failure.call("Method not found")
+		return false
 
+	# 执行异步调用
+	var task = caller.callv(method_name, args)
+	if not (task is Object) or !task.has_method("is_valid") or !task.is_valid():
+		on_failure.call("Invalid async task")
+		return false
+		
+	# 等待异步结果
+	var result = await task.completed
+	# 处理结果
+	if result != null and result.has_method("is_exception") and result.is_exception():
+		on_failure.call(result)
+		return false
+		
+	on_success.call(result)
+	return true
+
+		
 func find_unique_name(parent: Node, prefix: String = '') -> String:
 	var name1: String
 	while true:

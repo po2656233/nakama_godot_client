@@ -109,22 +109,23 @@ func _restore_session() -> void:
 		return
 	nakama_session = restore_result
 	await _connect_socket()
-	_is_connecting = false
+	
 
 # 连接socket
 func _connect_socket() -> void:
 	if not nakama_session:
+		_on_reset_session()
 		return
+		
 	nakama_socket = Nakama.create_socket_from(nakama_client)
 	var result = await nakama_socket.connect_async(nakama_session)
 	if (result is int and result == 18) or result.is_exception():
 		connection_state_changed.emit("socket_error")
 		print("网络连接出错",result)
-		_start_reconnect()
+		_attempt_reconnect()
 		return
-	
+	_is_connecting = is_socket_connected()
 	connection_state_changed.emit("connected")
-	_reset_reconnect_state()
 	
 	# 监听socket事件
 	nakama_socket.connection_error.connect(_on_socket_disconnected)
@@ -137,10 +138,12 @@ func _connect_socket() -> void:
 	# nakama_socket.received_channel_presence.connect(_on_channel_presence)
 	nakama_socket.received_channel_message.connect(_on_received_message)
 	OnlineMatch._set_nakama_socket(nakama_socket)
+	print("成功连接 ",_is_connecting)
 	pass
 
 # 断开socket
 func _disconnect_socket():
+	_reset_reconnect_state()
 	if nakama_socket:
 		nakama_socket.close()
 		nakama_socket = null
@@ -148,9 +151,9 @@ func _disconnect_socket():
 # 事件处理
 #########################################################
 func _on_socket_disconnected(err) -> void:
+	_reset_reconnect_state()
 	connection_state_changed.emit("disconnected")
 	print("网络异常",err)
-	_start_reconnect()
 
 func _on_socket_connected() -> void:
 	connection_state_changed.emit("connected")
@@ -158,15 +161,13 @@ func _on_socket_connected() -> void:
 	await sendDataRPC("ping")
 	# if lastSend.funcName != "":
 	# 	sendDataRPC(lastSend.funcName, lastSend.payload)
-	_reset_reconnect_state()
+	pass
 
 func _on_reset_session():
 	_disconnect_socket()
 	# 绑定登录失败后，继续重连
-	if OnlineLogin.login_failed.is_connected(_start_reconnect):
-		OnlineLogin.login_failed.disconnect(_start_reconnect)
-	OnlineLogin.login_failed.connect(_start_reconnect)
 	OnlineLogin.relogin()
+	pass
 
 func _on_connection_state_changed(state: String):
 	if state == "connected":
@@ -271,45 +272,37 @@ func do_broadcast(notification1):
 
 
 ####################重连#####################################	
-func _start_reconnect() -> void:
-	_attempt_reconnect()
-	# if _reconnect_timer.is_stopped() and (MAX_RETRY_COUNT == 0 or _retry_count < MAX_RETRY_COUNT):
-	# 	_reconnect_timer.wait_time = _current_delay
-	# 	_reconnect_timer.start()
-	# 	_current_delay = min(_current_delay * 2, MAX_RETRY_DELAY)
-	# 	_retry_count += 1
-	# 	print("等待重连")
-	# 	connection_state_changed.emit("waiting_to_reconnect")
-	pass
-
+func _reset_reconnect_state() -> void:
+	_is_connecting = false
+	_retry_count = 0
+	_current_delay = BASE_RETRY_DELAY
+	
 func _attempt_reconnect() -> void:
+	if _is_connecting:
+		return
+	if not nakama_session:
+		print("尝试重连-->无session")
+		connection_state_changed.emit("disconnected")
+		_on_reset_session()
+		return
 	# 超过重试次数后，重新登录
-	if nakama_session and nakama_session.is_valid() and _retry_count < RETRY_COUNT:
+	if nakama_session.is_valid() and _retry_count < RETRY_COUNT:
 		connection_state_changed.emit("reconnecting")
-		print("尝试重连")
+		print("尝试重连",_retry_count)
 		_retry_count += 1
 		await _connect_socket()
 	else:
-		if nakama_session:
-			print("尝试重连-->重置session")
-			await _restore_session()
-		else :
-			print("尝试重连-->无session")
-			connection_state_changed.emit("disconnected")
-			_start_reconnect()
+		print("尝试重连-->重置session")
+		await _restore_session()
+	pass
 
-func _reset_reconnect_state() -> void:
-	_retry_count = 0
-	_current_delay = BASE_RETRY_DELAY
 
 func is_socket_connected() -> bool:
 	return nakama_socket != null and nakama_socket.is_connected_to_host()
 
 func force_reconnect() -> void:
-	if nakama_socket:
-		nakama_socket.close()
-	_reset_reconnect_state()
-	_start_reconnect()
+	_disconnect_socket()
+	_attempt_reconnect()
 
 # func _notification(what: int) -> void:
 # 	if what == NOTIFICATION_APPLICATION_FOCUS_IN or what == NOTIFICATION_APPLICATION_RESUMED:
@@ -332,9 +325,10 @@ func sendPing():
 	if nakama_socket:
 		var result = await nakama_socket.rpc_async("ping")
 		if result.is_exception():
+			print("发送心跳...")
 			force_reconnect()
 			return 
-	return
+	pass
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):
 	print("发送RPC:", funcName, payload)

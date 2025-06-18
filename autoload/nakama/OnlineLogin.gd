@@ -65,7 +65,19 @@ func on_credentials() -> void:
 # 	if email != '' and password != '':
 # 		do_login()
 # 	pass
+# 成功回调函数
+func _on_auth_success(result):
+	print("Authentication success!")
+	login_method = 'acc'
+	session_connected.emit(result)
+	update_loading_progress()
+	#dosucessful(result)  # 处理成功逻辑
 
+# 失败回调函数
+func _on_auth_failure(error):
+	print("Authentication failed: ", error)
+	loginfail()
+	#dofailed(error)      # 处理失败逻辑
 
 # 账密登录
 func do_login(myemail: String = '', mypassword: String = '', save_credentials: bool = false) -> bool:
@@ -85,39 +97,20 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 		PopupManager.show_dynamic("重连中...")
 	else:
 		PopupManager.show_dynamic("登录中...")
-	
-	update_loading_progress(10)
-	var result = await Online.nakama_client.authenticate_email_async(email, password, null, false)
-	if result.is_exception():
-
-		print(result.get_exception().message)
-		loginfail()
-		return false
-	
 	_save_credentials = save_credentials
-	login_method = 'acc'
-	session_connected.emit(result)
-	update_loading_progress()
-	return true
-
+	update_loading_progress(1+randi()%10)
+	return await Util.Nakama_Call(Online.nakama_client,"authenticate_email_async",[email, password, null, false],_on_auth_success,_on_auth_failure)
+	
 # 设备登录
 func do_device_login(username: String="", created:bool=false, save_credentials: bool = false) -> bool:
 	var device_id = OS.get_unique_id()
 	var p_username = null
 	if username != "":
 		p_username = username
-	update_loading_progress(10)
-	var result = await Online.nakama_client.authenticate_device_async(device_id,p_username,created)
-	if result.is_exception():
-		push_error("Socket connection failed: " + result.get_exception().message)
-		loginfail()
-		return false
-	print("设备登录",result)
 	_save_credentials = save_credentials
-	login_method = 'dev'
-	session_connected.emit(result)
-	update_loading_progress()
-	return true
+	update_loading_progress(1+randi()%10)
+	return await Util.Nakama_Call(Online.nakama_client,"authenticate_device_async",[device_id,p_username,created],_on_auth_success,_on_auth_failure)
+
 
 # 重新登录
 func relogin():
@@ -137,6 +130,25 @@ func logout():
 			PopupManager.show_dynamic("清除缓存成功")
 		print("Logged out successfully")	
 
+# 注册处理
+func _on_register_success(result):
+	var msg = result.get_exception().message
+	# Nakama treats registration as logging in, so this is what we get if the
+	# the email is already is use but the password is wrong.
+	if msg == 'Invalid credentials.':
+		msg = '账号已经被使用了,请换个账号'
+	elif msg == '':
+		msg = "创建账号失败"
+	PopupManager.show_dynamic(msg)
+	# We always set Online.nakama_session in case something is yielding
+	# on the "session_changed" signal.
+	session_connected.emit(null)
+
+func _on_register_failure(result):
+	session_connected.emit(result)
+	PopupManager.show_dynamic("创建账号成功!")
+	login_method = 'acc'
+	
 # 注册账号(注册完后直登)
 func register_account(myEmail,myPassword,save_credentials=false) -> void:
 	email = myEmail.strip_edges()
@@ -149,25 +161,8 @@ func register_account(myEmail,myPassword,save_credentials=false) -> void:
 		PopupManager.show_dynamic("密码不能为空")
 		return
 	PopupManager.show_dynamic("正在创建账号...")
-	var result = await Online.nakama_client.authenticate_email_async(email, password, username, true)
-	if result.is_exception():
-		var msg = result.get_exception().message
-		# Nakama treats registration as logging in, so this is what we get if the
-		# the email is already is use but the password is wrong.
-		if msg == 'Invalid credentials.':
-			msg = '账号已经被使用了,请换个账号'
-		elif msg == '':
-			msg = "创建账号失败"
-		PopupManager.show_dynamic(msg)
-		# We always set Online.nakama_session in case something is yielding
-		# on the "session_changed" signal.
-		session_connected.emit(null)
-		return
-	
 	_save_credentials = save_credentials
-	session_connected.emit(result)
-	PopupManager.show_dynamic("创建账号成功!")
-	login_method = 'acc'
+	await Util.Nakama_Call(Online.nakama_client,"authenticate_email_async",[email, password, username, true],_on_register_success,_on_register_failure)
 	pass
 
 func loginfail():
@@ -184,9 +179,12 @@ func _on_login_success():
 func _on_session_connected(session):
 	if session:
 		load_player_data(session)
+	pass
+		
 
 ####################################用户信息###########################################################
 func load_player_data(session) -> void:
+	update_loading_progress()
 	var result = await Online.nakama_client.read_storage_objects_async(session, [{
 		"collection": "player_data",
 		"key": "profile",
@@ -194,21 +192,22 @@ func load_player_data(session) -> void:
 	}])
 	update_loading_progress()
 	print("读取玩家数据: ", result)
-	if not result.is_exception():
-		if result.objects.size() > 0:
-			player_data = JSON.parse_string(result.objects[0].value)
-		else:
-			var ret = await Online.nakama_client.get_account_async(session)
-			if ret.is_exception():
-				push_error("获取用户信息失败: " + ret.get_exception().message)
-				return
-			player_data = ret.user
-			print('用户信息:',player_data)	
-			update_loading_progress()
-			await save_player_data(session)
-			
-		print("已读取玩家数据: ", player_data)
+	# 玩家信息保存
+	if result and result.objects and result.objects.size() > 0:
+		player_data = JSON.parse_string(result.objects[0].value)
+		player_data_updated.emit()
+		return
+	# 
+	var ret = await Online.nakama_client.get_account_async(session)
+	if ret.is_exception():
+		push_error("获取用户信息失败: " + ret.get_exception().message)
+		loginfail()
+		return
+	player_data = ret.user
+	print('用户信息:',player_data)	
 	update_loading_progress()
+	await save_player_data(session)
+	print("已读取玩家数据: ", player_data)
 	player_data_updated.emit()
 	pass
 
@@ -216,12 +215,14 @@ func load_player_data(session) -> void:
 func update_loading_progress(scope:int = 20):
 	if scope >= 100:
 		cur_progress_percent = 100
-	else:
-		if scope==0:
-			scope = 20
-		cur_progress_percent = cur_progress_percent + randi()%scope
-		if cur_progress_percent > 100:
-			cur_progress_percent = 100
+		SignalManager.LoadingSIG.emit(cur_progress_percent)
+		return
+
+	if scope==0:
+		scope = 20
+	cur_progress_percent = cur_progress_percent + randi()%scope
+	if cur_progress_percent > 100:
+		cur_progress_percent = 100
 	SignalManager.LoadingSIG.emit(cur_progress_percent)
 	pass
 	
