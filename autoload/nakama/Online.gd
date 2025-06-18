@@ -327,7 +327,7 @@ func sendPing():
 		var result = await nakama_socket.rpc_async("ping")
 		if result.is_exception():
 			print("发送心跳...", result.get_exception().message )
-			#force_reconnect()
+			force_reconnect()
 			return 
 	pass
 # RPC 发送函数
