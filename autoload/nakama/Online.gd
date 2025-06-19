@@ -124,7 +124,6 @@ func _connect_socket() -> void:
 		connection_state_changed.emit("socket_error")
 		print("网络连接出错", result)
 		_is_connecting = false
-		_attempt_reconnect()
 		return
 	_is_connecting = is_socket_connected()
 	connection_state_changed.emit("connected")

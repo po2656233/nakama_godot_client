@@ -190,6 +190,7 @@ func logout():
 
 
 func _on_session_connected(session):
+	reset()
 	if session:
 		Online.nakama_session = session
 		load_player_data(session)
@@ -235,15 +236,17 @@ func first_load_player_data(session) -> void:
 #### 异步加载玩家数据
 func load_player_data(session) -> void:
 	loading_percent.emit(-1)
-	# 使用 bind() 将 session 绑定到回调函数
-	var success_callback = _on_userinfo_success.bind(session)
-	await Util.Nakama_Call(Online.nakama_client, "read_storage_objects_async",
-	[session, [ {
-		"collection": "player_data",
-		"key": "profile",
-		"user_id": session.user_id
-	}]], success_callback, _on_userinfo_failure)
-	pass
+	first_load_player_data(session)
+
+	# # 使用 bind() 将 session 绑定到回调函数
+	# var success_callback = _on_userinfo_success.bind(session)
+	# await Util.Nakama_Call(Online.nakama_client, "read_storage_objects_async",
+	# [session, [ {
+	# 	"collection": "player_data",
+	# 	"key": "profile",
+	# 	"user_id": session.user_id
+	# }]], success_callback, _on_userinfo_failure)
+	# pass
 
 #### 保存玩家数据
 func save_player_data(session) -> void:
