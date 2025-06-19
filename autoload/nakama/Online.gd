@@ -121,7 +121,7 @@ func _connect_socket() -> void:
 	nakama_socket = Nakama.create_socket_from(nakama_client)
 	var result = await nakama_socket.connect_async(nakama_session)
 	if (result is int and result == ERR_FILE_EOF ) or result.is_exception():
-		connection_state_changed.emit("socket_error")
+		# connection_state_changed.emit("socket_error")
 		print("网络连接出错", result)
 		_is_connecting = false
 		return
