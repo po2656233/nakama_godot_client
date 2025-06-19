@@ -52,7 +52,7 @@ func _ready() -> void:
 	_setup_reconnect_timer()
 	connection_state_changed.connect(_on_connection_state_changed)
 	session_failed.connect(_on_reset_session)
-	OnlineLogin.session_connected.connect(set_nakama_session)
+	# OnlineLogin.session_connected.connect(set_nakama_session)
 	pass
 
 # 初始化重连定时器
@@ -87,6 +87,7 @@ func set_nakama_session(_nakama_session: NakamaSession) -> void:
 	nakama_session = _nakama_session
 	if nakama_session and not nakama_session.is_exception() and not nakama_session.is_expired():
 		# 获取到session后连接socket
+		print("获取到session后连接socket _connect_socket")
 		_connect_socket()
 	else:
 		push_warning("session is invalid:",nakama_session)
@@ -119,9 +120,10 @@ func _connect_socket() -> void:
 		
 	nakama_socket = Nakama.create_socket_from(nakama_client)
 	var result = await nakama_socket.connect_async(nakama_session)
-	if (result is int and result == 18) or result.is_exception():
+	if (result is int and result == ERR_FILE_EOF ) or result.is_exception():
 		connection_state_changed.emit("socket_error")
-		print("网络连接出错",result)
+		print("网络连接出错", result)
+		_is_connecting = false
 		_attempt_reconnect()
 		return
 	_is_connecting = is_socket_connected()
@@ -302,7 +304,7 @@ func is_socket_connected() -> bool:
 	return nakama_socket != null and nakama_socket.is_connected_to_host()
 
 func force_reconnect() -> void:
-	_disconnect_socket()
+	_reset_reconnect_state()
 	_attempt_reconnect()
 
 # func _notification(what: int) -> void:
@@ -313,6 +315,7 @@ func force_reconnect() -> void:
 # 	pass
 ##############################################################################################
 func connect_nakama_socket() -> void:
+	print("连接Nakama Socket")
 	_connect_socket()
 	
 
@@ -326,9 +329,7 @@ func sendPing():
 	if nakama_socket:
 		var result = await nakama_socket.rpc_async("ping")
 		if result.is_exception():
-			print("发送心跳...", result.get_exception().message )
-			force_reconnect()
-			return 
+			print("发送心跳...", result.get_exception().message ) 
 	pass
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):

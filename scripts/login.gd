@@ -35,11 +35,13 @@ func _ready() -> void:
 		usernameEdit.text = ProjectSettings.get("username")
 	# 登录成功后的跳转
 	loading.set_next_scene("home")
+	
 	# # 创建HTTP请求节点
 	# http_request = HTTPRequest.new()
 	# add_child(http_request)
 	# http_request.request_completed.connect(_on_request_completed)
-	pass # Replace with function body.
+	OnlineLogin.login_failed.connect(_on_login_failed)
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -64,6 +66,10 @@ func _on_tr_devlogin_pressed() -> void:
 	# wechatLogin()
 	pass
 
+func _on_login_failed():
+	loading.Hide()
+	print("Login failed")
+	pass # Replace with function body.
 
 # 处理HTTP响应
 func _on_request_completed(result, _response_code, _headers, body):
@@ -89,21 +95,15 @@ func login()->void:
 		PopupManager.show_message("请阅读并同意用户协议")
 		return
 	loading.Show()
-	if await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
-		return
-	loading.Hide()
-	# PopupManager.show_message("账号或密码错误","提示",false)
-	print("Wrong username or password")#$Panel/VBoxContainer/HBoxContainer/Label.text = "Wrong username or password"
-	pass # Replace with function body.
+	await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false)
+	pass 
  
 # 设备登录
 func deviceLogin()->void:
 	loading.Show()
-	if await OnlineLogin.do_device_login("",false,true) or await OnlineLogin.do_device_login("",true):
-		return
-	loading.Hide()
-	PopupManager.show_message("登录失败，请检查网络连接")
-	pass # Replace with function body.
+	if not await OnlineLogin.do_device_login("",false,true) :
+		await OnlineLogin.do_device_login("",true)
+	pass
 
 # 微信登录(暂不使用)
 func wechatLogin()->void:

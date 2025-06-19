@@ -1,4 +1,8 @@
 extends Node
+
+
+var EMPTY_CALLABLE = Callable(func(): pass)
+
 # 通用异步调用封装
 # 参数:
 #   caller: 调用对象实例
@@ -6,27 +10,28 @@ extends Node
 #   args: 参数数组
 #   on_success: 成功回调函数 (Callable)
 #   on_failure: 失败回调函数 (Callable)
-func Nakama_Call(caller:Object,method_name: String,args: Array,on_success: Callable,on_failure: Callable)->bool:
+func Nakama_Call(caller: Object, method_name: String, args: Array, on_success: Callable, on_failure: Callable) -> bool:
+	print("Nakama_Call: %s >|< %s 【%s】" % [method_name,  str(args),str(caller)])
 	# 验证方法是否存在
 	if not caller or not caller.has_method(method_name):
 		push_error("Method not found: %s" % method_name)
-		on_failure.call("Method not found")
+		if on_failure: on_failure.call("Method not found")
 		return false
 
 	# 执行异步调用
 	var task = caller.callv(method_name, args)
 	if not (task is Object) or !task.has_method("is_valid") or !task.is_valid():
-		on_failure.call("Invalid async task")
+		if on_failure: on_failure.call("Invalid async task")
 		return false
 		
 	# 等待异步结果
 	var result = await task.completed
 	# 处理结果
 	if result != null and result.has_method("is_exception") and result.is_exception():
-		on_failure.call(result)
+		if on_failure: on_failure.call(result.get_exception().message)
 		return false
 		
-	on_success.call(result)
+	if on_success: on_success.call(result)
 	return true
 
 		
@@ -43,7 +48,7 @@ func random_name(prefix: String) -> String:
 
 #################################################################################
 # 异步加载 Texture2D
-func load_texture_async(url: String,width: int = 25,height: int = 25) :
+func load_texture_async(url: String, width: int = 25, height: int = 25):
 	if url.is_empty():
 		return null
 	var request = HTTPRequest.new()
@@ -53,7 +58,7 @@ func load_texture_async(url: String,width: int = 25,height: int = 25) :
 	var result = await request.request_completed
 	
 	if result[0] != HTTPRequest.RESULT_SUCCESS:
-		print("无法加载图片: ", result[0],url)
+		print("无法加载图片: ", result[0], url)
 		request.queue_free()
 		return null
 	# var response_code = result[1]
@@ -85,7 +90,7 @@ func load_texture_async(url: String,width: int = 25,height: int = 25) :
 		request.queue_free()
 		return null
 	
-	image.resize(width,height)
+	image.resize(width, height)
 	request.queue_free()
 	return ImageTexture.create_from_image(image)
 ############################################################################################
@@ -110,7 +115,7 @@ func _get_field_value(item, field: String):
 			return item.get(field)
 		
 		# 2. 尝试直接访问属性
-		if field in item: 
+		if field in item:
 			return item.get(field)
 			
 		# 3. 尝试使用get_xxx方法
@@ -138,12 +143,12 @@ func sort_dictionary_array(array: Array, sort_field: String, ascending: bool = t
 		push_warning("First element is not have: " + str(sort_field))
 		return array
 	
-	array.sort_custom(func(a, b): 
-		var field_value_a = _get_field_value(a,sort_field)
-		var field_value_b = _get_field_value(b,sort_field)
+	array.sort_custom(func(a, b):
+		var field_value_a = _get_field_value(a, sort_field)
+		var field_value_b = _get_field_value(b, sort_field)
 		# print('时间比较:',field_value_a, field_value_b)
 		if not field_value_a or not field_value_b:
-			push_error("比较异常",field_value_a, field_value_b)
+			push_error("比较异常", field_value_a, field_value_b)
 			return false
 		if ascending:
 			return field_value_a < field_value_b
@@ -233,7 +238,7 @@ func get_today_start_timestamp() -> int:
 
 # 获取东八区时间
 func get_chinese_time_str(timestamp: String, show_seconds: bool = true) -> String:
-	return format_china_time(Time.get_unix_time_from_datetime_string(timestamp),show_seconds)
+	return format_china_time(Time.get_unix_time_from_datetime_string(timestamp), show_seconds)
 
 
 # 获取当前时间戳
@@ -246,7 +251,7 @@ func get_current_timestamp() -> String:
 	 
 	# 格式化日期为 YYYY-MM-DD
 	var date_str = "%04d-%02d-%02d" % [date_dict.year, date_dict.month, date_dict.day]
-	return "%s %s" % [date_str, time_str]  # 输出示例：2024-03-15 14:30:45
+	return "%s %s" % [date_str, time_str] # 输出示例：2024-03-15 14:30:45
 
 # func check_network():
 # 	if OS.has_feature("mobile"):
@@ -267,18 +272,18 @@ func get_current_timestamp() -> String:
 # 			6: print("移动数据4G")
 # 	return true
 
-func isMobile()->bool:
+func isMobile() -> bool:
 	var systemName = OS.get_name()
 	return systemName == "Android" or systemName == "iOS"
 
 
-func isFullScreen()->bool:
-	return  DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+func isFullScreen() -> bool:
+	return DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 
 
-func norepeat(arr:Array) -> Array:
+func norepeat(arr: Array) -> Array:
 	arr = arr.duplicate(true) # 使用副本而不是对原数组进行操作
-	var dict:Dictionary = {}
+	var dict: Dictionary = {}
 	for item in arr:
 		dict[item] = item
 	return dict.keys() # dict.values()也可以
