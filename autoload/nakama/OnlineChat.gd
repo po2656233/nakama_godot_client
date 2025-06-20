@@ -77,7 +77,12 @@ func send_message(content: Dictionary) -> Error:
 	print("发送前确认:",_current_channel.id," 内容:",content)
 	var result = await Online.nakama_socket.write_chat_message_async(_current_channel.id, content)
 	if result.is_exception():
-		print("Failed to send message: ", result.get_exception().message)
+		var error_message = result.get_exception().message
+		if error_message == "Must join channel before sending messages":
+			var ret = await Online.nakama_socket.join_chat_async(_current_channel.id, _current_channel.type, true)
+			if not ret.is_exception():
+				send_message(content)  # 重新发送消息
+		print("Failed to send message: ", error_message)
 		return FAILED
 	print("发送反馈:",result)
 	return OK
@@ -377,9 +382,9 @@ func load_world_channel():
 		if group.name == "world":
 			var ret1 = await Online.nakama_client.join_group_async(Online.nakama_session, group.id)
 			print("加入世界频道: ", ret1)
-			if not ret1:
+			if ret1.is_exception():
 				PopupManager.show_dynamic("加入世界频道失败")
-				print("加入世界频道失败")
+				print("加入世界频道失败",ret1.get_exception().message)
 				return null
 			var ret = await add_channel_async(group.id, 2)
 			if not ret:

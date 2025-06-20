@@ -14,7 +14,7 @@ var password: String = ''
 var login_method: String = 'dev'
 var _reconnect: bool = false
 var _save_credentials: bool = false
-var player_data: NakamaAPI.ApiUser = null
+var player_data: NakamaAPI.ApiUser : get = get_my_info
 
 var cur_progress_percent = 0
 
@@ -33,7 +33,7 @@ func _ready() -> void:
 		file.close()
 	session_connected.connect(_on_session_connected)
 	loading_percent.connect(update_loading_progress)
-	login_failed.connect(reset)
+	login_failed.connect(_on_login_fail)
 	pass
 
 func reset():
@@ -64,6 +64,7 @@ func update_loading_progress(scope: int = 20):
 	if scope >= 100:
 		cur_progress_percent = 100
 		SignalManager.LoadingSIG.emit(cur_progress_percent)
+		cur_progress_percent = 0
 		return
 
 	if scope <= 0:
@@ -85,6 +86,12 @@ func update_loading_progress(scope: int = 20):
 ############################################【注册】#######################################################################
 # 注册处理
 func _on_register_success(result):
+	session_connected.emit(result)
+	PopupManager.show_dynamic("创建账号成功!")
+	login_method = 'acc'
+
+# 注册失败
+func _on_register_failure(result):
 	var msg = result.get_exception().message
 	# Nakama treats registration as logging in, so this is what we get if the
 	# the email is already is use but the password is wrong.
@@ -95,12 +102,9 @@ func _on_register_success(result):
 	PopupManager.show_dynamic(msg)
 	# We always set Online.nakama_session in case something is yielding
 	# on the "session_changed" signal.
-	session_connected.emit(null)
+	Online.nakama_session = null
 
-func _on_register_failure(result):
-	session_connected.emit(result)
-	PopupManager.show_dynamic("创建账号成功!")
-	login_method = 'acc'
+
 	
 # 注册账号(注册完后直登)
 func register_account(myEmail, myPassword, save_credentials = false) -> void:
@@ -131,12 +135,18 @@ func _on_auth_success(result):
 # 失败回调函数
 func _on_auth_failure(error):
 	print("获取 Authentication failed: ", error)
-	reset()
-	PopupManager.show_dynamic("登录失败，请检查您的网络设置")
 	login_failed.emit()
+	
+
+func _on_login_fail():
+	reset()
+	Online.nakama_session = null
+	PopupManager.show_dynamic("登录失败，请检查您的网络设置")
+	
 
 # 账密登录
 func do_login(myemail: String = '', mypassword: String = '', save_credentials: bool = false) -> bool:
+	reset()
 	if myemail != '':
 		email = myemail
 	if mypassword != '':
@@ -160,6 +170,7 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 	
 # 设备登录
 func do_device_login(username: String = "", created: bool = false, save_credentials: bool = false) -> bool:
+	reset()
 	var device_id = OS.get_unique_id()
 	var p_username = null
 	if username != "":
@@ -182,7 +193,7 @@ func logout():
 	reset()
 	if Online.nakama_client and Online.nakama_session:
 		Online.nakama_client.session_logout_async(Online.nakama_session)
-		session_connected.emit(null)
+		Online.nakama_session = null
 		var dir = DirAccess.open(USER_DIR)
 		if dir and OK == dir.remove(CREDENTIALS_FILENAME):
 			PopupManager.show_dynamic("清除缓存成功")
@@ -190,19 +201,19 @@ func logout():
 
 
 func _on_session_connected(session):
-	reset()
+	
 	if session:
-		Online.nakama_session = session
 		load_player_data(session)
+		Online.nakama_session = session
 	pass
 		
 
 ####################################用户信息###########################################################
 # 第一次加载用户信息
 func _on_first_userinfo_success(result):
-	print('第一次用户信息:', player_data)
 	loading_percent.emit(10)
 	player_data = result.user
+	print('第一次用户信息:', player_data)
 	pass
 
 # 加载用户信息成功
@@ -219,8 +230,6 @@ func _on_userinfo_success(result, session):
 # 加载用户信息失败
 func _on_userinfo_failure(err):
 	print("获取用户信息失败: ", err)
-	PopupManager.show_dynamic("登录失败, 请检查您的网络设置")
-	login_failed.emit()
 	pass
 
 
@@ -231,22 +240,24 @@ func first_load_player_data(session) -> void:
 		await save_player_data(session)
 		print("首次读取玩家数据,并保存: ", player_data)
 		loading_percent.emit(100)
+	else:
+		login_failed.emit()
 	pass
 
 #### 异步加载玩家数据
 func load_player_data(session) -> void:
 	loading_percent.emit(-1)
-	first_load_player_data(session)
+	#first_load_player_data(session)
 
-	# # 使用 bind() 将 session 绑定到回调函数
-	# var success_callback = _on_userinfo_success.bind(session)
-	# await Util.Nakama_Call(Online.nakama_client, "read_storage_objects_async",
-	# [session, [ {
-	# 	"collection": "player_data",
-	# 	"key": "profile",
-	# 	"user_id": session.user_id
-	# }]], success_callback, _on_userinfo_failure)
-	# pass
+	# 使用 bind() 将 session 绑定到回调函数
+	var success_callback = _on_userinfo_success.bind(session)
+	if not await Util.Nakama_Call(Online.nakama_client, "read_storage_objects_async",	[session, [ {
+		 	"collection": "player_data",
+		 	"key": "profile",
+		 	"user_id": session.user_id}]
+		],success_callback, _on_userinfo_failure):
+			first_load_player_data(session)
+	pass
 
 #### 保存玩家数据
 func save_player_data(session) -> void:

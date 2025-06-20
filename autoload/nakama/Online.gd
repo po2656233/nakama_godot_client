@@ -114,15 +114,22 @@ func _restore_session() -> void:
 
 # 连接socket
 func _connect_socket() -> void:
+	if _is_connecting:
+		print("已连接")
+		return
 	if not nakama_session:
 		_on_reset_session()
 		return
-		
+	_is_connecting = true
 	nakama_socket = Nakama.create_socket_from(nakama_client)
 	var result = await nakama_socket.connect_async(nakama_session)
-	if (result is int and result == ERR_FILE_EOF ) or result.is_exception():
+	if (result is int and result == ERR_FILE_EOF ):
 		# connection_state_changed.emit("socket_error")
-		print("网络连接出错", result)
+		print("网络连接出错 ->", result)
+		_is_connecting = false
+		return
+	if result.is_exception():
+		print("网络连接出错 & ", result.get_exception().message)
 		_is_connecting = false
 		return
 	_is_connecting = is_socket_connected()
@@ -240,7 +247,7 @@ func _on_channel_presence(channel_presence):
 	pass
 
 func _on_received_message(channel_message):
-	print("收到消息:", channel_message)
+	print("收到消息0000:", channel_message)
 	SignalManager.RecvMessageSIG.emit(channel_message)
 	pass
 
