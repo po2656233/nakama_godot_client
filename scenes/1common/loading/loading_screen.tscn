@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6j8y8j4q4q"]
+[gd_scene load_steps=7 format=3 uid="uid://b6j8y8j4q4q"]
 
 [ext_resource type="Script" uid="uid://btufsoo8tr6p1" path="res://scripts/1common/loading/loading_screen.gd" id="1_2gkkn"]
 [ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://assets/bg/bg_login.jpg" id="2_hsgnm"]
@@ -31,6 +31,13 @@ corner_radius_bottom_left = 6
 shadow_color = Color(0.353135, 0.675318, 0.598314, 0.6)
 shadow_size = 3
 shadow_offset = Vector2(2, 2)
+
+[sub_resource type="SystemFont" id="SystemFont_2gkkn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hsgnm"]
+font = SubResource("SystemFont_2gkkn")
+font_size = 46
+font_color = Color(0.847596, 0.868178, 0.900922, 1)
 
 [node name="LoadingScreen" type="Control"]
 layout_mode = 3
@@ -77,7 +84,23 @@ show_percentage = false
 
 [node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.658824, 0.701961, 0.407843, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Load... 0%"
 horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -34.0
+offset_right = 46.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "正        反"
+label_settings = SubResource("LabelSettings_hsgnm")
