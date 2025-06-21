@@ -187,23 +187,33 @@ func _on_reset_session():
 	pass
 
 func _on_connect_state(state: String):
-	if state == "connected":
-		# 连接成功
-		PopupManager.show_dynamic("连接成功")
-		pass
-	elif state == "disconnected":
-		# 连接断开
-		PopupManager.show_dynamic("连接断开")
-	elif state == "reconnecting":
-		# 正在重连
-		PopupManager.show_dynamic("正在重连")
-	# elif state == "waiting_to_reconnect":
-		# 等待重连
-		# PopupManager.show_dynamic("等待重连")
-	elif state == "restoring_session":
-		PopupManager.show_dynamic("正在恢复会话")
-	elif state == "socket_error":
-		PopupManager.show_dynamic("网络连接出错")
+	var hint = ""
+	match state:
+		"connected":
+			# 连接成功
+			# hint = "连接成功"
+			return
+		"disconnected":
+			# 连接断开
+			hint = "连接断开"
+			pass
+		"reconnecting":
+			# 正在重连
+			hint = "正在重连..."
+			pass
+		"restoring_session":
+			# 正在恢复会话
+			hint = "正在恢复会话..."
+			pass
+		"socket_error":
+			hint = "网络连接出错..."
+			pass
+		_:
+			push_warning("未知的连接状态:", state)
+			return
+	PopupManager.show_dynamic(hint)
+	pass
+	
 
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):

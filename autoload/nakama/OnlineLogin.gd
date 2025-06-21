@@ -1,6 +1,6 @@
 extends Node
 
-signal login_failed()
+signal login_failed(error: String)
 
 # signal session_connected(session)
 signal loading_percent(val)
@@ -37,8 +37,8 @@ func _ready() -> void:
 	pass
 
 func reset():
-	email = ''
-	password = ''
+	# email = ''
+	# password = ''
 	player_data = null
 	login_method = ''
 	cur_progress_percent = 0
@@ -99,10 +99,10 @@ func _on_register_failure(result):
 		msg = '账号已经被使用了,请换个账号'
 	elif msg == '':
 		msg = "创建账号失败"
-	PopupManager.show_dynamic(msg)
+	# PopupManager.show_dynamic(msg)
 	# We always set Online.nakama_session in case something is yielding
 	# on the "session_changed" signal.
-	login_failed.emit()
+	login_failed.emit(msg)
 
 
 	
@@ -137,7 +137,11 @@ func _on_auth_success(result):
 # 失败回调函数
 func _on_auth_failure(error):
 	print("获取 Authentication failed: ", error)
-	login_failed.emit()
+	if error == "Password must be at least 8 characters long.":
+		error = "密码长度至少为8位"
+	if error == "":
+		error = "登录失败，请检查您的网络设置"
+	login_failed.emit(error)
 	
 
 func _on_auth_failure_dev(error):
@@ -145,14 +149,24 @@ func _on_auth_failure_dev(error):
 	if _first_dev_login:
 		_first_dev_login = false
 	else:
-		login_failed.emit()
+		login_failed.emit(error)
 		_first_dev_login = true
 		
 
-func _on_login_fail():
+func _on_login_fail(err):
 	reset()
+	if err == "HTTPRequest failed!":
+		err = "网络连接失败，请检查您的网络设置"
+	elif err == "Invalid session.":
+		err = "登录会话无效，请重新登录"
+	elif err == "Session expired.":
+		err = "登录会话已过期，请重新登录"
+	elif err == "Invalid credentials.":
+		err = "账号或密码错误，请检查后重试"
+	elif err == "":
+		err = "登录失败，请稍后重试"
 	Online.set_nakama_session(null)
-	PopupManager.show_dynamic("登录失败，请检查您的网络设置")
+	PopupManager.show_dynamic(err)
 	
 
 # 账密登录
@@ -172,8 +186,7 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 		email = email + "@game.com"
 	if _reconnect:
 		PopupManager.show_dynamic("重连中...")
-	else:
-		PopupManager.show_dynamic("登录中...")
+	# 登录
 	login_method = 'acc'
 	_save_credentials = save_credentials
 	loading_percent.emit()
@@ -246,7 +259,7 @@ func first_load_player_data(session) -> void:
 		print("首次读取玩家数据,并保存: ", player_data)
 		loading_percent.emit(100)
 	else:
-		login_failed.emit()
+		login_failed.emit("获取玩家数据失败，请稍后重试")
 	pass
 
 #### 异步加载玩家数据

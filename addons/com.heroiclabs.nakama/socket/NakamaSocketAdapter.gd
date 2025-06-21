@@ -65,9 +65,9 @@ func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
 	return FAILED
 
 func _process(_delta):
-	#if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
-		#_ws.poll()
-	_ws.poll()
+	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
+		_ws.poll()
+	#_ws.poll()
 	var state = _ws.get_ready_state()
 	if _ws_last_state != state:
 		_ws_last_state = state

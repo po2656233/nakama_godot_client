@@ -179,11 +179,11 @@ func _on_member_add_friend(member_id: String):
 	pass
 
 func _on_member_clicked(item: Node):
-	var sleceteNode = selected_item
-	if sleceteNode != null:
-		sleceteNode.setup_panel_style(false)
-	if item:
-		item.setup_panel_style(true)
+	if not item:
+		return
+	if item != selected_item and selected_item:
+		selected_item.setup_panel_style(false)
+	item.setup_panel_style(true)
 	selected_item = item
 
 func _on_member_note_changed(member_data: Dictionary, new_note: String):

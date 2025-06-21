@@ -57,8 +57,9 @@ func _ready():
 	pass
 
 func clear() :
-	_clear_group_selection()
 	groups = []
+	current_selected_item = null
+	pass
 
 func update_group_list():
 	# 清除现有项目
@@ -98,24 +99,21 @@ func update_group_list():
 	pass
 
 
-func _clear_group_selection():
-	if current_selected_item:
-		current_selected_item = null
-
 func _on_cliecked_group(item: Node):
-	var sleceteNode = current_selected_item
-	if sleceteNode != null:
-		sleceteNode.setup_panel_style(false)
+	if current_selected_item != null:
+		current_selected_item.setup_panel_style(false)
+	current_selected_item = item	
 	if item != null:
 		item.setup_panel_style(true)
 		var clubInfo = item.get_group_data()
 		await OnlineChat.set_current_channel(clubInfo.channel, true) 
-	current_selected_item = item
+		
+
 
 func _on_group_selected(group_data: Dictionary, item: Node):
-	if current_selected_item != item:
-		_clear_group_selection()
-		current_selected_item = item 
+	if current_selected_item:
+		current_selected_item.setup_panel_style(false)
+	current_selected_item = item 
 	# 这里可以添加其他选中俱乐部后的逻辑
 	print("选中的群组信息:", group_data)
 

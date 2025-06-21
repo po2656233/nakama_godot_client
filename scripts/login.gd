@@ -95,7 +95,8 @@ func login()->void:
 		PopupManager.show_message("请阅读并同意用户协议")
 		return
 	loading.Show()
-	await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false)
+	if not await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
+		loading.Hide()
 	pass 
  
 # 设备登录

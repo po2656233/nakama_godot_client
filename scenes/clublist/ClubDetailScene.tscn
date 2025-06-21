@@ -67,6 +67,7 @@ outline_color = Color(0.442911, 0.442911, 0.442911, 1)
 shadow_color = Color(0, 0, 0, 0.847059)
 
 [sub_resource type="SystemFont" id="SystemFont_5wsdl"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_vnwtm"]
 font = SubResource("SystemFont_5wsdl")

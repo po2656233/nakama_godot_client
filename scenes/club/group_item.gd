@@ -8,7 +8,12 @@ signal notification_toggled(group_data, enabled)
 var group_data: Dictionary
 var notify_id: int = 2
 
-var style = StyleBoxFlat.new()
+const CORNER_RADIUS = 8
+const SHADOW_COLOR = Color(0, 0, 0, 0.1)  # 半透明黑色阴影
+const SHADOW_SIZE = 2
+const SHADOW_OFFSET = Vector2(0, 1)
+const MOUSE_BUTTON_LEFT = 1  # 左键鼠标按钮索引
+
 # # 定义颜色常量
 const NORMAL_COLOR = Color(0.02, 0.388, 0.576)  # 普通状态为灰色
 const SELECTED_COLOR = Color(0, 0.149, 0.329) # 选中状态为黄色
@@ -93,15 +98,17 @@ func _update_notification_icon():
 
 
 func setup_panel_style(isSelected: bool):
+	var style = get_theme_stylebox("panel").duplicate()
 	style.bg_color = SELECTED_COLOR if isSelected else NORMAL_COLOR  
-	style.corner_radius_top_left = 8
-	style.corner_radius_top_right = 8
-	style.corner_radius_bottom_left = 8
-	style.corner_radius_bottom_right = 8
-	style.shadow_color = Color(0, 0, 0, 0.1)  # 半透明黑色阴影
-	style.shadow_size = 2
-	style.shadow_offset = Vector2(0, 1)
+	style.corner_radius_top_left = CORNER_RADIUS
+	style.corner_radius_top_right = CORNER_RADIUS
+	style.corner_radius_bottom_left = CORNER_RADIUS
+	style.corner_radius_bottom_right = CORNER_RADIUS
+	style.shadow_color = SHADOW_COLOR
+	style.shadow_size = SHADOW_SIZE
+	style.shadow_offset = SHADOW_OFFSET
 	add_theme_stylebox_override("panel", style)
+	
 	
 func get_group_data():
 	return group_data
