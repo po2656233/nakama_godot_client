@@ -1,6 +1,6 @@
 extends Node
 
-signal connection_state_changed(state: String)
+signal connect_state(state: String)
 signal session_failed()
 
 # For developers to set from the outside, for example:
@@ -13,8 +13,8 @@ var nakama_scheme: String = 'https'
 
 # For other scripts to access:
 var nakama_client: NakamaClient: get = get_nakama_client
-var nakama_session: NakamaSession: set = set_nakama_session
-var nakama_socket: NakamaSocket
+var nakama_session: NakamaSession: get = get_nakama_session, set = set_nakama_session
+var nakama_socket: NakamaSocket = null
 
 # Internal variable for initializing the socket.
 # var _nakama_socket_connecting := false
@@ -44,13 +44,41 @@ enum EnBroadcast{
 	LeaveTable = 4,
 	TableOnline = 5,
 }   
+###################################################################################
+# 获取NakamaClient
+func get_nakama_client() -> NakamaClient:
+	if nakama_client == null:
+		nakama_client = Nakama.create_client(
+			nakama_server_key,
+			nakama_host,
+			nakama_port,
+			nakama_scheme,
+			Nakama.DEFAULT_TIMEOUT,
+			NakamaLogger.LOG_LEVEL.ERROR)
+	return nakama_client
 
+func get_nakama_session() -> NakamaSession:
+	return nakama_session
+
+# 设置session
+func set_nakama_session(_nakama_session: NakamaSession) -> void:		
+	nakama_session = _nakama_session
+	if not nakama_session or  nakama_session.is_exception() or  nakama_session.is_expired():
+		# 获取到session后连接socket
+		_disconnect_socket()
+		push_warning("session is invalid:",nakama_session)
+		return
+	print("获取到session后连接socket _connect_socket")
+	await _connect_socket(_nakama_session)
+	pass
+
+###################################################################################
 # 初始化
 func _ready() -> void:
 	# Don't stop processing messages from Nakama when the game is paused.
 	Nakama.process_mode = Node.PROCESS_MODE_ALWAYS
 	_setup_reconnect_timer()
-	connection_state_changed.connect(_on_connection_state_changed)
+	connect_state.connect(_on_connect_state)
 	session_failed.connect(_on_reset_session)
 	# OnlineLogin.session_connected.connect(set_nakama_session)
 	pass
@@ -66,42 +94,14 @@ func _setup_reconnect_timer() -> void:
 	sendPing()
 	pass
 
-# 获取NakamaClient
-func get_nakama_client() -> NakamaClient:
-	if nakama_client == null:
-		nakama_client = Nakama.create_client(
-			nakama_server_key,
-			nakama_host,
-			nakama_port,
-			nakama_scheme,
-			Nakama.DEFAULT_TIMEOUT,
-			NakamaLogger.LOG_LEVEL.ERROR)
-	return nakama_client
-
-# 设置session
-func set_nakama_session(_nakama_session: NakamaSession) -> void:
-	if not _nakama_session:
-		_disconnect_socket()
-		return
-		
-	nakama_session = _nakama_session
-	if nakama_session and not nakama_session.is_exception() and not nakama_session.is_expired():
-		# 获取到session后连接socket
-		print("获取到session后连接socket _connect_socket")
-		_connect_socket()
-	else:
-		push_warning("session is invalid:",nakama_session)
-	pass
-
 # 重置session
 func _restore_session() -> void:
 	if _is_connecting or not nakama_session:
 		return
 		
-	_is_connecting = true
 	print("重置session")
-	connection_state_changed.emit("restoring_session")
-	
+	connect_state.emit("restoring_session")
+	_is_connecting = true
 	var restore_result = await nakama_client.session_refresh_async(nakama_session)
 	if restore_result.is_exception():
 		_is_connecting = false
@@ -109,44 +109,53 @@ func _restore_session() -> void:
 		session_failed.emit()
 		return
 	nakama_session = restore_result
-	await _connect_socket()
+	await _connect_socket(restore_result)
 	
 
 # 连接socket
-func _connect_socket() -> void:
-	if _is_connecting:
-		print("已连接")
+func _connect_socket(session) -> void:
+	if session == null:
+		push_warning("连接Nakama Socket失败: session is null")
 		return
-	if not nakama_session:
-		_on_reset_session()
+	# 如果已经连接，则不再连接
+	if nakama_socket and nakama_socket.is_connected_to_host():
+		print("Nakama Socket已经连接")
+		connect_state.emit("connected")
 		return
-	_is_connecting = true
+
+	# 创建 Nakama Socket
 	nakama_socket = Nakama.create_socket_from(nakama_client)
-	var result = await nakama_socket.connect_async(nakama_session)
+	if not nakama_socket:
+		push_warning("创建Nakama Socket失败")
+		return
+	# 连接 Nakama Socket
+	var result = await nakama_socket.connect_async(session)
 	if (result is int and result == ERR_FILE_EOF ):
-		# connection_state_changed.emit("socket_error")
+		# connect_state.emit("socket_error")
 		print("网络连接出错 ->", result)
 		_is_connecting = false
 		return
 	if result.is_exception():
-		print("网络连接出错 & ", result.get_exception().message)
+		print("网络连接出错 & ", session)
 		_is_connecting = false
 		return
+
+	# 连接成功
 	_is_connecting = is_socket_connected()
-	connection_state_changed.emit("connected")
+	connect_state.emit("connected")
+	print("连接Nakama Socket 是否成功:", _is_connecting)
 	
 	# 监听socket事件
-	nakama_socket.connection_error.connect(_on_socket_disconnected)
-	nakama_socket.connected.connect(_on_socket_connected)
-	nakama_socket.received_matchmaker_matched.connect(_on_received_matchmaker_matched)
-	nakama_socket.received_match_state.connect(_on_received_match_state)
-	nakama_socket.received_match_presence.connect(_on_received_match_presence)
-	nakama_socket.received_status_presence.connect(_on_received_status_presence)
-	nakama_socket.received_notification.connect(_on_received_notification)	
-	# nakama_socket.received_channel_presence.connect(_on_channel_presence)
-	nakama_socket.received_channel_message.connect(_on_received_message)
+	Util.safe_connect(nakama_socket, "connection_error", self, "_on_socket_disconnected")
+	Util.safe_connect(nakama_socket, "connected", self, "_on_socket_connected")
+	Util.safe_connect(nakama_socket, "received_matchmaker_matched", self, "_on_received_matchmaker_matched") # 监听好友状态
+	Util.safe_connect(nakama_socket, "received_match_state", self, "_on_received_match_state") # 监听好友状态
+	Util.safe_connect(nakama_socket, "received_match_presence", self, "_on_received_match_presence") # 监听好友状态
+	Util.safe_connect(nakama_socket, "received_status_presence", self, "_on_received_status_presence") # 监听好友状态
+	Util.safe_connect(nakama_socket, "received_notification", self, "_on_received_notification")
+	Util.safe_connect(nakama_socket, "received_channel_message", self, "_on_received_message")
+	# Util.safe_connect(nakama_socket, "received_channel_presence", self, "_on_channel_presence")
 	OnlineMatch._set_nakama_socket(nakama_socket)
-	print("成功连接 ",_is_connecting)
 	pass
 
 # 断开socket
@@ -160,11 +169,11 @@ func _disconnect_socket():
 #########################################################
 func _on_socket_disconnected(err) -> void:
 	_reset_reconnect_state()
-	connection_state_changed.emit("disconnected")
+	connect_state.emit("disconnected")
 	print("网络异常",err)
 
 func _on_socket_connected() -> void:
-	connection_state_changed.emit("connected")
+	connect_state.emit("connected")
 	print("网络已连接")
 	await sendDataRPC("ping")
 	# if lastSend.funcName != "":
@@ -177,10 +186,10 @@ func _on_reset_session():
 	OnlineLogin.relogin()
 	pass
 
-func _on_connection_state_changed(state: String):
+func _on_connect_state(state: String):
 	if state == "connected":
 		# 连接成功
-		#PopupManager.show_dynamic("连接成功")
+		PopupManager.show_dynamic("连接成功")
 		pass
 	elif state == "disconnected":
 		# 连接断开
@@ -291,15 +300,15 @@ func _attempt_reconnect() -> void:
 		return
 	if not nakama_session:
 		print("尝试重连-->无session")
-		connection_state_changed.emit("disconnected")
+		connect_state.emit("disconnected")
 		_on_reset_session()
 		return
 	# 超过重试次数后，重新登录
 	if nakama_session.is_valid() and _retry_count < RETRY_COUNT:
-		connection_state_changed.emit("reconnecting")
+		connect_state.emit("reconnecting")
 		print("尝试重连",_retry_count)
 		_retry_count += 1
-		await _connect_socket()
+		connect_nakama_socket()
 	else:
 		print("尝试重连-->重置session")
 		await _restore_session()
@@ -322,13 +331,11 @@ func force_reconnect() -> void:
 ##############################################################################################
 func connect_nakama_socket() -> void:
 	print("连接Nakama Socket")
-	_connect_socket()
+	await _connect_socket(nakama_session)
 	
 
 func is_nakama_socket_connected() -> bool:
-	#print("conncted")
 	return nakama_socket != null && nakama_socket.is_connected_to_host()
-
 
 ############################主动发送数据############################################################
 func sendPing():
@@ -343,10 +350,10 @@ func sendDataRPC(funcName: String, payload = null):
 	if nakama_socket:
 		var result = await nakama_socket.rpc_async(funcName, payload)
 		if result.is_exception():
-			# 显示中文提示信息
-			dowithErr(result,funcName)
 			lastSend.funcName = funcName
 			lastSend.payload = payload
+			# 显示中文提示信息
+			dowithErr(result,funcName)
 			return null
 		lastSend.funcName = ""
 		lastSend.payload = null
@@ -364,6 +371,8 @@ func dowithErr(result,funcName=""):
 	match msg:
 		"网络断开":
 			force_reconnect()
+			if _is_connecting and lastSend.funcName != "":
+				sendDataRPC(lastSend.funcName, lastSend.payload)
 		_:
 			print(msg)
 	return

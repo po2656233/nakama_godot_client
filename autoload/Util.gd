@@ -34,7 +34,30 @@ func Nakama_Call(caller: Object, method_name: String, args: Array, on_success: C
 	if on_success: on_success.call(result)
 	return true
 
+# 改进的安全连接函数
+func safe_connect(obj: Object, signal_name: String, target: Object, method: String) -> void:
+	# 检查socket是否有效
+	if not is_instance_valid(obj):
+		push_error("Attempted to connect to invalid socket instance")
+		return
 		
+	# 检查信号是否存在
+	if not obj.has_signal(signal_name):
+		push_error("Signal '%s' not found on object %s" % [signal_name, obj])
+		return
+	
+	var callable = Callable(target, method)
+	
+	# 安全断开：只断开已存在的连接
+	if obj.is_connected(signal_name, callable):
+		obj.disconnect(signal_name, callable)
+	
+	# 连接信号
+	var error = obj.connect(signal_name, callable)
+	if error != OK:
+		push_error("Failed to connect signal '%s': Error %d" % [signal_name, error])
+	pass
+# 
 func find_unique_name(parent: Node, prefix: String = '') -> String:
 	var name1: String
 	while true:
@@ -287,3 +310,40 @@ func norepeat(arr: Array) -> Array:
 	for item in arr:
 		dict[item] = item
 	return dict.keys() # dict.values()也可以
+
+
+
+# # 1. 初始化（无场景树）
+# func _init():
+# 	print("场景初始化")
+
+# # 2. 加入场景树
+# func _enter_tree():
+# 	print("进入场景树")
+
+# # 3. 准备就绪（所有子节点就绪）
+# func _ready():
+# 	print("场景准备就绪")
+# 	set_process(true)
+	
+# # 4. 每帧更新 虚拟 靠算力补充帧
+# func _process(delta):
+# 	pass
+	
+# # 5. 每物理帧更新
+# func _physics_process(delta):
+# 	pass
+
+# # 6. 输入处理
+# func _input(event):
+# 	if event is InputEventKey:
+# 		print("按键输入:", event.as_text())
+
+# # 7. 离开场景树
+# func _exit_tree():
+# 	print("离开场景树")
+
+# # 8. 删除前（最后清理）
+# func _notification(what):
+# 	if what == NOTIFICATION_PREDELETE:
+# 		print("场景即将销毁")

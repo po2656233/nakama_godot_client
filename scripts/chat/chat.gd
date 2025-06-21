@@ -155,11 +155,12 @@ func initData():
 ######################################################
 func _on_socket_connected():
 	print("连接成功,监听聊天 通知等消息")
+	# 使用示例 - 传入任意 socket 对象
 	if Online.nakama_socket:
-		Online.nakama_socket.received_channel_presence.connect(_on_channel_presence)
-		Online.nakama_socket.received_channel_message.connect(_on_received_message)
-		Online.nakama_socket.received_status_presence.connect(_on_status_presence) # 监听好友状态
-		Online.nakama_socket.received_notification.connect(_on_received_notify) # 监听好友状态
+		Util.safe_connect(Online.nakama_socket, "received_channel_presence", self, "_on_channel_presence")
+		Util.safe_connect(Online.nakama_socket, "received_channel_message", self, "_on_received_message")
+		Util.safe_connect(Online.nakama_socket, "received_status_presence", self, "_on_status_presence") # 监听好友状态
+		Util.safe_connect(Online.nakama_socket, "received_notification", self, "_on_received_notify")
 	pass
 
 func _on_show_addfriend_pressed() -> void:

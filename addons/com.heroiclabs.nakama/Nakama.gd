@@ -8,7 +8,7 @@ const DEFAULT_HOST : String = "127.0.0.1"
 const DEFAULT_PORT : int = 7350
 
 # The default timeout for the connections.
-const DEFAULT_TIMEOUT = 3
+const DEFAULT_TIMEOUT = 5
 
 # The default protocol scheme for the client connection.
 const DEFAULT_CLIENT_SCHEME : String = "http"

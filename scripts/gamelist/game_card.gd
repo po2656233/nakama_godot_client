@@ -91,7 +91,6 @@ func flip():
 	is_animating = false
 
 func _on_gui_input(event):
-	
 	# 处理滚轮事件
 	if event is InputEventMouseButton:
 		print('鼠标事件')

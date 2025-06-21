@@ -75,6 +75,15 @@ func _process(delta):
 		status_label.text = base_text + "".rpad(dot_count, ".")
 	pass
 
+func _exit_tree():
+	if is_matching:
+		print("离开前,停止匹配")
+		stop_matching()
+	pass
+		
+		
+
+#####################################################################
 func start_matching():
 	current_state = MatchState.MATCHING
 	is_matching = true

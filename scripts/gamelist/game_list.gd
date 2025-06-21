@@ -96,6 +96,8 @@ func _ready():
 	SignalManager.CancleGameSIG.connect(_on_game_cancel)
 	pass
 
+
+	
 # 添加游戏
 func on_add_game_data(data):
 	var card = game_card_scene.instantiate()

@@ -100,32 +100,30 @@ static func unserialize_players(_players: Dictionary) -> Dictionary:
 		result[key] = Player.from_dict(_players[key])
 	return result
 
+######################################################################################
+# 设置只读变量的函数
 func _set_readonly_variable(_value) -> void:
-	pass
-
-func set_match_id(mid):
-	match_id = mid
 	pass
 
 func _set_nakama_socket(_nakama_socket: NakamaSocket) -> void:
 	if nakama_socket == _nakama_socket:
 		return
-
-	if nakama_socket:
-		nakama_socket.disconnect("closed", Callable(self, "_on_nakama_closed"))
-		nakama_socket.disconnect("received_error", Callable(self, "_on_nakama_error"))
-		nakama_socket.disconnect("received_match_state", Callable(self, "_on_nakama_match_state"))
-		nakama_socket.disconnect("received_match_presence", Callable(self, "_on_nakama_match_presence"))
-		nakama_socket.disconnect("received_matchmaker_matched", Callable(self, "_on_nakama_matchmaker_matched"))
-
 	nakama_socket = _nakama_socket
 	if nakama_socket:
-		nakama_socket.connect("closed", Callable(self, "_on_nakama_closed"))
-		nakama_socket.connect("received_error", Callable(self, "_on_nakama_error"))
-		nakama_socket.connect("received_match_state", Callable(self, "_on_nakama_match_state"))
-		nakama_socket.connect("received_match_presence", Callable(self, "_on_nakama_match_presence"))
-		nakama_socket.connect("received_matchmaker_matched", Callable(self, "_on_nakama_matchmaker_matched"))
+		Util.safe_connect(nakama_socket, "closed", self, "_on_nakama_closed")
+		Util.safe_connect(nakama_socket, "received_error", self, "_on_nakama_error")
+		Util.safe_connect(nakama_socket, "received_match_state", self, "_on_nakama_match_state")
+		Util.safe_connect(nakama_socket, "received_match_presence", self, "_on_nakama_match_presence")
+		Util.safe_connect(nakama_socket, "received_matchmaker_matched", self, "_on_nakama_matchmaker_matched")
 
+func set_match_id(mid):
+	match_id = mid
+	pass
+
+func set_nakama_socket(_nakama_socket: NakamaSocket):
+	_set_nakama_socket(_nakama_socket)
+
+######################################################################################
 func create_match(_nakama_socket: NakamaSocket) -> void:
 	leave()
 	_set_nakama_socket(_nakama_socket)

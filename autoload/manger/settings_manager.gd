@@ -45,7 +45,7 @@ func show_settings(state: int = 0):
 func _on_hide_settings():
 	if settings_ui != null:
 		settings_ui.hide()
-		print("隐藏设置按钮")
+		# print("隐藏设置按钮")
 	pass
 
 
