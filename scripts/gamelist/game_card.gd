@@ -41,11 +41,17 @@ func _ready():
 	var index = randi() % 5
 	if index == 1 and not Util.isFullScreen():
 		index = 3
-		
+	_on_window_resized()
 	gameFrontImage.texture = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
+	 # 连接窗口大小改变信号
+	get_viewport().connect("size_changed", _on_window_resized)
+
+func _on_window_resized():
+	# 当窗口大小改变时，重新设置最小尺寸
+	set_custom_minimum_size(Vector2(get_viewport().size.x/3.5, get_viewport().size.y* 0.75))
 
 func setup(data):
 	game_data = data
@@ -93,11 +99,11 @@ func flip():
 func _on_gui_input(event):
 	# 处理滚轮事件
 	if event is InputEventMouseButton:
-		print('鼠标事件')
 		if event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
 			# 如果卡片是翻转状态且描述文本有滚动条
 			if description.get_v_scroll_bar().max_value > 0:
 				get_viewport().set_input_as_handled()
+				#accept_event()
 				return
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			 # 如果没有明显的拖动，则视为点击，且双击

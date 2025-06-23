@@ -153,7 +153,6 @@ _data = {
 font_color = Color(0.299859, 0.709815, 0.648078, 1)
 
 [node name="GameCard" type="PanelContainer"]
-custom_minimum_size = Vector2(450, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -427,7 +426,6 @@ offset_bottom = -12.736
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
-mouse_filter = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20

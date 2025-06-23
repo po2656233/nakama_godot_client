@@ -78,10 +78,6 @@ func send_message(content: Dictionary) -> Error:
 	var result = await Online.nakama_socket.write_chat_message_async(_current_channel.id, content)
 	if result.is_exception():
 		var error_message = result.get_exception().message
-		if error_message == "Must join channel before sending messages" and Online.nakama_socket:
-			var ret = await Online.nakama_socket.join_chat_async(_current_channel.id, _current_channel.type, true)
-			if not ret.is_exception():
-				send_message(content)  # 重新发送消息
 		print("Failed to send message: ", error_message)
 		return FAILED
 	print("发送反馈:",result)

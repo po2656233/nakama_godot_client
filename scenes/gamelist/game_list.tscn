@@ -72,7 +72,7 @@ theme_override_constants/margin_bottom = 40
 [node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 150
 
 [node name="Matching" parent="." instance=ExtResource("2_kgill")]
 visible = false

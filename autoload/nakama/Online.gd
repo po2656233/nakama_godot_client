@@ -37,6 +37,15 @@ var lastSend = {
 	"payload":null,
 }
 
+var socket_state = {
+	"connected":"连接成功",
+	"disconnected":"连接断开",
+	"reconnecting":"正在重连...",
+	"restoring_session":"正在恢复会话...",
+	"socket_error":"网络连接出错...",
+}
+
+
 enum EnBroadcast{
 	CreateTable = 1,
 	RemoveTable = 2,
@@ -187,31 +196,10 @@ func _on_reset_session():
 	pass
 
 func _on_connect_state(state: String):
-	var hint = ""
-	match state:
-		"connected":
-			# 连接成功
-			# hint = "连接成功"
-			return
-		"disconnected":
-			# 连接断开
-			hint = "连接断开"
-			pass
-		"reconnecting":
-			# 正在重连
-			hint = "正在重连..."
-			pass
-		"restoring_session":
-			# 正在恢复会话
-			hint = "正在恢复会话..."
-			pass
-		"socket_error":
-			hint = "网络连接出错..."
-			pass
-		_:
-			push_warning("未知的连接状态:", state)
-			return
-	PopupManager.show_dynamic(hint)
+	if socket_state.has(state) and state != "connected":
+		PopupManager.show_dynamic(socket_state[state])
+		return
+	push_warning("未知的连接状态:", state)
 	pass
 	
 
@@ -330,6 +318,7 @@ func is_socket_connected() -> bool:
 
 func force_reconnect() -> void:
 	_reset_reconnect_state()
+	# _disconnect_socket()
 	_attempt_reconnect()
 
 # func _notification(what: int) -> void:
@@ -363,16 +352,17 @@ func sendDataRPC(funcName: String, payload = null):
 			lastSend.funcName = funcName
 			lastSend.payload = payload
 			# 显示中文提示信息
-			dowithErr(result,funcName)
+			if not dowithErr(result,funcName):
+				return await sendDataRPC(lastSend.funcName, lastSend.payload)
 			return null
 		lastSend.funcName = ""
 		lastSend.payload = null
 		return result
 	return null
 
-func dowithErr(result,funcName=""):
+func dowithErr(result,funcName="")-> bool:
 	if not result.is_exception():
-		return
+		return true
 	var msg = result.get_exception().message
 	print("RPC异常:",result)
 	msg = Errors.ResponeMapping.get(msg, msg)
@@ -381,8 +371,9 @@ func dowithErr(result,funcName=""):
 	match msg:
 		"网络断开":
 			force_reconnect()
-			if _is_connecting and lastSend.funcName != "":
-				sendDataRPC(lastSend.funcName, lastSend.payload)
+			print("成功连接, 重新访问接口:",lastSend.funcName)
+			if _is_connecting:
+				return false
 		_:
 			print(msg)
-	return
+	return true
