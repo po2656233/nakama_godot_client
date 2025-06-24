@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://riqfmggkqphd"]
 
 [ext_resource type="Script" uid="uid://kx25p5qusb28" path="res://scripts/1common/rotating_texture.gd" id="1_xxxxx"]
-[ext_resource type="Texture2D" uid="uid://nd0eyr182pkm" path="res://assets/bg/bg_login.png" id="2_ugvp3"]
+[ext_resource type="Texture2D" uid="uid://cwq34fb26ym2g" path="res://assets/bg/bg_hall.jpg" id="2_ugvp3"]
 
 [node name="RotatingTexture" type="Control"]
 layout_mode = 3
@@ -24,4 +24,3 @@ grow_vertical = 2
 custom_minimum_size = Vector2(350, 200)
 layout_mode = 2
 texture = ExtResource("2_ugvp3")
-expand_mode = 1

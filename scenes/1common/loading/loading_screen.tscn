@@ -1,7 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6j8y8j4q4q"]
+[gd_scene load_steps=11 format=3 uid="uid://b6j8y8j4q4q"]
 
 [ext_resource type="Script" uid="uid://btufsoo8tr6p1" path="res://scripts/1common/loading/loading_screen.gd" id="1_2gkkn"]
 [ext_resource type="Texture2D" uid="uid://dny80a2kosy2u" path="res://assets/bg/bg_login.jpg" id="2_hsgnm"]
+[ext_resource type="PackedScene" uid="uid://egr5pjwvrrk5" path="res://scenes/1common/gridanimation/board.tscn" id="3_hsgnm"]
+
+[sub_resource type="SystemFont" id="SystemFont_hsgnm"]
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ngnld"]
 bg_color = Color(0.211765, 0.643137, 0.792157, 1)
@@ -32,9 +36,6 @@ shadow_color = Color(0.353135, 0.675318, 0.598314, 0.6)
 shadow_size = 3
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="SystemFont" id="SystemFont_hsgnm"]
-subpixel_positioning = 0
-
 [sub_resource type="SystemFont" id="SystemFont_2gkkn"]
 subpixel_positioning = 0
 
@@ -44,6 +45,7 @@ font_size = 46
 font_color = Color(0.41623, 0.671764, 0.569814, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_1ji86"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_2d1qb"]
 font = SubResource("SystemFont_1ji86")
@@ -77,7 +79,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
+offset_top = -56.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_left = 15
@@ -87,25 +89,25 @@ theme_override_constants/margin_right = 15
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.906102, 0.890042, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 20
+theme_override_fonts/font = SubResource("SystemFont_hsgnm")
+theme_override_font_sizes/font_size = 24
+text = "Load... 0%"
+horizontal_alignment = 1
+
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_ngnld")
 theme_override_styles/fill = SubResource("StyleBoxFlat_tlhce")
 show_percentage = false
 
-[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.821723, 0.791818, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 20
-theme_override_fonts/font = SubResource("SystemFont_hsgnm")
-theme_override_font_sizes/font_size = 28
-text = "Load... 0%"
-horizontal_alignment = 1
-
-[node name="Label" type="Label" parent="."]
+[node name="rightwrong" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -115,19 +117,34 @@ text = "正    反"
 label_settings = SubResource("LabelSettings_hsgnm")
 horizontal_alignment = 3
 
-[node name="Label2" type="Label" parent="."]
+[node name="noway" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
+offset_left = -72.0
 offset_top = -36.5
-offset_right = 50.0
+offset_right = 72.0
 offset_bottom = 36.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "无    不"
 label_settings = SubResource("LabelSettings_2d1qb")
 horizontal_alignment = 1
+
+[node name="board" parent="." instance=ExtResource("3_hsgnm")]
+custom_minimum_size = Vector2(1100, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -500.0
+offset_top = 25.0
+offset_right = 500.0
+offset_bottom = 25.4
+grow_vertical = 1
+size_flags_horizontal = 4
+widthLen = 20

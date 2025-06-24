@@ -3,7 +3,7 @@ extends Control
 
 @onready var progress_bar = $MarginContainer/VBoxContainer/ProgressBar
 @onready var progress_label = $MarginContainer/VBoxContainer/ProgressLabel
-
+@onready var board = $board
 var progress: float = 0.0
 var target_progress: float = 0.0
 var current: float = 0.0
@@ -93,7 +93,7 @@ func close_loading():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	if load_type == LOAD_TEPE.LOADING:
-		SceneManager.switch_to_scene(next_scene, "custom", 0.2)
+		SceneManager.switch_to_scene(next_scene, "tile_reveal", 1)
 	elif load_type == LOAD_TEPE.LOAD_GAME:
 		SceneManager.ToGameScene(next_scene)
 	queue_free()
