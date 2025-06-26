@@ -146,15 +146,20 @@ func _on_auth_failure(error):
 
 func _on_auth_failure_dev(error):
 	print("获取 Authentication failed: ", error)
+	if error == "HTTPRequest failed!":
+		login_failed.emit(error)
+		return
 	if _first_dev_login:
 		_first_dev_login = false
+		print("第一次设备登录")
 	else:
+		print("第二次设备登录")
 		login_failed.emit(error)
-		_first_dev_login = true
 		
 
 func _on_login_fail(err):
 	reset()
+	_first_dev_login = true
 	if err == "HTTPRequest failed!":
 		err = "网络连接失败，请检查您的网络设置"
 	elif err == "Invalid session.":

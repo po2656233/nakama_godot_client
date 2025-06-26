@@ -66,9 +66,9 @@ func _on_tr_devlogin_pressed() -> void:
 	# wechatLogin()
 	pass
 
-func _on_login_failed():
+func _on_login_failed(err):
 	loading.Hide()
-	print("Login failed")
+	print("Login failed",err)
 	pass # Replace with function body.
 
 # 处理HTTP响应

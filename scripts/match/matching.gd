@@ -197,7 +197,7 @@ func _on_match_success():
 func _on_match_failed():
 	current_state = MatchState.FAILED
 	is_matching = false
-	status_label.text = "匹配到的房间已关闭,请重试"
+	status_label.text = "房间已关闭,请重试"
 	cancel_button.visible = true
 	start_button.visible = true
 	animation_player.play("failed_shake")

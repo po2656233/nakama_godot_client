@@ -71,7 +71,7 @@ func authenticate_email(username: String,password: String,email: String="",  cre
 
 # 发送消息
 func send_message(content: Dictionary) -> Error:
-	if not _current_channel:
+	if _current_channel == null:
 		print("Not in a chat channel")
 		return FAILED
 	print("发送前确认:",_current_channel.id," 内容:",content)

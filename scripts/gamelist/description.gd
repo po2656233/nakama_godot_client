@@ -16,14 +16,12 @@ var scroll_bar: VScrollBar
 func _ready():
 	# 获取滚动条引用
 	scroll_bar = get_v_scroll_bar()
+	
 	# 确保控件可以接收鼠标事件
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	# 设置滚动速度（可选）
 	scroll_active = true
 	scroll_following = true
-	
-	# 确保控件可以接收事件
-	mouse_filter = Control.MOUSE_FILTER_PASS
 	
 func _input(event):
 	if event is InputEventMouseButton:

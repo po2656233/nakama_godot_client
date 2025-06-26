@@ -58,6 +58,7 @@ func setup(data):
 	gameTitle.text = data.title
 	introduceTitle.text = data.name
 	description.text = data.description
+	description.scroll_bar.value_changed.emit(0.0)
 	var img = load("res://assets/game/flagItem/%d.png"%[randi() % 5])
 	gameBackImage.texture = img
 	# gameImage.texture = img

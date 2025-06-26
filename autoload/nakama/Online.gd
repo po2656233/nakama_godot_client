@@ -371,7 +371,9 @@ func dowithErr(result,funcName="")-> bool:
 	match msg:
 		"网络断开":
 			force_reconnect()
-			print("成功连接, 重新访问接口:",lastSend.funcName)
+			print("成功连接:",_is_connecting," 重新访问接口:",lastSend.funcName)
+			if not _is_connecting:
+				_restore_session()
 			if _is_connecting:
 				return false
 		_:

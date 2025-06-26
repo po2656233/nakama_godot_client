@@ -4,6 +4,24 @@
 [ext_resource type="Texture2D" uid="uid://dny80a2kosy2u" path="res://assets/bg/bg_login.jpg" id="2_hsgnm"]
 [ext_resource type="PackedScene" uid="uid://egr5pjwvrrk5" path="res://scenes/1common/gridanimation/board.tscn" id="3_hsgnm"]
 
+[sub_resource type="SystemFont" id="SystemFont_2gkkn"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_hsgnm"]
+font = SubResource("SystemFont_2gkkn")
+font_size = 46
+font_color = Color(0.41623, 0.671764, 0.569814, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_1ji86"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_2d1qb"]
+font = SubResource("SystemFont_1ji86")
+font_size = 50
+font_color = Color(0.492538, 0.733682, 0.423409, 1)
+outline_size = 2
+shadow_size = 2
+
 [sub_resource type="SystemFont" id="SystemFont_hsgnm"]
 subpixel_positioning = 0
 
@@ -36,24 +54,6 @@ shadow_color = Color(0.353135, 0.675318, 0.598314, 0.6)
 shadow_size = 3
 shadow_offset = Vector2(2, 2)
 
-[sub_resource type="SystemFont" id="SystemFont_2gkkn"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_hsgnm"]
-font = SubResource("SystemFont_2gkkn")
-font_size = 46
-font_color = Color(0.41623, 0.671764, 0.569814, 1)
-
-[sub_resource type="SystemFont" id="SystemFont_1ji86"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_2d1qb"]
-font = SubResource("SystemFont_1ji86")
-font_size = 50
-font_color = Color(0.492538, 0.733682, 0.423409, 1)
-outline_size = 2
-shadow_size = 2
-
 [node name="LoadingScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -72,6 +72,47 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_hsgnm")
 expand_mode = 1
+
+[node name="rightwrong" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 68.0
+grow_horizontal = 2
+text = "正    反"
+label_settings = SubResource("LabelSettings_hsgnm")
+horizontal_alignment = 3
+
+[node name="noway" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = 2.5
+offset_right = 72.0
+offset_bottom = 75.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "无    不"
+label_settings = SubResource("LabelSettings_2d1qb")
+horizontal_alignment = 1
+
+[node name="board" parent="." instance=ExtResource("3_hsgnm")]
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.122
+anchor_right = 0.5
+anchor_bottom = 0.122
+offset_left = -275.0
+offset_top = -0.0560074
+offset_right = 275.0
+offset_bottom = -0.0560074
+size_flags_horizontal = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -106,45 +147,3 @@ size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_ngnld")
 theme_override_styles/fill = SubResource("StyleBoxFlat_tlhce")
 show_percentage = false
-
-[node name="rightwrong" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 68.0
-grow_horizontal = 2
-text = "正    反"
-label_settings = SubResource("LabelSettings_hsgnm")
-horizontal_alignment = 3
-
-[node name="noway" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -72.0
-offset_top = -36.5
-offset_right = 72.0
-offset_bottom = 36.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "无    不"
-label_settings = SubResource("LabelSettings_2d1qb")
-horizontal_alignment = 1
-
-[node name="board" parent="." instance=ExtResource("3_hsgnm")]
-custom_minimum_size = Vector2(1100, 0)
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.0
-offset_left = -500.0
-offset_top = 25.0
-offset_right = 500.0
-offset_bottom = 25.4
-grow_vertical = 1
-size_flags_horizontal = 4
-widthLen = 20
