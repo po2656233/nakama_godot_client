@@ -222,6 +222,7 @@ func relogin():
 # 退出
 func logout():
 	reset()
+	OnlineGame.initGameList()
 	_first_dev_login = true
 	if Online.nakama_client and Online.nakama_session:
 		Online.nakama_client.session_logout_async(Online.nakama_session)

@@ -52,6 +52,7 @@ var games_data =[
 	 	#"image": "",
 	 #}
 ]
+
 		
 func _ready(): 
 	print("当前运行的节点名",SceneManager.get_current_scene_name())
@@ -97,7 +98,6 @@ func _ready():
 	pass
 
 
-	
 # 添加游戏
 func on_add_game_data(data):
 	var card = game_card_scene.instantiate()

@@ -37,7 +37,8 @@ var kind_en_names = {
 # 	"match_list"
 # ]
 #####################################################################
-
+func initGameList():
+	games_data = []
 # 获取数据
 func RpcData(funcName, payload:Dictionary={}):
 	# if not rpc_funcs.has(funcName):
@@ -103,12 +104,15 @@ func removeTable(payload):
 ########################################################################################
 # 获取游戏列表
 func getGameList(kind:int=-1):
-	if games_data.size() > 0:
-		return games_data
+	# 每次都加载最新的
+	#if games_data.size() > 0:
+		#return games_data
 	var result = await RpcListData("list_games",{"kid":kind}, "id")
 	if result.size() > 0:
 		games_data = result
 	return result
+
+
 
 # 获取收藏列表
 func getFavoriteList():

@@ -199,7 +199,7 @@ func _on_connect_state(state: String):
 	if socket_state.has(state) and state != "connected":
 		PopupManager.show_dynamic(socket_state[state])
 		return
-	push_warning("未知的连接状态:", state)
+	#push_warning("未知的连接状态:", state)
 	pass
 	
 
@@ -353,6 +353,7 @@ func sendDataRPC(funcName: String, payload = null):
 			lastSend.payload = payload
 			# 显示中文提示信息
 			if not dowithErr(result,funcName):
+				await get_tree().create_timer(1.0).timeout
 				return await sendDataRPC(lastSend.funcName, lastSend.payload)
 			return null
 		lastSend.funcName = ""

@@ -48,6 +48,7 @@ func _ready():
 	gui_input.connect(_on_gui_input)
 	 # 连接窗口大小改变信号
 	get_viewport().connect("size_changed", _on_window_resized)
+	
 
 func _on_window_resized():
 	# 当窗口大小改变时，重新设置最小尺寸
@@ -65,7 +66,7 @@ func setup(data):
 	if data.image:
 		for dragonBones in gameLogos:
 			DataManager.safe_free_node(dragonBones)
-		gameImage.texture = await Util.load_texture_async(data.image,225,225)
+		gameImage.texture = await Util.load_texture_async(data.image,255,255)
 	else:
 		# gameImage.texture = img
 		var logoLen = gameLogos.size()
