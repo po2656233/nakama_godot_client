@@ -102,4 +102,3 @@ func get_all_pieces():
 	for line in get_lines():
 		pieces.append_array(line.get_children())
 	return pieces
-

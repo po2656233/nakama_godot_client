@@ -30,6 +30,9 @@ var full_style_path = "res://styles/full_style.tres"
 
 var hover_tween: Tween
 var pulse_tween: Tween
+var click_tween: Tween
+var button_tween: Tween
+var rotation_tween: Tween
 var room_data: Dictionary = {}  # 初始化为空字典
 var is_favorite: bool = false:
 	set(value):
@@ -181,20 +184,23 @@ func _on_gui_input(event: InputEvent):
 	# 	scale_tween.tween_property(self, "scale", Vector2(1, 1), 0.1) 
 
 func _on_join_button_pressed():
+	# 这里可以发送加入房间的信号
+	join_room.emit(room_data)
+	print("加入房间：", room_data.get("room_name", ""))
 	# 点击动画
-	var click_tween = create_tween()
+	if click_tween:
+		click_tween.kill()
+	click_tween = create_tween()
 	click_tween.tween_property(self, "scale", Vector2(0.95, 0.95), 0.1)
 	click_tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)
 	
 	# 按钮动画
-	var button_tween = create_tween()
+	if button_tween:
+		button_tween.kill()
+	button_tween = create_tween()
 	button_tween.tween_property(join_button, "modulate", Color(1.2, 1.2, 1.2), 0.1)
 	button_tween.tween_property(join_button, "modulate", Color(1, 1, 1), 0.1)
-	
-	
-	# 这里可以发送加入房间的信号
-	join_room.emit(room_data)
-	print("加入房间：", room_data.get("room_name", ""))
+	pass
 
 func _on_favorite_button_toggled(_button_pressed: bool):
 	var result = await OnlineGame.favoriteTable({
@@ -207,7 +213,9 @@ func _on_favorite_button_toggled(_button_pressed: bool):
 	
 	
 	# 添加收藏动画
-	var rotation_tween = create_tween()
+	if rotation_tween:
+		rotation_tween.kill()
+	rotation_tween = create_tween()
 	if is_favorite:
 		rotation_tween.tween_property(favorite_button, "rotation", PI * 2, 0.5)
 	else:

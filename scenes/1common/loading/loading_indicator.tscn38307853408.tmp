@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbvyiicbjfxns"]
+
+[ext_resource type="Script" uid="uid://c667xns8gouqk" path="res://scripts/1common/loading/loading_indicator.gd" id="1_1x8g9"]
+
+[node name="LoadingIndicator" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("1_1x8g9")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05

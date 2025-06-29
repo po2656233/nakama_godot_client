@@ -60,7 +60,7 @@ func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
 	if _ws.get_ready_state() == WebSocketPeer.STATE_OPEN:
 		var ret = _ws.send(p_buffer, WebSocketPeer.WRITE_MODE_TEXT)
 		if ret != OK:
-			print('网络错误',ret) 
+			print('网络错误 ',ret) 
 		return ret
 	return FAILED
 

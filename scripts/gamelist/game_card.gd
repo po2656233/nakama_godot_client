@@ -34,7 +34,7 @@ var is_animating = false
 # 滑动相关变量
 var drag_start_position = Vector2.ZERO
 var is_dragging = false
-var min_swipe_distance = 100  # 最小滑动距离
+var min_swipe_distance = 300  # 最小滑动距离
 #
 func _ready():
 	gameLogos = [ dragonBones1, dragonBones2, dragonBones3, dragonBones4, dragonBones5, dragonBones6, dragonBones7]

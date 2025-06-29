@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqxvn8yqxqxqx"]
+
+[ext_resource type="Script" uid="uid://cif6yamscqobf" path="res://scripts/1common/loading/circular/load_circular.gd" id="1_0x8yq"]
+[ext_resource type="Script" uid="uid://ba31u0c3qgf0f" path="res://scripts/1common/loading/circular/circular_progress.gd" id="2_1x9yq"]
+
+[node name="loading_circular" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0x8yq")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="CircularProgress" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -58.0
+offset_right = 58.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_1x9yq")
+progress_color = Color(0.2, 0.8, 1, 1)
+background_color = Color(0.3, 0.3, 0.3, 0.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "准备就绪"
+horizontal_alignment = 1
+
+[node name="ProgressLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "进度: 0%"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "开始加载"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 50.0
+offset_right = 100.0
+offset_bottom = 80.0
+grow_horizontal = 2
+text = "圆形加载进度控件  正常使用请复制CircularProgress节点"
+horizontal_alignment = 1
