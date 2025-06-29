@@ -20,7 +20,7 @@ subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_d6prt"]
 font = SubResource("SystemFont_iwbqy")
-font_color = Color(1, 0.843137, 0, 1)
+font_color = Color(0.263992, 0.216563, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3edv"]
 draw_center = false

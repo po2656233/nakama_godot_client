@@ -103,16 +103,15 @@ horizontal_alignment = 1
 [node name="board" parent="." instance=ExtResource("3_hsgnm")]
 custom_minimum_size = Vector2(550, 0)
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.617
-anchor_right = 0.0
-anchor_bottom = 0.617
-offset_left = 50.0
-offset_top = 0.18396
-offset_right = 600.0
-offset_bottom = 0.18396
-grow_horizontal = 1
-grow_vertical = 0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -275.0
+offset_top = 50.0
+offset_right = 275.0
+offset_bottom = 50.0
+grow_vertical = 1
 size_flags_horizontal = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

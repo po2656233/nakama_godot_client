@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    <title>{{{ GAME_TITLE }}}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            overflow: hidden;
+        }
+        #canvas {
+            display: block;
+            margin: 0 auto;
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">正在加载游戏...</div>
+    <canvas id="canvas" oncontextmenu="return false;"></canvas>
+    <script>
+        // 检查Cross-Origin Isolation支持
+        if (!crossOriginIsolated) {
+            console.warn('Cross-Origin Isolation is not enabled. Some features may not work properly.');
+        }
+        
+        // 检查SharedArrayBuffer支持
+        if (typeof SharedArrayBuffer === 'undefined') {
+            console.warn('SharedArrayBuffer is not available. Some features may not work properly.');
+        }
+        
+        // 隐藏加载提示
+        window.addEventListener('load', function() {
+            document.getElementById('loading').style.display = 'none';
+        });
+    </script>
+    {{{ SCRIPT }}}
+</body>
+</html> 
