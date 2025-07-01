@@ -225,12 +225,10 @@ func _on_socket_connected() -> void:
 	_stop_continuous_session_reset()  # 确保停止持续重置
 	connect_state.emit("connected")
 	print("网络已连接")
-	
-	# 重连成功后，重试所有待处理的请求
-	_retry_pending_requests()
-	
 	# 发送心跳确认连接
 	await sendPing()
+	# 重连成功后，重试所有待处理的请求
+	_retry_pending_requests()
 	pass
 
 func _on_reset_session():
@@ -410,7 +408,7 @@ func sendDataRPC(funcName: String, payload = null):
 		# 请求成功，清除重试计数
 		_clear_request_retry_count(funcName)
 		return result
-	
+	print("nakama_socket is null:", funcName, payload)
 	return null
 
 # 添加请求到待处理队列

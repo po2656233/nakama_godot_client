@@ -113,8 +113,9 @@ func load_data() -> void:
 		var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 		if file:
 			var bytes = file.get_buffer(file.get_length())
-			cached_data.clear()
-			cached_data = bytes_to_var(bytes)
+			if not bytes.is_empty() and bytes[0] != 0:
+				cached_data.clear()
+				cached_data = bytes_to_var(bytes)
 			file.close()
 
 # 设置数据

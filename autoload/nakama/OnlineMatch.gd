@@ -413,11 +413,11 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 
 func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 	var test_json_conv = JSON.new()
-	var error_code = test_json_conv.parse(data.data)
+	var error_code =  test_json_conv.parse(data.data)
 	if error_code != OK:
-		print("Error parsing JSON: " + test_json_conv.get_error_message())
+		print("Error parsing JSON: " + test_json_conv.get_error_message()," ---",data)
 		# Handle the error here (e.g., return, show a message)
-		return
+		# return
 	var json_result = test_json_conv.get_data()
 	print('玩家状态信息:',json_result)
 	var content = json_result
@@ -452,6 +452,7 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 		if content['target'] == my_session_id:
 			leave()
 			emit_signal("error", content['reason'])
+	pass
 
 
 ##############################################################################################################################
