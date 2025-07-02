@@ -13,3 +13,15 @@ var ResponeMapping = {
 	"RPC function not found": "服务器未处理",
 	"Request cancelled.":"网络断开",
 }
+
+
+var NetworkErrors = [
+		"网络断开",
+		"连接失败", 
+		"连接超时",
+		"HTTPRequest failed!",
+		"Invalid session.",
+		"Session expired.",
+		"Request cancelled.",
+		"RPC function not found",
+	]

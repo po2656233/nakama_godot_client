@@ -109,9 +109,9 @@ func _setup_timers() -> void:
 	_ping_timer.start(RECONNECT_INTERVAL)
 	
 	# Session重置定时器
-	_session_reset_timer = Timer.new()
-	_session_reset_timer.timeout.connect(_attempt_session_reset)
-	add_child(_session_reset_timer)
+	#_session_reset_timer = Timer.new()
+	#_session_reset_timer.timeout.connect(_attempt_session_reset)
+	#add_child(_session_reset_timer)
 	
 	# 立即发送第一次心跳
 	sendPing()
@@ -160,6 +160,7 @@ func _connect_socket(session) -> void:
 		push_warning("创建Nakama Socket失败")
 		_is_connecting = false
 		return
+
 	# 连接 Nakama Socket
 	var result = await nakama_socket.connect_async(session)
 	if (result is int and result == ERR_FILE_EOF ):
@@ -332,7 +333,7 @@ func _attempt_reconnect() -> void:
 		return
 	if not nakama_session:
 		print("尝试重连-->无session")
-		connect_state.emit("disconnected")
+		# connect_state.emit("disconnected")
 		_on_reset_session()
 		return
 		
@@ -341,12 +342,12 @@ func _attempt_reconnect() -> void:
 		connect_state.emit("reconnecting")
 		print("尝试重连", _retry_count + 1, "/", RETRY_COUNT)
 		_retry_count += 1
-		_is_connecting = true
-		connect_nakama_socket()
+		await _restore_session()
 	else:
 		print("重试次数已达上限，开始重置session")
 		_retry_count = 0  # 重置重试计数
-		await _restore_session()
+		await _on_reset_session()
+		connect_nakama_socket()
 	pass
 
 
@@ -442,16 +443,7 @@ func _should_retry_request(result, funcName: String) -> bool:
 		return false
 	
 	# 网络相关错误才重试
-	var network_errors = [
-		"网络断开",
-		"连接失败", 
-		"连接超时",
-		"HTTPRequest failed!",
-		"Invalid session.",
-		"Session expired."
-	]
-	
-	for error in network_errors:
+	for error in Errors.NetworkErrors:
 		if msg.contains(error):
 			_request_retry_count[funcName] = retry_count + 1
 			print("网络错误，将重试请求:", funcName, "重试次数:", retry_count + 1)
@@ -541,7 +533,7 @@ func _stop_continuous_session_reset() -> void:
 	if _session_reset_timer:
 		_session_reset_timer.stop()
 	_is_resetting_session = false
-	print("停止持续重置session")
+	# print("停止持续重置session")
 	pass
 
 # 尝试重置session（持续重置用）
