@@ -25,6 +25,17 @@ const RETRY_COUNT := 5	 # 重试次数
 const PING_TIMEOUT := 20.0     # 心跳超时时间
 const REQUEST_RETRY_LIMIT := 3 # 单个请求最大重试次数
 const SESSION_RESET_INTERVAL := 1.0  # Session重置间隔（秒）
+const RECONNECT_LIMIT := 5  # 最大自动重连尝试次数
+
+# 这些接口不会在断线重连后自动恢复
+const NON_RETRY_API: Array = [
+	"authenticate_email_async",
+	"authenticate_device_async",
+	"register_account",
+	"login",
+	"do_login",
+	"do_device_login"
+]
 
 # 状态变量
 var _retry_count := 0
@@ -33,7 +44,7 @@ var _is_connecting := false
 var _is_connected := false
 var _reconnect_timer: Timer
 var _ping_timer: Timer
-var _session_reset_timer: Timer  # Session重置定时器
+#var _session_reset_timer: Timer  # Session重置定时器
 var _pending_requests: Array = []  # 待重试的请求队列
 var _last_ping_time := 0.0
 var _request_retry_count: Dictionary = {}  # 记录每个请求的重试次数
@@ -123,7 +134,7 @@ func _restore_session() -> void:
 		return
 		
 	print("重置session")
-	connect_state.emit("restoring_session")
+	# connect_state.emit("restoring_session")
 	_is_connecting = true
 	_is_resetting_session = true
 	
@@ -168,11 +179,11 @@ func _connect_socket(session) -> void:
 		_is_connecting = false
 		_on_socket_disconnected("连接失败")
 		return
-	# if result.is_exception():
-	# 	print("网络连接出错 & ", session)
-	# 	_is_connecting = false
-	# 	_on_socket_disconnected("连接异常")
-	# 	return
+	if result.is_exception():
+		print("网络连接出错 & ", session)
+		_is_connecting = false
+		_on_socket_disconnected("连接异常")
+		return
 
 	# 连接成功
 	_is_connecting = false
@@ -332,14 +343,11 @@ func _attempt_reconnect() -> void:
 	if _is_connecting:
 		return
 	if not nakama_session:
-		print("尝试重连-->无session")
 		# connect_state.emit("disconnected")
 		_on_reset_session()
 		return
-		
-	# 超过重试次数后，重置session
+	# 只有session失效时才重置session
 	if nakama_session.is_valid() and _retry_count < RETRY_COUNT:
-		connect_state.emit("reconnecting")
 		print("尝试重连", _retry_count + 1, "/", RETRY_COUNT)
 		_retry_count += 1
 		await _restore_session()
@@ -363,7 +371,7 @@ func force_reconnect() -> void:
 # 	if what == NOTIFICATION_APPLICATION_FOCUS_IN or what == NOTIFICATION_APPLICATION_RESUMED:
 # 		# 当游戏窗口重新获得焦点时检查连接
 # 		if not is_socket_connected():
-# 			_start_reconnect()
+# 			connect_nakama_socket()
 # 	pass
 ##############################################################################################
 func connect_nakama_socket() -> void:
@@ -380,7 +388,7 @@ func sendPing():
 		var result = await nakama_socket.rpc_async("ping")
 		if result.is_exception():
 			print("发送心跳失败:", result.get_exception().message)
-			# _last_ping_time = 0.0  # 重置心跳时间，触发重连检查
+			_last_ping_time = 0.0  # 重置心跳时间，触发重连检查
 		else:
 			_last_ping_time = Time.get_unix_time_from_system()
 			print("心跳发送成功:", _last_ping_time)
@@ -388,25 +396,24 @@ func sendPing():
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):
 	print("发送RPC:", funcName, payload)
-	
-	# 如果连接断开，将请求加入队列
 	if not _is_connected or not is_socket_connected():
+		if funcName in NON_RETRY_API:
+			PopupManager.show_dynamic("%s 失败: 网络断开" % funcName)
+			return null
 		_add_to_pending_requests(funcName, payload)
 		return null
-	
 	if nakama_socket:
 		var result = await nakama_socket.rpc_async(funcName, payload)
 		if result.is_exception():
-			# 处理网络相关错误，将请求加入重试队列
+			if funcName in NON_RETRY_API:
+				_handle_request_error(result, funcName)
+				return null
 			if _should_retry_request(result, funcName):
 				_add_to_pending_requests(funcName, payload)
 				return null
 			else:
-				# 其他错误直接显示
 				_handle_request_error(result, funcName)
 				return null
-		
-		# 请求成功，清除重试计数
 		_clear_request_retry_count(funcName)
 		return result
 	print("nakama_socket is null:", funcName, payload)
@@ -414,19 +421,20 @@ func sendDataRPC(funcName: String, payload = null):
 
 # 添加请求到待处理队列
 func _add_to_pending_requests(funcName: String, payload = null) -> void:
-	var request = {
+	if funcName in NON_RETRY_API:
+		print("接口", funcName, "配置为不自动重试，不加入重试队列")
+		return
+	var requests = {
 		"funcName": funcName,
 		"payload": payload,
 		"timestamp": Time.get_unix_time_from_system()
 	}
-	
 	# 检查是否已存在相同请求，避免重复
 	for existing_request in _pending_requests:
 		if existing_request.funcName == funcName and existing_request.payload == payload:
 			print("请求已存在于队列中:", funcName)
 			return
-	
-	_pending_requests.append(request)
+	_pending_requests.append(requests)
 	print("请求已加入重试队列:", funcName, "队列长度:", _pending_requests.size())
 
 # 判断是否应该重试请求
@@ -476,11 +484,11 @@ func _retry_pending_requests() -> void:
 	var requests_to_retry = _pending_requests.duplicate()
 	_pending_requests.clear()
 	
-	for request in requests_to_retry:
-		print("重试请求:", request.funcName)
+	for req in requests_to_retry:
+		print("重试请求:", req.funcName)
 		# 使用延迟避免请求过于密集
 		await get_tree().create_timer(0.5).timeout
-		await sendDataRPC(request.funcName, request.payload)
+		await sendDataRPC(req.funcName, req.payload)
 	
 	print("待处理请求重试完成")
 
@@ -509,14 +517,14 @@ func manual_reconnect() -> void:
 	_disconnect_socket()
 	_attempt_reconnect()
 
-# 应用恢复焦点时检查连接
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_APPLICATION_FOCUS_IN or what == NOTIFICATION_APPLICATION_RESUMED:
-		# 当游戏窗口重新获得焦点时检查连接
-		if not is_socket_connected():
-			print("应用恢复焦点，检查连接状态")
-			_check_connection()
-	pass
+# # 应用恢复焦点时检查连接
+# func _notification(what: int) -> void:
+# 	if what == NOTIFICATION_APPLICATION_FOCUS_IN or what == NOTIFICATION_APPLICATION_RESUMED:
+# 		# 当游戏窗口重新获得焦点时检查连接
+# 		if not is_socket_connected():
+# 			print("应用恢复焦点，检查连接状态")
+# 			_check_connection()
+# 	pass
 
 # 启动持续重置session
 func _start_continuous_session_reset() -> void:
@@ -554,3 +562,78 @@ func _attempt_session_reset() -> void:
 	nakama_session = restore_result
 	await _connect_socket(restore_result)
 	pass
+
+
+# =================== 主请求入口 ===================
+# 统一Nakama请求入口，自动处理断线、重试、恢复、弹窗
+# 示例: Online.request("api_name", [参数...], 成功回调, 失败回调)
+func Request(api: String, args: Array, success_cb: Callable, fail_cb: Callable) -> void:
+	if not _check_connected():
+		if api in NON_RETRY_API:
+			_show_error(api, "网络断开")
+			if fail_cb:
+				fail_cb.call("网络断开")
+			return
+		_add_to_pending(api, args, success_cb, fail_cb)
+		return
+	var result = await _do_nakama_call(api, args)
+	if result.is_exception():
+		if api in NON_RETRY_API:
+			_show_error(api, result.get_exception().message)
+			if fail_cb:
+				fail_cb.call(result.get_exception().message)
+			return
+		if _should_retry(result, api):
+			_add_to_pending(api, args, success_cb, fail_cb)
+			return
+		_show_error(api, result.get_exception().message)
+		if fail_cb:
+			fail_cb.call(result.get_exception().message)
+		return
+	_clear_retry(api)
+	if success_cb:
+		success_cb.call(result)
+
+# =================== 辅助函数 ===================
+# 加入待恢复队列（避免重复）
+func _add_to_pending(api, args, success_cb, fail_cb):
+	for req in _pending_requests:
+		if req.api == api and req.args == args:
+			return
+	_pending_requests.append({"api": api, "args": args, "success_cb": success_cb, "fail_cb": fail_cb})
+
+# 判断是否可重试（网络错误且未超限）
+func _should_retry(result, api):
+	if not result.is_exception():
+		return false
+	var msg = result.get_exception().message
+	var retry_count = _request_retry_count.get(api, 0)
+	if retry_count >= REQUEST_RETRY_LIMIT:
+		return false
+	var network_errors = ["网络断开", "连接失败", "连接超时", "HTTPRequest failed!", "Invalid session.", "Session expired."]
+	for error in network_errors:
+		if msg.find(error) != -1:
+			_request_retry_count[api] = retry_count + 1
+			return true
+	return false
+
+# 弹窗显示错误
+func _show_error(api, msg):
+	PopupManager.show_dynamic("%s 失败: %s" % [api, msg])
+
+# 清除接口重试计数
+func _clear_retry(api):
+	if _request_retry_count.has(api):
+		_request_retry_count.erase(api)
+
+# 检查socket是否已连接
+func _check_connected():
+	return nakama_socket and nakama_socket.is_connected_to_host()
+
+# 统一Nakama接口调用
+func _do_nakama_call(api, args):
+	if not nakama_client:
+		return null
+	if not nakama_client.has_method(api):
+		return null
+	return await nakama_client.callv(api, args)

@@ -203,8 +203,8 @@ func set_text_color(color: Color):
 		completion_label.add_theme_color_override("font_color", color)
 
 # 设置文本大小
-func set_text_size(size: int):
-	text_size = size
+func set_text_size(size1: int):
+	text_size = size1
 	if completion_label:
-		completion_label.add_theme_font_size_override("font_size", size)
+		completion_label.add_theme_font_size_override("font_size", size1)
 	
