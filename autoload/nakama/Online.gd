@@ -525,13 +525,13 @@ func _start_continuous_session_reset() -> void:
 		
 	print("启动持续重置session，间隔:", SESSION_RESET_INTERVAL, "秒")
 	_is_resetting_session = true
-	_session_reset_timer.start(SESSION_RESET_INTERVAL)
+	#_session_reset_timer.start(SESSION_RESET_INTERVAL)
 	pass
 
 # 停止持续重置session
 func _stop_continuous_session_reset() -> void:
-	if _session_reset_timer:
-		_session_reset_timer.stop()
+	#if _session_reset_timer:
+		#_session_reset_timer.stop()
 	_is_resetting_session = false
 	# print("停止持续重置session")
 	pass
