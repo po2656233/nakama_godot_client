@@ -87,8 +87,8 @@ func set_nakama_session(_nakama_session: NakamaSession) -> void:
 		_disconnect_socket()
 		push_warning("session is invalid:", nakama_session)
 		return
-	print("获取到session后连接socket _connect_socket")
-	await _connect_socket(_nakama_session)
+	print("获取到session:\t",_nakama_session,"\n")
+	_connect_socket(_nakama_session)
 	pass
 ###################################################################################
 # 初始化
@@ -97,6 +97,7 @@ func _ready() -> void:
 	socketStateSIG.connect(_on_socket_state)
 	pass
 func renew_session():
+	print("----完全重置session----")
 	_disconnect_socket()
 	# 绑定登录失败后，继续重连
 	OnlineLogin.relogin()
@@ -127,18 +128,21 @@ func reset_session() -> void:
 	if not nakama_session:
 		return
 		
-	print("正在重置session...")
+	print("\n正在重置session...")
 	# connect_state.emit("restoring_session")
 	_is_connecting = true
 	var restore_result = await nakama_client.session_refresh_async(nakama_session)
 	if restore_result.is_exception():
+		_is_connecting = false
 		print("重置session失败，将启动持续重置")
-		renew_session()
+		#renew_session()
 		return
-	
-	# 重置成功
+	_is_connecting = false
 	nakama_session = restore_result
-	await _connect_socket(restore_result)
+	if nakama_socket:
+		var result = await nakama_socket.connect_async(restore_result)
+		print("重置session结果：",result)
+	print("重置session...结束\n")
 	pass
 
 # 事件 --socket状态--
@@ -187,13 +191,13 @@ func _check_connection() -> void:
 		if nakama_session == null:
 			renew_session()
 			return
-		connect_nakama_socket()
+		reconnectSIG.emit()
 		return
 	pass
 
 # 检查心跳
 func _check_ping() -> void:
-	await sendPing()
+	call_thread_safe("sendPing")
 
 # 
 
@@ -210,33 +214,29 @@ func _connect_socket(session:NakamaSession) -> void:
 		
 	# 检查session是否有效
 	if session.is_exception() or session.is_expired():
-		push_warning("连接Nakama Socket失败: session无效或已过期")
-		_is_connecting = false
-		if session.is_valid():
-			reset_session()
-			return
-		renew_session()
+		reset_session()
 		return
+		#push_warning("连接Nakama Socket失败: session无效或已过期")
+		#_is_connecting = false
+		#if session.is_valid():
+			#reset_session()
+			#return
+		#renew_session()
+		#return
 		
-	# 如果已经连接，则不再连接
-	if _check_connected():
-		print("Nakama Socket已经连接")
-		_is_connecting = false
-		_retry_pending_requests()# 重试所有待处理的请求
-		return
-
 	# 创建 Nakama Socket
-	nakama_socket = Nakama.create_socket_from(nakama_client)
 	if not nakama_socket:
-		push_warning("创建Nakama Socket失败")
-		_is_connecting = false
-		return
+		nakama_socket = Nakama.create_socket_from(nakama_client)
+		if not nakama_socket:
+			push_warning("创建Nakama Socket失败")
+			_is_connecting = false
+			return
 
 	# 连接 Nakama Socket
 	print("正在连接WebSocket到: %s://%s:%d" % ["wss" if  nakama_scheme == "https" else "ws", nakama_host, nakama_port])
 	# print("Session token: %s" % session.token + "..." if session.token.length() > 20 else session.token)
 	
-	var result = await nakama_socket.connect_async(session)
+	var result = await nakama_socket.connect_async(session,false,20)
 	if (result is int and result == ERR_FILE_EOF ):
 		pass
 	elif result.is_exception():
@@ -248,7 +248,6 @@ func _connect_socket(session:NakamaSession) -> void:
 			exception.grpc_status_code
 		])
 
-		
 		# 根据错误类型提供具体建议
 		if exception.status_code != -1 and exception.grpc_status_code != -1:
 			print("连接失败 - 可能的原因:")
@@ -265,9 +264,11 @@ func _connect_socket(session:NakamaSession) -> void:
 				nakama_client = null  # 重置client以使用新配置
 				await _connect_socket(session)
 				return
-		pass
+		#reconnectSIG.emit()
+		#return
 	print("网络nakama_socket连接 ->", nakama_socket.is_connected_to_host())
-	_on_socket_connected()
+	if _check_connected():
+		_on_socket_connected()
 	pass
 
 # 设置socket事件监听
@@ -423,7 +424,7 @@ func sendPing():
 		var result = await nakama_socket.rpc_async("ping")
 		if result.is_exception():
 			print("发送心跳失败:", result.get_exception().message)
-			connect_nakama_socket()
+			reconnectSIG.emit()
 		else:
 			print("心跳发送成功")
 	pass
@@ -524,7 +525,7 @@ func _retry_pending_requests() -> void:
 		print("重试请求:", req.funcName)
 		# 使用延迟避免请求过于密集
 		await get_tree().create_timer(0.5).timeout
-		await sendDataRPC(req.funcName, req.payload)
+		sendDataRPC(req.funcName, req.payload)
 	
 	print("待处理请求重试完成")
 

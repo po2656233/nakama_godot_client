@@ -215,6 +215,7 @@ func do_device_login(username: String = "", created: bool = false, save_credenti
 	
 	var ret = await Util.Nakama_Call(Online.nakama_client, "authenticate_device_async", [device_id, p_username, created], _on_auth_success, _on_auth_failure_dev)
 	if !ret and !_first_dev_login:
+		print("-----------创建设备账号------------------")
 		ret = await Util.Nakama_Call(Online.nakama_client, "authenticate_device_async", [device_id, p_username, true], _on_auth_success, _on_auth_failure_dev)
 	return ret
 
@@ -272,6 +273,7 @@ func first_load_player_data(session) -> void:
 		print("首次读取玩家数据,并保存: ", player_data)
 		loading_percent.emit(100)
 	else:
+		print("获取玩家数据失败，请稍后重试:", player_data)
 		login_failed.emit("获取玩家数据失败，请稍后重试")
 	pass
 

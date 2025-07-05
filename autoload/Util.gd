@@ -11,7 +11,7 @@ var EMPTY_CALLABLE = Callable(func(): pass)
 #   on_success: 成功回调函数 (Callable)
 #   on_failure: 失败回调函数 (Callable)
 func Nakama_Call(caller: Object, method_name: String, args: Array, on_success: Callable, on_failure: Callable) -> bool:
-	print("Nakama_Call: %s >|< %s 【%s】" % [method_name,  str(args),str(caller)])
+	print("Nakama_Call:<<< [%s] >>>|||<<<--- [%s] --->>> 【%s】\n" % [method_name,  str(args),str(caller)])
 	# 验证方法是否存在
 	if not caller or not caller.has_method(method_name):
 		push_error("Method not found: %s" % method_name)

@@ -86,7 +86,7 @@ func _ready():
 	
 	# 线程开启加载俱乐部成员
 	# startThread()
-	call_deferred("initData")
+	call_thread_safe("initData")
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
@@ -685,10 +685,10 @@ func _on_tab_container_tab_selected(tab: int) -> void:
 	elif tab == 1 and first_clubs:
 		first_clubs = false
 		# get_club_list()
-		call_deferred("get_club_list")
+		call_thread_safe("get_club_list")
 	elif tab == 2 and first_friends:
 		first_friends = false
 		# get_friends_list()  
-		call_deferred("get_friends_list")
+		call_thread_safe("get_friends_list")
 	print("切换选项卡:", tab)
 	pass # Replace with function body.

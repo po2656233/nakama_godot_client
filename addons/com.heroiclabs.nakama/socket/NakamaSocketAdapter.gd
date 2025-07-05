@@ -64,7 +64,7 @@ func connect_to_host(p_uri : String, p_timeout : int):
 		call_deferred("emit_signal", "received_error", err)
 		return
 	
-	print("WebSocket连接请求已发送，等待连接...")
+	# print("WebSocket连接请求已发送，等待连接...")
 	_ws_last_state = WebSocketPeer.STATE_CLOSED
 # Connect to the server with an asynchronous operation.
 # @param p_uri - The URI of the server.

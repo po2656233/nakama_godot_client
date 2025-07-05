@@ -67,6 +67,7 @@ func getBBCodeContent(field, value):
 	
 
 func setup(data: Dictionary):
+	join_button.disabled = false
 	room_data = data.duplicate()
 	room_name_label.text = data.get("room_name", "")
 	game_name_label.text = data.get("game_name", "")
@@ -184,6 +185,7 @@ func _on_gui_input(event: InputEvent):
 	# 	scale_tween.tween_property(self, "scale", Vector2(1, 1), 0.1) 
 
 func _on_join_button_pressed():
+	join_button.disabled = true
 	# 这里可以发送加入房间的信号
 	join_room.emit(room_data)
 	print("加入房间：", room_data.get("room_name", ""))
