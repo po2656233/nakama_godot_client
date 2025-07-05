@@ -1,4 +1,5 @@
 extends Node
+# 信号管理器
 # 新消息
 @warning_ignore("unused_signal")
 signal NewMessageSIG(args)

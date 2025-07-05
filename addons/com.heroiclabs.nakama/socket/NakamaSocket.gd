@@ -167,7 +167,7 @@ func _notification(what):
 		for k in keys:
 			_requests[k].resume(NakamaException.new("Cancelled!"))
 		if _conn != null:
-			_conn.resume(ERR_FILE_EOF)
+			_conn.resume(ERR_FILE_EOF)   #ERR_FILE_EOF
 		_conn = null
 		if _weak_ref.get_ref() == null:
 			return
@@ -176,6 +176,7 @@ func _notification(what):
 			_adapter.queue_free()
 
 func _closed(p_error = null):
+	print("Socket closed with error: %s" % p_error)
 	emit_signal("closed")
 	_resume_conn(ERR_CANT_CONNECT)
 	_clear_requests()

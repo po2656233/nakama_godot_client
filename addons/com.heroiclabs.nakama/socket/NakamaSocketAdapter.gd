@@ -42,16 +42,48 @@ func connect_to_host(p_uri : String, p_timeout : int):
 		_ws.close()
 	_timeout = p_timeout
 	_start = Time.get_unix_time_from_system()
-	############测试时使用 todo[注意:正式环境请关闭]########################
-	var tls_options = TLSOptions.client_unsafe()
-	######################################################################
-	var err = _ws.connect_to_url(p_uri,tls_options)
-	#var err = _ws.connect_to_url(p_uri,null)
+	
+	print("WebSocket连接URI: %s 连接超时时间: %d秒" % [p_uri,p_timeout])
+	
+	# 根据URI判断是否使用TLS
+	var use_tls = p_uri.begins_with("wss://")
+	var tls_options = null
+	
+	if use_tls:
+		# 对于开发环境，可以使用不安全的TLS选项
+		# 注意：生产环境应该使用proper证书验证
+		tls_options = TLSOptions.client_unsafe()
+		print("使用TLS连接 (不安全模式)")
+	else:
+		print("使用非TLS连接")
+	
+	var err = _ws.connect_to_url(p_uri, tls_options)
 	if err != OK:
-		logger.debug("Error connecting to host %s" % p_uri)
+		logger.debug("Error connecting to host %s: %d" % [p_uri, err])
+		print("WebSocket连接失败，错误代码: %d" % err)
 		call_deferred("emit_signal", "received_error", err)
 		return
+	
+	print("WebSocket连接请求已发送，等待连接...")
 	_ws_last_state = WebSocketPeer.STATE_CLOSED
+# Connect to the server with an asynchronous operation.
+# @param p_uri - The URI of the server.
+# @param p_timeout - The timeout for the connect attempt on the socket.
+# func connect_to_host(p_uri : String, p_timeout : int):
+# 	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
+# 		_ws.close()
+# 	_timeout = p_timeout
+# 	_start = Time.get_unix_time_from_system()
+# 	############测试时使用 todo[注意:正式环境请关闭]########################
+# 	# var tls_options = TLSOptions.client_unsafe()
+# 	######################################################################
+# 	# var err = _ws.connect_to_url(p_uri,tls_options)
+# 	var err = _ws.connect_to_url(p_uri,null)
+# 	if err != OK:
+# 		logger.debug("Error connecting to host %s" % p_uri)
+# 		call_deferred("emit_signal", "received_error", err)
+# 		return
+# 	_ws_last_state = WebSocketPeer.STATE_CLOSED
 
 # Send data to the server with an asynchronous operation.
 # @param p_buffer - The buffer with the message to send.
@@ -67,13 +99,13 @@ func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
 func _process(_delta):
 	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
 		_ws.poll()
-	#_ws.poll()
 	var state = _ws.get_ready_state()
 	if _ws_last_state != state:
 		_ws_last_state = state
 		if state == WebSocketPeer.STATE_OPEN:
 			connected.emit()
 		elif state == WebSocketPeer.STATE_CLOSED:
+			logger.debug("get_close_reason: %s" % _ws.get_close_reason())
 			closed.emit()
 			set_process(false) 
 

@@ -77,6 +77,7 @@ func init_data():
 	pass
 
 func Show():
+	init_data()
 	show()
 	SettingsManager.settings_toggle.emit()
 

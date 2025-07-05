@@ -12,6 +12,16 @@ var FuncMapping = {
 var ResponeMapping = {
 	"RPC function not found": "服务器未处理",
 	"Request cancelled.":"网络断开",
+	"Connection failed": "连接失败",
+	"Connection timeout": "连接超时",
+	"Invalid session": "会话无效",
+	"Session expired": "会话已过期",
+	"WebSocket connection failed": "WebSocket连接失败",
+	"Network unreachable": "网络不可达",
+	"Host unreachable": "主机不可达",
+	"Connection refused": "连接被拒绝",
+	"TLS handshake failed": "TLS握手失败",
+	"Certificate verification failed": "证书验证失败",
 }
 
 
@@ -24,4 +34,16 @@ var NetworkErrors = [
 		"Session expired.",
 		"Request cancelled.",
 		"RPC function not found",
+		"Connection failed",
+		"Connection timeout",
+		"WebSocket connection failed",
+		"Network unreachable",
+		"Host unreachable",
+		"Connection refused",
+		"TLS handshake failed",
+		"Certificate verification failed",
+		"ERR_CANT_CONNECT",
+		"ERR_TIMEOUT",
+		"ERR_FILE_EOF",
+		"ERR_CONNECTION_ERROR",
 	]

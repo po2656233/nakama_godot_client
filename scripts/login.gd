@@ -68,7 +68,7 @@ func _on_tr_devlogin_pressed() -> void:
 
 func _on_login_failed(err):
 	loading.Hide()
-	print("Login failed",err)
+	print("Login failed:",err)
 	pass # Replace with function body.
 
 # 处理HTTP响应
@@ -102,8 +102,7 @@ func login()->void:
 # 设备登录
 func deviceLogin()->void:
 	loading.Show()
-	if not await OnlineLogin.do_device_login("",false,true) :
-		await OnlineLogin.do_device_login("",true)
+	await OnlineLogin.do_device_login("",false,true)
 	pass
 
 # 微信登录(暂不使用)

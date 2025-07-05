@@ -36,7 +36,7 @@ func _ready() -> void:
 
 
 ## 显示普通消息弹窗
-func show_dynamic(message: String,speed:float=200.0) -> void:
+func show_dynamic(message: String,speed:float=100.0) -> void:
 	dynamic_text.display_text(message)  # 文本会自动居中显示
 	dynamic_text.set_speed(speed)
 	is_visible = true

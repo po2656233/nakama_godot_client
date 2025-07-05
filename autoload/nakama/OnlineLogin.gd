@@ -60,16 +60,20 @@ func on_credentials() -> void:
 	pass
 	
 # 更新加载百分比 只有主动设置成100%
-func update_loading_progress(scope: int = 20):
+func update_loading_progress(scope: int = 20,isRand:bool = true):
 	if scope >= 100:
 		cur_progress_percent = 100
 		SignalManager.LoadingSIG.emit(cur_progress_percent)
 		cur_progress_percent = 0
 		return
 
-	if scope <= 0:
-		scope = 20
-	cur_progress_percent = cur_progress_percent + randi()%scope
+	
+	if isRand :
+		if scope <= 0:
+			scope = 20
+		cur_progress_percent = cur_progress_percent + randi()%scope
+	else:
+		cur_progress_percent = scope
 	if cur_progress_percent >= 100:
 		cur_progress_percent = 99
 	SignalManager.LoadingSIG.emit(cur_progress_percent)
@@ -159,7 +163,6 @@ func _on_auth_failure_dev(error):
 
 func _on_login_fail(err):
 	reset()
-	_first_dev_login = true
 	if err == "HTTPRequest failed!":
 		err = "网络连接失败，请检查您的网络设置"
 	elif err == "Invalid session.":
@@ -194,7 +197,7 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 	# 登录
 	login_method = 'acc'
 	_save_credentials = save_credentials
-	loading_percent.emit()
+	loading_percent.emit(1,false)
 	print("正在进行账号登录...")
 	return await Util.Nakama_Call(Online.nakama_client, "authenticate_email_async", [email, password, null, false], _on_auth_success, _on_auth_failure)
 	
@@ -207,9 +210,13 @@ func do_device_login(username: String = "", created: bool = false, save_credenti
 		p_username = username
 	login_method = 'dev'
 	_save_credentials = save_credentials
-	loading_percent.emit()
+	loading_percent.emit(1,false)
 	print("正在进行设备登录...")
-	return await Util.Nakama_Call(Online.nakama_client, "authenticate_device_async", [device_id, p_username, created], _on_auth_success, _on_auth_failure_dev)
+	
+	var ret = await Util.Nakama_Call(Online.nakama_client, "authenticate_device_async", [device_id, p_username, created], _on_auth_success, _on_auth_failure_dev)
+	if !ret and !_first_dev_login:
+		ret = await Util.Nakama_Call(Online.nakama_client, "authenticate_device_async", [device_id, p_username, true], _on_auth_success, _on_auth_failure_dev)
+	return ret
 
 
 # 重新登录
@@ -247,7 +254,7 @@ func _on_userinfo_success(result, session):
 		player_data = JSON.parse_string(result.objects[0].value)
 		loading_percent.emit(100)
 	if not player_data:
-		first_load_player_data(session)
+		await first_load_player_data(session)
 	print("读取用户数据: ", player_data)
 	pass
 
