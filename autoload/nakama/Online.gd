@@ -128,23 +128,18 @@ func reset_session() -> void:
 	if not nakama_session:
 		return
 		
-	print("\n正在重置session...")
+	print("正在重置session...")
 	# connect_state.emit("restoring_session")
 	_is_connecting = true
 	var restore_result = await nakama_client.session_refresh_async(nakama_session)
 	if restore_result.is_exception():
-		_is_connecting = false
-		print("重置session失败，将启动持续重置\n")
+		print("重置session失败，将启动持续重置")
 		renew_session()
 		return
-	_is_connecting = false
+	
+	# 重置成功
 	nakama_session = restore_result
-	if nakama_socket:
-		var result = await nakama_socket.connect_async(restore_result,false,20)
-		if _check_connected():
-			_on_socket_connected()
-		print("重置session结果：",result)
-	print("重置session...结束\n")
+	await _connect_socket(restore_result)
 	pass
 
 # 事件 --socket状态--
@@ -193,7 +188,6 @@ func _check_connection() -> void:
 		if nakama_session == null:
 			renew_session()
 			return
-		_is_connecting = false
 		reconnectSIG.emit()
 		return
 	pass
@@ -217,23 +211,27 @@ func _connect_socket(session:NakamaSession) -> void:
 		
 	# 检查session是否有效
 	if session.is_exception() or session.is_expired():
-		reset_session()
-		return
-		#push_warning("连接Nakama Socket失败: session无效或已过期")
-		#_is_connecting = false
-		#if session.is_valid():
-			#reset_session()
-			#return
-		#renew_session()
-		#return
-		
-	# 创建 Nakama Socket
-	if not nakama_socket:
-		nakama_socket = Nakama.create_socket_from(nakama_client)
-		if not nakama_socket:
-			push_warning("创建Nakama Socket失败")
-			_is_connecting = false
+		push_warning("连接Nakama Socket失败: session无效或已过期")
+		_is_connecting = false
+		if session.is_valid():
+			reset_session()
 			return
+		renew_session()
+		return
+		
+	# 如果已经连接，则不再连接
+	if _check_connected():
+		print("Nakama Socket已经连接")
+		_is_connecting = false
+		_retry_pending_requests()# 重试所有待处理的请求
+		return
+
+	# 创建 Nakama Socket
+	nakama_socket = Nakama.create_socket_from(nakama_client)
+	if not nakama_socket:
+		push_warning("创建Nakama Socket失败")
+		_is_connecting = false
+		return
 
 	# 连接 Nakama Socket
 	print("正在连接WebSocket到: %s://%s:%d" % ["wss" if  nakama_scheme == "https" else "ws", nakama_host, nakama_port])
@@ -251,6 +249,7 @@ func _connect_socket(session:NakamaSession) -> void:
 			exception.grpc_status_code
 		])
 
+		
 		# 根据错误类型提供具体建议
 		if exception.status_code != -1 and exception.grpc_status_code != -1:
 			print("连接失败 - 可能的原因:")
@@ -267,8 +266,8 @@ func _connect_socket(session:NakamaSession) -> void:
 				nakama_client = null  # 重置client以使用新配置
 				await _connect_socket(session)
 				return
-		#reconnectSIG.emit()
-		#return
+		reconnectSIG.emit()
+		return
 	print("网络nakama_socket连接 ->", nakama_socket.is_connected_to_host())
 	if _check_connected():
 		_on_socket_connected()

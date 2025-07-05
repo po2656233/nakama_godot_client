@@ -67,7 +67,8 @@ func getBBCodeContent(field, value):
 	
 
 func setup(data: Dictionary):
-	join_button.disabled = false
+	if join_button:
+		join_button.set_disabled(true)
 	room_data = data.duplicate()
 	room_name_label.text = data.get("room_name", "")
 	game_name_label.text = data.get("game_name", "")
