@@ -134,13 +134,15 @@ func reset_session() -> void:
 	var restore_result = await nakama_client.session_refresh_async(nakama_session)
 	if restore_result.is_exception():
 		_is_connecting = false
-		print("重置session失败，将启动持续重置")
-		#renew_session()
+		print("重置session失败，将启动持续重置\n")
+		renew_session()
 		return
 	_is_connecting = false
 	nakama_session = restore_result
 	if nakama_socket:
-		var result = await nakama_socket.connect_async(restore_result)
+		var result = await nakama_socket.connect_async(restore_result,false,20)
+		if _check_connected():
+			_on_socket_connected()
 		print("重置session结果：",result)
 	print("重置session...结束\n")
 	pass
@@ -191,6 +193,7 @@ func _check_connection() -> void:
 		if nakama_session == null:
 			renew_session()
 			return
+		_is_connecting = false
 		reconnectSIG.emit()
 		return
 	pass
