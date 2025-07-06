@@ -2,6 +2,14 @@ extends Node
 
 
 var EMPTY_CALLABLE = Callable(func(): pass)
+# 重连 可靠消息队列
+var reliable_queue: ReliableMessageQueue
+
+# 初始化
+func _ready() -> void:
+	# 创建可靠消息队列
+	reliable_queue = ReliableMessageQueue.new()
+	add_child(reliable_queue)
 
 # 通用异步调用封装
 # 参数:
@@ -10,8 +18,8 @@ var EMPTY_CALLABLE = Callable(func(): pass)
 #   args: 参数数组
 #   on_success: 成功回调函数 (Callable)
 #   on_failure: 失败回调函数 (Callable)
-func Nakama_Call(caller: Object, method_name: String, args: Array, on_success: Callable, on_failure: Callable) -> bool:
-	print("Nakama_Call:<<< [%s] >>>|||<<<--- [%s] --->>> 【%s】\n" % [method_name,  str(args),str(caller)])
+func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Callable, on_failure: Callable,inqueue:bool=true) -> bool:
+	print("Obj:%s:<<< FUNC:[%s] >>>|||<<<args:[%s]>>>\n" % [str(caller),method_name,str(args)])
 	# 验证方法是否存在
 	if not caller or not caller.has_method(method_name):
 		push_error("Method not found: %s" % method_name)
@@ -28,8 +36,16 @@ func Nakama_Call(caller: Object, method_name: String, args: Array, on_success: C
 	var result = await task.completed
 	# 处理结果
 	if result != null and result.has_method("is_exception") and result.is_exception():
-		if on_failure: on_failure.call(result.get_exception().message)
-		return false
+		# 有异常反馈，也被认为是执行成功了
+		var error_message = result.get_exception().message
+		if on_failure: on_failure.call(error_message)
+		if error_message in Errors.NetworkErrors: # 网络异常,则视为执行失败
+			if inqueue:
+				var msg_id = reliable_queue.EnqueueMessage(method_name,args,caller,on_success, on_failure)
+				print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
+			return false
+		print("Network error occurred: %s will resend:%s" % [error_message,inqueue])
+		return true
 		
 	if on_success: on_success.call(result)
 	return true

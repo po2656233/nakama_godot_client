@@ -39,8 +39,8 @@ SignalManager="*res://autoload/manger/signal_manager.gd"
 SettingsManager="*res://autoload/manger/settings_manager.gd"
 Util="*res://autoload/Util.gd"
 Errors="*res://autoload/error_setting.gd"
-NetworkManager="res://autoload/manger/network_manager.gd"
 Shared="*res://scripts/game/tetris/shared.gd"
+MessageQueue="*res://autoload/nakama/MessageQueue.gd"
 
 [display]
 
