@@ -2,7 +2,7 @@ class_name ReliableMessageQueue
 extends Node
 
 # 消息重试配置
-const MAX_RETRY_ATTEMPTS = 5
+const MAX_RETRY_ATTEMPTS = 12000
 const INITIAL_RETRY_DELAY = 1.0  # 初始重试延迟（秒）
 const RETRY_BACKOFF_FACTOR = 2.0  # 指数退避因子
 const MAX_RETRY_DELAY = 60.0     # 最大重试延迟（秒）
@@ -192,7 +192,6 @@ func _send_message_with_retry(msg: QueuedMessage) -> void:
 				msg.id,
 				msg.retry_count,
 				MAX_RETRY_ATTEMPTS,
-				cur_time,
 			])
 			if wait_time > 0:
 				await get_tree().create_timer(wait_time).timeout

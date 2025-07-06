@@ -223,9 +223,10 @@ func do_device_login(username: String = "", created: bool = false, save_credenti
 # 重新登录
 func relogin():
 	if login_method == 'acc':
-		do_login(email, password, _save_credentials)
+		await Util.Asyn_Call(Online.nakama_client, "authenticate_email_async", [email, password, null, false], _on_auth_success, Util.EMPTY_CALLABLE)
 	elif login_method == 'dev':
-		do_device_login("", false, _save_credentials)
+		var device_id = OS.get_unique_id()
+		await Util.Asyn_Call(Online.nakama_client, "authenticate_device_async", [device_id, "", false], _on_auth_success,Util.EMPTY_CALLABLE)
 
 # 退出
 func logout():

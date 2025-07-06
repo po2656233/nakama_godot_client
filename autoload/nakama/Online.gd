@@ -42,7 +42,7 @@ enum EnBroadcast{
 }  
 
 # 状态变量
-var _reconnect_timer: Timer = null		# 重连定时器
+#var _reconnect_timer: Timer = null		# 重连定时器
 var _ping_timer: Timer = null			# 心跳定时器
 
 var _is_connecting := false				# 是否正在连接
@@ -76,6 +76,8 @@ func get_nakama_session() -> NakamaSession:
 
 # 设置session
 func set_nakama_session(_nakama_session: NakamaSession) -> void:	
+	if _nakama_session == null:
+		return
 	nakama_session = _nakama_session
 	if not nakama_session or nakama_session.is_exception() or nakama_session.is_expired():
 		# 获取到session后连接socket
@@ -89,6 +91,7 @@ func set_nakama_session(_nakama_session: NakamaSession) -> void:
 # 初始化
 func _ready() -> void:
 	# 连接Nakama Socket
+	reconnectSIG.connect(_on_reset_session)
 	socketStateSIG.connect(_on_socket_state)
 	pass
 
@@ -102,8 +105,9 @@ func renew_session():
 
 
 # 事件 --重置session--
-func reset_session() -> void:
+func _on_reset_session() -> void:
 	if not nakama_session:
+		renew_session()
 		return
 		
 	print("正在重置session...")
@@ -140,17 +144,17 @@ func start_timers() -> void:
 	# 心跳定时器
 	if _ping_timer == null:
 		_ping_timer = Timer.new()
-		_ping_timer.timeout.connect(_check_ping)
+		_ping_timer.timeout.connect(sendPing)
 		add_child(_ping_timer)
 	_ping_timer.stop()
 	_ping_timer.start(PING_INTERVAL)
 	pass
 
 func close_timers() -> void:
-	if _reconnect_timer:
-		_reconnect_timer.stop()
-		_reconnect_timer.queue_free()
-		_reconnect_timer = null
+	#if _reconnect_timer:
+		#_reconnect_timer.stop()
+		#_reconnect_timer.queue_free()
+		#_reconnect_timer = null
 	if _ping_timer:	
 		_ping_timer.stop()
 		_ping_timer.queue_free()
@@ -158,23 +162,18 @@ func close_timers() -> void:
 	pass
 
 
-# 检查连接状态
-func _check_connection() -> void:
-	print("检查连接状态...")
-	if _is_disconnected:
-		print("断线重连中...",_is_disconnected)
-		if nakama_session == null:
-			renew_session()
-			return
-		reconnectSIG.emit()
-		return
-	pass
-
-# 检查心跳
-func _check_ping() -> void:
-	sendPing()
-
-# 
+# # 检查连接状态
+# func _check_connection() -> void:
+# 	print("检查连接状态...")
+# 	if _is_disconnected:
+# 		print("断线重连中...",_is_disconnected)
+# 		if nakama_session == null:
+# 			renew_session()
+# 			return
+# 		reconnectSIG.emit()
+# 		return
+# 	pass
+# # 
 
 
 #################################【网络连接】############################################
@@ -192,7 +191,7 @@ func _connect_socket(session:NakamaSession) -> void:
 		push_warning("连接Nakama Socket失败: session无效或已过期")
 		_is_connecting = false
 		if session.is_valid():
-			reset_session()
+			_on_reset_session()
 			return
 		renew_session()
 		return
@@ -389,11 +388,17 @@ func sendDataRPC(funcName: String, payload = null):
 	
 	var result_wrapper = { "result": null }  # 使用字典包装变量
 	
-	var cb = func(ret):
+	var sucess_cb = func(ret:NakamaAsyncResult):
+		if ret and ret.id == funcName:
+			result_wrapper.result = JSON.parse_string(ret.payload)
+			return
 		result_wrapper.result = ret  # 修改字典中的值
+		pass
+	var failed_cb = func(ret:NakamaAsyncResult):
+		print("发送RPC:",funcName," -->结果:",ret)
+		#result_wrapper.result = []  # 修改字典中的值
 		return
-
-	await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], cb, cb)
+	await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], sucess_cb, failed_cb)
 	print("发送RPC:",funcName," 结果:",result_wrapper.result)
 	return result_wrapper.result  # 返回最终结果
 

@@ -44,11 +44,7 @@ func RpcData(funcName, payload:Dictionary={}):
 	# if not rpc_funcs.has(funcName):
 	# 	print("无效的RPC函数名:",funcName)
 	# 	return []
-	var result = await Online.sendDataRPC(funcName,payload)
-	# print(" RPC反馈: ",funcName,"->",result)
-	if result and result.id == funcName:
-		return JSON.parse_string(result.payload)
-	return null
+	return await Online.sendDataRPC(funcName,payload)
 
 # 获取列表数据
 func RpcListData(funcName, payload:Dictionary={}, sort_field:String=""):
