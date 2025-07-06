@@ -171,20 +171,20 @@ func _on_auth_failure_dev(error):
 		login_failed.emit(error)
 		
 
-func _on_login_fail(err):
+func _on_login_fail(msg):
 	reset()
-	if err == "HTTPRequest failed!":
-		err = "网络连接失败，请检查您的网络设置"
-	elif err == "Invalid session.":
-		err = "登录会话无效，请重新登录"
-	elif err == "Session expired.":
-		err = "登录会话已过期，请重新登录"
-	elif err == "Invalid credentials.":
-		err = "账号或密码错误，请检查后重试"
-	elif err == "":
-		err = "登录失败，请稍后重试"
+	if msg == "HTTPRequest failed!":
+		msg = "网络连接失败，请检查您的网络设置"
+	elif msg == "Invalid session.":
+		msg = "登录会话无效，请重新登录"
+	elif msg == "Session expired.":
+		msg = "登录会话已过期，请重新登录"
+	elif msg == "Invalid credentials.":
+		msg = "账号或密码错误，请检查后重试"
+	elif msg == "":
+		msg = "登录失败，请稍后重试"
 	Online.set_nakama_session(null)
-	PopupManager.show_dynamic(err)
+	PopupManager.show_dynamic(msg)
 	
 
 # 账密登录

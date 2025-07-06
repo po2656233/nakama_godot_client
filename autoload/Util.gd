@@ -37,14 +37,14 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 	# 处理结果
 	if result != null and result.has_method("is_exception") and result.is_exception():
 		# 有异常反馈，也被认为是执行成功了
-		var error_message = result.get_exception().message
-		if on_failure: on_failure.call(error_message)
-		if error_message in Errors.NetworkErrors: # 网络异常,则视为执行失败
+		var errMsg = result.get_exception().message
+		if on_failure: on_failure.call(errMsg)
+		if errMsg in Errors.NetworkErrors: # 网络异常,则视为执行失败
 			if inqueue:
 				var msg_id = reliable_queue.EnqueueMessage(method_name,args,caller,on_success, on_failure)
 				print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
 			return false
-		print("Network error occurred: %s will resend:%s" % [error_message,inqueue])
+		print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
 		return true
 		
 	if on_success: on_success.call(result)

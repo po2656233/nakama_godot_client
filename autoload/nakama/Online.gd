@@ -14,7 +14,7 @@ var nakama_scheme: String = 'https'
 # For other scripts to access:
 var nakama_client: NakamaClient: get = get_nakama_client
 var nakama_session: NakamaSession: get = get_nakama_session, set = set_nakama_session
-var nakama_socket: NakamaSocket = null
+var nakama_socket: NakamaSocket: get = get_nakama_socket
 
 # 这些接口不会在断线重连后自动恢复
 const NON_RETRY_API: Array = [
@@ -73,7 +73,11 @@ func get_nakama_client() -> NakamaClient:
 # 获取NakamaSession
 func get_nakama_session() -> NakamaSession:
 	return nakama_session
-
+	
+# 获取nakama_socket
+func get_nakama_socket():
+	return nakama_socket
+	
 # 设置session
 func set_nakama_session(_nakama_session: NakamaSession) -> void:	
 	nakama_session = _nakama_session
@@ -325,10 +329,10 @@ func do_broadcast(notification1):
 func sendPing():
 	if nakama_socket:
 		var cur_time = Time.get_unix_time_from_system()
-		if cur_time > nakama_session.expire_time:
-			reconnectSIG.emit()
 		var result = await nakama_socket.rpc_async("ping")
-		if result.is_exception():
+		if result.is_exception() or cur_time+PING_INTERVAL > nakama_session.expire_time:
+			reconnectSIG.emit()
+			print("距离过期: %d 秒"%[nakama_session.expire_time-cur_time])
 			print("发送心跳失败:", result.get_exception().message)
 		else:
 			print("心跳发送成功")
@@ -337,14 +341,14 @@ func sendPing():
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):
 	print("发送RPC:", funcName, payload)
-	var result_wrapper = { "result": null }  # 使用字典包装变量
+	var result_wrapper = { "result":null}  # 使用字典包装变量
 	var sucess_cb = func(ret:NakamaAsyncResult):
 		if ret and ret.id == funcName:
 			result_wrapper.result = JSON.parse_string(ret.payload)
 			return
 		result_wrapper.result = ret  # 修改字典中的值
 		pass
-	var failed_cb = func(ret:NakamaAsyncResult):
+	var failed_cb = func(ret):
 		print("发送RPC:",funcName," -->结果:", ret)
 		#result_wrapper.result = []  # 修改字典中的值
 		return

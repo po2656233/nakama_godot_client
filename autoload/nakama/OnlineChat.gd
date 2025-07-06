@@ -261,7 +261,7 @@ func search_users(username: String):
 		return null
 	var result = await Online.nakama_client.get_users_async(Online.nakama_session,[], [username])
 	if result.is_exception():
-		print("Error searching users: ", result.get_exception().message)
+		print("Error search_users: ", result.get_exception().message)
 		return
 	print("查找用户: ", result)
 	return result
@@ -271,7 +271,7 @@ func search_users_rpc(username: String):
 		return null
 	var result = await Online.nakama_client.rpc_async(Online.nakama_session,  "search_username", username)
 	if result.is_exception():
-		print("Error searching users: ", result.get_exception().message)
+		print("Error search_users_rpc: ", result.get_exception().message)
 		return null
 	print("查找用户RPC: ", result)
 	return JSON.parse_string(result.payload)
@@ -281,7 +281,7 @@ func search_groups(groupname: String):
 		return null
 	var result = await Online.nakama_client.list_groups_async(Online.nakama_session, groupname)
 	if result.is_exception():
-		print("Error searching users: ", result.get_exception().message)
+		print("Error search_groups: ", result.get_exception().message)
 		return null
 	print("查找俱乐部: ", result)
 	return result
