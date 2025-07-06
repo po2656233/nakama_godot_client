@@ -241,6 +241,7 @@ func _connect_socket(session:NakamaSession) -> void:
 		reconnectSIG.emit()
 		return
 	print("网络nakama_socket连接 ->", nakama_socket.is_connected_to_host())
+	_on_socket_connected()
 	pass
 
 # 设置socket事件监听

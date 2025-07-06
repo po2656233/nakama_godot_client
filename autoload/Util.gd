@@ -1,7 +1,7 @@
 extends Node
 
 
-var EMPTY_CALLABLE = Callable(func(): pass)
+var EMPTY_CALLABLE = Callable(func(_ret): pass)
 # 重连 可靠消息队列
 var reliable_queue: ReliableMessageQueue
 
