@@ -1,5 +1,10 @@
 extends Node
 # 信号管理器
+
+# # 新Session 类似于登录成功
+# @warning_ignore("unused_signal")
+# signal NewSessionSIG(args)
+
 # 新消息
 @warning_ignore("unused_signal")
 signal NewMessageSIG(args)

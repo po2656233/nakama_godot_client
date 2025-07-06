@@ -50,12 +50,13 @@ func on_credentials() -> void:
 	if login_method == 'dev':
 		return
 	var file = FileAccess.open(CREDENTIALS_FILENAME, FileAccess.WRITE)
-	var credentials = {
-		email = email,
-		password = password,
-	}
-	file.store_line(JSON.stringify(credentials))
-	file.close()
+	if file.is_open():
+		var credentials = {
+			email = email,
+			password = password,
+		}
+		file.store_line(JSON.stringify(credentials))
+		file.close()
 	print("保存账号密码成功")
 	pass
 	
@@ -131,11 +132,20 @@ func register_account(myEmail, myPassword, save_credentials = false) -> void:
 ############################################【登录】#######################################################################
 # 成功回调函数
 func _on_auth_success(result):
-	print("获取 Authentication success!")
-	Online.set_nakama_session(result)
-	load_player_data(result)
+	print("获取 Authentication success!",result.username,result.user_id)
 	loading_percent.emit()
+	Online.nakama_session = result
+	loading_percent.emit()
+	player_data = NakamaAPI.ApiUser.create(NakamaAPI,{
+		username = result.username,
+		id = result.user_id,
+	})
 	on_credentials()
+	loading_percent.emit(100)
+	call_thread_safe("load_player_data",result)
+	
+
+
 	
 
 # 失败回调函数
@@ -250,15 +260,11 @@ func _on_first_userinfo_success(result):
 	pass
 
 # 加载用户信息成功
-func _on_userinfo_success(result, session):
-	loading_percent.emit(10)
-	if result and result.objects and result.objects.size() > 0:
-		player_data = JSON.parse_string(result.objects[0].value)
-		loading_percent.emit(100)
-	if not player_data:
-		await first_load_player_data(session)
-	print("读取用户数据: ", player_data)
-	pass
+func _on_userinfo_success(result):
+	print("获取用户信息成功: ", result)
+	player_data = result.users[0]
+	# SignalManager.UserInfoSIG.emit(player_data) # 发射用户信息信号
+
 
 # 加载用户信息失败
 func _on_userinfo_failure(err):
@@ -266,32 +272,14 @@ func _on_userinfo_failure(err):
 	pass
 
 
-#### 第一次加载玩家数据
-func first_load_player_data(session) -> void:
-	if await Util.Asyn_Call(Online.nakama_client, "get_account_async",
-	[session], _on_first_userinfo_success, _on_userinfo_failure):
-		await save_player_data(session)
-		print("首次读取玩家数据,并保存: ", player_data)
-		loading_percent.emit(100)
-	else:
-		print("获取玩家数据失败，请稍后重试:", player_data)
-		login_failed.emit("获取玩家数据失败，请稍后重试")
-	pass
+
 
 #### 异步加载玩家数据
 func load_player_data(session) -> void:
-	loading_percent.emit()
-	#first_load_player_data(session)
-
-	# 使用 bind() 将 session 绑定到回调函数
-	var success_callback = _on_userinfo_success.bind(session)
-	if not await Util.Asyn_Call(Online.nakama_client, "read_storage_objects_async",	[session, [ {
-		 	"collection": "player_data",
-		 	"key": "profile",
-		 	"user_id": session.user_id}]
-		],success_callback, _on_userinfo_failure):
-			first_load_player_data(session)
-	pass
+	await Util.Asyn_Call(Online.nakama_client, "get_users_async",	[session, [session.user_id]
+		],_on_userinfo_success, _on_userinfo_failure)
+	# 连接 Nakama Socket
+	return
 
 #### 保存玩家数据
 func save_player_data(session) -> void:

@@ -76,16 +76,9 @@ func get_nakama_session() -> NakamaSession:
 
 # 设置session
 func set_nakama_session(_nakama_session: NakamaSession) -> void:	
-	if _nakama_session == null:
-		return
 	nakama_session = _nakama_session
-	if not nakama_session or nakama_session.is_exception() or nakama_session.is_expired():
-		# 获取到session后连接socket
-		_disconnect_socket()
-		push_warning("session is invalid:", nakama_session)
-		return
-	print("获取到session:\t",_nakama_session,"\n")
 	_connect_socket(_nakama_session)
+	print("获取到session:\t",_nakama_session,"\n")
 	pass
 ###################################################################################
 # 初始化
@@ -98,9 +91,8 @@ func _ready() -> void:
 # 重连事件处理
 func renew_session():
 	print("----完全重置session----")
-	_disconnect_socket()
-	OnlineLogin.relogin()# 绑定登录失败后，继续重连
-	connect_nakama_socket()
+	#_disconnect_socket()
+	#OnlineLogin.relogin()# 绑定登录失败后，继续重连
 	pass
 
 
@@ -111,17 +103,13 @@ func _on_reset_session() -> void:
 		return
 		
 	print("正在重置session...")
-	# connect_state.emit("restoring_session")
-	_is_connecting = true
 	var restore_result = await nakama_client.session_refresh_async(nakama_session)
 	if restore_result.is_exception():
 		print("重置session失败，将启动持续重置")
 		renew_session()
 		return
-	
 	# 重置成功
 	nakama_session = restore_result
-	await _connect_socket(restore_result)
 	pass
 
 # 事件 --socket状态--
@@ -133,14 +121,6 @@ func _on_socket_state(state: String):
 ###########################################################################################
 # 初始化定时器
 func start_timers() -> void:
-	# # 重连定时器
-	# if _reconnect_timer == null:
-	# 	_reconnect_timer = Timer.new()
-	# 	_reconnect_timer.timeout.connect(_check_connection)
-	# 	add_child(_reconnect_timer)
-	# _reconnect_timer.stop()
-	# _reconnect_timer.start(RECONNECT_INTERVAL)
-	
 	# 心跳定时器
 	if _ping_timer == null:
 		_ping_timer = Timer.new()
@@ -151,52 +131,28 @@ func start_timers() -> void:
 	pass
 
 func close_timers() -> void:
-	#if _reconnect_timer:
-		#_reconnect_timer.stop()
-		#_reconnect_timer.queue_free()
-		#_reconnect_timer = null
 	if _ping_timer:	
 		_ping_timer.stop()
 		_ping_timer.queue_free()
 		_ping_timer = null
 	pass
 
-
-# # 检查连接状态
-# func _check_connection() -> void:
-# 	print("检查连接状态...")
-# 	if _is_disconnected:
-# 		print("断线重连中...",_is_disconnected)
-# 		if nakama_session == null:
-# 			renew_session()
-# 			return
-# 		reconnectSIG.emit()
-# 		return
-# 	pass
-# # 
+func nakama_connect_socket() -> void:
+	# 断开连接时关闭定时器
+	_connect_socket(nakama_session)
+	pass
 
 
 #################################【网络连接】############################################
 # 连接socket
 func _connect_socket(session:NakamaSession) -> void:
-	print("---------------------_connect_socket---------------------------------")
+	print("---------------------_connect_socket----------START-----------------------")
 	_is_connecting = true
 	if session == null:
 		push_warning("连接Nakama Socket失败: session is null")
 		_is_connecting = false
 		return
 		
-	# 检查session是否有效
-	if session.is_exception() or session.is_expired():
-		push_warning("连接Nakama Socket失败: session无效或已过期")
-		_is_connecting = false
-		if session.is_valid():
-			_on_reset_session()
-			return
-		renew_session()
-		return
-		
-
 	# 创建 Nakama Socket
 	nakama_socket = Nakama.create_socket_from(nakama_client)
 	if not nakama_socket:
@@ -205,9 +161,6 @@ func _connect_socket(session:NakamaSession) -> void:
 		return
 
 	# 连接 Nakama Socket
-	print("正在连接WebSocket到: %s://%s:%d" % ["wss" if  nakama_scheme == "https" else "ws", nakama_host, nakama_port])
-	# print("Session token: %s" % session.token + "..." if session.token.length() > 20 else session.token)
-	
 	var result = await nakama_socket.connect_async(session,false,20)
 	if (result is int and result == ERR_FILE_EOF ):
 		pass
@@ -222,7 +175,7 @@ func _connect_socket(session:NakamaSession) -> void:
 
 		
 		# 根据错误类型提供具体建议
-		if exception.status_code != -1 and exception.grpc_status_code != -1:
+		if exception.status_code == -1 and exception.grpc_status_code == -1:
 			print("连接失败 - 可能的原因:")
 			print("1. 服务器地址 %s:%d 无法访问" % [nakama_host, nakama_port])
 			print("2. 网络连接问题")
@@ -231,22 +184,22 @@ func _connect_socket(session:NakamaSession) -> void:
 			_is_connecting = false
 			socketStateSIG.emit("socket_error")
 			# 尝试使用HTTP而不是HTTPS
-			if nakama_scheme == "https":
-				print("尝试切换到HTTP连接...")
-				nakama_scheme = "http"
-				nakama_client = null  # 重置client以使用新配置
-				await _connect_socket(session)
-				return
-		reconnectSIG.emit()
-		return
+			#if nakama_scheme == "https":
+				#print("尝试切换到HTTP连接...")
+				#nakama_scheme = "http"
+				#nakama_client = null  # 重置client以使用新配置
+				#return
+		#reconnectSIG.emit()
+		# return
 	print("网络nakama_socket连接 ->", nakama_socket.is_connected_to_host())
 	_on_socket_connected()
+	print("---------------------_connect_socket----------END-----------------------\n")
 	pass
 
 # 设置socket事件监听
 func _setup_socket_events() -> void:
 	# 断开连接时重置状态
-	if not nakama_socket:
+	if not nakama_socket or _is_connecting:
 		return
 	Util.safe_connect(nakama_socket, "closed", self, "_on_socket_closed")
 	Util.safe_connect(nakama_socket, "connected", self, "_on_socket_connected")
@@ -279,8 +232,8 @@ func _on_socket_closed() -> void:
 	_is_disconnected = true
 	
 
-# 连接成功
 func _on_socket_connected() -> void:
+# 连接成功
 	print("连接Nakama Socket 成功")
 	_is_connecting = false
 	_is_disconnected = false
@@ -368,26 +321,23 @@ func do_broadcast(notification1):
 # 		if not _check_connected():
 # 			connect_nakama_socket()
 # 	pass
-##############################################################################################
-func connect_nakama_socket() -> void:
-	print("连接Nakama Socket")
-	await _connect_socket(nakama_session)
 ############################主动发送数据############################################################
 func sendPing():
 	if nakama_socket:
+		var cur_time = Time.get_unix_time_from_system()
+		if cur_time > nakama_session.expire_time:
+			reconnectSIG.emit()
 		var result = await nakama_socket.rpc_async("ping")
 		if result.is_exception():
 			print("发送心跳失败:", result.get_exception().message)
-			reconnectSIG.emit()
 		else:
 			print("心跳发送成功")
 	pass
+	
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):
 	print("发送RPC:", funcName, payload)
-	
 	var result_wrapper = { "result": null }  # 使用字典包装变量
-	
 	var sucess_cb = func(ret:NakamaAsyncResult):
 		if ret and ret.id == funcName:
 			result_wrapper.result = JSON.parse_string(ret.payload)
@@ -395,16 +345,20 @@ func sendDataRPC(funcName: String, payload = null):
 		result_wrapper.result = ret  # 修改字典中的值
 		pass
 	var failed_cb = func(ret:NakamaAsyncResult):
-		print("发送RPC:",funcName," -->结果:",ret)
+		print("发送RPC:",funcName," -->结果:", ret)
 		#result_wrapper.result = []  # 修改字典中的值
 		return
-	await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], sucess_cb, failed_cb)
+	var result = await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], sucess_cb, failed_cb)
+	if not result:
+		reconnectSIG.emit()  # 如果发送失败，触发重连信号
 	print("发送RPC:",funcName," 结果:",result_wrapper.result)
 	return result_wrapper.result  # 返回最终结果
 
 # RPC 发送函数
 func acynDataRPC(funcName: String, payload = null,success_cb: Callable = Util.EMPTY_CALLABLE, failure_cb: Callable = Util.EMPTY_CALLABLE) -> void:
-	await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], success_cb, failure_cb)
+	var result = await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], success_cb, failure_cb)
+	if not result:
+		reconnectSIG.emit()  # 如果发送失败，触发重连信号
 	return
 
 # # 应用恢复焦点时检查连接
