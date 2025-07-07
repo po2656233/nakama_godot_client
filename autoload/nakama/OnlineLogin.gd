@@ -183,7 +183,6 @@ func _on_login_fail(msg):
 		msg = "账号或密码错误，请检查后重试"
 	elif msg == "":
 		msg = "登录失败，请稍后重试"
-	Online.set_nakama_session(null)
 	PopupManager.show_dynamic(msg)
 	
 
@@ -276,8 +275,7 @@ func _on_userinfo_failure(err):
 
 #### 异步加载玩家数据
 func load_player_data(session) -> void:
-	await Util.Asyn_Call(Online.nakama_client, "get_users_async",	[session, [session.user_id]
-		],_on_userinfo_success, _on_userinfo_failure)
+	await Util.Asyn_Call(Online.nakama_client, "get_users_async",	[session, [session.user_id]],_on_userinfo_success, _on_userinfo_failure)
 	# 连接 Nakama Socket
 	return
 

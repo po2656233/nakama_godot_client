@@ -1,6 +1,6 @@
 extends Node
 
-signal socketStateSIG(state: String)
+#signal socketStateSIG(state: String)
 signal reconnectSIG()
 
 # For developers to set from the outside, for example:
@@ -16,37 +16,24 @@ var nakama_client: NakamaClient: get = get_nakama_client
 var nakama_session: NakamaSession: get = get_nakama_session, set = set_nakama_session
 var nakama_socket: NakamaSocket: get = get_nakama_socket
 
-# 这些接口不会在断线重连后自动恢复
-const NON_RETRY_API: Array = [
-	"authenticate_email_async",
-	"authenticate_device_async",
-	"register_account",
-	"login",
-	"do_login",
-	"do_device_login"
-]
+# 心跳管理
+var heartbeat_timer: Timer
+const HEARTBEAT_INTERVAL = 15.0  # 15秒发送一次心跳
 
-# 重连配置
-const RECONNECT_INTERVAL := 15	# 重连间隔（秒）
-const PING_INTERVAL := 10.0      # 心跳超时时间（秒）
-const BASE_RETRY_DELAY := 3.0  	# 基础重试延迟（秒）
-const MAX_RETRY_DELAY := 15.0  	# 最大重试延迟（秒）
-const MAX_RETRY_COUNT := 5	 	# 最大重试次数
-const REQUEST_RETRY_LIMIT := 3 	# 单个请求最大重试次数
+# 连接状态
+var is_socket_connected = false
+var last_activity_time = 0
+const ACTIVITY_TIMEOUT = 30.0  # 30秒无活动视为断开
+
+# 广播枚举
 enum EnBroadcast{
-	CreateTable = 1,
-	RemoveTable = 2,
-	JoinTable = 3,
-	LeaveTable = 4,
-	TableOnline = 5,
+	CreateTable = 1, # 创建桌子
+	RemoveTable = 2, # 删除桌子
+	JoinTable = 3, # 加入桌子
+	LeaveTable = 4, # 离开桌子
+	TableOnline = 5, # 桌子在线人数
 }  
 
-# 状态变量
-#var _reconnect_timer: Timer = null		# 重连定时器
-var _ping_timer: Timer = null			# 心跳定时器
-
-var _is_connecting := false				# 是否正在连接
-var _is_disconnected := true 			# 是否断开
 
 # socket状态
 var socket_state = {
@@ -58,7 +45,23 @@ var socket_state = {
 }
 
 ###################################################################################
-# 获取NakamaClient
+### 初始化
+func _ready() -> void:
+	nakama_client = get_nakama_client()
+	pass
+###################################################################################
+### 设置session
+func set_nakama_session(_nakama_session: NakamaSession) -> void:	
+	nakama_session = _nakama_session
+	if nakama_session == null:
+		heartbeat_timer.stop()
+		nakama_socket.close()  # 如果传入的session为null，关闭socket连接
+		return
+	create_and_connect_socket()
+	print("获取到session:\t",_nakama_session,"\n")
+	pass
+
+### 获取NakamaClient
 func get_nakama_client() -> NakamaClient:
 	if nakama_client == null:
 		nakama_client = Nakama.create_client(
@@ -70,140 +73,99 @@ func get_nakama_client() -> NakamaClient:
 			NakamaLogger.LOG_LEVEL.ERROR)
 	return nakama_client
 
-# 获取NakamaSession
+### 获取NakamaSession
 func get_nakama_session() -> NakamaSession:
 	return nakama_session
 	
-# 获取nakama_socket
+### 获取nakama_socket
 func get_nakama_socket():
 	return nakama_socket
-	
-# 设置session
-func set_nakama_session(_nakama_session: NakamaSession) -> void:	
-	nakama_session = _nakama_session
-	_connect_socket(_nakama_session)
-	print("获取到session:\t",_nakama_session,"\n")
-	pass
-###################################################################################
-# 初始化
-func _ready() -> void:
-	# 连接Nakama Socket
-	reconnectSIG.connect(_on_reset_session)
-	socketStateSIG.connect(_on_socket_state)
-	pass
-
-# 重连事件处理
-func renew_session():
-	print("----完全重置session----")
-	#_disconnect_socket()
-	#OnlineLogin.relogin()# 绑定登录失败后，继续重连
-	pass
-
-
-# 事件 --重置session--
-func _on_reset_session() -> void:
-	if not nakama_session:
-		renew_session()
-		return
-		
-	print("正在重置session...")
-	var restore_result = await nakama_client.session_refresh_async(nakama_session)
-	if restore_result.is_exception():
-		print("重置session失败，将启动持续重置")
-		renew_session()
-		return
-	# 重置成功
-	nakama_session = restore_result
-	pass
-
-# 事件 --socket状态--
-func _on_socket_state(state: String):
-	if socket_state.has(state) and state != "connected":
-		PopupManager.show_dynamic(socket_state[state])
-		return
-	pass
-###########################################################################################
-# 初始化定时器
-func start_timers() -> void:
-	# 心跳定时器
-	if _ping_timer == null:
-		_ping_timer = Timer.new()
-		_ping_timer.timeout.connect(sendPing)
-		add_child(_ping_timer)
-	_ping_timer.stop()
-	_ping_timer.start(PING_INTERVAL)
-	pass
-
-func close_timers() -> void:
-	if _ping_timer:	
-		_ping_timer.stop()
-		_ping_timer.queue_free()
-		_ping_timer = null
-	pass
-
-func nakama_connect_socket() -> void:
-	# 断开连接时关闭定时器
-	_connect_socket(nakama_session)
-	pass
-
-
 #################################【网络连接】############################################
-# 连接socket
-func _connect_socket(session:NakamaSession) -> void:
-	print("---------------------_connect_socket----------START-----------------------")
-	_is_connecting = true
-	if session == null:
-		push_warning("连接Nakama Socket失败: session is null")
-		_is_connecting = false
+### 创建并连接Socket
+func create_and_connect_socket():
+	if nakama_session == null:
+		# push_error("Session is null, cannot create socket")
 		return
-		
-	# 创建 Nakama Socket
 	nakama_socket = Nakama.create_socket_from(nakama_client)
-	if not nakama_socket:
-		push_warning("创建Nakama Socket失败")
-		_is_connecting = false
+	# 监听socket事件
+	_listen_socket_events()
+	# 匹配服重置socket
+	OnlineMatch._set_nakama_socket(nakama_socket)
+	
+	# 开始连接（正确使用官方API）
+	print("Connecting to socket...")
+	var connect_result = await nakama_socket.connect_async(nakama_session, true)  # 仅session和appear_online参数
+	if connect_result.is_exception():
+		push_error("Socket connection failed: " + connect_result.exception.message)
+		schedule_reconnect()
 		return
-
-	# 连接 Nakama Socket
-	var result = await nakama_socket.connect_async(session,false,20)
-	if (result is int and result == ERR_FILE_EOF ):
-		pass
-	elif result.is_exception():
-		var exception = result.get_exception()
-		print("网络连接出错 & %s" % result)
-		print("错误详情 - StatusCode: %d, Message: '%s', GrpcStatusCode: %d" % [
-			exception.status_code, 
-			exception.message, 
-			exception.grpc_status_code
-		])
-
-		
-		# 根据错误类型提供具体建议
-		if exception.status_code == -1 and exception.grpc_status_code == -1:
-			print("连接失败 - 可能的原因:")
-			print("1. 服务器地址 %s:%d 无法访问" % [nakama_host, nakama_port])
-			print("2. 网络连接问题")
-			print("3. 防火墙阻止连接")
-			print("4. TLS/SSL证书问题")
-			_is_connecting = false
-			socketStateSIG.emit("socket_error")
-			# 尝试使用HTTP而不是HTTPS
-			#if nakama_scheme == "https":
-				#print("尝试切换到HTTP连接...")
-				#nakama_scheme = "http"
-				#nakama_client = null  # 重置client以使用新配置
-				#return
-		#reconnectSIG.emit()
-		# return
-	print("网络nakama_socket连接 ->", nakama_socket.is_connected_to_host())
-	_on_socket_connected()
-	print("---------------------_connect_socket----------END-----------------------\n")
+	
+	print("Socket connected successfully")
+	is_socket_connected = true
+	
+	# 初始化心跳
+	start_heartbeat()
 	pass
 
-# 设置socket事件监听
-func _setup_socket_events() -> void:
+### 启动心跳机制
+func start_heartbeat():
+	# 创建心跳计时器
+	heartbeat_timer = Timer.new()
+	add_child(heartbeat_timer)
+	heartbeat_timer.wait_time = HEARTBEAT_INTERVAL
+	heartbeat_timer.timeout.connect(_send_heartbeat)
+	heartbeat_timer.start()
+	
+	# 初始化最后活动时间
+	last_activity_time = Time.get_unix_time_from_system()
+	
+	print("Heartbeat started")
+
+### 发送心跳
+func _send_heartbeat():
+	if !is_connected or not nakama_socket:
+		return
+	# 发送心跳消息
+	var result = await nakama_socket.rpc_async("ping")
+	if result.is_exception():
+		push_error("Heartbeat failed: " + result.exception.message)
+		_on_socket_closed()
+		return
+	# 更新最后活动时间
+	last_activity_time = Time.get_unix_time_from_system()
+	if last_activity_time > nakama_session.expire_time:
+		push_error("Session expired")
+		_reseet_session()
+		return
+	print("Heartbeat sent and acknowledged")
+
+### 重置会话
+func _reseet_session():
+	if not nakama_session:
+		push_error("No session to reset")
+		return
+	var result = await nakama_socket.connect_async(nakama_session, true)  # 重新连接socket
+	if result.is_exception():
+		push_error("Failed to reset session: " + result.exception.message)
+		return
+	nakama_session = result
+	print("Session reset successfully")
+
+# 检测连接活动
+func check_connection_activity():
+	if !is_connected:
+		return
+	
+	var current_time = Time.get_unix_time_from_system()
+	if current_time - last_activity_time > ACTIVITY_TIMEOUT:
+		push_warning("Connection inactive for too long. Assuming disconnected.")
+		_on_socket_closed()
+	pass
+
+### 设置socket事件监听
+func _listen_socket_events() -> void:
 	# 断开连接时重置状态
-	if not nakama_socket or _is_connecting:
+	if not nakama_socket:
 		return
 	Util.safe_connect(nakama_socket, "closed", self, "_on_socket_closed")
 	Util.safe_connect(nakama_socket, "connected", self, "_on_socket_connected")
@@ -214,68 +176,59 @@ func _setup_socket_events() -> void:
 	Util.safe_connect(nakama_socket, "received_status_presence", self, "_on_received_status_presence")
 	Util.safe_connect(nakama_socket, "received_notification", self, "_on_received_notification")
 	Util.safe_connect(nakama_socket, "received_channel_message", self, "_on_received_message")
-	# 匹配服重置socket
-	OnlineMatch._set_nakama_socket(nakama_socket)
 	pass
 
-# 断开socket
-func _disconnect_socket():
-	_is_connecting = false
-	_is_disconnected = true
-	if nakama_socket:
-		print("正在断开Nakama Socket连接...")
-		nakama_socket.close()
-		nakama_socket = null
+# 信号处理函数 ========================================
+### socket连接事件处理
+func _on_socket_connected():
+	print("Socket connected event received")
+	is_socket_connected = true
+	last_activity_time = Time.get_unix_time_from_system()
 
-#########################################################
-# 事件处理
-#########################################################
-# 连接关闭
-func _on_socket_closed() -> void:
-	print("Nakama Socket 关闭")
-	_is_disconnected = true
-	
+### socket关闭事件处理
+func _on_socket_closed():
+	print("Socket closed event received")
+	is_socket_connected = false
+	if heartbeat_timer:
+		heartbeat_timer.stop()
+	schedule_reconnect()
 
-func _on_socket_connected() -> void:
-# 连接成功
-	print("连接Nakama Socket 成功")
-	_is_connecting = false
-	_is_disconnected = false
-	socketStateSIG.emit("connected")
-	# 监听socket事件
-	_setup_socket_events()
-	# 启动定时器
-	start_timers()
-	pass
-
-# 网络错误
-func _on_socket_error(err) -> void:
-	print("网络异常——> ", err)
-	socketStateSIG.emit("disconnected")
+### 处理socket错误
+func _on_socket_error(error):
+	push_error("Socket error: " + str(error))
+	is_socket_connected = false
+	if heartbeat_timer:
+		heartbeat_timer.stop()
+	schedule_reconnect()
 
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):
+	last_activity_time = Time.get_unix_time_from_system()# 更新最后活动时间
 	SignalManager.MatchMakerSIG.emit(matchmaker_matched)
 	pass
 
 # 收到匹配状态
 func _on_received_match_state(match_state):
+	last_activity_time = Time.get_unix_time_from_system()# 更新最后活动时间
 	SignalManager.MatchStateEventSIG.emit(match_state)
 	pass
 
 # 收到匹配玩家数据
 func _on_received_match_presence(match_presence):
+	last_activity_time = Time.get_unix_time_from_system()# 更新最后活动时间
 	print("收到匹配的玩家数据:", match_presence)
 	SignalManager.MatchPresenceEventSIG.emit(match_presence)
 	pass
 
 # 收到状态数据
 func _on_received_status_presence(status_presence):	
+	last_activity_time = Time.get_unix_time_from_system()# 更新最后活动时间
 	SignalManager.StatusPresenceEventSIG.emit(status_presence)
 	pass
 
 # 收到通知
 func _on_received_notification(notification1):
+	last_activity_time = Time.get_unix_time_from_system()# 更新最后活动时间
 	print("收到通知:", notification1.subject, " 内容:", notification1)
 	match notification1.subject:
 		"broadcast":
@@ -292,16 +245,19 @@ func _on_received_notification(notification1):
 			push_warning("未知的通知类型:", notification1.category)
 	pass
 
+# 收到频道消息
 func _on_channel_presence(channel_presence):
 	var _1 = channel_presence
 	pass
 
+# 接收消息
 func _on_received_message(channel_message):
+	last_activity_time = Time.get_unix_time_from_system()# 更新最后活动时间
 	print("收到消息:", channel_message)
 	SignalManager.RecvMessageSIG.emit(channel_message)
 	pass
 
-########################全局信号转发####################################
+# 全局信号转发
 func do_broadcast(notification1):
 	var content = JSON.parse_string(notification1.content)
 	match notification1.code:
@@ -319,25 +275,43 @@ func do_broadcast(notification1):
 			push_warning("未知的广播类型:", notification1.code)
 	pass
 
-# func _notification(what: int) -> void:
-# 	if what == NOTIFICATION_APPLICATION_FOCUS_IN or what == NOTIFICATION_APPLICATION_RESUMED:
-# 		# 当游戏窗口重新获得焦点时检查连接
-# 		if not _check_connected():
-# 			connect_nakama_socket()
-# 	pass
-############################主动发送数据############################################################
-func sendPing():
-	if nakama_socket:
-		var cur_time = Time.get_unix_time_from_system()
-		var result = await nakama_socket.rpc_async("ping")
-		if result.is_exception() or cur_time+PING_INTERVAL > nakama_session.expire_time:
-			reconnectSIG.emit()
-			print("距离过期: %d 秒"%[nakama_session.expire_time-cur_time])
-			print("发送心跳失败:", result.get_exception().message)
-		else:
-			print("心跳发送成功")
-	pass
+# 重连逻辑 ==========================================
+func schedule_reconnect():
+	# 指数退避重连策略
+	var delay = 1.0 + randf() * 2.0  # 1-3秒随机延迟防止重连风暴
 	
+	print("Scheduling reconnect in ", delay, " seconds")
+	
+	# 创建定时器执行重连
+	var timer = Timer.new()
+	add_child(timer)
+	timer.one_shot = true
+	timer.wait_time = delay
+	timer.timeout.connect(_perform_reconnect)
+	timer.start()
+
+func _perform_reconnect():
+	print("Attempting reconnect...")
+	create_and_connect_socket()
+
+# 游戏生命周期管理 ==================================
+
+func _notification(what):
+	# 失去焦点时暂停心跳
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		print("App lost focus. Pausing heartbeat.")
+		if heartbeat_timer:
+			heartbeat_timer.paused = true
+	
+	# 获得焦点时恢复心跳
+	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		print("App gained focus. Resuming heartbeat.")
+		if heartbeat_timer:
+			heartbeat_timer.paused = false
+			# 立即发送心跳检测连接状态
+			_send_heartbeat()
+
+############################主动发送数据############################################################
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null):
 	print("发送RPC:", funcName, payload)
@@ -364,12 +338,3 @@ func acynDataRPC(funcName: String, payload = null,success_cb: Callable = Util.EM
 	if not result:
 		reconnectSIG.emit()  # 如果发送失败，触发重连信号
 	return
-
-# # 应用恢复焦点时检查连接
-# func _notification(what: int) -> void:
-# 	if what == NOTIFICATION_APPLICATION_FOCUS_IN or what == NOTIFICATION_APPLICATION_RESUMED:
-# 		# 当游戏窗口重新获得焦点时检查连接
-# 		if not _check_connected():
-# 			print("应用恢复焦点，检查连接状态")
-# 			_check_connection()
-# 	pass
