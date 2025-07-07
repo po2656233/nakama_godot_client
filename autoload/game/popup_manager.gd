@@ -125,3 +125,8 @@ func _on_confirm_pressed(popup_id) -> void:
 		return
 	popup_confirmed.emit(popup_id)
 	pass
+
+
+func show_nakama_error(result,funcName: String,) -> void:
+	# 显示在线错误弹窗
+	show_message(result.get_exception().message, Errors.FuncMapping[funcName], false)

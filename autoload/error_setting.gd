@@ -9,6 +9,18 @@ var FuncMapping = {
 	"send_message": "发送消息",
 	# 添加更多映射...
 }
+
+# 这些接口不会在断线重连后自动恢复
+const Non_Retry_API: Array = [
+	"authenticate_email_async",
+	"authenticate_device_async",
+	"register_account",
+	"login",
+	"do_login",
+	"do_device_login"
+]
+
+# 定义一个映射字典，将错误消息映射为中文
 var ResponeMapping = {
 	"RPC function not found": "服务器未处理",
 	"Request cancelled.":"网络断开",
@@ -24,11 +36,11 @@ var ResponeMapping = {
 	"Certificate verification failed": "证书验证失败",
 }
 
-
+# 网络错误
 var NetworkErrors = [
-		"网络断开",
-		"连接失败", 
-		"连接超时",
+		# "网络断开",
+		# "连接失败", 
+		# "连接超时",
 		"HTTPRequest failed!",
 		"Invalid session.",
 		"Session expired.",

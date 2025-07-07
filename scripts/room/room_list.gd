@@ -94,6 +94,8 @@ func _ready():
 	for game in games:
 		game_options.add_item(game.name, game.id)
 		game_options.set_item_metadata(game_options.item_count-1, game)
+	if games.size() == 0:
+		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 	jion_dialog.visible = false
 
 	
@@ -623,7 +625,7 @@ func _on_join_room(room_info: Dictionary):
 	if ret == null or not ret.has("tableId") or ret.tableId != room_info.id:
 		SignalManager.JoinErrorMusicSIG.emit()
 		print("加入房间失败", ret)
-		_refresh_room_list()
+		# _refresh_room_list()
 		return 
 
 	# 进入房间
@@ -633,7 +635,7 @@ func _on_join_room(room_info: Dictionary):
 	})
 	if not result:
 		#失败则返回 不用处理接口里统一处理了
-		_refresh_room_list()
+		# _refresh_room_list()
 		return
 	print("加入房间成功", result)
 	SignalManager.JoinSuccessMusicSIG.emit(room_info.room_id)

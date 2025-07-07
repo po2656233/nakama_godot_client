@@ -96,7 +96,7 @@ func create_and_connect_socket():
 	print("Connecting to socket...")
 	var connect_result = await nakama_socket.connect_async(nakama_session, true)  # 仅session和appear_online参数
 	if connect_result.is_exception():
-		push_error("Socket connection failed: " + connect_result.exception.message)
+		push_error("Socket connection failed: " + connect_result.get_exception().message)
 		schedule_reconnect()
 		return
 	
@@ -129,7 +129,8 @@ func _send_heartbeat():
 	var result = await nakama_socket.rpc_async("ping")
 	if result.is_exception():
 		push_error("Heartbeat failed: " + result.exception.message)
-		_on_socket_closed()
+		#_on_socket_closed()
+		schedule_reconnect()
 		return
 	# 更新最后活动时间
 	last_activity_time = Time.get_unix_time_from_system()
@@ -191,7 +192,7 @@ func _on_socket_closed():
 	is_socket_connected = false
 	if heartbeat_timer:
 		heartbeat_timer.stop()
-	schedule_reconnect()
+	#schedule_reconnect()
 
 ### 处理socket错误
 func _on_socket_error(error):
@@ -199,7 +200,7 @@ func _on_socket_error(error):
 	is_socket_connected = false
 	if heartbeat_timer:
 		heartbeat_timer.stop()
-	schedule_reconnect()
+	#schedule_reconnect()
 
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):
