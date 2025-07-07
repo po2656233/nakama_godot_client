@@ -86,6 +86,8 @@ func _ready():
 			"state": int(item.state),
 		})
 	# 添加游戏
+	if games.size() == 0:
+		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 	
 	for item in games_data:
 		on_add_game_data(item)

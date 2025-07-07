@@ -591,10 +591,13 @@ func _on_cancel_waiting():
 				selected_room_info.players.remove_at(i)
 				break
 		_refresh_room_list()
+	selected_room_info = {}
 	pass
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
+	if selected_room_info != {}:
+		return
 	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
 	if not SceneManager.has_scene(enName):
