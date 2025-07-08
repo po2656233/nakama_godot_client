@@ -54,8 +54,8 @@ func _ready() -> void:
 func set_nakama_session(_nakama_session: NakamaSession) -> void:	
 	nakama_session = _nakama_session
 	if nakama_session == null:
-		heartbeat_timer.stop()
-		nakama_socket.close()  # 如果传入的session为null，关闭socket连接
+		if heartbeat_timer:heartbeat_timer.stop()
+		if nakama_socket:nakama_socket.close()  # 如果传入的session为null，关闭socket连接
 		return
 	create_and_connect_socket()
 	print("获取到session:\t",_nakama_session,"\n")
