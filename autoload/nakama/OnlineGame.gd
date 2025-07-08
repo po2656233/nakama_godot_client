@@ -51,22 +51,18 @@ func RpcListData(funcName, payload:Dictionary={}, sort_field:String=""):
 	# if not rpc_funcs.has(funcName):
 	# 	print("无效的RPC函数名:",funcName)
 	# 	return []
-	var result_wrapper = { "result": [] }  # 使用字典包装变量
-	var cb = func(result):
-		if result and result.id == funcName:
-			var sorted = JSON.parse_string(result.payload)
-			sorted = sorted.duplicate() 
-			if sort_field != "":
-				sorted.sort_custom(func(a, b):
-					if a.has(sort_field) and b.has(sort_field):
-						return a[sort_field] < b[sort_field]
-					else:
-						return false
-				)
-			result_wrapper.result = sorted
-		return
-	await Online.acynDataRPC(funcName,payload,cb)
-	return result_wrapper.result
+	var result = await Online.sendDataRPC(funcName,payload)
+	var sorted = result
+	if sorted:
+		sorted = sorted.duplicate() 
+		if sort_field != "":
+			sorted.sort_custom(func(a, b):
+				if a.has(sort_field) and b.has(sort_field):
+					return a[sort_field] < b[sort_field]
+				else:
+					return false
+			)
+	return sorted
 ##################################################################################
 
 func sendToMatch(p_match_id, p_op_code : int, p_data : String, p_presences = null):
@@ -107,7 +103,7 @@ func getGameList(kind:int=-1):
 	#if games_data.size() > 0:
 		#return games_data
 	var result = await RpcListData("list_games",{"kid":kind}, "id")
-	if result.size() > 0:
+	if result and result.size() > 0:
 		games_data = result
 	return result
 

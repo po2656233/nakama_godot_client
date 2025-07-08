@@ -86,11 +86,12 @@ func create_and_connect_socket():
 	if nakama_session == null:
 		# push_error("Session is null, cannot create socket")
 		return
-	nakama_socket = Nakama.create_socket_from(nakama_client)
-	# 监听socket事件
-	_listen_socket_events()
-	# 匹配服重置socket
-	OnlineMatch._set_nakama_socket(nakama_socket)
+	if not nakama_socket:
+		nakama_socket = Nakama.create_socket_from(nakama_client)
+		# 监听socket事件
+		_listen_socket_events()
+		# 匹配服重置socket
+		OnlineMatch._set_nakama_socket(nakama_socket)
 	
 	# 开始连接（正确使用官方API）
 	print("Connecting to socket...")
