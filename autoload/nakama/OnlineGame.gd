@@ -105,6 +105,8 @@ func getGameList(kind:int=-1):
 	var result = await RpcListData("list_games",{"kid":kind}, "id")
 	if result and result.size() > 0:
 		games_data = result
+	else:
+		result = []
 	return result
 
 
