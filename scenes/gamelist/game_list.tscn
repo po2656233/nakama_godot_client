@@ -77,8 +77,10 @@ theme_override_constants/separation = 150
 [node name="Matching" parent="." instance=ExtResource("2_kgill")]
 visible = false
 layout_mode = 1
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
+anchor_right = 0.5
 anchor_bottom = 0.5
 offset_top = 0.0
 offset_bottom = 0.0

@@ -90,15 +90,10 @@ func _ready():
 	# 加载保存的数据
 	print("初始化房间列表数据!!!page:%d,columns:%d,width:%d,space:%d"%[items_per_page,columns,width,space])
 	await load_data()
-	var games = await OnlineGame.getGameList()
-	for game in games:
-		game_options.add_item(game.name, game.id)
-		game_options.set_item_metadata(game_options.item_count-1, game)
-	if games.size() == 0:
-		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
-	jion_dialog.visible = false
 
 	
+	# 加入房间的对话框
+	jion_dialog.visible = false
 	# 绑定事件
 	search_input.text_changed.connect(_on_search_changed)
 	# sort_options.item_selected.connect(_on_sort_changed)
@@ -117,6 +112,9 @@ func _ready():
 	pass
 
 func load_data():
+	# 游戏列表
+	OnlineGame.getGameList(-1,self,"_on_game_list")
+	#await Online.sendDataRPC("list_games",{"kid":-1},self,"_on_game_list")
 	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
 	curSelect = SearchType.favorite
 	await loadRooms()
@@ -270,6 +268,15 @@ func update_total_pages(list_size = -1):
 		current_page = max(0, total_pages - 1)
 	_update_stats()
 
+# 游戏列表
+func _on_game_list(result):
+	var games = Util.sort_by_filed(result,"id")
+	for game in games:
+		game_options.add_item(game.name, game.id)
+		game_options.set_item_metadata(game_options.item_count-1, game)
+	if games.size() == 0:
+		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+	pass
 
 # 刷新房间列表
 func _refresh_room_list():

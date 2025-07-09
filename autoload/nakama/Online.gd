@@ -18,13 +18,13 @@ var nakama_socket: NakamaSocket = null
 
 # 心跳管理
 var heartbeat_timer: Timer
-const HEARTBEAT_INTERVAL = 15.0  # 15秒发送一次心跳
+const HEARTBEAT_INTERVAL = 10.0  # 15秒发送一次心跳
 
 # 连接状态
 var is_socket_connected = false
 var last_activity_time = 0
 const ACTIVITY_TIMEOUT = 30.0  # 30秒无活动视为断开
-
+var linkCount = 0
 # 广播枚举
 enum EnBroadcast{
 	CreateTable = 1, # 创建桌子
@@ -95,12 +95,12 @@ func create_and_connect_socket():
 		_listen_socket_events()
 		# 匹配服重置socket
 		OnlineMatch._set_nakama_socket(nakama_socket)
-	
+	linkCount+=1
 	# 开始连接（正确使用官方API）
-	print("Connecting to socket...")
-	var connect_result = await nakama_socket.connect_async(nakama_session, true)  # 仅session和appear_online参数
+	print("Connecting to socket...",linkCount)
+	var connect_result = await nakama_socket.connect_async(nakama_session, true,20)  # 仅session和appear_online参数
 	if connect_result.is_exception():
-		push_error("Socket connection failed: " + connect_result.get_exception().message)
+		print("Socket connection failed: " , connect_result)
 		#schedule_reconnect()
 		return
 	
@@ -138,7 +138,7 @@ func _send_heartbeat():
 		return
 	# 更新最后活动时间
 	last_activity_time = Time.get_unix_time_from_system()
-	if last_activity_time > nakama_session.expire_time:
+	if last_activity_time+20 > nakama_session.expire_time:
 		push_error("Session expired")
 		_reseet_session()
 		return
@@ -196,11 +196,13 @@ func _on_socket_closed():
 	is_socket_connected = false
 	if heartbeat_timer:
 		heartbeat_timer.stop()
-	#schedule_reconnect()
+	schedule_reconnect()
 
 ### 处理socket错误
 func _on_socket_error(error):
 	push_error("Socket error: " + str(error))
+	if error == ERR_TIMEOUT:
+		PopupManager.show_dynamic("连接超时,请稍后重试")
 	is_socket_connected = false
 	if heartbeat_timer:
 		heartbeat_timer.stop()
@@ -317,17 +319,24 @@ func _notification(what):
 
 ############################主动发送数据############################################################
 # RPC 发送函数
-func sendDataRPC(funcName: String, payload = null):
+func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String="_on_work"):
 	print("发送RPC:", funcName, payload)
 	var result_wrapper = { "result":null}  # 使用字典包装变量
 	var sucess_cb = func(ret:NakamaAsyncResult):
 		if ret and ret.id == funcName:
 			result_wrapper.result = JSON.parse_string(ret.payload)
-			if has_signal(funcName+"SIG"):
-				emit_signal(funcName+"SIG",result_wrapper.result) 
-				print("接收RPC成功,发送信号:",funcName+"SIG"," 结果:", result_wrapper.result) 
-			else:
-				push_warning("未找到信号:", funcName+"SIG")
+			# 外部有处理函数,再发送信号
+			if obj != null:
+				# 动态创建信号，并且根据外部obj和work_cb名称进行处理
+				var sigName = funcName+"SIG"
+				if not has_signal(sigName):
+					add_user_signal(sigName, result_wrapper.result)
+				#disconnect(sigName,Callable(obj,work_cb))
+				if is_connected(sigName,Callable(obj,work_cb)):
+					disconnect(sigName,Callable(obj,work_cb))
+				connect(sigName,Callable(obj,work_cb))
+				emit_signal(sigName,result_wrapper.result) 
+			print("接收RPC成功,发送信号:",funcName+"SIG") 
 			return
 		result_wrapper.result = ret  # 修改字典中的值
 		pass

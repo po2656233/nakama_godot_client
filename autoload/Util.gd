@@ -47,7 +47,7 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 		print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
 		return true
 		
-	if on_success: on_success.call(result)
+	if on_success and result != null: on_success.call(result)
 	return true
 
 # 改进的安全连接函数
@@ -84,6 +84,21 @@ func find_unique_name(parent: Node, prefix: String = '') -> String:
 
 func random_name(prefix: String) -> String:
 	return prefix + str(randi())
+
+
+# 就数组进行字段排序
+func sort_by_filed(arr:Array,sort_field:String=""):
+	if not arr.is_empty():
+		var sorted = arr.duplicate() 
+		if sort_field != "":
+			sorted.sort_custom(func(a, b):
+				if a.has(sort_field) and b.has(sort_field):
+					return a[sort_field] < b[sort_field]
+				else:
+					return false
+			)
+		return sorted
+	return []
 
 #################################################################################
 # 异步加载 Texture2D

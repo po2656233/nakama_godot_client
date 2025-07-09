@@ -10,8 +10,9 @@ var game_card_scene = preload("res://scenes/gamelist/game_card.tscn")
 var game_id:int = -1
 var curMatchId = ""
 # 示例游戏数据
-# var games_data =[]
-var games_data =[
+var games_data =[]
+var already_ids = []
+#var games_data =[
 	# {
 	# 	"id": 1001,
 	# 	"name":"史诗冒险之旅",
@@ -51,7 +52,7 @@ var games_data =[
 	 	#"version":"",
 	 	#"image": "",
 	 #}
-]
+#]
 
 		
 func _ready(): 
@@ -62,10 +63,41 @@ func _ready():
 	print("游戏列表--->")
 	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
 
+	# 加载数据
+	load_data()
+	
+	
+	# 连接匹配信号
+	matching.match_sucess.connect(_on_match_sucess)
+	matching.match_cancel.connect(_on_match_cancel)
+	SignalManager.StartGameSIG.connect(_on_game_start)
+	SignalManager.CancleGameSIG.connect(_on_game_cancel)
+	pass
+
+# 加载游戏数据
+func load_data():
+	# 为了界面
+	var games = OnlineGame.getGameListOld()
+	if games.size() > 0:
+		set_game_list(games)
+	OnlineGame.getGameList(-1,self,"_on_game_list")
+	#await get_tree().process_frame
+
+# 加载游戏列表
+func _on_game_list(result):
 	# 获取游戏列表
-	var games = await OnlineGame.getGameList()
+	var games = Util.sort_by_filed(result,"id")
+	set_game_list(games)
+
+func set_game_list(games):
+	if games.size() == 0:
+		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+		return
+	# 添加游戏
 	for item in games:
-		print(item)
+		if item.id in already_ids:
+			continue
+		print("----------------------------------->\n\n",item)
 		if item.max_player < 2:# 单机游戏不参与匹配
 			continue
 		var description = "[center][b]%s[/b][/center]\n\n"%[item.name]
@@ -73,6 +105,7 @@ func _ready():
 			description += "[color=blue][b]特色：[/b][/color]\n"+item.special+"\n\n"
 		if item.rules:
 			description += "[color=green][b][font_size=24]规则介绍：[/font_size][/b][/color]\n"+item.rules+"\n\n"
+		already_ids.append(item.id)
 		games_data.append({
 			"id": item.id,
 			"kid": item.kid,
@@ -85,18 +118,10 @@ func _ready():
 			"lessscore": item.lessscore,
 			"state": int(item.state),
 		})
-	# 添加游戏
-	if games.size() == 0:
-		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
-	
+
+	# 加载游戏数据
 	for item in games_data:
 		on_add_game_data(item)
-	
-	# 连接匹配信号
-	matching.match_sucess.connect(_on_match_sucess)
-	matching.match_cancel.connect(_on_match_cancel)
-	SignalManager.StartGameSIG.connect(_on_game_start)
-	SignalManager.CancleGameSIG.connect(_on_game_cancel)
 	pass
 
 
@@ -106,6 +131,7 @@ func on_add_game_data(data):
 	game_list.add_child(card)
 	card.setup(data)
 	card.game_selected.connect(_on_game_selected)
+	card.show()
 
 
 # 游戏选择

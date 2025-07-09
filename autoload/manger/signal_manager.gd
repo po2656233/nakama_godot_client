@@ -94,9 +94,7 @@ signal LoadingSIG(value)
 signal ChangeSceneSIG(sceneName, transition_way, dissolve_time, dissolve_image) 
 
 ####################游戏#############################
-# 游戏列表
-@warning_ignore("unused_signal")
-signal GameListSIG(allGames) 
+
 # 加载游戏
 @warning_ignore("unused_signal")
 signal LoadingGameSIG(gameName) 
@@ -182,3 +180,8 @@ signal MatchSuccessFailedMusicSIG()
 # 匹配成功的时间音效
 @warning_ignore("unused_signal")
 signal MatchSuccessTimeMusicSIG(isStop) 
+
+###################RPC业务相关###################################
+## 采用信号 作为事件驱动处理业务
+## 动态信号创建 已经 动态地绑定处理函数 
+## 详情见 online的sendDataRPC接口

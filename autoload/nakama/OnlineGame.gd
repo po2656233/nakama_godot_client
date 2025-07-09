@@ -98,17 +98,17 @@ func removeTable(payload):
 
 ########################################################################################
 # 获取游戏列表
-func getGameList(kind:int=-1):
+func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 	# 每次都加载最新的
-	#if games_data.size() > 0:
-		#return games_data
-	var result = await RpcListData("list_games",{"kid":kind}, "id")
+	var result = await Online.sendDataRPC("list_games",{"kid":kind},obj,work_cb)
 	if result and result.size() > 0:
-		games_data = result
+		games_data = Util.sort_by_filed(result,"id") 
 	else:
 		result = []
 	return result
 
+func getGameListOld():
+	return games_data 
 
 
 # 获取收藏列表
