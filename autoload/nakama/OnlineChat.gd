@@ -370,6 +370,7 @@ func load_world_channel():
 	if _world_channel:
 		return _world_channel
 	var result = await search_groups("world")
+	print("查找世界频道:\n\n ")
 	if not result:
 		return null
 	for group in result.groups:

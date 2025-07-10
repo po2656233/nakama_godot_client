@@ -231,7 +231,8 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 		pass
 	
 	if  result == null:
-		print("获取房间列表失败:")
+		# print("获取房间列表失败:")
+		PopupManager.show_message("获取房间列表失败，请检查网络连接或稍后再试。", "提示", false)
 		return
 	if result.has("items"):
 		print("获取房间数量:",result.items.size())
@@ -270,6 +271,7 @@ func update_total_pages(list_size = -1):
 
 # 游戏列表
 func _on_game_list(result):
+	print("房间--游戏列表",result)
 	var games = Util.sort_by_filed(result,"id")
 	for game in games:
 		game_options.add_item(game.name, game.id)

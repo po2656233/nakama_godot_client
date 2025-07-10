@@ -48,6 +48,7 @@ var socket_state = {
 ### 初始化
 func _ready() -> void:
 	nakama_client = get_nakama_client()
+	reconnectSIG.connect(schedule_reconnect)
 	pass
 ###################################################################################
 ### 设置session
@@ -101,14 +102,15 @@ func create_and_connect_socket():
 	var connect_result = await nakama_socket.connect_async(nakama_session, true,20)  # 仅session和appear_online参数
 	if connect_result.is_exception():
 		print("Socket connection failed: " , connect_result)
-		#schedule_reconnect()
+		schedule_reconnect()
 		return
 	
 	print("Socket connected successfully")
 	is_socket_connected = true
 	
 	# 初始化心跳
-	start_heartbeat()
+	if linkCount == 1:
+		start_heartbeat()
 	pass
 
 ### 启动心跳机制
@@ -321,6 +323,7 @@ func _notification(what):
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String="_on_work"):
 	print("发送RPC:", funcName, payload)
+	
 	var result_wrapper = { "result":null}  # 使用字典包装变量
 	var sucess_cb = func(ret:NakamaAsyncResult):
 		if ret and ret.id == funcName:
@@ -340,14 +343,17 @@ func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String
 			return
 		result_wrapper.result = ret  # 修改字典中的值
 		pass
-	var failed_cb = func(ret):
-		print("发送RPC失败:",funcName," -->结果:", ret)
+	var failed_cb = func(errMsg):
+		if errMsg in Errors.NetworkErrors:
+			reconnectSIG.emit()
+		print("发送RPC失败:",funcName," -->结果:", errMsg)
 		#result_wrapper.result = []  # 修改字典中的值
 		return
+	if not is_socket_connected:
+		Util.reliable_queue.EnqueueMessage("rpc_async", [funcName, payload],nakama_socket,sucess_cb, failed_cb)
+		return
 	var result = await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], sucess_cb, failed_cb)
-	if not result:
-		reconnectSIG.emit()  # 如果发送失败，触发重连信号
-	print("发送RPC:",funcName," 结果:",result_wrapper.result)
+	print("发送RPC-FIN:",funcName," 反馈结果:",result)
 	return result_wrapper.result  # 返回最终结果
 
 # RPC 发送函数
