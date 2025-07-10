@@ -4,6 +4,7 @@ const loginProto = preload("res://gdprotobuf/login.gd")
 const homeProto = preload("res://gdprotobuf/home.gd")
 var local_match_id = ""
 var games_data = []
+var favorite_list = []
 var kind_names = {
 	1: "对战类",
 	2: "百人类",
@@ -102,19 +103,20 @@ func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 	# 每次都加载最新的
 	var result = await Online.sendDataRPC("list_games",{"kid":kind},obj,work_cb)
 	if result and result.size() > 0:
-		games_data = Util.sort_by_filed(result,"id") 
+		games_data = Util.sort_by_filed(result,"id")
 	else:
-		result = []
+		result = [] 
 	return result
 
 func getGameListOld():
 	return games_data 
 
-
 # 获取收藏列表
 func getFavoriteList():
-	var result = await RpcData("favorite_list")
-	return result
+	if favorite_list.size() == 0:
+		var result = await RpcData("favorite_list")
+		favorite_list = result if result else []
+	return favorite_list
 
 
 # 获取牌桌列表

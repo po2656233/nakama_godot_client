@@ -167,11 +167,15 @@ func _process_queue() -> void:
 func _send_message_with_retry(msg: QueuedMessage) -> void:
 	var success = false
 	var should_retry = true
+	var socket = null
 	
 	# 尝试发送消息
 	while not success and should_retry:
 		# 使用 await 确保异步发送完成
-		success = await Util.Asyn_Call(msg.caller, msg.func_name, msg.payload, msg.do_success, msg.do_failure,false)
+		socket = msg.caller
+		if msg.caller == null:
+			socket = Online.nakama_socket
+		success = await Util.Asyn_Call(socket, msg.func_name, msg.payload, msg.do_success, msg.do_failure,false)
 		if success:
 			# 发送成功，从进行中移除
 			_mutex.lock()

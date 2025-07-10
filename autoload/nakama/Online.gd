@@ -22,6 +22,7 @@ const HEARTBEAT_INTERVAL = 10.0  # 15秒发送一次心跳
 
 # 连接状态
 var is_socket_connected = false
+var is_connecting = false
 var last_activity_time = 0
 const ACTIVITY_TIMEOUT = 30.0  # 30秒无活动视为断开
 var linkCount = 0
@@ -89,6 +90,9 @@ func create_and_connect_socket():
 	if nakama_session == null:
 		push_error("Session is null, cannot create socket")
 		return
+	if is_connecting:
+		return
+	is_connecting = true
 	if not nakama_socket:
 		print("Create socket")
 		nakama_socket = Nakama.create_socket_from(nakama_client)
@@ -99,7 +103,7 @@ func create_and_connect_socket():
 	linkCount+=1
 	# 开始连接（正确使用官方API）
 	print("Connecting to socket...",linkCount)
-	var connect_result = await nakama_socket.connect_async(nakama_session, true,20)  # 仅session和appear_online参数
+	var connect_result = await nakama_socket.connect_async(nakama_session,true,20)  # 仅session和appear_online参数
 	if connect_result.is_exception():
 		print("Socket connection failed: " , connect_result)
 		schedule_reconnect()
@@ -107,7 +111,7 @@ func create_and_connect_socket():
 	
 	print("Socket connected successfully")
 	is_socket_connected = true
-	
+	is_connecting = false
 	# 初始化心跳
 	if linkCount == 1:
 		start_heartbeat()
@@ -129,7 +133,7 @@ func start_heartbeat():
 
 ### 发送心跳
 func _send_heartbeat():
-	if !is_connected or not nakama_socket:
+	if !is_connected or not nakama_socket or is_connecting:
 		return
 	# 发送心跳消息
 	var result = await nakama_socket.rpc_async("ping")
@@ -155,8 +159,9 @@ func _reseet_session():
 	if result.is_exception():
 		push_error("Failed to reset session: " + result.exception.message)
 		return
+	print("Session reset successfully",result)
 	nakama_session = result
-	print("Session reset successfully")
+	
 
 # 检测连接活动
 func check_connection_activity():
@@ -196,8 +201,8 @@ func _on_socket_connected():
 func _on_socket_closed():
 	print("Socket closed event received")
 	is_socket_connected = false
-	if heartbeat_timer:
-		heartbeat_timer.stop()
+	#if heartbeat_timer:
+		#heartbeat_timer.stop()
 	schedule_reconnect()
 
 ### 处理socket错误
@@ -286,7 +291,7 @@ func do_broadcast(notification1):
 # 重连逻辑 ==========================================
 func schedule_reconnect():
 	# 指数退避重连策略
-	var delay = 1.0 + randf() * 2.0  # 1-3秒随机延迟防止重连风暴
+	var delay = 1.0 + randf_range(0, 1.5)  # 1-3秒随机延迟防止重连风暴
 	
 	print("Scheduling reconnect in ", delay, " seconds")
 	
@@ -300,7 +305,8 @@ func schedule_reconnect():
 
 func _perform_reconnect():
 	print("Attempting reconnect...")
-	create_and_connect_socket()
+	call_thread_safe("create_and_connect_socket")
+	#create_and_connect_socket()
 
 # 游戏生命周期管理 ==================================
 
@@ -323,7 +329,6 @@ func _notification(what):
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String="_on_work"):
 	print("发送RPC:", funcName, payload)
-	
 	var result_wrapper = { "result":null}  # 使用字典包装变量
 	var sucess_cb = func(ret:NakamaAsyncResult):
 		if ret and ret.id == funcName:
@@ -344,9 +349,9 @@ func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String
 		result_wrapper.result = ret  # 修改字典中的值
 		pass
 	var failed_cb = func(errMsg):
-		if errMsg in Errors.NetworkErrors:
-			reconnectSIG.emit()
 		print("发送RPC失败:",funcName," -->结果:", errMsg)
+		#if errMsg in Errors.NetworkErrors:
+			#reconnectSIG.emit()
 		#result_wrapper.result = []  # 修改字典中的值
 		return
 	if not is_socket_connected:

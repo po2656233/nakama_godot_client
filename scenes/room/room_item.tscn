@@ -548,7 +548,7 @@ grow_horizontal = 0
 scale = Vector2(0.5, 0.5)
 script = ExtResource("10_a2pe3")
 progress_color = Color(1.44392e-06, 0.557247, 0.711925, 1)
-background_color = Color(0.0872539, 0.212737, 0.431342, 0.5)
+background_color = Color(0.170225, 0.366205, 0.488429, 0.501961)
 completion_text = "绪"
 text_color = Color(0.423076, 0.662606, 0.778746, 1)
 

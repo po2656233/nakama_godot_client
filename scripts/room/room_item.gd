@@ -128,6 +128,10 @@ func setup(data: Dictionary):
 	_start_pulse_animation()
 	pass
 
+func set_join_btn(is_alive:bool):
+	if join_button:
+		join_button.set_disabled(!is_alive)
+
 func _update_favorite_button():
 	var style = favorite_button.get_theme_stylebox("normal").duplicate()
 	if is_favorite:

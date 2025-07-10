@@ -115,11 +115,7 @@ func load_data():
 	# 游戏列表
 	OnlineGame.getGameList(-1,self,"_on_game_list")
 	#await Online.sendDataRPC("list_games",{"kid":-1},self,"_on_game_list")
-	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
-	curSelect = SearchType.favorite
-	await loadRooms()
-	curSelect = SearchType.all
-	await loadRooms()
+
 
 # 添加房间数据
 func append_room(data):
@@ -232,7 +228,7 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 	
 	if  result == null:
 		# print("获取房间列表失败:")
-		PopupManager.show_message("获取房间列表失败，请检查网络连接或稍后再试。", "提示", false)
+		#PopupManager.show_message("获取房间列表失败，请检查网络连接或稍后再试。", "提示", false)
 		return
 	if result.has("items"):
 		print("获取房间数量:",result.items.size())
@@ -278,6 +274,11 @@ func _on_game_list(result):
 		game_options.set_item_metadata(game_options.item_count-1, game)
 	if games.size() == 0:
 		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
+	curSelect = SearchType.favorite
+	await loadRooms()
+	curSelect = SearchType.all
+	await loadRooms()
 	pass
 
 # 刷新房间列表
@@ -321,7 +322,7 @@ func _refresh_room_list():
 		room_item.is_favorite = favorite_ids.has(data.id)
 		
 		# 添加进入动画
-		room_item.show()
+		#room_item.show()
 		# room_item.modulate.a = 0
 		# tween.chain().tween_property(room_item, "modulate:a", 1.0, 0.2)
 		# Update navigation buttons and page label
@@ -402,7 +403,7 @@ func _update_items(room_info):
 			print("更新房间:", room_info)
 			child.setup(room_info)
 			break
-	_refresh_room_list()
+	#_refresh_room_list()
 
 # 更新统计信息
 func _update_stats():
@@ -463,9 +464,14 @@ func _on_confirm_btn_pressed() -> void:
 
 # 取消房间
 func _on_cancle_btn_pressed() -> void:
+	for child in room_container.get_children():
+		if child.room_data.room_id == selected_room_info.room_id:
+			child.set_join_btn(true)
+			break
 	selected_room_info = {}
 	jion_dialog.visible = false
 	jion_input.text = ""
+
 	pass # Replace with function body.
 
 
@@ -591,7 +597,7 @@ func _on_received_table_online(data):
 # 取消等待
 func _on_cancel_waiting():
 	print("离开房间:", selected_room_info.room_id)
-	await OnlineMatch.LeaveMatch(selected_room_info.room_id)
+	var cur_room_id = selected_room_info.room_id
 	waitingStart.Hide()
 	waitingStart.remove_player(OnlineLogin.get_my_id())
 	if selected_room_info:
@@ -601,6 +607,7 @@ func _on_cancel_waiting():
 				break
 		_refresh_room_list()
 	selected_room_info = {}
+	await OnlineMatch.LeaveMatch(cur_room_id)
 	pass
 
 # 加入房间
@@ -637,6 +644,8 @@ func _on_join_room(room_info: Dictionary):
 	if ret == null or not ret.has("tableId") or ret.tableId != room_info.id:
 		SignalManager.JoinErrorMusicSIG.emit()
 		print("加入房间失败", ret)
+		_update_items(selected_room_info)
+		selected_room_info = {}
 		# _refresh_room_list()
 		return 
 

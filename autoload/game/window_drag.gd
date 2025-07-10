@@ -24,24 +24,14 @@ func setup_fullscreen_window():
 	get_window().borderless = true
 	# 设置窗口为独占模式
 	get_window().exclusive = true
-	# 监听窗口大小变化事件
-	get_window().size_changed.connect(_on_window_size_changed)
-	# 监听窗口焦点变化事件
-	get_window().focus_entered.connect(_on_window_focus_entered)
 
-func _on_window_size_changed():
-	var os_name = OS.get_name()
-	if os_name != "Windows":
-		# 非Windows平台始终全屏
-		if get_window().mode != Window.MODE_FULLSCREEN:
-			get_window().mode = Window.MODE_FULLSCREEN
+func _on_normal_screen():
+	get_window().mode = Window.MODE_WINDOWED
+	SignalManager.NormalWindowSIG.emit()
 
-func _on_window_focus_entered():
-	var os_name = OS.get_name()
-	if os_name != "Windows":
-		# 非Windows平台始终全屏
-		if get_window().mode != Window.MODE_FULLSCREEN:
-			get_window().mode = Window.MODE_FULLSCREEN
+func _on_full_screen():
+	get_window().mode = Window.MODE_FULLSCREEN
+	SignalManager.FullWindowSIG.emit()
 
 func _input(event: InputEvent) -> void:
 	var os_name = OS.get_name()
@@ -85,10 +75,13 @@ func _input(event: InputEvent) -> void:
 		if event.keycode == KEY_ENTER and event.alt_pressed:
 			get_viewport().set_input_as_handled()
 			return
-		if event.keycode == KEY_F11 or event.keycode == KEY_ESCAPE:
-			toggle_fullscreen()
+		if event.keycode == KEY_F11:
+			_on_full_screen()
 			get_viewport().set_input_as_handled()
 			return
+		if event.keycode == KEY_ESCAPE:
+			_on_normal_screen()
+			get_viewport().set_input_as_handled()
 
 # 注册一个控件作为拖动区域
 func register_drag_zone(control: Control) -> void:
@@ -106,7 +99,7 @@ func unregister_drag_zone(control: Control) -> void:
 func toggle_fullscreen() -> void:
 	if get_window().mode == Window.MODE_FULLSCREEN:
 		# 退出全屏
-		get_window().mode = Window.MODE_WINDOWED
+		_on_normal_screen()
 	else:
 		# 进入全屏
-		get_window().mode = Window.MODE_FULLSCREEN
+		_on_full_screen()

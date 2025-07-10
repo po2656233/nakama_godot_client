@@ -66,6 +66,8 @@ func connect_to_host(p_uri : String, p_timeout : int):
 	
 	# print("WebSocket连接请求已发送，等待连接...")
 	_ws_last_state = WebSocketPeer.STATE_CLOSED
+	set_process(true) 
+	
 # Connect to the server with an asynchronous operation.
 # @param p_uri - The URI of the server.
 # @param p_timeout - The timeout for the connect attempt on the socket.
@@ -105,7 +107,8 @@ func _process(_delta):
 		if state == WebSocketPeer.STATE_OPEN:
 			connected.emit()
 		elif state == WebSocketPeer.STATE_CLOSED:
-			logger.debug("get_close_reason: %s" % _ws.get_close_reason())
+			#logger.debug("get_close_reason: %s" % _ws.get_close_reason())
+			print("get_close_reason: %s" % _ws.get_close_reason())
 			closed.emit()
 			set_process(false) 
 

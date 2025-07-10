@@ -96,11 +96,11 @@ func _draw():
 
 func draw_exclamation_shape(center: Vector2):
 	# 绘制感叹号形状图（颠倒）
-	var exclamation_color = Color.HOT_PINK  # 感叹号颜色
+	var exclamation_color = Color.MEDIUM_BLUE  # 感叹号颜色
 	var shape_radius = radius * 0.8  # 感叹号形状的半径
 	
 	# 绘制感叹号的下半部分（圆点）- 现在是底部，增加间隔
-	var dot_radius = shape_radius * 0.15
+	var dot_radius = shape_radius * 0.2
 	var dot_center = center + Vector2(0, shape_radius * 0.5)  # 增加间隔，从0.3改为0.5
 	draw_circle(dot_center, dot_radius, exclamation_color)
 	
