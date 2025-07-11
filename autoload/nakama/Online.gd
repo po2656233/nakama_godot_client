@@ -23,6 +23,7 @@ const HEARTBEAT_INTERVAL = 10.0  # 15秒发送一次心跳
 # 连接状态
 var is_socket_connected = false
 var is_connecting = false
+var is_renew_socket = false
 var last_activity_time = 0
 const ACTIVITY_TIMEOUT = 30.0  # 30秒无活动视为断开
 var linkCount = 0
@@ -57,7 +58,6 @@ func set_nakama_session(_nakama_session: NakamaSession) -> void:
 	nakama_session = _nakama_session
 	if nakama_session == null:
 		print("传入的session为null,关闭socket连接")
-		if heartbeat_timer:heartbeat_timer.stop()
 		if nakama_socket:nakama_socket.close()  
 		nakama_socket = null# 如果传入的session为null，关闭socket连接
 		return
@@ -93,7 +93,7 @@ func create_and_connect_socket():
 	if is_connecting:
 		return
 	is_connecting = true
-	if not nakama_socket:
+	if not nakama_socket or is_renew_socket:
 		print("Create socket")
 		nakama_socket = Nakama.create_socket_from(nakama_client)
 		# 监听socket事件
@@ -106,12 +106,16 @@ func create_and_connect_socket():
 	var connect_result = await nakama_socket.connect_async(nakama_session,true,20)  # 仅session和appear_online参数
 	if connect_result.is_exception():
 		print("Socket connection failed: " , connect_result)
+		is_connecting = false
+		#OnlineLogin.relogin()
+		is_renew_socket = true
 		schedule_reconnect()
 		return
 	
 	print("Socket connected successfully")
 	is_socket_connected = true
 	is_connecting = false
+	is_renew_socket = false
 	# 初始化心跳
 	if linkCount == 1:
 		start_heartbeat()
@@ -159,6 +163,10 @@ func _reseet_session():
 	if result.is_exception():
 		push_error("Failed to reset session: " + result.exception.message)
 		return
+	
+	if result.get_exception() == null:
+		push_error("Failed to reset session: null")
+		return
 	print("Session reset successfully",result)
 	nakama_session = result
 	
@@ -201,9 +209,8 @@ func _on_socket_connected():
 func _on_socket_closed():
 	print("Socket closed event received")
 	is_socket_connected = false
-	#if heartbeat_timer:
-		#heartbeat_timer.stop()
-	schedule_reconnect()
+	call_thread_safe("schedule_reconnect")
+	#schedule_reconnect()
 
 ### 处理socket错误
 func _on_socket_error(error):
@@ -211,8 +218,6 @@ func _on_socket_error(error):
 	if error == ERR_TIMEOUT:
 		PopupManager.show_dynamic("连接超时,请稍后重试")
 	is_socket_connected = false
-	if heartbeat_timer:
-		heartbeat_timer.stop()
 
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):

@@ -70,6 +70,7 @@ func setup(data: Dictionary):
 	if join_button:
 		join_button.set_disabled(true)
 	room_data = data.duplicate()
+	is_favorite = data.is_favorite
 	room_name_label.text = data.get("room_name", "")
 	game_name_label.text = data.get("game_name", "")
 	room_id_label.text = data.get("room_id", "").substr(0, 16)
@@ -123,7 +124,7 @@ func setup(data: Dictionary):
 	# content += getBBCodeContent("规则", rules)
 	# var players = data.get("players", []).map(func(player): return "- " + player.username)
 	detail_info.text = content
-
+	_update_favorite_button()
 	# 设置完数据后启动脉冲动画
 	_start_pulse_animation()
 	pass

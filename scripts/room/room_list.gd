@@ -112,6 +112,10 @@ func _ready():
 	pass
 
 func load_data():
+	game_options.disabled = true
+	show_favorites.disabled = true
+	show_myrooms.disabled = true
+	create_button.disabled = true
 	# 游戏列表
 	OnlineGame.getGameList(-1,self,"_on_game_list")
 	#await Online.sendDataRPC("list_games",{"kid":-1},self,"_on_game_list")
@@ -274,11 +278,16 @@ func _on_game_list(result):
 		game_options.set_item_metadata(game_options.item_count-1, game)
 	if games.size() == 0:
 		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+		return
 	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
 	curSelect = SearchType.favorite
 	await loadRooms()
 	curSelect = SearchType.all
 	await loadRooms()
+	game_options.disabled = false
+	show_favorites.disabled = false
+	show_myrooms.disabled = false
+	create_button.disabled = false
 	pass
 
 # 刷新房间列表
@@ -311,6 +320,7 @@ func _refresh_room_list():
 		var room_item = roomItem.instantiate()
 		room_container.add_child(room_item)
 		# print(i," - 房间数据:", data)
+		data.is_favorite = favorite_ids.has(data.id)
 		room_item.setup(data)
 		room_item.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		room_item.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -319,7 +329,6 @@ func _refresh_room_list():
 		
 		# 设置收藏状态
 		print("收藏了列表:", favorite_ids, " 房间ID:",data.id)
-		room_item.is_favorite = favorite_ids.has(data.id)
 		
 		# 添加进入动画
 		#room_item.show()
@@ -446,7 +455,8 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 	})
 	if result == null:
 		return 
-	await loadRooms()
+	#await loadRooms()
+	_refresh_room_list()
 	pass
 
 # 显示收藏房间

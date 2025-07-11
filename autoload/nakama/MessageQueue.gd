@@ -2,10 +2,10 @@ class_name ReliableMessageQueue
 extends Node
 
 # 消息重试配置
-const MAX_RETRY_ATTEMPTS = 12000
+const MAX_RETRY_ATTEMPTS = 10
 const INITIAL_RETRY_DELAY = 1.0  # 初始重试延迟（秒）
 const RETRY_BACKOFF_FACTOR = 2.0  # 指数退避因子
-const MAX_RETRY_DELAY = 60.0     # 最大重试延迟（秒）
+const MAX_RETRY_DELAY = 15.0     # 最大重试延迟（秒）
 # 这些接口不会在断线重连后自动恢复
 const NON_RETRY_API: Array = [
 	"authenticate_email_async",
