@@ -14,7 +14,7 @@ var nakama_scheme: String = 'https'
 # For other scripts to access:
 var nakama_client: NakamaClient: get = get_nakama_client
 var nakama_session: NakamaSession: get = get_nakama_session, set = set_nakama_session
-var nakama_socket: NakamaSocket = null
+var nakama_socket: NakamaSocket : get = get_nakama_socket
 
 # 心跳管理
 var heartbeat_timer: Timer
@@ -93,7 +93,7 @@ func create_and_connect_socket():
 	if is_connecting:
 		return
 	is_connecting = true
-	if not nakama_socket or is_renew_socket:
+	if not nakama_socket: #or is_renew_socket
 		print("Create socket")
 		nakama_socket = Nakama.create_socket_from(nakama_client)
 		# 监听socket事件
@@ -105,9 +105,8 @@ func create_and_connect_socket():
 	print("Connecting to socket...",linkCount)
 	var connect_result = await nakama_socket.connect_async(nakama_session,true,20)  # 仅session和appear_online参数
 	if connect_result.is_exception():
-		print("Socket connection failed: " , connect_result)
+		print("Socket 连接失败: " , connect_result)
 		is_connecting = false
-		#OnlineLogin.relogin()
 		is_renew_socket = true
 		schedule_reconnect()
 		return
@@ -133,7 +132,7 @@ func start_heartbeat():
 	# 初始化最后活动时间
 	last_activity_time = Time.get_unix_time_from_system()
 	
-	print("Heartbeat started")
+	print("心跳 started")
 
 ### 发送心跳
 func _send_heartbeat():
@@ -142,17 +141,17 @@ func _send_heartbeat():
 	# 发送心跳消息
 	var result = await nakama_socket.rpc_async("ping")
 	if result.is_exception():
-		push_error("Heartbeat failed: " + result.exception.message)
+		print("心跳 发送失败 ",result.exception.message)
 		#_on_socket_closed()
 		schedule_reconnect()
 		return
 	# 更新最后活动时间
 	last_activity_time = Time.get_unix_time_from_system()
-	if last_activity_time+20 > nakama_session.expire_time:
-		push_error("Session expired")
+	if last_activity_time+HEARTBEAT_INTERVAL > nakama_session.expire_time:
+		print("心跳 发送成功 但session快要过期了 ")
 		_reseet_session()
 		return
-	print("Heartbeat sent and acknowledged")
+	print("心跳 发送成功 ")
 
 ### 重置会话
 func _reseet_session():
@@ -182,6 +181,43 @@ func check_connection_activity():
 		_on_socket_closed()
 	pass
 
+# 重连逻辑 ==========================================
+func schedule_reconnect():
+	# 指数退避重连策略
+	var delay = 1.0 + randf_range(0, 1.5)  # 1-3秒随机延迟防止重连风暴
+	print("Scheduling reconnect in ", delay, " seconds")
+	
+	# 创建定时器执行重连
+	var timer = Timer.new()
+	add_child(timer)
+	timer.one_shot = true
+	timer.wait_time = delay
+	timer.timeout.connect(_perform_reconnect)
+	timer.start()
+
+func _perform_reconnect():
+	print("Attempting reconnect...")
+	call_thread_safe("create_and_connect_socket")
+	#create_and_connect_socket()
+
+# 游戏生命周期管理 ==================================
+
+func _notification(what):
+	# 失去焦点时暂停心跳
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		print("失去焦点时暂停心跳")
+		if heartbeat_timer:
+			heartbeat_timer.paused = true
+	
+	# 获得焦点时恢复心跳
+	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		print("获得焦点时恢复心跳")
+		if heartbeat_timer:
+			heartbeat_timer.paused = false
+			# 立即发送心跳检测连接状态
+			_send_heartbeat()
+
+
 ### 设置socket事件监听
 func _listen_socket_events() -> void:
 	# 断开连接时重置状态
@@ -209,7 +245,9 @@ func _on_socket_connected():
 func _on_socket_closed():
 	print("Socket closed event received")
 	is_socket_connected = false
-	call_thread_safe("schedule_reconnect")
+	# 不是重连时，则重新尝试
+	if not is_renew_socket:
+		call_thread_safe("schedule_reconnect")
 	#schedule_reconnect()
 
 ### 处理socket错误
@@ -293,42 +331,6 @@ func do_broadcast(notification1):
 			push_warning("未知的广播类型:", notification1.code)
 	pass
 
-# 重连逻辑 ==========================================
-func schedule_reconnect():
-	# 指数退避重连策略
-	var delay = 1.0 + randf_range(0, 1.5)  # 1-3秒随机延迟防止重连风暴
-	
-	print("Scheduling reconnect in ", delay, " seconds")
-	
-	# 创建定时器执行重连
-	var timer = Timer.new()
-	add_child(timer)
-	timer.one_shot = true
-	timer.wait_time = delay
-	timer.timeout.connect(_perform_reconnect)
-	timer.start()
-
-func _perform_reconnect():
-	print("Attempting reconnect...")
-	call_thread_safe("create_and_connect_socket")
-	#create_and_connect_socket()
-
-# 游戏生命周期管理 ==================================
-
-func _notification(what):
-	# 失去焦点时暂停心跳
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		print("App lost focus. Pausing heartbeat.")
-		if heartbeat_timer:
-			heartbeat_timer.paused = true
-	
-	# 获得焦点时恢复心跳
-	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
-		print("App gained focus. Resuming heartbeat.")
-		if heartbeat_timer:
-			heartbeat_timer.paused = false
-			# 立即发送心跳检测连接状态
-			_send_heartbeat()
 
 ############################主动发送数据############################################################
 # RPC 发送函数
@@ -336,6 +338,7 @@ func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String
 	print("发送RPC:", funcName, payload)
 	var result_wrapper = { "result":null}  # 使用字典包装变量
 	var sucess_cb = func(ret:NakamaAsyncResult):
+		print("接收RPC成功-->",funcName)
 		if ret and ret.id == funcName:
 			result_wrapper.result = JSON.parse_string(ret.payload)
 			# 外部有处理函数,再发送信号
@@ -349,7 +352,7 @@ func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String
 					disconnect(sigName,Callable(obj,work_cb))
 				connect(sigName,Callable(obj,work_cb))
 				emit_signal(sigName,result_wrapper.result) 
-			print("接收RPC成功,发送信号:",funcName+"SIG") 
+				print("接收RPC成功,发送信号:",funcName+"SIG") 
 			return
 		result_wrapper.result = ret  # 修改字典中的值
 		pass

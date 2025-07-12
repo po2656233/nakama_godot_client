@@ -135,14 +135,14 @@ func getTabelList(payload:Dictionary):
 # 获取游戏名称
 func getGameName(game_id:int):
 	for game in games_data:
-		if game.id == game_id:
+		if int(game.id) == game_id:
 			return game.name
 	return ""
 
 # 获取游戏名称
 func getGameEnName(game_id:int):
 	for game in games_data:
-		if game.id == game_id:
+		if int(game.id) == game_id:
 			return game.en_name
 	return ""
 
@@ -155,7 +155,7 @@ func getGameEnName_by(gamename:String):
 
 func getGameMaxPeople(game_id:int)->int:
 	for game in games_data:
-		if game.id == game_id:
+		if int(game.id) == game_id:
 			return game.max_player
 	return 0
 	
@@ -167,9 +167,9 @@ func getGameID(enName:String):
 	return -1
 
 # 获取游戏类型信息
-func getKindName(kind:int):
+func getKindName(kind):
 	return kind_names.get(kind, "其他")
 
 # 获取游戏类型英文名
-func getKindEnName(kind:int):
+func getKindEnName(kind):
 	return kind_en_names.get(kind, "other")

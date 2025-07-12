@@ -86,10 +86,12 @@ func _ready():
 
 	if not Util.isFullScreen():
 		items_per_page = columns
-
+		
+	enableBtn(false)
 	# 加载保存的数据
 	print("初始化房间列表数据!!!page:%d,columns:%d,width:%d,space:%d"%[items_per_page,columns,width,space])
-	await load_data()
+	load_data()
+
 
 	
 	# 加入房间的对话框
@@ -112,13 +114,14 @@ func _ready():
 	pass
 
 func load_data():
-	game_options.disabled = true
-	show_favorites.disabled = true
-	show_myrooms.disabled = true
-	create_button.disabled = true
 	# 游戏列表
 	OnlineGame.getGameList(-1,self,"_on_game_list")
 	#await Online.sendDataRPC("list_games",{"kid":-1},self,"_on_game_list")
+	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
+	curSelect = SearchType.favorite
+	await loadRooms()
+	curSelect = SearchType.all
+	await loadRooms()
 
 
 # 添加房间数据
@@ -269,6 +272,12 @@ func update_total_pages(list_size = -1):
 		current_page = max(0, total_pages - 1)
 	_update_stats()
 
+func enableBtn(is_disabled:bool):
+	game_options.disabled = !is_disabled
+	show_favorites.disabled = !is_disabled
+	show_myrooms.disabled = !is_disabled
+	create_button.disabled = !is_disabled
+
 # 游戏列表
 func _on_game_list(result):
 	print("房间--游戏列表",result)
@@ -279,15 +288,8 @@ func _on_game_list(result):
 	if games.size() == 0:
 		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
-	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
-	curSelect = SearchType.favorite
-	await loadRooms()
-	curSelect = SearchType.all
-	await loadRooms()
-	game_options.disabled = false
-	show_favorites.disabled = false
-	show_myrooms.disabled = false
-	create_button.disabled = false
+	# 启用功能
+	enableBtn(true)
 	pass
 
 # 刷新房间列表

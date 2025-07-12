@@ -42,7 +42,8 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 		if errMsg in Errors.NetworkErrors: # 网络异常,则视为执行失败
 			if inqueue:
 				var msg_id = reliable_queue.EnqueueMessage(method_name,args,caller,on_success, on_failure)
-				print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
+				if not msg_id:
+					print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
 			return false
 		print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
 		return true
