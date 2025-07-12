@@ -15,6 +15,7 @@ const NON_RETRY_API: Array = [
 	"do_login",
 	"do_device_login"
 ]
+
 # 消息数据结构
 class QueuedMessage:
 	var id: String 
@@ -27,6 +28,7 @@ class QueuedMessage:
 	var next_retry_time: float
 	var do_success: Callable
 	var do_failure: Callable
+	var obj_mutex: Mutex = Mutex.new()
 	
 	func _init(msg_id: String,msg_name: String, data: Variant, obj:Object=Online.nakama_socket ,on_success: Callable = Util.EMPTY_CALLABLE, on_failure: Callable = Util.EMPTY_CALLABLE) -> void:
 		id = msg_id
@@ -39,6 +41,8 @@ class QueuedMessage:
 		caller = obj
 		do_success = on_success
 		do_failure = on_failure
+		if caller == Online.nakama_socket:
+			caller.connected.connect(self._on_socket_connected)
 	
 	func should_retry() -> bool:
 		return retry_count < MAX_RETRY_ATTEMPTS
@@ -49,6 +53,12 @@ class QueuedMessage:
 		var delay = INITIAL_RETRY_DELAY * pow(RETRY_BACKOFF_FACTOR, retry_count - 1)
 		delay = min(delay, MAX_RETRY_DELAY)
 		next_retry_time = Time.get_unix_time_from_system() + delay
+	
+	# 当socket连接成功 获取新的socket
+	func _on_socket_connected():
+		obj_mutex.lock()
+		caller = Online.get_nakama_socket()
+		obj_mutex.unlock()
 
 var _message_queue: Array[QueuedMessage] = []
 var _in_progress: Dictionary = {}  # 正在发送中的消息 (id: QueuedMessage)
@@ -172,9 +182,11 @@ func _send_message_with_retry(msg: QueuedMessage) -> void:
 	# 尝试发送消息
 	while not success and should_retry:
 		# 使用 await 确保异步发送完成
+		msg.obj_mutex.lock()
 		socket = msg.caller
-		if msg.caller == null:
-			socket = Online.nakama_socket
+		msg.obj_mutex.unlock()
+		if socket == null:
+			continue
 		success = await Util.Asyn_Call(socket, msg.func_name, msg.payload, msg.do_success, msg.do_failure,false)
 		if success:
 			# 发送成功，从进行中移除

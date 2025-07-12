@@ -14,7 +14,7 @@ var nakama_scheme: String = 'https'
 # For other scripts to access:
 var nakama_client: NakamaClient: get = get_nakama_client
 var nakama_session: NakamaSession: get = get_nakama_session, set = set_nakama_session
-var nakama_socket: NakamaSocket : get = get_nakama_socket
+var nakama_socket: NakamaSocket = null
 
 # 心跳管理
 var heartbeat_timer: Timer
@@ -93,7 +93,7 @@ func create_and_connect_socket():
 	if is_connecting:
 		return
 	is_connecting = true
-	if not nakama_socket: #or is_renew_socket
+	if not nakama_socket or is_renew_socket:
 		print("Create socket")
 		nakama_socket = Nakama.create_socket_from(nakama_client)
 		# 监听socket事件
@@ -159,6 +159,7 @@ func _reseet_session():
 		push_error("No session to reset")
 		return
 	var result = await nakama_socket.connect_async(nakama_session, true)  # 重新连接socket
+	print("重置session--",result)
 	if result.is_exception():
 		push_error("Failed to reset session: " + result.exception.message)
 		return
@@ -245,10 +246,11 @@ func _on_socket_connected():
 func _on_socket_closed():
 	print("Socket closed event received")
 	is_socket_connected = false
+	nakama_socket = null
+	#is_renew_socket = true
 	# 不是重连时，则重新尝试
 	if not is_renew_socket:
 		call_thread_safe("schedule_reconnect")
-	#schedule_reconnect()
 
 ### 处理socket错误
 func _on_socket_error(error):

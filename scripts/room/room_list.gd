@@ -118,10 +118,7 @@ func load_data():
 	OnlineGame.getGameList(-1,self,"_on_game_list")
 	#await Online.sendDataRPC("list_games",{"kid":-1},self,"_on_game_list")
 	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
-	curSelect = SearchType.favorite
-	await loadRooms()
-	curSelect = SearchType.all
-	await loadRooms()
+	
 
 
 # 添加房间数据
@@ -288,6 +285,10 @@ func _on_game_list(result):
 	if games.size() == 0:
 		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
+	curSelect = SearchType.favorite
+	loadRooms()
+	curSelect = SearchType.all
+	loadRooms()
 	# 启用功能
 	enableBtn(true)
 	pass
