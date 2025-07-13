@@ -88,7 +88,7 @@ func create_and_connect_socket():
 	OnlineMatch._set_nakama_socket(nakama_socket)
 	# 开始连接（正确使用官方API）
 	var connect_result = await nakama_socket.connect_async(nakama_session,true,-1,_reseet_session)  # 仅session和appear_online参数
-	if connect_result.is_exception():
+	if typeof(connect_result) == TYPE_INT or connect_result.is_exception():
 		print("Socket 连接失败: " , connect_result)
 		return
 	
@@ -101,16 +101,15 @@ func _reseet_session():
 		push_error("No session to reset")
 		return
 	var result =  await nakama_client.session_refresh_async(nakama_session)  # 重新连接socket
-	print("---重置session--",result)
-	if result.is_exception():
-		push_error("Failed to reset session: " + result.exception.message)
-		return
-	
-	if result.get_exception() == null:
+	if result == null:
 		push_error("Failed to reset session: null")
+		return 
+	if result.is_exception():
+		print("重置session失败 ",result.exception.message)
 		return
-	print("---重置session--成功")
+	print("---重置session--",result)
 	nakama_session = result
+	return result
 
 
 

@@ -146,7 +146,7 @@ func join_match(_nakama_socket: NakamaSocket, _match_id: String, p_metadata = nu
 	if data.is_exception():
 		leave()
 		emit_signal("error", "Unable to join match")
-		print("unable to join match")
+		print("unable to join match",data)
 	else:
 		print("Joined",match_mode)
 		_on_nakama_match_join(data)
@@ -185,7 +185,7 @@ func start_matchmaking(_nakama_socket: NakamaSocket, data: Dictionary = {}) -> v
 	if result.is_exception():
 		leave()
 		emit_signal("error", "Unable to join match making pool")
-		print("Unable to join matchmaking pool")
+		print("Unable to join matchmaking pool",result)
 	else:
 		matchmaker_ticket = result.ticket
 		print("Successfully joined pool,ticket:",matchmaker_ticket)
@@ -405,7 +405,7 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 	var result = await nakama_socket.join_matched_async(data)
 	if result.is_exception():
 		leave()
-		print("unable to join match")
+		print("unable to join match",result)
 		emit_signal("error", "Unable to join match")
 	else:
 		_on_nakama_match_join(result)
