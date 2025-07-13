@@ -95,17 +95,19 @@ func create_and_connect_socket():
 	if is_connecting:
 		return
 	is_connecting = true
-	if not nakama_socket or is_renew_socket:
+	if not nakama_socket:
 		print("Create socket")
 		nakama_socket = Nakama.create_socket_from(nakama_client)
 		# 监听socket事件
 		_listen_socket_events()
 		# 匹配服重置socket
 		OnlineMatch._set_nakama_socket(nakama_socket)
+	if is_renew_socket:
+		_reseet_session()
 	linkCount += 1
 	# 开始连接（正确使用官方API）
 	print("Connecting to socket...",linkCount)
-	var connect_result = await nakama_socket.connect_async(nakama_session,true,10)  # 仅session和appear_online参数
+	var connect_result = await nakama_socket.connect_async(nakama_session,true)  # 仅session和appear_online参数
 	if connect_result.is_exception():
 		print("Socket 连接失败: " , connect_result)
 		is_connecting = false
@@ -242,13 +244,13 @@ func _listen_socket_events() -> void:
 # 信号处理函数 ========================================
 ### socket连接事件处理
 func _on_socket_connected():
-	print("Socket connected event received")
+	print("Socket 连接成功")
 	is_socket_connected = true
 	last_activity_time = Time.get_unix_time_from_system()
 
 ### socket关闭事件处理
 func _on_socket_closed():
-	print("Socket closed event received")
+	print("Socket 被关闭")
 	is_socket_connected = false
 	is_connecting = false
 	schedule_reconnect()
@@ -259,10 +261,12 @@ func _on_socket_closed():
 
 ### 处理socket错误
 func _on_socket_error(error):
-	push_error("Socket error: " + str(error))
-	if error == ERR_TIMEOUT:
-		PopupManager.show_dynamic("连接超时,请稍后重试")
 	is_socket_connected = false
+	push_error("socket error: " + str(error))
+	if error == ERR_TIMEOUT:
+		is_renew_socket = true
+		PopupManager.show_dynamic("连接超时,请稍后重试")
+
 
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):

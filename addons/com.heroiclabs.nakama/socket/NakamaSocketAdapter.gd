@@ -108,7 +108,7 @@ func _process(_delta):
 			connected.emit()
 		elif state == WebSocketPeer.STATE_CLOSED:
 			#logger.debug("get_close_reason: %s" % _ws.get_close_reason())
-			print("get_close_reason: %s" % _ws.get_close_reason())
+			print("get_close_reason: %s (%d)" % [_ws.get_close_reason(),_ws.get_close_code()])
 			closed.emit()
 			set_process(false) 
 
@@ -117,6 +117,7 @@ func _process(_delta):
 			logger.debug("Timeout when connecting to socket")
 			received_error.emit(ERR_TIMEOUT)
 			_ws.close()
+			set_process(false) 
 
 	while _ws.get_ready_state() == WebSocketPeer.STATE_OPEN and _ws.get_available_packet_count():
 		received.emit(_ws.get_packet())

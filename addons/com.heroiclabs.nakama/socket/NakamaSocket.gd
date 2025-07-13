@@ -187,6 +187,7 @@ func _connection_error(p_error):
 	_clear_requests()
 
 func _connected():
+	print("Socket connected.")
 	emit_signal("connected")
 	_resume_conn(OK)
 
@@ -316,8 +317,10 @@ func close():
 # @param p_connect_timeout - The time allowed for the socket connection to be established.
 # Returns a task to represent the asynchronous operation.
 func connect_async(p_session : NakamaSession, p_appear_online : bool = false, p_connect_timeout : int = -1):
+	if _conn != null and !_conn.is_ready():
+		print("Already connecting...")
+		return await _conn.completed
 	var uri = "%s/ws?lang=en&status=%s&token=%s" % [_base_uri, str(p_appear_online).to_lower(), p_session.token]
-	print("-----》》》》》NakamaSocket connect uri: ", uri) # 
 	logger.debug("Connecting to host: %s" % uri)
 	_conn = AsyncConnection.new()
 	_adapter.connect_to_host(uri, p_connect_timeout)
