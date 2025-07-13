@@ -112,7 +112,7 @@ func create_and_connect_socket():
 		print("Socket 连接失败: " , connect_result)
 		is_connecting = false
 		is_renew_socket = true
-		schedule_reconnect()
+		#schedule_reconnect()
 		return
 	
 	print("Socket connected successfully")
