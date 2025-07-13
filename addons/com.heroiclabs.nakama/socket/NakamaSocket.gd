@@ -140,6 +140,7 @@ func _resume_conn(p_err : int):
 			_conn.resume(NakamaAsyncResult.new())
 		_conn = null
 
+
 func _init(p_adapter : NakamaSocketAdapter,
 		p_host : String,
 		p_port : int,
@@ -316,13 +317,15 @@ func close():
 # @param p_appear_online - If the user who appear online to other users.
 # @param p_connect_timeout - The time allowed for the socket connection to be established.
 # Returns a task to represent the asynchronous operation.
-func connect_async(p_session : NakamaSession, p_appear_online : bool = false, p_connect_timeout : int = -1):
+func connect_async(p_session : NakamaSession, p_appear_online : bool = false, p_connect_timeout : int = -1,p_refresh_session_func : Callable = Callable()):
 	if _conn != null and !_conn.is_ready():
 		print("Already connecting...")
 		return await _conn.completed
 	var uri = "%s/ws?lang=en&status=%s&token=%s" % [_base_uri, str(p_appear_online).to_lower(), p_session.token]
 	logger.debug("Connecting to host: %s" % uri)
 	_conn = AsyncConnection.new()
+	if p_refresh_session_func.is_valid():
+		_adapter.set_refresh_session_func(p_refresh_session_func)
 	_adapter.connect_to_host(uri, p_connect_timeout)
 	return await _conn.completed
 
