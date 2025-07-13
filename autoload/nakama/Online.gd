@@ -22,8 +22,8 @@ const HEARTBEAT_INTERVAL = 10.0  # 15秒发送一次心跳
 
 # 连接状态
 var is_socket_connected = false
-var is_connecting = false
 var is_renew_socket = false
+var is_connecting = false
 var last_activity_time = 0
 const ACTIVITY_TIMEOUT = 30.0  # 30秒无活动视为断开
 var linkCount = 0
@@ -100,10 +100,10 @@ func create_and_connect_socket():
 		_listen_socket_events()
 		# 匹配服重置socket
 		OnlineMatch._set_nakama_socket(nakama_socket)
-	linkCount+=1
+	linkCount += 1
 	# 开始连接（正确使用官方API）
 	print("Connecting to socket...",linkCount)
-	var connect_result = await nakama_socket.connect_async(nakama_session,true,20)  # 仅session和appear_online参数
+	var connect_result = await nakama_socket.connect_async(nakama_session,true)  # 仅session和appear_online参数
 	if connect_result.is_exception():
 		print("Socket 连接失败: " , connect_result)
 		is_connecting = false
@@ -142,7 +142,6 @@ func _send_heartbeat():
 	var result = await nakama_socket.rpc_async("ping")
 	if result.is_exception():
 		print("心跳 发送失败 ",result.exception.message)
-		#_on_socket_closed()
 		schedule_reconnect()
 		return
 	# 更新最后活动时间
@@ -158,7 +157,7 @@ func _reseet_session():
 	if not nakama_session:
 		push_error("No session to reset")
 		return
-	var result = await nakama_socket.connect_async(nakama_session, true)  # 重新连接socket
+	var result =  await nakama_client.session_refresh_async(nakama_session)  # 重新连接socket
 	print("重置session--",result)
 	if result.is_exception():
 		push_error("Failed to reset session: " + result.exception.message)
@@ -199,7 +198,6 @@ func schedule_reconnect():
 func _perform_reconnect():
 	print("Attempting reconnect...")
 	call_thread_safe("create_and_connect_socket")
-	#create_and_connect_socket()
 
 # 游戏生命周期管理 ==================================
 
@@ -246,11 +244,11 @@ func _on_socket_connected():
 func _on_socket_closed():
 	print("Socket closed event received")
 	is_socket_connected = false
-	nakama_socket = null
+	schedule_reconnect()
 	#is_renew_socket = true
 	# 不是重连时，则重新尝试
-	if not is_renew_socket:
-		call_thread_safe("schedule_reconnect")
+	#if not is_renew_socket:
+		#call_thread_safe("schedule_reconnect")
 
 ### 处理socket错误
 func _on_socket_error(error):

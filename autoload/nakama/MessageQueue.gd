@@ -2,7 +2,7 @@ class_name ReliableMessageQueue
 extends Node
 
 # 消息重试配置
-const MAX_RETRY_ATTEMPTS = 10
+const MAX_RETRY_ATTEMPTS = -1   #-1无限尝试
 const INITIAL_RETRY_DELAY = 1.0  # 初始重试延迟（秒）
 const RETRY_BACKOFF_FACTOR = 2.0  # 指数退避因子
 const MAX_RETRY_DELAY = 5.0     # 最大重试延迟（秒）
@@ -45,7 +45,7 @@ class QueuedMessage:
 			caller.connected.connect(self._on_socket_connected)
 	
 	func should_retry() -> bool:
-		return retry_count < MAX_RETRY_ATTEMPTS
+		return retry_count < MAX_RETRY_ATTEMPTS or MAX_RETRY_ATTEMPTS == -1
 	
 	func calculate_next_retry() -> void:
 		retry_count += 1
@@ -195,22 +195,26 @@ func _send_message_with_retry(msg: QueuedMessage) -> void:
 			_mutex.unlock()
 			print("消息发送成功: ", msg.id)
 			return
+		# 是否继续重试
+		should_retry = msg.should_retry()
+		if not should_retry:
+			break
 		# 发送失败，计算下次重试时间
 		msg.calculate_next_retry()
-		should_retry = msg.should_retry()
-		if should_retry:
-			# 等待重试时间到达
-			var cur_time = Time.get_unix_time_from_system()
-			var wait_time = msg.next_retry_time - cur_time
-			print("发送失败，[%d] %d秒后重试消息 %s (尝试 %d/%d) " % [
+		
+		# 等待重试时间到达
+		var cur_time = Time.get_unix_time_from_system()
+		var wait_time = msg.next_retry_time - cur_time
+		print("发送失败，[%d] %d秒后重试消息 %s (尝试 %d/%d) " % [
 				cur_time,
 				wait_time,
 				msg.id,
 				msg.retry_count,
 				MAX_RETRY_ATTEMPTS,
 			])
-			if wait_time > 0:
-				await get_tree().create_timer(wait_time).timeout
+		if wait_time > 0:
+			await get_tree().create_timer(wait_time).timeout
+		pass
 	# 达到最大重试次数仍失败
 	_mutex.lock()
 	_in_progress.erase(msg.id)

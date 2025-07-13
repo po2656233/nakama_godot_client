@@ -113,7 +113,7 @@ func _process(_delta):
 			set_process(false) 
 
 	if state == WebSocketPeer.STATE_CONNECTING:
-		if _start + _timeout < Time.get_unix_time_from_system():
+		if _start + _timeout < Time.get_unix_time_from_system() and _timeout != -1:
 			logger.debug("Timeout when connecting to socket")
 			received_error.emit(ERR_TIMEOUT)
 			_ws.close()

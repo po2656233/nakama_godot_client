@@ -315,7 +315,7 @@ func close():
 # @param p_appear_online - If the user who appear online to other users.
 # @param p_connect_timeout - The time allowed for the socket connection to be established.
 # Returns a task to represent the asynchronous operation.
-func connect_async(p_session : NakamaSession, p_appear_online : bool = false, p_connect_timeout : int = 3):
+func connect_async(p_session : NakamaSession, p_appear_online : bool = false, p_connect_timeout : int = -1):
 	var uri = "%s/ws?lang=en&status=%s&token=%s" % [_base_uri, str(p_appear_online).to_lower(), p_session.token]
 	print("-----》》》》》NakamaSocket connect uri: ", uri) # 
 	logger.debug("Connecting to host: %s" % uri)
