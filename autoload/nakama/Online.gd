@@ -18,12 +18,13 @@ var nakama_socket: NakamaSocket = null
 
 # 心跳管理
 var heartbeat_timer: Timer
-const HEARTBEAT_INTERVAL = 10.0  # 15秒发送一次心跳
+const HEARTBEAT_INTERVAL = 5.0  # 5秒发送一次心跳
 
 # 连接状态
 var is_socket_connected = false
 var is_renew_socket = false
 var is_connecting = false
+var is_ping_now = false
 var last_activity_time = 0
 const ACTIVITY_TIMEOUT = 30.0  # 30秒无活动视为断开
 var linkCount = 0
@@ -87,6 +88,7 @@ func get_nakama_socket():
 #################################【网络连接】############################################
 ### 创建并连接Socket
 func create_and_connect_socket():
+	print("create_and_connect_socket ",is_connecting)
 	if nakama_session == null:
 		push_error("Session is null, cannot create socket")
 		return
@@ -103,7 +105,7 @@ func create_and_connect_socket():
 	linkCount += 1
 	# 开始连接（正确使用官方API）
 	print("Connecting to socket...",linkCount)
-	var connect_result = await nakama_socket.connect_async(nakama_session,true)  # 仅session和appear_online参数
+	var connect_result = await nakama_socket.connect_async(nakama_session,true,10)  # 仅session和appear_online参数
 	if connect_result.is_exception():
 		print("Socket 连接失败: " , connect_result)
 		is_connecting = false
@@ -116,18 +118,19 @@ func create_and_connect_socket():
 	is_connecting = false
 	is_renew_socket = false
 	# 初始化心跳
-	if linkCount == 1:
-		start_heartbeat()
+	
+	start_heartbeat()
 	pass
 
 ### 启动心跳机制
 func start_heartbeat():
 	# 创建心跳计时器
-	heartbeat_timer = Timer.new()
-	add_child(heartbeat_timer)
-	heartbeat_timer.wait_time = HEARTBEAT_INTERVAL
-	heartbeat_timer.timeout.connect(_send_heartbeat)
-	heartbeat_timer.start()
+	if heartbeat_timer == null:
+		heartbeat_timer = Timer.new()
+		add_child(heartbeat_timer)
+		heartbeat_timer.wait_time = HEARTBEAT_INTERVAL
+		heartbeat_timer.timeout.connect(_send_heartbeat)
+		heartbeat_timer.start()
 	
 	# 初始化最后活动时间
 	last_activity_time = Time.get_unix_time_from_system()
@@ -136,17 +139,20 @@ func start_heartbeat():
 
 ### 发送心跳
 func _send_heartbeat():
-	if !is_connected or not nakama_socket or is_connecting:
+	if !is_connected or not nakama_socket or is_ping_now:
 		return
 	# 发送心跳消息
+	is_ping_now = true
 	var result = await nakama_socket.rpc_async("ping")
+	is_ping_now = false
 	if result.is_exception():
 		print("心跳 发送失败 ",result.exception.message)
+		
 		schedule_reconnect()
 		return
 	# 更新最后活动时间
 	last_activity_time = Time.get_unix_time_from_system()
-	if last_activity_time+HEARTBEAT_INTERVAL > nakama_session.expire_time:
+	if last_activity_time+HEARTBEAT_INTERVAL > nakama_session.refresh_expire_time:
 		print("心跳 发送成功 但session快要过期了 ")
 		_reseet_session()
 		return
@@ -196,7 +202,7 @@ func schedule_reconnect():
 	timer.start()
 
 func _perform_reconnect():
-	print("Attempting reconnect...")
+	#print("Attempting reconnect...")
 	call_thread_safe("create_and_connect_socket")
 
 # 游戏生命周期管理 ==================================
@@ -244,6 +250,7 @@ func _on_socket_connected():
 func _on_socket_closed():
 	print("Socket closed event received")
 	is_socket_connected = false
+	is_connecting = false
 	schedule_reconnect()
 	#is_renew_socket = true
 	# 不是重连时，则重新尝试
