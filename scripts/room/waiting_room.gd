@@ -4,7 +4,7 @@ signal quitRoomSIG()
 var player_scene = preload("res://scenes/room/player_item.tscn") 
 var tween:Tween
 var max_players = 4
-var limit_time = 3.0
+var limit_time = 2.0 #最后读秒 禁止操作
 var last_wait_time = 8
 var time_left:float = 20.0
 var room_id = ""
