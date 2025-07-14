@@ -15,6 +15,8 @@ var nakama_socket: NakamaSocket = null
 
 # 心跳管理
 var heartbeat_timer: Timer
+var is_ping_now = false
+var is_socket_connected = false
 const HEARTBEAT_INTERVAL = 5.0  # 5秒发送一次心跳
 
 # 广播枚举
@@ -93,6 +95,7 @@ func create_and_connect_socket():
 		return
 	
 	print("Socket connected successfully")
+	start_heartbeat()
 	pass
 
 ### 重置会话
@@ -111,7 +114,25 @@ func _reseet_session():
 	nakama_session = result
 	return result
 
-
+func start_heartbeat():
+	# 创建心跳计时器
+	if heartbeat_timer == null:
+		heartbeat_timer = Timer.new()
+		add_child(heartbeat_timer)
+		heartbeat_timer.wait_time = HEARTBEAT_INTERVAL
+		heartbeat_timer.timeout.connect(_send_heartbeat)
+		heartbeat_timer.start()
+### 发送心跳
+func _send_heartbeat():
+	if is_ping_now or not is_socket_connected:
+		return
+	is_ping_now = true
+	var result = await nakama_socket.rpc_async("ping")
+	is_ping_now = false
+	if result.is_exception():
+		print("心跳 发送失败 ",result.exception.message)
+		return
+	print("心跳 发送成功 ")
 
 ### 设置socket事件监听
 func _listen_socket_events() -> void:
@@ -132,10 +153,12 @@ func _listen_socket_events() -> void:
 # 信号处理函数 ========================================
 ### socket连接事件处理
 func _on_socket_connected():
+	is_socket_connected = true
 	print("Socket 连接成功")
 
 ### socket关闭事件处理
 func _on_socket_closed():
+	is_socket_connected = false
 	print("Socket 被关闭")
 
 ### 处理socket错误

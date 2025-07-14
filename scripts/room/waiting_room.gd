@@ -34,14 +34,32 @@ func _ready():
 func Show():
 	show()
 	SettingsManager.settings_toggle.emit()
+	pass
 
 func Hide():
 	hide()
 	SettingsManager.settings_toggle.emit()
+	pass
 	
+
+func Comming():
+	waiting_animation.text = "正在进入..."
+	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人"%[room_id.substr(0, 16),max_players] 
+	pass
+	
+func Waiting():
+	if current_players.size() < max_players:
+		waiting_animation.text = "等待中..."
+	pass
+
+func ToBegin():
+	waiting_animation.text = "即将开始..."
+	pass
 
 # 重置房间信息
 func reset(name1: String,roomId: String = "",playerMax:int=10):
+	Show()
+	Comming()
 	time_left = 20.0
 	cancleBtn.disabled = false
 	max_players = playerMax
@@ -69,19 +87,22 @@ func reset(name1: String,roomId: String = "",playerMax:int=10):
 # 加入房间
 func add_player(player_uid,player_name: String,player_avatar = null):
 	if current_players.size() >= max_players:
-		PopupManager.show_dynamic("房间已满，无法加入")
+		PopupManager.show_dynamic("房间已满，无法加入"+String(max_players))
 		return
 	var player_item = player_scene.instantiate()
 	player_item.set_player_info(player_uid,player_name,player_avatar)
 	player_list.add_child(player_item)
 	current_players.append(player_name)
 	print("加入房间", player_name, " 剩下", current_players)
-	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
+	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] 
+	#"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 	if current_players.size() >= max_players:
+		ToBegin()
 		room_info.text += "  [color=red](满)[/color]"
 		countdown.show()
 		countdown.start(last_wait_time)
 		SignalManager.FullRoomSIG.emit(room_id)
+		
 
 # 离开房间
 func remove_player(uid: String):
@@ -98,7 +119,8 @@ func remove_player(uid: String):
 				PopupManager.show_dynamic("%s  已离开房间"%[username])
 			countdown.stop()
 			countdown.hide()
-			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id,max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
+			Waiting()
+			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 			return
 	pass
 

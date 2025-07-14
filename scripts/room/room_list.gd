@@ -625,8 +625,8 @@ func _on_cancel_waiting():
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
-	if selected_room_info != {}:
-		return
+	#if selected_room_info != {}:
+		#return
 	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
 	if not SceneManager.has_scene(enName):
@@ -646,10 +646,6 @@ func _on_join_room(room_info: Dictionary):
 	print("加入房间-key:", jion_input.text)
 	# 初始化等待房间
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
-	for player in room_info.players:
-		print("正在等待的玩家:", player)
-		waitingStart.add_player(player.uid, player.username, player.get("headIcon", ""))
-
 	var ret = await OnlineGame.joinTable({
 		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
@@ -671,9 +667,9 @@ func _on_join_room(room_info: Dictionary):
 		#失败则返回 不用处理接口里统一处理了
 		# _refresh_room_list()
 		return
+	waitingStart.Waiting()
 	print("加入房间成功", result)
 	SignalManager.JoinSuccessMusicSIG.emit(room_info.room_id)
-	waitingStart.Show()
 	pass
 
 # 创建房间

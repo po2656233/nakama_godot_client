@@ -116,6 +116,7 @@ func _set_nakama_socket(_nakama_socket: NakamaSocket) -> void:
 		Util.safe_connect(nakama_socket, "received_match_presence", self, "_on_nakama_match_presence")
 		Util.safe_connect(nakama_socket, "received_matchmaker_matched", self, "_on_nakama_matchmaker_matched")
 
+######################################################################################
 func set_match_id(mid):
 	match_id = mid
 	pass
