@@ -4,7 +4,8 @@ signal quitRoomSIG()
 var player_scene = preload("res://scenes/room/player_item.tscn") 
 var tween:Tween
 var max_players = 4
-var last_wait_time = 5
+var limit_time = 3.0
+var last_wait_time = 8
 var time_left:float = 20.0
 var room_id = ""
 var game_name = ""
@@ -58,8 +59,6 @@ func ToBegin():
 
 # 重置房间信息
 func reset(name1: String,roomId: String = "",playerMax:int=10):
-	Show()
-	Comming()
 	time_left = 20.0
 	cancleBtn.disabled = false
 	max_players = playerMax
@@ -82,12 +81,14 @@ func reset(name1: String,roomId: String = "",playerMax:int=10):
 			player_list.columns = 4
 	else:
 		player_list.columns = playerMax
+	Comming()
+	Show()
 	pass
 
 # 加入房间
 func add_player(player_uid,player_name: String,player_avatar = null):
 	if current_players.size() >= max_players:
-		PopupManager.show_dynamic("房间已满，无法加入"+String(max_players))
+		PopupManager.show_dynamic("房间已满，无法加入")
 		return
 	var player_item = player_scene.instantiate()
 	player_item.set_player_info(player_uid,player_name,player_avatar)
@@ -106,7 +107,7 @@ func add_player(player_uid,player_name: String,player_avatar = null):
 
 # 离开房间
 func remove_player(uid: String):
-	if  time_left <= 1.0:
+	if  time_left <= limit_time:
 		return
 	for player_item in player_list.get_children():
 		var playerUid = player_item.getUserId()
@@ -149,7 +150,7 @@ func _on_countdown_timeout():
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):
 	time_left = timeleft
-	if timeleft == 1.0:
+	if timeleft == limit_time:
 		PopupManager.show_dynamic("选手已锁定,不允许离开",150)
 		cancleBtn.disabled = true
 		if tween:
