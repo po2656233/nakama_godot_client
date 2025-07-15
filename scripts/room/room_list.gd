@@ -108,7 +108,7 @@ func _ready():
 	SignalManager.CreateRoomSIG.connect(_on_append_room)
 	SignalManager.RemoveRoomSIG.connect(_on_remove_room)
 	# SignalManager.JoinRoomSIG.connect(_recv_join_room)
-	# SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
+	SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
 	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
 	SignalManager.MatchPresenceEventSIG.connect(_on_received_match_presence)
 	SignalManager.OnlineCountSIG.connect(_on_received_table_online)
@@ -119,8 +119,6 @@ func load_data():
 	OnlineGame.getGameList(-1,self,"_on_game_list")
 	#await Online.sendDataRPC("list_games",{"kid":-1},self,"_on_game_list")
 	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
-	
-
 
 # 添加房间数据
 func append_room(data):
@@ -205,53 +203,28 @@ func remove_room(room_data):
 # 获取房间列表
 func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 	# room_list_info.clear()
-	var result = null
 	match curSelect:
 		SearchType.all:
-			result = await OnlineGame.getTabelList({
+			await OnlineGame.getTabelList({
 				"creatorId": creatorId,
 				"order": order,
 				"name": name1,
 				"isDesc": isDesc,
 				"pageNum": int(page),
 				"pageSize": int(page_size)
-			})
+			},self,"_on_get_table_list")
 		SearchType.favorite:
-			favorite_rooms.clear()
-			favorite_ids.clear()
-			result = await OnlineGame.getFavoriteList()
+			await OnlineGame.getFavoriteList("",self,"_on_get_favorite_list")
 		SearchType.my:
-			result = await OnlineGame.getTabelList({
+			await OnlineGame.getTabelList({
 				"creatorId": OnlineLogin.get_my_id(),
 				"order": order,
 				"name": name1,
 				"isDesc": isDesc,
 				"pageNum": int(page),
 				"pageSize": int(page_size)
-			})
+			},self,"_on_get_table_list")
 		pass
-	
-	if  result == null:
-		# print("获取房间列表失败:")
-		#PopupManager.show_message("获取房间列表失败，请检查网络连接或稍后再试。", "提示", false)
-		return
-	if result.has("items"):
-		print("获取房间数量:",result.items.size())
-		for data in result.items:
-			append_room(data)
-		pass
-	var total = 0
-	if result.has("total"):
-		print("房间总数量:", result.total)
-		total = result.total
-	match curSelect:
-		SearchType.all:
-			all_count = total
-		SearchType.favorite:
-			favorite_count = total
-		SearchType.my:
-			my_count = total
-	_refresh_room_list()
 	pass
 
 
@@ -275,6 +248,25 @@ func enableBtn(is_disabled:bool):
 	show_favorites.disabled = !is_disabled
 	show_myrooms.disabled = !is_disabled
 	create_button.disabled = !is_disabled
+
+func add_item(result):
+	if result.has("items"):
+		print("获取房间数量:",result.items.size())
+		for data in result.items:
+			append_room(data)
+		pass
+	var total = 0
+	if result.has("total"):
+		print("房间总数量:", result.total)
+		total = result.total
+	match curSelect:
+		SearchType.all:
+			all_count = total
+		SearchType.favorite:
+			favorite_count = total
+		SearchType.my:
+			my_count = total
+	_refresh_room_list()
 
 # 游戏列表
 func _on_game_list(result):
@@ -453,17 +445,12 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 			favorite_ids.push_front(room_info.id)
 	else:
 		favorite_ids.erase(room_info.id)
-	var result = await OnlineGame.favoriteTable({
+	await OnlineGame.favoriteTable({
 		"tableId": room_info.id,
 		"isFavorite": is_favorite,
-	})
-	if result == null:
-		return 
-	#await loadRooms()
-	_refresh_room_list()
+	},self,"_on_favorite_table_cb")
 	pass
 
-# 显示收藏房间
 
 # 确认房间密码
 func _on_confirm_btn_pressed() -> void:
@@ -523,10 +510,6 @@ func _on_search_input_focus_exited() -> void:
 	pass # Replace with function body.
 
 #################################################################
-func _on_update_games_name(_games):
-	for item in room_list_info:
-		item.game_name = OnlineGame.getGameName(item.game_type)
-	pass
 func _on_append_room(info):
 	var data = info.get("table", {})
 	var item = {
@@ -571,6 +554,7 @@ func _on_received_match_state(data):
 	print("匹配状态:", data)
 	pass
 
+# 接收匹配状态
 func _on_received_match_presence(data):
 	var joins = []
 	var leaves = []
@@ -600,12 +584,13 @@ func _on_received_match_presence(data):
 			return
 	pass
 
+# 接收在线桌子信息
 func _on_received_table_online(data):
 	print("桌子在线:", data.mid)
 		# 清除现有房间
 	for info in room_list_info:
 		if info.room_id == data.mid:
-			info.player_count = data.online
+			info.player_count = int(data.online)
 			_update_items(info)
 			return
 	pass
@@ -614,18 +599,18 @@ func _on_received_table_online(data):
 
 # 取消等待
 func _on_cancel_waiting():
-	print("离开房间:", selected_room_info.room_id)
-	var cur_room_id = selected_room_info.room_id
 	waitingStart.Hide()
 	waitingStart.remove_player(OnlineLogin.get_my_id())
 	if selected_room_info:
+		var cur_room_id = selected_room_info.room_id
+		print("离开房间:", cur_room_id)
 		for i in range(selected_room_info.players.size()):
 			if selected_room_info.players[i].uid == OnlineLogin.get_my_id():
 				selected_room_info.players.remove_at(i)
 				break
-		_refresh_room_list()
-	selected_room_info = {}
-	await OnlineMatch.LeaveMatch(cur_room_id)
+		await OnlineMatch.LeaveMatch(cur_room_id)
+		selected_room_info = {}
+		
 	pass
 
 # 加入房间
@@ -651,35 +636,76 @@ func _on_join_room(room_info: Dictionary):
 	print("加入房间-key:", jion_input.text)
 	# 初始化等待房间
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
-	var ret = await OnlineGame.joinTable({
+	await OnlineGame.joinTable({
 		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
-	})
-	if ret == null or not ret.has("tableId") or ret.tableId != room_info.id:
-		SignalManager.JoinErrorMusicSIG.emit()
-		print("加入房间失败", ret)
-		_update_items(selected_room_info)
-		selected_room_info = {}
-		# _refresh_room_list()
-		return 
-
-	# 进入房间
-	var result = await OnlineMatch.joinMatch(room_info.room_id, {
-		"name": room_info.room_name,
-		"key": room_info.room_key
-	})
-	if not result:
-		#失败则返回 不用处理接口里统一处理了
-		# _refresh_room_list()
-		return
-	waitingStart.Waiting()
-	print("加入房间成功", result)
-	SignalManager.JoinSuccessMusicSIG.emit(room_info.room_id)
+	},self, "_on_join_table_cb")
 	pass
+
 
 # 创建房间
 func _on_room_created(_room_info: Dictionary):
 	var timer = get_tree().create_timer(1.0)
 	await timer.timeout
+	_refresh_room_list()
+	pass
+
+
+############################################################################
+# 获取游戏名称更新回调
+func _on_update_games_name(games):
+	print("更新游戏列表:", games)
+	for item in room_list_info:
+		for game in games:
+			if item.game_type == game.gid:
+				item.game_name = game.name
+				break
+		# _update_items(item)
+	pass
+
+# 获取房间列表回调
+func _on_get_table_list(result):
+	add_item(result)
+	pass
+
+# 获取收藏房间列表回调
+func _on_get_favorite_list(result):
+	favorite_rooms.clear()
+	favorite_ids.clear()
+	add_item(result)
+	pass
+##################################################################################
+# 加入牌桌
+func _on_join_table_cb(result):
+	if selected_room_info == {}:
+		return
+	if result == null or not result.has("tableId") or result.tableId != selected_room_info.id:
+		SignalManager.JoinErrorMusicSIG.emit()
+		print("加入房间失败", result)
+		_update_items(selected_room_info)
+		selected_room_info = {}
+		# _refresh_room_list()
+		return 
+		# 进入房间
+	var result_1 = await OnlineMatch.joinMatch(selected_room_info.room_id, {
+		"name": selected_room_info.room_name,
+		"key": selected_room_info.room_key
+	})
+	if not result_1:
+		#失败则返回 不用处理接口里统一处理了
+		selected_room_info = {}
+		# _refresh_room_list()
+		return
+	waitingStart.Waiting()
+	print("加入房间成功", result_1)
+	SignalManager.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
+	pass
+
+# 显示收藏房间
+func _on_favorite_table_cb(result):
+	if result == null:
+		return 
+	#await loadRooms()
+	print("收藏牌桌: ",result)
 	_refresh_room_list()
 	pass

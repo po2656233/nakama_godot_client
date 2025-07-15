@@ -40,32 +40,7 @@ var kind_en_names = {
 #####################################################################
 func initGameList():
 	games_data = []
-# 获取数据
-func RpcData(funcName, payload:Dictionary={}):
-	# if not rpc_funcs.has(funcName):
-	# 	print("无效的RPC函数名:",funcName)
-	# 	return []
-	return await Online.sendDataRPC(funcName,payload)
-
-# 获取列表数据
-func RpcListData(funcName, payload:Dictionary={}, sort_field:String=""):
-	# if not rpc_funcs.has(funcName):
-	# 	print("无效的RPC函数名:",funcName)
-	# 	return []
-	var result = await Online.sendDataRPC(funcName,payload)
-	var sorted = result
-	if sorted:
-		sorted = sorted.duplicate() 
-		if sort_field != "":
-			sorted.sort_custom(func(a, b):
-				if a.has(sort_field) and b.has(sort_field):
-					return a[sort_field] < b[sort_field]
-				else:
-					return false
-			)
-	return sorted
 ##################################################################################
-
 func sendToMatch(p_match_id, p_op_code : int, p_data : String, p_presences = null):
 	if Online.nakama_socket and p_match_id != "":
 		print("发送至比赛%s 操作码:%d 数据:%s"%[p_match_id, p_op_code, p_data])
@@ -77,27 +52,27 @@ func sendToMatch(p_match_id, p_op_code : int, p_data : String, p_presences = nul
 	return null
 
 #########################RPC###########################################################
-func favoriteTable(payload):
-	var result = await self.RpcData("favorite_table",payload)
+func favoriteTable(payload,obj:Object=null,work_cb:String="_on_work"):
+	var result = await Online.sendDataRPC("favorite_table",payload,obj,work_cb)
 	return result
 
-func joinTable(payload):
-	var result = await self.RpcData("join_table",payload)
+func joinTable(payload,obj:Object=null,work_cb:String="_on_work"):
+	var result = await Online.sendDataRPC("join_table",payload,obj,work_cb)
 	return result
 
-func leaveTable(payload):
-	var result = await self.RpcData("leave_table",payload)
+func leaveTable(payload,obj:Object=null,work_cb:String="_on_work"):
+	var result = await Online.sendDataRPC("leave_table",payload,obj,work_cb)
 	return result
 
-func createTable(payload):
-	var result = await self.RpcData("create_table",payload)
+func createTable(payload,obj:Object=null,work_cb:String="_on_work"):
+	var result = await Online.sendDataRPC("create_table",payload,obj,work_cb)
 	return result
 
-func removeTable(payload):
-	var result = await self.RpcData("remove_table",payload)
+func removeTable(payload,obj:Object=null,work_cb:String="_on_work"):
+	var result = await Online.sendDataRPC("remove_table",payload,obj,work_cb)
 	return result
 
-########################################################################################
+
 # 获取游戏列表
 func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 	# 每次都加载最新的
@@ -109,30 +84,32 @@ func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 		result = [] 
 	return result
 
-func getGameListOld():
-	return games_data 
+
 
 # 获取收藏列表
-func getFavoriteList():
+func getFavoriteList(payload=null,obj:Object=null,work_cb:String="_on_work"):
 	if favorite_list.size() == 0:
-		var result = await RpcData("favorite_list")
+		var result = await Online.sendDataRPC("favorite_list",payload,obj,work_cb)
 		favorite_list = result if result else []
 	return favorite_list
 
 
 # 获取牌桌列表
-func getTabelList(payload:Dictionary):
-	var request = homeProto.GetTableListReq.new()
-	request.set_creatorId(payload.get("creatorId",""))
-	request.set_order(payload.get("order",""))
-	request.set_name(payload.get("name",""))
-	request.set_isDesc(payload.get("isDesc",false))
-	request.set_pageNum(payload.get("pageNum",1))
-	request.set_pageSize(payload.get("pageSize",20))
-	var result = await RpcData("table_list",payload)
-	print("牌桌列表 反馈:",result)
+func getTabelList(payload:Dictionary,obj:Object=null,work_cb:String="_on_work"):
+	#var request = homeProto.GetTableListReq.new()
+	#request.set_creatorId(payload.get("creatorId",""))
+	#request.set_order(payload.get("order",""))
+	#request.set_name(payload.get("name",""))
+	#request.set_isDesc(payload.get("isDesc",false))
+	#request.set_pageNum(payload.get("pageNum",1))
+	#request.set_pageSize(payload.get("pageSize",20))
+	var result = await Online.sendDataRPC("table_list",payload,obj,work_cb)
 	return result
 
+########################################################################################
+func getGameListOld():
+	return games_data 
+	
 # 获取游戏名称
 func getGameName(game_id:int):
 	for game in games_data:

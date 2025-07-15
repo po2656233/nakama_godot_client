@@ -28,7 +28,7 @@ class QueuedMessage:
 	var next_retry_time: float
 	var do_success: Callable
 	var do_failure: Callable
-	var obj_mutex: Mutex = Mutex.new()
+	# var obj_mutex: Mutex = Mutex.new()
 	
 	func _init(msg_id: String,msg_name: String, data: Variant, obj:Object=Online.nakama_socket ,on_success: Callable = Util.EMPTY_CALLABLE, on_failure: Callable = Util.EMPTY_CALLABLE) -> void:
 		id = msg_id
@@ -41,9 +41,10 @@ class QueuedMessage:
 		caller = obj
 		do_success = on_success
 		do_failure = on_failure
-		if caller == Online.nakama_socket:
-			caller.connected.connect(self._on_socket_connected)
-	
+		# if caller == Online.nakama_socket:
+		# 	caller.connected.connect(self._on_socket_connected)
+		# SignalManager.UpdateSocketSIG.connect(self._on_socket_connected)
+
 	func should_retry() -> bool:
 		return retry_count < MAX_RETRY_ATTEMPTS or MAX_RETRY_ATTEMPTS == -1
 	
@@ -55,10 +56,10 @@ class QueuedMessage:
 		next_retry_time = Time.get_unix_time_from_system() + delay
 	
 	# 当socket连接成功 获取新的socket
-	func _on_socket_connected():
-		obj_mutex.lock()
-		caller = Online.get_nakama_socket()
-		obj_mutex.unlock()
+	# func _on_socket_connected():
+	# 	obj_mutex.lock()
+	# 	caller = Online.get_nakama_socket()
+	# 	obj_mutex.unlock()
 
 var _message_queue: Array[QueuedMessage] = []
 var _in_progress: Dictionary = {}  # 正在发送中的消息 (id: QueuedMessage)
@@ -177,15 +178,15 @@ func _process_queue() -> void:
 func _send_message_with_retry(msg: QueuedMessage) -> void:
 	var success = false
 	var should_retry = true
-	var socket = null
-	
+	var socket = msg.caller
+	var is_socket_obj =  msg.caller == Online.nakama_socket
 	# 尝试发送消息
 	while not success and should_retry:
 		# 使用 await 确保异步发送完成
-		msg.obj_mutex.lock()
-		socket = msg.caller
-		msg.obj_mutex.unlock()
+		if is_socket_obj:
+			socket = Online.nakama_socket# msg.caller
 		if socket == null:
+			socket = msg.caller
 			continue
 		success = await Util.Asyn_Call(socket, msg.func_name, msg.payload, msg.do_success, msg.do_failure,false)
 		if success:

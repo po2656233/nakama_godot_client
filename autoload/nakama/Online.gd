@@ -27,17 +27,14 @@ enum EnBroadcast{
 	LeaveTable = 4, # 离开桌子
 	TableOnline = 5, # 桌子在线人数
 }  
-
-
-# socket状态
-var socket_state = {
-	"connected":"连接成功",
-	"disconnected":"连接断开",
-	"reconnecting":"正在重连...",
-	"restoring_session":"正在恢复会话...",
-	"socket_error":"网络连接出错...",
-}
-
+# # socket状态
+# var socket_state = {
+# 	"connected":"连接成功",
+# 	"disconnected":"连接断开",
+# 	"reconnecting":"正在重连...",
+# 	"restoring_session":"正在恢复会话...",
+# 	"socket_error":"网络连接出错...",
+# }
 ###################################################################################
 ### 初始化
 func _ready() -> void:
@@ -122,6 +119,8 @@ func start_heartbeat():
 		heartbeat_timer.wait_time = HEARTBEAT_INTERVAL
 		heartbeat_timer.timeout.connect(_send_heartbeat)
 		heartbeat_timer.start()
+	pass
+
 ### 发送心跳
 func _send_heartbeat():
 	if is_ping_now or not is_socket_connected:
@@ -133,6 +132,7 @@ func _send_heartbeat():
 		print("心跳 发送失败 ",result.exception.message)
 		return
 	print("心跳 发送成功 ")
+	pass
 
 ### 设置socket事件监听
 func _listen_socket_events() -> void:
@@ -154,6 +154,7 @@ func _listen_socket_events() -> void:
 ### socket连接事件处理
 func _on_socket_connected():
 	is_socket_connected = true
+	SignalManager.UpdateSocketSIG.emit(nakama_socket)
 	print("Socket 连接成功")
 
 ### socket关闭事件处理
@@ -250,7 +251,7 @@ func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String
 				# 动态创建信号，并且根据外部obj和work_cb名称进行处理
 				var sigName = funcName+"SIG"
 				if not has_signal(sigName):
-					add_user_signal(sigName, result_wrapper.result)
+					add_user_signal(sigName, [result_wrapper.result])
 				#disconnect(sigName,Callable(obj,work_cb))
 				if is_connected(sigName,Callable(obj,work_cb)):
 					disconnect(sigName,Callable(obj,work_cb))

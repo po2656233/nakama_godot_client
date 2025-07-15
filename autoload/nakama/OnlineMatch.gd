@@ -543,8 +543,12 @@ func LeaveMatch(p_match_id : String = ""):
 	LeaveMatchmaker()
 	var result = await Online.nakama_socket.leave_match_async(p_match_id)
 	if result.is_exception():
-		PopupManager.show_dynamic("离开匹配失败 "+result.get_exception().message)
+		if Errors.ResponeMapping[result.get_exception().message]:
+			PopupManager.show_dynamic("离开匹配失败 "+Errors.ResponeMapping[result.get_exception().message])
+		else:
+			PopupManager.show_dynamic("离开匹配失败 "+result.get_exception().message)
 		return result
+	print("离开匹配成功--->>>",p_match_id)
 	match_id = ""
 	matchmaker_ticket = ""
 	pass

@@ -5,6 +5,10 @@ extends Node
 # @warning_ignore("unused_signal")
 # signal NewSessionSIG(args)
 
+# 更新Socket
+@warning_ignore("unused_signal")
+signal UpdateSocketSIG(socket)
+###################消息通知###########################
 # 新消息
 @warning_ignore("unused_signal")
 signal NewMessageSIG(args)
