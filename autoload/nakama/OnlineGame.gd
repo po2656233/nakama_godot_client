@@ -52,24 +52,24 @@ func sendToMatch(p_match_id, p_op_code : int, p_data : String, p_presences = nul
 	return null
 
 #########################RPC###########################################################
-func favoriteTable(payload,obj:Object=null,work_cb:String="_on_work"):
-	var result = await Online.sendDataRPC("favorite_table",payload,obj,work_cb)
+func favoriteTable(payload,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
+	var result = await Online.sendDataRPC("favorite_table",payload,obj,work_cb,error_cb)
 	return result
 
-func joinTable(payload,obj:Object=null,work_cb:String="_on_work"):
-	var result = await Online.sendDataRPC("join_table",payload,obj,work_cb)
+func joinTable(payload,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
+	var result = await Online.sendDataRPC("join_table",payload,obj,work_cb,error_cb)
 	return result
 
-func leaveTable(payload,obj:Object=null,work_cb:String="_on_work"):
-	var result = await Online.sendDataRPC("leave_table",payload,obj,work_cb)
+func leaveTable(payload,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
+	var result = await Online.sendDataRPC("leave_table",payload,obj,work_cb,error_cb)
 	return result
 
-func createTable(payload,obj:Object=null,work_cb:String="_on_work"):
-	var result = await Online.sendDataRPC("create_table",payload,obj,work_cb)
+func createTable(payload,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
+	var result = await Online.sendDataRPC("create_table",payload,obj,work_cb,error_cb)
 	return result
 
-func removeTable(payload,obj:Object=null,work_cb:String="_on_work"):
-	var result = await Online.sendDataRPC("remove_table",payload,obj,work_cb)
+func removeTable(payload,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
+	var result = await Online.sendDataRPC("remove_table",payload,obj,work_cb,error_cb)
 	return result
 
 

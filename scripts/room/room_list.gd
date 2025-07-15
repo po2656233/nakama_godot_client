@@ -639,7 +639,7 @@ func _on_join_room(room_info: Dictionary):
 	await OnlineGame.joinTable({
 		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
-	},self, "_on_join_table_cb")
+	},self, "_on_join_table_cb", "_on_join_table_err")
 	pass
 
 
@@ -692,13 +692,21 @@ func _on_join_table_cb(result):
 		"key": selected_room_info.room_key
 	})
 	if not result_1:
+		print("加入房间失败:", result_1)
 		#失败则返回 不用处理接口里统一处理了
 		selected_room_info = {}
-		# _refresh_room_list()
 		return
 	waitingStart.Waiting()
 	print("加入房间成功", result_1)
 	SignalManager.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
+	pass
+
+func _on_join_table_err(result):
+	print("加入房间失败:", result)
+	PopupManager.show_dynamic("加入房间失败: %s" % result)
+	await get_tree().create_timer(0.5).timeout
+	waitingStart.Hide()
+	SignalManager.JoinErrorMusicSIG.emit()
 	pass
 
 # 显示收藏房间

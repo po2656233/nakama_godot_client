@@ -239,7 +239,7 @@ func do_broadcast(notification1):
 
 ############################主动发送数据############################################################
 # RPC 发送函数
-func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String="_on_work"):
+func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
 	print("发送RPC:", funcName, payload)
 	var result_wrapper = { "result":null}  # 使用字典包装变量
 	var sucess_cb = func(ret:NakamaAsyncResult):
@@ -257,12 +257,23 @@ func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String
 					disconnect(sigName,Callable(obj,work_cb))
 				connect(sigName,Callable(obj,work_cb))
 				emit_signal(sigName,result_wrapper.result) 
-				print("接收RPC成功,发送信号:",funcName+"SIG") 
+				print("接收RPC成功,发送信号:",sigName) 
 			return
 		result_wrapper.result = ret  # 修改字典中的值
 		pass
 	var failed_cb = func(errMsg):
-		print("发送RPC失败:",funcName," -->结果:", errMsg)
+		if obj != null:
+				# 动态创建信号，并且根据外部obj和work_cb名称进行处理
+				var sigName = funcName+"_ERR_SIG"
+				if not has_signal(sigName):
+					add_user_signal(sigName, [errMsg])
+				#disconnect(sigName,Callable(obj,error_cb))
+				if is_connected(sigName,Callable(obj,error_cb)):
+					disconnect(sigName,Callable(obj,error_cb))
+				connect(sigName,Callable(obj,error_cb))
+				emit_signal(sigName,errMsg) 
+				print("接收RPC成功,发送信号:",sigName) 
+		print("发送RPC:",funcName," -->结果异常:", errMsg)
 		return
 	var result = await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], sucess_cb, failed_cb)
 	print("发送RPC-FIN:",funcName," 反馈结果:",result)
