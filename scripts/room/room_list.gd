@@ -104,6 +104,7 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	create_room_dialog.room_created.connect(_on_room_created) # 创建房间
 	waitingStart.quitRoomSIG.connect(_on_cancel_waiting)
+	SignalManager.GameListSIG.connect(_on_update_games_name)
 	SignalManager.CreateRoomSIG.connect(_on_append_room)
 	SignalManager.RemoveRoomSIG.connect(_on_remove_room)
 	# SignalManager.JoinRoomSIG.connect(_recv_join_room)
@@ -522,6 +523,10 @@ func _on_search_input_focus_exited() -> void:
 	pass # Replace with function body.
 
 #################################################################
+func _on_update_games_name(_games):
+	for item in room_list_info:
+		item.game_name = OnlineGame.getGameName(item.game_type)
+	pass
 func _on_append_room(info):
 	var data = info.get("table", {})
 	var item = {

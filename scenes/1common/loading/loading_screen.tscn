@@ -101,6 +101,7 @@ label_settings = SubResource("LabelSettings_2d1qb")
 horizontal_alignment = 1
 
 [node name="board" parent="." instance=ExtResource("3_hsgnm")]
+visible = false
 custom_minimum_size = Vector2(550, 0)
 layout_mode = 1
 anchors_preset = 5

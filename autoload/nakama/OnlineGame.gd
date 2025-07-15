@@ -104,6 +104,7 @@ func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 	var result = await Online.sendDataRPC("list_games",{"kid":kind},obj,work_cb)
 	if result and result.size() > 0:
 		games_data = Util.sort_by_filed(result,"id")
+		SignalManager.GameListSIG.emit(games_data)
 	else:
 		result = [] 
 	return result
