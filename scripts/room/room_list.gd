@@ -32,6 +32,7 @@ const SAVE_PATH = "user://room_list_info.json"
 @onready var next_button = $NextButton
 @onready var page_label = $PageLabel
 
+var allgames = []
 var my_rooms = []
 var favorite_rooms = []
 var favorite_ids = []
@@ -104,7 +105,6 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	create_room_dialog.room_created.connect(_on_room_created) # 创建房间
 	waitingStart.quitRoomSIG.connect(_on_cancel_waiting)
-	SignalManager.GameListSIG.connect(_on_update_games_name)
 	SignalManager.CreateRoomSIG.connect(_on_append_room)
 	SignalManager.RemoveRoomSIG.connect(_on_remove_room)
 	# SignalManager.JoinRoomSIG.connect(_recv_join_room)
@@ -116,20 +116,24 @@ func _ready():
 
 func load_data():
 	# 游戏列表
-	OnlineGame.getGameList(-1,self,"_on_game_list")
-	#await Online.sendDataRPC("list_games",{"kid":-1},self,"_on_game_list")
-	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
+	await OnlineGame.getGameList(-1,self,"_on_game_list")
+	pass
 
 # 添加房间数据
 func append_room(data):
 	print("添加 房间数据:", data)
+	var game_name = "未知游戏"
+	for game in allgames:
+		if int(game.id) == int(data.get("gid", 0)):
+			game_name = game.name
+			break
 	var item = {
 			"id": int(data.get("id", 0)),
 			"room_id": data.get("mid", 0), # str().md5_text().substr(8, 16),
 			"room_name": data.get("name", ""),
 			"room_key": data.get("key", ""),
 			"is_locked": data.get("isLock", false),
-			"game_name": OnlineGame.getGameName(data.get("gid", 0)),
+			"game_name": game_name,
 			"game_type": data.get("gid", 0),
 			"game_mode": data.get("mode", 0),
 			"game_section": data.get("section", 0),
@@ -271,13 +275,14 @@ func add_item(result):
 # 游戏列表
 func _on_game_list(result):
 	print("房间--游戏列表",result)
-	var games = Util.sort_by_filed(result,"id")
-	for game in games:
+	allgames = Util.sort_by_filed(result,"id")
+	for game in allgames:
 		game_options.add_item(game.name, game.id)
 		game_options.set_item_metadata(game_options.item_count-1, game)
-	if games.size() == 0:
+	if allgames.size() == 0:
 		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
+	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
 	curSelect = SearchType.favorite
 	loadRooms()
 	curSelect = SearchType.all
@@ -609,14 +614,11 @@ func _on_cancel_waiting():
 				selected_room_info.players.remove_at(i)
 				break
 		await OnlineMatch.LeaveMatch(cur_room_id)
-		selected_room_info = {}
-		
+		#selected_room_info = {}
 	pass
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
-	#if selected_room_info != {}:
-		#return
 	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
 	if not SceneManager.has_scene(enName):
@@ -636,10 +638,12 @@ func _on_join_room(room_info: Dictionary):
 	print("加入房间-key:", jion_input.text)
 	# 初始化等待房间
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
-	await OnlineGame.joinTable({
+	# 不加入网络重试
+	var result = await Online.nakama_socket.rpc_async("join_table",{
 		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
-	},self, "_on_join_table_cb", "_on_join_table_err")
+	})
+	_on_join_table_cb(result)
 	pass
 
 
@@ -677,14 +681,16 @@ func _on_get_favorite_list(result):
 ##################################################################################
 # 加入牌桌
 func _on_join_table_cb(result):
-	if selected_room_info == {}:
+	if result == null:
+		_on_join_table_err("")
 		return
-	if result == null or not result.has("tableId") or result.tableId != selected_room_info.id:
-		SignalManager.JoinErrorMusicSIG.emit()
+	if result.is_exception():
+		_on_join_table_err(result.get_exception().message)
+		return
+	var tab_info = JSON.parse_string(result.payload )
+	if tab_info.tableId != selected_room_info.id:
+		_on_join_table_err("")
 		print("加入房间失败", result)
-		_update_items(selected_room_info)
-		selected_room_info = {}
-		# _refresh_room_list()
 		return 
 		# 进入房间
 	var result_1 = await OnlineMatch.joinMatch(selected_room_info.room_id, {
@@ -692,9 +698,7 @@ func _on_join_table_cb(result):
 		"key": selected_room_info.room_key
 	})
 	if not result_1:
-		print("加入房间失败:", result_1)
-		#失败则返回 不用处理接口里统一处理了
-		selected_room_info = {}
+		_on_join_table_err("")
 		return
 	waitingStart.Waiting()
 	print("加入房间成功", result_1)
