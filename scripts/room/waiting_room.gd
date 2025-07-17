@@ -3,6 +3,7 @@ extends Control
 signal quitRoomSIG()
 var player_scene = preload("res://scenes/room/player_item.tscn") 
 var tween:Tween
+var is_no_enter = false
 var max_players = 4
 var limit_time = 2.0 #最后读秒 禁止操作
 var last_wait_time = 8
@@ -44,16 +45,19 @@ func Hide():
 	
 
 func Comming():
+	is_no_enter = true
 	waiting_animation.text = "正在进入..."
 	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人"%[room_id.substr(0, 16),max_players] 
 	pass
 	
 func Waiting():
+	is_no_enter = false
 	if current_players.size() < max_players:
 		waiting_animation.text = "等待中..."
 	pass
 
 func ToBegin():
+	is_no_enter = true
 	waiting_animation.text = "即将开始..."
 	pass
 
@@ -171,7 +175,8 @@ func _on_cancel_button_pressed():
 	countdown.hide()
 	quitRoomSIG.emit()
 	loading_scene.hide()
-	SignalManager.JoinErrorMusicSIG.emit()
+	if not is_no_enter:
+		SignalManager.JoinErrorMusicSIG.emit()
 
 # func _debug_add_test_players():
 # 	# 仅用于测试：模拟其他玩家陆续加入

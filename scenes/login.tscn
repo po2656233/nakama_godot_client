@@ -205,6 +205,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+tooltip_text = "账号登录"
 texture_normal = ExtResource("1_lxatw")
 texture_pressed = ExtResource("4_1a3i5")
 texture_hover = ExtResource("4_8q84o")

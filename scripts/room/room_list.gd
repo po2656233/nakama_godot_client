@@ -59,6 +59,7 @@ var pre_room_id = ""
 var pre_room_count = 0
 var selected_room_info = {}
 var already_selectd_favorite = false
+var is_doing_enter = false
 var tween: Tween
 var room_list_info = []
 var favorite_list = []
@@ -474,10 +475,9 @@ func _on_cancle_btn_pressed() -> void:
 		if child.room_data.room_id == selected_room_info.room_id:
 			child.set_join_btn(true)
 			break
-	selected_room_info = {}
 	jion_dialog.visible = false
 	jion_input.text = ""
-
+	selected_room_info = {}
 	pass # Replace with function body.
 
 
@@ -604,6 +604,9 @@ func _on_received_table_online(data):
 
 # 取消等待
 func _on_cancel_waiting():
+	if is_doing_enter:
+		PopupManager.show_dynamic("正在进入房间,请等待",250)
+		return
 	waitingStart.Hide()
 	waitingStart.remove_player(OnlineLogin.get_my_id())
 	if selected_room_info:
@@ -613,12 +616,20 @@ func _on_cancel_waiting():
 			if selected_room_info.players[i].uid == OnlineLogin.get_my_id():
 				selected_room_info.players.remove_at(i)
 				break
+		for child in room_container.get_children():
+			if child.room_data.room_id == cur_room_id:
+				child.set_join_btn(true)
+				break
 		await OnlineMatch.LeaveMatch(cur_room_id)
-		#selected_room_info = {}
+		selected_room_info = {}
+		# _refresh_room_list()
 	pass
 
 # 加入房间
 func _on_join_room(room_info: Dictionary):
+	if selected_room_info != {} and jion_input.text == "":
+		PopupManager.show_dynamic("已有房间,请等待离开")
+		return
 	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
 	if not SceneManager.has_scene(enName):
@@ -629,6 +640,7 @@ func _on_join_room(room_info: Dictionary):
 	
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
+		selected_room_info = {}
 		return
 	selected_room_info = room_info
 	if room_info.is_locked and jion_input.text == "":
@@ -639,6 +651,7 @@ func _on_join_room(room_info: Dictionary):
 	# 初始化等待房间
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
 	# 不加入网络重试
+	is_doing_enter = true
 	var result = await Online.nakama_socket.rpc_async("join_table",{
 		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
@@ -690,27 +703,34 @@ func _on_join_table_cb(result):
 	var tab_info = JSON.parse_string(result.payload )
 	if tab_info.tableId != selected_room_info.id:
 		_on_join_table_err("")
-		print("加入房间失败", result)
 		return 
-		# 进入房间
+	# 进入房间
 	var result_1 = await OnlineMatch.joinMatch(selected_room_info.room_id, {
 		"name": selected_room_info.room_name,
 		"key": selected_room_info.room_key
 	})
+	
 	if not result_1:
 		_on_join_table_err("")
 		return
+		
 	waitingStart.Waiting()
 	print("加入房间成功", result_1)
 	SignalManager.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
+	is_doing_enter = false
 	pass
 
 func _on_join_table_err(result):
 	print("加入房间失败:", result)
-	PopupManager.show_dynamic("加入房间失败: %s" % result)
+	if result in Errors.ResponeMapping:
+		PopupManager.show_dynamic("加入房间失败: %s" % Errors.ResponeMapping[result])
+	else:
+		PopupManager.show_dynamic("加入房间失败: %s" % result)
 	await get_tree().create_timer(0.5).timeout
 	waitingStart.Hide()
 	SignalManager.JoinErrorMusicSIG.emit()
+	selected_room_info = {}
+	_refresh_room_list()
 	pass
 
 # 显示收藏房间

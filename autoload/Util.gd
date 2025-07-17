@@ -18,37 +18,61 @@ func _ready() -> void:
 #   args: 参数数组
 #   on_success: 成功回调函数 (Callable)
 #   on_failure: 失败回调函数 (Callable)
-func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Callable, on_failure: Callable,inqueue:bool=true) -> bool:
-	print("Obj:%s:<<< FUNC:[%s] >>>|||<<<args:[%s]>>>\n" % [str(caller),method_name,str(args)])
+# 优化后的异步调用方法
+func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Callable, on_failure: Callable, inqueue: bool = true) -> bool:
+	# 使用弱引用避免对象生命周期问题
+	var weak_caller = weakref(caller)
+	
+	# 创建安全回调包装器
+	var safe_on_success = func(ret):
+		var obj = weak_caller.get_ref()
+		if obj and on_success:
+			on_success.call(ret)
+	
+	var safe_on_failure = func(err_msg):
+		var obj = weak_caller.get_ref()
+		if obj and on_failure:
+			on_failure.call(err_msg)
+	
 	# 验证方法是否存在
 	if not caller or not caller.has_method(method_name):
 		push_error("Method not found: %s" % method_name)
-		if on_failure: on_failure.call("Method not found")
+		safe_on_failure.call("Method not found")
 		return false
 
 	# 执行异步调用
 	var task = caller.callv(method_name, args)
 	if not (task is Object) or !task.has_method("is_valid") or !task.is_valid():
-		if on_failure: on_failure.call("Invalid async task")
+		safe_on_failure.call("Invalid async task")
 		return false
-		
-	# 等待异步结果
+
+	# 使用协程处理异步结果
 	var result = await task.completed
+	
 	# 处理结果
 	if result != null and result.has_method("is_exception") and result.is_exception():
-		# 有异常反馈，也被认为是执行成功了
 		var errMsg = result.get_exception().message
-		if on_failure: on_failure.call(errMsg)
-		if errMsg in Errors.NetworkErrors: # 网络异常,则视为执行失败
-			if inqueue:
-				var msg_id = reliable_queue.EnqueueMessage(method_name,args,caller,on_success, on_failure)
-				if not msg_id:
-					print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
-			return false
-		print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
-		return true
+		safe_on_failure.call(errMsg)
 		
-	if on_success and result != null: on_success.call(result)
+		if errMsg in Errors.NetworkErrors and inqueue:
+			# 使用安全回调添加至队列
+			var msg_id = reliable_queue.EnqueueMessage(
+				method_name, 
+				args, 
+				weak_caller, 
+				safe_on_success, 
+				safe_on_failure
+			)
+			if not msg_id:
+				print("添加至消息队列重试 func_name:", method_name, " payload:", args)
+			return false
+			
+		print("Network error occurred: %s" % errMsg)
+		return true
+
+	if result != null:
+		safe_on_success.call(result)
+		
 	return true
 
 # 改进的安全连接函数
