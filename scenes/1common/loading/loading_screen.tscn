@@ -133,8 +133,8 @@ layout_mode = 2
 
 [node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(1, 0.906102, 0.890042, 1)
+theme_override_colors/font_color = Color(0.578996, 0.00136283, 4.81308e-08, 1)
+theme_override_colors/font_shadow_color = Color(0.169589, 0.271936, 0.159005, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 20
 theme_override_fonts/font = SubResource("SystemFont_hsgnm")

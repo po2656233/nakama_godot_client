@@ -468,13 +468,17 @@ func _on_confirm_btn_pressed() -> void:
 	_on_join_room(selected_room_info)
 	pass
 
+func _set_join_btn(room_id,is_join = true):
+	for child in room_container.get_children():
+			if child.room_data.room_id == room_id:
+				child.set_join_btn(is_join)
+				break
+	pass
 
 # 取消房间
 func _on_cancle_btn_pressed() -> void:
-	for child in room_container.get_children():
-		if child.room_data.room_id == selected_room_info.room_id:
-			child.set_join_btn(true)
-			break
+	if selected_room_info != {}:
+		_set_join_btn(selected_room_info.room_id)
 	jion_dialog.visible = false
 	jion_input.text = ""
 	selected_room_info = {}
@@ -616,20 +620,19 @@ func _on_cancel_waiting():
 			if selected_room_info.players[i].uid == OnlineLogin.get_my_id():
 				selected_room_info.players.remove_at(i)
 				break
-		for child in room_container.get_children():
-			if child.room_data.room_id == cur_room_id:
-				child.set_join_btn(true)
-				break
+		_set_join_btn(cur_room_id)
 		await OnlineMatch.LeaveMatch(cur_room_id)
 		selected_room_info = {}
 		# _refresh_room_list()
 	pass
 
 # 加入房间
-func _on_join_room(room_info: Dictionary):
+func _on_join_room(room_info: Dictionary)->bool:
+	# 检查是否正在加入房间
 	if selected_room_info != {} and jion_input.text == "":
 		PopupManager.show_dynamic("已有房间,请等待离开")
-		return
+		_set_join_btn(room_info.room_id)
+		return false
 	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
 	if not SceneManager.has_scene(enName):
@@ -637,16 +640,20 @@ func _on_join_room(room_info: Dictionary):
 		#SignalManager.LoadingGameSIG.emit(enName)
 	else:
 		print('已有游戏...',enName)
-	
+
+	# 检查是否已满
 	if room_info.max_players == room_info.player_count:
 		PopupManager.show_dynamic("房间已满员")
 		selected_room_info = {}
-		return
+		_set_join_btn(room_info.room_id)
+		return false
+
+	# 检查是否需要密码	
 	selected_room_info = room_info
 	if room_info.is_locked and jion_input.text == "":
 		jion_dialog.visible = true
 		jion_room.text = "%s\nID:%s" % [room_info.room_name, room_info.room_id.substr(0,16)]
-		return
+		return true
 	print("加入房间-key:", jion_input.text)
 	# 初始化等待房间
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
@@ -657,7 +664,7 @@ func _on_join_room(room_info: Dictionary):
 		"tableKey": jion_input.text
 	})
 	_on_join_table_cb(result)
-	pass
+	return true
 
 
 # 创建房间
@@ -729,6 +736,9 @@ func _on_join_table_err(result):
 	await get_tree().create_timer(0.5).timeout
 	waitingStart.Hide()
 	SignalManager.JoinErrorMusicSIG.emit()
+	
+	jion_dialog.visible = false
+	jion_input.text = ""
 	selected_room_info = {}
 	_refresh_room_list()
 	pass
