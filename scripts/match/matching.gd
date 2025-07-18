@@ -132,6 +132,12 @@ func start_matching():
 	# pass
 
 func stop_matching():
+	var leave = await OnlineMatch.LeaveMatch()
+	if leave and leave.is_exception():
+		PopupManager.show_dynamic("停止匹配失败")
+		print("错误信息: ", leave.get_exception().message)
+		return
+	print("停止匹配",leave)
 	is_matching = false
 	current_state = MatchState.IDLE
 	reset_ui()
