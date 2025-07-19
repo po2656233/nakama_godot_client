@@ -530,6 +530,8 @@ func add_club(group):
 func update_club(group):
 	# 获取成员列表
 	var retsult = await OnlineChat.get_group_member_list_async(group.id)
+	if not retsult:
+		return
 	var dataList = []
 	var isAdmin = false
 	for info1 in retsult.group_users:
