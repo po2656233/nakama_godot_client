@@ -1,5 +1,5 @@
 extends player_chess
-
+class_name player_chess_m
 
 func move(_start:chess_position,_end:chess_position,_chess_array:Array)->bool:
 	var distance_=distance(_start.V_position,_end.V_position)

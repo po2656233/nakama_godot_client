@@ -1,5 +1,5 @@
 extends player_chess
-
+class_name player_chess_x
 func move(_start:chess_position,_end:chess_position,_chess_array:Array)->bool:
 	if _end.chess_color!=chess_color:
 		return false

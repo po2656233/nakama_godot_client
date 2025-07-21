@@ -1,5 +1,5 @@
 extends player_chess
-
+class_name player_chess_z
 func move(_start:chess_position,_end:chess_position,_chess_array:Array)->bool:
 	if chess_color==1:
 		if _start.V_position.y<_end.V_position.y:

@@ -132,7 +132,7 @@ func _on_timer_timeout():
 			timer_label.text = base_text_1 % timer_value
 
 		ready_label.text = "   %d/%d已准备就绪" % [ready_count, player_total]
-	elif timer_value <= 0:
+	elif timer_value == 0:
 		_on_decline_pressed()
 	pass
 

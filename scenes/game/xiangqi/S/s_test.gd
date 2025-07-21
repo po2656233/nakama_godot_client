@@ -6,14 +6,19 @@ var V_CHESS_POSITION:chess_position
 
 
 @onready var chessposition: Node2D = $chessposition
+@onready var jiangjun_play: AudioStreamPlayer = $jiangjun
 
 var chess_position_array=[]
-var pre_chess:chess_position
+var pre_chess_black:chess_position
+var pre_chess_red:chess_position
 var size1:int=58
 func _ready() -> void:
 	# SettingsManager.show_settings() 
 	add_position()
 	add_player_chess()
+	# 黑方先走，动画初始在黑方最优棋子上
+	start_player = 1
+	jump_to_best_piece_for_player_move()
 	
 func add_position()->void:
 	for x in 9:
@@ -111,57 +116,160 @@ func reture_chess(chess:int):
 
 var start_player:int=1
 var V_chess:chess_position
+var is_waiting_for_opponent: bool = false
+
 func move(chess:chess_position):
-	if V_chess==null:
-		if chess.play!=null:
-			if chess.play.chess_color==start_player:
-				V_chess=chess
-				player_move.visible=true
-				player_move.position=V_chess.position
-	elif chess==V_chess:
+	# 只有当前方才能操作
+	if V_chess == null:
+		if chess.play != null:
+			if chess.play.chess_color == start_player:
+				V_chess = chess
+				player_move.visible = true
+				player_move.position = V_chess.position
+	elif chess == V_chess:
 		pass
-	else :
-		if chess.play!=null:
-			if chess.play.chess_color==start_player:
-				V_chess=chess
-				player_move.visible=true
-				player_move.position=V_chess.position
+	else:
+		if chess.play != null:
+			if chess.play.chess_color == start_player:
+				V_chess = chess
+				player_move.visible = true
+				player_move.position = V_chess.position
 			else:
-				if V_chess.play.move(V_chess,chess,chess_position_array):
-					if chess.play.game_over():
+				if V_chess.play == null or not V_chess.play.has_method("move"):
+					cuowu.play()
+					print("移动---1")
+					return
+				if is_only_blocker_and_leaving_x(V_chess, chess):
+					PopupManager.show_dynamic("该棋子不能横向离开将帅之间的纵线！")
+					cuowu.play()
+					return
+				if is_facing_kings(V_chess, chess):
+					PopupManager.show_dynamic("将帅不能面对面！")
+					cuowu.play()
+					return
+				if V_chess.play.move(V_chess, chess, chess_position_array):
+					if chess.play and chess.play.has_method("game_over") and chess.play.game_over():
 						game_over()
 					chess.play.queue_free()
 					_move_end(chess)
 					chi.play()
-				else :
+					if is_kings_facing():
+						_undo_last_move()
+						PopupManager.show_dynamic("走子后将帅不能面对面！")
+						cuowu.play()
+						return
+					check_xiangqi_status()
+				else:
 					cuowu.play()
-		else :
-			if V_chess.play == null:
+		else:
+			if V_chess.play == null or not V_chess.play.has_method("move"):
 				return
-			if V_chess.play.move(V_chess,chess,chess_position_array):
+			if is_only_blocker_and_leaving_x(V_chess, chess):
+				PopupManager.show_dynamic("将帅不能见面！")
+				cuowu.play()
+				return
+			if is_facing_kings(V_chess, chess):
+				PopupManager.show_dynamic("将帅不能见面！")
+				cuowu.play()
+				return
+			if V_chess.play.move(V_chess, chess, chess_position_array):
 				_move_end(chess)
 				luozi.play()
-			else :
+				if is_kings_facing():
+					_undo_last_move()
+					PopupManager.show_dynamic("走子后将帅不能面对面！")
+					cuowu.play()
+					return
+				check_xiangqi_status()
+			else:
 				cuowu.play()
-	
-func _move_end(chess:chess_position)->void:
-	chess.play=V_chess.play
-	V_chess.play=null
-	chess.play.position=chess.position
-	V_chess=null
+
+func set_pre_move(pre_chess,new_chess):
 	if pre_chess:
 		V_chess = pre_chess
-		player_move.position=pre_chess.position
+		player_move.position = pre_chess.position
+	pre_chess = new_chess
+
+
+func _move_end(chess:chess_position)->void:
+	chess.play = V_chess.play
+	V_chess.play = null
+	chess.play.position = chess.position
+	V_chess = null
+	var pre_chess = pre_chess_black if start_player == 0 else pre_chess_red
+	if pre_chess:
+		V_chess = pre_chess
+		player_move.position = pre_chess.position
 	pre_chess = chess
-	# player_move.visible=false
+	if start_player == 0:
+		pre_chess_black = pre_chess
+		if pre_chess_red and pre_chess_black.position == pre_chess_red.position:
+			pre_chess_red = null
+	else:
+		pre_chess_red = pre_chess
+		if pre_chess_black and pre_chess_black.position == pre_chess_red.position:
+			pre_chess_black = null
+	if not check_xiangqi_status():
+		return
 	change_player()
 	player_move._change_color()
+	is_waiting_for_opponent = false
+
+
 func change_player()->void:
 	if start_player==0:
 		start_player=1
-	else :
+	else:
 		start_player=0
+	# 始终显示player_move，跳到当前方最优棋子
+	jump_to_best_piece_for_player_move()
+
+# player_move动画始终显示，优先上次操作、将/帅、中线兵/卒、再第一个己方棋子
+func jump_to_best_piece_for_player_move():
+	# 优先跳到上一次操作过的己方棋子
+	if start_player == 0 and pre_chess_black and pre_chess_black.play:
+		V_chess = pre_chess_black
+		player_move.visible = true
+		player_move.position = pre_chess_black.position
+		return
+	if start_player == 1 and pre_chess_red and pre_chess_red.play:
+		V_chess = pre_chess_red
+		player_move.visible = true
+		player_move.position = pre_chess_red.position
+		return
+	# 跳到中线兵/卒
+	var center_x = 4
+	for y in range(10):
+		var pos = chess_position_array[center_x][y]
+		if pos.play and pos.play.chess_color == start_player and (pos.play is player_chess_z):
+			V_chess = pos
+			player_move.visible = true
+			player_move.position = pos.position
+			return
+	# 跳到将/帅
+	for x in range(9):
+		for y in range(10):
+			var pos = chess_position_array[x][y]
+			if pos.play and (pos.play is player_chess_j) and pos.play.chess_color == start_player:
+				V_chess = pos
+				player_move.visible = true
+				player_move.position = pos.position
+				return
 	
+	# 跳到第一个己方棋子
+	for x in range(9):
+		for y in range(10):
+			var pos = chess_position_array[x][y]
+			if pos.play and pos.play.chess_color == start_player:
+				V_chess = pos
+				player_move.visible = true
+				player_move.position = pos.position
+				return
+	# 没有己方棋子
+	player_move.visible = false
+	V_chess = null
+	PopupManager.show_dynamic("已决出胜负")
+
 
 @onready var over: CanvasLayer = %over
 @onready var label: Label = $over/Label
@@ -183,3 +291,199 @@ func _on_reback_btn_pressed() -> void:
 	# queue_free()
 	
 	pass # Replace with function body.
+
+# 检查“将军”“绝杀”“困毙”状态
+func check_xiangqi_status():
+	if is_checkmate(1-start_player):
+		PopupManager.show_dynamic("绝杀！")
+		return false
+	elif is_check(1-start_player):
+		jiangjun_play.play()
+		PopupManager.show_dynamic("将军！")
+	elif is_stalemate(1-start_player):
+		PopupManager.show_dynamic("困毙！")
+		return false
+	return true
+
+# 判断“将帅不能相见”
+func is_facing_kings(start_pos, end_pos) -> bool:
+	# 找到两个“将/帅”所在列
+	var j1 = null
+	var j2 = null
+	for y in range(10):
+		for x in range(9):
+			var pos = chess_position_array[x][y]
+			if pos.play and (pos.play is player_chess_j):
+				if j1 == null:
+					j1 = pos
+				else:
+					j2 = pos
+	if j1 and j2 and j1.V_position.x == j2.V_position.x:
+		var miny = min(j1.V_position.y, j2.V_position.y)
+		var maxy = max(j1.V_position.y, j2.V_position.y)
+		var blockers = []
+		for y in range(miny+1, maxy):
+			var mid = chess_position_array[j1.V_position.x][y]
+			if mid.play:
+				blockers.append(mid)
+		# 如果只有一个棋子挡在中间，且本次移动是要让它离开该纵轴，则禁止
+		if blockers.size() == 1 and blockers[0] == start_pos:
+			if end_pos.V_position.x != start_pos.V_position.x:
+				return true
+		# 其它情况同原逻辑
+		if blockers.size() == 0:
+			if (start_pos.V_position.x == j1.V_position.x and end_pos.V_position.x == j1.V_position.x and
+				((start_pos.V_position.y > miny and start_pos.V_position.y < maxy) or (end_pos.V_position.y > miny and end_pos.V_position.y < maxy))):
+				return true
+			if (start_pos.V_position.x == j1.V_position.x and start_pos.play and end_pos == j2):
+				return true
+	return false
+
+# 判断“将军”
+func is_check(enemy_color:int) -> bool:
+	var king_pos = find_king_pos(enemy_color)
+	if not king_pos:
+		return false
+	for x in range(9):
+		for y in range(10):
+			var pos = chess_position_array[x][y]
+			if pos.play and pos.play.chess_color == start_player:
+				if pos.play.move(pos, king_pos, chess_position_array):
+					return true
+	return false
+
+# 判断“绝杀”
+func is_checkmate(enemy_color:int) -> bool:
+	if not is_check(enemy_color):
+		return false
+	# 检查对方所有棋子所有走法，是否有能解将的
+	for x in range(9):
+		for y in range(10):
+			var pos = chess_position_array[x][y]
+			if pos.play and pos.play.chess_color == enemy_color:
+				for dx in range(9):
+					for dy in range(10):
+						var target = chess_position_array[dx][dy]
+						if pos.play.move(pos, target, chess_position_array):
+							# 模拟走法
+							var backup = target.play
+							target.play = pos.play
+							pos.play = null
+							var still_check = is_check(enemy_color)
+							# 撤销
+							pos.play = target.play
+							target.play = backup
+							if not still_check:
+								return false
+	return true
+
+# 判断“困毙”
+func is_stalemate(enemy_color:int) -> bool:
+	for x in range(9):
+		for y in range(10):
+			var pos = chess_position_array[x][y]
+			if pos.play and pos.play.chess_color == enemy_color:
+				for dx in range(9):
+					for dy in range(10):
+						var target = chess_position_array[dx][dy]
+						if pos.play.move(pos, target, chess_position_array):
+							return false
+	return true
+
+# 查找“将/帅”位置
+func find_king_pos(color:int):
+	for x in range(9):
+		for y in range(10):
+			var pos = chess_position_array[x][y]
+			if pos.play and (pos.play is player_chess_j) and pos.play.chess_color == color:
+				return pos
+	return null
+
+# 检查走子后将帅是否同竖线且中间无子
+func is_kings_facing() -> bool:
+	var j1 = null
+	var j2 = null
+	for y in range(10):
+		for x in range(9):
+			var pos = chess_position_array[x][y]
+			if pos.play and (pos.play is player_chess_j):
+				if j1 == null:
+					j1 = pos
+				else:
+					j2 = pos
+	if j1 and j2 and j1.V_position.x == j2.V_position.x:
+		var miny = min(j1.V_position.y, j2.V_position.y)
+		var maxy = max(j1.V_position.y, j2.V_position.y)
+		var count = 0
+		for y in range(miny+1, maxy):
+			if chess_position_array[j1.V_position.x][y].play:
+				count += 1
+		if count == 0:
+			return true
+	return false
+
+# 判断是否为将帅之间唯一阻挡棋子且本次移动要离开该纵轴
+func is_only_blocker_and_leaving_x(start_pos, end_pos) -> bool:
+	var j1 = null
+	var j2 = null
+	for y in range(10):
+		for x in range(9):
+			var pos = chess_position_array[x][y]
+			if pos.play and (pos.play is player_chess_j):
+				if j1 == null:
+					j1 = pos
+				else:
+					j2 = pos
+	if j1 and j2 and j1.V_position.x == j2.V_position.x:
+		var miny = min(j1.V_position.y, j2.V_position.y)
+		var maxy = max(j1.V_position.y, j2.V_position.y)
+		var blockers = []
+		for y in range(miny+1, maxy):
+			var mid = chess_position_array[j1.V_position.x][y]
+			if mid.play:
+				blockers.append(mid)
+		if blockers.size() == 1 and blockers[0] == start_pos:
+			# 本次移动要离开该纵轴
+			if end_pos.V_position.x != start_pos.V_position.x:
+				return true
+	return false
+
+# 撤销上一步（简单实现：只禁止本次走子，实际可扩展为完整悔棋）
+func _undo_last_move():
+	# 这里只做提示和不切换玩家，实际悔棋可记录历史状态
+	change_player()
+	is_waiting_for_opponent = false
+
+# 设置player_move到当前方中线兵/卒
+func set_player_move_to_center_pawn(color:int):
+	var center_x = 4
+	var found = false
+	# 优先找中线兵/卒
+	for y in range(10):
+		var pos = chess_position_array[center_x][y]
+		if pos.play and pos.play.chess_color == color and (pos.play is player_chess_z):
+			V_chess = pos
+			player_move.visible = true
+			player_move.position = pos.position
+			found = true
+			break
+	# 若没有中线兵/卒，找第一个己方兵/卒
+	if not found:
+		for x in range(9):
+			for y in range(10):
+				var pos = chess_position_array[x][y]
+				if pos.play and pos.play.chess_color == color and (pos.play is player_chess_z):
+					V_chess = pos
+					player_move.visible = true
+					player_move.position = pos.position
+					return
+	# 若没有兵/卒，找第一个己方棋子
+	if not found:
+		for x in range(9):
+			for y in range(10):
+				var pos = chess_position_array[x][y]
+				if pos.play and pos.play.chess_color == color:
+					V_chess = pos
+					player_move.visible = true
+					player_move.position = pos.position
+					return

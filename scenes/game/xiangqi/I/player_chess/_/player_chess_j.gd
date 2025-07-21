@@ -1,6 +1,5 @@
 extends player_chess
-
-
+class_name player_chess_j
 
 func move(_start:chess_position,_end:chess_position,_chess_array:Array)->bool:
 	if _end.V_position.x<3 or _end.V_position.x>5:
