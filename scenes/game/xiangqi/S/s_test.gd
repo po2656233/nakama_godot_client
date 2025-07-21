@@ -299,7 +299,7 @@ func check_xiangqi_status():
 		return false
 	elif is_check(1-start_player):
 		jiangjun_play.play()
-		PopupManager.show_dynamic("将军！")
+		PopupManager.show_dynamic("将军！",300)
 	elif is_stalemate(1-start_player):
 		PopupManager.show_dynamic("困毙！")
 		return false
