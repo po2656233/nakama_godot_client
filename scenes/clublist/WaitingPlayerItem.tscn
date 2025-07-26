@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://be3byx2jjlvkr"]
 
-[ext_resource type="Script" uid="uid://beot0sf68su2k" path="res://scripts/clublist/WaitingPlayerItem.gd" id="1_g1krc"]
+[ext_resource type="Script" uid="uid://b1p3kvelh68k1" path="res://scripts/clublist/WaitingPlayerItem.gd" id="1_g1krc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0i8sv"]
 bg_color = Color(0.216149, 0.371218, 0.597193, 0.490196)
@@ -15,15 +15,15 @@ subpixel_positioning = 0
 [sub_resource type="SystemFont" id="SystemFont_g1krc"]
 subpixel_positioning = 0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1krc"]
-bg_color = Color(0.672718, 0.876476, 0.676299, 0.498039)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vbwdy"]
+bg_color = Color(0.190372, 0.4724, 0.491955, 0.733333)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vbwdy"]
-bg_color = Color(0.190372, 0.4724, 0.491955, 0.733333)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1krc"]
+bg_color = Color(0.672718, 0.876476, 0.676299, 0.498039)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -97,9 +97,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/hover = SubResource("StyleBoxFlat_g1krc")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vbwdy")
 theme_override_styles/normal = SubResource("StyleBoxFlat_0i8sv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vbwdy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g1krc")
 
 [node name="StatusParticles" type="CPUParticles2D" parent="."]
 position = Vector2(15, 20)

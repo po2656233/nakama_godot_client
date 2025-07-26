@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://bkirpx8d7fv6y"]
 
 [ext_resource type="Texture2D" uid="uid://btorq3l8t3kev" path="res://assets/game/fishgame/kenney-platform-deluxe/request/rockSmall.png" id="1"]
-[ext_resource type="Script" uid="uid://b5ftmc03ptnci" path="res://scenes/game/fishgame/actors/ExplodeEffect.gd" id="2"]
+[ext_resource type="Script" uid="uid://lt4e4yuj5gjb" path="res://scenes/game/fishgame/actors/ExplodeEffect.gd" id="2"]
 [ext_resource type="Gradient" path="res://scenes/game/fishgame/actors/ExplodeEffectGradient.tres" id="3"]
 [ext_resource type="AudioStream" uid="uid://cln7oaurwgtj0" path="res://assets/game/fishgame/sounds/explosions/explosion3.wav" id="4"]
-[ext_resource type="Script" uid="uid://bu2v7cyp1yor7" path="res://scripts/game/fishgame/components/Sounds.gd" id="5"]
+[ext_resource type="Script" uid="uid://cs7o2qxhfol4o" path="res://scripts/game/fishgame/components/Sounds.gd" id="5"]
 [ext_resource type="AudioStream" uid="uid://dylenbvypqw8m" path="res://assets/game/fishgame/sounds/explosions/explosion2.wav" id="6"]
 [ext_resource type="AudioStream" uid="uid://bnvioqxf6g4fe" path="res://assets/game/fishgame/sounds/explosions/explosion1.wav" id="7"]
 
@@ -48,14 +48,11 @@ script = ExtResource("5")
 
 [node name="Explode1" type="AudioStreamPlayer" parent="Sounds/Explode"]
 stream = ExtResource("7")
-bus = &"Sound Effects"
 
 [node name="Explode2" type="AudioStreamPlayer" parent="Sounds/Explode"]
 stream = ExtResource("6")
-bus = &"Sound Effects"
 
 [node name="Explode3" type="AudioStreamPlayer" parent="Sounds/Explode"]
 stream = ExtResource("4")
-bus = &"Sound Effects"
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

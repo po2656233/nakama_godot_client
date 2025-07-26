@@ -294,7 +294,7 @@ texture = ExtResource("4_vt4ww")
 stretch_mode = 2
 
 [node name="LinkButton" type="LinkButton" parent="Panel/VBoxContainer/HBoxContainerRead/TextureRect"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 192.0
 offset_top = -8.0
 offset_right = 299.0

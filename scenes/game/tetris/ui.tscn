@@ -14,14 +14,14 @@ font_color = Color(0.968627, 0.0313726, 0.415686, 1)
 font = SubResource("FontVariation_yo6jb")
 font_color = Color(0.701961, 0.701961, 0.0745098, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40y36"]
-bg_color = Color(0.301961, 0.694118, 0.435294, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tlr7"]
+bg_color = Color(0.588235, 0.388235, 0.847059, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1v6nn"]
 bg_color = Color(0.729412, 0.192157, 0.262745, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tlr7"]
-bg_color = Color(0.588235, 0.388235, 0.847059, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40y36"]
+bg_color = Color(0.301961, 0.694118, 0.435294, 1)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_j3a81")
@@ -69,9 +69,9 @@ clip_contents = true
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.47451, 0.819608, 0.254902, 1)
-theme_override_styles/hover = SubResource("StyleBoxFlat_40y36")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_1v6nn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_5tlr7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1v6nn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_40y36")
 text = "RESTART"
 icon_alignment = 1
 expand_icon = true

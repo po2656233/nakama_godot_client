@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bax6ip8g5br3b"]
+[gd_scene load_steps=6 format=3 uid="uid://bax6ip8g5br3b"]
 
 [ext_resource type="Texture2D" uid="uid://owo7weoycemt" path="res://assets/game/fishgame/kenney-platform-deluxe/tiles/castle.png" id="1"]
-[ext_resource type="Script" uid="uid://bws53ef1x0msu" path="res://scenes/game/fishgame/objects/TimedGenerator.gd" id="2"]
+[ext_resource type="Script" uid="uid://uadgxnfihik8" path="res://scenes/game/fishgame/objects/TimedGenerator.gd" id="2"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(15, 15)
@@ -20,6 +20,11 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 6),
 "update": 0,
 "values": [Color(1, 0.768627, 0.768627, 1), Color(0.898039, 0, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u1ypx"]
+_data = {
+&"Glow": SubResource("2")
 }
 
 [node name="TimedGenerator" type="StaticBody2D" groups=["map_object"]]
@@ -42,5 +47,7 @@ position = Vector2(15, -40)
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_u1ypx")
+}
 autoplay = "Glow"
-anims/Glow = SubResource("2")

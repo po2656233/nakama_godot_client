@@ -24,6 +24,3 @@ extends Resource
 
 [resource]
 script = SubResource("GDScript_ma676")
-line_length = 100
-fast_but_unsafe = false
-format_on_save = false

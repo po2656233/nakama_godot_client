@@ -8,8 +8,8 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oaumh"]
 bg_color = Color(0.501961, 0.611765, 0.286275, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb341"]
-bg_color = Color(0.329412, 0.701961, 0.243137, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6vpl"]
+bg_color = Color(0.168627, 0.415686, 0.368627, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -22,8 +22,8 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6vpl"]
-bg_color = Color(0.168627, 0.415686, 0.368627, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb341"]
+bg_color = Color(0.329412, 0.701961, 0.243137, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -88,9 +88,9 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 105.0
 offset_bottom = 60.0
-theme_override_styles/hover = SubResource("StyleBoxFlat_rb341")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_okley")
 theme_override_styles/normal = SubResource("StyleBoxFlat_r6vpl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_okley")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rb341")
 text = "清理-已领取"
 
 [node name="CloseButton" type="TextureButton" parent="Panel"]

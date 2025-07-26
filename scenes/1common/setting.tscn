@@ -14,29 +14,29 @@
 [ext_resource type="Texture2D" uid="uid://cbtyhawxiukwn" path="res://assets/currency/exit.png" id="10_8hrxv"]
 [ext_resource type="Texture2D" uid="uid://byxoofshj56sj" path="res://assets/currency/reback1.png" id="11_evuvb"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yi3xu"]
-draw_center = false
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cw5id"]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_undds"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yi3xu"]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndc40"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mp32a"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_undds"]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkhcx"]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awqwa"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mp32a"]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g4t"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awqwa"]
+draw_center = false
 
 [node name="Setting" type="Control"]
 layout_mode = 3
@@ -66,8 +66,8 @@ clip_contents = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "邮件信息"
-theme_override_styles/focus = SubResource("StyleBoxFlat_yi3xu")
 theme_override_styles/normal = SubResource("StyleBoxFlat_cw5id")
+theme_override_styles/focus = SubResource("StyleBoxFlat_yi3xu")
 icon = ExtResource("6_xkbed")
 flat = true
 expand_icon = true
@@ -82,8 +82,8 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "窗体缩放"
-theme_override_styles/focus = SubResource("StyleBoxFlat_undds")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ndc40")
+theme_override_styles/focus = SubResource("StyleBoxFlat_undds")
 icon = ExtResource("3_u7pao")
 icon_alignment = 2
 expand_icon = true
@@ -93,8 +93,8 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "设置功能"
-theme_override_styles/pressed = SubResource("StyleBoxFlat_mp32a")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pkhcx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mp32a")
 icon = ExtResource("4_6kece")
 icon_alignment = 1
 expand_icon = true
@@ -126,8 +126,8 @@ offset_right = 80.0
 offset_bottom = 80.0
 size_flags_horizontal = 8
 size_flags_vertical = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_awqwa")
 theme_override_styles/normal = SubResource("StyleBoxFlat_85g4t")
+theme_override_styles/focus = SubResource("StyleBoxFlat_awqwa")
 icon = ExtResource("2_p0qrl")
 flat = true
 icon_alignment = 2

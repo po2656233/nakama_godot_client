@@ -72,16 +72,16 @@ font_color = Color(0.996078, 0.984314, 0, 1)
 [sub_resource type="SystemFont" id="SystemFont_w7vkm"]
 subpixel_positioning = 0
 
-[sub_resource type="SystemFont" id="SystemFont_75xrq"]
-subpixel_positioning = 0
-
-[sub_resource type="SystemFont" id="SystemFont_5f45h"]
+[sub_resource type="SystemFont" id="SystemFont_dcyp8"]
 subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_6jbmw"]
 subpixel_positioning = 0
 
-[sub_resource type="SystemFont" id="SystemFont_dcyp8"]
+[sub_resource type="SystemFont" id="SystemFont_5f45h"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_75xrq"]
 subpixel_positioning = 0
 
 [sub_resource type="Animation" id="Animation_6stlh"]
@@ -436,10 +436,10 @@ clip_contents = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_fonts/normal_font = SubResource("SystemFont_w7vkm")
-theme_override_fonts/mono_font = SubResource("SystemFont_75xrq")
-theme_override_fonts/italics_font = SubResource("SystemFont_5f45h")
-theme_override_fonts/bold_italics_font = SubResource("SystemFont_6jbmw")
 theme_override_fonts/bold_font = SubResource("SystemFont_dcyp8")
+theme_override_fonts/bold_italics_font = SubResource("SystemFont_6jbmw")
+theme_override_fonts/italics_font = SubResource("SystemFont_5f45h")
+theme_override_fonts/mono_font = SubResource("SystemFont_75xrq")
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 36
 bbcode_enabled = true

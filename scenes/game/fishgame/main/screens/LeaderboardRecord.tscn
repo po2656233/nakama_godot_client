@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cayvxiy4iyp3"]
 
-[ext_resource type="Script" uid="uid://dcpuhbiyw8ho7" path="res://scripts/game/fishgame/main/screens/LeaderboardRecord.gd" id="2"]
+[ext_resource type="Script" uid="uid://dm85iybclmsjv" path="res://scripts/game/fishgame/main/screens/LeaderboardRecord.gd" id="2"]
 
 [node name="HBoxContainer" type="HBoxContainer"]
 anchors_preset = 10

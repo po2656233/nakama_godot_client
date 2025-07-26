@@ -6,5 +6,4 @@
 [resource]
 script = ExtResource("2_4n53t")
 piece_texture = ExtResource("1_runxs")
-tetromino_type = 0
 spawn_position = Vector2(-24, -456)

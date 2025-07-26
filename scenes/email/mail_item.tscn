@@ -2,15 +2,8 @@
 
 [ext_resource type="Script" uid="uid://btsndo4kmiydi" path="res://scripts/email/mail_item.gd" id="1_kxn4r"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8omkr"]
-bg_color = Color(0.600592, 0.416857, 0.164399, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwxv8"]
-bg_color = Color(0.25308, 0.579073, 0.518538, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tu8ks"]
+bg_color = Color(0.223529, 0.333333, 0.670588, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -23,8 +16,15 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tu8ks"]
-bg_color = Color(0.223529, 0.333333, 0.670588, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwxv8"]
+bg_color = Color(0.25308, 0.579073, 0.518538, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8omkr"]
+bg_color = Color(0.600592, 0.416857, 0.164399, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -36,10 +36,10 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 80.0
 grow_horizontal = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_8omkr")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mwxv8")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_b45mw")
 theme_override_styles/normal = SubResource("StyleBoxFlat_tu8ks")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b45mw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mwxv8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8omkr")
 script = ExtResource("1_kxn4r")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

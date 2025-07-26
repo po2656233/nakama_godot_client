@@ -47,7 +47,7 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 				if not msg_id:
 					print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
 			print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
-			return false
+		return false
 	if on_success and result != null: on_success.call(result)
 	return true
 

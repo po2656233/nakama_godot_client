@@ -1,9 +1,9 @@
 [gd_resource type="Theme" load_steps=9 format=3 uid="uid://cyhtfq7v4nxvx"]
 
-[ext_resource type="FontFile" uid="uid://d3u5428h3aenu" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="1_y1tsb"]
-[ext_resource type="Texture2D" uid="uid://6yfij31nnouv" path="res://assets/game/mahjong_matching/image/UI/button_hover.png" id="2_retp5"]
-[ext_resource type="Texture2D" uid="uid://kuduwi5dhe5m" path="res://assets/game/mahjong_matching/image/UI/button_normal.png" id="3_smek6"]
-[ext_resource type="Texture2D" uid="uid://dt55nfyh4560d" path="res://assets/game/mahjong_matching/image/UI/button_press.png" id="4_5o2ka"]
+[ext_resource type="FontFile" uid="uid://d1ykbo1h8utc1" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="1_y1tsb"]
+[ext_resource type="Texture2D" uid="uid://c7qmtj6mra22m" path="res://assets/game/mahjong_matching/image/UI/button_hover.png" id="2_retp5"]
+[ext_resource type="Texture2D" uid="uid://wa55n35cx3ks" path="res://assets/game/mahjong_matching/image/UI/button_normal.png" id="3_smek6"]
+[ext_resource type="Texture2D" uid="uid://hu4vlaevgolp" path="res://assets/game/mahjong_matching/image/UI/button_press.png" id="4_5o2ka"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iquht"]
 texture = ExtResource("2_retp5")

@@ -18,9 +18,9 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_374i1"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b15p6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_374i1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
 content_margin_left = 8.0
@@ -108,8 +108,8 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
 theme_override_font_sizes/normal_font_size = 38
-theme_override_styles/focus = SubResource("StyleBoxEmpty_374i1")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_b15p6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_374i1")
 fit_content = true
 scroll_following = true
 selection_enabled = true

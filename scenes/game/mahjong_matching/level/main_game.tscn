@@ -1,14 +1,14 @@
 [gd_scene load_steps=22 format=3 uid="uid://dynv7y3by6dvx"]
 
-[ext_resource type="Script" uid="uid://6q5n0q6pr3q2" path="res://scripts/game/mahjong_matching/Gameplay/main_game.gd" id="1_2gask"]
+[ext_resource type="Script" uid="uid://bb8vcufv2dwry" path="res://scripts/game/mahjong_matching/Gameplay/main_game.gd" id="1_2gask"]
 [ext_resource type="FontFile" uid="uid://d1ykbo1h8utc1" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="1_pyx26"]
 [ext_resource type="Texture2D" uid="uid://beldrkh4tidr8" path="res://assets/game/mahjong_matching/image/UI/background.png" id="2_w08m4"]
-[ext_resource type="Script" uid="uid://d1wdiqo7bd4mx" path="res://scripts/game/mahjong_matching/UI/MainUI.gd" id="3_gqje3"]
+[ext_resource type="Script" uid="uid://g42ygmndw0gg" path="res://scripts/game/mahjong_matching/UI/MainUI.gd" id="3_gqje3"]
 [ext_resource type="AudioStream" uid="uid://bn1ueose4ywy6" path="res://assets/game/mahjong_matching/sound/SE/click1.wav" id="4_t2hyo"]
 [ext_resource type="AudioStream" uid="uid://bklwt5kl85nqb" path="res://assets/game/mahjong_matching/sound/bgm/gamemain.mp3" id="5_iytmj"]
 [ext_resource type="Theme" uid="uid://vb12ay5d7wb4" path="res://themes/game/mahjong_matching/start_ui.tres" id="6_n8nu8"]
 [ext_resource type="Texture2D" uid="uid://bi33h4011vraw" path="res://assets/game/mahjong_matching/image/UI/Icon_Small_WhiteOutline_Return.png" id="9_dainb"]
-[ext_resource type="Script" uid="uid://dxs3kpbkqgp70" path="res://scripts/game/mahjong_matching/UI/GameEnd.gd" id="10_4jbsj"]
+[ext_resource type="Script" uid="uid://bbdanpo625sno" path="res://scripts/game/mahjong_matching/UI/GameEnd.gd" id="10_4jbsj"]
 [ext_resource type="AudioStream" uid="uid://c8o27a5hkc7kw" path="res://assets/game/mahjong_matching/sound/SE/Minimalist1.wav" id="10_h4e4j"]
 [ext_resource type="Texture2D" uid="uid://co5531doidw3x" path="res://assets/game/mahjong_matching/image/UI/Box_Flowers.png" id="11_0dvrn"]
 [ext_resource type="AudioStream" uid="uid://c3khdl5w73yco" path="res://assets/game/mahjong_matching/sound/SE/Minimalist4.wav" id="11_oxhy8"]
@@ -161,7 +161,6 @@ stream = ExtResource("15_pqmqm")
 [node name="ClickPlayer2" type="AudioStreamPlayer2D" parent="SE"]
 stream = ExtResource("16_vve0v")
 
-[connection signal="pressed" from="UI/backButton" to="UI" method="_on_back_button_pressed"]
 [connection signal="pressed" from="UI/restartButton" to="UI" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="UI/GameEnd/QuitButton" to="UI/GameEnd" method="_on_quit_button_pressed"]
 [connection signal="pressed" from="UI/GameEnd/AgainButton" to="UI/GameEnd" method="_on_again_button_pressed"]

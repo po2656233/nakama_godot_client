@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://drp4jv1y6o7x3"]
 
-[ext_resource type="Script" uid="uid://cxgpm246fkbr5" path="res://scripts/1common/loading/loading_power.gd" id="1_eqbnf"]
-[ext_resource type="Texture2D" uid="uid://dc4cmgosgp2yt" path="res://assets/currency/loading/progress_background.svg" id="2_j2eub"]
-[ext_resource type="Texture2D" uid="uid://dnow512o4dgwy" path="res://assets/currency/loading/progress_fill.svg" id="3_2cq87"]
-[ext_resource type="Texture2D" uid="uid://d0b8urbayxban" path="res://assets/currency/loading/progress_over.svg" id="4_rqy2c"]
+[ext_resource type="Script" uid="uid://q624ak88nj2s" path="res://scripts/1common/loading/loading_power.gd" id="1_eqbnf"]
+[ext_resource type="Texture2D" uid="uid://blk2fi66wxu7r" path="res://assets/currency/loading/progress_background.svg" id="2_j2eub"]
+[ext_resource type="Texture2D" uid="uid://b5vg61155qc52" path="res://assets/currency/loading/progress_fill.svg" id="3_2cq87"]
+[ext_resource type="Texture2D" uid="uid://b81esupf5ctq2" path="res://assets/currency/loading/progress_over.svg" id="4_rqy2c"]
 
 [sub_resource type="FontVariation" id="FontVariation_oghxi"]
 

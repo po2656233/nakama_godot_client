@@ -14,21 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://c46s1r5ocgwv5" path="res://assets/hall/send.png" id="12_qyhqg"]
 [ext_resource type="PackedScene" uid="uid://b6c8g4q5rj3x4" path="res://scenes/1common/announcements/announcement_scene.tscn" id="14_7exda"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n31td"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_blend = true
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kw3vv"]
-bg_color = Color(0.0470588, 0.352941, 0.952941, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6s4h"]
+bg_color = Color(0.92549, 0.839216, 0.482353, 0.913725)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -51,8 +38,21 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6s4h"]
-bg_color = Color(0.92549, 0.839216, 0.482353, 0.913725)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kw3vv"]
+bg_color = Color(0.0470588, 0.352941, 0.952941, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n31td"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -91,17 +91,13 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fcaqj"]
-bg_color = Color(0.137255, 0.423529, 0.45098, 0.376471)
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fluuk"]
-bg_color = Color(0.137255, 0.423529, 0.45098, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oulow"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
 border_width_bottom = 10
-border_color = Color(0.454902, 0.898039, 0.764706, 1)
+border_color = Color(0.8, 0.8, 0.8, 0.203922)
 border_blend = true
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -121,18 +117,22 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oulow"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fluuk"]
+bg_color = Color(0.137255, 0.423529, 0.45098, 1)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
 border_width_bottom = 10
-border_color = Color(0.8, 0.8, 0.8, 0.203922)
+border_color = Color(0.454902, 0.898039, 0.764706, 1)
 border_blend = true
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fcaqj"]
+bg_color = Color(0.137255, 0.423529, 0.45098, 0.376471)
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84rx4"]
 draw_center = false
@@ -209,10 +209,10 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 icon = ExtResource("5_hrlg5")
 icon_alignment = 1
 expand_icon = true
@@ -239,10 +239,10 @@ custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "竞技场"
 
 [node name="btn_room" type="Button" parent="HBoxContainerHome"]
@@ -251,10 +251,10 @@ custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "联盟"
 
 [node name="tb_home" type="TextureButton" parent="HBoxContainerHome"]
@@ -275,10 +275,10 @@ custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "战绩"
 
 [node name="btn_ranking" type="Button" parent="HBoxContainerHome"]
@@ -287,10 +287,10 @@ custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "排行榜"
 
 [node name="btn_store" type="Button" parent="HBoxContainerHome"]
@@ -299,10 +299,10 @@ custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "商城"
 icon = ExtResource("6_bdbkb")
 expand_icon = true
@@ -376,102 +376,102 @@ size_flags_vertical = 0
 [node name="btn_homepage" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
-theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_fcaqj")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fcaqj")
 text = "主页"
 
 [node name="btn_herolist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
-theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "英雄列表"
 
 [node name="btn_matchlist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
-theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "赛事列表"
 
 [node name="btn_ranklist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
-theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "排行榜"
 
 [node name="btn_mygoods" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
-theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "我的物品"
 
 [node name="btn_convert" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
-theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "兑换"
 
 [node name="btn_rechange" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
-theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "充值"
 
 [node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer"]

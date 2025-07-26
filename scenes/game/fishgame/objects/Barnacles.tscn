@@ -35,7 +35,7 @@ vframes = 2
 frame = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Idle"
 libraries = {
-"": SubResource("AnimationLibrary_fupuh")
+&"": SubResource("AnimationLibrary_fupuh")
 }
+autoplay = "Idle"

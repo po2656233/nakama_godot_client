@@ -27,16 +27,6 @@ shadow_size = 10
 [sub_resource type="SystemFont" id="SystemFont_2knlu"]
 subpixel_positioning = 0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahplc"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_orn7s"]
-bg_color = Color(0.129412, 0.290196, 0.380392, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymw4y"]
-draw_center = false
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss6pv"]
 bg_color = Color(0.266667, 0.462745, 0.592157, 1)
 border_width_left = 5
@@ -48,8 +38,11 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5o8v3"]
-bg_color = Color(0.8, 0.501961, 0.133333, 0.968627)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymw4y"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulhag"]
+bg_color = Color(0.219608, 0.458824, 0.282353, 1)
 border_width_left = 10
 border_width_right = 10
 border_color = Color(0.8, 0.8, 0.8, 0)
@@ -57,8 +50,6 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-expand_margin_left = 8.0
-expand_margin_right = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceaav"]
 bg_color = Color(0.945098, 0.901961, 0.243137, 0.945098)
@@ -72,8 +63,8 @@ corner_radius_bottom_left = 10
 expand_margin_left = 5.0
 expand_margin_right = 5.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulhag"]
-bg_color = Color(0.219608, 0.458824, 0.282353, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5o8v3"]
+bg_color = Color(0.8, 0.501961, 0.133333, 0.968627)
 border_width_left = 10
 border_width_right = 10
 border_color = Color(0.8, 0.8, 0.8, 0)
@@ -81,6 +72,15 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_orn7s"]
+bg_color = Color(0.129412, 0.290196, 0.380392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahplc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sg1j"]
 bg_color = Color(0.176471, 0.380392, 0.498039, 1)
@@ -184,22 +184,18 @@ content_margin_right = 10.0
 content_margin_bottom = 10.0
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajf2a"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayyfq"]
-bg_color = Color(0.113725, 0.431373, 0.580392, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1efha"]
+bg_color = Color(0.145098, 0.341176, 0.286275, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.266667, 0.345098, 0.811765, 1)
+border_color = Color(0.607843, 0.623529, 0.607843, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-shadow_size = 10
+shadow_size = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfaqc"]
 bg_color = Color(0.321569, 0.419608, 0.913725, 1)
@@ -214,18 +210,22 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1efha"]
-bg_color = Color(0.145098, 0.341176, 0.286275, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayyfq"]
+bg_color = Color(0.113725, 0.431373, 0.580392, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.607843, 0.623529, 0.607843, 1)
+border_color = Color(0.266667, 0.345098, 0.811765, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-shadow_size = 5
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajf2a"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
 
 [node name="Chat" type="Control"]
 layout_mode = 3
@@ -260,18 +260,18 @@ offset_bottom = -65.0
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "社交场"
-theme_override_colors/font_hovered_color = Color(0, 0.458824, 0.745098, 1)
 theme_override_colors/font_selected_color = Color(1, 0.843137, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0.458824, 0.745098, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = SubResource("SystemFont_2knlu")
 theme_override_font_sizes/font_size = 35
-theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
-theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
-theme_override_styles/tabbar_background = SubResource("StyleBoxFlat_ymw4y")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ss6pv")
-theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
-theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
+theme_override_styles/tabbar_background = SubResource("StyleBoxFlat_ymw4y")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
 tab_alignment = 1
 current_tab = 0
 drag_to_rearrange_enabled = true
@@ -526,13 +526,13 @@ size_flags_horizontal = 3
 layout_mode = 2
 tooltip_text = "打开或关闭添加好友面板"
 mouse_default_cursor_shape = 2
-theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
-theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
 text = "好友面板"
 alignment = 1
@@ -579,8 +579,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 tooltip_text = "消息发送框"
-theme_override_colors/background_color = Color(0.0980392, 0.168627, 0.235294, 1)
 theme_override_colors/selection_color = Color(0.666667, 0.588235, 0.466667, 1)
+theme_override_colors/background_color = Color(0.0980392, 0.168627, 0.235294, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_52lde")
 placeholder_text = "请输入..."
 wrap_mode = 1
@@ -598,14 +598,14 @@ custom_minimum_size = Vector2(120, 55)
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "发送输入框文本至指定渠道"
-theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0, 0.866667, 0.964706, 1)
 theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ayyfq")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_1efha")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ayyfq")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
 text = "发送"
 
 [node name="light_switch" type="TextureButton" parent="MarginContainer/Panel"]

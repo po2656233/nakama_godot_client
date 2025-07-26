@@ -21,35 +21,36 @@ font_color = Color(0.533037, 0.533037, 0.533037, 1)
 [sub_resource type="SystemFont" id="SystemFont_ooq0r"]
 subpixel_positioning = 0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnmft"]
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omtad"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvtgn"]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqrgh"]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvtgn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omtad"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnmft"]
 draw_center = false
 
 [sub_resource type="SystemFont" id="SystemFont_2eegr"]
 subpixel_positioning = 0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85xwb"]
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78plf"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnayj"]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20rj2"]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnayj"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78plf"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85xwb"]
 draw_center = false
 
 [node name="MatchSuccess" type="Window"]
 process_mode = 3
+oversampling_override = 1.0
 title = "匹配成功"
 initial_position = 2
 size = Vector2i(550, 350)
@@ -119,15 +120,15 @@ alignment = 1
 [node name="AcceptButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
 custom_minimum_size = Vector2(135, 65)
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.972549, 0.976471, 0, 1)
 theme_override_colors/font_color = Color(0.0194218, 0.654311, 0.588068, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.882353, 0.882353, 1)
+theme_override_colors/font_hover_color = Color(0.972549, 0.976471, 0, 1)
 theme_override_fonts/font = SubResource("SystemFont_ooq0r")
 theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxFlat_cnmft")
-theme_override_styles/hover = SubResource("StyleBoxFlat_omtad")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_uqrgh")
 theme_override_styles/normal = SubResource("StyleBoxFlat_vvtgn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uqrgh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_omtad")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cnmft")
 text = "接受"
 icon = ExtResource("2_fc1y7")
 flat = true
@@ -140,10 +141,10 @@ theme_override_colors/font_color = Color(0.566092, 1.38376e-06, 3.36915e-07, 1)
 theme_override_colors/font_pressed_color = Color(0.470076, 0.470076, 0.470076, 1)
 theme_override_fonts/font = SubResource("SystemFont_2eegr")
 theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxFlat_85xwb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_78plf")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_20rj2")
 theme_override_styles/normal = SubResource("StyleBoxFlat_tnayj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_20rj2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_78plf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_85xwb")
 text = "拒绝"
 icon = ExtResource("2_fc1y7")
 flat = true

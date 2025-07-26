@@ -6,11 +6,8 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6x7xj"]
 bg_color = Color(0.490196, 0.631373, 0.635294, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xocxj"]
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pa1nx"]
-bg_color = Color(0.644392, 0.83418, 0.585831, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkh8y"]
+bg_color = Color(0.959851, 0.403935, 0.134559, 1)
 corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
@@ -23,21 +20,24 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkh8y"]
-bg_color = Color(0.959851, 0.403935, 0.134559, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pa1nx"]
+bg_color = Color(0.644392, 0.83418, 0.585831, 1)
 corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vifji"]
-bg_color = Color(0.776471, 0.741176, 0.278431, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xocxj"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85iih"]
+bg_color = Color(0.101961, 0.768627, 0.615686, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uml1q"]
 bg_color = Color(0.341176, 0.576471, 0.341176, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85iih"]
-bg_color = Color(0.101961, 0.768627, 0.615686, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vifji"]
+bg_color = Color(0.776471, 0.741176, 0.278431, 1)
 
 [node name="MailDetail" type="Control"]
 layout_mode = 3
@@ -79,10 +79,10 @@ layout_mode = 2
 [node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_xocxj")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pa1nx")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_c3tkr")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hkh8y")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_c3tkr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pa1nx")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xocxj")
 icon = ExtResource("2_hkh8y")
 icon_alignment = 1
 expand_icon = true
@@ -119,9 +119,9 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/hover = SubResource("StyleBoxFlat_vifji")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_uml1q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_85iih")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uml1q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vifji")
 text = "领取奖励"
 
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

@@ -45,8 +45,8 @@ shader_parameter/thickness = 0.1
 shader_parameter/progress = 0.0
 shader_parameter/glow_strength = 0.5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_80lqc"]
-bg_color = Color(0.430008, 0.585536, 0.94734, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8v4p"]
+bg_color = Color(0.137255, 0.486275, 0.678431, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -56,6 +56,9 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_681q7"]
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g306g"]
 bg_color = Color(0.995617, 0.784119, 0.514017, 1)
@@ -70,11 +73,8 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_681q7"]
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8v4p"]
-bg_color = Color(0.137255, 0.486275, 0.678431, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_80lqc"]
+bg_color = Color(0.430008, 0.585536, 0.94734, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -268,10 +268,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
 theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_681q7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_u8v4p")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_681q7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
 text = "开始匹配"
 
 [node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
@@ -280,10 +280,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
 theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_681q7")
 theme_override_styles/normal = SubResource("StyleBoxFlat_u8v4p")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_681q7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
 text = "取消"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

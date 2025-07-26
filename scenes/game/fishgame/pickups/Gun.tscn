@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://btrrj3ou03vi1" path="res://assets/game/fishgame/sprites/gun.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://bmnok1dwyv3cl" path="res://scenes/game/fishgame/pickups/Pickup.tscn" id="2"]
-[ext_resource type="Script" uid="uid://j8g0ba6mqput" path="res://scripts/game/fishgame/pickups/Gun.gd" id="3"]
+[ext_resource type="Script" uid="uid://duduhreoh56fw" path="res://scripts/game/fishgame/pickups/Gun.gd" id="3"]
 [ext_resource type="AudioStream" uid="uid://gdu4rgvlqmh6" path="res://assets/game/fishgame/sounds/shoot.ogg" id="4"]
-[ext_resource type="Script" uid="uid://bu2v7cyp1yor7" path="res://scripts/game/fishgame/components/Sounds.gd" id="5"]
+[ext_resource type="Script" uid="uid://cs7o2qxhfol4o" path="res://scripts/game/fishgame/components/Sounds.gd" id="5"]
 [ext_resource type="AudioStream" uid="uid://d3hgd7crqibrc" path="res://assets/game/fishgame/sounds/empty.wav" id="6"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
@@ -131,10 +131,10 @@ shape = SubResource("2")
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
-autoplay = "Idle"
 libraries = {
-"": SubResource("AnimationLibrary_j5owa")
+&"": SubResource("AnimationLibrary_j5owa")
 }
+autoplay = "Idle"
 
 [node name="Sounds" type="Node" parent="." index="8"]
 script = ExtResource("5")
@@ -142,11 +142,9 @@ script = ExtResource("5")
 [node name="Shoot" type="AudioStreamPlayer" parent="Sounds" index="0"]
 stream = ExtResource("4")
 volume_db = 5.0
-bus = &"Sound Effects"
 
 [node name="Empty" type="AudioStreamPlayer" parent="Sounds" index="1"]
 stream = ExtResource("6")
-bus = &"Sound Effects"
 
 [node name="HeldPosition" parent="." index="9"]
 position = Vector2(-17, 0)

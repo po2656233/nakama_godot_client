@@ -7,14 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://c3nkmrq40xd4p" path="res://assets/hall/btn_jia _xuant.png" id="4_o61lp"]
 [ext_resource type="Texture2D" uid="uid://iuonmkrhiqvo" path="res://assets/hall/btn_jia_enx.png" id="5_g27v3"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03han"]
-content_margin_left = 20.0
-bg_color = Color(0.0666667, 0.0980392, 0.184314, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x2pc1"]
 content_margin_left = 20.0
 bg_color = Color(0.120345, 0.17538, 0.120918, 1)
@@ -23,11 +15,19 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mdyjj"]
-bg_color = Color(0.25098, 0.458824, 0.223529, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03han"]
+content_margin_left = 20.0
+bg_color = Color(0.0666667, 0.0980392, 0.184314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dsmle"]
 bg_color = Color(0.0156863, 0.34902, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mdyjj"]
+bg_color = Color(0.25098, 0.458824, 0.223529, 1)
 
 [node name="Firends" type="Control"]
 layout_mode = 3
@@ -61,8 +61,8 @@ grow_horizontal = 2
 [node name="LineEdit_find" type="LineEdit" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_03han")
 theme_override_styles/normal = SubResource("StyleBoxFlat_x2pc1")
+theme_override_styles/focus = SubResource("StyleBoxFlat_03han")
 placeholder_text = "查找"
 
 [node name="tb_add" type="TextureButton" parent="Panel/HBoxContainer"]
@@ -88,14 +88,14 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_colors/font_selected_color = Color(0.776471, 0.862745, 0.729412, 1)
 theme_override_colors/font_hovered_color = Color(0.968627, 0.807843, 0, 1)
+theme_override_colors/font_selected_color = Color(0.776471, 0.862745, 0.729412, 1)
+theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 2
 theme_override_constants/line_separation = 10
 theme_override_constants/icon_margin = 10
-theme_override_constants/h_separation = 20
-theme_override_styles/focus = SubResource("StyleBoxFlat_mdyjj")
 theme_override_styles/panel = SubResource("StyleBoxFlat_dsmle")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mdyjj")
 select_mode = 1
 script = ExtResource("3_qwje4")
 

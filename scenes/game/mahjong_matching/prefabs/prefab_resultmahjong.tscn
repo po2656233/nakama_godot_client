@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cjtqk3u6sselg"]
 
-[ext_resource type="Script" uid="uid://cwg02lgp8rxq4" path="res://scripts/game/mahjong_matching/prefabs/prefab_resultmahjong.gd" id="1_ex5xt"]
+[ext_resource type="Script" uid="uid://bab7k4u4i76e1" path="res://scripts/game/mahjong_matching/prefabs/prefab_resultmahjong.gd" id="1_ex5xt"]
 [ext_resource type="Texture2D" uid="uid://cgi0sdge22ps0" path="res://assets/game/mahjong_matching/image/texture/01.svg" id="2_y2c3i"]
 
 [node name="Prefab-Resultmahjong" type="Node2D"]

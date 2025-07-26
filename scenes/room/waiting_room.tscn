@@ -13,26 +13,13 @@ corner_radius_bottom_left = 20
 shadow_color = Color(0, 0, 0, 0.2)
 shadow_size = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8i22"]
-bg_color = Color(0.0610417, 0.474252, 0.55323, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io71a"]
+bg_color = Color(0.342197, 0.187184, 0.187367, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.290061, 0.630606, 0.415877, 1)
-border_blend = true
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxmux"]
-bg_color = Color(0.0742709, 0.00687578, 0.178601, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.255659, 0.255659, 0.255659, 1)
+border_color = Color(0.237469, 0.271058, 0.306106, 1)
 border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -52,13 +39,26 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io71a"]
-bg_color = Color(0.342197, 0.187184, 0.187367, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxmux"]
+bg_color = Color(0.0742709, 0.00687578, 0.178601, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.237469, 0.271058, 0.306106, 1)
+border_color = Color(0.255659, 0.255659, 0.255659, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8i22"]
+bg_color = Color(0.0610417, 0.474252, 0.55323, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.290061, 0.630606, 0.415877, 1)
 border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -166,10 +166,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(200, 58)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/focus = SubResource("StyleBoxFlat_m8i22")
-theme_override_styles/hover = SubResource("StyleBoxFlat_oxmux")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_6rmcv")
 theme_override_styles/normal = SubResource("StyleBoxFlat_io71a")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6rmcv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_oxmux")
+theme_override_styles/focus = SubResource("StyleBoxFlat_m8i22")
 text = "取消等待"
 
 [node name="LoadingScreen" parent="." instance=ExtResource("3_h1ti0")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bofkhvgxv0kij"]
 
-[ext_resource type="Script" uid="uid://cxau4wqquwkyl" path="res://scripts/clublist/MemberItem.gd" id="1_4qkrf"]
+[ext_resource type="Script" uid="uid://dr1wxj4psvfef" path="res://scripts/clublist/MemberItem.gd" id="1_4qkrf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xk6vy"]
 bg_color = Color(0.14902, 0.227451, 0.34902, 1)
@@ -88,10 +88,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_7xyxm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7xyxm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_7xyxm")
 theme_override_styles/normal = SubResource("StyleBoxFlat_xk6vy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7xyxm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7xyxm")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7xyxm")
 flat = true
 
 [connection signal="pressed" from="PanelButton" to="." method="_on_panel_button_pressed"]

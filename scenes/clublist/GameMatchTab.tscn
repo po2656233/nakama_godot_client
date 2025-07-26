@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://c6d2a4cgdqdew"]
 
-[ext_resource type="Script" uid="uid://c15lkjeubdqij" path="res://scripts/clublist/GameMatchTab.gd" id="1_22nfy"]
+[ext_resource type="Script" uid="uid://ca6oi3mnp7wgf" path="res://scripts/clublist/GameMatchTab.gd" id="1_22nfy"]
 [ext_resource type="FontFile" uid="uid://d1ykbo1h8utc1" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="2_o8v82"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryjag"]
@@ -63,13 +63,13 @@ corner_radius_bottom_left = 6
 expand_margin_left = 5.0
 expand_margin_right = 5.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uutlr"]
-draw_center = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vn5un"]
+bg_color = Color(0.101961, 0.160784, 0.243137, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0.8, 0.8, 0.8, 0.380392)
+border_color = Color(0.580392, 0.168627, 0.184314, 0.745098)
 border_blend = true
 corner_radius_top_left = 6
 corner_radius_top_right = 6
@@ -78,13 +78,13 @@ corner_radius_bottom_left = 6
 expand_margin_left = 5.0
 expand_margin_right = 5.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vn5un"]
-bg_color = Color(0.101961, 0.160784, 0.243137, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uutlr"]
+draw_center = false
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0.580392, 0.168627, 0.184314, 0.745098)
+border_color = Color(0.8, 0.8, 0.8, 0.380392)
 border_blend = true
 corner_radius_top_left = 6
 corner_radius_top_right = 6
@@ -191,9 +191,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_o8v82")
 theme_override_font_sizes/font_size = 20
-theme_override_styles/hover = SubResource("StyleBoxFlat_o8v82")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_o8v82")
 theme_override_styles/normal = SubResource("StyleBoxFlat_o8v82")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o8v82")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o8v82")
 text = "加入匹配队列"
 
 [node name="LeaveQueueButton" type="Button" parent="VBoxContainer/MarginContainer3/OPContainer"]
@@ -202,10 +202,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_o8v82")
 theme_override_font_sizes/font_size = 20
-theme_override_styles/disabled = SubResource("StyleBoxFlat_uutlr")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vn5un")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vn5un")
 theme_override_styles/normal = SubResource("StyleBoxFlat_vn5un")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vn5un")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vn5un")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_uutlr")
 text = "离开匹配队列"
 
 [node name="MatchAnimationParticles" type="CPUParticles2D" parent="."]
