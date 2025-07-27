@@ -1,17 +1,57 @@
 extends Node2D
 
-const CHESS_POSITION = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
+@onready var b_chessposition: Node2D = $b_chessposition
+@onready var player_move: Sprite2D = $b_chessposition/player_move
 
-var V_CHESS_POSITION:chess_position
-
-
+@onready var luozi: AudioStreamPlayer = $luozi
+@onready var chi: AudioStreamPlayer = $chi
+@onready var cuowu: AudioStreamPlayer = $cuowu
 @onready var chessposition: Node2D = $chessposition
 @onready var jiangjun_play: AudioStreamPlayer = $jiangjun
+
+@onready var over: CanvasLayer = %over
+@onready var label: Label = $over/Label
+
+const CHESS_POSITION = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
+
+const PLAYER_CHESS_C = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_c.tscn")
+const PLAYER_CHESS_J = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_j.tscn")
+const PLAYER_CHESS_M = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_m.tscn")
+const PLAYER_CHESS_P = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_p.tscn")
+const PLAYER_CHESS_S = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_s.tscn")
+const PLAYER_CHESS_X = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_x.tscn")
+const PLAYER_CHESS_Z = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_z.tscn")
+
+var y0=[1,3,6,5,2,5,6,3,1]
+var y1=[0,0,0,0,0,0,0,0,0]
+var y2=[0,4,0,0,0,0,0,4,0]
+var y3=[7,0,7,0,7,0,7,0,7]
+var y4=[0,0,0,0,0,0,0,0,0]
+var y5=[0,0,0,0,0,0,0,0,0]
+var y6=[7,0,7,0,7,0,7,0,7]
+var y7=[0,4,0,0,0,0,0,4,0]
+var y8=[0,0,0,0,0,0,0,0,0]
+var y9=[1,3,6,5,2,5,6,3,1]
+
+var size1:int=58
+
+var start_player:int=1
+var V_chess:chess_position
+var is_waiting_for_opponent: bool = false
+var game_ended: bool = false  # 游戏是否已结束（绝杀或困毙）
+
+var start_x:int=0
+var start_y:int=0
+
+var V_CHESS_POSITION:chess_position
 
 var chess_position_array=[]
 var pre_chess_black:chess_position
 var pre_chess_red:chess_position
-var size1:int=58
+
+
+
+
 func _ready() -> void:
 	# SettingsManager.show_settings() 
 	add_position()
@@ -33,29 +73,7 @@ func add_position()->void:
 				V_CHESS_POSITION.chess_color=1
 			chess_position_array_.append(V_CHESS_POSITION)
 		chess_position_array.append(chess_position_array_)
-
-
-
-const PLAYER_CHESS_C = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_c.tscn")
-const PLAYER_CHESS_J = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_j.tscn")
-const PLAYER_CHESS_M = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_m.tscn")
-const PLAYER_CHESS_P = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_p.tscn")
-const PLAYER_CHESS_S = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_s.tscn")
-const PLAYER_CHESS_X = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_x.tscn")
-const PLAYER_CHESS_Z = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_z.tscn")
-
-var y0=[1,3,6,5,2,5,6,3,1]
-var y1=[0,0,0,0,0,0,0,0,0]
-var y2=[0,4,0,0,0,0,0,4,0]
-var y3=[7,0,7,0,7,0,7,0,7]
-var y4=[0,0,0,0,0,0,0,0,0]
-var y5=[0,0,0,0,0,0,0,0,0]
-var y6=[7,0,7,0,7,0,7,0,7]
-var y7=[0,4,0,0,0,0,0,4,0]
-var y8=[0,0,0,0,0,0,0,0,0]
-var y9=[1,3,6,5,2,5,6,3,1]
-
-
+	pass
 
 func add_player_chess()->void:
 	add_player_chess_array(y0)
@@ -68,13 +86,7 @@ func add_player_chess()->void:
 	add_player_chess_array(y7)
 	add_player_chess_array(y8)
 	add_player_chess_array(y9)
-
-	
-var start_x:int=0
-var start_y:int=0
-
-
-@onready var b_chessposition: Node2D = $b_chessposition
+	pass
 
 func add_player_chess_array(chess:Array)->void:
 	start_x=0
@@ -87,6 +99,7 @@ func add_player_chess_array(chess:Array)->void:
 			chess_position_array[start_x][start_y].play=results
 		start_x+=1
 	start_y+=1
+	pass
 
 func reture_chess(chess:int):
 	match chess:
@@ -104,21 +117,16 @@ func reture_chess(chess:int):
 			return PLAYER_CHESS_X.instantiate()
 		6:
 			return PLAYER_CHESS_Z.instantiate()
-	
+	pass
 
-@onready var player_move: Sprite2D = $b_chessposition/player_move
-
-@onready var luozi: AudioStreamPlayer = $luozi
-@onready var chi: AudioStreamPlayer = $chi
-@onready var cuowu: AudioStreamPlayer = $cuowu
-
-
-
-var start_player:int=1
-var V_chess:chess_position
-var is_waiting_for_opponent: bool = false
 
 func move(chess:chess_position):
+	# 检查游戏是否已结束（绝杀或困毙）
+	if game_ended:
+		PopupManager.show_dynamic("游戏已结束，请重新开始！")
+		cuowu.play()
+		return
+	
 	# 只有当前方才能操作
 	if V_chess == null:
 		if chess.play != null:
@@ -147,7 +155,13 @@ func move(chess:chess_position):
 					PopupManager.show_dynamic("将帅不能面对面！")
 					cuowu.play()
 					return
+				# 先检查移动是否合法
 				if V_chess.play.move(V_chess, chess, chess_position_array):
+					# 检查移动后是否会导致自己被将军
+					if will_cause_self_check(V_chess, chess):
+						PopupManager.show_dynamic("被将军!!")
+						cuowu.play()
+						return
 					if chess.play and chess.play.has_method("game_over") and chess.play.game_over():
 						game_over()
 					chess.play.queue_free()
@@ -155,7 +169,7 @@ func move(chess:chess_position):
 					chi.play()
 					if is_kings_facing():
 						_undo_last_move()
-						PopupManager.show_dynamic("走子后将帅不能面对面！")
+						PopupManager.show_dynamic("将帅面对面了！")
 						cuowu.play()
 						return
 					check_xiangqi_status()
@@ -172,23 +186,72 @@ func move(chess:chess_position):
 				PopupManager.show_dynamic("将帅不能见面！")
 				cuowu.play()
 				return
+			# 先检查移动是否合法
 			if V_chess.play.move(V_chess, chess, chess_position_array):
+				# 检查移动后是否会导致自己被将军
+				if will_cause_self_check(V_chess, chess):
+					PopupManager.show_dynamic("被将军！")
+					cuowu.play()
+					return
 				_move_end(chess)
 				luozi.play()
 				if is_kings_facing():
 					_undo_last_move()
-					PopupManager.show_dynamic("走子后将帅不能面对面！")
+					PopupManager.show_dynamic("将帅不能面对面！")
 					cuowu.play()
 					return
 				check_xiangqi_status()
 			else:
 				cuowu.play()
+	pass
+
+
+# 判断移动是否会导致自己被将军
+func will_cause_self_check(from_pos: chess_position, to_pos: chess_position) -> bool:
+	# 保存目标位置的原始棋子
+	var original_piece = to_pos.play
+	
+	# 模拟移动：将棋子从起始位置移动到目标位置
+	to_pos.play = from_pos.play
+	from_pos.play = null
+	
+	# 检查移动后是否将帅面对面
+	if is_kings_facing():
+		# 恢复原始状态
+		from_pos.play = to_pos.play
+		to_pos.play = original_piece
+		return true
+	
+	# 找到当前玩家的将/帅位置
+	var king_pos = find_king_pos(start_player)
+	var in_check = false
+	
+	# 检查对方是否有任何棋子可以攻击到我方将/帅
+	if king_pos:
+		for x in range(9):
+			for y in range(10):
+				var pos = chess_position_array[x][y]
+				# 如果是对方的棋子
+				if pos.play and pos.play.chess_color != start_player:
+					# 检查该棋子是否可以攻击到我方将/帅
+					if pos.play.move(pos, king_pos, chess_position_array):
+						in_check = true
+						break
+			if in_check:
+				break
+	
+	# 恢复原始状态
+	from_pos.play = to_pos.play
+	to_pos.play = original_piece
+	
+	return in_check
 
 func set_pre_move(pre_chess,new_chess):
 	if pre_chess:
 		V_chess = pre_chess
 		player_move.position = pre_chess.position
 	pre_chess = new_chess
+	pass
 
 
 func _move_end(chess:chess_position)->void:
@@ -270,10 +333,6 @@ func jump_to_best_piece_for_player_move():
 	V_chess = null
 	PopupManager.show_dynamic("已决出胜负")
 
-
-@onready var over: CanvasLayer = %over
-@onready var label: Label = $over/Label
-
 func game_over()->void:
 	over.visible=true
 	if start_player==1:
@@ -292,20 +351,24 @@ func _on_reback_btn_pressed() -> void:
 	
 	pass # Replace with function body.
 
-# 检查“将军”“绝杀”“困毙”状态
+# 检查"将军""绝杀""困毙"状态
 func check_xiangqi_status():
 	if is_checkmate(1-start_player):
-		PopupManager.show_dynamic("绝杀！")
+		game_ended = true  # 设置游戏结束状态
+		PopupManager.show_dynamic("绝杀！游戏结束")
+		game_over()
 		return false
 	elif is_check(1-start_player):
 		jiangjun_play.play()
-		PopupManager.show_dynamic("将军！",300)
+		PopupManager.show_dynamic("将军！", 300)
 	elif is_stalemate(1-start_player):
-		PopupManager.show_dynamic("困毙！")
+		game_ended = true  # 设置游戏结束状态
+		PopupManager.show_dynamic("困毙！游戏结束")
+		game_over()
 		return false
 	return true
 
-# 判断“将帅不能相见”
+# 判断"将帅不能相见"
 func is_facing_kings(start_pos, end_pos) -> bool:
 	# 找到两个“将/帅”所在列
 	var j1 = null
@@ -339,55 +402,109 @@ func is_facing_kings(start_pos, end_pos) -> bool:
 				return true
 	return false
 
-# 判断“将军”
+# 判断"将军"
 func is_check(enemy_color:int) -> bool:
 	var king_pos = find_king_pos(enemy_color)
 	if not king_pos:
 		return false
+	# 检查对方棋子是否能攻击到己方将/帅
+	var attacker_color = 1 - enemy_color  # 攻击方颜色
 	for x in range(9):
 		for y in range(10):
 			var pos = chess_position_array[x][y]
-			if pos.play and pos.play.chess_color == start_player:
+			if pos.play and pos.play.chess_color == attacker_color:
 				if pos.play.move(pos, king_pos, chess_position_array):
 					return true
 	return false
 
-# 判断“绝杀”
+# 判断"绝杀"
 func is_checkmate(enemy_color:int) -> bool:
 	if not is_check(enemy_color):
 		return false
-	# 检查对方所有棋子所有走法，是否有能解将的
+
+	print("检测绝杀：被将军方颜色=", enemy_color)
+	# 检查被将军方是否能通过任何移动解将
 	for x in range(9):
 		for y in range(10):
-			var pos = chess_position_array[x][y]
-			if pos.play and pos.play.chess_color == enemy_color:
-				for dx in range(9):
-					for dy in range(10):
-						var target = chess_position_array[dx][dy]
-						if pos.play.move(pos, target, chess_position_array):
-							# 模拟走法
-							var backup = target.play
-							target.play = pos.play
-							pos.play = null
-							var still_check = is_check(enemy_color)
-							# 撤销
-							pos.play = target.play
-							target.play = backup
-							if not still_check:
-								return false
+			var piece_pos = chess_position_array[x][y]
+			if piece_pos.play and piece_pos.play.chess_color == enemy_color:
+				for tx in range(9):
+					for ty in range(10):
+						var target_pos = chess_position_array[tx][ty]
+						if piece_pos == target_pos:
+							continue  # 跳过原地不动
+
+						# 保存原始状态
+						var original_piece = piece_pos.play
+						var original_target = target_pos.play
+
+						# 检查移动是否合法（不能吃自己的棋子）
+						if target_pos.play and target_pos.play.chess_color == enemy_color:
+							continue  # 不能吃自己的棋子
+						
+						if not piece_pos.play.move(piece_pos, target_pos, chess_position_array):
+							continue  # 移动不合法，跳过
+
+						# 模拟移动
+						target_pos.play = original_piece
+						piece_pos.play = null
+
+						# 检查移动后是否仍然被将军
+						var still_in_check = is_check(enemy_color)
+						
+						# 检查是否造成将帅面对面（这也是不合法的）
+						if not still_in_check:
+							still_in_check = is_kings_facing()
+
+						# 恢复原始状态
+						piece_pos.play = original_piece
+						target_pos.play = original_target
+
+						# 如果存在一个移动可以解将，则不是绝杀
+						if not still_in_check:
+							print("找到解将移动：", piece_pos.V_position, " -> ", target_pos.V_position)
+							return false
+
+	# 如果所有可能的移动都不能解将，则为绝杀
+	print("绝杀确认：所有移动都无法解将")
 	return true
 
-# 判断“困毙”
+# 判断"困毙"
 func is_stalemate(enemy_color:int) -> bool:
+	# 困毙：未被将军但无法进行任何合法移动
+	if is_check(enemy_color):
+		return false
+	
+	# 检查是否能进行任何合法移动
 	for x in range(9):
 		for y in range(10):
-			var pos = chess_position_array[x][y]
-			if pos.play and pos.play.chess_color == enemy_color:
-				for dx in range(9):
-					for dy in range(10):
-						var target = chess_position_array[dx][dy]
-						if pos.play.move(pos, target, chess_position_array):
-							return false
+			var piece_pos = chess_position_array[x][y]
+			# 遍历所有当前玩家的棋子
+			if piece_pos.play and piece_pos.play.chess_color == enemy_color:
+				# 尝试这个棋子的所有可能移动
+				for tx in range(9):
+					for ty in range(10):
+						var target_pos = chess_position_array[tx][ty]
+						# 检查是否可以移动到目标位置
+						if piece_pos.play.move(piece_pos, target_pos, chess_position_array):
+							# 模拟移动
+							var original_target = target_pos.play
+							target_pos.play = piece_pos.play
+							var original_piece = piece_pos.play
+							piece_pos.play = null
+							
+							# 检查移动后是否被将军
+							var would_be_in_check = is_check(enemy_color) or is_kings_facing()
+							
+							# 恢复原状
+							piece_pos.play = original_piece
+							target_pos.play = original_target
+							
+							# 如果存在一个合法移动（不会被将军），则不是困毙
+							if not would_be_in_check:
+								return false
+								
+	# 如果无法进行任何合法移动，则为困毙
 	return true
 
 # 查找“将/帅”位置
@@ -487,3 +604,4 @@ func set_player_move_to_center_pawn(color:int):
 					player_move.visible = true
 					player_move.position = pos.position
 					return
+	pass
