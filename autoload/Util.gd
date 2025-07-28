@@ -24,13 +24,21 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 	# 验证方法是否存在
 	if not caller or not caller.has_method(method_name):
 		push_error("Method not found: %s" % method_name)
-		if on_failure: on_failure.call("Method not found")
+		if on_failure and on_failure.is_valid(): on_failure.call("Method not found")
+		return false
+
+	# 验证回调函数是否有效
+	if not on_success or not on_success.is_valid():
+		push_error("Invalid on_success callback")
+		return false
+	if not on_failure or not on_failure.is_valid():
+		push_error("Invalid on_failure callback")
 		return false
 
 	# 执行异步调用
 	var task = caller.callv(method_name, args)
 	if not (task is Object) or !task.has_method("is_valid") or !task.is_valid():
-		if on_failure: on_failure.call("Invalid async task")
+		if on_failure and on_failure.is_valid(): on_failure.call("Invalid async task")
 		return false
 
 	# 使用协程处理异步结果
@@ -40,7 +48,7 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 	if result != null and result.has_method("is_exception") and result.is_exception():
 		# 有异常反馈，也被认为是执行成功了
 		var errMsg = result.get_exception().message
-		if on_failure: on_failure.call(errMsg)
+		if on_failure and on_failure.is_valid(): on_failure.call(errMsg)
 		if errMsg in Errors.NetworkErrors: # 网络异常,则视为执行失败
 			if inqueue:
 				var msg_id = reliable_queue.EnqueueMessage(method_name,args,caller,on_success, on_failure)
@@ -48,7 +56,7 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 					print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
 			print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
 		return false
-	if on_success and result != null: on_success.call(result)
+	if on_success and on_success.is_valid(): on_success.call(result)
 	return true
 
 # 改进的安全连接函数

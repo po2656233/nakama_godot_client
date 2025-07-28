@@ -22,6 +22,7 @@ var _reconnect_attempts := 0
 var _last_uri := ""
 var _last_timeout := 30
 var _reconnect_timer:Timer= null
+var _token_expired_for_reconnect := false
 
 # token刷新相关
 var _refresh_session_func: Callable
@@ -74,6 +75,7 @@ func _on_need_reconnect(token_expired := false):
 		return
 	_reconnect_attempts += 1
 	_reconnect_delay = min(_reconnect_delay * 2, _max_reconnect_delay)
+	_token_expired_for_reconnect = token_expired
 	print("Socket断开，%d秒后自动重连（第%d次）...%s" % [_reconnect_delay, _reconnect_attempts,token_expired])
 	if _reconnect_timer:
 		_reconnect_timer.queue_free()
@@ -81,24 +83,24 @@ func _on_need_reconnect(token_expired := false):
 	_reconnect_timer.one_shot = true
 	_reconnect_timer.wait_time = _reconnect_delay
 	add_child(_reconnect_timer)
-	_reconnect_timer.timeout.connect(
-		func():
-			if token_expired and _refresh_session_func != null:
-				print("检测到token过期，自动刷新session...")
-				var ret = await _refresh_session_func.call()
-				if ret and ret.token:
-					print("重组URL")
-					var token_str = "&token="
-					var uris = _last_uri.split(token_str)
-					if uris.size()>1:
-						uris[1] = ret.token
-						_last_uri = uris[0]+token_str+uris[1]
-						print("重组URL",_last_uri)
-					pass
-				# 刷新session后，_last_uri 需要被外部更新为新token的uri
-			_do_connect()
-	)
+	_reconnect_timer.timeout.connect(_on_reconnect_timer_timeout)
 	_reconnect_timer.start()
+
+func _on_reconnect_timer_timeout():
+	if not is_instance_valid(self):
+		return
+	if _token_expired_for_reconnect and _refresh_session_func != null:
+		print("检测到token过期，自动刷新session...")
+		var ret = await _refresh_session_func.call()
+		if ret and ret.token:
+			print("重组URL")
+			var token_str = "&token="
+			var uris = _last_uri.split(token_str)
+			if uris.size()>1:
+				uris[1] = ret.token
+				_last_uri = uris[0]+token_str+uris[1]
+				print("重组URL",_last_uri)
+	_do_connect()
 
 func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
 	if _ws.get_ready_state() == WebSocketPeer.STATE_OPEN:

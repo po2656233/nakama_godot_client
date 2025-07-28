@@ -212,10 +212,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -132.0
+offset_left = -152.0
 offset_top = 10.0
-offset_right = 133.0
-offset_bottom = 575.0
+offset_right = 153.0
+offset_bottom = 556.0
 grow_horizontal = 2
 theme_override_constants/separation = 25
 
@@ -253,14 +253,15 @@ size_flags_vertical = 4
 color = Color(0.538823, 0.436949, 0.762096, 1)
 
 [node name="VSplitContainer" type="VSplitContainer" parent="Panel/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 25
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 25
+theme_override_constants/separation = 65
+alignment = 1
 
 [node name="StartButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(120, 60)
