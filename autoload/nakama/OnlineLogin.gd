@@ -181,6 +181,8 @@ func _on_login_fail(msg):
 		msg = "登录会话已过期，请重新登录"
 	elif msg == "Invalid credentials.":
 		msg = "账号或密码错误，请检查后重试"
+	elif msg == "User account not found.":
+		msg = "该账号未注册"
 	elif msg == "":
 		msg = "登录失败，请稍后重试"
 	PopupManager.show_dynamic(msg)
