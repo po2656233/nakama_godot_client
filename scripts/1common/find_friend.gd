@@ -19,6 +19,7 @@ func _ready() -> void:
 	# 取消窗口拖动
 	WindowDrag.unregister_drag_zone(self)
 	_search_box.placeholder_text = placeholder_text
+	$Panel/ScrollContainer.focus_mode = Control.FOCUS_NONE
 	# Create the popup menu
 	popup_menu = PopupMenu.new()
 	popup_menu.set_size(Vector2(20, 10))
@@ -78,7 +79,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 			var texture:Texture2D
 			if user.avatar_url:
 				texture = await Util.load_texture_async(user.avatar_url)
-			# var index = _list.add_item_with_buttons(user.username,texture,"添加",Callable(Network,"add_friends_async").bind(user.id))
+			#var index = _list.add_item_with_buttons(user.username,texture,"添加",Callable(Network,"add_friends_async").bind(user.id))
 			var index = _list.add_item(user.username,texture)
 			if index != -1:
 				_list.set_item_metadata(index,user)

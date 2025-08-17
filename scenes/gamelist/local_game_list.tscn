@@ -124,7 +124,6 @@ disabled = true
 text = "下一页 ▶"
 
 [node name="FooterContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 20
 
