@@ -43,13 +43,17 @@ draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulhag"]
 bg_color = Color(0.219608, 0.458824, 0.282353, 1)
+draw_center = false
 border_width_left = 10
 border_width_right = 10
 border_color = Color(0.8, 0.8, 0.8, 0)
+border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_right = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceaav"]
 bg_color = Color(0.945098, 0.901961, 0.243137, 0.945098)
@@ -273,10 +277,11 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
 theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 drag_to_rearrange_enabled = true
 
 [node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -408,7 +413,7 @@ placeholder_text = "查找俱乐部"
 isClub = true
 
 [node name="Panel_clubs" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
-custom_minimum_size = Vector2(255, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
@@ -427,7 +432,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -506,7 +510,7 @@ size_flags_horizontal = 3
 placeholder_text = "输入用户名(查找)"
 
 [node name="Panel_friends" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends"]
-custom_minimum_size = Vector2(255, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0

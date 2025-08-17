@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://duk1crphy5j8f"]
+[gd_scene load_steps=10 format=3 uid="uid://duk1crphy5j8f"]
 
 [ext_resource type="Script" uid="uid://b8fwefc1knge1" path="res://scripts/1common/find_friend.gd" id="1_54668"]
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://themes/chat.tres" id="2_a7bd4"]
@@ -39,30 +39,6 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ipxp4"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pihue"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.75)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 0.75)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-expand_margin_left = 4.0
-expand_margin_top = 4.0
-expand_margin_right = 4.0
-expand_margin_bottom = 4.0
 
 [node name="Firends" type="Control"]
 layout_mode = 3
@@ -119,8 +95,6 @@ offset_right = -14.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_ipxp4")
-theme_override_styles/focus = SubResource("StyleBoxFlat_pihue")
 
 [node name="ItemList" type="ItemList" parent="Panel/ScrollContainer"]
 layout_mode = 2
