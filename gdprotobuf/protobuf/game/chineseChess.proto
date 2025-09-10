@@ -1,0 +1,100 @@
+syntax = "proto3";
+option go_package = "/game";
+package pb;
+import "common/baseinfo.proto";
+// 先由房主发起规则，双方确立规则后，再进行游戏。
+// 玩家信息(刚入场时,只有座位号和id)
+message ChineseChessPlayer {
+  PlayerInfo  myInfo = 1;
+  bytes  grids = 2;              // 牌 (仅提供手牌数目的牌值)
+  int64  gainScore = 3;          // 输赢分值
+  int64  totalScore = 4;         // 总积分(当不为系统房时,该分值可以为负分)
+}
+//入场 (场景)
+message ChineseChessSceneResp {
+  int64 timeStamp = 1;                  // 时间戳
+  string inning = 2;                    // 牌局号
+  int64 bankerID = 3;                  // 当前庄家
+  int64 currentID = 4;                 // 当前玩家ID
+  int64  baseScore = 5;                 // 当前底分()
+  bytes  outGrids = 6;                  // 已经出过的牌值
+  bytes  boardGrids = 7;                // 棋盘内的棋子
+  repeated ChineseChessPlayer allPlayers = 8; // 玩家信息
+}
+// 服务端推送
+//(空闲)
+message ChineseChessStateFreeResp {
+  TimeInfo times = 1;
+}
+//(规则确认)
+message ChineseChessStateRuleResp {
+  TimeInfo times = 1;
+}
+//(开始)
+message ChineseChessStateStartResp {
+  TimeInfo times = 1;
+  string inning = 2;               // 牌局号
+}
+//(游戏中)
+message ChineseChessStatePlayingResp {
+  TimeInfo times = 1;
+  int64 turnID = 2; //轮到谁
+}
+//(开奖)
+message ChineseChessStateOpenResp {
+  TimeInfo times = 1;
+  int64 winID = 2; //谁赢了
+}
+//(结束)
+message ChineseChessStateOverResp {
+  TimeInfo times = 1;
+}
+//游戏消息
+//准备
+message ChineseChessReadyReq {
+  bool isReady = 1; // 玩家准备，可以取消准备
+}
+message ChineseChessReadyResp {
+  bool isReady = 1; // 玩家准备，可以取消准备
+  int64 userID = 2;
+}
+// 规则
+message ChineseChessRuleReq {
+  int64 score = 1; // 起始分数
+  bytes giveUpGrids = 2;
+  int32 timeout = 3;
+}
+message ChineseChessRuleResp {
+  int64 score = 1; // 起始分数
+  bytes giveUpGrids = 2;
+  int32 timeout = 3;
+}
+// 同意规则
+message ChineseChessAgreeReq {
+  string inning = 1;               // 牌局号
+}
+message ChineseChessAgreeResp {
+  string inning = 1;               // 牌局号
+}
+// 托管
+message ChineseChessTrusteeReq {
+  bool isTrustee = 1; //是否托管
+}
+message ChineseChessTrusteeResp {
+  int64 userID = 1; // 玩家ID
+  bool isTrustee = 2; //是否托管
+}
+// 出牌
+message ChineseChessOutCardReq {
+  CardInfo cards = 1;//
+}
+message ChineseChessOutCardResp {
+  int64 userID = 1; // 玩家ID
+  CardInfo cards = 2;// 牌值为空==要不起
+}
+//-----------------------------
+// 结算
+message ChineseChessCheckoutResp {
+  int64 winnerID = 1;   //赢家ID
+  repeated ChineseChessPlayer allPlayers = 2; // 所有玩家得分
+}

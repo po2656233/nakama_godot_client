@@ -4,8 +4,8 @@ extends Node
 #   Online.nakama_host = 'nakama.example.com'
 #   Online.nakama_scheme = 'https'
 var nakama_server_key: String = 'superman'
-var nakama_host: String = 'trytry.asia'#'localhost'
-var nakama_port: int = 8850
+var nakama_host: String =  'trytry.asia' #'172.22.49.44'   #'localhost'
+var nakama_port: int = 8850 #7350#
 var nakama_scheme: String = 'https'
 
 # For other scripts to access:

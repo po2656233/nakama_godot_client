@@ -663,6 +663,7 @@ class PBPacker:
 
 class Test0:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 	var data = {}
@@ -698,6 +699,7 @@ enum Enum0 {
 
 class Test1:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__f_double = PBField.new("f_double", PB_DATA_TYPE.DOUBLE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.DOUBLE])
@@ -1549,6 +1551,7 @@ class Test1:
 	
 	class map_type_f_map:
 		func _init():
+			@warning_ignore("unused_variable")
 			var service
 			
 			__key = PBField.new("key", PB_DATA_TYPE.INT32, PB_RULE.REQUIRED, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -1627,6 +1630,7 @@ class Test1:
 	
 class Test2:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		var __f1_default: Array[String] = []
@@ -1757,6 +1761,7 @@ class Test2:
 	
 	class TestInner1:
 		func _init():
+			@warning_ignore("unused_variable")
 			var service
 			
 			var __f1_default: Array[float] = []
@@ -1827,6 +1832,7 @@ class Test2:
 		
 	class TestInner2:
 		func _init():
+			@warning_ignore("unused_variable")
 			var service
 			
 		var data = {}
@@ -1854,6 +1860,7 @@ class Test2:
 		
 	class TestInner3:
 		func _init():
+			@warning_ignore("unused_variable")
 			var service
 			
 			var __f1_default: Array = []
@@ -1923,6 +1930,7 @@ class Test2:
 		
 		class TestInner3_1:
 			func _init():
+				@warning_ignore("unused_variable")
 				var service
 				
 			var data = {}
@@ -1950,6 +1958,7 @@ class Test2:
 			
 		class TestInner3_2:
 			func _init():
+				@warning_ignore("unused_variable")
 				var service
 				
 				__f1 = PBField.new("f1", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -2005,6 +2014,7 @@ class Test2:
 			
 		class map_type_f1:
 			func _init():
+				@warning_ignore("unused_variable")
 				var service
 				
 				__key = PBField.new("key", PB_DATA_TYPE.STRING, PB_RULE.REQUIRED, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
@@ -2106,6 +2116,7 @@ class Test2:
 	
 class Test4:
 	func _init():
+		@warning_ignore("unused_variable")
 		var service
 		
 		__f1 = PBField.new("f1", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 10, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
@@ -2201,6 +2212,7 @@ class Test4:
 	
 	class map_type_f5:
 		func _init():
+			@warning_ignore("unused_variable")
 			var service
 			
 			__key = PBField.new("key", PB_DATA_TYPE.INT32, PB_RULE.REQUIRED, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
