@@ -4,8 +4,8 @@ extends Node
 #   Online.nakama_host = 'nakama.example.com'
 #   Online.nakama_scheme = 'https'
 var nakama_server_key: String = 'superman'
-var nakama_host: String =  'trytry.asia' #'172.22.49.44'   #'localhost'
-var nakama_port: int = 8850 #7350#
+var nakama_host: String =  '172.22.58.44'#'trytry.asia' #   #'localhost'
+var nakama_port: int = 8850 #
 var nakama_scheme: String = 'https'
 
 # For other scripts to access:
@@ -167,14 +167,18 @@ func _on_socket_error(error):
 	print("socket error: " + str(error))
 	#if error == ERR_TIMEOUT:
 		#PopupManager.show_dynamic("连接超时,请稍后重试")
-		
+
+
+############################接收的比赛匹配数据###########################################
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):
+	print("收到已匹配数据:", matchmaker_matched)
 	SignalManager.MatchMakerSIG.emit(matchmaker_matched)
 	pass
 
 # 收到匹配状态
 func _on_received_match_state(match_state):
+	print("收到匹配状态:", match_state)
 	SignalManager.MatchStateEventSIG.emit(match_state)
 	pass
 
@@ -186,6 +190,7 @@ func _on_received_match_presence(match_presence):
 
 # 收到状态数据
 func _on_received_status_presence(status_presence):	
+	print("收到状态数据:", status_presence)
 	SignalManager.StatusPresenceEventSIG.emit(status_presence)
 	pass
 
@@ -207,6 +212,7 @@ func _on_received_notification(notification1):
 			push_warning("未知的通知类型:", notification1.category)
 	pass
 
+############################接收数据###########################################
 # 收到频道消息
 func _on_channel_presence(channel_presence):
 	var _1 = channel_presence
@@ -237,7 +243,7 @@ func do_broadcast(notification1):
 	pass
 
 
-############################主动发送数据############################################################
+############################主动发送数据###########################################
 # RPC 发送函数
 func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
 	print("发送RPC:", funcName, payload)

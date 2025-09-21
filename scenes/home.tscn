@@ -314,6 +314,10 @@ anchor_left = 0.0564236
 anchor_top = 0.177469
 anchor_right = 0.407986
 anchor_bottom = 0.871913
+offset_left = 1.5258789e-05
+offset_top = 9.1552734e-05
+offset_right = 0.00015258789
+offset_bottom = 0.00036621094
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
@@ -353,6 +357,10 @@ anchor_left = 0.446181
 anchor_top = 0.177469
 anchor_right = 0.951389
 anchor_bottom = 0.867284
+offset_left = -0.00048828125
+offset_top = 9.1552734e-05
+offset_right = -0.00012207031
+offset_bottom = -6.1035156e-05
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_p652v")
 metadata/_edit_group_ = true
@@ -374,6 +382,7 @@ layout_mode = 2
 size_flags_vertical = 0
 
 [node name="btn_homepage" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
@@ -388,7 +397,6 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_fcaqj")
 text = "主页"
 
 [node name="btn_herolist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
@@ -403,6 +411,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "英雄列表"
 
 [node name="btn_matchlist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)

@@ -525,6 +525,8 @@ func joinMatchmaker(data):
 	matchmaker_ticket = result.ticket
 	print("\n匹配Ticket:",result," 玩家信息:",OnlineLogin.get_my_name())
 	pass
+
+# 离开匹配池
 func LeaveMatchmaker(ticket_id : String=""):
 	if ticket_id == "":
 		ticket_id = matchmaker_ticket
@@ -536,11 +538,11 @@ func LeaveMatchmaker(ticket_id : String=""):
 
 # 离开匹配
 func LeaveMatch(p_match_id : String = ""):
+	LeaveMatchmaker()
 	if p_match_id == "":
 		p_match_id = match_id
 	if p_match_id == "":
 		return
-	LeaveMatchmaker()
 	var result = await Online.nakama_socket.leave_match_async(p_match_id)
 	if result.is_exception():
 		if Errors.ResponeMapping[result.get_exception().message]:

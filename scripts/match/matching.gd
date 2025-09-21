@@ -100,14 +100,16 @@ func start_matching():
 	progress_rotation = 0
 	progress_value = 0
 	var minplayer = 1
+	var gname = OnlineGame.getGameEnName_by(gamename)
 	if maxplayer < minplayer:
 		maxplayer = HIGHT_LIMIT
 	OnlineMatch.joinMatchmaker({
-		"query": " +properties.game:%s " %gamename,
+		"query": " +properties.game:%s +properties.name:%s" %[gname,gamename],
 		"min_count": minplayer,
 		"max_count": maxplayer,
 		"string_properties": {
-			"game": gamename,
+			"game": gname,
+			"name": gamename,
 		},
 		"numeric_properties": {
 			"maxplayer": maxplayer,
