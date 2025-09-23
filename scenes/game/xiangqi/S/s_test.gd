@@ -121,6 +121,9 @@ func reture_chess(chess:int):
 
 
 func move(chess:chess_position):
+	var strChess = JSON.stringify(chess.V_position)
+	print("MOVE  ",strChess)
+	OnlineGame.sendToMatch(OnlineMatch.get_match_id(),100,strChess,null)
 	# 检查游戏是否已结束（绝杀或困毙）
 	if game_ended:
 		PopupManager.show_dynamic("游戏已结束，请重新开始！")
