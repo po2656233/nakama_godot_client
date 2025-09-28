@@ -12,7 +12,7 @@ extends Node2D
 @onready var over: CanvasLayer = %over
 @onready var label: Label = $over/Label
 
-const CHESS_POSITION = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
+const chess_qizi = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
 
 const PLAYER_CHESS_C = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_c.tscn")
 const PLAYER_CHESS_J = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_j.tscn")
@@ -22,34 +22,43 @@ const PLAYER_CHESS_S = preload("res://scenes/game/xiangqi/I/player_chess/_/playe
 const PLAYER_CHESS_X = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_x.tscn")
 const PLAYER_CHESS_Z = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_z.tscn")
 
-var y0=[1,3,6,5,2,5,6,3,1]
-var y1=[0,0,0,0,0,0,0,0,0]
-var y2=[0,4,0,0,0,0,0,4,0]
-var y3=[7,0,7,0,7,0,7,0,7]
-var y4=[0,0,0,0,0,0,0,0,0]
-var y5=[0,0,0,0,0,0,0,0,0]
-var y6=[7,0,7,0,7,0,7,0,7]
-var y7=[0,4,0,0,0,0,0,4,0]
-var y8=[0,0,0,0,0,0,0,0,0]
-var y9=[1,3,6,5,2,5,6,3,1]
+enum ChessType {
+	NONE,
+	CHESS_C,  # 车
+	CHESS_J,  # 将/帅
+	CHESS_M,  # 马
+	CHESS_P,  # 炮
+	CHESS_S,  # 士
+	CHESS_X,  # 象
+	CHESS_Z   # 兵/卒
+}
 
-var size1:int=58
+var y0 = [1, 3, 6, 5, 2, 5, 6, 3, 1]
+var y1 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+var y2 = [0, 4, 0, 0, 0, 0, 0, 4, 0]
+var y3 = [7, 0, 7, 0, 7, 0, 7, 0, 7]
+var y4 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+var y5 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+var y6 = [7, 0, 7, 0, 7, 0, 7, 0, 7]
+var y7 = [0, 4, 0, 0, 0, 0, 0, 4, 0]
+var y8 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+var y9 = [1, 3, 6, 5, 2, 5, 6, 3, 1]
 
-var start_player:int=1
-var V_chess:chess_position
+var size1: int = 58
+
+var start_player: int = 1
+var V_chess: chess_position
 var is_waiting_for_opponent: bool = false
-var game_ended: bool = false  # 游戏是否已结束（绝杀或困毙）
+var game_ended: bool = false # 游戏是否已结束（绝杀或困毙）
 
-var start_x:int=0
-var start_y:int=0
+var start_x: int = 0
+var start_y: int = 0
 
-var V_CHESS_POSITION:chess_position
+var V_CHESS_QIZI: chess_position
 
-var chess_position_array=[]
-var pre_chess_black:chess_position
-var pre_chess_red:chess_position
-
-
+var chess_position_array = []
+var pre_chess_black: chess_position
+var pre_chess_red: chess_position
 
 
 func _ready() -> void:
@@ -60,22 +69,22 @@ func _ready() -> void:
 	start_player = 1
 	jump_to_best_piece_for_player_move()
 	
-func add_position()->void:
+func add_position() -> void:
 	for x in 9:
-		var chess_position_array_=[]
+		var chess_position_array_ = []
 		for y in 10:
-			V_CHESS_POSITION=CHESS_POSITION.instantiate()
-			chessposition.add_child(V_CHESS_POSITION)
-			V_CHESS_POSITION.position=Vector2(x*size1,y*size1)
-			V_CHESS_POSITION.V_position=Vector2(x,y)
-			V_CHESS_POSITION.connect("move",move)
-			if y>=5:
-				V_CHESS_POSITION.chess_color=1
-			chess_position_array_.append(V_CHESS_POSITION)
+			V_CHESS_QIZI = chess_qizi.instantiate()
+			chessposition.add_child(V_CHESS_QIZI)
+			V_CHESS_QIZI.position = Vector2(x * size1, y * size1)
+			V_CHESS_QIZI.V_position = Vector2(x, y)
+			V_CHESS_QIZI.connect("move", move)
+			if y >= 5:
+				V_CHESS_QIZI.chess_color = 1
+			chess_position_array_.append(V_CHESS_QIZI)
 		chess_position_array.append(chess_position_array_)
 	pass
 
-func add_player_chess()->void:
+func add_player_chess() -> void:
 	add_player_chess_array(y0)
 	add_player_chess_array(y1)
 	add_player_chess_array(y2)
@@ -88,20 +97,59 @@ func add_player_chess()->void:
 	add_player_chess_array(y9)
 	pass
 
-func add_player_chess_array(chess:Array)->void:
-	start_x=0
+func add_player_chess_array(chess: Array) -> void:
+	start_x = 0
 	for i in chess:
-		if i>=1 and i<8:
-			var results=reture_chess(i-1)
+		if i >= 1 and i < 8:
+			var results = reture_chess(i - 1)
 			b_chessposition.add_child(results)
-			results.position=Vector2(start_x*size1,start_y*size1)
+			results.position = Vector2(start_x * size1, start_y * size1)
 			results.change(chess_position_array[start_x][start_y].chess_color)
-			chess_position_array[start_x][start_y].play=results
-		start_x+=1
-	start_y+=1
+			chess_position_array[start_x][start_y].play = results
+		start_x += 1
+	start_y += 1
 	pass
 
-func reture_chess(chess:int):
+# 添加获取棋子类型的方法
+func get_chess_type(chess_instance) -> ChessType:
+	if chess_instance is player_chess_c:
+		return ChessType.CHESS_C
+	elif chess_instance is player_chess_j:
+		return ChessType.CHESS_J
+	elif chess_instance is player_chess_m:
+		return ChessType.CHESS_M
+	elif chess_instance is player_chess_p:
+		return ChessType.CHESS_P
+	elif chess_instance is player_chess_s:
+		return ChessType.CHESS_S
+	elif chess_instance is player_chess_x:
+		return ChessType.CHESS_X
+	elif chess_instance is player_chess_z:
+		return ChessType.CHESS_Z
+	else:
+		return ChessType.NONE
+
+# 添加获取棋子名称的方法
+func get_chess_name(chess_instance) -> String:
+	match get_chess_type(chess_instance):
+		ChessType.CHESS_C:
+			return "车"
+		ChessType.CHESS_J:
+			return "将/帅"
+		ChessType.CHESS_M:
+			return "马"
+		ChessType.CHESS_P:
+			return "炮"
+		ChessType.CHESS_S:
+			return "士"
+		ChessType.CHESS_X:
+			return "象"
+		ChessType.CHESS_Z:
+			return "兵/卒"
+		_:
+			return "未知"
+
+func reture_chess(chess: int):
 	match chess:
 		0:
 			return PLAYER_CHESS_C.instantiate()
@@ -120,10 +168,7 @@ func reture_chess(chess:int):
 	pass
 
 
-func move(chess:chess_position):
-	var strChess = JSON.stringify(chess.V_position)
-	print("MOVE  ",strChess)
-	OnlineGame.sendToMatch(OnlineMatch.get_match_id(),100,strChess,null)
+func move(chess: chess_position):
 	# 检查游戏是否已结束（绝杀或困毙）
 	if game_ended:
 		PopupManager.show_dynamic("游戏已结束，请重新开始！")
@@ -249,7 +294,7 @@ func will_cause_self_check(from_pos: chess_position, to_pos: chess_position) -> 
 	
 	return in_check
 
-func set_pre_move(pre_chess,new_chess):
+func set_pre_move(pre_chess, new_chess):
 	if pre_chess:
 		V_chess = pre_chess
 		player_move.position = pre_chess.position
@@ -257,7 +302,9 @@ func set_pre_move(pre_chess,new_chess):
 	pass
 
 
-func _move_end(chess:chess_position)->void:
+func _move_end(chess:chess_position) -> void:
+	var to_position = chess.V_position
+	var from_position = V_chess.V_position
 	chess.play = V_chess.play
 	V_chess.play = null
 	chess.play.position = chess.position
@@ -277,16 +324,25 @@ func _move_end(chess:chess_position)->void:
 			pre_chess_black = null
 	if not check_xiangqi_status():
 		return
+		
+	var strChess = JSON.stringify({
+		"color": chess.play.chess_color,
+		"play": chess.play.red,
+		"form": from_position,
+		"to": to_position,
+	})
+	print("MOVE  ", strChess)
+	OnlineGame.sendToMatch(OnlineMatch.get_match_id(), 100, strChess, null)
 	change_player()
 	player_move._change_color()
 	is_waiting_for_opponent = false
 
 
-func change_player()->void:
-	if start_player==0:
-		start_player=1
+func change_player() -> void:
+	if start_player == 0:
+		start_player = 1
 	else:
-		start_player=0
+		start_player = 0
 	# 始终显示player_move，跳到当前方最优棋子
 	jump_to_best_piece_for_player_move()
 
@@ -307,7 +363,7 @@ func jump_to_best_piece_for_player_move():
 	var center_x = 4
 	for y in range(10):
 		var pos = chess_position_array[center_x][y]
-		if pos.play and pos.play.chess_color == start_player and (pos.play is player_chess_z):
+		if get_chess_type(pos.play) == ChessType.CHESS_Z and pos.play and pos.play.chess_color == start_player:
 			V_chess = pos
 			player_move.visible = true
 			player_move.position = pos.position
@@ -316,7 +372,7 @@ func jump_to_best_piece_for_player_move():
 	for x in range(9):
 		for y in range(10):
 			var pos = chess_position_array[x][y]
-			if pos.play and (pos.play is player_chess_j) and pos.play.chess_color == start_player:
+			if get_chess_type(pos.play) == ChessType.CHESS_J and pos.play and pos.play.chess_color == start_player:
 				V_chess = pos
 				player_move.visible = true
 				player_move.position = pos.position
@@ -336,12 +392,12 @@ func jump_to_best_piece_for_player_move():
 	V_chess = null
 	PopupManager.show_dynamic("已决出胜负")
 
-func game_over()->void:
-	over.visible=true
-	if start_player==1:
-		label.text="黑方获胜"
-	else :
-		label.text="红方获胜"
+func game_over() -> void:
+	over.visible = true
+	if start_player == 1:
+		label.text = "黑方获胜"
+	else:
+		label.text = "红方获胜"
 
 
 func _on_button_button_down() -> void:
@@ -356,16 +412,16 @@ func _on_reback_btn_pressed() -> void:
 
 # 检查"将军""绝杀""困毙"状态
 func check_xiangqi_status():
-	if is_checkmate(1-start_player):
-		game_ended = true  # 设置游戏结束状态
+	if is_checkmate(1 - start_player):
+		game_ended = true # 设置游戏结束状态
 		PopupManager.show_dynamic("绝杀！游戏结束")
 		game_over()
 		return false
-	elif is_check(1-start_player):
+	elif is_check(1 - start_player):
 		jiangjun_play.play()
 		PopupManager.show_dynamic("将军！", 300)
-	elif is_stalemate(1-start_player):
-		game_ended = true  # 设置游戏结束状态
+	elif is_stalemate(1 - start_player):
+		game_ended = true # 设置游戏结束状态
 		PopupManager.show_dynamic("困毙！游戏结束")
 		game_over()
 		return false
@@ -376,10 +432,11 @@ func is_facing_kings(start_pos, end_pos) -> bool:
 	# 找到两个“将/帅”所在列
 	var j1 = null
 	var j2 = null
+	
 	for y in range(10):
 		for x in range(9):
 			var pos = chess_position_array[x][y]
-			if pos.play and (pos.play is player_chess_j):
+			if get_chess_type(pos.play) == ChessType.CHESS_J:
 				if j1 == null:
 					j1 = pos
 				else:
@@ -388,7 +445,7 @@ func is_facing_kings(start_pos, end_pos) -> bool:
 		var miny = min(j1.V_position.y, j2.V_position.y)
 		var maxy = max(j1.V_position.y, j2.V_position.y)
 		var blockers = []
-		for y in range(miny+1, maxy):
+		for y in range(miny + 1, maxy):
 			var mid = chess_position_array[j1.V_position.x][y]
 			if mid.play:
 				blockers.append(mid)
@@ -406,12 +463,12 @@ func is_facing_kings(start_pos, end_pos) -> bool:
 	return false
 
 # 判断"将军"
-func is_check(enemy_color:int) -> bool:
+func is_check(enemy_color: int) -> bool:
 	var king_pos = find_king_pos(enemy_color)
 	if not king_pos:
 		return false
 	# 检查对方棋子是否能攻击到己方将/帅
-	var attacker_color = 1 - enemy_color  # 攻击方颜色
+	var attacker_color = 1 - enemy_color # 攻击方颜色
 	for x in range(9):
 		for y in range(10):
 			var pos = chess_position_array[x][y]
@@ -421,7 +478,7 @@ func is_check(enemy_color:int) -> bool:
 	return false
 
 # 判断"绝杀"
-func is_checkmate(enemy_color:int) -> bool:
+func is_checkmate(enemy_color: int) -> bool:
 	if not is_check(enemy_color):
 		return false
 
@@ -435,7 +492,7 @@ func is_checkmate(enemy_color:int) -> bool:
 					for ty in range(10):
 						var target_pos = chess_position_array[tx][ty]
 						if piece_pos == target_pos:
-							continue  # 跳过原地不动
+							continue # 跳过原地不动
 
 						# 保存原始状态
 						var original_piece = piece_pos.play
@@ -443,10 +500,10 @@ func is_checkmate(enemy_color:int) -> bool:
 
 						# 检查移动是否合法（不能吃自己的棋子）
 						if target_pos.play and target_pos.play.chess_color == enemy_color:
-							continue  # 不能吃自己的棋子
+							continue # 不能吃自己的棋子
 						
 						if not piece_pos.play.move(piece_pos, target_pos, chess_position_array):
-							continue  # 移动不合法，跳过
+							continue # 移动不合法，跳过
 
 						# 模拟移动
 						target_pos.play = original_piece
@@ -473,7 +530,7 @@ func is_checkmate(enemy_color:int) -> bool:
 	return true
 
 # 判断"困毙"
-func is_stalemate(enemy_color:int) -> bool:
+func is_stalemate(enemy_color: int) -> bool:
 	# 困毙：未被将军但无法进行任何合法移动
 	if is_check(enemy_color):
 		return false
@@ -511,11 +568,11 @@ func is_stalemate(enemy_color:int) -> bool:
 	return true
 
 # 查找“将/帅”位置
-func find_king_pos(color:int):
+func find_king_pos(color: int):
 	for x in range(9):
 		for y in range(10):
 			var pos = chess_position_array[x][y]
-			if pos.play and (pos.play is player_chess_j) and pos.play.chess_color == color:
+			if get_chess_type(pos.play) == ChessType.CHESS_J and pos.play.chess_color == color:
 				return pos
 	return null
 
@@ -526,7 +583,7 @@ func is_kings_facing() -> bool:
 	for y in range(10):
 		for x in range(9):
 			var pos = chess_position_array[x][y]
-			if pos.play and (pos.play is player_chess_j):
+			if pos.play and get_chess_type(pos.play) == ChessType.CHESS_J:
 				if j1 == null:
 					j1 = pos
 				else:
@@ -535,7 +592,7 @@ func is_kings_facing() -> bool:
 		var miny = min(j1.V_position.y, j2.V_position.y)
 		var maxy = max(j1.V_position.y, j2.V_position.y)
 		var count = 0
-		for y in range(miny+1, maxy):
+		for y in range(miny + 1, maxy):
 			if chess_position_array[j1.V_position.x][y].play:
 				count += 1
 		if count == 0:
@@ -549,7 +606,7 @@ func is_only_blocker_and_leaving_x(start_pos, end_pos) -> bool:
 	for y in range(10):
 		for x in range(9):
 			var pos = chess_position_array[x][y]
-			if pos.play and (pos.play is player_chess_j):
+			if pos.play and get_chess_type(pos.play) == ChessType.CHESS_J:
 				if j1 == null:
 					j1 = pos
 				else:
@@ -558,7 +615,7 @@ func is_only_blocker_and_leaving_x(start_pos, end_pos) -> bool:
 		var miny = min(j1.V_position.y, j2.V_position.y)
 		var maxy = max(j1.V_position.y, j2.V_position.y)
 		var blockers = []
-		for y in range(miny+1, maxy):
+		for y in range(miny + 1, maxy):
 			var mid = chess_position_array[j1.V_position.x][y]
 			if mid.play:
 				blockers.append(mid)
@@ -575,13 +632,13 @@ func _undo_last_move():
 	is_waiting_for_opponent = false
 
 # 设置player_move到当前方中线兵/卒
-func set_player_move_to_center_pawn(color:int):
+func set_player_move_to_center_pawn(color: int):
 	var center_x = 4
 	var found = false
 	# 优先找中线兵/卒
 	for y in range(10):
 		var pos = chess_position_array[center_x][y]
-		if pos.play and pos.play.chess_color == color and (pos.play is player_chess_z):
+		if pos.play and pos.play.chess_color == color and get_chess_type(pos.play) == ChessType.CHESS_Z:
 			V_chess = pos
 			player_move.visible = true
 			player_move.position = pos.position
@@ -592,7 +649,7 @@ func set_player_move_to_center_pawn(color:int):
 		for x in range(9):
 			for y in range(10):
 				var pos = chess_position_array[x][y]
-				if pos.play and pos.play.chess_color == color and (pos.play is player_chess_z):
+				if pos.play and pos.play.chess_color == color and get_chess_type(pos.play) == ChessType.CHESS_Z:
 					V_chess = pos
 					player_move.visible = true
 					player_move.position = pos.position

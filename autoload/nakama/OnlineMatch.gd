@@ -10,16 +10,16 @@ var max_players := 4
 var client_version := 'dev'
 
 # Nakama variables:
-var nakama_socket: NakamaSocket#: set = _set_readonly_variable
-var my_session_id: String: get = get_my_session_id#, set = _set_readonly_variable
-var match_id: String: get = get_match_id, set = set_match_id#, set = _set_readonly_variable
-var matchmaker_ticket: String: get = get_matchmaker_ticket#, set = _set_readonly_variable
+var nakama_socket: NakamaSocket # : set = _set_readonly_variable
+var my_session_id: String: get = get_my_session_id # , set = _set_readonly_variable
+var match_id: String: get = get_match_id, set = set_match_id # , set = _set_readonly_variable
+var matchmaker_ticket: String: get = get_matchmaker_ticket # , set = _set_readonly_variable
 
 # RPC variables:
-var my_peer_id: int#: set = _set_readonly_variable
+var my_peer_id: int # : set = _set_readonly_variable
 
 var players: Dictionary
-var my_player:Player = null
+var my_player: Player = null
 var _next_peer_id: int
 
 enum MatchState {
@@ -30,7 +30,7 @@ enum MatchState {
 	READY = 4,
 	PLAYING = 5,
 }
-var match_state: int = MatchState.LOBBY: get = get_match_state#, set = _set_readonly_variable
+var match_state: int = MatchState.LOBBY: get = get_match_state # , set = _set_readonly_variable
 
 enum MatchMode {
 	NONE = 0,
@@ -38,7 +38,7 @@ enum MatchMode {
 	JOIN = 2,
 	MATCHMAKER = 3,
 }
-var match_mode: int = MatchMode.NONE: get = get_match_mode#, set = _set_readonly_variable
+var match_mode: int = MatchMode.NONE: get = get_match_mode # , set = _set_readonly_variable
 
 enum PlayerStatus {
 	CONNECTING = 0,
@@ -51,19 +51,19 @@ enum MatchOpCode {
 	JOIN_ERROR = 9003,
 }
 
-signal error (message)
-signal disconnected ()
+signal error(message)
+signal disconnected()
 
-signal match_created (match_id)
-signal match_joined (match_id)
-signal matchmaker_matched (players)
+signal match_created(match_id)
+signal match_joined(match_id)
+signal matchmaker_matched(players)
 
-signal player_joined (player)
-signal player_left (player)
-signal player_status_changed (player, status)
+signal player_joined(player)
+signal player_left(player)
+signal player_status_changed(player, status)
 
-signal match_ready (players)
-signal match_not_ready ()
+signal match_ready(players)
+signal match_not_ready()
 
 class Player:
 	var session_id: String
@@ -143,13 +143,13 @@ func join_match(_nakama_socket: NakamaSocket, _match_id: String, p_metadata = nu
 	_set_nakama_socket(_nakama_socket)
 	match_mode = MatchMode.JOIN
 
-	var data = await nakama_socket.join_match_async(_match_id,p_metadata)
+	var data = await nakama_socket.join_match_async(_match_id, p_metadata)
 	if data.is_exception():
 		leave()
 		emit_signal("error", "Unable to join match")
-		print("unable to join match",data)
+		print("unable to join match", data)
 	else:
-		print("Joined",match_mode)
+		print("Joined", match_mode)
 		_on_nakama_match_join(data)
 	return data
 		
@@ -186,10 +186,10 @@ func start_matchmaking(_nakama_socket: NakamaSocket, data: Dictionary = {}) -> v
 	if result.is_exception():
 		leave()
 		emit_signal("error", "Unable to join match making pool")
-		print("Unable to join matchmaking pool",result)
+		print("Unable to join matchmaking pool", result)
 	else:
 		matchmaker_ticket = result.ticket
-		print("Successfully joined pool,ticket:",matchmaker_ticket)
+		print("Successfully joined pool,ticket:", matchmaker_ticket)
 
 func start_playing() -> void:
 	assert(match_state == MatchState.READY)
@@ -256,7 +256,6 @@ func custom_rpc(node: Node, method: String, args: Array = []) -> void:
 	custom_rpc_id(node, 0, method, args)
 
 func custom_rpc_id(node: Node, id: int, method: String, args: Array = []) -> void:
-	
 	assert(match_state == MatchState.READY or match_state == MatchState.PLAYING)
 	assert(match_id != '')
 	assert(nakama_socket != null)
@@ -280,7 +279,7 @@ func custom_rpc_id_sync(node: Node, id: int, method: String, args: Array = []) -
 		custom_rpc_id(node, id, method, args)
 
 func _on_nakama_error(data) -> void:
-	print ("ERROR:")
+	print("ERROR:")
 	print(data)
 	leave()
 	emit_signal("error", "Websocket connection error")
@@ -309,7 +308,7 @@ func _check_enough_players() -> void:
 		match_state = MatchState.WAITING_FOR_ENOUGH_PLAYERS
 
 func _on_nakama_match_presence(data: NakamaRTAPI.MatchPresenceEvent) -> void:
-	print("wanj data:",data)
+	print("wanj data:", data)
 	for u in data.joins:
 		if u.session_id == my_session_id:
 			continue
@@ -371,7 +370,7 @@ func _on_nakama_match_presence(data: NakamaRTAPI.MatchPresenceEvent) -> void:
 func _on_nakama_match_join(data: NakamaRTAPI.Match) -> void:
 	match_id = data.match_id
 	my_session_id = data.self_user.session_id
-	print("joined match:",data)
+	print("joined match:", data)
 	if match_mode == MatchMode.JOIN:
 		emit_signal("match_joined", match_id)
 		print("emmited singnal: match_joined")
@@ -384,7 +383,7 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 		leave()
 		emit_signal("error", "Matchmaker error")
 		return
-	print("Matched matchmarker:",data)
+	print("Matched matchmarker:", data)
 	my_session_id = data.self_user.presence.session_id
 
 	# Use the list of users to assign peer ids.
@@ -406,7 +405,7 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 	var result = await nakama_socket.join_matched_async(data)
 	if result.is_exception():
 		leave()
-		print("unable to join match",result)
+		print("unable to join match", result)
 		emit_signal("error", "Unable to join match")
 	else:
 		_on_nakama_match_join(result)
@@ -414,13 +413,13 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 
 func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 	var test_json_conv = JSON.new()
-	var error_code =  test_json_conv.parse(data.data)
+	var error_code = test_json_conv.parse(data.data)
 	if error_code != OK:
-		print("Error parsing JSON: " + test_json_conv.get_error_message()," ---",data)
+		print("Error parsing JSON: " + test_json_conv.get_error_message(), " ---", data)
 		# Handle the error here (e.g., return, show a message)
 		# return
 	var json_result = test_json_conv.get_data()
-	print('玩家状态信息:',json_result)
+	print('玩家状态信息:', json_result)
 	var content = json_result
 	if data.op_code == MatchOpCode.CUSTOM_RPC:
 		if content['peer_id'] == 0 or content['peer_id'] == my_peer_id:
@@ -458,32 +457,32 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 
 ##############################################################################################################################
 # 获取匹配列表
-func getMatchList(payload:Dictionary={"limit":100,"authoritative":true,"minSize":0,"maxSize":100,"query":"*"}):
-	var result = await OnlineGame.RpcListData("match_list",payload)
+func getMatchList(payload: Dictionary = {"limit": 100, "authoritative": true, "minSize": 0, "maxSize": 100, "query": "*"}):
+	var result = await OnlineGame.RpcListData("match_list", payload)
 	return result
  
 # 创建匹配 RPC
-func createMatch(id:String,game_name:String,min_size:int=1,max_size:int=100,limit:int=100,authoritative:bool=false,query:String="*"):
+func createMatch(id: String, game_name: String, min_size: int = 1, max_size: int = 100, limit: int = 100, authoritative: bool = false, query: String = "*"):
 	var matchInfo = {
-			"label":id,
-			"name":game_name,
-			"limit":limit,
-			"authoritative":authoritative,
-			"minSize":min_size,
-			"maxSize":max_size,
-			"query":query,
+			"label": id,
+			"name": game_name,
+			"limit": limit,
+			"authoritative": authoritative,
+			"minSize": min_size,
+			"maxSize": max_size,
+			"query": query,
 		}
 	match_mode = MatchMode.CREATE
-	var res = await Online.nakama_client.rpc_async(Online.nakama_session,"create_match",JSON.stringify(matchInfo))
+	var res = await Online.nakama_client.rpc_async(Online.nakama_session, "create_match", JSON.stringify(matchInfo))
 	#print('创建比赛 ',res)
 	print("创建匹配", res)
-	return 
+	return
 
 # 加入匹配
-func joinMatch(p_match_id : String, p_metadata = null):
+func joinMatch(p_match_id: String, p_metadata = null):
 	match_id = p_match_id
 	match_mode = MatchMode.JOIN
-	return await join_match(Online.nakama_socket,p_match_id,p_metadata)
+	return await join_match(Online.nakama_socket, p_match_id, p_metadata)
 	#return await Online.nakama_socket.join_match_async(p_match_id,p_metadata)
 
 # 加入匹配 与MatchmakerAdd回包一起使用
@@ -504,7 +503,7 @@ func joinMatchmaker(data):
 		data['max_count'] = min(max_players, data['max_count'])
 	else:
 		data['max_count'] = max_players
-	data['max_count'] = max(data['max_count'],data['min_count'])
+	data['max_count'] = max(data['max_count'], data['min_count'])
 	if client_version != '':
 		if not data.has('string_properties'):
 			data['string_properties'] = {}
@@ -516,28 +515,28 @@ func joinMatchmaker(data):
 		else:
 			data['query'] = query
 
-	print("\n匹配相关信息:",data,"\n")
+	print("\n匹配相关信息:", data, "\n")
 	var result = await Online.nakama_socket.add_matchmaker_async(data.get('query', '*'), data['min_count'], data['max_count'], data.get('string_properties', {}), data.get('numeric_properties', {}))
 	if result.is_exception():
-		PopupManager.show_dynamic("匹配失败 "+result.get_exception().message)
+		PopupManager.show_dynamic("匹配失败 " + result.get_exception().message)
 		SignalManager.MatchMakerFailedSIG.emit()
 		return result
 	matchmaker_ticket = result.ticket
-	print("\n匹配Ticket:",result," 玩家信息:",OnlineLogin.get_my_name())
+	print("\n匹配Ticket:", result, " 玩家信息:", OnlineLogin.get_my_name())
 	pass
 
 # 离开匹配池
-func LeaveMatchmaker(ticket_id : String=""):
+func LeaveMatchmaker(ticket_id: String = ""):
 	if ticket_id == "":
 		ticket_id = matchmaker_ticket
 	if ticket_id == "":
-		return	
-	print("\n移除Ticket:",ticket_id," 玩家信息:",OnlineLogin.get_my_name())
+		return
+	print("\n移除Ticket:", ticket_id, " 玩家信息:", OnlineLogin.get_my_name())
 	return await Online.nakama_socket.remove_matchmaker_async(ticket_id)
 
 
 # 离开匹配
-func LeaveMatch(p_match_id : String = ""):
+func LeaveMatch(p_match_id: String = ""):
 	LeaveMatchmaker()
 	if p_match_id == "":
 		p_match_id = match_id
@@ -546,11 +545,11 @@ func LeaveMatch(p_match_id : String = ""):
 	var result = await Online.nakama_socket.leave_match_async(p_match_id)
 	if result.is_exception():
 		if Errors.ResponeMapping[result.get_exception().message]:
-			PopupManager.show_dynamic("离开匹配失败 "+Errors.ResponeMapping[result.get_exception().message])
+			PopupManager.show_dynamic("离开匹配失败 " + Errors.ResponeMapping[result.get_exception().message])
 		else:
-			PopupManager.show_dynamic("离开匹配失败 "+result.get_exception().message)
+			PopupManager.show_dynamic("离开匹配失败 " + result.get_exception().message)
 		return result
-	print("离开匹配成功--->>>",p_match_id)
+	print("离开匹配成功--->>>", p_match_id)
 	match_id = ""
 	matchmaker_ticket = ""
 	pass
