@@ -4,7 +4,7 @@ extends Node
 #   Online.nakama_host = 'nakama.example.com'
 #   Online.nakama_scheme = 'https'
 var nakama_server_key: String = 'superman'
-var nakama_host: String =  '172.22.58.44'#'trytry.asia' #   #'localhost'
+var nakama_host: String = '172.22.58.44' # 'trytry.asia' #   #'localhost'
 var nakama_port: int = 8850 #
 var nakama_scheme: String = 'https'
 
@@ -17,16 +17,16 @@ var nakama_socket: NakamaSocket = null
 var heartbeat_timer: Timer
 var is_ping_now = false
 var is_socket_connected = false
-const HEARTBEAT_INTERVAL = 5.0  # 5秒发送一次心跳
+const HEARTBEAT_INTERVAL = 5.0 # 5秒发送一次心跳
 
 # 广播枚举
-enum EnBroadcast{
+enum EnBroadcast {
 	CreateTable = 1, # 创建桌子
 	RemoveTable = 2, # 删除桌子
 	JoinTable = 3, # 加入桌子
 	LeaveTable = 4, # 离开桌子
 	TableOnline = 5, # 桌子在线人数
-}  
+}
 # # socket状态
 # var socket_state = {
 # 	"connected":"连接成功",
@@ -42,15 +42,15 @@ func _ready() -> void:
 	pass
 ###################################################################################
 ### 设置session
-func set_nakama_session(_nakama_session: NakamaSession) -> void:	
+func set_nakama_session(_nakama_session: NakamaSession) -> void:
 	nakama_session = _nakama_session
 	if nakama_session == null:
 		print("传入的session为null,关闭socket连接")
-		if nakama_socket:nakama_socket.close()  
-		nakama_socket = null# 如果传入的session为null，关闭socket连接
+		if nakama_socket: nakama_socket.close()
+		nakama_socket = null # 如果传入的session为null，关闭socket连接
 		return
 	create_and_connect_socket()
-	print("获取到session:\t",_nakama_session,"\n")
+	print("获取到session:\t", _nakama_session, "\n")
 	pass
 
 ### 获取NakamaClient
@@ -86,9 +86,9 @@ func create_and_connect_socket():
 	# 匹配服重置socket
 	OnlineMatch._set_nakama_socket(nakama_socket)
 	# 开始连接（正确使用官方API）
-	var connect_result = await nakama_socket.connect_async(nakama_session,true,-1,_reseet_session)  # 仅session和appear_online参数
+	var connect_result = await nakama_socket.connect_async(nakama_session, true, -1, _reseet_session) # 仅session和appear_online参数
 	if typeof(connect_result) == TYPE_INT or connect_result.is_exception():
-		print("Socket 连接失败: " , connect_result)
+		print("Socket 连接失败: ", connect_result)
 		return
 	
 	print("Socket connected successfully")
@@ -100,14 +100,14 @@ func _reseet_session():
 	if not nakama_session:
 		push_error("No session to reset")
 		return
-	var result =  await nakama_client.session_refresh_async(nakama_session)  # 重新连接socket
+	var result = await nakama_client.session_refresh_async(nakama_session) # 重新连接socket
 	if result == null:
 		push_error("Failed to reset session: null")
-		return 
-	if result.is_exception():
-		print("重置session失败 ",result.exception.message)
 		return
-	print("---重置session--",result)
+	if result.is_exception():
+		print("重置session失败 ", result.exception.message)
+		return
+	print("---重置session--", result)
 	nakama_session = result
 	return result
 
@@ -129,7 +129,7 @@ func _send_heartbeat():
 	var result = await nakama_socket.rpc_async("ping")
 	is_ping_now = false
 	if result.is_exception():
-		print("心跳 发送失败 ",result.exception.message)
+		print("心跳 发送失败 ", result.exception.message)
 		return
 	print("心跳 发送成功 ")
 	pass
@@ -189,7 +189,7 @@ func _on_received_match_presence(match_presence):
 	pass
 
 # 收到状态数据
-func _on_received_status_presence(status_presence):	
+func _on_received_status_presence(status_presence):
 	print("收到状态数据:", status_presence)
 	SignalManager.StatusPresenceEventSIG.emit(status_presence)
 	pass
@@ -245,47 +245,47 @@ func do_broadcast(notification1):
 
 ############################主动发送数据###########################################
 # RPC 发送函数
-func sendDataRPC(funcName: String, payload = null,obj:Object=null,work_cb:String="_on_work",error_cb:String="_on_err"):
+func sendDataRPC(funcName: String, payload = null, obj: Object = null, work_cb: String = "_on_work", error_cb: String = "_on_err"):
 	print("发送RPC:", funcName, payload)
-	var result_wrapper = { "result":null}  # 使用字典包装变量
-	var sucess_cb = func(ret:NakamaAsyncResult):
-		print("接收RPC成功-->",funcName)
+	var result_wrapper = {"result": null} # 使用字典包装变量
+	var sucess_cb = func(ret: NakamaAsyncResult):
+		print("接收RPC成功-->", funcName)
 		if ret and ret.id == funcName:
 			result_wrapper.result = JSON.parse_string(ret.payload)
 			# 外部有处理函数,再发送信号
 			if obj != null:
 				# 动态创建信号，并且根据外部obj和work_cb名称进行处理
-				var sigName = funcName+"SIG"
+				var sigName = funcName + "SIG"
 				if not has_signal(sigName):
 					add_user_signal(sigName, [result_wrapper.result])
 				#disconnect(sigName,Callable(obj,work_cb))
-				if is_connected(sigName,Callable(obj,work_cb)):
-					disconnect(sigName,Callable(obj,work_cb))
-				connect(sigName,Callable(obj,work_cb))
-				emit_signal(sigName,result_wrapper.result) 
-				print("接收RPC成功,发送信号:",sigName) 
+				if is_connected(sigName, Callable(obj, work_cb)):
+					disconnect(sigName, Callable(obj, work_cb))
+				connect(sigName, Callable(obj, work_cb))
+				emit_signal(sigName, result_wrapper.result)
+				print("接收RPC成功,发送信号:", sigName)
 			return
-		result_wrapper.result = ret  # 修改字典中的值
+		result_wrapper.result = ret # 修改字典中的值
 		pass
 	var failed_cb = func(errMsg):
 		if obj != null:
-				# 动态创建信号，并且根据外部obj和work_cb名称进行处理
-				var sigName = funcName+"_ERR_SIG"
-				if not has_signal(sigName):
-					add_user_signal(sigName, [errMsg])
-				#disconnect(sigName,Callable(obj,error_cb))
-				if is_connected(sigName,Callable(obj,error_cb)):
-					disconnect(sigName,Callable(obj,error_cb))
-				connect(sigName,Callable(obj,error_cb))
-				emit_signal(sigName,errMsg) 
-				print("接收RPC成功,发送信号:",sigName) 
-		print("发送RPC:",funcName," -->结果异常:", errMsg)
+			# 动态创建信号，并且根据外部obj和work_cb名称进行处理
+			var sigName = funcName + "_ERR_SIG"
+			if not has_signal(sigName):
+				add_user_signal(sigName, [errMsg])
+			#disconnect(sigName,Callable(obj,error_cb))
+			if is_connected(sigName, Callable(obj, error_cb)):
+				disconnect(sigName, Callable(obj, error_cb))
+			connect(sigName, Callable(obj, error_cb))
+			emit_signal(sigName, errMsg)
+			print("接收RPC成功,发送信号:", sigName)
+		print("发送RPC:", funcName, " -->结果异常:", errMsg)
 		return
 	var result = await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], sucess_cb, failed_cb)
-	print("发送RPC-FIN:",funcName," 反馈结果:",result)
-	return result_wrapper.result  # 返回最终结果
+	print("发送RPC-FIN:", funcName, " 反馈结果:", result)
+	return result_wrapper.result # 返回最终结果
 
 # RPC 发送函数
-func acynDataRPC(funcName: String, payload = null,success_cb: Callable = Util.EMPTY_CALLABLE, failure_cb: Callable = Util.EMPTY_CALLABLE) -> void:
+func acynDataRPC(funcName: String, payload = null, success_cb: Callable = Util.EMPTY_CALLABLE, failure_cb: Callable = Util.EMPTY_CALLABLE) -> void:
 	await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], success_cb, failure_cb)
 	return

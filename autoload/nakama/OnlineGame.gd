@@ -137,10 +137,10 @@ func getGameMaxPeople(game_id:int)->int:
 			return game.max_player
 	return 0
 	
-# 获取游戏名称
+# 获取游戏ID
 func getGameID(enName:String):
 	for game in games_data:
-		if game.en_name == enName:
+		if game.en_name.to_lower() == enName.to_lower():
 			return game.id
 	return -1
 

@@ -327,7 +327,7 @@ func _move_end(chess:chess_position) -> void:
 		
 	var strChess = JSON.stringify({
 		"color": chess.play.chess_color,
-		"play": chess.play.red,
+		"play": get_chess_type(chess.play),
 		"form": from_position,
 		"to": to_position,
 	})

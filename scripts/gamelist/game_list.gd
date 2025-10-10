@@ -6,6 +6,7 @@ var game_card_scene = preload("res://scenes/gamelist/game_card.tscn")
 @onready var scrollContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer
 @onready var matching = $Matching
 @onready var match_sucess = $MatchSuccess
+@onready var loading_scene = $LoadingScreen
 
 var game_id:int = -1
 var curMatchId = ""
@@ -63,6 +64,7 @@ func _ready():
 	print("游戏列表--->")
 	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
 
+	loading_scene.hide()
 	# 加载数据
 	load_data()
 	
@@ -175,10 +177,15 @@ func _on_game_cancel(_game_id):
 # 游戏开始
 func _on_game_start(game_id_1):
 	SignalManager.WelcomeMusicSIG.emit()
-	await get_tree().create_timer(1.0).timeout
-	PopupManager.show_dynamic("游戏开始")
+	#await get_tree().create_timer(1.0).timeout
+	#PopupManager.show_dynamic("游戏开始")
+	# 加载游戏
+	loading_scene.show()
+	SignalManager.LoadingGameSIG.emit(game_id_1)
+	
 	var gameEnName = OnlineGame.getGameEnName(game_id_1)
-	SceneManager.ToGameScene(gameEnName)
+	# SceneManager.ToGameScene(gameEnName)
+	print("游戏开始 game_id:", game_id_1, " name:", gameEnName)
 	SignalManager.GameKeepSIG.emit(1,game_id_1,-1,curMatchId,gameEnName)
 	pass
 

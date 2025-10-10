@@ -104,7 +104,7 @@ signal GameListSIG(gameList)
 
 # 加载游戏
 @warning_ignore("unused_signal")
-signal LoadingGameSIG(gameName) 
+signal LoadingGameSIG(gid) 
 # 加入游戏
 @warning_ignore("unused_signal")
 signal JoinGameSIG(gid) 
@@ -120,7 +120,7 @@ signal CancleGameSIG(gid)
 # 退出游戏
 @warning_ignore("unused_signal")
 signal ExitGameSIG(gid) 
-# 开始游戏
+# 恢复游戏 保存上一次玩过的游戏
 @warning_ignore("unused_signal")
 signal GameKeepSIG(mode,gid,rid,mid,gname) 
 ####################房间##############################

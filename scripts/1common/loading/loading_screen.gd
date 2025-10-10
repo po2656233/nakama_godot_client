@@ -124,8 +124,11 @@ func _on_loading(value):
 ###########################加载游戏资源##########################################
 
 # 加载游戏资源
-func _on_load_game(gameName):
+func _on_load_game(game_id):
+	print("开始下载游戏资源：", game_id)
 	# 发送 HTTP 请求下载资源
+	var gameName = OnlineGame.getGameEnName(game_id)
+	print("开始下载游戏资源：", gameName, " ID:", game_id)
 	gameName = gameName.to_lower()
 	if not SceneManager.has_scene(gameName):
 		SignalManager.LoadingSIG.emit(-1)

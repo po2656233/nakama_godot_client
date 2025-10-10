@@ -637,7 +637,7 @@ func _on_join_room(room_info: Dictionary)->bool:
 	# 检查游戏本地是否存在，不存在则网络下载
 	if not SceneManager.has_scene(enName):
 		print('第一次加载游戏...',enName)
-		#SignalManager.LoadingGameSIG.emit(enName)
+		#SignalManager.LoadingGameSIG.emit(room_info.game_type)
 	else:
 		print('已有游戏...',enName)
 

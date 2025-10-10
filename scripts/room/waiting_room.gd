@@ -149,7 +149,10 @@ func _on_countdown_timeout():
 		await timer.timeout
 		SceneManager.set_previous_name("roomlist")
 		loading_scene.show()
-		SignalManager.LoadingGameSIG.emit(game_name)
+		
+		var game_id = OnlineGame.getGameID(game_name)
+		print("准备游戏 game_id:", game_id, " name:", game_name)
+		SignalManager.LoadingGameSIG.emit(game_id)
 
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):

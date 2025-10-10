@@ -75,7 +75,7 @@ theme_override_fonts/font = ExtResource("4_h1am3")
 theme_override_font_sizes/font_size = 50
 text = "返回"
 
-[node name="Button" type="Button" parent="."]
+[node name="RestartBtn" type="Button" parent="."]
 offset_left = -467.0
 offset_top = -17.0
 offset_right = -395.0
@@ -101,4 +101,4 @@ volume_db = 24.0
 
 [connection signal="button_down" from="over/Button" to="." method="_on_button_button_down"]
 [connection signal="button_down" from="RebackBtn" to="." method="_on_reback_btn_pressed"]
-[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="RestartBtn" to="." method="_on_button_button_down"]

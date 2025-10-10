@@ -136,6 +136,7 @@ func _init():
 ###############################################################
 func _ready():
 	SignalManager.ChangeSceneSIG.connect(switch_to_scene)
+	
 # 	# 添加场景字典
 # 	var scenes = {
 # 		"login": "res://scenes/login.tscn",
