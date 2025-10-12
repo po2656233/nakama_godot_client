@@ -34,6 +34,7 @@ var ResponeMapping = {
 	"Connection refused": "连接被拒绝",
 	"TLS handshake failed": "TLS握手失败",
 	"Certificate verification failed": "证书验证失败",
+	"Failed to decode JSON response": "连接失败,服务器网络异常",
 }
 
 # 网络错误

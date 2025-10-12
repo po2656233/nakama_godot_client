@@ -123,7 +123,7 @@ func _on_timer_timeout():
 		return
 
 	timer_value -= 1
-	if timer_value > 0 and ready_count < player_total:
+	if timer_value >= 0 and ready_count < player_total:
 		if timer_value <= timer_warn:
 			if not accept_button.disabled:
 				SignalManager.MatchSuccessTimeMusicSIG.emit(false)
@@ -132,7 +132,8 @@ func _on_timer_timeout():
 			timer_label.text = base_text_1 % timer_value
 
 		ready_label.text = "   %d/%d已准备就绪" % [ready_count, player_total]
-	elif timer_value == 0:
+	elif timer_value == -1:
+		SignalManager.CancleGameSIG.emit(game_id)
 		_on_decline_pressed()
 	pass
 
@@ -143,7 +144,7 @@ func _on_accept_pressed():
 	accept_button.disabled = true
 	decline_button.visible = false
 	SignalManager.MatchSuccessTimeMusicSIG.emit(true)
-	var ret = await OnlineGame.sendToMatch(match_id, MatchState.GameReady, "0")
+	var ret = await OnlineGame.sendToMatch(match_id, MatchState.GameReady, "1")
 	if ret and ret.is_exception():
 		accept_button.disabled = false
 		decline_button.visible = true
