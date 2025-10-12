@@ -661,6 +661,138 @@ class PBPacker:
 ############### USER DATA BEGIN ################
 
 
+enum ChineseChessPiece {
+	EmptyPiece = 0,
+	RedGeneral = 1,
+	RedAdvisor = 2,
+	RedElephant = 3,
+	RedHorse = 4,
+	RedChariot = 5,
+	RedCannon = 6,
+	RedSoldier = 7,
+	BlackGeneral = 8,
+	BlackAdvisor = 9,
+	BlackElephant = 10,
+	BlackHorse = 11,
+	BlackChariot = 12,
+	BlackCannon = 13,
+	BlackSoldier = 14
+}
+
+class ChineseChessPosition:
+	func _init():
+		@warning_ignore("unused_variable")
+		var service
+		
+		__row = PBField.new("row", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
+		service = PBServiceField.new()
+		service.field = __row
+		data[__row.tag] = service
+		
+		__col = PBField.new("col", PB_DATA_TYPE.INT32, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT32])
+		service = PBServiceField.new()
+		service.field = __col
+		data[__col.tag] = service
+		
+	var data = {}
+	
+	var __row: PBField
+	func get_row() -> int:
+		return __row.value
+	func clear_row() -> void:
+		data[1].state = PB_SERVICE_STATE.UNFILLED
+		__row.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT32]
+	func set_row(value : int) -> void:
+		__row.value = value
+	
+	var __col: PBField
+	func get_col() -> int:
+		return __col.value
+	func clear_col() -> void:
+		data[2].state = PB_SERVICE_STATE.UNFILLED
+		__col.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT32]
+	func set_col(value : int) -> void:
+		__col.value = value
+	
+	func _to_string() -> String:
+		return PBPacker.message_to_string(data)
+		
+	func to_bytes() -> PackedByteArray:
+		return PBPacker.pack_message(data)
+		
+	func from_bytes(bytes : PackedByteArray, offset : int = 0, limit : int = -1) -> int:
+		var cur_limit = bytes.size()
+		if limit != -1:
+			cur_limit = limit
+		var result = PBPacker.unpack_message(data, bytes, offset, cur_limit)
+		if result == cur_limit:
+			if PBPacker.check_required(data):
+				if limit == -1:
+					return PB_ERR.NO_ERRORS
+			else:
+				return PB_ERR.REQUIRED_FIELDS
+		elif limit == -1 && result > 0:
+			return PB_ERR.PARSE_INCOMPLETE
+		return result
+	
+class ChineseChessCell:
+	func _init():
+		@warning_ignore("unused_variable")
+		var service
+		
+		__pos = PBField.new("pos", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
+		service = PBServiceField.new()
+		service.field = __pos
+		service.func_ref = Callable(self, "new_pos")
+		data[__pos.tag] = service
+		
+		__piece = PBField.new("piece", PB_DATA_TYPE.ENUM, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.ENUM])
+		service = PBServiceField.new()
+		service.field = __piece
+		data[__piece.tag] = service
+		
+	var data = {}
+	
+	var __pos: PBField
+	func get_pos() -> ChineseChessPosition:
+		return __pos.value
+	func clear_pos() -> void:
+		data[1].state = PB_SERVICE_STATE.UNFILLED
+		__pos.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
+	func new_pos() -> ChineseChessPosition:
+		__pos.value = ChineseChessPosition.new()
+		return __pos.value
+	
+	var __piece: PBField
+	func get_piece():
+		return __piece.value
+	func clear_piece() -> void:
+		data[2].state = PB_SERVICE_STATE.UNFILLED
+		__piece.value = DEFAULT_VALUES_3[PB_DATA_TYPE.ENUM]
+	func set_piece(value) -> void:
+		__piece.value = value
+	
+	func _to_string() -> String:
+		return PBPacker.message_to_string(data)
+		
+	func to_bytes() -> PackedByteArray:
+		return PBPacker.pack_message(data)
+		
+	func from_bytes(bytes : PackedByteArray, offset : int = 0, limit : int = -1) -> int:
+		var cur_limit = bytes.size()
+		if limit != -1:
+			cur_limit = limit
+		var result = PBPacker.unpack_message(data, bytes, offset, cur_limit)
+		if result == cur_limit:
+			if PBPacker.check_required(data):
+				if limit == -1:
+					return PB_ERR.NO_ERRORS
+			else:
+				return PB_ERR.REQUIRED_FIELDS
+		elif limit == -1 && result > 0:
+			return PB_ERR.PARSE_INCOMPLETE
+		return result
+	
 class ChineseChessPlayer:
 	func _init():
 		@warning_ignore("unused_variable")
@@ -672,17 +804,12 @@ class ChineseChessPlayer:
 		service.func_ref = Callable(self, "new_myInfo")
 		data[__myInfo.tag] = service
 		
-		__grids = PBField.new("grids", PB_DATA_TYPE.BYTES, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.BYTES])
-		service = PBServiceField.new()
-		service.field = __grids
-		data[__grids.tag] = service
-		
-		__gainScore = PBField.new("gainScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 3, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__gainScore = PBField.new("gainScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
 		service = PBServiceField.new()
 		service.field = __gainScore
 		data[__gainScore.tag] = service
 		
-		__totalScore = PBField.new("totalScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 4, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__totalScore = PBField.new("totalScore", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 3, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
 		service = PBServiceField.new()
 		service.field = __totalScore
 		data[__totalScore.tag] = service
@@ -699,20 +826,11 @@ class ChineseChessPlayer:
 		__myInfo.value = PlayerInfo.new()
 		return __myInfo.value
 	
-	var __grids: PBField
-	func get_grids() -> PackedByteArray:
-		return __grids.value
-	func clear_grids() -> void:
-		data[2].state = PB_SERVICE_STATE.UNFILLED
-		__grids.value = DEFAULT_VALUES_3[PB_DATA_TYPE.BYTES]
-	func set_grids(value : PackedByteArray) -> void:
-		__grids.value = value
-	
 	var __gainScore: PBField
 	func get_gainScore() -> int:
 		return __gainScore.value
 	func clear_gainScore() -> void:
-		data[3].state = PB_SERVICE_STATE.UNFILLED
+		data[2].state = PB_SERVICE_STATE.UNFILLED
 		__gainScore.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
 	func set_gainScore(value : int) -> void:
 		__gainScore.value = value
@@ -721,7 +839,7 @@ class ChineseChessPlayer:
 	func get_totalScore() -> int:
 		return __totalScore.value
 	func clear_totalScore() -> void:
-		data[4].state = PB_SERVICE_STATE.UNFILLED
+		data[3].state = PB_SERVICE_STATE.UNFILLED
 		__totalScore.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
 	func set_totalScore(value : int) -> void:
 		__totalScore.value = value
@@ -777,14 +895,18 @@ class ChineseChessSceneResp:
 		service.field = __baseScore
 		data[__baseScore.tag] = service
 		
-		__outGrids = PBField.new("outGrids", PB_DATA_TYPE.BYTES, PB_RULE.OPTIONAL, 6, true, DEFAULT_VALUES_3[PB_DATA_TYPE.BYTES])
+		var __outGrids_default: Array[ChineseChessCell] = []
+		__outGrids = PBField.new("outGrids", PB_DATA_TYPE.MESSAGE, PB_RULE.REPEATED, 6, true, __outGrids_default)
 		service = PBServiceField.new()
 		service.field = __outGrids
+		service.func_ref = Callable(self, "add_outGrids")
 		data[__outGrids.tag] = service
 		
-		__boardGrids = PBField.new("boardGrids", PB_DATA_TYPE.BYTES, PB_RULE.OPTIONAL, 7, true, DEFAULT_VALUES_3[PB_DATA_TYPE.BYTES])
+		var __boardGrids_default: Array[ChineseChessCell] = []
+		__boardGrids = PBField.new("boardGrids", PB_DATA_TYPE.MESSAGE, PB_RULE.REPEATED, 7, true, __boardGrids_default)
 		service = PBServiceField.new()
 		service.field = __boardGrids
+		service.func_ref = Callable(self, "add_boardGrids")
 		data[__boardGrids.tag] = service
 		
 		var __allPlayers_default: Array[ChineseChessPlayer] = []
@@ -842,22 +964,26 @@ class ChineseChessSceneResp:
 		__baseScore.value = value
 	
 	var __outGrids: PBField
-	func get_outGrids() -> PackedByteArray:
+	func get_outGrids() -> Array[ChineseChessCell]:
 		return __outGrids.value
 	func clear_outGrids() -> void:
 		data[6].state = PB_SERVICE_STATE.UNFILLED
-		__outGrids.value = DEFAULT_VALUES_3[PB_DATA_TYPE.BYTES]
-	func set_outGrids(value : PackedByteArray) -> void:
-		__outGrids.value = value
+		__outGrids.value = []
+	func add_outGrids() -> ChineseChessCell:
+		var element = ChineseChessCell.new()
+		__outGrids.value.append(element)
+		return element
 	
 	var __boardGrids: PBField
-	func get_boardGrids() -> PackedByteArray:
+	func get_boardGrids() -> Array[ChineseChessCell]:
 		return __boardGrids.value
 	func clear_boardGrids() -> void:
 		data[7].state = PB_SERVICE_STATE.UNFILLED
-		__boardGrids.value = DEFAULT_VALUES_3[PB_DATA_TYPE.BYTES]
-	func set_boardGrids(value : PackedByteArray) -> void:
-		__boardGrids.value = value
+		__boardGrids.value = []
+	func add_boardGrids() -> ChineseChessCell:
+		var element = ChineseChessCell.new()
+		__boardGrids.value.append(element)
+		return element
 	
 	var __allPlayers: PBField
 	func get_allPlayers() -> Array[ChineseChessPlayer]:
@@ -1249,7 +1375,7 @@ class ChineseChessReadyResp:
 		service.field = __isReady
 		data[__isReady.tag] = service
 		
-		__userID = PBField.new("userID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__userID = PBField.new("userID", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
 		service = PBServiceField.new()
 		service.field = __userID
 		data[__userID.tag] = service
@@ -1266,12 +1392,12 @@ class ChineseChessReadyResp:
 		__isReady.value = value
 	
 	var __userID: PBField
-	func get_userID() -> int:
+	func get_userID() -> String:
 		return __userID.value
 	func clear_userID() -> void:
 		data[2].state = PB_SERVICE_STATE.UNFILLED
-		__userID.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
-	func set_userID(value : int) -> void:
+		__userID.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_userID(value : String) -> void:
 		__userID.value = value
 	
 	func _to_string() -> String:
@@ -1566,7 +1692,7 @@ class ChineseChessTrusteeResp:
 		@warning_ignore("unused_variable")
 		var service
 		
-		__userID = PBField.new("userID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__userID = PBField.new("userID", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
 		service = PBServiceField.new()
 		service.field = __userID
 		data[__userID.tag] = service
@@ -1579,12 +1705,12 @@ class ChineseChessTrusteeResp:
 	var data = {}
 	
 	var __userID: PBField
-	func get_userID() -> int:
+	func get_userID() -> String:
 		return __userID.value
 	func clear_userID() -> void:
 		data[1].state = PB_SERVICE_STATE.UNFILLED
-		__userID.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
-	func set_userID(value : int) -> void:
+		__userID.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_userID(value : String) -> void:
 		__userID.value = value
 	
 	var __isTrustee: PBField
@@ -1617,28 +1743,44 @@ class ChineseChessTrusteeResp:
 			return PB_ERR.PARSE_INCOMPLETE
 		return result
 	
-class ChineseChessOutCardReq:
+class ChineseChessMoveReq:
 	func _init():
 		@warning_ignore("unused_variable")
 		var service
 		
-		__cards = PBField.new("cards", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
+		__cell = PBField.new("cell", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
 		service = PBServiceField.new()
-		service.field = __cards
-		service.func_ref = Callable(self, "new_cards")
-		data[__cards.tag] = service
+		service.field = __cell
+		service.func_ref = Callable(self, "new_cell")
+		data[__cell.tag] = service
+		
+		__toPos = PBField.new("toPos", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
+		service = PBServiceField.new()
+		service.field = __toPos
+		service.func_ref = Callable(self, "new_toPos")
+		data[__toPos.tag] = service
 		
 	var data = {}
 	
-	var __cards: PBField
-	func get_cards() -> CardInfo:
-		return __cards.value
-	func clear_cards() -> void:
+	var __cell: PBField
+	func get_cell() -> ChineseChessCell:
+		return __cell.value
+	func clear_cell() -> void:
 		data[1].state = PB_SERVICE_STATE.UNFILLED
-		__cards.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
-	func new_cards() -> CardInfo:
-		__cards.value = CardInfo.new()
-		return __cards.value
+		__cell.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
+	func new_cell() -> ChineseChessCell:
+		__cell.value = ChineseChessCell.new()
+		return __cell.value
+	
+	var __toPos: PBField
+	func get_toPos() -> ChineseChessPosition:
+		return __toPos.value
+	func clear_toPos() -> void:
+		data[2].state = PB_SERVICE_STATE.UNFILLED
+		__toPos.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
+	func new_toPos() -> ChineseChessPosition:
+		__toPos.value = ChineseChessPosition.new()
+		return __toPos.value
 	
 	func _to_string() -> String:
 		return PBPacker.message_to_string(data)
@@ -1661,42 +1803,58 @@ class ChineseChessOutCardReq:
 			return PB_ERR.PARSE_INCOMPLETE
 		return result
 	
-class ChineseChessOutCardResp:
+class ChineseChessMoveResp:
 	func _init():
 		@warning_ignore("unused_variable")
 		var service
 		
-		__userID = PBField.new("userID", PB_DATA_TYPE.INT64, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.INT64])
+		__userID = PBField.new("userID", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
 		service = PBServiceField.new()
 		service.field = __userID
 		data[__userID.tag] = service
 		
-		__cards = PBField.new("cards", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
+		__cell = PBField.new("cell", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
 		service = PBServiceField.new()
-		service.field = __cards
-		service.func_ref = Callable(self, "new_cards")
-		data[__cards.tag] = service
+		service.field = __cell
+		service.func_ref = Callable(self, "new_cell")
+		data[__cell.tag] = service
+		
+		__toPos = PBField.new("toPos", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 3, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
+		service = PBServiceField.new()
+		service.field = __toPos
+		service.func_ref = Callable(self, "new_toPos")
+		data[__toPos.tag] = service
 		
 	var data = {}
 	
 	var __userID: PBField
-	func get_userID() -> int:
+	func get_userID() -> String:
 		return __userID.value
 	func clear_userID() -> void:
 		data[1].state = PB_SERVICE_STATE.UNFILLED
-		__userID.value = DEFAULT_VALUES_3[PB_DATA_TYPE.INT64]
-	func set_userID(value : int) -> void:
+		__userID.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_userID(value : String) -> void:
 		__userID.value = value
 	
-	var __cards: PBField
-	func get_cards() -> CardInfo:
-		return __cards.value
-	func clear_cards() -> void:
+	var __cell: PBField
+	func get_cell() -> ChineseChessCell:
+		return __cell.value
+	func clear_cell() -> void:
 		data[2].state = PB_SERVICE_STATE.UNFILLED
-		__cards.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
-	func new_cards() -> CardInfo:
-		__cards.value = CardInfo.new()
-		return __cards.value
+		__cell.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
+	func new_cell() -> ChineseChessCell:
+		__cell.value = ChineseChessCell.new()
+		return __cell.value
+	
+	var __toPos: PBField
+	func get_toPos() -> ChineseChessPosition:
+		return __toPos.value
+	func clear_toPos() -> void:
+		data[3].state = PB_SERVICE_STATE.UNFILLED
+		__toPos.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
+	func new_toPos() -> ChineseChessPosition:
+		__toPos.value = ChineseChessPosition.new()
+		return __toPos.value
 	
 	func _to_string() -> String:
 		return PBPacker.message_to_string(data)

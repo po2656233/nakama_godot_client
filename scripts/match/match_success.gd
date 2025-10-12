@@ -25,7 +25,7 @@ var base_text_2 = "进入游戏倒计时: [b][color=red]%02d[/color][/b] 秒   "
 enum MatchState {
 	GameReady = 1000,
 	GameReadyCancel,
-	GameStart
+	GameStart,
 }
 
 
@@ -70,9 +70,8 @@ func add_player(is_ready=true):
 	pass
 
 
-func reset(gid: int, matchId: String, playerMax: int = 10, readyCount: int = 0):
+func reset(gid: int, playerMax: int = 10, readyCount: int = 0):
 	game_id = gid
-	match_id = matchId
 	player_total = playerMax
 	timer.stop()
 	player_icons.clear()
@@ -113,7 +112,7 @@ func check_ready():
 		print("匹配到游戏 时间:%d 准备人数:%d 总人数:%d" % [timer_value, ready_count, player_total])
 		visible = false
 		SignalManager.StartGameSIG.emit(game_id)
-		reset(game_id, "", player_total)
+		reset(game_id, player_total)
 		return true
 	return false
 
@@ -144,7 +143,7 @@ func _on_accept_pressed():
 	accept_button.disabled = true
 	decline_button.visible = false
 	SignalManager.MatchSuccessTimeMusicSIG.emit(true)
-	var ret = await OnlineGame.sendToMatch(match_id, MatchState.GameReady, "1")
+	var ret = await OnlineGame.sendToMatch(MatchState.GameReady, "1")
 	if ret and ret.is_exception():
 		accept_button.disabled = false
 		decline_button.visible = true
@@ -157,7 +156,7 @@ func _on_decline_pressed():
 	# Handle decline logic
 	print("取消游戏 match_id:", match_id)
 	timer_label.text = base_text_2 % [0]
-	await OnlineGame.sendToMatch(match_id, MatchState.GameReadyCancel, "0")
+	await OnlineGame.sendToMatch(MatchState.GameReadyCancel, "0")
 	pass
 
 

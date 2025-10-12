@@ -11,6 +11,7 @@ extends Node2D
 
 @onready var over: CanvasLayer = %over
 @onready var label: Label = $over/Label
+const proto = preload("res://gdprotobuf/chineseChess.gd")
 
 const chess_qizi = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
 
@@ -21,6 +22,20 @@ const PLAYER_CHESS_P = preload("res://scenes/game/xiangqi/I/player_chess/_/playe
 const PLAYER_CHESS_S = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_s.tscn")
 const PLAYER_CHESS_X = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_x.tscn")
 const PLAYER_CHESS_Z = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_z.tscn")
+
+enum OpCode {
+	OpXiangqiGameStart = 2000,               # 象棋游戏开始
+	OpXiangqiMove,  				# 象棋移动
+	OpXiangqiGameEnd,                 # 象棋游戏结束
+	OpXiangqiSurrender,               # 象棋投降
+	OpXiangqiDraw,                   # 象棋求和
+	OpXiangqiDrawAccept,            # 象棋同意求和
+	OpXiangqiDrawReject,               # 象棋拒绝求和
+	OpXiangqiUndo,                 # 象棋悔棋
+	OpXiangqiUndoAccept,            # 象棋同意悔棋
+	OpXiangqiUndoReject,             # 象棋拒绝悔棋
+	OpXiangqiMoveError,              # 象棋移动错误
+}
 
 enum ChessType {
 	NONE,
@@ -47,6 +62,7 @@ var y9 = [1, 3, 6, 5, 2, 5, 6, 3, 1]
 var size1: int = 58
 
 var start_player: int = 1
+var my_clolor: int = 1 # 0黑 1红
 var V_chess: chess_position
 var is_waiting_for_opponent: bool = false
 var game_ended: bool = false # 游戏是否已结束（绝杀或困毙）
@@ -62,13 +78,67 @@ var pre_chess_red: chess_position
 
 
 func _ready() -> void:
+	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
+
+
+func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
+	print("象棋游戏接收数据: ", data)
+	match data.op_code:
+		OpCode.OpXiangqiGameStart:
+			gameStart(data.data)	
+		OpCode.OpXiangqiMove:
+			gameMove(data.binary_data)
+	pass
+###############################################################################################
+func gameStart(data) -> void:
+	if data == null:
+		return
+	var json_conv = JSON.new()
+	var error_code = json_conv.parse(data,true)
+	if error_code != OK:
+		print("Error parsing JSON: " + json_conv.get_error_message(), " ---", data)
+		return
 	# SettingsManager.show_settings() 
+
+	# 黑方先走，动画初始在黑方最优棋子上
+	var result = json_conv.get_data()
+	start_player = result.gameState.current_turn
+	var uid = OnlineLogin.get_my_id()
+	if uid == result.redPlayer:
+		my_clolor = 1
+	else:
+		my_clolor = 0
+	print("象棋游戏开始 ", result," uid:",uid," my_clolor:",my_clolor)
 	add_position()
 	add_player_chess()
-	# 黑方先走，动画初始在黑方最优棋子上
-	start_player = 1
 	jump_to_best_piece_for_player_move()
+	pass
+
+func gameMove(data) -> void:
+	print("象棋游戏移动 ", data)
+	var resp = proto.ChineseChessMoveResp.new()
+	resp.from_bytes(data)
+	print("象棋游戏移动 解析后 ", resp)
+	var uid = OnlineLogin.get_my_id()
+	print("象棋游戏移动 当前用户id ", uid, " 移动用户id ", resp.get_userID())
+	if uid == resp.get_userID():
+		return
+	var cell = resp.get_cell()
+	var orginX = cell.get_pos().get_row()
+	var orginY = cell.get_pos().get_col()
+	var orgin = chess_position_array[orginX][orginY]
 	
+	V_chess = orgin
+	var toPos = resp.get_toPos()
+	var desX = toPos.get_row()
+	var desY = toPos.get_col()
+	var des = chess_position_array[desX][desY]
+	move(des)
+	pass
+
+
+
+###############################################################################################
 func add_position() -> void:
 	for x in 9:
 		var chess_position_array_ = []
@@ -78,6 +148,7 @@ func add_position() -> void:
 			V_CHESS_QIZI.position = Vector2(x * size1, y * size1)
 			V_CHESS_QIZI.V_position = Vector2(x, y)
 			V_CHESS_QIZI.connect("move", move)
+			V_CHESS_QIZI.chess_color = 0
 			if y >= 5:
 				V_CHESS_QIZI.chess_color = 1
 			chess_position_array_.append(V_CHESS_QIZI)
@@ -101,7 +172,7 @@ func add_player_chess_array(chess: Array) -> void:
 	start_x = 0
 	for i in chess:
 		if i >= 1 and i < 8:
-			var results = reture_chess(i - 1)
+			var results = reture_chess(i)
 			b_chessposition.add_child(results)
 			results.position = Vector2(start_x * size1, start_y * size1)
 			results.change(chess_position_array[start_x][start_y].chess_color)
@@ -151,19 +222,19 @@ func get_chess_name(chess_instance) -> String:
 
 func reture_chess(chess: int):
 	match chess:
-		0:
-			return PLAYER_CHESS_C.instantiate()
 		1:
-			return PLAYER_CHESS_J.instantiate()
+			return PLAYER_CHESS_C.instantiate()
 		2:
-			return PLAYER_CHESS_M.instantiate()
+			return PLAYER_CHESS_J.instantiate()
 		3:
-			return PLAYER_CHESS_P.instantiate()
+			return PLAYER_CHESS_M.instantiate()
 		4:
-			return PLAYER_CHESS_S.instantiate()
+			return PLAYER_CHESS_P.instantiate()
 		5:
-			return PLAYER_CHESS_X.instantiate()
+			return PLAYER_CHESS_S.instantiate()
 		6:
+			return PLAYER_CHESS_X.instantiate()
+		7:
 			return PLAYER_CHESS_Z.instantiate()
 	pass
 
@@ -305,6 +376,7 @@ func set_pre_move(pre_chess, new_chess):
 func _move_end(chess:chess_position) -> void:
 	var to_position = chess.V_position
 	var from_position = V_chess.V_position
+		
 	chess.play = V_chess.play
 	V_chess.play = null
 	chess.play.position = chess.position
@@ -324,7 +396,23 @@ func _move_end(chess:chess_position) -> void:
 			pre_chess_black = null
 	if not check_xiangqi_status():
 		return
-		
+	
+	# 发生移动协议
+	var move_req = proto.ChineseChessMoveReq.new()
+	# 创建并填充 cell（起始格）
+	var cell = move_req.new_cell()
+	var pos_from = cell.new_pos() if cell.has_method("new_pos") else cell.get_pos()
+	cell.set_piece(get_chess_type(chess.play))
+	pos_from.set_row(from_position.x)
+	pos_from.set_col(from_position.y)
+ 	# 填充目标位置
+	var topos = move_req.new_toPos()
+	if topos:
+		topos.set_row(to_position.x)
+		topos.set_col(to_position.y)
+	# 序列化为字节
+	var resp = move_req.to_bytes()
+
 	var strChess = JSON.stringify({
 		"color": chess.play.chess_color,
 		"play": get_chess_type(chess.play),
@@ -332,7 +420,7 @@ func _move_end(chess:chess_position) -> void:
 		"to": to_position,
 	})
 	print("MOVE  ", strChess)
-	OnlineGame.sendToMatch(OnlineMatch.get_match_id(), 100, strChess, null)
+	OnlineGame.sendToMatchRpc(OpCode.OpXiangqiMove, resp, null)
 	change_player()
 	player_move._change_color()
 	is_waiting_for_opponent = false

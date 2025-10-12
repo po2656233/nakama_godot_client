@@ -158,7 +158,7 @@ func _on_match_cancel():
 # 匹配成功
 func _on_match_sucess(matchData):
 	curMatchId = matchData.match_id
-	match_sucess.reset(game_id, curMatchId, matching.maxplayer)
+	match_sucess.reset(game_id, matching.maxplayer)
 	matching.hide()
 	match_sucess.start(1.0)
 	match_sucess.popup_centered()
@@ -166,7 +166,7 @@ func _on_match_sucess(matchData):
 
 # 游戏取消
 func _on_game_cancel(_game_id):
-	await OnlineMatch.LeaveMatch(curMatchId)
+	await OnlineMatch.LeaveMatch()
 	print("取消准备游戏 match_id:", curMatchId)
 	await get_tree().create_timer(1.5).timeout
 	PopupManager.show_dynamic("游戏已取消")

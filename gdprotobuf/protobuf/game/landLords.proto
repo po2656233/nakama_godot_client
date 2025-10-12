@@ -43,7 +43,7 @@ message LandLordsStateStartResp {
 //(叫分)
 message LandLordsStateCallResp {
   TimeInfo times = 1;// 叫分剩余时间
-  int64 userID = 2; // 玩家ID
+  string userID = 2; // 玩家ID
 }
 //(加倍)
 message LandLordsStateDoubleResp {
@@ -66,7 +66,7 @@ message LandLordsStateOverResp {
 ///////////////////////////
 // 发牌
 message LandLordsDealResp {
-  int64 userID = 1;    // 玩家ID
+  string userID = 1;    // 玩家ID
   bytes cardsHand = 2;  // 手牌
 }
 // 广播抢地主后的玩家(抱歉 此处仅用于展示用,插入牌值用LandLordsDealResp)
@@ -83,14 +83,14 @@ message LandLordsReadyReq {
 }
 message LandLordsReadyResp {
   bool isReady = 1; // 玩家准备，可以取消准备
-  int64 userID = 2;
+  string userID = 2;
 }
 // 叫分
 message LandLordsCallReq {
   int64 score = 1; // 叫分 0:不叫 1: 2: 3:
 }
 message LandLordsCallResp {
-  int64 userID = 1; // 玩家ID
+  string userID = 1; // 玩家ID
   int64  score = 2; // 叫分 0:不叫 1: 2: 3:
 }
 // 加倍
@@ -98,21 +98,21 @@ message LandLordsDoubleReq {
   int64 multiple = 1; // 额外倍数  1:加倍 2:超级加倍:
 }
 message LandLordsDoubleResp {
-  int64 userID = 1; // 玩家ID
+  string userID = 1; // 玩家ID
   int64 multiple = 2; // 额外倍数  1:加倍 2:超级加倍:
 }
 //明牌
 message LandLordsMingReq {
 }
 message LandLordsMingResp {
-  int64 userID = 1; // 玩家ID
+  string userID = 1; // 玩家ID
 }
 // 托管
 message LandLordsTrusteeReq {
   bool isTrustee = 1; //是否托管
 }
 message LandLordsTrusteeResp {
-  int64 userID = 1; // 玩家ID
+  string userID = 1; // 玩家ID
   bool isTrustee = 2; //是否托管
 }
 // 出牌
@@ -120,7 +120,7 @@ message LandLordsOutCardReq {
   CardInfo cards = 1;//
 }
 message LandLordsOutCardResp {
-  int64 userID = 1; // 玩家ID
+  string userID = 1; // 玩家ID
   CardInfo cards = 2;// 牌值为空==要不起
 }
 //-----------------------------

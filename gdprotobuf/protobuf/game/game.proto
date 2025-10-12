@@ -106,7 +106,7 @@ message TrusteeReq {
   bool isTrustee = 1; //是否托管
 }
 message TrusteeResp {
-  int64 userID = 1; // 玩家ID
+  string userID = 1; // 玩家ID
   bool isTrustee = 2; //是否托管
 }
 //扔骰子

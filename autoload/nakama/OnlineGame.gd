@@ -41,10 +41,22 @@ var kind_en_names = {
 func initGameList():
 	games_data = []
 ##################################################################################
-func sendToMatch(p_match_id, p_op_code : int, p_data : String, p_presences = null):
+func sendToMatch(p_op_code : int, p_data : String, p_presences = null):
+	var p_match_id = OnlineMatch.get_match_id()
 	if Online.nakama_socket and p_match_id != "":
 		print("发送至比赛%s 操作码:%d 数据:%s"%[p_match_id, p_op_code, p_data])
 		var result = await Online.nakama_socket.send_match_state_async(p_match_id, p_op_code, p_data, p_presences)
+		if result.is_exception():
+			PopupManager.show_dynamic("数据异常 " + result.get_exception().message)
+			return null
+		return result
+	return null
+
+func sendToMatchRpc(p_op_code : int, p_data : PackedByteArray, p_presences = null):
+	var p_match_id = OnlineMatch.get_match_id()
+	if Online.nakama_socket and p_match_id != "":
+		print("发送至比赛%s 操作码:%d 数据:%s"%[p_match_id, p_op_code, p_data])
+		var result = await Online.nakama_socket.send_match_state_raw_async(p_match_id, p_op_code, p_data, p_presences)
 		if result.is_exception():
 			PopupManager.show_dynamic("数据异常 " + result.get_exception().message)
 			return null

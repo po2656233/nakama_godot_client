@@ -29,6 +29,7 @@ enum MatchState {
 	WAITING_FOR_ENOUGH_PLAYERS = 3,
 	READY = 4,
 	PLAYING = 5,
+	LOADING_MAP_FINISH = 9999,
 }
 var match_state: int = MatchState.LOBBY: get = get_match_state # , set = _set_readonly_variable
 
@@ -49,6 +50,7 @@ enum MatchOpCode {
 	CUSTOM_RPC = 9001,
 	JOIN_SUCCESS = 9002,
 	JOIN_ERROR = 9003,
+	
 }
 
 signal error(message)
@@ -413,13 +415,13 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 
 func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 	var test_json_conv = JSON.new()
-	var error_code = test_json_conv.parse(data.data)
+	var error_code = test_json_conv.parse(data.data,true)
 	if error_code != OK:
 		print("Error parsing JSON: " + test_json_conv.get_error_message(), " ---", data)
 		# Handle the error here (e.g., return, show a message)
 		# return
 	var json_result = test_json_conv.get_data()
-	print('玩家状态信息:', json_result)
+	print('nakama玩家状态信息:', json_result)
 	var content = json_result
 	if data.op_code == MatchOpCode.CUSTOM_RPC:
 		if content['peer_id'] == 0 or content['peer_id'] == my_peer_id:
@@ -433,7 +435,7 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 				return
 
 			node.callv(content['method'], str_to_var(content['args']))
-	if data.op_code == MatchOpCode.JOIN_SUCCESS && match_mode == MatchMode.JOIN:
+	elif data.op_code == MatchOpCode.JOIN_SUCCESS && match_mode == MatchMode.JOIN:
 		var host_client_version = content.get('client_version', '')
 		if client_version != host_client_version:
 			leave()
@@ -448,10 +450,12 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 				emit_signal("player_joined", players[session_id])
 				emit_signal("player_status_changed", players[session_id], PlayerStatus.CONNECTED)
 		_check_enough_players()
-	if data.op_code == MatchOpCode.JOIN_ERROR:
+	elif data.op_code == MatchOpCode.JOIN_ERROR:
 		if content['target'] == my_session_id:
 			leave()
 			emit_signal("error", content['reason'])
+	else:
+		print("Unknown op_code:", data.op_code)
 	pass
 
 

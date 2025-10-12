@@ -25,7 +25,7 @@ var url_path = ""
 var http_request = HTTPRequest.new()
 var scene_files = []
 var is_http_request = false
-
+var is_full = false
 enum LOAD_TEPE{
 	LOADING = 1,
 	LOAD_GAME = 2
@@ -59,16 +59,18 @@ func _process(delta):
 
 	# 平滑更新进度条
 	if progress < target_progress:
+		is_full = false
 		progress = min(progress + delta * 100, target_progress)
 	progress_bar.value = progress
 	update_progress_label(progress)
-	if progress == 100:
+	if progress == 100 and not is_full:
+		is_full = true
 		close_loading()
 	elif progress <= -1.0:
 		reback()
 	pass
 
-
+# ###############################初始化数据##########################################
 func init_data():
 	progress = 0.0
 	target_progress = 0.0
@@ -91,12 +93,13 @@ func reback():
 	pass
 
 func close_loading():
-	var timer = get_tree().create_timer(0.2)
-	await timer.timeout
 	if load_type == LOAD_TEPE.LOADING:
 		SceneManager.switch_to_scene(next_scene, "tile_reveal", 1)
 	elif load_type == LOAD_TEPE.LOAD_GAME:
 		SceneManager.ToGameScene(next_scene)
+		await OnlineGame.sendToMatch(OnlineMatch.MatchState.LOADING_MAP_FINISH, "1")
+	var timer = get_tree().create_timer(0.2)
+	await timer.timeout
 	queue_free()
 	pass
 
