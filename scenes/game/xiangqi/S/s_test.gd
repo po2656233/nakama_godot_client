@@ -133,7 +133,7 @@ func gameMove(data) -> void:
 	var desX = toPos.get_row()
 	var desY = toPos.get_col()
 	var des = chess_position_array[desX][desY]
-	move(des)
+	otherMove(des)
 	pass
 
 
@@ -151,6 +151,7 @@ func add_position() -> void:
 			V_CHESS_QIZI.chess_color = 0
 			if y >= 5:
 				V_CHESS_QIZI.chess_color = 1
+				
 			chess_position_array_.append(V_CHESS_QIZI)
 		chess_position_array.append(chess_position_array_)
 	pass
@@ -183,6 +184,8 @@ func add_player_chess_array(chess: Array) -> void:
 
 # 添加获取棋子类型的方法
 func get_chess_type(chess_instance) -> ChessType:
+	if chess_instance == null:
+		return ChessType.NONE
 	if chess_instance is player_chess_c:
 		return ChessType.CHESS_C
 	elif chess_instance is player_chess_j:
@@ -240,6 +243,10 @@ func reture_chess(chess: int):
 
 
 func move(chess: chess_position):
+	if start_player != my_clolor:
+		PopupManager.show_dynamic("等待对方操作")
+		cuowu.play()
+		return	
 	# 检查游戏是否已结束（绝杀或困毙）
 	if game_ended:
 		PopupManager.show_dynamic("游戏已结束，请重新开始！")
@@ -325,8 +332,99 @@ func move(chess: chess_position):
 	pass
 
 
+
+func otherMove(chess: chess_position):
+	# 检查游戏是否已结束（绝杀或困毙）
+	if game_ended:
+		PopupManager.show_dynamic("游戏已结束，请重新开始！")
+		cuowu.play()
+		return
+	
+
+	# 只有当前方才能操作
+	if V_chess == null:
+		if chess.play != null:
+			if chess.play.chess_color == start_player:
+				V_chess = chess
+				player_move.visible = true
+				player_move.position = V_chess.position
+	elif chess == V_chess:
+		pass
+	else:
+		if chess.play != null:
+			if chess.play.chess_color == start_player:
+				V_chess = chess
+				player_move.visible = true
+				player_move.position = V_chess.position
+			else:
+				if V_chess.play == null or not V_chess.play.has_method("move"):
+					cuowu.play()
+					print("移动---1")
+					return
+				if is_only_blocker_and_leaving_x(V_chess, chess):
+					PopupManager.show_dynamic("该棋子不能横向离开将帅之间的纵线！")
+					cuowu.play()
+					return
+				if is_facing_kings(V_chess, chess):
+					PopupManager.show_dynamic("将帅不能面对面！")
+					cuowu.play()
+					return
+				# 先检查移动是否合法
+				if V_chess.play.move(V_chess, chess, chess_position_array):
+					# 检查移动后是否会导致自己被将军
+					if will_cause_self_check(V_chess, chess):
+						PopupManager.show_dynamic("被将军!!")
+						cuowu.play()
+						return
+					if chess.play and chess.play.has_method("game_over") and chess.play.game_over():
+						game_over()
+					chess.play.queue_free()
+					_move_end(chess)
+					chi.play()
+					if is_kings_facing():
+						_undo_last_move()
+						PopupManager.show_dynamic("将帅面对面了！")
+						cuowu.play()
+						return
+					check_xiangqi_status()
+				else:
+					cuowu.play()
+		else:
+			if V_chess.play == null or not V_chess.play.has_method("move"):
+				return
+			if is_only_blocker_and_leaving_x(V_chess, chess):
+				PopupManager.show_dynamic("将帅不能见面！")
+				cuowu.play()
+				return
+			if is_facing_kings(V_chess, chess):
+				PopupManager.show_dynamic("将帅不能见面！")
+				cuowu.play()
+				return
+			# 先检查移动是否合法
+			if V_chess.play.move(V_chess, chess, chess_position_array):
+				# 检查移动后是否会导致自己被将军
+				if will_cause_self_check(V_chess, chess):
+					PopupManager.show_dynamic("被将军！")
+					cuowu.play()
+					return
+				_move_end(chess)
+				luozi.play()
+				if is_kings_facing():
+					_undo_last_move()
+					PopupManager.show_dynamic("将帅不能面对面！")
+					cuowu.play()
+					return
+				check_xiangqi_status()
+			else:
+				cuowu.play()
+	pass
+
+
+
 # 判断移动是否会导致自己被将军
 func will_cause_self_check(from_pos: chess_position, to_pos: chess_position) -> bool:
+	if to_pos.play == null:
+		return false
 	# 保存目标位置的原始棋子
 	var original_piece = to_pos.play
 	
@@ -371,7 +469,6 @@ func set_pre_move(pre_chess, new_chess):
 		player_move.position = pre_chess.position
 	pre_chess = new_chess
 	pass
-
 
 func _move_end(chess:chess_position) -> void:
 	var to_position = chess.V_position
