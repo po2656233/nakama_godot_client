@@ -110,7 +110,7 @@ func set_next_scene(scene_name: String):
 
 func set_progress(value: float):
 	# 设置目标进度值（0-100）
-	target_progress = clamp(value, 0, 100)
+	target_progress = clamp(value, -5, 100)
 	pass
 
 func update_progress_label(value: float):
@@ -134,7 +134,7 @@ func _on_load_game(game_id):
 	print("开始下载游戏资源：", gameName, " ID:", game_id)
 	gameName = gameName.to_lower()
 	if not SceneManager.has_scene(gameName):
-		SignalManager.LoadingSIG.emit(-1)
+		reback()
 		PopupManager.show_dynamic("%s游戏正在招商中..."%[gameName])
 		return
 	game_name = gameName

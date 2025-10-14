@@ -160,6 +160,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_j4uwh")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_oybbq")
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_5wsdl")
 tab_alignment = 1
+drag_to_rearrange_enabled = true
 
 [node name="ChatPanel" type="Panel" parent="HBoxContainer"]
 layout_mode = 2
@@ -230,7 +231,10 @@ text = "发送"
 [node name="BackButton" type="Button" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
-text = "返回俱乐部列表"
+theme_override_colors/font_color = Color(0.24926916, 0.99782056, 0.92836744, 1)
+theme_override_colors/font_focus_color = Color(0.8659674, 0.988923, 0.872517, 1)
+theme_override_colors/font_pressed_color = Color(0.6592748, 0.97690326, 0.3289545, 1)
+text = "进入俱乐部列表"
 
 [node name="MembersPanel" type="Panel" parent="HBoxContainer"]
 visible = false

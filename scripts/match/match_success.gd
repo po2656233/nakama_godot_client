@@ -168,7 +168,6 @@ func _on_match_state_event(state):
 			add_player()
 		MatchState.GameReadyCancel:
 			add_player(false)
-			PopupManager.show_dynamic("玩家取消准备")
 			SignalManager.CancleGameSIG.emit(game_id)
 		MatchState.GameStart:
 			isStart = true

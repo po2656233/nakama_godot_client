@@ -7,6 +7,7 @@ extends Control
 
 @onready var chat_input: LineEdit = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/ChatInput
 @onready var send_button: Button = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer/SendButton
+@onready var club_button: Button = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/BackButton
 @onready var messages_list: VBoxContainer = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages/MessagesList
 @onready var members_panel: Panel = $HBoxContainer/MembersPanel
 @onready var chat_panel: Panel = $HBoxContainer/ChatPanel
@@ -141,7 +142,9 @@ func _on_back_button_pressed():
 	tween.tween_callback(func(): 
 		# 返回俱乐部列表
 		queue_free()
-		get_parent().get_node("ClubsPanel").visible = true
+		var parent = get_parent()
+		if parent and parent.get_node("ClubsPanel"):
+			parent.get_node("ClubsPanel").visible = true
 	)
 
 func _on_member_clicked(member_name):
@@ -298,13 +301,15 @@ func _format_number(number):
 
 func _on_game_joined(game_name):
 	is_in_game = true
-	
+	club_button.disabled = true
 	update_chat_interface()
 	add_system_message("你已加入游戏: " + game_name)
 	chat_title_label.text = "%s-聊天"%[game_name]
+	
 
 func _on_game_left(game_name):
 	is_in_game = false
+	club_button.disabled = false
 	update_chat_interface()
 	add_system_message("你已离开游戏: " + game_name)
 	chat_title_label.text = "游戏聊天"

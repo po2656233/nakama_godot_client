@@ -54,6 +54,8 @@ func populate_clubs_list():
 		clubs_list.add_child(club_item)
 		club_item.setup(club)
 		club_item.pressed.connect(_on_club_pressed.bind(club))
+		if i==0:
+			club_item.emit_signal("pressed")
 		
 		# 设置初始状态并添加出现动画
 		club_item.modulate.a = 0
@@ -63,6 +65,7 @@ func populate_clubs_list():
 		var item_tween = create_tween()
 		item_tween.tween_property(club_item, "position:x", 0, 0.3).set_delay(delay).set_ease(Tween.EASE_OUT)
 		item_tween.parallel().tween_property(club_item, "modulate:a", 1, 0.3).set_delay(delay)
+
 
 func _on_club_pressed(club):
 	# 创建转场效果
