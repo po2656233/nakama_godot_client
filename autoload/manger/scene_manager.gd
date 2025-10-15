@@ -20,6 +20,7 @@ var scenes ={
 		"email":"res://scenes/email/mail.tscn",
 		"approval":"res://scenes/approval/approval_form.tscn",
 		"clublist":"res://scenes/clublist/ClubScene.tscn",
+		"clubhome":"res://scenes/clublist/ClubDetailScene.tscn",
 		"gamelist":"res://scenes/gamelist/game_list.tscn",
 		"roomlist":"res://scenes/room/room_list.tscn",
 		"matching":"res://scenes/match/matching.tscn",

@@ -1,31 +1,11 @@
 extends Control
 
-# 示例俱乐部数据
-var clubs = [
-	{
-		"id": 1,
-		"name": "电竞俱乐部",
-		"members": ["玩家1", "玩家2", "玩家3", "玩家4"],
-		"games": ["DOTA2", "英雄联盟", "CS:GO"]
-	},
-	{
-		"id": 2,
-		"name": "休闲游戏俱乐部",
-		"members": ["成员A", "成员B", "成员C"],
-		"games": ["糖豆人", "Among Us", "派对游戏"]
-	},
-	{
-		"id": 3,
-		"name": "策略游戏爱好者",
-		"members": ["战略家1", "战略家2", "战略家3", "战略家4", "战略家5"],
-		"games": ["文明6", "全面战争", "王国风云3"]
-	}
-]
 
 # 预加载俱乐部项目场景和详情场景
 var club_item_scene = preload("res://scenes/clublist/ClubItem.tscn")
 var club_detail_scene = preload("res://scenes/clublist/ClubDetailScene.tscn")
-
+const  club_data = preload("res://scripts/clublist/ClubData.gd")
+var clubs = club_data.clubs
 func _ready():
 	# 初始化面板，设置为从上方进入
 	$ClubsPanel.modulate.a = 0
@@ -54,8 +34,6 @@ func populate_clubs_list():
 		clubs_list.add_child(club_item)
 		club_item.setup(club)
 		club_item.pressed.connect(_on_club_pressed.bind(club))
-		if i==0:
-			club_item.emit_signal("pressed")
 		
 		# 设置初始状态并添加出现动画
 		club_item.modulate.a = 0

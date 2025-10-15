@@ -16,7 +16,9 @@ extends Control
 @onready var chat_title_label: Label = $HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatTitleLabel
 @onready var info_section: GridContainer = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection
 
-var club_data = {}
+
+var club_data = preload("res://scripts/clublist/ClubData.gd").clubs[0]
+#var club_data = {}
 var member_item_scene = preload("res://scenes/clublist/MemberItem.tscn")
 var game_match_scene = preload("res://scenes/clublist/GameMatchTab.tscn")
 var current_player_popup = null
@@ -60,7 +62,7 @@ func _ready():
 	# 入场动画
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1, 0.3)
-	
+	setup(club_data)
 	switchPanel(true)
 	# 初始化聊天界面状态
 	update_chat_interface()
@@ -141,10 +143,11 @@ func _on_back_button_pressed():
 	tween.tween_property(self, "modulate:a", 0, 0.3)
 	tween.tween_callback(func(): 
 		# 返回俱乐部列表
+		SignalManager.ChangeSceneSIG.emit("clublist")
 		queue_free()
-		var parent = get_parent()
-		if parent and parent.get_node("ClubsPanel"):
-			parent.get_node("ClubsPanel").visible = true
+		#var parent = get_parent()
+		#if parent and parent.get_node("ClubsPanel"):
+			#parent.get_node("ClubsPanel").visible = true
 	)
 
 func _on_member_clicked(member_name):
