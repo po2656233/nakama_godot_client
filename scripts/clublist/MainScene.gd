@@ -43,7 +43,7 @@ func populate_clubs_list():
 		var item_tween = create_tween()
 		item_tween.tween_property(club_item, "position:x", 0, 0.3).set_delay(delay).set_ease(Tween.EASE_OUT)
 		item_tween.parallel().tween_property(club_item, "modulate:a", 1, 0.3).set_delay(delay)
-
+		
 
 func _on_club_pressed(club):
 	# 创建转场效果

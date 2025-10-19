@@ -63,6 +63,7 @@ func _ready():
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1, 0.3)
 	setup(club_data)
+	
 	switchPanel(true)
 	# 初始化聊天界面状态
 	update_chat_interface()

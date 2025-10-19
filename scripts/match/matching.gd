@@ -66,7 +66,10 @@ func _process(delta):
 		progress_value = fmod(progress_rotation, 1.0)
 		if accumulator >= 2.0:
 			accumulator = fmod(accumulator, 2.0) # 保留余数防止误差累积
-			progress_circle.material.set_shader_parameter("color", Color(randf(), randf(), randf(), 1.0))
+			var hue = randf()                # 0.0 ~ 1.0 之间的色相
+			var saturation = randf_range(0.3, 1.0)  # 高饱和度
+			var value = randf_range(0.9, 1.0)       # 高亮度
+			progress_circle.material.set_shader_parameter("color", Color.from_hsv(hue, saturation, value, 1.0))
 			SignalManager.MatchingTimeMusicSIG.emit(false)
 		progress_circle.material.set_shader_parameter("progress", progress_value)
 		#

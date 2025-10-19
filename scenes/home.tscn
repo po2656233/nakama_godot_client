@@ -233,18 +233,6 @@ label_settings = SubResource("LabelSettings_ip4d6")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="btn_match" type="Button" parent="HBoxContainerHome"]
-clip_contents = true
-custom_minimum_size = Vector2(90, 55)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-text = "竞技场"
-
 [node name="btn_room" type="Button" parent="HBoxContainerHome"]
 clip_contents = true
 custom_minimum_size = Vector2(90, 55)
@@ -256,6 +244,18 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
 theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "联盟"
+
+[node name="btn_match" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(90, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
+text = "竞技场"
 
 [node name="tb_home" type="TextureButton" parent="HBoxContainerHome"]
 custom_minimum_size = Vector2(120, 80)
@@ -269,18 +269,6 @@ texture_disabled = ExtResource("6_s23th")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="btn_zhanji" type="Button" parent="HBoxContainerHome"]
-clip_contents = true
-custom_minimum_size = Vector2(90, 55)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
-theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
-text = "战绩"
-
 [node name="btn_ranking" type="Button" parent="HBoxContainerHome"]
 clip_contents = true
 custom_minimum_size = Vector2(90, 55)
@@ -292,6 +280,18 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
 theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "排行榜"
+
+[node name="btn_zhanji" type="Button" parent="HBoxContainerHome"]
+clip_contents = true
+custom_minimum_size = Vector2(90, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_l6s4h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vl7jb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
+text = "战绩"
 
 [node name="btn_store" type="Button" parent="HBoxContainerHome"]
 clip_contents = true
@@ -489,10 +489,10 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_5rkik")
 
 [connection signal="pressed" from="HBoxContainerHome/btn_start" to="." method="_on_btn_start_pressed"]
-[connection signal="pressed" from="HBoxContainerHome/btn_match" to="." method="_on_btn_match_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_room" to="." method="_on_btn_renwu_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/btn_match" to="." method="_on_btn_match_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/tb_home" to="." method="_on_tb_home_pressed"]
-[connection signal="pressed" from="HBoxContainerHome/btn_zhanji" to="." method="_on_btn_zhanji_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_ranking" to="." method="_on_btn_ranking_pressed"]
+[connection signal="pressed" from="HBoxContainerHome/btn_zhanji" to="." method="_on_btn_zhanji_pressed"]
 [connection signal="pressed" from="HBoxContainerHome/btn_store" to="." method="_on_btn_store_pressed"]
 [connection signal="pressed" from="VBoxContainer/Chat/btn_popup" to="VBoxContainer/Chat" method="_on_btn_popup_pressed"]
