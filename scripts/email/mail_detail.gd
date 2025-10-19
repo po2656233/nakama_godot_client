@@ -10,7 +10,7 @@ var current_mail_id: int = -1
 var mail_system
 var mail_list  # 引用邮件列表节点
 func _ready():
-	mail_system = get_node("/root/MailSystem")
+	mail_system = get_node("/root/MailMgr")
 	mail_list = mail_system.get_mail_list_node()
 	mail_system.mail_selected.connect(_on_mail_selected)
 	mail_system.mail_claimed.connect(_on_mail_claimed)

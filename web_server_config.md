@@ -25,19 +25,19 @@ Header always set Cross-Origin-Resource-Policy "same-origin"
 #### Nginx配置
 ```nginx
 location / {
-    add_header Cross-Origin-Opener-Policy "same-origin";
-    add_header Cross-Origin-Embedder-Policy "require-corp";
-    add_header Cross-Origin-Resource-Policy "same-origin";
+	add_header Cross-Origin-Opener-Policy "same-origin";
+	add_header Cross-Origin-Embedder-Policy "require-corp";
+	add_header Cross-Origin-Resource-Policy "same-origin";
 }
 ```
 
 #### Node.js Express服务器
 ```javascript
 app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
-    next();
+	res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+	res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+	res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+	next();
 });
 ```
 
@@ -47,15 +47,15 @@ import http.server
 import socketserver
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
-    def end_headers(self):
-        self.send_header('Cross-Origin-Opener-Policy', 'same-origin')
-        self.send_header('Cross-Origin-Embedder-Policy', 'require-corp')
-        self.send_header('Cross-Origin-Resource-Policy', 'same-origin')
-        super().end_headers()
+	def end_headers(self):
+		self.send_header('Cross-Origin-Opener-Policy', 'same-origin')
+		self.send_header('Cross-Origin-Embedder-Policy', 'require-corp')
+		self.send_header('Cross-Origin-Resource-Policy', 'same-origin')
+		super().end_headers()
 
 with socketserver.TCPServer(("", 8000), CustomHTTPRequestHandler) as httpd:
-    print("服务器运行在 http://localhost:8000")
-    httpd.serve_forever()
+	print("服务器运行在 http://localhost:8000")
+	httpd.serve_forever()
 ```
 
 ### 3. 本地测试

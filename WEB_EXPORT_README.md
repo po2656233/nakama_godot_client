@@ -96,9 +96,9 @@ Header always set Cross-Origin-Resource-Policy "same-origin"
 ### Nginx
 ```nginx
 location / {
-    add_header Cross-Origin-Opener-Policy "same-origin";
-    add_header Cross-Origin-Embedder-Policy "require-corp";
-    add_header Cross-Origin-Resource-Policy "same-origin";
+	add_header Cross-Origin-Opener-Policy "same-origin";
+	add_header Cross-Origin-Embedder-Policy "require-corp";
+	add_header Cross-Origin-Resource-Policy "same-origin";
 }
 ```
 

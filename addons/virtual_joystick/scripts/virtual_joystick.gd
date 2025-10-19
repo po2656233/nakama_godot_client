@@ -14,7 +14,8 @@ signal analogic_released
 @export var action_up := "ui_up"
 ## 向下方向
 @export var action_down := "ui_down"
-
+## 选择
+@export var action_accept := "ui_accept"
 
 
 @export_group("Settings")
@@ -62,10 +63,7 @@ func _ready() -> void:
 	touch.position = -radius
 	touch.released.connect(analogic_released.emit)
 
-	if ProjectSettings.get_setting("input_devices/pointing/emulate_mouse_from_touch"):
-		printerr("The Project Setting 'emulate_mouse_from_touch' should be set to False")
-	if not ProjectSettings.get_setting("input_devices/pointing/emulate_touch_from_mouse"):
-		printerr("The Project Setting 'emulate_touch_from_mouse' should be set to True")
+	
 	
 	if stick_pressed == null:
 		stick_pressed = preload("res://addons/virtual_joystick/sprites/stick_pressed.png")
@@ -80,7 +78,7 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	# 只处理触摸和拖动事件
-	if not (event is InputEventScreenDrag or event is InputEventScreenTouch):
+	if not (event is InputEventScreenDrag or event is InputEventScreenTouch ):
 		return
 		
 	var event_dist_from_center = (event.position - global_position).length()
@@ -121,14 +119,16 @@ func _input(event: InputEvent) -> void:
 			touch.texture_normal = stick if is_instance_valid(stick) else preload("res://addons/virtual_joystick/sprites/stick.png")
 			
 			# 释放摇杆控制的所有动作
-			if Input.is_action_pressed(action_left):
+			if _has_action(action_left) and Input.is_action_pressed(action_left):
 				Input.action_release(action_left)
-			if Input.is_action_pressed(action_right):
+			if _has_action(action_right) and Input.is_action_pressed(action_right):
 				Input.action_release(action_right)
-			if Input.is_action_pressed(action_up):
+			if _has_action(action_up) and Input.is_action_pressed(action_up):
 				Input.action_release(action_up)
-			if Input.is_action_pressed(action_down):
+			if _has_action(action_down) and Input.is_action_pressed(action_down):
 				Input.action_release(action_down)
+			if _has_action(action_accept) and Input.is_action_pressed(action_accept):
+				Input.action_release(action_accept)
 			
 			# 只有当启用了joystick_area_only时，才标记事件为已处理
 			if joystick_area_only and is_in_joystick_area:
@@ -146,21 +146,27 @@ func get_value() -> Vector2:
 func change_direction(dir_joystick: Vector2):
 	var dir = dir_joystick
 	# 释放之前的方向输入
-	if Input.is_action_pressed(action_left) and dir.x >= -0.3:
+	if _has_action(action_left) and Input.is_action_pressed(action_left) and dir.x >= -0.3:
 		Input.action_release(action_left)
-	if Input.is_action_pressed(action_right) and dir.x <= 0.3:
+	if _has_action(action_right) and Input.is_action_pressed(action_right) and dir.x <= 0.3:
 		Input.action_release(action_right)
-	if Input.is_action_pressed(action_up) and dir.y >= -0.3:
+	if _has_action(action_up) and Input.is_action_pressed(action_up) and dir.y >= -0.3:
 		Input.action_release(action_up)
-	if Input.is_action_pressed(action_down) and dir.y <= 0.3:
+	if _has_action(action_down) and Input.is_action_pressed(action_down) and dir.y <= 0.3:
 		Input.action_release(action_down)
-	
+	if _has_action(action_accept) and Input.is_action_pressed(action_accept) and dir.y <= 0.3:
+		Input.action_release(action_accept)	
+		
 	# 根据摇杆位置触发方向输入
-	if dir.x < -0.3:
+	if dir.x < -0.3 and _has_action(action_left):
 		Input.action_press(action_left, -dir.x)
-	if dir.x > 0.3:
+	if dir.x > 0.3 and _has_action(action_right):
 		Input.action_press(action_right, dir.x)
-	if dir.y < -0.3:
+	if dir.y < -0.3 and _has_action(action_up):
 		Input.action_press(action_up, -dir.y)
-	if dir.y > 0.3:
+	if dir.y > 0.3 and _has_action(action_down):
 		Input.action_press(action_down, dir.y)
+
+# 新增：在文件末尾或合适位置添加此辅助函数
+func _has_action(name: String) -> bool:
+	return name != null and name != "" and InputMap.has_action(name)

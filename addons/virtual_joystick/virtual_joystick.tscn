@@ -28,18 +28,20 @@ script/source = "extends CanvasLayer
 @export var action_up := \"ui_up\"
 ## 向下
 @export var action_down := \"ui_down\"
+##
+@export var action_accept := \"ui_accept\"
 
 @export_group(\"功能映射\")
 ## x键对应的用户自定义的映射
-@export var action_x := \"ui_null\"
+@export var action_x := \"\"
 ## y键对应的用户自定义的映射
-@export var action_y := \"ui_null\"
+@export var action_y := \"\"
 ## z键对应的用户自定义的映射
-@export var action_z := \"ui_null\"
+@export var action_z := \"\"
 ## a键对应的用户自定义的映射
-@export var action_a := \"ui_null\"
+@export var action_a := \"\"
 ## b键对应的用户自定义的映射
-@export var action_b := \"ui_null\"
+@export var action_b := \"\"
 
 ## 当不松手时,一直触发A所映射的键
 @export var a_keep_pressed := true
@@ -77,6 +79,7 @@ func _ready() -> void:
 	virtual_joystick.action_right = action_right
 	virtual_joystick.action_up = action_up
 	virtual_joystick.action_down = action_down
+	virtual_joystick.action_accept = action_accept
 	pass
 
 func _process(_delta):
@@ -102,23 +105,21 @@ func pressKey(key:Key):
 	pass
 
 func pressAction(action:String):
-	if not releaseAction(action):
+	# 仅在动作名非空且已在 InputMap 中注册时才触发
+	if action.is_empty() or  not InputMap.has_action(action) :
 		return
-	#if Input.is_action_pressed(action):
-		#Input.action_release(action)
-	
-	 # 添加持续触发逻辑
+	# 先释放已有状态，再发送按下
+	releaseAction(action)
 	var event = InputEventAction.new()
 	event.action = action
 	event.pressed = true
-	event.strength = 1.0  # 保持压力值
-	
-	# 需要保持事件在输入队列中
+	event.strength = 1.0
 	Input.parse_input_event(event)
-	Input.action_press(action, 1.0)  # 保持持续按压状态
+	Input.action_press(action, 1.0)
+	pass
 
 func releaseAction(action:String)->bool:
-	if not action.is_empty() and action != \"ui_null\":
+	if not action.is_empty():
 		Input.action_release(action)
 		return true
 	return false

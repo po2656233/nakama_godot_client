@@ -7,11 +7,11 @@ signal closeMailSIG()
 # @onready var home_scene = preload("res://scenes/home.tscn").instantiate()
 @onready var clear_button = $Panel/ClearButton
 
-var mail_system: MailSystem
+var mail_manger: MailMgr
 
 func _ready():
-	mail_system = get_node("/root/MailSystem")
-	mail_system.set_mail_list_node(self)  # 设置引用
+	mail_manger = get_node("/root/MailMgr")
+	mail_manger.set_mail_list_node(self)  # 设置引用
 	clear_button.pressed.connect(_on_clear_button_pressed)
 	_load_mail_list()
 	# _update_clear_button()
@@ -22,7 +22,7 @@ func _load_mail_list():
 		child.queue_free()
 	
 	# 加载邮件列表
-	var mails = mail_system.get_mail_list()
+	var mails = mail_manger.get_mail_list()
 	for mail_data in mails:
 		var mail_item = mail_item_scene.instantiate()
 		mail_list_container.add_child(mail_item)
@@ -34,16 +34,16 @@ func _load_mail_list():
 
 func _on_mail_item_pressed(mail_data: Dictionary):
 	print("选中了")
-	mail_system.mail_selected.emit(mail_data)
+	mail_manger.mail_selected.emit(mail_data)
 
 func _on_clear_button_pressed():
-	if mail_system.clear_claimed_mails():
+	if mail_manger.clear_claimed_mails():
 		_load_mail_list()
 
 func _update_clear_button():
 	# 检查是否有已领取的邮件
 	var has_claimed = false
-	for mail in mail_system.get_mail_list():
+	for mail in mail_manger.get_mail_list():
 		if mail["is_claimed"]:
 			has_claimed = true
 			break
