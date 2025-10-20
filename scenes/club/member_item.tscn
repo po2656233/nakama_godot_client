@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://riqfmggkqpf6"]
 
-[ext_resource type="Script" uid="uid://b2x056pg1xip" path="res://scenes/club/member_item.gd" id="1_xxxxx"]
+[ext_resource type="Script" uid="uid://b2x056pg1xip" path="res://scripts/club/member_item.gd" id="1_xxxxx"]
 
 [node name="MemberItem" type="PanelContainer"]
 custom_minimum_size = Vector2(0, 70)

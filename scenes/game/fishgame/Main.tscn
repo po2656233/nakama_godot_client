@@ -80,8 +80,6 @@ grow_vertical = 1
 [node name="CreditsScreen" parent="UILayer/Screens" instance=ExtResource("9_tqcnr")]
 visible = false
 layout_mode = 1
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Overlay" type="Control" parent="UILayer"]
 visible = false
