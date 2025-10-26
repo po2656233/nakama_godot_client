@@ -27,10 +27,10 @@ func _on_match_button_pressed(mode) -> void:
 			return
 
 	# Connect socket to realtime Nakama API if not connected.
-	if not Online.is_nakama_socket_connected():
-		print("socket not connected")
-		Online.connect_nakama_socket()
-		await Online.socket_connected
+	#if not Online.is_nakama_socket_connected():
+		#print("socket not connected")
+		#Online.connect_nakama_socket()
+		#await Online.socket_connected
 
 	ui_layer.hide_message()
 
@@ -68,6 +68,7 @@ func _start_matchmaking() -> void:
 		"numeric_properties": {
 			"maxplayer": min_players,
 			"vip": 1,
+			"tickRate":60,
 		}
 		})
 	print("Match_screen_start_matchmaking")

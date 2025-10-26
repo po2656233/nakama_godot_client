@@ -249,19 +249,19 @@ func change_direction(dir_joystick: Vector2):
 	# 根据摇杆位置触发方向输入
 	if dir.x < -0.3 and _has_action(action_left):
 		Input.action_press(action_left, -dir.x)
-		print("[VirtualJoystick] direction=",action_left)
+		# print("[VirtualJoystick] direction=",action_left)
 		
 	if dir.x > 0.3 and _has_action(action_right):
 		Input.action_press(action_right, dir.x)
-		print("[VirtualJoystick] direction=",action_right)
+		# print("[VirtualJoystick] direction=",action_right)
 
 	if dir.y < -0.3 and _has_action(action_up):
 		Input.action_press(action_up, -dir.y)
-		print("[VirtualJoystick] direction=",action_up)
+		# print("[VirtualJoystick] direction=",action_up)
 
 	if dir.y > 0.3 and _has_action(action_down):
 		Input.action_press(action_down, dir.y)
-		print("[VirtualJoystick] direction=",action_down)
+		# print("[VirtualJoystick] direction=",action_down)
 
 # 新增：在文件末尾或合适位置添加此辅助函数
 func _has_action(name: String) -> bool:

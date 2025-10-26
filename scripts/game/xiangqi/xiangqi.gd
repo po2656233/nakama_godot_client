@@ -13,15 +13,15 @@ extends Node2D
 @onready var label: Label = $over/Label
 const proto = preload("res://gdprotobuf/chineseChess.gd")
 
-const chess_qizi = preload("res://scenes/game/xiangqi/M/chess_position.tscn")
+const chess_qizi = preload("res://scenes/game/xiangqi/move/chess_position.tscn")
 
-const PLAYER_CHESS_C = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_c.tscn")
-const PLAYER_CHESS_J = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_j.tscn")
-const PLAYER_CHESS_M = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_m.tscn")
-const PLAYER_CHESS_P = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_p.tscn")
-const PLAYER_CHESS_S = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_s.tscn")
-const PLAYER_CHESS_X = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_x.tscn")
-const PLAYER_CHESS_Z = preload("res://scenes/game/xiangqi/I/player_chess/_/player_chess_z.tscn")
+const PLAYER_CHESS_C = preload("res://scenes/game/xiangqi/item/chess/chess_c.tscn")
+const PLAYER_CHESS_J = preload("res://scenes/game/xiangqi/item/chess/chess_j.tscn")
+const PLAYER_CHESS_M = preload("res://scenes/game/xiangqi/item/chess/chess_m.tscn")
+const PLAYER_CHESS_P = preload("res://scenes/game/xiangqi/item/chess/chess_p.tscn")
+const PLAYER_CHESS_S = preload("res://scenes/game/xiangqi/item/chess/chess_s.tscn")
+const PLAYER_CHESS_X = preload("res://scenes/game/xiangqi/item/chess/chess_x.tscn")
+const PLAYER_CHESS_Z = preload("res://scenes/game/xiangqi/item/chess/chess_z.tscn")
 
 enum OpCode {
 	OpXiangqiGameStart = 2000,               # 象棋游戏开始
@@ -76,10 +76,16 @@ var chess_position_array = []
 var pre_chess_black: chess_position
 var pre_chess_red: chess_position
 
+func _enter_tree():
+	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
+	pass
 
 func _ready() -> void:
-	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
-
+	add_position()
+	add_player_chess()
+	jump_to_best_piece_for_player_move()
+	pass
+	
 
 func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 	print("象棋游戏接收数据: ", data)
@@ -109,9 +115,6 @@ func gameStart(data) -> void:
 	else:
 		my_clolor = 0
 	print("象棋游戏开始 ", result," uid:",uid," my_clolor:",my_clolor)
-	add_position()
-	add_player_chess()
-	jump_to_best_piece_for_player_move()
 	pass
 
 func gameMove(data) -> void:

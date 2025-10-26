@@ -28,7 +28,7 @@ var scenes ={
 		"leaderboard":"res://scenes/1common/leaderboard.tscn",
 		
 		# 游戏初始场景映射
-		"chinesechess":"res://scenes/game/xiangqi/S/s_test.tscn",
+		"chinesechess":"res://scenes/game/xiangqi/xiangqi.tscn",
 		"tetris":"res://scenes/game/tetris/tetris.tscn",
 		"mahjong_matching":"res://scenes/game/mahjong_matching/level/main_game.tscn",
 		"battle_city":"res://scenes/game/godot4BattleCity/welcome.tscn",

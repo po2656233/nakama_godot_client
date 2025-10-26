@@ -117,6 +117,7 @@ func start_matching():
 		"numeric_properties": {
 			"maxplayer": maxplayer,
 			"vip": 1,
+			"tickRate":60,
 		}
 		})
 	# OnlineMatch.create_match(Online.nakama_socket)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://coou7p7l0b6ic"]
 
 [ext_resource type="Texture2D" uid="uid://cquwfh2palelv" path="res://assets/game/xiangqi/r_x.png" id="1_bxv6n"]
-[ext_resource type="Script" uid="uid://ddjjfosyhy5cr" path="res://scenes/game/xiangqi/I/player_chess/_/player_chess_x.gd" id="2_r0qt8"]
+[ext_resource type="Script" uid="uid://ddjjfosyhy5cr" path="res://scripts/game/xiangqi/item/chess/chess_x.gd" id="2_r0qt8"]
 [ext_resource type="Texture2D" uid="uid://ybvtlrltp0nd" path="res://assets/game/xiangqi/b_x.png" id="3_bi0bg"]
 
 [node name="player_chess_x" type="Sprite2D"]
