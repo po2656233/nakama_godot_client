@@ -9,6 +9,7 @@ class_name player_chess
 func _ready() -> void:
 	change(chess_color)
 	scale=Vector2(1.5,1.5)
+	
 func change(chess_color_:int)->void:
 	chess_color=chess_color_
 	if chess_color==0:

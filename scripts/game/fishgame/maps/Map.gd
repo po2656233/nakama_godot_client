@@ -4,10 +4,11 @@ const TILE_SIZE = Vector2(70, 70)
 @onready var virtual_joystick: CanvasLayer = $VirtualJoystick
 
 func _ready() -> void:
-	if Input.emulate_touch_from_mouse:
-		virtual_joystick.show()
-	else:
-		virtual_joystick.hide()
+	if virtual_joystick:
+		if Input.emulate_touch_from_mouse:
+			virtual_joystick.show()
+		else:
+			virtual_joystick.hide()
 	pass
 
 func map_start() -> void:

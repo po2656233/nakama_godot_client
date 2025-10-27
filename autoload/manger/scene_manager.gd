@@ -32,7 +32,7 @@ var scenes ={
 		"tetris":"res://scenes/game/tetris/tetris.tscn",
 		"mahjong_matching":"res://scenes/game/mahjong_matching/level/main_game.tscn",
 		"battle_city":"res://scenes/game/godot4BattleCity/welcome.tscn",
-		"fishgame":"res://scenes/game/fishgame/Main.tscn",
+		"fishgame": "res://scenes/game/fishgame/Game.tscn" #"res://scenes/game/fishgame/Main.tscn",
 		# "xiangqi":"scenes\game\\tetris.tscn",
 		# # 如果有重复的场景名称，将被跳过并输出警告
 		# "login": "res://scenes/another_login.tscn"  ,

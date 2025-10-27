@@ -37,6 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TitleScreen" parent="UILayer/Screens" instance=ExtResource("4_bxau0")]
+visible = false
 layout_mode = 1
 
 [node name="ConnectionScreen" parent="UILayer/Screens" instance=ExtResource("5_ie8l5")]
@@ -44,7 +45,6 @@ visible = false
 layout_mode = 1
 
 [node name="MatchScreen" parent="UILayer/Screens" instance=ExtResource("6_tvswn")]
-visible = false
 layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0

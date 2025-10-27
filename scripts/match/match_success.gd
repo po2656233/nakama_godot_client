@@ -139,16 +139,16 @@ func _on_timer_timeout():
 
 func _on_accept_pressed():
 	# Todo 请求服务端
-	print("准备游戏 match_id:", match_id)
+	print("准备游戏 ", match_id)
 	accept_button.disabled = true
 	decline_button.visible = false
 	SignalManager.MatchSuccessTimeMusicSIG.emit(true)
 	var ret = await OnlineGame.sendToMatch(MatchState.GameReady, "1")
-	if ret and ret.is_exception():
+	if not ret or (ret and ret.is_exception()):
 		accept_button.disabled = false
 		decline_button.visible = true
 		accept_button.text = "准备"
-		print("准备游戏成功",ret)
+		print("准备游戏失败",ret)
 	else:
 		accept_button.text = "已准备"
 
@@ -171,6 +171,4 @@ func _on_match_state_event(state):
 			SignalManager.CancleGameSIG.emit(game_id)
 		MatchState.GameStart:
 			isStart = true
-	
-			
 	return

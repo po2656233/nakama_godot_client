@@ -357,6 +357,19 @@ func norepeat(arr: Array) -> Array:
 	return dict.keys() # dict.values()也可以
 
 
+func uuid_to_int64_truncated(uuid_string: String) -> int:
+	# 1. 移除短横线
+	var clean_uuid: String = uuid_string.replace("-", "")
+	
+	# 2. 截取前 16 个字符 (64位)
+	# 940833b2fe3f4311 | 8cb200a35cbbc5f5
+	var part1_hex: String = clean_uuid.substr(0, 16)
+	
+	# 3. 转换为 int64。第二个参数 16 表示输入是十六进制。
+	# str_to_int 自动返回 64 位整数 (int64)
+	var int64_id: int = part1_hex.to_int()
+	
+	return int64_id
 
 # # 1. 初始化（无场景树）
 # func _init():

@@ -11,7 +11,6 @@ signal ready_pressed ()
 
 func _ready() -> void:
 	clear_players()
-
 	OnlineMatch.connect("player_joined", Callable(self, "_on_OnlineMatch_player_joined"))
 	OnlineMatch.connect("player_left", Callable(self, "_on_OnlineMatch_player_left"))
 	OnlineMatch.connect("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))

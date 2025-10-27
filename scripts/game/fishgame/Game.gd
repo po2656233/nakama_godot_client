@@ -17,7 +17,35 @@ var players_setup := {}
 signal game_started ()
 signal player_dead (player_id)
 signal game_stopped (player_id)
+enum OpCode {
+	OpFishMove = 3000 , # 移动
+	OpFishJump,                    # 跳跃
+	OpFishAttack,                  # 攻击
+	OpFishFight,                   # 开火
+	OpFishFinish,                  # 结束
+}
+# 进入场景
+func _enter_tree():
+	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
+	pass
 
+
+# 接收匹配状态事件
+func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
+	print("鱼人大作战游戏接收数据: ", data)
+	var json_conv = JSON.new()
+	var error_code = json_conv.parse(data.data,true)
+	if error_code != OK:
+		print("Error parsing JSON: " + json_conv.get_error_message(), " ---", data)
+	var json_result = json_conv.get_data()
+	print('状态信息:', json_result)
+	match data.op_code:
+		OnlineGame.game_status.Start:
+			game_start(json_result['players'])	
+		OpCode.OpFishMove:
+			pass
+	pass
+# 实现
 func _get_custom_rpc_methods() -> Array:
 	return [
 		'_do_game_setup',
@@ -43,18 +71,18 @@ func _do_game_setup(players: Dictionary) -> void:
 	players_alive = players
 
 	reload_map()
-
+	var sit = 0
 	for player_id in players:
+		sit = sit + 1
 		var other_player = Player.instantiate()
 		other_player.name = str(player_id)
 		players_node.add_child(other_player)
-
-		other_player.set_multiplayer_authority(player_id)
-		other_player.set_player_skin(player_id - 1)
-		other_player.set_player_name(players[player_id])
-		other_player.position = map.get_node("PlayerStartPositions/Player" + str(player_id)).position
-		other_player.rotation = map.get_node("PlayerStartPositions/Player" + str(player_id)).rotation
-		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(player_id))
+		other_player.set_multiplayer_authority(sit)
+		other_player.set_player_skin(sit - 1)
+		other_player.set_player_name(players[player_id].presence.Username)
+		other_player.position = map.get_node("PlayerStartPositions/Player" + str(sit)).position
+		other_player.rotation = map.get_node("PlayerStartPositions/Player" + str(sit)).rotation
+		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(sit))
 
 		if not OnlineGame.online_play:
 			other_player.player_controlled = true
@@ -127,7 +155,6 @@ func kill_player(player_id) -> void:
 
 func _on_player_dead(player_id) -> void:
 	emit_signal("player_dead", player_id)
-
 	players_alive.erase(player_id)
 	if not game_over and players_alive.size() == 1:
 		game_over = true

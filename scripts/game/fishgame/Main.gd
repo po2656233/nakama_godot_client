@@ -14,8 +14,6 @@ var players_score := {}
 var match_started := false
 
 func _ready() -> void:
-
-
 	OnlineMatch.connect("error", Callable(self, "_on_OnlineMatch_error"))
 	OnlineMatch.connect("disconnected", Callable(self, "_on_OnlineMatch_disconnected"))
 	OnlineMatch.connect("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
