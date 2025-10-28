@@ -120,7 +120,6 @@ func check_ready():
 func _on_timer_timeout():
 	if check_ready():
 		return
-
 	timer_value -= 1
 	if timer_value >= 0 and ready_count < player_total:
 		if timer_value <= timer_warn:

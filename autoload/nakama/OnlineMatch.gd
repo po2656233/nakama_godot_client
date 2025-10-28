@@ -255,12 +255,14 @@ func is_network_master_for_node(node: Node) -> bool:
 	return node.get_multiplayer_authority() == my_peer_id
 
 func custom_rpc(node: Node, method: String, args: Array = []) -> void:
-	custom_rpc_id(node, 0, method, args)
+	custom_rpc_id(node, my_peer_id, method, args)
 
 func custom_rpc_id(node: Node, id: int, method: String, args: Array = []) -> void:
-	assert(match_state == MatchState.READY or match_state == MatchState.PLAYING)
-	assert(match_id != '')
-	assert(nakama_socket != null)
+	# assert(match_state == MatchState.READY or match_state == MatchState.PLAYING)
+	# assert(match_id != '')
+	# assert(nakama_socket != null)
+	if nakama_socket == null:
+		nakama_socket = Online.get_nakama_socket()
 	if nakama_socket:
 		nakama_socket.send_match_state_async(match_id, MatchOpCode.CUSTOM_RPC, JSON.stringify({
 			peer_id = id,

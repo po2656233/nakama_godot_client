@@ -13,16 +13,17 @@ var game_playing := false
 var game_over := false
 var players_alive := {}
 var players_setup := {}
+var sitters := {} #sit:id
 
 signal game_started ()
 signal player_dead (player_id)
 signal game_stopped (player_id)
 enum OpCode {
 	OpFishMove = 3000 , # 移动
-	OpFishJump,                    # 跳跃
-	OpFishAttack,                  # 攻击
-	OpFishFight,                   # 开火
-	OpFishFinish,                  # 结束
+	OpFishJump,					# 跳跃
+	OpFishAttack,				  # 攻击
+	OpFishFight,				   # 开火
+	OpFishFinish,				  # 结束
 }
 # 进入场景
 func _enter_tree():
@@ -37,12 +38,30 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 	var error_code = json_conv.parse(data.data,true)
 	if error_code != OK:
 		print("Error parsing JSON: " + json_conv.get_error_message(), " ---", data)
-	var json_result = json_conv.get_data()
-	print('状态信息:', json_result)
+	var json_data = json_conv.get_data()
 	match data.op_code:
 		OnlineGame.game_status.Start:
-			game_start(json_result['players'])	
+			OnlineGame.online_play = true
+			game_start(json_data['players'])	
 		OpCode.OpFishMove:
+			pass
+		OnlineGame.game_status.Playing:
+			if typeof(json_data) != TYPE_FLOAT and json_data.args:
+				var parsed_args = str_to_var(json_data.args)
+
+				# 检查解析结果是否有效
+				if parsed_args != null and typeof(parsed_args) == TYPE_ARRAY:
+					# 获取目标节点
+					var target_node = players_node.get_node(sitters[int(json_data.peer_id)]) #get_node(json_data.node_path)
+					# 检查节点是否存在以及是否有相应的方法
+					if target_node and target_node.has_method(json_data.method):
+						# 使用callv调用方法，传入解析后的参数数组
+						target_node.callv(json_data.method, parsed_args)
+					else:
+						print("找不到节点或方法: ", json_data.node_path, json_data.method)
+				else:
+					print("参数解析失败")
+				print("解析结果: ", json_data.args)
 			pass
 	pass
 # 实现
@@ -74,38 +93,41 @@ func _do_game_setup(players: Dictionary) -> void:
 	var sit = 0
 	for player_id in players:
 		sit = sit + 1
+		if player_id == OnlineLogin.get_my_id():
+			OnlineMatch.my_peer_id = sit
+		sitters[sit] = player_id
 		var other_player = Player.instantiate()
 		other_player.name = str(player_id)
 		players_node.add_child(other_player)
 		other_player.set_multiplayer_authority(sit)
-		other_player.set_player_skin(sit - 1)
+		other_player.set_player_skin(sit-1)
 		other_player.set_player_name(players[player_id].presence.Username)
 		other_player.position = map.get_node("PlayerStartPositions/Player" + str(sit)).position
 		other_player.rotation = map.get_node("PlayerStartPositions/Player" + str(sit)).rotation
-		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(sit))
-
+		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(player_id))
+		
 		if not OnlineGame.online_play:
 			other_player.player_controlled = true
-			other_player.input_prefix = "ui_"#"player" + str(player_id) + "_"
-
+			other_player.input_prefix = "player" + str(player_id) + "_"
+	
 	camera.update_position_and_zoom(false)
 
 	if OnlineGame.online_play:
-		var my_id := OnlineMatch.get_unique_id()
+		var my_id := OnlineLogin.get_my_id()
 		var my_player := players_node.get_node(str(my_id))
 		my_player.player_controlled = true
 
 		# Tell the host that we've finished setup.
-		OnlineMatch.custom_rpc_id_sync(self, 1, "_finished_game_setup", [my_id])
+		OnlineMatch.custom_rpc_id_sync(self, OnlineMatch.my_peer_id, "_finished_game_setup", [my_id])
 	else:
 		_do_game_start()
 
 # Records when each player has finished setup so we know when all players are ready.
-func _finished_game_setup(player_id: int) -> void:
+func _finished_game_setup(player_id) -> void:
 	players_setup[player_id] = players_alive[player_id]
-	if players_setup.size() == players_alive.size():
+	#if players_setup.size() == players_alive.size():
 		# Once all clients have finished setup, tell them to start the game.
-		OnlineMatch.custom_rpc_sync(self, "_do_game_start")
+	OnlineMatch.custom_rpc_sync(self, "_do_game_start")
 
 # Actually start the game on this client.
 func _do_game_start() -> void:

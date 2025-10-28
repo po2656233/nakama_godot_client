@@ -179,7 +179,7 @@ func pickup_or_throw() -> void:
 			# We try to pickup only on the host so it can make sure that
 			# only one client gets it, and then the host will tell everyone
 			# else.
-			OnlineMatch.custom_rpc_id_sync(self, 1, '_try_pickup')
+			OnlineMatch.custom_rpc_id_sync(self, OnlineMatch.my_peer_id, '_try_pickup')
 
 func _try_pickup() -> void:
 	for body in pickup_area.get_overlapping_bodies():
