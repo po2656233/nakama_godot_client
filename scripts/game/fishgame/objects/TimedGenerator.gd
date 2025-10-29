@@ -24,7 +24,7 @@ func _do_generate() -> void:
 	if not pickup_parent:
 		return
 
-	var pickup_name = Util.find_unique_name(pickup_parent, 'Pickup-')
+	var pickup_name = 'Pickup-'+str(OnlineMatch.my_peer_id) # Util.find_unique_name(pickup_parent, 'Pickup-')
 	if OnlineGame.online_play:
 		OnlineMatch.custom_rpc_sync(self, "generate", [pickup_name])
 	else:
@@ -46,7 +46,8 @@ func generate(pickup_name: String) -> void:
 	current_pickup.connect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
 
 func _on_current_pickup_picked_up() -> void:
-	current_pickup.disconnect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
+	if current_pickup:
+		current_pickup.disconnect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
 	current_pickup = null
 
 	if not OnlineGame.online_play or OnlineMatch.is_network_master_for_node(self):

@@ -30,10 +30,9 @@ func _enter_tree():
 	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
 	pass
 
-
 # 接收匹配状态事件
 func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
-	print("鱼人大作战游戏接收数据: ", data)
+	# print("鱼人大作战游戏接收数据: ", data)
 	var json_conv = JSON.new()
 	var error_code = json_conv.parse(data.data,true)
 	if error_code != OK:
@@ -48,20 +47,20 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 		OnlineGame.game_status.Playing:
 			if typeof(json_data) != TYPE_FLOAT and json_data.args:
 				var parsed_args = str_to_var(json_data.args)
-
 				# 检查解析结果是否有效
 				if parsed_args != null and typeof(parsed_args) == TYPE_ARRAY:
-					# 获取目标节点
-					var target_node = players_node.get_node(sitters[int(json_data.peer_id)]) #get_node(json_data.node_path)
+					# 从根节点获取目标节点
+					var target_node = get_node(json_data.node_path)
+					#var target_node = players_node.get_node(sitters[int(json_data.peer_id)]) #get_node(json_data.node_path)
 					# 检查节点是否存在以及是否有相应的方法
 					if target_node and target_node.has_method(json_data.method):
 						# 使用callv调用方法，传入解析后的参数数组
 						target_node.callv(json_data.method, parsed_args)
-					else:
-						print("找不到节点或方法: ", json_data.node_path, json_data.method)
-				else:
-					print("参数解析失败")
-				print("解析结果: ", json_data.args)
+					#else:
+						#print("找不到节点或方法: ", json_data.node_path, json_data.method)
+				#else:
+					#print("参数解析失败")
+				#print("解析结果: ", json_data.args)
 			pass
 	pass
 # 实现
@@ -101,7 +100,7 @@ func _do_game_setup(players: Dictionary) -> void:
 		players_node.add_child(other_player)
 		other_player.set_multiplayer_authority(sit)
 		other_player.set_player_skin(sit-1)
-		other_player.set_player_name(players[player_id].presence.Username)
+		other_player.set_player_name(str(sit)) #players[player_id].presence.Username
 		other_player.position = map.get_node("PlayerStartPositions/Player" + str(sit)).position
 		other_player.rotation = map.get_node("PlayerStartPositions/Player" + str(sit)).rotation
 		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(player_id))

@@ -78,6 +78,7 @@ const SYNC_DELAY := 3
 var sync_forced := false
 var sync_counter: int = 0
 var sync_state_info := {}
+var nick_name:String = ""
 
 func _ready():
 	# Disable the state machine node's _physics_process() so that we can run
@@ -107,6 +108,7 @@ func set_player_skin(_player_skin: PlayerSkin) -> void:
 
 func set_player_name(_player_name: String) -> void:
 	# @todo Implement
+	nick_name = _player_name
 	pass
 
 func set_flip_h(_flip_h: bool) -> void:
@@ -195,6 +197,19 @@ func _try_pickup() -> void:
 		return
 
 func _do_pickup(pickup_path: NodePath) -> void:
+	current_pickup = get_node_or_null(pickup_path)
+	
+	# 检查节点是否成功获取
+	if current_pickup == null:
+		# 在网络游戏中，有时候节点可能还没有创建完成
+		# 可以选择重试几次或者直接忽略这次操作
+		print("Warning: Pickup node not found at path: ", pickup_path)
+		print("Available nodes in Map/Objects: ", pickup_path)
+		var map_objects = get_node_or_null("/root/Game/Map/Objects")
+		if map_objects:
+			for child in map_objects.get_children():
+				print("  - ", child.name)
+		return
 	sounds.play("Pickup")
 	current_pickup = get_node(pickup_path)
 	current_pickup.pickup(self)
