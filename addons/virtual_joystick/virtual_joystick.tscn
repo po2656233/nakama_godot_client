@@ -1,8 +1,8 @@
 [gd_scene load_steps=23 format=3 uid="uid://cn4ssax8bfua3"]
 
 [ext_resource type="Script" uid="uid://r768hvr811jf" path="res://addons/virtual_joystick/scripts/virtual_joystick.gd" id="1_otik3"]
-[ext_resource type="Texture2D" uid="uid://d1kpl1ws5ywfr" path="res://addons/virtual_joystick/sprites/joystick.png" id="2_v2x7c"]
-[ext_resource type="Texture2D" uid="uid://b43x5d10e5s44" path="res://addons/virtual_joystick/sprites/stick.png" id="3_sngmj"]
+[ext_resource type="Texture2D" uid="uid://c6t3duvo515dq" path="res://addons/virtual_joystick/textures/bigger_1.svg" id="2_otik3"]
+[ext_resource type="Texture2D" uid="uid://c7suokjawlpsq" path="res://addons/virtual_joystick/textures/smaller_3.svg" id="3_v2x7c"]
 [ext_resource type="Texture2D" uid="uid://bc6paavcnnwf6" path="res://addons/virtual_joystick/sprites/stick_pressed.png" id="4_n6pya"]
 [ext_resource type="Texture2D" uid="uid://c4wsyfj8hjsoe" path="res://addons/virtual_joystick/textures/attack.svg" id="5_y5rfs"]
 [ext_resource type="Texture2D" uid="uid://dkpjnuy3kn0jw" path="res://addons/virtual_joystick/textures/attack_press.svg" id="6_lbygl"]
@@ -252,8 +252,8 @@ script = SubResource("GDScript_f5fmp")
 [node name="VirtualJoystick" type="Node2D" parent="."]
 position = Vector2(68, 575)
 script = ExtResource("1_otik3")
-border = ExtResource("2_v2x7c")
-stick = ExtResource("3_sngmj")
+border = ExtResource("2_otik3")
+stick = ExtResource("3_v2x7c")
 stick_pressed = ExtResource("4_n6pya")
 
 [node name="A" type="TouchScreenButton" parent="."]

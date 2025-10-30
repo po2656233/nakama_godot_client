@@ -1,5 +1,5 @@
 extends Node
-var online_play = false
+var online_play = true
 const loginProto = preload("res://gdprotobuf/login.gd")
 const homeProto = preload("res://gdprotobuf/home.gd")
 var local_match_id = ""

@@ -208,8 +208,9 @@ func _received(p_bytes : PackedByteArray):
 			logger.error("Invalid call id received %s" % dict)
 	else:
 		if dict.has("error"):
-			var res = NakamaRTAPI.Error.create(NakamaRTAPI, dict["error"])
-			emit_signal("received_error", res)
+			# var res = NakamaRTAPI.Error.create(NakamaRTAPI, dict["error"])
+			# emit_signal("received_error", res)
+			emit_signal("received_error", dict["error"])
 		elif dict.has("channel_message"):
 			var res = NakamaAPI.ApiChannelMessage.create(NakamaAPI, dict["channel_message"])
 			emit_signal("received_channel_message", res)

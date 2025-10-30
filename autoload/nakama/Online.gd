@@ -185,6 +185,9 @@ func _on_received_match_state(match_state):
 # 收到匹配玩家数据
 func _on_received_match_presence(match_presence):
 	print("收到匹配的玩家数据:", match_presence)
+	if match_presence.match_id and match_presence.match_id != "":
+		OnlineMatch.set_match_id(match_presence.match_id)
+		pass
 	SignalManager.MatchPresenceEventSIG.emit(match_presence)
 	pass
 

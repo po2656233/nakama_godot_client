@@ -138,6 +138,7 @@ func _on_timer_timeout():
 
 func _on_accept_pressed():
 	# Todo 请求服务端
+	match_id = OnlineMatch.get_match_id()
 	print("准备游戏 ", match_id)
 	accept_button.disabled = true
 	decline_button.visible = false
@@ -147,7 +148,8 @@ func _on_accept_pressed():
 		accept_button.disabled = false
 		decline_button.visible = true
 		accept_button.text = "准备"
-		print("准备游戏失败",ret)
+		print("准备游戏失败",match_id)
+		_on_decline_pressed()
 	else:
 		accept_button.text = "已准备"
 

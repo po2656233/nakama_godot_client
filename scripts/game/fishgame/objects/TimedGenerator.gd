@@ -23,7 +23,6 @@ func _do_generate() -> void:
 	var pickup_parent = get_node(pickup_parent_path)
 	if not pickup_parent:
 		return
-
 	var pickup_name = 'Pickup-'+str(OnlineMatch.my_peer_id) # Util.find_unique_name(pickup_parent, 'Pickup-')
 	if OnlineGame.online_play:
 		OnlineMatch.custom_rpc_sync(self, "generate", [pickup_name])

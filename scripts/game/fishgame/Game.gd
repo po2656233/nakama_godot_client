@@ -50,7 +50,16 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 				# 检查解析结果是否有效
 				if parsed_args != null and typeof(parsed_args) == TYPE_ARRAY:
 					# 从根节点获取目标节点
-					var target_node = get_node(json_data.node_path)
+					var target_node = get_node_or_null(json_data.node_path)
+					if not target_node:
+						if str(json_data.node_path).containsn(map.name):
+							target_node = map
+						elif str(json_data.node_path).containsn(players_node.name):
+							target_node = players_node
+						else:
+							target_node = get_node_or_null(json_data.node_path)
+						pass
+					#print(get_orphan_node_ids())
 					#var target_node = players_node.get_node(sitters[int(json_data.peer_id)]) #get_node(json_data.node_path)
 					# 检查节点是否存在以及是否有相应的方法
 					if target_node and target_node.has_method(json_data.method):

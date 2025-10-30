@@ -311,7 +311,6 @@ func _check_enough_players() -> void:
 		match_state = MatchState.WAITING_FOR_ENOUGH_PLAYERS
 
 func _on_nakama_match_presence(data: NakamaRTAPI.MatchPresenceEvent) -> void:
-	print("wanj data:", data)
 	for u in data.joins:
 		if u.session_id == my_session_id:
 			continue
@@ -422,7 +421,7 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 		# Handle the error here (e.g., return, show a message)
 		# return
 	var json_result = test_json_conv.get_data()
-	print('nakama玩家状态信息:', json_result)
+	# print('nakama玩家状态信息:', json_result)
 	var content = json_result
 	if data.op_code == MatchOpCode.CUSTOM_RPC:
 		if content['peer_id'] == 0 or content['peer_id'] == my_peer_id:

@@ -1,4 +1,4 @@
-extends "res://scenes/game/fishgame/actors/player-states/Move.gd"
+extends "res://scripts/game/fishgame/actors/player-states/Move.gd"
 
 func _state_enter(info: Dictionary) -> void:
 	host.play_animation("Jump")

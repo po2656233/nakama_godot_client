@@ -567,6 +567,7 @@ func _on_received_match_state(data):
 func _on_received_match_presence(data):
 	var joins = []
 	var leaves = []
+
 	for adder in data.joins:
 		joins.append({
 			"uid": adder.user_id,
