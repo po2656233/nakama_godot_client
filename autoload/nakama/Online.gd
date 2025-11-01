@@ -161,6 +161,7 @@ func _on_socket_connected():
 func _on_socket_closed():
 	is_socket_connected = false
 	print("Socket 被关闭")
+	PopupManager.show_dynamic("连接异常,请检测网络状况")
 
 ### 处理socket错误
 func _on_socket_error(error):

@@ -149,6 +149,7 @@ func _on_accept_pressed():
 		decline_button.visible = true
 		accept_button.text = "准备"
 		print("准备游戏失败",match_id)
+		SignalManager.CancleGameSIG.emit(game_id)
 		_on_decline_pressed()
 	else:
 		accept_button.text = "已准备"

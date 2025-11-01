@@ -183,7 +183,9 @@ func _on_match_maker_event(p_matched: NakamaRTAPI.MatchmakerMatched):
 		_on_match_failed()
 		print("错误信息: ", joined_match.get_exception().message)
 		return
-	OnlineMatch.set_match_id(joined_match.match_id)
+	if joined_match.match_id and joined_match.match_id != "":
+		OnlineMatch.set_match_id(joined_match.match_id)
+	
 	for player in p_matched.users:
 		players.append(player)
 	# if players.size() == maxplayer:服务器已经处理了

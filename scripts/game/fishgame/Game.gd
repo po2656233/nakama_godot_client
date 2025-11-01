@@ -32,7 +32,7 @@ func _enter_tree():
 
 # 接收匹配状态事件
 func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
-	# print("鱼人大作战游戏接收数据: ", data)
+	print("鱼人大作战游戏接收数据: ", data)
 	var json_conv = JSON.new()
 	var error_code = json_conv.parse(data.data,true)
 	if error_code != OK:

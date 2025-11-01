@@ -56,7 +56,7 @@ func change_state(name : String, info : Dictionary = {}):
 
 	if current_state:
 		if !check_allowed_transition(current_state.name, next_state.name):
-			push_error("Transition from %s to %s not allowed" % [current_state.name, next_state.name])
+			#push_error("Transition from %s to %s not allowed" % [current_state.name, next_state.name])
 			return
 
 	if current_state:

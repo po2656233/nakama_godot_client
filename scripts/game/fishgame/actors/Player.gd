@@ -70,7 +70,6 @@ var pass_through_one_way_platforms: bool:
 var vector := Vector2.ZERO
 var current_pickup: CharacterBody2D
 var current_pickup_position: Marker2D
-#var last_pickup: CharacterBody2D
 
 const PlayerActions := ['left', 'right', 'down', 'up', 'grab', 'use', 'blop']
 var input_buffer
@@ -182,7 +181,7 @@ func pickup_or_throw() -> void:
 			# We try to pickup only on the host so it can make sure that
 			# only one client gets it, and then the host will tell everyone
 			# else.
-			OnlineMatch.custom_rpc_id_sync(self, 1, '_try_pickup')
+			OnlineMatch.custom_rpc_id(self,OnlineMatch.my_peer_id, '_try_pickup')
 
 func _try_pickup() -> void:
 	for body in pickup_area.get_overlapping_bodies():
@@ -215,6 +214,7 @@ func _do_pickup(pickup_path: NodePath) -> void:
 					break
 		if current_pickup == null:
 			return
+		return
 		
 	sounds.play("Pickup")
 	current_pickup = get_node(pickup_path)
