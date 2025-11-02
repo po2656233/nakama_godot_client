@@ -42,11 +42,11 @@ func generate(pickup_name: String) -> void:
 	pickup_parent.add_child(current_pickup)
 	current_pickup.global_position = pickup_position.global_position
 
-	current_pickup.connect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
+	current_pickup.connect("picked_up", _on_current_pickup_picked_up)
 
 func _on_current_pickup_picked_up() -> void:
 	if current_pickup:
-		current_pickup.disconnect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
+		current_pickup.disconnect("picked_up", _on_current_pickup_picked_up)
 	current_pickup = null
 
 	if not OnlineGame.online_play or OnlineMatch.is_network_master_for_node(self):

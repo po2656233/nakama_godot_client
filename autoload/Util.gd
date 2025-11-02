@@ -49,15 +49,16 @@ func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Cal
 		# 有异常反馈，也被认为是执行成功了
 		var errMsg = result.get_exception().message
 		if on_failure and on_failure.is_valid(): on_failure.call(errMsg)
-		if errMsg in Errors.NetworkErrors: # 网络异常,则视为执行失败
+
+		 # 网络异常,则视为执行失败
+		if errMsg in Errors.ResponeMapping:
+			errMsg = Errors.ResponeMapping[errMsg]
 			if inqueue:
 				var msg_id = reliable_queue.EnqueueMessage(method_name,args,caller,on_success, on_failure)
 				if not msg_id:
 					print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
 			print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
-		print("Asyn_Call Failure: %s" % errMsg)
-		if errMsg in Errors.ResponeMapping:
-			errMsg = Errors.ResponeMapping[errMsg]
+		print("Asyn_Call Failure: %s" % errMsg)	
 		PopupManager.show_dynamic(errMsg)
 		return false
 	print("Asyn_Call Success: %s" % str(result))

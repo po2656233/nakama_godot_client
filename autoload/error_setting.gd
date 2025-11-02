@@ -22,41 +22,31 @@ const Non_Retry_API: Array = [
 
 # 定义一个映射字典，将错误消息映射为中文
 var ResponeMapping = {
+	# 通用网络错误
 	"RPC function not found": "服务器未处理",
-	"Request cancelled.":"网络断开",
+	"Request cancelled.": "网络断开",
 	"Connection failed": "连接失败",
 	"Connection timeout": "连接超时",
 	"Invalid session": "会话无效",
 	"Session expired": "会话已过期",
-	"WebSocket connection failed": "WebSocket连接失败",
+	"WebSocket connection failed": "网络连接失败",
 	"Network unreachable": "网络不可达",
 	"Host unreachable": "主机不可达",
 	"Connection refused": "连接被拒绝",
 	"TLS handshake failed": "TLS握手失败",
 	"Certificate verification failed": "证书验证失败",
 	"Failed to decode JSON response": "连接失败,服务器网络异常",
-}
+	"ERR_CANT_CONNECT": "连接失败,服务器网络异常",
+	"ERR_TIMEOUT": "连接超时,请检查网络",
+	"ERR_FILE_EOF": "连接断开,请检查网络",
+	"ERR_CONNECTION_ERROR": "连接出错,请检查网络",
+	"HTTPRequest failed!": "网络连接失败，请检查您的网络设置",
 
-# 网络错误
-var NetworkErrors = [
-		# "网络断开",
-		# "连接失败", 
-		# "连接超时",
-		"HTTPRequest failed!",
-		"Invalid session.",
-		"Session expired.",
-		"Request cancelled.",
-		"RPC function not found",
-		"Connection failed",
-		"Connection timeout",
-		"WebSocket connection failed",
-		"Network unreachable",
-		"Host unreachable",
-		"Connection refused",
-		"TLS handshake failed",
-		"Certificate verification failed",
-		"ERR_CANT_CONNECT",
-		"ERR_TIMEOUT",
-		"ERR_FILE_EOF",
-		"ERR_CONNECTION_ERROR",
-	]
+
+	#账密失效
+	"Invalid session.": "会话无效",
+	"Session expired.": "会话已过期",
+	"Invalid credentials.": "账号或密码错误，请检查后重试",
+	"User account not found.": "该账号未注册",
+
+}

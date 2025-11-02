@@ -9,6 +9,12 @@ var _timeout : int = 30
 var _start : int = 0
 var logger = NakamaLogger.new()
 
+# 添加消息队列和相关参数[新增]
+var _outgoing_queue : Array = []
+var _max_queue_size : int = 60
+var _queue_process_timer : Timer = null
+var _processing_queue : bool = false
+
 signal connected()
 signal closed()
 signal received_error(p_exception)
@@ -28,6 +34,16 @@ var _token_expired_for_reconnect := false
 var _refresh_session_func: Callable
 func set_refresh_session_func(func_callable:Callable):
 	_refresh_session_func = func_callable
+
+# 处理消息队列的定时器回调函数[新增]
+func _ready():#该函数新增
+	# 初始化队列处理定时器
+	_queue_process_timer = Timer.new()
+	_queue_process_timer.one_shot = false
+	_queue_process_timer.wait_time = 0.01  # 10ms处理间隔
+	_queue_process_timer.timeout.connect(_process_outgoing_queue)
+	add_child(_queue_process_timer)
+	_queue_process_timer.start()
 
 func is_connected_to_host():
 	return _ws.get_ready_state() == WebSocketPeer.STATE_OPEN
@@ -70,6 +86,10 @@ func _do_connect():
 	_ws_last_state = WebSocketPeer.STATE_CLOSED
 	set_process(true)
 
+	# 重新启动队列处理[新增]
+	if _queue_process_timer:
+		_queue_process_timer.start()
+
 func _on_need_reconnect(token_expired := false):
 	if not _auto_reconnect:
 		return
@@ -103,12 +123,36 @@ func _on_reconnect_timer_timeout():
 	_do_connect()
 
 func send(p_buffer : PackedByteArray, p_reliable : bool = true) -> int:
-	if _ws.get_ready_state() == WebSocketPeer.STATE_OPEN:
-		var ret = _ws.send(p_buffer, WebSocketPeer.WRITE_MODE_TEXT)
-		if ret != OK:
-			print('网络错误 ',ret) 
-		return ret
-	return FAILED
+	# 将消息添加到队列而不是立即发送 [新增]
+	if _outgoing_queue.size() >= _max_queue_size:
+		logger.debug("Outgoing queue is full, dropping message")
+		print("警告: 传出队列已满，丢弃消息")
+		return ERR_OUT_OF_MEMORY
+	
+	_outgoing_queue.append({
+		"buffer": p_buffer,
+		"reliable": p_reliable
+	})
+	return OK
+	# 原有逻辑
+	# if _ws.get_ready_state() == WebSocketPeer.STATE_OPEN:
+	# 	var ret = _ws.send(p_buffer, WebSocketPeer.WRITE_MODE_TEXT)
+	# 	if ret != OK:
+	# 		print('网络错误 ',ret) 
+	# 	return ret
+	# return FAILED
+
+func _process_outgoing_queue():
+	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN or _outgoing_queue.is_empty():
+		return
+	
+	# 每次处理队列时只发送一条消息，避免阻塞
+	var message = _outgoing_queue.pop_front()
+	var ret = _ws.send(message.buffer, WebSocketPeer.WRITE_MODE_TEXT)
+	if ret != OK:
+		print('网络错误 ', ret)
+		# 如果发送失败，将消息重新放回队列前端
+		_outgoing_queue.push_front(message)
 
 func _process(_delta):
 	if _ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
@@ -143,3 +187,8 @@ func _process(_delta):
 			_on_need_reconnect()
 	while _ws.get_ready_state() == WebSocketPeer.STATE_OPEN and _ws.get_available_packet_count():
 		received.emit(_ws.get_packet())
+
+func _exit_tree():
+	if _queue_process_timer:
+		_queue_process_timer.stop()
+		_queue_process_timer.queue_free()

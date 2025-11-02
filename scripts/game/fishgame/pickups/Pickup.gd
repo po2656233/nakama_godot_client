@@ -53,7 +53,7 @@ func pickup(_player: Node2D) -> void:
 	player = _player
 	rotation = 0.0
 	sleeping = true
-	emit_signal("picked_up")
+	picked_up.emit()
 
 func _on_throw() -> void:
 	# This allows the pickup to do something special just before it's thrown.

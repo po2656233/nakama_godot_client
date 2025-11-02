@@ -32,7 +32,7 @@ func _enter_tree():
 
 # 接收匹配状态事件
 func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
-	print("鱼人大作战游戏接收数据: ", data)
+	#print("鱼人大作战游戏接收数据: ", data)
 	var json_conv = JSON.new()
 	var error_code = json_conv.parse(data.data,true)
 	if error_code != OK:
@@ -54,13 +54,16 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 					if not target_node:
 						if str(json_data.node_path).containsn(map.name):
 							target_node = map
-						elif str(json_data.node_path).containsn(players_node.name):
-							target_node = players_node
+						elif str(json_data.node_path).containsn("Players"):
+							target_node = players_node.get_node(sitters[int(json_data.peer_id)])
 						else:
 							target_node = get_node_or_null(json_data.node_path)
 						pass
 					#print(get_orphan_node_ids())
 					#var target_node = players_node.get_node(sitters[int(json_data.peer_id)]) #get_node(json_data.node_path)
+					# 玩家节点强制转
+					if str(json_data.node_path).containsn("Players"):
+							target_node = players_node.get_node(sitters[int(json_data.peer_id)])
 					# 检查节点是否存在以及是否有相应的方法
 					if target_node and target_node.has_method(json_data.method):
 						# 使用callv调用方法，传入解析后的参数数组

@@ -214,7 +214,7 @@ func _do_pickup(pickup_path: NodePath) -> void:
 					break
 		if current_pickup == null:
 			return
-		return
+		pass
 		
 	sounds.play("Pickup")
 	current_pickup = get_node(pickup_path)
@@ -244,7 +244,8 @@ func _do_throw() -> void:
 	current_pickup_position = null
 
 func try_use() -> void:
-	if not current_pickup:
+	if current_pickup == null:
+		print("无法找到pickup节点")
 		return
 	current_pickup.use()
 
