@@ -70,6 +70,7 @@ var pass_through_one_way_platforms: bool:
 var vector := Vector2.ZERO
 var current_pickup: CharacterBody2D
 var current_pickup_position: Marker2D
+var current_pickup_path: NodePath = NodePath("")
 
 const PlayerActions := ['left', 'right', 'down', 'up', 'grab', 'use', 'blop']
 var input_buffer
@@ -188,7 +189,7 @@ func _try_pickup() -> void:
 		if not body.can_pickup():
 			continue
 		body.pickup_state = Pickup.PickupState.PICKED_UP
-
+		current_pickup_path = body.get_path()
 		if OnlineGame.online_play:
 			OnlineMatch.custom_rpc_sync(self, '_do_pickup', [body.get_path()])
 		else:
@@ -217,9 +218,11 @@ func _do_pickup(pickup_path: NodePath) -> void:
 		pass
 		
 	sounds.play("Pickup")
+
 	current_pickup = get_node(pickup_path)
 	current_pickup.pickup(self)
 	current_pickup.get_parent().remove_child(current_pickup)
+	print("nick_name: Pickup",nick_name,pickup_path)
 
 	current_pickup_position = back_pickup_position if current_pickup.pickup_position == Pickup.PickupPosition.BACK else front_pickup_position
 	current_pickup_position.add_child(current_pickup)
@@ -242,8 +245,17 @@ func _do_throw() -> void:
 	current_pickup.throw(current_pickup_position.global_position, throw_vector.limit_length(throw_vector_max_length), throw_torque)
 	current_pickup = null
 	current_pickup_position = null
-
+	print("nick_name: do_pickup --- ",nick_name)
+	
 func try_use() -> void:
+	print("nick_name: use",nick_name,current_pickup_path)
+	if current_pickup == null:
+		current_pickup = get_node(current_pickup_path)
+	if current_pickup == null:
+		if current_pickup_position:
+			var count = current_pickup_position.get_child_count()
+			if count > 0:
+				current_pickup = current_pickup_position.get_child(count-1)
 	if current_pickup == null:
 		print("无法找到pickup节点")
 		return

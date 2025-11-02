@@ -29,7 +29,7 @@ enum OpCode {
 func _enter_tree():
 	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
 	pass
-
+	
 # 接收匹配状态事件
 func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 	#print("鱼人大作战游戏接收数据: ", data)
@@ -61,15 +61,13 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 						pass
 					#print(get_orphan_node_ids())
 					#var target_node = players_node.get_node(sitters[int(json_data.peer_id)]) #get_node(json_data.node_path)
-					# 玩家节点强制转
-					if str(json_data.node_path).containsn("Players"):
-							target_node = players_node.get_node(sitters[int(json_data.peer_id)])
+					
 					# 检查节点是否存在以及是否有相应的方法
 					if target_node and target_node.has_method(json_data.method):
 						# 使用callv调用方法，传入解析后的参数数组
 						target_node.callv(json_data.method, parsed_args)
-					#else:
-						#print("找不到节点或方法: ", json_data.node_path, json_data.method)
+					else:
+						print("找不到节点或方法: ", json_data.node_path, json_data.method)
 				#else:
 					#print("参数解析失败")
 				#print("解析结果: ", json_data.args)
