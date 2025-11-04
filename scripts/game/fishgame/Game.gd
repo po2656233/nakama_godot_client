@@ -67,7 +67,7 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 						# 使用callv调用方法，传入解析后的参数数组
 						target_node.callv(json_data.method, parsed_args)
 					else:
-						print("找不到节点或方法: ", json_data.node_path, json_data.method)
+						print("找不到节点或:", json_data.node_path,'  方法:', json_data.method)
 				#else:
 					#print("参数解析失败")
 				#print("解析结果: ", json_data.args)

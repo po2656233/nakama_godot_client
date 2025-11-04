@@ -237,7 +237,8 @@ func _do_throw() -> void:
 	throw_vector += Vector2.UP * throw_upward_velocity
 
 	# Disconnect from our pickup position.
-
+	if not current_pickup_position:
+		return 
 	current_pickup_position.remove_child(current_pickup)
 	current_pickup.original_parent.add_child(current_pickup)
 	current_pickup.global_position = current_pickup_position.global_position
@@ -246,16 +247,23 @@ func _do_throw() -> void:
 	current_pickup = null
 	current_pickup_position = null
 	print("nick_name: do_pickup --- ",nick_name)
-	
+func _do_use():
+	try_use()
+	pass
 func try_use() -> void:
 	print("nick_name: use",nick_name,current_pickup_path)
-	if current_pickup == null:
-		current_pickup = get_node(current_pickup_path)
 	if current_pickup == null:
 		if current_pickup_position:
 			var count = current_pickup_position.get_child_count()
 			if count > 0:
 				current_pickup = current_pickup_position.get_child(count-1)
+	#if current_pickup == null:
+		#if back_pickup_position:
+			#var count = back_pickup_position.get_child_count()
+			#if count > 0:
+				#current_pickup = back_pickup_position.get_child(count-1)
+	if current_pickup == null:
+		current_pickup = get_node(current_pickup_path)
 	if current_pickup == null:
 		print("无法找到pickup节点")
 		return
