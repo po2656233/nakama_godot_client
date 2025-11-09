@@ -18,7 +18,7 @@ var original_state := {
 }
 
 func _on_fullscreen_toggle():
-	WindowDrag.stopMove = !is_fullscreen
+	Global.WindowDrag.stopMove = !is_fullscreen
 	if is_fullscreen:
 		exit_fullscreen()
 	else:
@@ -97,7 +97,7 @@ func animate_to_fullscreen(target_position: Vector2, target_size: Vector2):
 
 func animate_to_normal():
 	if !original_state.parent: return
-	WindowDrag.unregister_drag_zone(original_state.parent)
+	Global.WindowDrag.unregister_drag_zone(original_state.parent)
 	if tween: tween.kill()
 	tween = create_tween()
 	# tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
@@ -124,7 +124,7 @@ func restore_original_state():
 		if current_parent:
 			current_parent.remove_child(self)
 			original_state.parent.add_child(self)
-			WindowDrag.unregister_drag_zone(original_state.parent)
+			Global.WindowDrag.unregister_drag_zone(original_state.parent)
 			top_level=false
 	)
 	tween.tween_property(self, "modulate:a", 1.0, 0.2)

@@ -154,33 +154,33 @@ func _listen_socket_events() -> void:
 ### socket连接事件处理
 func _on_socket_connected():
 	is_socket_connected = true
-	SignalManager.UpdateSocketSIG.emit(nakama_socket)
+	SignalMgr.UpdateSocketSIG.emit(nakama_socket)
 	print("Socket 连接成功")
 
 ### socket关闭事件处理
 func _on_socket_closed():
 	is_socket_connected = false
 	print("Socket 被关闭")
-	PopupManager.show_dynamic("连接异常,请检测网络状况")
+	Global.PopupManager.show_dynamic("连接异常,请检测网络状况")
 
 ### 处理socket错误
 func _on_socket_error(error):
 	print("socket error: " + str(error))
 	#if error == ERR_TIMEOUT:
-		#PopupManager.show_dynamic("连接超时,请稍后重试")
+		#Global.PopupManager.show_dynamic("连接超时,请稍后重试")
 
 
 ############################接收的比赛匹配数据###########################################
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):
 	print("收到已匹配数据:", matchmaker_matched)
-	SignalManager.MatchMakerSIG.emit(matchmaker_matched)
+	SignalMgr.MatchMakerSIG.emit(matchmaker_matched)
 	pass
 
 # 收到匹配状态
 func _on_received_match_state(match_state):
 	print("收到匹配状态:", match_state)
-	SignalManager.MatchStateEventSIG.emit(match_state)
+	SignalMgr.MatchStateEventSIG.emit(match_state)
 	pass
 
 # 收到匹配玩家数据
@@ -189,13 +189,13 @@ func _on_received_match_presence(match_presence):
 	if match_presence.match_id and match_presence.match_id != "":
 		OnlineMatch.set_match_id(match_presence.match_id)
 		pass
-	SignalManager.MatchPresenceEventSIG.emit(match_presence)
+	SignalMgr.MatchPresenceEventSIG.emit(match_presence)
 	pass
 
 # 收到状态数据
 func _on_received_status_presence(status_presence):
 	print("收到状态数据:", status_presence)
-	SignalManager.StatusPresenceEventSIG.emit(status_presence)
+	SignalMgr.StatusPresenceEventSIG.emit(status_presence)
 	pass
 
 # 收到通知
@@ -225,7 +225,7 @@ func _on_channel_presence(channel_presence):
 # 接收消息
 func _on_received_message(channel_message):
 	print("收到消息:", channel_message)
-	SignalManager.RecvMessageSIG.emit(channel_message)
+	SignalMgr.RecvMessageSIG.emit(channel_message)
 	pass
 
 # 全局信号转发
@@ -233,15 +233,15 @@ func do_broadcast(notification1):
 	var content = JSON.parse_string(notification1.content)
 	match notification1.code:
 		EnBroadcast.CreateTable:
-			SignalManager.CreateRoomSIG.emit(content)
+			SignalMgr.CreateRoomSIG.emit(content)
 		EnBroadcast.RemoveTable:
-			SignalManager.RemoveRoomSIG.emit(content)
+			SignalMgr.RemoveRoomSIG.emit(content)
 		EnBroadcast.JoinTable:
-			SignalManager.JoinRoomSIG.emit(content)
+			SignalMgr.JoinRoomSIG.emit(content)
 		EnBroadcast.LeaveTable:
-			SignalManager.LeaveRoomSIG.emit(content)
+			SignalMgr.LeaveRoomSIG.emit(content)
 		EnBroadcast.TableOnline:
-			SignalManager.OnlineCountSIG.emit(content)
+			SignalMgr.OnlineCountSIG.emit(content)
 		_:
 			push_warning("未知的广播类型:", notification1.code)
 	pass

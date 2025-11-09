@@ -1,5 +1,5 @@
 extends Node
-
+class_name Shared
 enum Tetromino {
 	I,O, T, J, L, S, Z
 }

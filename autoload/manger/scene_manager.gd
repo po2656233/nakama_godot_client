@@ -136,7 +136,7 @@ func _init():
 
 ###############################################################
 func _ready():
-	SignalManager.ChangeSceneSIG.connect(switch_to_scene)
+	SignalMgr.ChangeSceneSIG.connect(switch_to_scene)
 	
 # 	# 添加场景字典
 # 	var scenes = {
@@ -360,7 +360,7 @@ func ToGameScene(gameName: String) -> void:
 	gameName = gameName.to_lower()
 	var scene_path = get_scene_path(gameName)
 	if scene_path == "":
-		PopupManager.show_dynamic("%s 正在招商中..." % gameName)
+		Global.PopupManager.show_dynamic("%s 正在招商中..." % gameName)
 		print("%s 正在招商中..." % gameName)
 		gameName = HOME_NODE
 		pass
@@ -382,14 +382,14 @@ func ToGameScene(gameName: String) -> void:
 func switch_to_scene(scene_name: String, transition_way:String = "cross", dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_name == "":
 		return 
-	SettingsManager.settings_changed.emit()
+	SettingsMgr.settings_changed.emit()
 	var scene_path = get_scene_path(scene_name)
 	_transition_scene(scene_path,transition_way,dissolve_time, dissolve_image)
 	pass
 
 func _transition_scene(scene_path: String,  transition_way:String = "cross",dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_path == "":
-		PopupManager.show_dynamic("场景路径为空")
+		Global.PopupManager.show_dynamic("场景路径为空")
 		push_error("场景路径为空")
 		go_back()
 		return
@@ -401,13 +401,13 @@ func _transition_scene(scene_path: String,  transition_way:String = "cross",diss
 	if transition_way == "":
 		transition_way = "conical"
 	if transition_way == "custom":
-		FancyFade.custom_fade(sceneObj, dissolve_time, dissolve_image)
+		Global.FancyFade.custom_fade(sceneObj, dissolve_time, dissolve_image)
 	elif transition_way == "cross":
-		FancyFade.cross_fade(sceneObj, dissolve_time)
+		Global.FancyFade.cross_fade(sceneObj, dissolve_time)
 	elif transition_way == "instant":
-		FancyFade.instant_change(sceneObj)
+		Global.FancyFade.instant_change(sceneObj)
 	else:
-		FancyFade._fade(transition_way,sceneObj,dissolve_time)
+		Global.FancyFade._fade(transition_way,sceneObj,dissolve_time)
 
 
 # 隐藏指定场景

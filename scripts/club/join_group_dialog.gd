@@ -16,8 +16,8 @@ func _on_join_pressed():
 		return
 	var ret = await OnlineChat.add_group_async(group_name)
 	if not ret:
-		PopupManager.show_message("加入俱乐部失败")
+		Global.PopupManager.show_message("加入俱乐部失败")
 		return 
 	# group_joined.emit(new_group)
-	PopupManager.show_message("已申请,请等待审批")
+	Global.PopupManager.show_message("已申请,请等待审批")
 	queue_free()

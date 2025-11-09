@@ -30,13 +30,13 @@ enum MatchState {
 
 
 func _ready():
-	# SettingsManager.show_settings(1)
+	# SettingsMgr.show_settings(1)
 	add_child(timer)
 	timer.wait_time = 1.0
 	timer.timeout.connect(_on_timer_timeout)
 	accept_button.pressed.connect(_on_accept_pressed)
 	decline_button.pressed.connect(_on_decline_pressed)
-	SignalManager.MatchStateEventSIG.connect(_on_match_state_event)
+	SignalMgr.MatchStateEventSIG.connect(_on_match_state_event)
 	pass
 
 # 初始化玩家图标
@@ -59,12 +59,12 @@ func add_player(is_ready=true):
 	if ready_count > player_total:
 		return
 	if is_ready:
-		SignalManager.MatchSuccessOkMusicSIG.emit()
+		SignalMgr.MatchSuccessOkMusicSIG.emit()
 		player_icons[ready_count - 1].modulate = Color(1, 0.84, 0) # Gold color
 	else:
 		timer.stop()
-		SignalManager.MatchSuccessTimeMusicSIG.emit(true)
-		SignalManager.MatchSuccessFailedMusicSIG.emit()
+		SignalMgr.MatchSuccessTimeMusicSIG.emit(true)
+		SignalMgr.MatchSuccessFailedMusicSIG.emit()
 		player_icons[ready_count - 1].texture = png1
 		player_icons[ready_count - 1].modulate = Color(1, 1, 1)
 	pass
@@ -79,7 +79,7 @@ func reset(gid: int, playerMax: int = 10, readyCount: int = 0):
 	accept_button.disabled = false
 	decline_button.visible = true
 	accept_button.text = "准备"
-	SignalManager.MatchSuccessTimeMusicSIG.emit(true)
+	SignalMgr.MatchSuccessTimeMusicSIG.emit(true)
 	# 清除子项
 	for child in grid_container.get_children():
 		child.queue_free()
@@ -111,7 +111,7 @@ func check_ready():
 		# 匹配成功
 		print("匹配到游戏 时间:%d 准备人数:%d 总人数:%d" % [timer_value, ready_count, player_total])
 		visible = false
-		SignalManager.StartGameSIG.emit(game_id)
+		SignalMgr.StartGameSIG.emit(game_id)
 		reset(game_id, player_total)
 		return true
 	return false
@@ -124,14 +124,14 @@ func _on_timer_timeout():
 	if timer_value >= 0 and ready_count < player_total:
 		if timer_value <= timer_warn:
 			if not accept_button.disabled:
-				SignalManager.MatchSuccessTimeMusicSIG.emit(false)
+				SignalMgr.MatchSuccessTimeMusicSIG.emit(false)
 			timer_label.text = base_text_2 % timer_value
 		else:
 			timer_label.text = base_text_1 % timer_value
 
 		ready_label.text = "   %d/%d已准备就绪" % [ready_count, player_total]
 	elif timer_value == -1:
-		SignalManager.CancleGameSIG.emit(game_id)
+		SignalMgr.CancleGameSIG.emit(game_id)
 		_on_decline_pressed()
 	pass
 
@@ -142,14 +142,14 @@ func _on_accept_pressed():
 	print("准备游戏 ", match_id)
 	accept_button.disabled = true
 	decline_button.visible = false
-	SignalManager.MatchSuccessTimeMusicSIG.emit(true)
+	SignalMgr.MatchSuccessTimeMusicSIG.emit(true)
 	var ret = await OnlineGame.sendToMatch(MatchState.GameReady, "1")
 	if not ret or (ret and ret.is_exception()):
 		accept_button.disabled = false
 		decline_button.visible = true
 		accept_button.text = "准备"
 		print("准备游戏失败",match_id)
-		SignalManager.CancleGameSIG.emit(game_id)
+		SignalMgr.CancleGameSIG.emit(game_id)
 		_on_decline_pressed()
 	else:
 		accept_button.text = "已准备"
@@ -170,7 +170,7 @@ func _on_match_state_event(state):
 			add_player()
 		MatchState.GameReadyCancel:
 			add_player(false)
-			SignalManager.CancleGameSIG.emit(game_id)
+			SignalMgr.CancleGameSIG.emit(game_id)
 		MatchState.GameStart:
 			isStart = true
 	return

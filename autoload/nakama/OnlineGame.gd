@@ -57,7 +57,7 @@ func sendToMatch(p_op_code : int, p_data : String, p_presences = null):
 		print("发送至比赛%s 操作码:%d 数据:%s"%[p_match_id, p_op_code, p_data])
 		var result = await Online.nakama_socket.send_match_state_async(p_match_id, p_op_code, p_data, p_presences)
 		if result.is_exception():
-			PopupManager.show_dynamic("数据异常 " + result.get_exception().message)
+			Global.PopupManager.show_dynamic("数据异常 " + result.get_exception().message)
 			return null
 		return result
 	return null
@@ -68,7 +68,7 @@ func sendToMatchRpc(p_op_code : int, p_data : PackedByteArray, p_presences = nul
 		print("发送至比赛%s 操作码:%d 数据:%s"%[p_match_id, p_op_code, p_data])
 		var result = await Online.nakama_socket.send_match_state_raw_async(p_match_id, p_op_code, p_data, p_presences)
 		if result.is_exception():
-			PopupManager.show_dynamic("数据异常 " + result.get_exception().message)
+			Global.PopupManager.show_dynamic("数据异常 " + result.get_exception().message)
 			return null
 		return result
 	return null
@@ -101,7 +101,7 @@ func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 	var result = await Online.sendDataRPC("list_games",{"kid":kind},obj,work_cb)
 	if result and result.size() > 0:
 		games_data = Util.sort_by_filed(result,"id")
-		SignalManager.GameListSIG.emit(games_data)
+		SignalMgr.GameListSIG.emit(games_data)
 	else:
 		result = [] 
 	return result

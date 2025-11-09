@@ -30,17 +30,17 @@ func _ready():
 	 #     _debug_add_test_players()
 	countdown.timeout.connect(_on_countdown_timeout)
 	countdown.timeleft.connect(_on_countdown_timeleft)
-	SignalManager.LoadingSIG.connect(_on_loading_value)
+	SignalMgr.LoadingSIG.connect(_on_loading_value)
 	pass
 
 func Show():
 	show()
-	SettingsManager.settings_toggle.emit()
+	SettingsMgr.settings_toggle.emit()
 	pass
 
 func Hide():
 	hide()
-	SettingsManager.settings_toggle.emit()
+	SettingsMgr.settings_toggle.emit()
 	pass
 	
 
@@ -92,7 +92,7 @@ func reset(name1: String,roomId: String = "",playerMax:int=10):
 # 加入房间
 func add_player(player_uid,player_name: String,player_avatar = null):
 	if current_players.size() >= max_players:
-		PopupManager.show_dynamic("房间已满，无法加入")
+		Global.PopupManager.show_dynamic("房间已满，无法加入")
 		return
 	var player_item = player_scene.instantiate()
 	player_item.set_player_info(player_uid,player_name,player_avatar)
@@ -106,7 +106,7 @@ func add_player(player_uid,player_name: String,player_avatar = null):
 		room_info.text += "  [color=red](满)[/color]"
 		countdown.show()
 		countdown.start(last_wait_time)
-		SignalManager.FullRoomSIG.emit(room_id)
+		SignalMgr.FullRoomSIG.emit(room_id)
 		
 
 # 离开房间
@@ -121,7 +121,7 @@ func remove_player(uid: String):
 			player_list.remove_child(player_item)
 			print("离开房间", username, " 剩下", current_players)
 			if playerUid != uid:
-				PopupManager.show_dynamic("%s  已离开房间"%[username])
+				Global.PopupManager.show_dynamic("%s  已离开房间"%[username])
 			countdown.stop()
 			countdown.hide()
 			Waiting()
@@ -147,18 +147,18 @@ func _on_countdown_timeout():
 		# cancleBtn.disabled = true
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
-		SceneManager.set_previous_name("roomlist")
+		SceneMgr.set_previous_name("roomlist")
 		loading_scene.show()
 		
 		var game_id = OnlineGame.getGameID(game_name)
 		print("准备游戏 game_id:", game_id, " name:", game_name)
-		SignalManager.LoadingGameSIG.emit(game_id)
+		SignalMgr.LoadingGameSIG.emit(game_id)
 
 # 计时器回调
 func _on_countdown_timeleft(timeleft:float):
 	time_left = timeleft
 	if timeleft == limit_time:
-		PopupManager.show_dynamic("选手已锁定,不允许离开",150)
+		Global.PopupManager.show_dynamic("选手已锁定,不允许离开",150)
 		cancleBtn.disabled = true
 		if tween:
 			tween.kill()
@@ -179,7 +179,7 @@ func _on_cancel_button_pressed():
 	quitRoomSIG.emit()
 	loading_scene.hide()
 	if not is_no_enter:
-		SignalManager.JoinErrorMusicSIG.emit()
+		SignalMgr.JoinErrorMusicSIG.emit()
 
 # func _debug_add_test_players():
 # 	# 仅用于测试：模拟其他玩家陆续加入

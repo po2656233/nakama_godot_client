@@ -43,7 +43,7 @@ class QueuedMessage:
 		do_failure = on_failure
 		# if caller == Online.nakama_socket:
 		# 	caller.connected.connect(self._on_socket_connected)
-		# SignalManager.UpdateSocketSIG.connect(self._on_socket_connected)
+		# SignalMgr.UpdateSocketSIG.connect(self._on_socket_connected)
 
 	func should_retry() -> bool:
 		return retry_count < MAX_RETRY_ATTEMPTS or MAX_RETRY_ATTEMPTS == -1

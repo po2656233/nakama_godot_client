@@ -2,9 +2,9 @@ extends Node
 
 ## 弹窗管理器单例
 ## 使用方法:
-## 1. 普通提示: PopupManager.show_message("提示内容")
-## 2. 确认框: PopupManager.show_confirm("确认内容", callback)
-## 3. 自定义弹窗: PopupManager.show_custom(popup_scene_path, params)
+## 1. 普通提示: Global.PopupManager.show_message("提示内容")
+## 2. 确认框: Global.PopupManager.show_confirm("确认内容", callback)
+## 3. 自定义弹窗: Global.PopupManager.show_custom(popup_scene_path, params)
 
 # 信号定义
 signal popup_confirmed(popup_id: String)

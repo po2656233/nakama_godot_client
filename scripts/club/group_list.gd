@@ -52,8 +52,8 @@ func _ready():
 
 	# 连接搜索信号
 	$VBoxContainer/SearchBar/MarginContainer/HBoxContainer/SearchInput.text_changed.connect(_on_search_text_changed)
-	SignalManager.OpenLightSIG.connect(_on_turnOnLight)
-	SignalManager.CloseLightSIG.connect(_on_turnOffLight)
+	SignalMgr.OpenLightSIG.connect(_on_turnOnLight)
+	SignalMgr.CloseLightSIG.connect(_on_turnOffLight)
 	pass
 
 func clear() :

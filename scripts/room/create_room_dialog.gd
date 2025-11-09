@@ -83,7 +83,7 @@ func _on_create_pressed():
 	# 模拟创建房间回包
 	if not _validate_room_data():
 		return
-	PopupManager.show_confirm("确定创建吗？", _create_room, "确认")
+	Global.PopupManager.show_confirm("确定创建吗？", _create_room, "确认")
 	pass
 
 func _create_room():
@@ -111,7 +111,7 @@ func _create_room():
 		})
 		if not res:
 			print("创建房间失败:")
-			PopupManager.show_dynamic("创建房间失败")
+			Global.PopupManager.show_dynamic("创建房间失败")
 			return
 		print("创建服务端托管成功",res)
 		room_created.emit({})
@@ -144,7 +144,7 @@ func _validate_room_data() -> bool:
 
 
 func _show_error(message: String):
-	PopupManager.show_message(message)
+	Global.PopupManager.show_message(message)
 	await get_tree().create_timer(1.5).timeout
 	show()
 	# var dialog = AcceptDialog.new()

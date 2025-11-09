@@ -85,7 +85,7 @@ func _show_leave_confirmation():
 				group_left.emit(group_data)
 				DataManager.get_instance().remove_chat_history(OnlineChat.get_my_id(), group_data["id"])
 			else:
-				PopupManager.show_message(group_data["name"]+"解散失败")
+				Global.PopupManager.show_message(group_data["name"]+"解散失败")
 		dialog.queue_free()
 	)
 

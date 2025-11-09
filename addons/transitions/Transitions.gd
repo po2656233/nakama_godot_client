@@ -70,7 +70,7 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:Compresse
 	
 	####### NOTE: might be solvable with yield(get_tree(), "idle_frame")
 	# Take a screenshot of the old scene. This is the only reliable way to make
-	# complex transitions. Cross-scene fades doesn't work well with multiple cameras;
+	# complex Global.Transitions. Cross-scene fades doesn't work well with multiple cameras;
 	# somehow, they just end up with extra frames randomly blitting mid-way.
 	var screenshot:Sprite2D = _take_screenshot()
 	# Don't need the sprite mate, just the texture, for our "fade scene" that has

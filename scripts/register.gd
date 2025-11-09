@@ -11,9 +11,9 @@ var login_scene = load("res://scenes/login.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SceneManager.set_current_scene("register")
-	print("当前运行的节点名",SceneManager.get_current_scene_name())
-	# WindowDrag.register_drag_zone(self)
+	SceneMgr.set_current_scene("register")
+	print("当前运行的节点名",SceneMgr.get_current_scene_name())
+	# Global.WindowDrag.register_drag_zone(self)
 	pass # Replace with function body.
 
 
@@ -23,13 +23,13 @@ func _process(_delta: float) -> void:
 
 func _input(event):
 	if event is InputEventKey:
-		if event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and not PopupManager.isVisible():  # 或使用 KEY_RETURN
+		if event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and not Global.PopupManager.isVisible():  # 或使用 KEY_RETURN
 			_on_btn_register_pressed()
 			get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
 # 返回登录页面
 func _on_tb_return_pressed() -> void:
-	FancyFade.wipe_left(login_scene.instantiate(),0.5)
+	Global.FancyFade.wipe_left(login_scene.instantiate(),0.5)
 	pass # Replace with function body.
 
 # 注册
@@ -42,43 +42,43 @@ func _on_btn_register_pressed() -> void:
 	if await Online.nakama_client.authenticate_email(usernameEdit.text, passwordEdit.text,"",true):
 		ProjectSettings.set("username",usernameEdit.text)
 		# ProjectSettings.set("password",passwordEdit.text)
-		PopupManager.show_confirm("注册成功", Callable(self,"_on_register_success"))
+		Global.PopupManager.show_confirm("注册成功", Callable(self,"_on_register_success"))
 	else:
-		PopupManager.show_message("注册失败")
+		Global.PopupManager.show_message("注册失败")
 	pass # Replace with function body.
 
 func checkValidity()-> bool:
 	if usernameEdit.text == "" or usernameEdit.text.length() > 8:
-		PopupManager.show_message("请填写用户名,字符数限制为1-8位")
+		Global.PopupManager.show_message("请填写用户名,字符数限制为1-8位")
 		return false
 	if passwordEdit.text.length() < 8 or passwordEdit.text.length() > 16:
-		PopupManager.show_message("请填写密码,字符数限制为8-16位")
+		Global.PopupManager.show_message("请填写密码,字符数限制为8-16位")
 		return false
 	if qrpasswordEdit.text == "":
-		PopupManager.show_message("请填写确认密码")
+		Global.PopupManager.show_message("请填写确认密码")
 		return false
 	if passwordEdit.text!= qrpasswordEdit.text:
-		PopupManager.show_message("两次密码输入不一致")
+		Global.PopupManager.show_message("两次密码输入不一致")
 		return false
 	if phoneEdit.text == "":
-		PopupManager.show_message("请填写手机号码")
+		Global.PopupManager.show_message("请填写手机号码")
 		return false
 	if phoneEdit.text.length() != 11:
-		PopupManager.show_message("手机号必须是11位")
+		Global.PopupManager.show_message("手机号必须是11位")
 		return	false
 	if not is_valid_phone_number(phoneEdit.text):
-		PopupManager.show_message("请输入有效的手机号码")
+		Global.PopupManager.show_message("请输入有效的手机号码")
 		return false
 	if vcodeEdit.text == "":
-		PopupManager.show_message("请填写验证码")
+		Global.PopupManager.show_message("请填写验证码")
 		return false
 	if not checkbox.is_pressed():
-		PopupManager.show_message("请阅读并同意用户协议")
+		Global.PopupManager.show_message("请阅读并同意用户协议")
 		return false
 	return true
 
 func _on_register_success():
-	FancyFade.wipe_conical(login_scene.instantiate(),0.5)
+	Global.FancyFade.wipe_conical(login_scene.instantiate(),0.5)
 	pass
 
 func is_valid_phone_number(phone: String) -> bool:
@@ -98,10 +98,10 @@ func _on_texture_psw_button_up() -> void:
 
 func _on_btn_vcode_pressed() -> void:
 	if phoneEdit.text == "":
-		PopupManager.show_message("请填写手机号码")
+		Global.PopupManager.show_message("请填写手机号码")
 		return
 	if not is_valid_phone_number(phoneEdit.text):
-		PopupManager.show_message("请输入有效的手机号码")
+		Global.PopupManager.show_message("请输入有效的手机号码")
 		return
 	pass # Replace with function body.
 

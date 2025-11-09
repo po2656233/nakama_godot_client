@@ -28,29 +28,29 @@ extends Node
 var isMute = false 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SignalManager.BackgroundMusicSIG.connect(_on_backgroundMusic)
-	SignalManager.WelcomeMusicSIG.connect(_on_welcomegMusic)
+	SignalMgr.BackgroundMusicSIG.connect(_on_backgroundMusic)
+	SignalMgr.WelcomeMusicSIG.connect(_on_welcomegMusic)
 
-	SignalManager.NewMessageSIG.connect(_on_new_msg)
-	SignalManager.SendMessageSIG.connect(_on_send_msg)
-	SignalManager.RecvMessageSIG.connect(_on_recv_msg)
-	SignalManager.OnlineSIG.connect(_on_online_msg)
+	SignalMgr.NewMessageSIG.connect(_on_new_msg)
+	SignalMgr.SendMessageSIG.connect(_on_send_msg)
+	SignalMgr.RecvMessageSIG.connect(_on_recv_msg)
+	SignalMgr.OnlineSIG.connect(_on_online_msg)
 
-	SignalManager.NewEmailSIG.connect(_on_email_notify)
-	SignalManager.NewNotifySIG.connect(_on_recv_notify)
+	SignalMgr.NewEmailSIG.connect(_on_email_notify)
+	SignalMgr.NewNotifySIG.connect(_on_recv_notify)
 
-	SignalManager.GameMusicSIG.connect(_on_gameMusic)
-	SignalManager.MuteSIG.connect(_on_mute)
-	SignalManager.JoinSuccessMusicSIG.connect(_on_joinSuccessMusic)
-	SignalManager.JoinErrorMusicSIG.connect(_on_joinErrorMusic)
+	SignalMgr.GameMusicSIG.connect(_on_gameMusic)
+	SignalMgr.MuteSIG.connect(_on_mute)
+	SignalMgr.JoinSuccessMusicSIG.connect(_on_joinSuccessMusic)
+	SignalMgr.JoinErrorMusicSIG.connect(_on_joinErrorMusic)
 	
-	SignalManager.MatchingOkMusicSIG.connect(_on_matchingOkMusic)
-	SignalManager.MatchingFailedMusicSIG.connect(_on_matchingFailedMusic)
-	SignalManager.MatchingTimeMusicSIG.connect(_on_matchingTimeMusic)
+	SignalMgr.MatchingOkMusicSIG.connect(_on_matchingOkMusic)
+	SignalMgr.MatchingFailedMusicSIG.connect(_on_matchingFailedMusic)
+	SignalMgr.MatchingTimeMusicSIG.connect(_on_matchingTimeMusic)
 
-	SignalManager.MatchSuccessOkMusicSIG.connect(_on_matchSuccessOkMusic)
-	SignalManager.MatchSuccessFailedMusicSIG.connect(_on_matchSuccessFailedMusic)
-	SignalManager.MatchSuccessTimeMusicSIG.connect(_on_matchSuccessTimeMusic)
+	SignalMgr.MatchSuccessOkMusicSIG.connect(_on_matchSuccessOkMusic)
+	SignalMgr.MatchSuccessFailedMusicSIG.connect(_on_matchSuccessFailedMusic)
+	SignalMgr.MatchSuccessTimeMusicSIG.connect(_on_matchSuccessTimeMusic)
 
 	pass # Replace with function body.
 

@@ -163,5 +163,5 @@ func get_player_rank(type: RankType, player_name: String) -> int:
 
 
 func _on_btn_out_pressed() -> void:
-	FancyFade.circle_in(home_scene.instantiate())
+	Global.FancyFade.circle_in(home_scene.instantiate())
 	pass # Replace with function body.

@@ -26,11 +26,11 @@ func _ready() -> void:
 
 	# 禁用 SSL 验证 【todo 正式环境建议解除】
 	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
-	SceneManager.set_current_scene("login")
-	SettingsManager.show_settings(2) 
+	SceneMgr.set_current_scene("login")
+	SettingsMgr.show_settings(2) 
 	
-	print("当前运行的节点名",SceneManager.get_current_scene_name())
-	WindowDrag.register_drag_zone(self)
+	print("当前运行的节点名",SceneMgr.get_current_scene_name())
+	Global.WindowDrag.register_drag_zone(self)
 	if ProjectSettings.has_setting("username"):
 		usernameEdit.text = ProjectSettings.get("username")
 	# 登录成功后的跳转
@@ -54,7 +54,7 @@ func _process(_delta):
 		last_keyboard_height = current_height
 
 func _on_tb_register_pressed() -> void:
-	SceneManager.switch_to_scene("register","tile_reveal")
+	SceneMgr.switch_to_scene("register","tile_reveal")
 	pass # Replace with function body.
 
 func _on_tr_login_pressed() -> void:
@@ -83,7 +83,7 @@ func _on_request_completed(result, _response_code, _headers, body):
 
 func _input(event):
 	if event is InputEventKey:
-		if event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and not PopupManager.isVisible():  # 或使用 KEY_RETURN
+		if event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and not Global.PopupManager.isVisible():  # 或使用 KEY_RETURN
 			login()
 			get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
@@ -92,7 +92,7 @@ func _input(event):
 func login()->void:
 	print("Login: " + usernameEdit.text + " " + passwordEdit.text)
 	if not checkbox.is_pressed():
-		PopupManager.show_message("请阅读并同意用户协议")
+		Global.PopupManager.show_message("请阅读并同意用户协议")
 		return
 	loading.Show()
 	if not await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):

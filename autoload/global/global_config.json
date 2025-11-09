@@ -1,0 +1,8 @@
+{
+	"Transitions":"res://addons/transitions/Transitions.gd",
+	"FancyFade":"res://addons/transitions/FancyFade.gd",
+	"FadeScene":"res://addons/transitions/FadeScene.gd",
+	"WindowDrag":"res://autoload/window/window_drag.gd",
+	"PopupManager":"res://autoload/window/popup_manager.gd",
+	"Shared":"res://scripts/game/tetris/shared.gd"
+}

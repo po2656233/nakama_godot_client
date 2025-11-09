@@ -27,11 +27,11 @@ func setup_fullscreen_window():
 
 func _on_normal_screen():
 	get_window().mode = Window.MODE_WINDOWED
-	SignalManager.NormalWindowSIG.emit()
+	SignalMgr.NormalWindowSIG.emit()
 
 func _on_full_screen():
 	get_window().mode = Window.MODE_FULLSCREEN
-	SignalManager.FullWindowSIG.emit()
+	SignalMgr.FullWindowSIG.emit()
 
 func _input(event: InputEvent) -> void:
 	var os_name = OS.get_name()

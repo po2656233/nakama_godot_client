@@ -22,8 +22,8 @@ func _ready():
 	original_color = modulate
 	
 
-	SignalManager.OpenLightSIG.connect(open_color)
-	SignalManager.CloseLightSIG.connect(close_color)
+	SignalMgr.OpenLightSIG.connect(open_color)
+	SignalMgr.CloseLightSIG.connect(close_color)
 
 # 	# 连接鼠标事件信号
 # 	gui_input.connect(_on_gui_input)

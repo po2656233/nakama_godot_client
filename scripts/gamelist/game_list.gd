@@ -57,10 +57,10 @@ var already_ids = []
 
 		
 func _ready(): 
-	print("当前运行的节点名",SceneManager.get_current_scene_name())
-	# WindowDrag.register_drag_zone(self) 
-	SettingsManager.show_settings() 
-	SceneManager.set_previous_name("gamelist")
+	print("当前运行的节点名",SceneMgr.get_current_scene_name())
+	# Global.WindowDrag.register_drag_zone(self) 
+	SettingsMgr.show_settings() 
+	SceneMgr.set_previous_name("gamelist")
 	print("游戏列表--->")
 	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
 
@@ -72,8 +72,8 @@ func _ready():
 	# 连接匹配信号
 	matching.match_sucess.connect(_on_match_sucess)
 	matching.match_cancel.connect(_on_match_cancel)
-	SignalManager.StartGameSIG.connect(_on_game_start)
-	SignalManager.CancleGameSIG.connect(_on_game_cancel)
+	SignalMgr.StartGameSIG.connect(_on_game_start)
+	SignalMgr.CancleGameSIG.connect(_on_game_cancel)
 	pass
 
 # 加载游戏数据
@@ -93,7 +93,7 @@ func _on_game_list(result):
 
 func set_game_list(games):
 	if games.size() == 0:
-		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+		Global.PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
 	# 添加游戏
 	for item in games:
@@ -169,24 +169,24 @@ func _on_game_cancel(_game_id):
 	await OnlineMatch.LeaveMatch()
 	print("取消准备游戏 match_id:", curMatchId)
 	await get_tree().create_timer(1.5).timeout
-	PopupManager.show_dynamic("游戏已取消")
+	Global.PopupManager.show_dynamic("游戏已取消")
 	match_sucess.hide()
 	switch_controls(matching, scrollContainer)
 	pass
 
 # 游戏开始
 func _on_game_start(game_id_1):
-	SignalManager.WelcomeMusicSIG.emit()
+	SignalMgr.WelcomeMusicSIG.emit()
 	#await get_tree().create_timer(1.0).timeout
-	#PopupManager.show_dynamic("游戏开始")
+	#Global.PopupManager.show_dynamic("游戏开始")
 	# 加载游戏
 	loading_scene.show()
-	SignalManager.LoadingGameSIG.emit(game_id_1)
+	SignalMgr.LoadingGameSIG.emit(game_id_1)
 	
 	var gameEnName = OnlineGame.getGameEnName(game_id_1)
-	# SceneManager.ToGameScene(gameEnName)
+	# SceneMgr.ToGameScene(gameEnName)
 	print("游戏开始 game_id:", game_id_1, " name:", gameEnName)
-	SignalManager.GameKeepSIG.emit(1,game_id_1,-1,curMatchId,gameEnName)
+	SignalMgr.GameKeepSIG.emit(1,game_id_1,-1,curMatchId,gameEnName)
 	pass
 
 

@@ -522,8 +522,8 @@ func joinMatchmaker(data):
 	print("\n匹配相关信息:", data, "\n")
 	var result = await Online.nakama_socket.add_matchmaker_async(data.get('query', '*'), data['min_count'], data['max_count'], data.get('string_properties', {}), data.get('numeric_properties', {}))
 	if result.is_exception():
-		PopupManager.show_dynamic("匹配失败 " + result.get_exception().message)
-		SignalManager.MatchMakerFailedSIG.emit()
+		Global.PopupManager.show_dynamic("匹配失败 " + result.get_exception().message)
+		SignalMgr.MatchMakerFailedSIG.emit()
 		return result
 	matchmaker_ticket = result.ticket
 	print("\n匹配Ticket:", result, " 玩家信息:", OnlineLogin.get_my_name())
@@ -549,9 +549,9 @@ func LeaveMatch(p_match_id: String = ""):
 	var result = await Online.nakama_socket.leave_match_async(p_match_id)
 	if result.is_exception():
 		if Errors.ResponeMapping[result.get_exception().message]:
-			PopupManager.show_dynamic("离开匹配失败 " + Errors.ResponeMapping[result.get_exception().message])
+			Global.PopupManager.show_dynamic("离开匹配失败 " + Errors.ResponeMapping[result.get_exception().message])
 		else:
-			PopupManager.show_dynamic("离开匹配失败 " + result.get_exception().message)
+			Global.PopupManager.show_dynamic("离开匹配失败 " + result.get_exception().message)
 		return result
 	print("离开匹配成功--->>>", p_match_id)
 	match_id = ""

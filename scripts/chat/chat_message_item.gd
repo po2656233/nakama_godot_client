@@ -437,7 +437,7 @@ func _on_popup_menu_item_selected(id: int):
 				DisplayServer.clipboard_set(selected_text)
 			else:
 				DisplayServer.clipboard_set(text_label.text)
-			PopupManager.show_message("已复制")
+			Global.PopupManager.show_message("已复制")
 		1: # 撤销
 			if is_self_message:
 				text_label.text = "[正在撤销...]"

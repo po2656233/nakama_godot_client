@@ -17,7 +17,7 @@ var is_long_press = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# 取消窗口拖动
-	WindowDrag.unregister_drag_zone(self)
+	Global.WindowDrag.unregister_drag_zone(self)
 	_search_box.placeholder_text = placeholder_text
 	$Panel/ScrollContainer.focus_mode = Control.FOCUS_NONE
 	# Create the popup menu
@@ -122,7 +122,7 @@ func _on_tb_add_pressed() -> void:
 	var selected_items = _list.get_selected_items()
 	var ids = []
 	if not OnlineLogin.player_data:
-		PopupManager.show_message("未登录")
+		Global.PopupManager.show_message("未登录")
 		return
 	var uid = OnlineLogin.get_my_id()
 	for item in selected_items:
@@ -130,7 +130,7 @@ func _on_tb_add_pressed() -> void:
 		if info:
 			var friend = DataManager.get_instance().get_uid_friendInfo(uid,info.id)
 			if friend:
-				PopupManager.show_message("已是好友,请勿重复添加")
+				Global.PopupManager.show_message("已是好友,请勿重复添加")
 				return
 			ids.append(info.id)
 		pass
@@ -139,11 +139,11 @@ func _on_tb_add_pressed() -> void:
 		if isClub:
 			var result = await OnlineChat.create_group_async(_search_box.text)
 			if result:
-				PopupManager.show_message("创建俱乐部成功")
+				Global.PopupManager.show_message("创建俱乐部成功")
 			else:
-				PopupManager.show_message("创建俱乐部失败")
+				Global.PopupManager.show_message("创建俱乐部失败")
 		else:
-			PopupManager.show_message("没有选中用户")
+			Global.PopupManager.show_message("没有选中用户")
 		return
 
 	# 添加俱乐部
@@ -155,11 +155,11 @@ func _on_tb_add_pressed() -> void:
 	# 添加好友
 	var ret = await OnlineChat.add_friends_async(ids)	
 	if ret:
-		PopupManager.show_message("已添加,请等待对方通过")
+		Global.PopupManager.show_message("已添加,请等待对方通过")
 		_list.clear()
 		_search_box.text = ""
 	else:
-		PopupManager.show_message("添加失败")
+		Global.PopupManager.show_message("添加失败")
 
 	pass # Replace with function body.
 

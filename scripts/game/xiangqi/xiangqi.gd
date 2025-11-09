@@ -77,7 +77,7 @@ var pre_chess_black: chess_position
 var pre_chess_red: chess_position
 
 func _enter_tree():
-	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
+	SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
 	pass
 
 func _ready() -> void:
@@ -104,7 +104,7 @@ func gameStart(data) -> void:
 	if error_code != OK:
 		print("Error parsing JSON: " + json_conv.get_error_message(), " ---", data)
 		return
-	# SettingsManager.show_settings() 
+	# SettingsMgr.show_settings() 
 
 	# 黑方先走，动画初始在黑方最优棋子上
 	var result = json_conv.get_data()
@@ -247,12 +247,12 @@ func reture_chess(chess: int):
 
 func move(chess: chess_position):
 	if start_player != my_clolor:
-		PopupManager.show_dynamic("等待对方操作")
+		Global.PopupManager.show_dynamic("等待对方操作")
 		cuowu.play()
 		return	
 	# 检查游戏是否已结束（绝杀或困毙）
 	if game_ended:
-		PopupManager.show_dynamic("游戏已结束，请重新开始！")
+		Global.PopupManager.show_dynamic("游戏已结束，请重新开始！")
 		cuowu.play()
 		return
 	
@@ -277,18 +277,18 @@ func move(chess: chess_position):
 					print("移动---1")
 					return
 				if is_only_blocker_and_leaving_x(V_chess, chess):
-					PopupManager.show_dynamic("该棋子不能横向离开将帅之间的纵线！")
+					Global.PopupManager.show_dynamic("该棋子不能横向离开将帅之间的纵线！")
 					cuowu.play()
 					return
 				if is_facing_kings(V_chess, chess):
-					PopupManager.show_dynamic("将帅不能面对面！")
+					Global.PopupManager.show_dynamic("将帅不能面对面！")
 					cuowu.play()
 					return
 				# 先检查移动是否合法
 				if V_chess.play.move(V_chess, chess, chess_position_array):
 					# 检查移动后是否会导致自己被将军
 					if will_cause_self_check(V_chess, chess):
-						PopupManager.show_dynamic("被将军!!")
+						Global.PopupManager.show_dynamic("被将军!!")
 						cuowu.play()
 						return
 					if chess.play and chess.play.has_method("game_over") and chess.play.game_over():
@@ -298,7 +298,7 @@ func move(chess: chess_position):
 					chi.play()
 					if is_kings_facing():
 						_undo_last_move()
-						PopupManager.show_dynamic("将帅面对面了！")
+						Global.PopupManager.show_dynamic("将帅面对面了！")
 						cuowu.play()
 						return
 					check_xiangqi_status()
@@ -308,25 +308,25 @@ func move(chess: chess_position):
 			if V_chess.play == null or not V_chess.play.has_method("move"):
 				return
 			if is_only_blocker_and_leaving_x(V_chess, chess):
-				PopupManager.show_dynamic("将帅不能见面！")
+				Global.PopupManager.show_dynamic("将帅不能见面！")
 				cuowu.play()
 				return
 			if is_facing_kings(V_chess, chess):
-				PopupManager.show_dynamic("将帅不能见面！")
+				Global.PopupManager.show_dynamic("将帅不能见面！")
 				cuowu.play()
 				return
 			# 先检查移动是否合法
 			if V_chess.play.move(V_chess, chess, chess_position_array):
 				# 检查移动后是否会导致自己被将军
 				if will_cause_self_check(V_chess, chess):
-					PopupManager.show_dynamic("被将军！")
+					Global.PopupManager.show_dynamic("被将军！")
 					cuowu.play()
 					return
 				_move_end(chess)
 				luozi.play()
 				if is_kings_facing():
 					_undo_last_move()
-					PopupManager.show_dynamic("将帅不能面对面！")
+					Global.PopupManager.show_dynamic("将帅不能面对面！")
 					cuowu.play()
 					return
 				check_xiangqi_status()
@@ -339,7 +339,7 @@ func move(chess: chess_position):
 func otherMove(chess: chess_position):
 	# 检查游戏是否已结束（绝杀或困毙）
 	if game_ended:
-		PopupManager.show_dynamic("游戏已结束，请重新开始！")
+		Global.PopupManager.show_dynamic("游戏已结束，请重新开始！")
 		cuowu.play()
 		return
 	
@@ -365,18 +365,18 @@ func otherMove(chess: chess_position):
 					print("移动---1")
 					return
 				if is_only_blocker_and_leaving_x(V_chess, chess):
-					PopupManager.show_dynamic("该棋子不能横向离开将帅之间的纵线！")
+					Global.PopupManager.show_dynamic("该棋子不能横向离开将帅之间的纵线！")
 					cuowu.play()
 					return
 				if is_facing_kings(V_chess, chess):
-					PopupManager.show_dynamic("将帅不能面对面！")
+					Global.PopupManager.show_dynamic("将帅不能面对面！")
 					cuowu.play()
 					return
 				# 先检查移动是否合法
 				if V_chess.play.move(V_chess, chess, chess_position_array):
 					# 检查移动后是否会导致自己被将军
 					if will_cause_self_check(V_chess, chess):
-						PopupManager.show_dynamic("被将军!!")
+						Global.PopupManager.show_dynamic("被将军!!")
 						cuowu.play()
 						return
 					if chess.play and chess.play.has_method("game_over") and chess.play.game_over():
@@ -386,7 +386,7 @@ func otherMove(chess: chess_position):
 					chi.play()
 					if is_kings_facing():
 						_undo_last_move()
-						PopupManager.show_dynamic("将帅面对面了！")
+						Global.PopupManager.show_dynamic("将帅面对面了！")
 						cuowu.play()
 						return
 					check_xiangqi_status()
@@ -396,25 +396,25 @@ func otherMove(chess: chess_position):
 			if V_chess.play == null or not V_chess.play.has_method("move"):
 				return
 			if is_only_blocker_and_leaving_x(V_chess, chess):
-				PopupManager.show_dynamic("将帅不能见面！")
+				Global.PopupManager.show_dynamic("将帅不能见面！")
 				cuowu.play()
 				return
 			if is_facing_kings(V_chess, chess):
-				PopupManager.show_dynamic("将帅不能见面！")
+				Global.PopupManager.show_dynamic("将帅不能见面！")
 				cuowu.play()
 				return
 			# 先检查移动是否合法
 			if V_chess.play.move(V_chess, chess, chess_position_array):
 				# 检查移动后是否会导致自己被将军
 				if will_cause_self_check(V_chess, chess):
-					PopupManager.show_dynamic("被将军！")
+					Global.PopupManager.show_dynamic("被将军！")
 					cuowu.play()
 					return
 				_move_end(chess)
 				luozi.play()
 				if is_kings_facing():
 					_undo_last_move()
-					PopupManager.show_dynamic("将帅不能面对面！")
+					Global.PopupManager.show_dynamic("将帅不能面对面！")
 					cuowu.play()
 					return
 				check_xiangqi_status()
@@ -578,7 +578,7 @@ func jump_to_best_piece_for_player_move():
 	# 没有己方棋子
 	player_move.visible = false
 	V_chess = null
-	PopupManager.show_dynamic("已决出胜负")
+	Global.PopupManager.show_dynamic("已决出胜负")
 
 func game_over() -> void:
 	over.visible = true
@@ -593,7 +593,7 @@ func _on_button_button_down() -> void:
 
 
 func _on_reback_btn_pressed() -> void:
-	SceneManager.go_back()
+	SceneMgr.go_back()
 	# queue_free()
 	
 	pass # Replace with function body.
@@ -602,15 +602,15 @@ func _on_reback_btn_pressed() -> void:
 func check_xiangqi_status():
 	if is_checkmate(1 - start_player):
 		game_ended = true # 设置游戏结束状态
-		PopupManager.show_dynamic("绝杀！游戏结束")
+		Global.PopupManager.show_dynamic("绝杀！游戏结束")
 		game_over()
 		return false
 	elif is_check(1 - start_player):
 		jiangjun_play.play()
-		PopupManager.show_dynamic("将军！", 300)
+		Global.PopupManager.show_dynamic("将军！", 300)
 	elif is_stalemate(1 - start_player):
 		game_ended = true # 设置游戏结束状态
-		PopupManager.show_dynamic("困毙！游戏结束")
+		Global.PopupManager.show_dynamic("困毙！游戏结束")
 		game_over()
 		return false
 	return true

@@ -64,7 +64,7 @@ func on_credentials() -> void:
 func update_loading_progress(scope: int = 20,isRand:bool = true):
 	if scope >= 100:
 		cur_progress_percent = 100
-		SignalManager.LoadingSIG.emit(cur_progress_percent)
+		SignalMgr.LoadingSIG.emit(cur_progress_percent)
 		cur_progress_percent = 0
 		return
 
@@ -77,7 +77,7 @@ func update_loading_progress(scope: int = 20,isRand:bool = true):
 		cur_progress_percent = scope
 	if cur_progress_percent >= 100:
 		cur_progress_percent = 99
-	SignalManager.LoadingSIG.emit(cur_progress_percent)
+	SignalMgr.LoadingSIG.emit(cur_progress_percent)
 	pass
 # func _show_screen(info: Dictionary = {}) -> void:
 # 	_reconnect = info.get('reconnect', false)
@@ -92,7 +92,7 @@ func update_loading_progress(scope: int = 20,isRand:bool = true):
 # 注册处理
 func _on_register_success(result):
 	Online.set_nakama_session(result)
-	PopupManager.show_dynamic("创建账号成功!")
+	Global.PopupManager.show_dynamic("创建账号成功!")
 	
 
 # 注册失败
@@ -104,7 +104,7 @@ func _on_register_failure(result):
 		msg = '账号已经被使用了,请换个账号'
 	elif msg == '':
 		msg = "创建账号失败"
-	# PopupManager.show_dynamic(msg)
+	# Global.PopupManager.show_dynamic(msg)
 	# We always set Online.nakama_session in case something is yielding
 	# on the "session_changed" signal.
 	login_failed.emit(msg)
@@ -117,12 +117,12 @@ func register_account(myEmail, myPassword, save_credentials = false) -> void:
 	password = myPassword.strip_edges()
 	var username = email.split('@')[0]
 	if email == '':
-		PopupManager.show_dynamic("账号名不能为空")
+		Global.PopupManager.show_dynamic("账号名不能为空")
 		return
 	if password == '':
-		PopupManager.show_dynamic("密码不能为空")
+		Global.PopupManager.show_dynamic("密码不能为空")
 		return
-	PopupManager.show_dynamic("正在创建账号...")
+	Global.PopupManager.show_dynamic("正在创建账号...")
 	login_method = 'acc'
 	_save_credentials = save_credentials
 	await Util.Asyn_Call(Online.nakama_client, "authenticate_email_async", [email, password, username, true], _on_register_success, _on_register_failure)
@@ -185,7 +185,7 @@ func _on_login_fail(msg):
 		msg = "该账号未注册"
 	elif msg == "":
 		msg = "登录失败，请稍后重试"
-	PopupManager.show_dynamic(msg)
+	Global.PopupManager.show_dynamic(msg)
 	
 
 # 账密登录
@@ -196,15 +196,15 @@ func do_login(myemail: String = '', mypassword: String = '', save_credentials: b
 	if mypassword != '':
 		password = mypassword
 	if email.is_empty():
-		PopupManager.show_dynamic("账号不能为空")
+		Global.PopupManager.show_dynamic("账号不能为空")
 		return false
 	if password.is_empty():
-		PopupManager.show_dynamic("密码不能为空")
+		Global.PopupManager.show_dynamic("密码不能为空")
 		return false
 	if email.find('@') == -1:
 		email = email + "@game.com"
 	if _reconnect:
-		PopupManager.show_dynamic("重连中...")
+		Global.PopupManager.show_dynamic("重连中...")
 	# 登录
 	login_method = 'acc'
 	_save_credentials = save_credentials
@@ -249,7 +249,7 @@ func logout():
 		Online.nakama_session = null
 		var dir = DirAccess.open(USER_DIR)
 		if dir and OK == dir.remove(CREDENTIALS_FILENAME):
-			PopupManager.show_dynamic("清除缓存成功")
+			Global.PopupManager.show_dynamic("清除缓存成功")
 		print("Logged out successfully")
 
 ####################################用户信息###########################################################
@@ -264,7 +264,7 @@ func _on_first_userinfo_success(result):
 func _on_userinfo_success(result):
 	print("获取用户信息成功: ", result)
 	player_data = result.users[0]
-	# SignalManager.UserInfoSIG.emit(player_data) # 发射用户信息信号
+	# SignalMgr.UserInfoSIG.emit(player_data) # 发射用户信息信号
 
 
 # 加载用户信息失败

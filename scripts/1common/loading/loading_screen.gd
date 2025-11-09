@@ -41,9 +41,9 @@ func _ready():
 	add_child(http_request)
 	http_request.use_threads = true
 	
-	SignalManager.LoadingSIG.connect(_on_loading)
+	SignalMgr.LoadingSIG.connect(_on_loading)
 	# 连接按钮的按下信号到加载函数
-	SignalManager.LoadingGameSIG.connect(_on_load_game)
+	SignalMgr.LoadingGameSIG.connect(_on_load_game)
 	# 连接 HTTPRequest 的请求完成信号到处理函数
 	http_request.request_completed.connect(_on_http_request_request_completed)
 	
@@ -81,22 +81,22 @@ func init_data():
 func Show():
 	init_data()
 	show()
-	SettingsManager.settings_toggle.emit()
+	SettingsMgr.settings_toggle.emit()
 
 func Hide():
 	hide()
-	SettingsManager.settings_toggle.emit()
+	SettingsMgr.settings_toggle.emit()
 
 func reback():
-	SceneManager.go_back()
+	SceneMgr.go_back()
 	queue_free()
 	pass
 
 func close_loading():
 	if load_type == LOAD_TEPE.LOADING:
-		SceneManager.switch_to_scene(next_scene, "tile_reveal", 1)
+		SceneMgr.switch_to_scene(next_scene, "tile_reveal", 1)
 	elif load_type == LOAD_TEPE.LOAD_GAME:
-		SceneManager.ToGameScene(next_scene)
+		SceneMgr.ToGameScene(next_scene)
 		await OnlineGame.sendToMatch(OnlineMatch.MatchState.LOADING_MAP_FINISH, "1")
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
@@ -133,25 +133,25 @@ func _on_load_game(game_id):
 	var gameName = OnlineGame.getGameEnName(game_id)
 	print("开始下载游戏资源：", gameName, " ID:", game_id)
 	gameName = gameName.to_lower()
-	if not SceneManager.has_scene(gameName):
+	if not SceneMgr.has_scene(gameName):
 		reback()
-		PopupManager.show_dynamic("%s游戏正在招商中..."%[gameName])
+		Global.PopupManager.show_dynamic("%s游戏正在招商中..."%[gameName])
 		return
 	game_name = gameName
 	load_type = LOAD_TEPE.LOAD_GAME
-	if SceneManager.check_scene(game_name):
+	if SceneMgr.check_scene(game_name):
 		set_next_scene(game_name)
-		SignalManager.LoadingSIG.emit(100)
+		SignalMgr.LoadingSIG.emit(100)
 		return
-	SignalManager.LoadingSIG.emit(1)
+	SignalMgr.LoadingSIG.emit(1)
 	is_http_request = true
 	game_zip_path = local_path + game_name + game_pack
 	url_path = resource_url + game_name + game_pack
-	print("请求接口:", url_path, " 游戏路径:", SceneManager.get_scene_path(game_name))
+	print("请求接口:", url_path, " 游戏路径:", SceneMgr.get_scene_path(game_name))
 	var error = http_request.request(url_path)
 	if error != OK:
-		SignalManager.LoadingSIG.emit(-1.0)
-		PopupManager.show_dynamic("游戏资源不足...")
+		SignalMgr.LoadingSIG.emit(-1.0)
+		Global.PopupManager.show_dynamic("游戏资源不足...")
 		print("Failed to send HTTP request: ", error)
 
 # 处理 HTTP 请求完成事件
@@ -168,11 +168,11 @@ func _on_http_request_request_completed(_result: int, response_code: int, _heade
 			print("Resource downloaded and saved to: ", game_zip_path)
 		else:
 			print("Failed to save resource to local path")
-			SignalManager.LoadingSIG.emit(-1)
-			PopupManager.show_dynamic("游戏资源解压失败...")
+			SignalMgr.LoadingSIG.emit(-1)
+			Global.PopupManager.show_dynamic("游戏资源解压失败...")
 	else:
-		SignalManager.LoadingSIG.emit(-1)
-		PopupManager.show_dynamic("游戏资源下载失败...")
+		SignalMgr.LoadingSIG.emit(-1)
+		Global.PopupManager.show_dynamic("游戏资源下载失败...")
 		print("Failed to download resource, response code: ", response_code)
 
 # 加载本地资源
@@ -199,7 +199,7 @@ func afterUnzipFIN(zip_reader: ZIPReader):
 	var main_path = ""
 	for file_path in scene_files:
 		print('解压出来的文件路径', file_path)
-		if SceneManager.get_scene_path(game_name) == res_path + file_path and loadMainScene(file_path):
+		if SceneMgr.get_scene_path(game_name) == res_path + file_path and loadMainScene(file_path):
 			is_add_main_scene = true
 			main_path = file_path
 			break
@@ -210,23 +210,23 @@ func afterUnzipFIN(zip_reader: ZIPReader):
 		is_add_main_scene = loadMainScene(main_path)
 
 	if not is_add_main_scene:
-		SignalManager.LoadingSIG.emit(-1)
-		PopupManager.show_dynamic("缺乏主场景资源,游戏启动失败..."+main_path)
+		SignalMgr.LoadingSIG.emit(-1)
+		Global.PopupManager.show_dynamic("缺乏主场景资源,游戏启动失败..."+main_path)
 		return
 	# 添加道场景管理
-	SignalManager.LoadingSIG.emit(100)
+	SignalMgr.LoadingSIG.emit(100)
 	#restart_app()
 	#get_tree().reload_current_scene()
 	await get_tree().process_frame
-	SceneManager.add_scene(game_name, main_path)
-	SceneManager.ToGameScene(game_name)
+	SceneMgr.add_scene(game_name, main_path)
+	SceneMgr.ToGameScene(game_name)
 	pass
 
 # 解压完成
 func afterUnzip(_zip_reader: ZIPReader):
 	#print(files) # ["1.txt", "2.md", "3.html", "1.jpg"]
 	print("File processing completed")
-	# SceneManager.add_scenes_from_dict({
+	# SceneMgr.add_scenes_from_dict({
 	# 	game_name: default_scene_path + game_name + ".tscn"
 	# })
 	pass

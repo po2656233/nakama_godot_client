@@ -262,12 +262,12 @@ func flip():
 	is_animating = false
 
 func _on_texture_button_pressed() -> void:
-	PopupManager.show_confirm("确定删除房间吗?",remove_room)
+	Global.PopupManager.show_confirm("确定删除房间吗?",remove_room)
 	pass # Replace with function body.
 	
 func remove_room():
 	var result = await OnlineGame.removeTable({"tid":room_data.id})
 	if result == null or (result and not result.has("tid")):
-		PopupManager.show_dynamic("删除失败")
+		Global.PopupManager.show_dynamic("删除失败")
 		return
-	PopupManager.show_dynamic("删除成功")
+	Global.PopupManager.show_dynamic("删除成功")

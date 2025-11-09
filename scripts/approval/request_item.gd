@@ -105,14 +105,14 @@ func _on_approve_button_pressed() -> void:
 	if _type == "用户":
 		if await OnlineChat.add_friends_async([_uid]):
 			approve()
-			SignalManager.FreshFriendListSIG.emit()
+			SignalMgr.FreshFriendListSIG.emit()
 			return	
 	elif _type == "俱乐部":
 		if await OnlineChat.add_group_users_async(_gid, [_uid]):
 			approve()
-			SignalManager.FreshClubListSIG.emit()
+			SignalMgr.FreshClubListSIG.emit()
 			return
-	PopupManager.show_message("无效操作", "提示")
+	Global.PopupManager.show_message("无效操作", "提示")
 	pass
 
 func approve() -> void:
@@ -156,7 +156,7 @@ func _on_reject_button_pressed() -> void:
 			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
 		pass
 	else:
-		PopupManager.show_message("网络错误，请重试", "提示")
+		Global.PopupManager.show_message("网络错误，请重试", "提示")
 	pass
 
 

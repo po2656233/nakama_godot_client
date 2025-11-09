@@ -144,7 +144,7 @@ func _on_back_button_pressed():
 	tween.tween_property(self, "modulate:a", 0, 0.3)
 	tween.tween_callback(func(): 
 		# 返回俱乐部列表
-		SignalManager.ChangeSceneSIG.emit("clublist")
+		SignalMgr.ChangeSceneSIG.emit("clublist")
 		queue_free()
 		#var parent = get_parent()
 		#if parent and parent.get_node("ClubsPanel"):

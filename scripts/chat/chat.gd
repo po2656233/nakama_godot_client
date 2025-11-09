@@ -55,7 +55,7 @@ func _ready():
 	tab_container.set_tab_title(1,"俱乐部")
 	tab_container.set_tab_title(2,"好友")
 	if not OnlineLogin.player_data:
-		PopupManager.show_message("未登录")
+		Global.PopupManager.show_message("未登录")
 		OnlineLogin.relogin()
 		return
 	# 获取基础信息
@@ -90,13 +90,13 @@ func _ready():
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
-	SignalManager.FullWindowSIG.connect(_on_fullscreen)
-	SignalManager.NormalWindowSIG.connect(_on_normalscreen)
-	SignalManager.FreshFriendListSIG.connect(_on_fresh_friend_list) # 刷新好友列表
-	SignalManager.FreshClubListSIG.connect(_on_fresh_club_list) # 刷新俱乐部列表
-	SignalManager.AddClubSIG.connect(_on_add_club) # 添加俱乐部
-	SignalManager.UpdateClubSIG.connect(_on_update_club) # 更新俱乐部
-	SignalManager.RecvFinishSIG.connect(_on_recv_finish) # 收到完成消息
+	SignalMgr.FullWindowSIG.connect(_on_fullscreen)
+	SignalMgr.NormalWindowSIG.connect(_on_normalscreen)
+	SignalMgr.FreshFriendListSIG.connect(_on_fresh_friend_list) # 刷新好友列表
+	SignalMgr.FreshClubListSIG.connect(_on_fresh_club_list) # 刷新俱乐部列表
+	SignalMgr.AddClubSIG.connect(_on_add_club) # 添加俱乐部
+	SignalMgr.UpdateClubSIG.connect(_on_update_club) # 更新俱乐部
+	SignalMgr.RecvFinishSIG.connect(_on_recv_finish) # 收到完成消息
 	OnlineChat.changeChannelSIG.connect(_on_change_channel)
 	
 	_on_socket_connected()
@@ -117,7 +117,7 @@ func _process(_delta):
 func _input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE: # 或使用 KEY_RETURN
-			WindowDrag.stopMove = false
+			Global.WindowDrag.stopMove = false
 			exit_fullscreen()
 			get_viewport().set_input_as_handled() # 阻止事件继续传
 	pass
@@ -233,7 +233,7 @@ func _on_received_message(msg):
 	print("收到消息:", msg)
 	if add_message_to_history(msg.channel_id, msg):
 		if msg.sender_id != uid:
-			SignalManager.RecvMessageSIG.emit(msg)
+			SignalMgr.RecvMessageSIG.emit(msg)
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
 		ensure_scroll_to()
@@ -278,7 +278,7 @@ func _on_status_presence(presence):
 	for joinItem in presence.joins:
 		changeOnline(joinItem.user_id, true)
 	if count > 1:
-		SignalManager.OnlineSIG.emit()
+		SignalMgr.OnlineSIG.emit()
 	if count == 0:
 		for leaveItem in presence.leaves:
 			changeOnline(leaveItem.user_id, false)
@@ -340,32 +340,32 @@ func _on_received_notify(notify):
 			approval_data["type"] = "好友"
 			approval_data["status"] = 2
 			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalManager.NewNotifySIG.emit()
+			SignalMgr.NewNotifySIG.emit()
 		NotifyStatus.ACCEPT_FRIEND:
 			approval_data["type"] = "好友"
 			approval_data["status"] = 4
 			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			# SignalManager.NewNotifySIG.emit()
-			SignalManager.FreshFriendListSIG.emit()
+			# SignalMgr.NewNotifySIG.emit()
+			SignalMgr.FreshFriendListSIG.emit()
 		NotifyStatus.ACCEPT_GROUP:
 			approval_data["status"] = 4
 			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalManager.NewNotifySIG.emit()
+			SignalMgr.NewNotifySIG.emit()
 			pass
 		NotifyStatus.WANT_GROUP:
 			approval_data["status"] = 2
 			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalManager.NewNotifySIG.emit()
+			SignalMgr.NewNotifySIG.emit()
 			pass
 		NotifyStatus.FRIEND_JOIN:
-			SignalManager.NewNotifySIG.emit()
+			SignalMgr.NewNotifySIG.emit()
 			pass
 		NotifyStatus.SERVER_CLOSE:
 			pass
 		NotifyStatus.BANNED:
 			approval_data["status"] = 3
 			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalManager.NewNotifySIG.emit()
+			SignalMgr.NewNotifySIG.emit()
 			pass
 		_:
 			pass
@@ -400,13 +400,13 @@ func _on_btn_send_pressed() -> void:
 		print("发送消息:", msg)
 		var ret = await OnlineChat.send_message(msg)
 		if ret == OK:
-			SignalManager.SendMessageSIG.emit(msg)
+			SignalMgr.SendMessageSIG.emit(msg)
 			sendTextEdit.clear()
 			isToTop = false
 		else:
-			PopupManager.show_message("发送失败")
+			Global.PopupManager.show_message("发送失败")
 		return
-	PopupManager.show_message("未指定频道")
+	Global.PopupManager.show_message("未指定频道")
 	pass # Replace with function body.
 
 
@@ -482,7 +482,7 @@ func get_friends_list():
 					print("好友--> ", index, "好友信息", friend.user)
 					pass
 			elif friend.state == 2: # 需要审批
-				SignalManager.NewNotifySIG.emit(null)
+				SignalMgr.NewNotifySIG.emit(null)
 				pass
 			# 状态
 			var approval_data = {
@@ -666,9 +666,9 @@ func _on_light_button_pressed() -> void:
 	light_switch.texture_normal = pressed
 	light_switch.texture_pressed = normal
 	if !isOpenLight:
-		SignalManager.OpenLightSIG.emit()
+		SignalMgr.OpenLightSIG.emit()
 	else:
-		SignalManager.CloseLightSIG.emit()
+		SignalMgr.CloseLightSIG.emit()
 	isOpenLight = !isOpenLight
 	pass # Replace with function body.
 

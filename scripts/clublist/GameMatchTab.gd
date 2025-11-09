@@ -32,8 +32,8 @@ func _ready():
 	join_queue_button.mouse_exited.connect(_on_join_button_exit)
 	leave_queue_button.mouse_entered.connect(_on_leave_button_hover)
 	leave_queue_button.mouse_exited.connect(_on_leave_button_exit)
-	SignalManager.JoinGameSIG.connect(_on_join_game)
-	SignalManager.LeaveGameSIG.connect(_on_leave_game)
+	SignalMgr.JoinGameSIG.connect(_on_join_game)
+	SignalMgr.LeaveGameSIG.connect(_on_leave_game)
 	# 定时更新匹配状态（模拟）
 	var timer = Timer.new()
 	add_child(timer)
@@ -108,7 +108,7 @@ func _on_join_queue_button_pressed():
 		tween.tween_property(button, "scale", Vector2(0.95, 0.95), 0.1)
 		tween.tween_property(button, "scale", Vector2(1, 1), 0.1)
 		join_queue_button_pressed.emit(game_name)
-		SignalManager.JoinGameSIG.emit(game_name)
+		SignalMgr.JoinGameSIG.emit(game_name)
 
 func _on_leave_queue_button_pressed():
 	if in_queue:
@@ -128,7 +128,7 @@ func _on_leave_queue_button_pressed():
 		
 	if select_game_name != "":
 		leave_queue_button_pressed.emit(select_game_name)
-		SignalManager.LeaveGameSIG.emit(select_game_name)
+		SignalMgr.LeaveGameSIG.emit(select_game_name)
 	pass
 	
 	

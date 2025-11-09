@@ -71,9 +71,9 @@ enum SearchType {
 var curSelect = SearchType.all
 # 准备
 func _ready():
-	SettingsManager.show_settings()
-	SceneManager.set_previous_name("roomlist")
-	# WindowDrag.register_drag_zone(self)
+	SettingsMgr.show_settings()
+	SceneMgr.set_previous_name("roomlist")
+	# Global.WindowDrag.register_drag_zone(self)
 
 	# 适配房间子项的列数
 	var width = get_viewport_rect().size.x
@@ -106,13 +106,13 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	create_room_dialog.room_created.connect(_on_room_created) # 创建房间
 	waitingStart.quitRoomSIG.connect(_on_cancel_waiting)
-	SignalManager.CreateRoomSIG.connect(_on_append_room)
-	SignalManager.RemoveRoomSIG.connect(_on_remove_room)
-	# SignalManager.JoinRoomSIG.connect(_recv_join_room)
-	SignalManager.LeaveRoomSIG.connect(_recv_leave_room)
-	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
-	SignalManager.MatchPresenceEventSIG.connect(_on_received_match_presence)
-	SignalManager.OnlineCountSIG.connect(_on_received_table_online)
+	SignalMgr.CreateRoomSIG.connect(_on_append_room)
+	SignalMgr.RemoveRoomSIG.connect(_on_remove_room)
+	# SignalMgr.JoinRoomSIG.connect(_recv_join_room)
+	SignalMgr.LeaveRoomSIG.connect(_recv_leave_room)
+	SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
+	SignalMgr.MatchPresenceEventSIG.connect(_on_received_match_presence)
+	SignalMgr.OnlineCountSIG.connect(_on_received_table_online)
 	pass
 
 func load_data():
@@ -281,7 +281,7 @@ func _on_game_list(result):
 		game_options.add_item(game.name, game.id)
 		game_options.set_item_metadata(game_options.item_count-1, game)
 	if allgames.size() == 0:
-		PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+		Global.PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
 	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
 	curSelect = SearchType.favorite
@@ -461,7 +461,7 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 # 确认房间密码
 func _on_confirm_btn_pressed() -> void:
 	if jion_input.text == "":
-		PopupManager.show_dynamic("请输入房间密码")
+		Global.PopupManager.show_dynamic("请输入房间密码")
 		return
 	# 校验房间密码
 	selected_room_info.room_key = jion_input.text
@@ -610,7 +610,7 @@ func _on_received_table_online(data):
 # 取消等待
 func _on_cancel_waiting():
 	if is_doing_enter:
-		PopupManager.show_dynamic("正在进入房间,请等待",250)
+		Global.PopupManager.show_dynamic("正在进入房间,请等待",250)
 		return
 	waitingStart.Hide()
 	waitingStart.remove_player(OnlineLogin.get_my_id())
@@ -631,20 +631,20 @@ func _on_cancel_waiting():
 func _on_join_room(room_info: Dictionary)->bool:
 	# 检查是否正在加入房间
 	if selected_room_info != {} and jion_input.text == "":
-		PopupManager.show_dynamic("已有房间,请等待离开")
+		Global.PopupManager.show_dynamic("已有房间,请等待离开")
 		_set_join_btn(room_info.room_id)
 		return false
 	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
-	if not SceneManager.has_scene(enName):
+	if not SceneMgr.has_scene(enName):
 		print('第一次加载游戏...',enName)
-		#SignalManager.LoadingGameSIG.emit(room_info.game_type)
+		#SignalMgr.LoadingGameSIG.emit(room_info.game_type)
 	else:
 		print('已有游戏...',enName)
 
 	# 检查是否已满
 	if room_info.max_players == room_info.player_count:
-		PopupManager.show_dynamic("房间已满员")
+		Global.PopupManager.show_dynamic("房间已满员")
 		selected_room_info = {}
 		_set_join_btn(room_info.room_id)
 		return false
@@ -724,19 +724,19 @@ func _on_join_table_cb(result):
 		
 	waitingStart.Waiting()
 	print("加入房间成功", result_1)
-	SignalManager.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
+	SignalMgr.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
 	is_doing_enter = false
 	pass
 
 func _on_join_table_err(result):
 	print("加入房间失败:", result)
 	if result in Errors.ResponeMapping:
-		PopupManager.show_dynamic("加入房间失败: %s" % Errors.ResponeMapping[result])
+		Global.PopupManager.show_dynamic("加入房间失败: %s" % Errors.ResponeMapping[result])
 	else:
-		PopupManager.show_dynamic("加入房间失败: %s" % result)
+		Global.PopupManager.show_dynamic("加入房间失败: %s" % result)
 	await get_tree().create_timer(0.5).timeout
 	waitingStart.Hide()
-	SignalManager.JoinErrorMusicSIG.emit()
+	SignalMgr.JoinErrorMusicSIG.emit()
 	
 	jion_dialog.visible = false
 	jion_input.text = ""

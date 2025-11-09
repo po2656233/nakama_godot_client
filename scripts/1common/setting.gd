@@ -19,8 +19,8 @@ var hidden_indices = []  # 存储需要隐藏的索引
 func _ready() -> void: 
 	var isMute = DataManager.get_instance().get_isMute()
 	print("当前是否禁音:",isMute)
-	SignalManager.MuteSIG.emit(isMute)
-	SignalManager.BackgroundMusicSIG.emit(isMute)
+	SignalMgr.MuteSIG.emit(isMute)
+	SignalMgr.BackgroundMusicSIG.emit(isMute)
 	
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
@@ -132,7 +132,7 @@ func on_setting_pressed(index: int) -> void:
 	var check:bool = popup_menu.is_item_checked(index)
 	var new_check:bool = not check
 	popup_menu.set_item_checked(index, new_check)
-	WindowDrag.dragging = false
+	Global.WindowDrag.dragging = false
 	print("Setting pressed ",index)
 	var id = popup_menu.get_item_id(index)
 	match id:
@@ -141,8 +141,8 @@ func on_setting_pressed(index: int) -> void:
 			isMute = !isMute
 			print("是否禁音: ",isMute)
 			DataManager.get_instance().set_isMute(isMute)
-			SignalManager.BackgroundMusicSIG.emit(isMute)
-			SignalManager.MuteSIG.emit(isMute)
+			SignalMgr.BackgroundMusicSIG.emit(isMute)
+			SignalMgr.MuteSIG.emit(isMute)
 			_rebuild_menu()
 			# var hints = "打开音量" if isMute else "关闭音量"
 			# popup_menu.set_item_text(index, hints)
@@ -150,14 +150,14 @@ func on_setting_pressed(index: int) -> void:
 			pass
 		2:#返回登录页
 			OnlineLogin.logout() 
-			SceneManager.switch_to_scene("login",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
+			SceneMgr.switch_to_scene("login",SceneMgr.get_transition_key("WIPE_LEFT"),0.5)
 		# 	pass
 		3:# 退出
 			get_tree().quit()
 			print("退出游戏")
 			pass
 		4:#返回主页
-			SceneManager.switch_to_scene("home",SceneManager.get_transition_key("WIPE_LEFT"),0.5)
+			SceneMgr.switch_to_scene("home",SceneMgr.get_transition_key("WIPE_LEFT"),0.5)
 		_:
 			print("Setting error",index)
 			pass
@@ -189,7 +189,7 @@ func restore_window():
 #############################
 func _on_btn_notify_pressed() -> void:
 	#铃铛停止播放
-	SignalManager.NewNotifySIG.emit(false)
+	SignalMgr.NewNotifySIG.emit(false)
 	pass # Replace with function body.
 
 
@@ -197,12 +197,12 @@ func _on_btn_email_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_look_notify()->void:
-	SceneManager.show_scene_in_center("approval",0.9)
+	SceneMgr.show_scene_in_center("approval",0.9)
 	pass
 
 func _on_look_email()->void:
-	SceneManager.show_scene_in_center("email")
-	# FancyFade.wipe_left(mail_scene.instantiate(),0.5)
+	SceneMgr.show_scene_in_center("email")
+	# Global.FancyFade.wipe_left(mail_scene.instantiate(),0.5)
 	pass
 #######################################
 func showNotify(isShow:bool):

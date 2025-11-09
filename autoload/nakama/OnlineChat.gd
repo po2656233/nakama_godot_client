@@ -159,7 +159,7 @@ func fetch_full_chat_history(channel_id: String, limit: int = 20):
 	while next_cursor:
 		var prev_cursor = next_cursor
 		next_cursor = await fetch_older_messages(channel_id, prev_cursor, limit)
-	SignalManager.RecvFinishSIG.emit()
+	SignalMgr.RecvFinishSIG.emit()
 	pass
 
 
@@ -358,7 +358,7 @@ func create_world_async():
 		print("Error create_world_async: ", result.get_exception().message)
 		return null
 	print("添加俱乐部: ", result)
-	# SignalManager.FreshClubListSIG.emit()
+	# SignalMgr.FreshClubListSIG.emit()
 	return result
 
 
@@ -381,13 +381,13 @@ func load_world_channel():
 			var ret1 = await Online.nakama_client.join_group_async(Online.nakama_session, group.id)
 			print("加入世界频道: ", ret1)
 			if ret1.is_exception():
-				PopupManager.show_dynamic("加入世界频道失败")
+				Global.PopupManager.show_dynamic("加入世界频道失败")
 				print("加入世界频道失败",ret1.get_exception().message)
 				return null
 			var ret = await add_channel_async(group.id, 2)
 			if not ret:
 				print("加入世界渠道失败")
-				PopupManager.show_dynamic("加入世界渠道失败")
+				Global.PopupManager.show_dynamic("加入世界渠道失败")
 				return null
 			print("添加世界渠道频道: ", ret)
 			_world_channel = ret

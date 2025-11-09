@@ -51,8 +51,8 @@ func _ready():
 	start_button.pressed.connect(_on_start_button_pressed)
 	match_start.connect(_on_start_button_pressed)
 
-	SignalManager.MatchMakerSIG.connect(_on_match_maker_event)
-	SignalManager.MatchMakerFailedSIG.connect(_on_match_failed)
+	SignalMgr.MatchMakerSIG.connect(_on_match_maker_event)
+	SignalMgr.MatchMakerFailedSIG.connect(_on_match_failed)
 	pass
 
 
@@ -70,7 +70,7 @@ func _process(delta):
 			var saturation = randf_range(0.3, 1.0)  # 高饱和度
 			var value = randf_range(0.9, 1.0)       # 高亮度
 			progress_circle.material.set_shader_parameter("color", Color.from_hsv(hue, saturation, value, 1.0))
-			SignalManager.MatchingTimeMusicSIG.emit(false)
+			SignalMgr.MatchingTimeMusicSIG.emit(false)
 		progress_circle.material.set_shader_parameter("progress", progress_value)
 		#
 		time += delta
@@ -96,7 +96,7 @@ func start_matching():
 	cancel_button.visible = true
 	start_button.visible = false
 	animation_player.play("matching_pulse")
-	SignalManager.MatchingTimeMusicSIG.emit(true)
+	SignalMgr.MatchingTimeMusicSIG.emit(true)
 	# 显示进度动画
 	progress_circle.visible = true
 	accumulator = 0
@@ -127,7 +127,7 @@ func start_matching():
 	# 	print("错误信息: ", result.get_exception().message)
 	# else:
 	# 	print("当前匹配信息: ", result, gamename, maxplayer, result.ticket)
-	# 	PopupManager.show_dynamic("已添加至匹配池,请您耐心等待")
+	# 	Global.PopupManager.show_dynamic("已添加至匹配池,请您耐心等待")
 
 	# await get_tree().create_timer(randf_range(2, 5)).timeout
 	# _on_match_success()
@@ -140,7 +140,7 @@ func start_matching():
 func stop_matching():
 	var leave = await OnlineMatch.LeaveMatch()
 	if leave and leave.is_exception():
-		PopupManager.show_dynamic("停止匹配失败")
+		Global.PopupManager.show_dynamic("停止匹配失败")
 		print("错误信息: ", leave.get_exception().message)
 		return
 	print("停止匹配",leave)
@@ -148,7 +148,7 @@ func stop_matching():
 	current_state = MatchState.IDLE
 	reset_ui()
 	animation_player.stop()
-	SignalManager.MatchingTimeMusicSIG.emit(true)
+	SignalMgr.MatchingTimeMusicSIG.emit(true)
 	match_cancel.emit()
 
 func reset_ui():
@@ -201,8 +201,8 @@ func _on_match_success():
 	cancel_button.visible = false
 	animation_player.play("success_flash")
 	progress_circle.visible = false
-	SignalManager.MatchingTimeMusicSIG.emit(true)
-	SignalManager.MatchingOkMusicSIG.emit()
+	SignalMgr.MatchingTimeMusicSIG.emit(true)
+	SignalMgr.MatchingOkMusicSIG.emit()
 	
 	# 这里添加切换到游戏场景的代码
 	
@@ -216,5 +216,5 @@ func _on_match_failed():
 	start_button.visible = true
 	animation_player.play("failed_shake")
 	progress_circle.visible = false
-	SignalManager.MatchingTimeMusicSIG.emit(true)
-	SignalManager.MatchingFailedMusicSIG.emit()
+	SignalMgr.MatchingTimeMusicSIG.emit(true)
+	SignalMgr.MatchingFailedMusicSIG.emit()

@@ -27,7 +27,7 @@ enum OpCode {
 }
 # 进入场景
 func _enter_tree():
-	SignalManager.MatchStateEventSIG.connect(_on_received_match_state)
+	SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
 	pass
 	
 # 接收匹配状态事件
