@@ -267,9 +267,9 @@ func launch_game():
 	if not game_data.has("installed") or not game_data["installed"]:
 		# 游戏未安装
 		print("游戏未安装：", game_data.get("title", "未知游戏"))
-		# 尝试使用PopupManager显示提示
-		if PopupManager:
-			Global.PopupManager.show_message("游戏未安装，请先安装游戏。", "提示", false)
+		# 尝试使用WindowPopup显示提示
+		if Global.WindowPopup:
+			Global.WindowPopup.show_message("游戏未安装，请先安装游戏。", "提示", false)
 		return
 	
 	var game_title = game_data.get("title", "未知游戏")
@@ -277,14 +277,14 @@ func launch_game():
 	
 	if executable_path == "":
 		print("找不到游戏执行文件：", game_title)
-		if PopupManager:
-			Global.PopupManager.show_message("找不到游戏执行文件。", "错误", false)
+		if Global.WindowPopup:
+			Global.WindowPopup.show_message("找不到游戏执行文件。", "错误", false)
 		return
 	
 	# 显示启动提示
 	print("正在启动游戏：", game_title)
-	if PopupManager:
-		Global.PopupManager.show_message("正在启动 " + game_title + "...", "启动游戏", false)
+	if Global.WindowPopup:
+		Global.WindowPopup.show_message("正在启动 " + game_title + "...", "启动游戏", false)
 	
 	# 这里应该调用系统API启动游戏
 	# OS.execute(executable_path, [])

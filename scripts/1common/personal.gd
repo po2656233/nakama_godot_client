@@ -15,12 +15,12 @@ extends Control
 func _ready() -> void:
 	 # 初始化进度条
 	init_progress_bar()
-	#print('当前玩家信息',OnlineLogin.player_data)
+	#print('当前玩家信息',Global.OnlineLogin.player_data)
 	nickname.text = ''
-	username.text = OnlineLogin.get_my_name()
-	headIcon.texture = await  Util.load_texture_async(OnlineLogin.get_my_headIcon())
+	username.text = Global.OnlineLogin.get_my_name()
+	headIcon.texture = await  Util.load_texture_async(Global.OnlineLogin.get_my_headIcon())
 	if username.text == '':
-		username.text = OnlineLogin.get_my_nickname()
+		username.text = Global.OnlineLogin.get_my_nickname()
 	pass # Replace with function body.
 
 

@@ -26,10 +26,10 @@ func _ready() -> void:
 
 	# 禁用 SSL 验证 【todo 正式环境建议解除】
 	ProjectSettings.set_setting("network/ssl/verify_hosts", false)
-	SceneMgr.set_current_scene("login")
-	SettingsMgr.show_settings(2) 
+	Global.SceneMgr.set_current_scene("login")
+	Global.SettingsMgr.show_settings(2) 
 	
-	print("当前运行的节点名",SceneMgr.get_current_scene_name())
+	print("当前运行的节点名",Global.SceneMgr.get_current_scene_name())
 	Global.WindowDrag.register_drag_zone(self)
 	if ProjectSettings.has_setting("username"):
 		usernameEdit.text = ProjectSettings.get("username")
@@ -40,7 +40,7 @@ func _ready() -> void:
 	# http_request = HTTPRequest.new()
 	# add_child(http_request)
 	# http_request.request_completed.connect(_on_request_completed)
-	OnlineLogin.login_failed.connect(_on_login_failed)
+	Global.OnlineLogin.login_failed.connect(_on_login_failed)
 	pass
 
 
@@ -54,7 +54,7 @@ func _process(_delta):
 		last_keyboard_height = current_height
 
 func _on_tb_register_pressed() -> void:
-	SceneMgr.switch_to_scene("register","tile_reveal")
+	Global.SceneMgr.switch_to_scene("register","tile_reveal")
 	pass # Replace with function body.
 
 func _on_tr_login_pressed() -> void:
@@ -83,7 +83,7 @@ func _on_request_completed(result, _response_code, _headers, body):
 
 func _input(event):
 	if event is InputEventKey:
-		if event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and not Global.PopupManager.isVisible():  # 或使用 KEY_RETURN
+		if event.pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and not Global.WindowPopup.isVisible():  # 或使用 KEY_RETURN
 			login()
 			get_viewport().set_input_as_handled()  # 阻止事件继续传递
 
@@ -92,17 +92,17 @@ func _input(event):
 func login()->void:
 	print("Login: " + usernameEdit.text + " " + passwordEdit.text)
 	if not checkbox.is_pressed():
-		Global.PopupManager.show_message("请阅读并同意用户协议")
+		Global.WindowPopup.show_message("请阅读并同意用户协议")
 		return
 	loading.Show()
-	if not await OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
+	if not await Global.OnlineLogin.do_login(usernameEdit.text,passwordEdit.text,false):
 		loading.Hide()
 	pass 
  
 # 设备登录
 func deviceLogin()->void:
 	loading.Show()
-	await OnlineLogin.do_device_login("",false,true)
+	await Global.OnlineLogin.do_device_login("",false,true)
 	pass
 
 # 微信登录(暂不使用)

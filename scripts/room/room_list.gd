@@ -71,8 +71,8 @@ enum SearchType {
 var curSelect = SearchType.all
 # 准备
 func _ready():
-	SettingsMgr.show_settings()
-	SceneMgr.set_previous_name("roomlist")
+	Global.SettingsMgr.show_settings()
+	Global.SceneMgr.set_previous_name("roomlist")
 	# Global.WindowDrag.register_drag_zone(self)
 
 	# 适配房间子项的列数
@@ -106,18 +106,18 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	create_room_dialog.room_created.connect(_on_room_created) # 创建房间
 	waitingStart.quitRoomSIG.connect(_on_cancel_waiting)
-	SignalMgr.CreateRoomSIG.connect(_on_append_room)
-	SignalMgr.RemoveRoomSIG.connect(_on_remove_room)
-	# SignalMgr.JoinRoomSIG.connect(_recv_join_room)
-	SignalMgr.LeaveRoomSIG.connect(_recv_leave_room)
-	SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
-	SignalMgr.MatchPresenceEventSIG.connect(_on_received_match_presence)
-	SignalMgr.OnlineCountSIG.connect(_on_received_table_online)
+	Global.SignalMgr.CreateRoomSIG.connect(_on_append_room)
+	Global.SignalMgr.RemoveRoomSIG.connect(_on_remove_room)
+	# Global.SignalMgr.JoinRoomSIG.connect(_recv_join_room)
+	Global.SignalMgr.LeaveRoomSIG.connect(_recv_leave_room)
+	Global.SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
+	Global.SignalMgr.MatchPresenceEventSIG.connect(_on_received_match_presence)
+	Global.SignalMgr.OnlineCountSIG.connect(_on_received_table_online)
 	pass
 
 func load_data():
 	# 游戏列表
-	await OnlineGame.getGameList(-1,self,"_on_game_list")
+	await Global.OnlineGame.getGameList(-1,self,"_on_game_list")
 	pass
 
 # 添加房间数据
@@ -210,7 +210,7 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 	# room_list_info.clear()
 	match curSelect:
 		SearchType.all:
-			await OnlineGame.getTabelList({
+			await Global.OnlineGame.getTabelList({
 				"creatorId": creatorId,
 				"order": order,
 				"name": name1,
@@ -219,10 +219,10 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 				"pageSize": int(page_size)
 			},self,"_on_get_table_list")
 		SearchType.favorite:
-			await OnlineGame.getFavoriteList("",self,"_on_get_favorite_list")
+			await Global.OnlineGame.getFavoriteList("",self,"_on_get_favorite_list")
 		SearchType.my:
-			await OnlineGame.getTabelList({
-				"creatorId": OnlineLogin.get_my_id(),
+			await Global.OnlineGame.getTabelList({
+				"creatorId": Global.OnlineLogin.get_my_id(),
 				"order": order,
 				"name": name1,
 				"isDesc": isDesc,
@@ -281,7 +281,7 @@ func _on_game_list(result):
 		game_options.add_item(game.name, game.id)
 		game_options.set_item_metadata(game_options.item_count-1, game)
 	if allgames.size() == 0:
-		Global.PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+		Global.WindowPopup.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
 	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
 	curSelect = SearchType.favorite
@@ -451,7 +451,7 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 			favorite_ids.push_front(room_info.id)
 	else:
 		favorite_ids.erase(room_info.id)
-	await OnlineGame.favoriteTable({
+	await Global.OnlineGame.favoriteTable({
 		"tableId": room_info.id,
 		"isFavorite": is_favorite,
 	},self,"_on_favorite_table_cb")
@@ -461,7 +461,7 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 # 确认房间密码
 func _on_confirm_btn_pressed() -> void:
 	if jion_input.text == "":
-		Global.PopupManager.show_dynamic("请输入房间密码")
+		Global.WindowPopup.show_dynamic("请输入房间密码")
 		return
 	# 校验房间密码
 	selected_room_info.room_key = jion_input.text
@@ -527,7 +527,7 @@ func _on_append_room(info):
 			"room_name": data.get("name", ""),
 			"room_key": data.get("key", ""),
 			"is_locked": data.get("isLock", false),
-			"game_name": OnlineGame.getGameName(data.get("gid", 0)),
+			"game_name": Global.OnlineGame.getGameName(data.get("gid", 0)),
 			"game_type": data.get("gid", 0),
 			"creator_id": data.get("creatorId", ""),
 			"author": data.get("creator", ""),
@@ -610,19 +610,19 @@ func _on_received_table_online(data):
 # 取消等待
 func _on_cancel_waiting():
 	if is_doing_enter:
-		Global.PopupManager.show_dynamic("正在进入房间,请等待",250)
+		Global.WindowPopup.show_dynamic("正在进入房间,请等待",250)
 		return
 	waitingStart.Hide()
-	waitingStart.remove_player(OnlineLogin.get_my_id())
+	waitingStart.remove_player(Global.OnlineLogin.get_my_id())
 	if selected_room_info:
 		var cur_room_id = selected_room_info.room_id
 		print("离开房间:", cur_room_id)
 		for i in range(selected_room_info.players.size()):
-			if selected_room_info.players[i].uid == OnlineLogin.get_my_id():
+			if selected_room_info.players[i].uid == Global.OnlineLogin.get_my_id():
 				selected_room_info.players.remove_at(i)
 				break
 		_set_join_btn(cur_room_id)
-		await OnlineMatch.LeaveMatch(cur_room_id)
+		await Global.OnlineMatch.LeaveMatch(cur_room_id)
 		selected_room_info = {}
 		# _refresh_room_list()
 	pass
@@ -631,20 +631,20 @@ func _on_cancel_waiting():
 func _on_join_room(room_info: Dictionary)->bool:
 	# 检查是否正在加入房间
 	if selected_room_info != {} and jion_input.text == "":
-		Global.PopupManager.show_dynamic("已有房间,请等待离开")
+		Global.WindowPopup.show_dynamic("已有房间,请等待离开")
 		_set_join_btn(room_info.room_id)
 		return false
-	var enName = OnlineGame.getGameEnName(room_info.game_type).to_lower() 
+	var enName = Global.OnlineGame.getGameEnName(room_info.game_type).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
-	if not SceneMgr.has_scene(enName):
+	if not Global.SceneMgr.has_scene(enName):
 		print('第一次加载游戏...',enName)
-		#SignalMgr.LoadingGameSIG.emit(room_info.game_type)
+		#Global.SignalMgr.LoadingGameSIG.emit(room_info.game_type)
 	else:
 		print('已有游戏...',enName)
 
 	# 检查是否已满
 	if room_info.max_players == room_info.player_count:
-		Global.PopupManager.show_dynamic("房间已满员")
+		Global.WindowPopup.show_dynamic("房间已满员")
 		selected_room_info = {}
 		_set_join_btn(room_info.room_id)
 		return false
@@ -660,7 +660,7 @@ func _on_join_room(room_info: Dictionary)->bool:
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
 	# 不加入网络重试
 	is_doing_enter = true
-	var result = await Online.nakama_socket.rpc_async("join_table",{
+	var result = await Global.Online.nakama_socket.rpc_async("join_table",{
 		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
 	})
@@ -713,7 +713,7 @@ func _on_join_table_cb(result):
 		_on_join_table_err("")
 		return 
 	# 进入房间
-	var result_1 = await OnlineMatch.joinMatch(selected_room_info.room_id, {
+	var result_1 = await Global.OnlineMatch.joinMatch(selected_room_info.room_id, {
 		"name": selected_room_info.room_name,
 		"key": selected_room_info.room_key
 	})
@@ -724,19 +724,19 @@ func _on_join_table_cb(result):
 		
 	waitingStart.Waiting()
 	print("加入房间成功", result_1)
-	SignalMgr.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
+	Global.SignalMgr.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
 	is_doing_enter = false
 	pass
 
 func _on_join_table_err(result):
 	print("加入房间失败:", result)
 	if result in Errors.ResponeMapping:
-		Global.PopupManager.show_dynamic("加入房间失败: %s" % Errors.ResponeMapping[result])
+		Global.WindowPopup.show_dynamic("加入房间失败: %s" % Errors.ResponeMapping[result])
 	else:
-		Global.PopupManager.show_dynamic("加入房间失败: %s" % result)
+		Global.WindowPopup.show_dynamic("加入房间失败: %s" % result)
 	await get_tree().create_timer(0.5).timeout
 	waitingStart.Hide()
-	SignalMgr.JoinErrorMusicSIG.emit()
+	Global.SignalMgr.JoinErrorMusicSIG.emit()
 	
 	jion_dialog.visible = false
 	jion_input.text = ""

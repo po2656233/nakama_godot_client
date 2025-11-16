@@ -12,7 +12,7 @@ enum PickupPosition {
 	BACK,
 }
 
-@export var pickup_position := PickupPosition.FRONT
+@export var pickup_position : PickupPosition = PickupPosition.FRONT
 
 enum PickupState {
 	FREE = 0,
@@ -40,11 +40,6 @@ signal picked_up()
 func _ready():
 	pass
 
-func _get_custom_rpc_methods() -> Array:
-	return [
-		'_do_physics_finished',
-	]
-
 func can_pickup() -> bool:
 	return pickup_state == PickupState.FREE or pickup_state == PickupState.THROWN
 
@@ -53,7 +48,7 @@ func pickup(_player: Node2D) -> void:
 	player = _player
 	rotation = 0.0
 	sleeping = true
-	picked_up.emit()
+	emit_signal("picked_up")
 
 func _on_throw() -> void:
 	# This allows the pickup to do something special just before it's thrown.
@@ -115,14 +110,14 @@ func _physics_process(delta: float) -> void:
 		move_and_collide(collision.get_normal() * collision.get_remainder().length())
 
 	# Sleep the object if it gets below certain linear/angular velocity thresholds.
-	if not OnlineGame.online_play or OnlineMatch.is_network_master_for_node(self):
+	if not Global.OnlineGame.online_play or is_multiplayer_authority():
 		if linear_velocity.length() < MIN_LINEAR_VELOCITY and angular_velocity < MIN_ANGULAR_VELOCITY:
-			if OnlineGame.online_play:
-				OnlineMatch.custom_rpc_sync(self, '_do_physics_finished', [global_transform])
+			if Global.OnlineGame.online_play:
+				rpc('_do_physics_finished', global_transform)
 			else:
 				_do_physics_finished(global_transform)
 
-func _do_physics_finished(_remote_transform = null) -> void:
+@rpc("any_peer", "call_local") func _do_physics_finished(_remote_transform = null) -> void:
 	if _remote_transform:
 		global_transform = _remote_transform
 

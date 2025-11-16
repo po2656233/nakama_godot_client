@@ -34,14 +34,14 @@ func update_member_list():
 	# 拉取最新数据
 	members = []
 	var isAdmin = false
-	var result = await OnlineChat.get_group_member_list_async(group_id)
+	var result = await Global.OnlineChat.get_group_member_list_async(group_id)
 	if result:
-		print("更新俱乐部信息:", result," 当前玩家ID:",OnlineLogin.get_my_id())
+		print("更新俱乐部信息:", result," 当前玩家ID:",Global.OnlineLogin.get_my_id())
 		for info in result.group_users:
 			if info.state == 3:
 				continue
 			var member = info.user
-			if member.id == OnlineLogin.get_my_id() and (info.state == 0 or info.state == 1):
+			if member.id == Global.OnlineLogin.get_my_id() and (info.state == 0 or info.state == 1):
 				isAdmin = true
 			members.append({
 				"id": member.id, 
@@ -117,20 +117,20 @@ func _on_new_member_added(member_data: Dictionary):
 			return 
 	# 查找用户ID
 	if not member_data["id"].is_empty() and member_data["id"].length() <16:
-		var result = await OnlineChat.search_users(member_data["id"])
+		var result = await Global.OnlineChat.search_users(member_data["id"])
 		print("好友搜索",result,member_data["id"])
 		if result and result.users.size() > 0:
-			var ret = await Online.nakama_client.add_group_users_async(Online.nakama_session, group_id, [result.users[0].id])
+			var ret = await Global.Online.nakama_client.add_group_users_async(Global.Online.nakama_session, group_id, [result.users[0].id])
 			if not ret:
-				Global.PopupManager.show_message("添加失败")
+				Global.WindowPopup.show_message("添加失败")
 				return	
 	isOp = true
 	update_member_list()
 
 func _on_member_deleted(member_id: String):
-	var ret = await OnlineChat.remove_gourp_user(group_id, member_id)
+	var ret = await Global.OnlineChat.remove_gourp_user(group_id, member_id)
 	if not ret:
-		Global.PopupManager.show_message("删除失败")
+		Global.WindowPopup.show_message("删除失败")
 		return
 	isOp = true
 	# members = members.filter(func(m): return m["id"] != member_id)
@@ -140,42 +140,42 @@ func _on_member_deleted(member_id: String):
 	# queue_free() 
 
 func _on_member_band(member_id: String):
-	var ret = await OnlineChat.ban_group_users_async(group_id, member_id)
+	var ret = await Global.OnlineChat.ban_group_users_async(group_id, member_id)
 	if not ret:
-		Global.PopupManager.show_message("拉黑失败")
+		Global.WindowPopup.show_message("拉黑失败")
 		return
 	isOp = true
 	update_member_list()
 	pass
 
 func _on_member_demote(member_id: String):
-	var ret = await Online.nakama_client.demote_group_users_async(Online.nakama_session,group_id, [member_id])
+	var ret = await Global.Online.nakama_client.demote_group_users_async(Global.Online.nakama_session,group_id, [member_id])
 	if not ret:
-		Global.PopupManager.show_message("降级失败")
+		Global.WindowPopup.show_message("降级失败")
 		return
 	isOp = true
 	update_member_list()
 	pass
 
 func _on_member_promote(member_id: String):
-	var ret = await Online.nakama_client.promote_group_users_async(Online.nakama_session,group_id, [member_id])
+	var ret = await Global.Online.nakama_client.promote_group_users_async(Global.Online.nakama_session,group_id, [member_id])
 	if not ret:
-		Global.PopupManager.show_message("升级失败")
+		Global.WindowPopup.show_message("升级失败")
 		return
 	isOp = true
 	update_member_list()
 	pass
 
 func _on_member_add_friend(member_id: String):
-	var data = DataManager.get_instance().get_uid_friendInfo(OnlineLogin.get_my_id(), member_id)
+	var data = Global.DataMgr.get_instance().get_uid_friendInfo(Global.OnlineLogin.get_my_id(), member_id)
 	if data:
-		Global.PopupManager.show_message("对方已是好友")
+		Global.WindowPopup.show_message("对方已是好友")
 		return
-	var ret = await Online.nakama_client.add_friends_async(Online.nakama_session,[member_id])
+	var ret = await Global.Online.nakama_client.add_friends_async(Global.Online.nakama_session,[member_id])
 	if not ret:
-		Global.PopupManager.show_message("添加好友失败")
+		Global.WindowPopup.show_message("添加好友失败")
 		return
-	Global.PopupManager.show_message("已请求,需等待审批")
+	Global.WindowPopup.show_message("已请求,需等待审批")
 	pass
 
 func _on_member_clicked(item: Node):
@@ -195,7 +195,7 @@ func _on_member_note_changed(member_data: Dictionary, new_note: String):
 
 func _on_back_button_pressed():
 	if isOp:
-		SignalMgr.UpdateClubSIG.emit(group_name)
+		Global.SignalMgr.UpdateClubSIG.emit(group_name)
 	queue_free()
 
 

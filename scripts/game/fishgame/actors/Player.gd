@@ -18,24 +18,24 @@ var skin_resources = [
 	preload("res://assets/game/fishgame/sprites/whale_purple.png"),
 ]
 
-@export var player_skin := PlayerSkin.BLUE: set = set_player_skin
-@export var speed := 350.0
-@export var acceleration := 2000.0
-@export var friction := 1500.0
-@export var sliding_friction := 400.0
-@export var jump_speed := 700.0
-@export var glide_speed := -100.0
-@export var terminal_velocity := 1000.0
-@export var push_back_speed := 50.0
-@export var throw_velocity := 300.0
-@export var throw_upward_velocity := 500.0
-@export var throw_vector_mix := 0.5
-@export var throw_vector_max_length := 700.0
-@export var throw_torque := 10.0
-@export var invincible := false
-@export var player_controlled := false
-@export var input_prefix := "ui_"#"player1_"
-
+@export var player_skin : PlayerSkin = PlayerSkin.BLUE: set = set_player_skin
+@export var speed : float = 350.0
+@export var acceleration : float = 2000.0
+@export var friction : float = 1500.0
+@export var sliding_friction : float = 400.0
+@export var jump_speed : float = 700.0
+@export var glide_speed : float = -100.0
+@export var terminal_velocity : float = 1000.0
+@export var push_back_speed : float = 50.0
+@export var throw_velocity : float = 300.0
+@export var throw_upward_velocity : float = 500.0
+@export var throw_vector_mix : float = 0.5
+@export var throw_vector_max_length : float = 700.0
+@export var throw_torque : float = 10.0
+@export var invincible : bool = false
+@export var player_controlled : bool = false
+#@export var input_prefix : String = "player1_"
+@export var input_prefix : String = "ui_"
 signal player_dead ()
 
 @onready var initial_scale = scale
@@ -59,19 +59,14 @@ var flip_h := false: set = set_flip_h
 var show_gliding := false: set = set_show_gliding
 var show_sliding := false: set = set_show_sliding
 
-const ONE_WAY_PLATFORMS_COLLISION_BIT := 5
-var _pass_through_one_way_platforms := false
-var pass_through_one_way_platforms: bool:
-	get:
-		return _pass_through_one_way_platforms
-	set(v):
-		set_pass_through_one_way_platforms(v)
+const ONE_WAY_PLATFORMS_COLLISION_BIT := 4
+var pass_through_one_way_platforms := false: set = set_pass_through_one_way_platforms
 
 var vector := Vector2.ZERO
 var current_pickup: CharacterBody2D
 var current_pickup_position: Marker2D
-var current_pickup_path: NodePath = NodePath("")
 
+#const PlayerActions := ['left', 'right', 'down', 'jump', 'grab', 'use', 'blop']
 const PlayerActions := ['left', 'right', 'down', 'up', 'grab', 'use', 'blop']
 var input_buffer
 
@@ -79,7 +74,6 @@ const SYNC_DELAY := 3
 var sync_forced := false
 var sync_counter: int = 0
 var sync_state_info := {}
-var nick_name:String = ""
 
 func _ready():
 	# Disable the state machine node's _physics_process() so that we can run
@@ -90,18 +84,9 @@ func _ready():
 	fin_sprite.texture = skin_resources[player_skin]
 	reset_state()
 
-func _get_custom_rpc_methods() -> Array:
-	return [
-		'_try_pickup',
-		'_do_pickup',
-		'_do_throw',
-		'_do_die',
-		'update_remote_player',
-	]
-
-func set_player_skin(_player_skin: PlayerSkin) -> void:
+func set_player_skin(_player_skin: int) -> void:
 	if player_skin != _player_skin and _player_skin < PlayerSkin.MAX and _player_skin >= 0:
-		player_skin = _player_skin
+		player_skin = _player_skin as PlayerSkin
 
 		if body_sprite != null:
 			body_sprite.texture = skin_resources[player_skin]
@@ -109,7 +94,6 @@ func set_player_skin(_player_skin: PlayerSkin) -> void:
 
 func set_player_name(_player_name: String) -> void:
 	# @todo Implement
-	nick_name = _player_name
 	pass
 
 func set_flip_h(_flip_h: bool) -> void:
@@ -122,14 +106,12 @@ func set_flip_h(_flip_h: bool) -> void:
 			scale.x = initial_scale.x * sign(scale.y)
 
 func set_pass_through_one_way_platforms(_pass_through: bool) -> void:
-	if _pass_through_one_way_platforms != _pass_through:
-		_pass_through_one_way_platforms = _pass_through
+	if pass_through_one_way_platforms != _pass_through:
+		pass_through_one_way_platforms = _pass_through
 		set_collision_mask_value(ONE_WAY_PLATFORMS_COLLISION_BIT, !_pass_through)
-		print("pass through: ", _pass_through)
-		print(get_collision_mask_value(ONE_WAY_PLATFORMS_COLLISION_BIT))
 
 func _on_PassThroughDetectorArea_body_exited(_body: Node) -> void:
-	set_pass_through_one_way_platforms(false)
+	self.pass_through_one_way_platforms = false
 
 func set_show_gliding(_show_gliding: bool) -> void:
 	if show_gliding != _show_gliding:
@@ -168,7 +150,7 @@ func reset_state() -> void:
 	visible = true
 
 func pickup_or_throw() -> void:
-	if not OnlineGame.online_play:
+	if not Global.OnlineGame.online_play:
 		if current_pickup:
 			_do_throw()
 		else:
@@ -177,58 +159,37 @@ func pickup_or_throw() -> void:
 		if current_pickup:
 			# We throw on all clients; the pickup knows to simulate physics
 			# only on the master, and sync to the puppets.
-			OnlineMatch.custom_rpc_sync(self, '_do_throw')
+			rpc("_do_throw")
 		else:
 			# We try to pickup only on the host so it can make sure that
 			# only one client gets it, and then the host will tell everyone
 			# else.
-			OnlineMatch.custom_rpc_id(self,OnlineMatch.my_peer_id, '_try_pickup')
+			rpc_id(1, "_try_pickup")
 
-func _try_pickup() -> void:
+@rpc("any_peer", "call_local") func _try_pickup() -> void:
 	for body in pickup_area.get_overlapping_bodies():
 		if not body.can_pickup():
 			continue
 		body.pickup_state = Pickup.PickupState.PICKED_UP
-		current_pickup_path = body.get_path()
-		if OnlineGame.online_play:
-			OnlineMatch.custom_rpc_sync(self, '_do_pickup', [body.get_path()])
+
+		if Global.OnlineGame.online_play:
+			rpc("_do_pickup", body.get_path())
 		else:
 			_do_pickup(body.get_path())
 
 		return
 
-func _do_pickup(pickup_path: NodePath) -> void:
-	current_pickup = get_node_or_null(pickup_path)
-	# 检查节点是否成功获取
-	if current_pickup == null:
-		# 在网络游戏中，有时候节点可能还没有创建完成
-		# 可以选择重试几次或者直接忽略这次操作
-		print("Warning: Pickup node not found at path: ", pickup_path)
-		print("Available nodes in Map/Objects: ", pickup_path)
-		var last_part = pickup_path.get_name(pickup_path.get_name_count()-1) 
-		var map_objects = get_node_or_null("/root/Game/Map/Objects")
-		if map_objects:
-			for child in map_objects.get_children():
-				print("  - ", child.name)
-				if child.name.contains(last_part):
-					current_pickup = child
-					break
-		if current_pickup == null:
-			return
-		pass
-		
+@rpc("any_peer", "call_local") func _do_pickup(pickup_path: NodePath) -> void:
 	sounds.play("Pickup")
-
 	current_pickup = get_node(pickup_path)
 	current_pickup.pickup(self)
 	current_pickup.get_parent().remove_child(current_pickup)
-	print("nick_name: Pickup",nick_name,pickup_path)
 
 	current_pickup_position = back_pickup_position if current_pickup.pickup_position == Pickup.PickupPosition.BACK else front_pickup_position
 	current_pickup_position.add_child(current_pickup)
 	current_pickup.position = -current_pickup.held_position.position
 
-func _do_throw() -> void:
+@rpc("any_peer", "call_local") func _do_throw() -> void:
 	if current_pickup == null:
 		return
 
@@ -237,8 +198,7 @@ func _do_throw() -> void:
 	throw_vector += Vector2.UP * throw_upward_velocity
 
 	# Disconnect from our pickup position.
-	if not current_pickup_position:
-		return 
+
 	current_pickup_position.remove_child(current_pickup)
 	current_pickup.original_parent.add_child(current_pickup)
 	current_pickup.global_position = current_pickup_position.global_position
@@ -246,26 +206,9 @@ func _do_throw() -> void:
 	current_pickup.throw(current_pickup_position.global_position, throw_vector.limit_length(throw_vector_max_length), throw_torque)
 	current_pickup = null
 	current_pickup_position = null
-	print("nick_name: do_pickup --- ",nick_name)
-func _do_use():
-	try_use()
-	pass
+
 func try_use() -> void:
-	print("nick_name: use",nick_name,current_pickup_path)
-	if current_pickup == null:
-		if current_pickup_position:
-			var count = current_pickup_position.get_child_count()
-			if count > 0:
-				current_pickup = current_pickup_position.get_child(count-1)
-	#if current_pickup == null:
-		#if back_pickup_position:
-			#var count = back_pickup_position.get_child_count()
-			#if count > 0:
-				#current_pickup = back_pickup_position.get_child(count-1)
-	if current_pickup == null:
-		current_pickup = get_node(current_pickup_path)
-	if current_pickup == null:
-		print("无法找到pickup节点")
+	if not current_pickup:
 		return
 	current_pickup.use()
 
@@ -285,17 +228,17 @@ func hurt(node: Node2D) -> void:
 	})
 
 func die() -> void:
-	if OnlineGame.online_play:
-		if OnlineMatch.is_network_master_for_node(self):
+	if Global.OnlineGame.online_play:
+		if is_multiplayer_authority():
 			if current_pickup:
-				OnlineMatch.custom_rpc_sync(self, "_do_throw")
-			OnlineMatch.custom_rpc_sync(self, "_do_die")
+				rpc("_do_throw")
+			rpc("_do_die")
 	else:
 		if current_pickup:
 			_do_throw()
 		_do_die();
 
-func _do_die() -> void:
+@rpc("any_peer", "call_local") func _do_die() -> void:
 	var explosion = ExplodeEffect.instantiate()
 	get_parent().add_child(explosion)
 	explosion.global_position = global_position
@@ -325,20 +268,20 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	vector = velocity
 
-	if OnlineGame.online_play:
+	if Global.OnlineGame.online_play:
 		if player_controlled:
 			# Sync every so many physics frames.
 			sync_counter += 1
 			if sync_forced or input_buffer_changed or sync_counter >= SYNC_DELAY:
 				sync_counter = 0
 				sync_forced = false
-				OnlineMatch.custom_rpc(self, "update_remote_player", [input_buffer.buffer, state_machine.current_state.name, sync_state_info, global_position, vector, body_sprite.frame, flip_h, show_gliding, show_sliding, _pass_through_one_way_platforms])
+				rpc("update_remote_player", input_buffer.buffer, state_machine.current_state.name, sync_state_info, global_position, vector, body_sprite.frame, flip_h, show_gliding, show_sliding, pass_through_one_way_platforms)
 				if sync_state_info.size() > 0:
 					sync_state_info.clear()
 		else:
 			input_buffer.predict_next_frame()
 
-func update_remote_player(_input_buffer: Dictionary, current_state: String, state_info: Dictionary, _position: Vector2, _vector: Vector2, _frame: int, _flip_h: bool, _show_gliding: bool, _show_sliding: bool, _pass_through: bool) -> void:
+@rpc("any_peer") func update_remote_player(_input_buffer: Dictionary, current_state: String, state_info: Dictionary, _position: Vector2, _vector: Vector2, _frame: int, _flip_h: bool, _show_gliding: bool, _show_sliding: bool, _pass_through: bool) -> void:
 	# Initialize the input buffer.
 	if input_buffer == null:
 		input_buffer = InputBuffer.new(PlayerActions, input_prefix)

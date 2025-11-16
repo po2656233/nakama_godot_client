@@ -10,8 +10,8 @@ func _ready():
 	# 初始化面板，设置为从上方进入
 	$ClubsPanel.modulate.a = 0
 	$ClubsPanel.position.y = -50
-	SceneMgr.set_current_scene("clublist")
-	SettingsMgr.show_settings()
+	Global.SceneMgr.set_current_scene("clublist")
+	Global.SettingsMgr.show_settings()
 	# 使用动画效果显示面板
 	var tween = create_tween()
 	tween.tween_property($ClubsPanel, "position:y", 0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)

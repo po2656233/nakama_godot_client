@@ -6,5 +6,5 @@ func _ready():
 
 func _on_button_pressed():
 	queue_free()
-	SceneMgr.go_back()
+	Global.SceneMgr.go_back()
 	pass

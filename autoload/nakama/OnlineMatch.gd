@@ -3,8 +3,8 @@ extends Node
 #   email@addr.com
 
 # For developers to set from the outside, for example:
-#   OnlineMatch.max_players = 8
-#   OnlineMatch.client_version = 'v1.2'
+#   Global.OnlineMatch.max_players = 8
+#   Global.OnlineMatch.client_version = 'v1.2'
 var min_players := 2
 var max_players := 4
 var client_version := 'dev'
@@ -262,7 +262,7 @@ func custom_rpc_id(node: Node, id: int, method: String, args: Array = []) -> voi
 	# assert(match_id != '')
 	# assert(nakama_socket != null)
 	if nakama_socket == null:
-		nakama_socket = Online.get_nakama_socket()
+		nakama_socket = Global.Online.get_nakama_socket()
 	if nakama_socket:
 		nakama_socket.send_match_state_async(match_id, MatchOpCode.CUSTOM_RPC, JSON.stringify({
 			peer_id = id,
@@ -462,7 +462,7 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 ##############################################################################################################################
 # 获取匹配列表
 func getMatchList(payload: Dictionary = {"limit": 100, "authoritative": true, "minSize": 0, "maxSize": 100, "query": "*"}):
-	var result = await OnlineGame.RpcListData("match_list", payload)
+	var result = await Global.OnlineGame.RpcListData("match_list", payload)
 	return result
  
 # 创建匹配 RPC
@@ -477,7 +477,7 @@ func createMatch(id: String, game_name: String, min_size: int = 1, max_size: int
 			"query": query,
 		}
 	match_mode = MatchMode.CREATE
-	var res = await Online.nakama_client.rpc_async(Online.nakama_session, "create_match", JSON.stringify(matchInfo))
+	var res = await Global.Online.nakama_client.rpc_async(Global.Online.nakama_session, "create_match", JSON.stringify(matchInfo))
 	#print('创建比赛 ',res)
 	print("创建匹配", res)
 	return
@@ -486,13 +486,13 @@ func createMatch(id: String, game_name: String, min_size: int = 1, max_size: int
 func joinMatch(p_match_id: String, p_metadata = null):
 	match_id = p_match_id
 	match_mode = MatchMode.JOIN
-	return await join_match(Online.nakama_socket, p_match_id, p_metadata)
-	#return await Online.nakama_socket.join_match_async(p_match_id,p_metadata)
+	return await join_match(Global.Online.nakama_socket, p_match_id, p_metadata)
+	#return await Global.Online.nakama_socket.join_match_async(p_match_id,p_metadata)
 
 # 加入匹配 与MatchmakerAdd回包一起使用
 func joinMatched(p_metadata = null):
 	match_mode = MatchMode.JOIN
-	return await Online.nakama_socket.join_matched_async(p_metadata)
+	return await Global.Online.nakama_socket.join_matched_async(p_metadata)
 
 # 加入匹配
 func joinMatchmaker(data):
@@ -520,13 +520,13 @@ func joinMatchmaker(data):
 			data['query'] = query
 
 	print("\n匹配相关信息:", data, "\n")
-	var result = await Online.nakama_socket.add_matchmaker_async(data.get('query', '*'), data['min_count'], data['max_count'], data.get('string_properties', {}), data.get('numeric_properties', {}))
+	var result = await Global.Online.nakama_socket.add_matchmaker_async(data.get('query', '*'), data['min_count'], data['max_count'], data.get('string_properties', {}), data.get('numeric_properties', {}))
 	if result.is_exception():
-		Global.PopupManager.show_dynamic("匹配失败 " + result.get_exception().message)
-		SignalMgr.MatchMakerFailedSIG.emit()
+		Global.WindowPopup.show_dynamic("匹配失败 " + result.get_exception().message)
+		Global.SignalMgr.MatchMakerFailedSIG.emit()
 		return result
 	matchmaker_ticket = result.ticket
-	print("\n匹配Ticket:", result, " 玩家信息:", OnlineLogin.get_my_name())
+	print("\n匹配Ticket:", result, " 玩家信息:", Global.OnlineLogin.get_my_name())
 	pass
 
 # 离开匹配池
@@ -535,8 +535,8 @@ func LeaveMatchmaker(ticket_id: String = ""):
 		ticket_id = matchmaker_ticket
 	if ticket_id == "":
 		return
-	print("\n移除Ticket:", ticket_id, " 玩家信息:", OnlineLogin.get_my_name())
-	return await Online.nakama_socket.remove_matchmaker_async(ticket_id)
+	print("\n移除Ticket:", ticket_id, " 玩家信息:", Global.OnlineLogin.get_my_name())
+	return await Global.Online.nakama_socket.remove_matchmaker_async(ticket_id)
 
 
 # 离开匹配
@@ -546,12 +546,12 @@ func LeaveMatch(p_match_id: String = ""):
 		p_match_id = match_id
 	if p_match_id == "":
 		return
-	var result = await Online.nakama_socket.leave_match_async(p_match_id)
+	var result = await Global.Online.nakama_socket.leave_match_async(p_match_id)
 	if result.is_exception():
 		if Errors.ResponeMapping[result.get_exception().message]:
-			Global.PopupManager.show_dynamic("离开匹配失败 " + Errors.ResponeMapping[result.get_exception().message])
+			Global.WindowPopup.show_dynamic("离开匹配失败 " + Errors.ResponeMapping[result.get_exception().message])
 		else:
-			Global.PopupManager.show_dynamic("离开匹配失败 " + result.get_exception().message)
+			Global.WindowPopup.show_dynamic("离开匹配失败 " + result.get_exception().message)
 		return result
 	print("离开匹配成功--->>>", p_match_id)
 	match_id = ""

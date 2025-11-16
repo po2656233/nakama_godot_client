@@ -14,10 +14,10 @@ func _on_join_pressed():
 	var group_name = $Panel/MarginContainer/VBoxContainer/GroupIDInput.text.strip_edges()
 	if group_name.is_empty():
 		return
-	var ret = await OnlineChat.add_group_async(group_name)
+	var ret = await Global.OnlineChat.add_group_async(group_name)
 	if not ret:
-		Global.PopupManager.show_message("加入俱乐部失败")
+		Global.WindowPopup.show_message("加入俱乐部失败")
 		return 
 	# group_joined.emit(new_group)
-	Global.PopupManager.show_message("已申请,请等待审批")
+	Global.WindowPopup.show_message("已申请,请等待审批")
 	queue_free()

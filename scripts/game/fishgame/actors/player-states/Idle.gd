@@ -15,7 +15,7 @@ func _check_pickup_or_throw_or_use():
 	# Only do this on the client controlling this player, because we have 
 	# seperate system for sync'ing pickups and throws that this will conflict
 	# with if it runs on a remote player.
-	if OnlineGame.online_play and not host.player_controlled:
+	if Global.OnlineGame.online_play and not host.player_controlled:
 		return
 	
 	# We use call_deferred() here so that those operation happen after we've
@@ -41,7 +41,7 @@ func _state_physics_process(delta: float) -> void:
 	
 	var input_vector = _get_player_input_vector()
 	
-	if host.input_buffer.is_action_just_pressed("up"):
+	if host.input_buffer.is_action_just_pressed("jump"):
 		if host.is_on_floor():
 			get_parent().change_state("Jump", {
 				"input_vector": input_vector,

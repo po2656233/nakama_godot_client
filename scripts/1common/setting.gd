@@ -17,10 +17,10 @@ var hidden_indices = []  # 存储需要隐藏的索引
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void: 
-	var isMute = DataManager.get_instance().get_isMute()
+	var isMute = Global.DataMgr.get_instance().get_isMute()
 	print("当前是否禁音:",isMute)
-	SignalMgr.MuteSIG.emit(isMute)
-	SignalMgr.BackgroundMusicSIG.emit(isMute)
+	Global.SignalMgr.MuteSIG.emit(isMute)
+	Global.SignalMgr.BackgroundMusicSIG.emit(isMute)
 	
 	var popup_menu = menuBtn.get_popup()
 	popup_menu.index_pressed.connect(on_setting_pressed)
@@ -65,7 +65,7 @@ func _rebuild_menu():
 	if not menuBtn:
 		return
 	var popup = menuBtn.get_popup()
-	var isMute = DataManager.get_instance().get_isMute()
+	var isMute = Global.DataMgr.get_instance().get_isMute()
 	var icon = volume if isMute else novolume
 	var text = "打开音量" if isMute else "关闭音量"
 	popup.clear()
@@ -137,27 +137,27 @@ func on_setting_pressed(index: int) -> void:
 	var id = popup_menu.get_item_id(index)
 	match id:
 		0:
-			var isMute = DataManager.get_instance().get_isMute()
+			var isMute = Global.DataMgr.get_instance().get_isMute()
 			isMute = !isMute
 			print("是否禁音: ",isMute)
-			DataManager.get_instance().set_isMute(isMute)
-			SignalMgr.BackgroundMusicSIG.emit(isMute)
-			SignalMgr.MuteSIG.emit(isMute)
+			Global.DataMgr.get_instance().set_isMute(isMute)
+			Global.SignalMgr.BackgroundMusicSIG.emit(isMute)
+			Global.SignalMgr.MuteSIG.emit(isMute)
 			_rebuild_menu()
 			# var hints = "打开音量" if isMute else "关闭音量"
 			# popup_menu.set_item_text(index, hints)
 			# popup_menu.set_item_icon(index, volume if isMute else novolume)
 			pass
 		2:#返回登录页
-			OnlineLogin.logout() 
-			SceneMgr.switch_to_scene("login",SceneMgr.get_transition_key("WIPE_LEFT"),0.5)
+			Global.OnlineLogin.logout() 
+			Global.SceneMgr.switch_to_scene("login",Global.SceneMgr.get_transition_key("WIPE_LEFT"),0.5)
 		# 	pass
 		3:# 退出
 			get_tree().quit()
 			print("退出游戏")
 			pass
 		4:#返回主页
-			SceneMgr.switch_to_scene("home",SceneMgr.get_transition_key("WIPE_LEFT"),0.5)
+			Global.SceneMgr.switch_to_scene("home",Global.SceneMgr.get_transition_key("WIPE_LEFT"),0.5)
 		_:
 			print("Setting error",index)
 			pass
@@ -189,7 +189,7 @@ func restore_window():
 #############################
 func _on_btn_notify_pressed() -> void:
 	#铃铛停止播放
-	SignalMgr.NewNotifySIG.emit(false)
+	Global.SignalMgr.NewNotifySIG.emit(false)
 	pass # Replace with function body.
 
 
@@ -197,11 +197,11 @@ func _on_btn_email_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_look_notify()->void:
-	SceneMgr.show_scene_in_center("approval",0.9)
+	Global.SceneMgr.show_scene_in_center("approval",0.9)
 	pass
 
 func _on_look_email()->void:
-	SceneMgr.show_scene_in_center("email")
+	Global.SceneMgr.show_scene_in_center("email")
 	# Global.FancyFade.wipe_left(mail_scene.instantiate(),0.5)
 	pass
 #######################################

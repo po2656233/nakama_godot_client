@@ -76,16 +76,16 @@ func _show_leave_confirmation():
 	dialog.popup_centered()
 	
 	dialog.confirmed.connect(func():
-		var ret = await OnlineChat.leave_group(group_data["id"])
+		var ret = await Global.OnlineChat.leave_group(group_data["id"])
 		if ret:
 			group_left.emit(group_data)
 		else:
-			ret = await OnlineChat.remove_group(group_data["id"])
+			ret = await Global.OnlineChat.remove_group(group_data["id"])
 			if ret:
 				group_left.emit(group_data)
-				DataManager.get_instance().remove_chat_history(OnlineChat.get_my_id(), group_data["id"])
+				Global.DataMgr.get_instance().remove_chat_history(Global.OnlineChat.get_my_id(), group_data["id"])
 			else:
-				Global.PopupManager.show_message(group_data["name"]+"解散失败")
+				Global.WindowPopup.show_message(group_data["name"]+"解散失败")
 		dialog.queue_free()
 	)
 

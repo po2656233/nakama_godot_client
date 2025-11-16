@@ -1,8 +1,8 @@
 extends Node
 
 # For developers to set from the outside, for example:
-#   Online.nakama_host = 'nakama.example.com'
-#   Online.nakama_scheme = 'https'
+#   Global.Online.nakama_host = 'nakama.example.com'
+#   Global.Online.nakama_scheme = 'https'
 var nakama_server_key: String = 'superman'
 var nakama_host: String = '172.22.58.44' # 'trytry.asia' #   #'localhost'
 var nakama_port: int = 8850 #
@@ -84,7 +84,7 @@ func create_and_connect_socket():
 	# 监听socket事件
 	_listen_socket_events()
 	# 匹配服重置socket
-	OnlineMatch._set_nakama_socket(nakama_socket)
+	Global.OnlineMatch._set_nakama_socket(nakama_socket)
 	# 开始连接（正确使用官方API）
 	var connect_result = await nakama_socket.connect_async(nakama_session, true, -1, _reseet_session) # 仅session和appear_online参数
 	if typeof(connect_result) == TYPE_INT or connect_result.is_exception():
@@ -154,48 +154,48 @@ func _listen_socket_events() -> void:
 ### socket连接事件处理
 func _on_socket_connected():
 	is_socket_connected = true
-	SignalMgr.UpdateSocketSIG.emit(nakama_socket)
+	Global.SignalMgr.UpdateSocketSIG.emit(nakama_socket)
 	print("Socket 连接成功")
 
 ### socket关闭事件处理
 func _on_socket_closed():
 	is_socket_connected = false
 	print("Socket 被关闭")
-	Global.PopupManager.show_dynamic("连接异常,请检测网络状况")
+	Global.WindowPopup.show_dynamic("连接异常,请检测网络状况")
 
 ### 处理socket错误
 func _on_socket_error(error):
 	print("socket error: " + str(error))
 	#if error == ERR_TIMEOUT:
-		#Global.PopupManager.show_dynamic("连接超时,请稍后重试")
+		#Global.WindowPopup.show_dynamic("连接超时,请稍后重试")
 
 
 ############################接收的比赛匹配数据###########################################
 # 收到匹配数据
 func _on_received_matchmaker_matched(matchmaker_matched):
 	print("收到已匹配数据:", matchmaker_matched)
-	SignalMgr.MatchMakerSIG.emit(matchmaker_matched)
+	Global.SignalMgr.MatchMakerSIG.emit(matchmaker_matched)
 	pass
 
 # 收到匹配状态
 func _on_received_match_state(match_state):
 	print("收到匹配状态:", match_state)
-	SignalMgr.MatchStateEventSIG.emit(match_state)
+	Global.SignalMgr.MatchStateEventSIG.emit(match_state)
 	pass
 
 # 收到匹配玩家数据
 func _on_received_match_presence(match_presence):
 	print("收到匹配的玩家数据:", match_presence)
 	if match_presence.match_id and match_presence.match_id != "":
-		OnlineMatch.set_match_id(match_presence.match_id)
+		Global.OnlineMatch.set_match_id(match_presence.match_id)
 		pass
-	SignalMgr.MatchPresenceEventSIG.emit(match_presence)
+	Global.SignalMgr.MatchPresenceEventSIG.emit(match_presence)
 	pass
 
 # 收到状态数据
 func _on_received_status_presence(status_presence):
 	print("收到状态数据:", status_presence)
-	SignalMgr.StatusPresenceEventSIG.emit(status_presence)
+	Global.SignalMgr.StatusPresenceEventSIG.emit(status_presence)
 	pass
 
 # 收到通知
@@ -225,7 +225,7 @@ func _on_channel_presence(channel_presence):
 # 接收消息
 func _on_received_message(channel_message):
 	print("收到消息:", channel_message)
-	SignalMgr.RecvMessageSIG.emit(channel_message)
+	Global.SignalMgr.RecvMessageSIG.emit(channel_message)
 	pass
 
 # 全局信号转发
@@ -233,15 +233,15 @@ func do_broadcast(notification1):
 	var content = JSON.parse_string(notification1.content)
 	match notification1.code:
 		EnBroadcast.CreateTable:
-			SignalMgr.CreateRoomSIG.emit(content)
+			Global.SignalMgr.CreateRoomSIG.emit(content)
 		EnBroadcast.RemoveTable:
-			SignalMgr.RemoveRoomSIG.emit(content)
+			Global.SignalMgr.RemoveRoomSIG.emit(content)
 		EnBroadcast.JoinTable:
-			SignalMgr.JoinRoomSIG.emit(content)
+			Global.SignalMgr.JoinRoomSIG.emit(content)
 		EnBroadcast.LeaveTable:
-			SignalMgr.LeaveRoomSIG.emit(content)
+			Global.SignalMgr.LeaveRoomSIG.emit(content)
 		EnBroadcast.TableOnline:
-			SignalMgr.OnlineCountSIG.emit(content)
+			Global.SignalMgr.OnlineCountSIG.emit(content)
 		_:
 			push_warning("未知的广播类型:", notification1.code)
 	pass

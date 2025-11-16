@@ -57,10 +57,10 @@ var already_ids = []
 
 		
 func _ready(): 
-	print("当前运行的节点名",SceneMgr.get_current_scene_name())
+	print("当前运行的节点名",Global.SceneMgr.get_current_scene_name())
 	# Global.WindowDrag.register_drag_zone(self) 
-	SettingsMgr.show_settings() 
-	SceneMgr.set_previous_name("gamelist")
+	Global.SettingsMgr.show_settings() 
+	Global.SceneMgr.set_previous_name("gamelist")
 	print("游戏列表--->")
 	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
 
@@ -72,17 +72,17 @@ func _ready():
 	# 连接匹配信号
 	matching.match_sucess.connect(_on_match_sucess)
 	matching.match_cancel.connect(_on_match_cancel)
-	SignalMgr.StartGameSIG.connect(_on_game_start)
-	SignalMgr.CancleGameSIG.connect(_on_game_cancel)
+	Global.SignalMgr.StartGameSIG.connect(_on_game_start)
+	Global.SignalMgr.CancleGameSIG.connect(_on_game_cancel)
 	pass
 
 # 加载游戏数据
 func load_data():
 	# 为了界面
-	var games = OnlineGame.getGameListOld()
+	var games = Global.OnlineGame.getGameListOld()
 	if games.size() > 0:
 		set_game_list(games)
-	OnlineGame.getGameList(-1,self,"_on_game_list")
+	Global.OnlineGame.getGameList(-1,self,"_on_game_list")
 	#await get_tree().process_frame
 
 # 加载游戏列表
@@ -93,7 +93,7 @@ func _on_game_list(result):
 
 func set_game_list(games):
 	if games.size() == 0:
-		Global.PopupManager.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
+		Global.WindowPopup.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
 	# 添加游戏
 	for item in games:
@@ -166,27 +166,27 @@ func _on_match_sucess(matchData):
 
 # 游戏取消
 func _on_game_cancel(_game_id):
-	await OnlineMatch.LeaveMatch()
+	await Global.OnlineMatch.LeaveMatch()
 	print("取消准备游戏 match_id:", curMatchId)
 	await get_tree().create_timer(1.5).timeout
-	Global.PopupManager.show_dynamic("游戏已取消")
+	Global.WindowPopup.show_dynamic("游戏已取消")
 	match_sucess.hide()
 	switch_controls(matching, scrollContainer)
 	pass
 
 # 游戏开始
 func _on_game_start(game_id_1):
-	SignalMgr.WelcomeMusicSIG.emit()
+	Global.SignalMgr.WelcomeMusicSIG.emit()
 	#await get_tree().create_timer(1.0).timeout
-	#Global.PopupManager.show_dynamic("游戏开始")
+	#Global.WindowPopup.show_dynamic("游戏开始")
 	# 加载游戏
 	loading_scene.show()
-	SignalMgr.LoadingGameSIG.emit(game_id_1)
+	Global.SignalMgr.LoadingGameSIG.emit(game_id_1)
 	
-	var gameEnName = OnlineGame.getGameEnName(game_id_1)
-	# SceneMgr.ToGameScene(gameEnName)
+	var gameEnName = Global.OnlineGame.getGameEnName(game_id_1)
+	# Global.SceneMgr.ToGameScene(gameEnName)
 	print("游戏开始 game_id:", game_id_1, " name:", gameEnName)
-	SignalMgr.GameKeepSIG.emit(1,game_id_1,-1,curMatchId,gameEnName)
+	Global.SignalMgr.GameKeepSIG.emit(1,game_id_1,-1,curMatchId,gameEnName)
 	pass
 
 

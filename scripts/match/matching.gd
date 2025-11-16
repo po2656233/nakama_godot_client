@@ -51,8 +51,8 @@ func _ready():
 	start_button.pressed.connect(_on_start_button_pressed)
 	match_start.connect(_on_start_button_pressed)
 
-	SignalMgr.MatchMakerSIG.connect(_on_match_maker_event)
-	SignalMgr.MatchMakerFailedSIG.connect(_on_match_failed)
+	Global.SignalMgr.MatchMakerSIG.connect(_on_match_maker_event)
+	Global.SignalMgr.MatchMakerFailedSIG.connect(_on_match_failed)
 	pass
 
 
@@ -70,7 +70,7 @@ func _process(delta):
 			var saturation = randf_range(0.3, 1.0)  # 高饱和度
 			var value = randf_range(0.9, 1.0)       # 高亮度
 			progress_circle.material.set_shader_parameter("color", Color.from_hsv(hue, saturation, value, 1.0))
-			SignalMgr.MatchingTimeMusicSIG.emit(false)
+			Global.SignalMgr.MatchingTimeMusicSIG.emit(false)
 		progress_circle.material.set_shader_parameter("progress", progress_value)
 		#
 		time += delta
@@ -96,17 +96,17 @@ func start_matching():
 	cancel_button.visible = true
 	start_button.visible = false
 	animation_player.play("matching_pulse")
-	SignalMgr.MatchingTimeMusicSIG.emit(true)
+	Global.SignalMgr.MatchingTimeMusicSIG.emit(true)
 	# 显示进度动画
 	progress_circle.visible = true
 	accumulator = 0
 	progress_rotation = 0
 	progress_value = 0
 	var minplayer = 1
-	var gname = OnlineGame.getGameEnName_by(gamename)
+	var gname = Global.OnlineGame.getGameEnName_by(gamename)
 	if maxplayer < minplayer:
 		maxplayer = HIGHT_LIMIT
-	OnlineMatch.joinMatchmaker({
+	Global.OnlineMatch.joinMatchmaker({
 		"query": " +properties.game:%s +properties.name:%s" %[gname,gamename],
 		"min_count": minplayer,
 		"max_count": maxplayer,
@@ -120,14 +120,14 @@ func start_matching():
 			"tickRate":30,
 		}
 		})
-	# OnlineMatch.create_match(Online.nakama_socket)
-	# var result = await OnlineMatch.create_match(Online.nakama_socket)
+	# Global.OnlineMatch.create_match(Global.Online.nakama_socket)
+	# var result = await Global.OnlineMatch.create_match(Global.Online.nakama_socket)
 	# if result.is_exception():
 	# 	_on_match_failed()
 	# 	print("错误信息: ", result.get_exception().message)
 	# else:
 	# 	print("当前匹配信息: ", result, gamename, maxplayer, result.ticket)
-	# 	Global.PopupManager.show_dynamic("已添加至匹配池,请您耐心等待")
+	# 	Global.WindowPopup.show_dynamic("已添加至匹配池,请您耐心等待")
 
 	# await get_tree().create_timer(randf_range(2, 5)).timeout
 	# _on_match_success()
@@ -138,9 +138,9 @@ func start_matching():
 	# pass
 
 func stop_matching():
-	var leave = await OnlineMatch.LeaveMatch()
+	var leave = await Global.OnlineMatch.LeaveMatch()
 	if leave and leave.is_exception():
-		Global.PopupManager.show_dynamic("停止匹配失败")
+		Global.WindowPopup.show_dynamic("停止匹配失败")
 		print("错误信息: ", leave.get_exception().message)
 		return
 	print("停止匹配",leave)
@@ -148,11 +148,11 @@ func stop_matching():
 	current_state = MatchState.IDLE
 	reset_ui()
 	animation_player.stop()
-	SignalMgr.MatchingTimeMusicSIG.emit(true)
+	Global.SignalMgr.MatchingTimeMusicSIG.emit(true)
 	match_cancel.emit()
 
 func reset_ui():
-	await OnlineMatch.LeaveMatch()
+	await Global.OnlineMatch.LeaveMatch()
 	game_name.text = gamename
 	status_label.text = "等待开始匹配..."
 	timer_label.text = "00:00"
@@ -178,13 +178,13 @@ func _on_start_button_pressed():
 func _on_match_maker_event(p_matched: NakamaRTAPI.MatchmakerMatched):
 	print("匹配 maker:", p_matched)
 	players.clear()
-	var joined_match: NakamaRTAPI.Match = await OnlineMatch.joinMatched(p_matched)
+	var joined_match: NakamaRTAPI.Match = await Global.OnlineMatch.joinMatched(p_matched)
 	if joined_match.is_exception():
 		_on_match_failed()
 		print("错误信息: ", joined_match.get_exception().message)
 		return
 	if joined_match.match_id and joined_match.match_id != "":
-		OnlineMatch.set_match_id(joined_match.match_id)
+		Global.OnlineMatch.set_match_id(joined_match.match_id)
 	
 	for player in p_matched.users:
 		players.append(player)
@@ -201,8 +201,8 @@ func _on_match_success():
 	cancel_button.visible = false
 	animation_player.play("success_flash")
 	progress_circle.visible = false
-	SignalMgr.MatchingTimeMusicSIG.emit(true)
-	SignalMgr.MatchingOkMusicSIG.emit()
+	Global.SignalMgr.MatchingTimeMusicSIG.emit(true)
+	Global.SignalMgr.MatchingOkMusicSIG.emit()
 	
 	# 这里添加切换到游戏场景的代码
 	
@@ -216,5 +216,5 @@ func _on_match_failed():
 	start_button.visible = true
 	animation_player.play("failed_shake")
 	progress_circle.visible = false
-	SignalMgr.MatchingTimeMusicSIG.emit(true)
-	SignalMgr.MatchingFailedMusicSIG.emit()
+	Global.SignalMgr.MatchingTimeMusicSIG.emit(true)
+	Global.SignalMgr.MatchingFailedMusicSIG.emit()

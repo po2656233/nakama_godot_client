@@ -60,8 +60,8 @@ func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	print("data manger init")
 	load_data()
-	SignalMgr.NewNotifySIG.connect(_on_approval_notify)
-	SignalMgr.GameKeepSIG.connect(_on_keep_game)
+	Global.SignalMgr.NewNotifySIG.connect(_on_approval_notify)
+	Global.SignalMgr.GameKeepSIG.connect(_on_keep_game)
 
 # 信号通知
 func _notification(what):

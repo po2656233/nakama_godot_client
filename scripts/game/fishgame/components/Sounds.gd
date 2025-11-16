@@ -1,9 +1,8 @@
 extends Node
 
 func play(name1: String):
-	print("声音",name1)
 	var node = get_node(name1)
-	assert(node != null) #,"No sound with name " + name)
+	assert(node != null) #,"No sound with name " + name1)
 	
 	if node is AudioStreamPlayer:
 		node.play()

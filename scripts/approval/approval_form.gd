@@ -6,12 +6,12 @@ var RequestItemScene = preload("res://scenes/approval/request_item.tscn")
 @onready var request_list = %RequestList
 
 func _ready():
-	if OnlineLogin.player_data:
-		var approvals = DataManager.get_instance().get_uid_approval(OnlineLogin.get_my_id())
+	if Global.OnlineLogin.player_data:
+		var approvals = Global.DataMgr.get_instance().get_uid_approval(Global.OnlineLogin.get_my_id())
 		import_requests(approvals)
 	
 func _exit_tree() -> void:
-	DataManager.get_instance().save_data()
+	Global.DataMgr.get_instance().save_data()
 	clear_requests()
 	pass
 

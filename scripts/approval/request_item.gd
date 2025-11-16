@@ -103,16 +103,16 @@ func get_request_info() -> Dictionary:
 func _on_approve_button_pressed() -> void:
 	_status = Status.APPROVED
 	if _type == "用户":
-		if await OnlineChat.add_friends_async([_uid]):
+		if await Global.OnlineChat.add_friends_async([_uid]):
 			approve()
-			SignalMgr.FreshFriendListSIG.emit()
+			Global.SignalMgr.FreshFriendListSIG.emit()
 			return	
 	elif _type == "俱乐部":
-		if await OnlineChat.add_group_users_async(_gid, [_uid]):
+		if await Global.OnlineChat.add_group_users_async(_gid, [_uid]):
 			approve()
-			SignalMgr.FreshClubListSIG.emit()
+			Global.SignalMgr.FreshClubListSIG.emit()
 			return
-	Global.PopupManager.show_message("无效操作", "提示")
+	Global.WindowPopup.show_message("无效操作", "提示")
 	pass
 
 func approve() -> void:
@@ -121,7 +121,7 @@ func approve() -> void:
 	_update_status_display()
 	_update_buttons()
 	approved.emit()
-	DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
+	Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(),get_request_info())
 	pass
 
 
@@ -129,34 +129,34 @@ func _on_reject_button_pressed() -> void:
 	if _type == "用户":
 		if _status == Status.REJECTED:
 			_status = Status.ABSOLE
-			if await OnlineChat.remove_friend(_uid):
+			if await Global.OnlineChat.remove_friend(_uid):
 				_approval_time = Time.get_datetime_string_from_system().split(".")[0]
 				$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
 				_update_status_display()
 				_update_buttons()
 				rejected.emit()
-				DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
+				Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(),get_request_info())
 			return
 		_status = Status.REJECTED
-		if await OnlineChat.refuse_friends_async(_uid):
+		if await Global.OnlineChat.refuse_friends_async(_uid):
 			_approval_time = Time.get_datetime_string_from_system().split(".")[0]
 			$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
 			_update_status_display()
 			_update_buttons()
 			rejected.emit()
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(),get_request_info())
 	elif _type == "俱乐部":
 		_status = Status.REJECTED
-		if await OnlineChat.remove_gourp_user(_gid,_uid):
+		if await Global.OnlineChat.remove_gourp_user(_gid,_uid):
 			_approval_time = Time.get_datetime_string_from_system().split(".")[0]
 			$MarginContainer/HBoxContainer/ApprovalTimeLabel.text = _approval_time
 			_update_status_display()
 			_update_buttons()
 			rejected.emit()
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(),get_request_info())
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(),get_request_info())
 		pass
 	else:
-		Global.PopupManager.show_message("网络错误，请重试", "提示")
+		Global.WindowPopup.show_message("网络错误，请重试", "提示")
 	pass
 
 

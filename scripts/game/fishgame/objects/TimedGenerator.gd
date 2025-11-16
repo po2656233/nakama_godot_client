@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 @export var pickup_scene: PackedScene
-@export_node_path("Node2D") var pickup_parent_path: NodePath = "../"
+@export var pickup_parent_path: NodePath = ^".."
 @export var regenerate_delay := 10.0
 
 @onready var timer = $Timer
@@ -14,22 +14,18 @@ func _ready() -> void:
 	animation_player.play("Glow")
 	timer.connect("timeout", Callable(self, "_do_generate"))
 
-func _get_custom_rpc_methods() -> Array:
-	return [
-		'generate',
-	]
-
 func _do_generate() -> void:
 	var pickup_parent = get_node(pickup_parent_path)
 	if not pickup_parent:
 		return
-	var pickup_name = 'Pickup-'+str(OnlineMatch.my_peer_id) # Util.find_unique_name(pickup_parent, 'Pickup-')
-	if OnlineGame.online_play:
-		OnlineMatch.custom_rpc_sync(self, "generate", [pickup_name])
+
+	var pickup_name = Util.find_unique_name(pickup_parent, 'Pickup-')
+	if Global.OnlineGame.online_play:
+		rpc("generate", pickup_name)
 	else:
 		generate(pickup_name)
 
-func generate(pickup_name: String) -> void:
+@rpc("any_peer", "call_local") func generate(pickup_name: String) -> void:
 	if not pickup_scene:
 		return
 
@@ -42,18 +38,17 @@ func generate(pickup_name: String) -> void:
 	pickup_parent.add_child(current_pickup)
 	current_pickup.global_position = pickup_position.global_position
 
-	current_pickup.connect("picked_up", _on_current_pickup_picked_up)
+	current_pickup.connect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
 
 func _on_current_pickup_picked_up() -> void:
-	if current_pickup:
-		current_pickup.disconnect("picked_up", _on_current_pickup_picked_up)
+	current_pickup.disconnect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
 	current_pickup = null
 
-	if not OnlineGame.online_play or OnlineMatch.is_network_master_for_node(self):
+	if not Global.OnlineGame.online_play or is_multiplayer_authority():
 		timer.start()
 
 func map_object_start() -> void:
-	if current_pickup == null and (not OnlineGame.online_play or OnlineMatch.is_network_master_for_node(self)):
+	if current_pickup == null and (not Global.OnlineGame.online_play or is_multiplayer_authority()):
 		_do_generate()
 	timer.wait_time = regenerate_delay
 

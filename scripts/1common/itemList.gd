@@ -70,8 +70,8 @@ func _ready():
 	delItemData.connect(_on_del_item_data)
 	modifyItemData.connect(_on_modify_item_data)
 	findItemData.connect(_on_find_item_data)
-	SignalMgr.OpenLightSIG.connect(open_color)
-	SignalMgr.CloseLightSIG.connect(close_color)
+	Global.SignalMgr.OpenLightSIG.connect(open_color)
+	Global.SignalMgr.CloseLightSIG.connect(close_color)
 	self.connect("gui_input", Callable(self, "_on_item_list_gui_input"))
 	pass
 
@@ -138,7 +138,7 @@ func _on_item_selected(index: int):
 	var friend = self.get_item_metadata(selected_index)
 	if friend:
 		print("选中项索引：", index,"-->", friend.user)
-		await OnlineChat.set_current_channel(friend.channel, true) 
+		await Global.OnlineChat.set_current_channel(friend.channel, true) 
 	pass
  
 func _on_item_list_gui_input(event: InputEvent):
@@ -173,13 +173,13 @@ func _on_popup_menu_item_selected(id: int):
 		addname:
 			# 处理"新增"选项
 			# 在这里添加你的代码来处理新增选项
-			Global.PopupManager.show_confirm("确定新增吗？", _add_item, "确认")
+			Global.WindowPopup.show_confirm("确定新增吗？", _add_item, "确认")
 			print("新增")
 		delname:
 			# 处理"删除"选项
 			# 在这里添加你的代码来处理删除选项
 			print("删除")
-			Global.PopupManager.show_confirm("确定删除吗？", _delete_item, "确认")
+			Global.WindowPopup.show_confirm("确定删除吗？", _delete_item, "确认")
 		modifyname:
 			# 处理"修改"选项
 			# 在这里添加你的代码来处理修改选项
@@ -192,17 +192,17 @@ func _on_popup_menu_item_selected(id: int):
 			# 处理"同意"选项
 			# 在这里添加你的代码来处理同意选项
 			print("同意")
-			Global.PopupManager.show_confirm("确定同意吗？", _add_item, "确认")
+			Global.WindowPopup.show_confirm("确定同意吗？", _add_item, "确认")
 		refuseName:
 			# 处理"拒绝"选项
 			# 在这里添加你的代码来处理拒绝选项
 			print("拒绝")
-			Global.PopupManager.show_confirm("确定拒绝吗？", _refuse_item, "确认")
+			Global.WindowPopup.show_confirm("确定拒绝吗？", _refuse_item, "确认")
 		blockName:
 			# 处理"拉黑"选项
 			# 在这里添加你的代码来处理拉黑选项
 			print("拉黑")
-			Global.PopupManager.show_confirm("确定要拉黑该用户吗？", _block_item, "确认")
+			Global.WindowPopup.show_confirm("确定要拉黑该用户吗？", _block_item, "确认")
 			# _refuse_item()
 		
 	if id == 0 and selected_index != -1: # 第一个菜单项且有选中的项目
@@ -217,7 +217,7 @@ func _add_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("新增好友", friend)
 			if friend:
-				var ret = await Online.nakama_client.add_friends_async(Online.nakama_session,[friend.user.id])
+				var ret = await Global.Online.nakama_client.add_friends_async(Global.Online.nakama_session,[friend.user.id])
 				if ret:
 					_on_add_item_data(friend)
 				else:
@@ -239,14 +239,14 @@ func _refuse_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("拒绝好友", friend)
 			if friend: 
-				ret = await Online.nakama_client.refuse_friends_async(friend.user.id)
-				SignalMgr.FreshFriendListSIG.emit()
+				ret = await Global.Online.nakama_client.refuse_friends_async(friend.user.id)
+				Global.SignalMgr.FreshFriendListSIG.emit()
 		1:
 			print("拒绝俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
-				ret = await Online.nakama_client.remove_group(group.id)
-				SignalMgr.FreshClubListSIG.emit()
+				ret = await Global.Online.nakama_client.remove_group(group.id)
+				Global.SignalMgr.FreshClubListSIG.emit()
 		2:
 			print("拒绝组员")
 		3:
@@ -254,7 +254,7 @@ func _refuse_item():
 		# 从列表中移除项目
 	if ret:
 		self.remove_item(selected_index)
-		Global.PopupManager.show_message("已拒绝")
+		Global.WindowPopup.show_message("已拒绝")
 		selected_index = -1 # 重置选中索引
 	pass
 
@@ -266,14 +266,14 @@ func _block_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("拉黑好友", friend)
 			if friend: 
-				ret = await Online.nakama_client.refuse_friends_async(friend.user.id)
-				SignalMgr.FreshFriendListSIG.emit()
+				ret = await Global.Online.nakama_client.refuse_friends_async(friend.user.id)
+				Global.SignalMgr.FreshFriendListSIG.emit()
 		1:
 			print("拉黑俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
-				ret = await Online.nakama_client.remove_group(group.id)
-				SignalMgr.FreshClubListSIG.emit()
+				ret = await Global.Online.nakama_client.remove_group(group.id)
+				Global.SignalMgr.FreshClubListSIG.emit()
 		2:
 			print("拉黑组员")
 		3:
@@ -281,7 +281,7 @@ func _block_item():
 		# 从列表中移除项目
 	if ret:
 		self.remove_item(selected_index)
-		Global.PopupManager.show_message("已拉黑")
+		Global.WindowPopup.show_message("已拉黑")
 		selected_index = -1 # 重置选中索引
 	pass
 
@@ -293,12 +293,12 @@ func _delete_item():
 			var friend = self.get_item_metadata(selected_index)
 			print("删除好友", friend)
 			if friend:
-				ret = await Online.nakama_client.remove_friend(friend.user.id)
+				ret = await Global.Online.nakama_client.remove_friend(friend.user.id)
 		1:
 			print("删除俱乐部")
 			var group = self.get_item_metadata(selected_index)
 			if group:
-				ret = await Online.nakama_client.remove_group(group.id)
+				ret = await Global.Online.nakama_client.remove_group(group.id)
 		2:
 			print("删除组员")
 		3:
@@ -306,7 +306,7 @@ func _delete_item():
 		# 从列表中移除项目
 	if ret:
 		self.remove_item(selected_index)
-		Global.PopupManager.show_message("删除成功")
+		Global.WindowPopup.show_message("删除成功")
 		selected_index = -1 # 重置选中索引
 	pass
 

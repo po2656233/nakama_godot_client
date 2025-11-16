@@ -223,7 +223,7 @@ func cleanup_overflow_messages(scroll: ScrollContainer):
 func _on_message_revoked(message_item):
 	if message_item.current_content.content:
 		message_item.current_content.content = "[已撤回]"
-	var ret = await OnlineChat.reback_channel_message(message_item.channel_id, message_item.message_id, message_item.current_content)
+	var ret = await Global.OnlineChat.reback_channel_message(message_item.channel_id, message_item.message_id, message_item.current_content)
 	# 如果成功，可以更新消息显示
 	if ret:
 		message_item.text_label.text = "[已撤回]"
@@ -233,7 +233,7 @@ func _on_message_revoked(message_item):
 
 # 处理消息删除
 func _on_message_deleted(message_item):
-	await OnlineChat.remove_channel_message(message_item.channel_id, message_item.message_id)
+	await Global.OnlineChat.remove_channel_message(message_item.channel_id, message_item.message_id)
 	 # 创建渐隐动画
 	message_item.visible = false
 	delete_message(message_item.channel_id, message_item.message_id)
@@ -243,18 +243,18 @@ func _on_message_deleted(message_item):
 func delete_message(channel_id: String, message_id: String):
 	# 从历史记录中删除
 	# 获取当前channel的消息
-	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
+	var messages = Global.DataMgr.get_instance().get_chat_history(uid, channel_id)
 	if messages.is_empty():
 		return
-	OnlineChat.remove_message_by_id(messages, message_id)
-	DataManager.get_instance().set_chat_history(uid, channel_id, messages)
+	Global.OnlineChat.remove_message_by_id(messages, message_id)
+	Global.DataMgr.get_instance().set_chat_history(uid, channel_id, messages)
 	# 从ID缓存中删除
 	if channel_id in message_id_cache:
 		message_id_cache[channel_id].erase(message_id)
 
 func modify_message(channel_id: String, message_id: String, content: String):
 	# 从历史记录中删除
-	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
+	var messages = Global.DataMgr.get_instance().get_chat_history(uid, channel_id)
 	 # 使用从后向前遍历的方法（最安全）
 	for i in range(messages.size() - 1, -1, -1):
 		if messages[i].message_id == message_id:
@@ -275,13 +275,13 @@ func modify_message(channel_id: String, message_id: String, content: String):
 			# 替换消息
 			messages[i] = new_msg
 			print("更新后的消息: ", messages[i])
-	DataManager.get_instance().set_chat_history(uid, channel_id, messages)
+	Global.DataMgr.get_instance().set_chat_history(uid, channel_id, messages)
 	pass
 
  
 # 检查消息是否已存在
 func has_message(channel_id: String, message_id: String) -> bool:
-	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
+	var messages = Global.DataMgr.get_instance().get_chat_history(uid, channel_id)
 	if messages == null:
 		return false
 	for item in messages:
@@ -346,7 +346,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 			"message_id": false,
 			#"finish_history": false
 		}
-		DataManager.get_instance().add_channel_list(uid, channel_id)
+		Global.DataMgr.get_instance().add_channel_list(uid, channel_id)
 		print("渠道---> " + str(channel_id) + " 初始化完毕")
 
 	# 检查消息是否已存在
@@ -357,16 +357,16 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 	# 添加消息到历史记录和ID缓存
 	message_id_cache[channel_id].message_id = true
 
-	var msgCount = DataManager.get_instance().add_chat_history(uid, channel_id, msg)
+	var msgCount = Global.DataMgr.get_instance().add_chat_history(uid, channel_id, msg)
 	print("当前消息数量", msgCount)
-	DataManager.get_instance().set_data(uid + "_msg_cache", message_id_cache)
+	Global.DataMgr.get_instance().set_data(uid + "_msg_cache", message_id_cache)
 	return true
 
 # 加载本地历史记录
 func load_local_history():
-	message_id_cache = Util.validate_dict_types(DataManager.get_instance().get_data(uid+"_msg_cache",message_id_cache))
+	message_id_cache = Util.validate_dict_types(Global.DataMgr.get_instance().get_data(uid+"_msg_cache",message_id_cache))
 	print("加载本地历史记录:",message_id_cache)
-	var  world_channel_id = DataManager.get_instance().get_world_channel_id()
+	var  world_channel_id = Global.DataMgr.get_instance().get_world_channel_id()
 	if world_channel_id:
 		changePanel(MessageKind.WORLD)
 		refresh_current_channel_display(world_channel_id)
@@ -375,7 +375,7 @@ func load_local_history():
 # 获取指定channel的所有历史消息
 func get_channel_messages(channel_id: String) -> Array:
 	# 排序
-	var messages = DataManager.get_instance().get_chat_history(uid, channel_id)
+	var messages = Global.DataMgr.get_instance().get_chat_history(uid, channel_id)
 	if messages == null:
 		return []
 	#print('已保存于本地的消息记录:',messages)
@@ -391,7 +391,7 @@ func refresh_current_channel_display(cid="") -> void:
 	# 获取并显示当前channel的所有消息
 	var messages = get_channel_messages(cid)
 	for message in messages:
-		var msg = message if typeof(message) != TYPE_STRING else DataManager.get_instance().parse_message(message)
+		var msg = message if typeof(message) != TYPE_STRING else Global.DataMgr.get_instance().parse_message(message)
 		var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 		var code = msg.code if msg.has("code") else 0
 		add_message(cid, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time), code)

@@ -79,7 +79,7 @@ func setup(data: Dictionary):
 	status_label.text = status_name[data.get("status", 0)]
 	room_lock.visible = data.get("is_locked", false)
 	author.text = "@"+data.get("author", "")+" "
-	remove_button.visible = data.get("author", "") == OnlineLogin.get_my_name()
+	remove_button.visible = data.get("author", "") == Global.OnlineLogin.get_my_name()
 	# 根据状态设置状态标签样式
 	var style_path: String
 	match data.get("status", 0):  #"等待中" "进行中"  "已满员"
@@ -211,7 +211,7 @@ func _on_join_button_pressed():
 	pass
 
 func _on_favorite_button_toggled(_button_pressed: bool):
-	var result = await OnlineGame.favoriteTable({
+	var result = await Global.OnlineGame.favoriteTable({
 		"tableId": room_data.get("id", 0),
 		"isFavorite": !is_favorite,
 		})
@@ -262,12 +262,12 @@ func flip():
 	is_animating = false
 
 func _on_texture_button_pressed() -> void:
-	Global.PopupManager.show_confirm("确定删除房间吗?",remove_room)
+	Global.WindowPopup.show_confirm("确定删除房间吗?",remove_room)
 	pass # Replace with function body.
 	
 func remove_room():
-	var result = await OnlineGame.removeTable({"tid":room_data.id})
+	var result = await Global.OnlineGame.removeTable({"tid":room_data.id})
 	if result == null or (result and not result.has("tid")):
-		Global.PopupManager.show_dynamic("删除失败")
+		Global.WindowPopup.show_dynamic("删除失败")
 		return
-	Global.PopupManager.show_dynamic("删除成功")
+	Global.WindowPopup.show_dynamic("删除成功")

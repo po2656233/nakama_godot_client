@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var disabled := false: set = set_disabled
+@export var disabled : bool = false: set = set_disabled
 
 func _ready() -> void:
 	_update_disabled()
@@ -17,5 +17,5 @@ func _update_disabled() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if not disabled and body.has_method('hurt'):
-		if not OnlineGame.online_play or OnlineMatch.is_network_master_for_node(body):
+		if not Global.OnlineGame.online_play or body.is_multiplayer_authority():
 			body.hurt(self)

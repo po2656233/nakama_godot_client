@@ -21,7 +21,7 @@ func _state_physics_process(_delta: float) -> void:
 	do_move(input_vector)
 	
 	# If the player presses the jump key before landing, then glide.
-	if host.input_buffer.is_action_pressed("up"):
+	if host.input_buffer.is_action_pressed("jump"):
 		host.vector.y = -host.glide_speed
 		host.show_gliding = true
 		host.play_animation("Glide")

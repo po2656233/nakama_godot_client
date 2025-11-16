@@ -136,7 +136,7 @@ func _init():
 
 ###############################################################
 func _ready():
-	SignalMgr.ChangeSceneSIG.connect(switch_to_scene)
+	Global.SignalMgr.ChangeSceneSIG.connect(switch_to_scene)
 	
 # 	# 添加场景字典
 # 	var scenes = {
@@ -340,7 +340,7 @@ func go_back() -> void:
 	if nodePath == "":
 		nodePath = get_scene_path(HOME_NODE)
 	print("上一个场景: ", nodePath)
-	await OnlineMatch.LeaveMatch()
+	await Global.OnlineMatch.LeaveMatch()
 	# 获取当前场景根节点
 	var current_scene = get_tree().current_scene
 	# 加载新场景
@@ -360,7 +360,7 @@ func ToGameScene(gameName: String) -> void:
 	gameName = gameName.to_lower()
 	var scene_path = get_scene_path(gameName)
 	if scene_path == "":
-		Global.PopupManager.show_dynamic("%s 正在招商中..." % gameName)
+		Global.WindowPopup.show_dynamic("%s 正在招商中..." % gameName)
 		print("%s 正在招商中..." % gameName)
 		gameName = HOME_NODE
 		pass
@@ -382,14 +382,14 @@ func ToGameScene(gameName: String) -> void:
 func switch_to_scene(scene_name: String, transition_way:String = "cross", dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_name == "":
 		return 
-	SettingsMgr.settings_changed.emit()
+	Global.SettingsMgr.settings_changed.emit()
 	var scene_path = get_scene_path(scene_name)
 	_transition_scene(scene_path,transition_way,dissolve_time, dissolve_image)
 	pass
 
 func _transition_scene(scene_path: String,  transition_way:String = "cross",dissolve_time: float = 1.0, dissolve_image: CompressedTexture2D = DISSOLVE_IMAGE) -> void:
 	if scene_path == "":
-		Global.PopupManager.show_dynamic("场景路径为空")
+		Global.WindowPopup.show_dynamic("场景路径为空")
 		push_error("场景路径为空")
 		go_back()
 		return
@@ -631,11 +631,11 @@ func print_all_scenes() -> void:
 	var index_width = len(str(_scenes.size()))
 	
 	# 打印分隔线
-	var separator = "+" + "-".repeat(index_width + 2) + "+" + "-".repeat(max_name_length + 2) + "+" + "-".repeat(50) + "+"
+	var separator = "+" + "-".repeat(index_width + 2) + "+" + "-".repeat(max_name_length + 2) + "+" + "-".repeat(66) + "+"
 	print(separator)
 	
 	# 打印表头
-	print("| %-*s | %-*s | %48s |" % [index_width, "序号", max_name_length, "场景名称", "场景路径"])
+	print("| %-*s | %-*s | %58s |" % [index_width, "序号", max_name_length, "场景名称", "场景路径"])
 	print(separator)
 	
 	# 按场景名称排序并打印
@@ -646,13 +646,13 @@ func print_all_scenes() -> void:
 	for i in range(sorted_scenes.size()):
 		var scene_name = sorted_scenes[i]
 		var scene_index = scene_order.find(scene_name)  # 获取原始添加顺序的索引
-		print("| %-*d | %-*s | %48s |" % [index_width, scene_index, max_name_length, scene_name, _scenes[scene_name]])
+		print_rich("| [color=red][b]%-*d[/b][/color] | [color=green]%-*s[/color] | [color=yellow]%64s[/color] |" % [index_width, scene_index, max_name_length, scene_name, _scenes[scene_name]])
 	
 	# 打印底部分隔线
 	print(separator)
 	print("\n")
 	var renderer = RenderingServer.get_video_adapter_name()
-	print("当前渲染器: ", renderer)
+	print_rich("当前渲染器: [color=red]", renderer,"[/color]")
 		
 	# 判断是否包含 Vulkan 标识
 	if "Vulkan" in renderer:

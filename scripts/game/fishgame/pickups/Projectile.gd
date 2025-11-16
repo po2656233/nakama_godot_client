@@ -19,9 +19,9 @@ func shoot(_start_position: Vector2, _vector: Vector2, _max_distance: float, _du
 	vector = _vector
 	max_distance = _max_distance
 	dud = _dud
-
+	
 	global_position = _start_position
-
+	
 	if dud:
 		hitbox.disabled = true
 		hit()
@@ -29,13 +29,13 @@ func shoot(_start_position: Vector2, _vector: Vector2, _max_distance: float, _du
 func _physics_process(delta: float) -> void:
 	if vector == Vector2.ZERO or dud:
 		return
-
+	
 	# Add to trail before moving project, so we are using the last position
 	# from the last frame.
 	trail.add_point(global_position)
 	while trail.get_point_count() > 5:
 		trail.remove_point(0)
-
+	
 	var increment = vector * delta
 	ray_cast.target_position = increment
 	ray_cast.force_raycast_update()
@@ -44,11 +44,11 @@ func _physics_process(delta: float) -> void:
 		vector = Vector2.ZERO
 	else:
 		global_position += increment
-
+	
 	if start_position.distance_to(global_position) >= max_distance:
 		hit()
 
-func _on_Projectile_body_entered(_body: Node) -> void:
+func _on_Projectile_body_entered(_body: Node) -> void:	
 	if not dud:
 		hit()
 

@@ -19,7 +19,7 @@ const NON_RETRY_API: Array = [
 # 消息数据结构
 class QueuedMessage:
 	var id: String 
-	var caller: Object = Online.nakama_socket  # 默认使用在线的nakama_socket
+	var caller: Object = Global.Online.nakama_socket  # 默认使用在线的nakama_socket
 	var func_name: String
 	var payload: Variant
 	var create_time: float
@@ -30,7 +30,7 @@ class QueuedMessage:
 	var do_failure: Callable
 	# var obj_mutex: Mutex = Mutex.new()
 	
-	func _init(msg_id: String,msg_name: String, data: Variant, obj:Object=Online.nakama_socket ,on_success: Callable = Util.EMPTY_CALLABLE, on_failure: Callable = Util.EMPTY_CALLABLE) -> void:
+	func _init(msg_id: String,msg_name: String, data: Variant, obj:Object=Global.Online.nakama_socket ,on_success: Callable = Util.EMPTY_CALLABLE, on_failure: Callable = Util.EMPTY_CALLABLE) -> void:
 		id = msg_id
 		func_name = msg_name
 		payload = data
@@ -41,9 +41,9 @@ class QueuedMessage:
 		caller = obj
 		do_success = on_success
 		do_failure = on_failure
-		# if caller == Online.nakama_socket:
+		# if caller == Global.Online.nakama_socket:
 		# 	caller.connected.connect(self._on_socket_connected)
-		# SignalMgr.UpdateSocketSIG.connect(self._on_socket_connected)
+		# Global.SignalMgr.UpdateSocketSIG.connect(self._on_socket_connected)
 
 	func should_retry() -> bool:
 		return retry_count < MAX_RETRY_ATTEMPTS or MAX_RETRY_ATTEMPTS == -1
@@ -58,7 +58,7 @@ class QueuedMessage:
 	# 当socket连接成功 获取新的socket
 	# func _on_socket_connected():
 	# 	obj_mutex.lock()
-	# 	caller = Online.get_nakama_socket()
+	# 	caller = Global.Online.get_nakama_socket()
 	# 	obj_mutex.unlock()
 
 var _message_queue: Array[QueuedMessage] = []
@@ -68,7 +68,7 @@ var _message_counter: int = 0
 var _processing_active: bool = false
 
 # 添加消息到队列
-func EnqueueMessage(funcName: String,payload: Variant,obj:Object=Online.nakama_socket ,success_cb: Callable = Util.EMPTY_CALLABLE, failure_cb: Callable = Util.EMPTY_CALLABLE) -> String:
+func EnqueueMessage(funcName: String,payload: Variant,obj:Object=Global.Online.nakama_socket ,success_cb: Callable = Util.EMPTY_CALLABLE, failure_cb: Callable = Util.EMPTY_CALLABLE) -> String:
 	# 重试的API不加入队列
 	if NON_RETRY_API.has(funcName) or obj == null:
 		print("警告！！！添加消息到队列失败 funcName:", funcName, " payload:", payload, " obj is null")
@@ -179,12 +179,12 @@ func _send_message_with_retry(msg: QueuedMessage) -> void:
 	var success = false
 	var should_retry = true
 	var socket = msg.caller
-	var is_socket_obj =  msg.caller == Online.nakama_socket
+	var is_socket_obj =  msg.caller == Global.Online.nakama_socket
 	# 尝试发送消息
 	while not success and should_retry:
 		# 使用 await 确保异步发送完成
 		if is_socket_obj:
-			socket = Online.nakama_socket# msg.caller
+			socket = Global.Online.nakama_socket# msg.caller
 		if socket == null:
 			socket = msg.caller
 			continue

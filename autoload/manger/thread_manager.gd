@@ -39,6 +39,8 @@ func get_counter():
 # Thread must be disposed (or "joined"), for portability.
 func _exit_tree():
 	# Set exit condition to true.
+	if not mutex:
+		return
 	mutex.lock()
 	exit_thread = true # Protect with Mutex.
 	mutex.unlock()

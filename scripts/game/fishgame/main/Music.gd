@@ -29,6 +29,7 @@ func play(song_name: String) -> void:
 
 	tween.finished.connect(self._on_Tween_tween_completed.bind(current_song))
 	current_song = next_song
+	#tween.play()
 
 func play_random() -> void:
 	if get_child_count() == 1:

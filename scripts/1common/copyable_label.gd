@@ -26,5 +26,5 @@ func _gui_input(event: InputEvent) -> void:
 
 func _copy_text() -> void:
 	DisplayServer.clipboard_set(text)
-	Global.PopupManager.show_message("已复制账号")
+	Global.WindowPopup.show_message("已复制账号")
 	print("已复制文本：", text)

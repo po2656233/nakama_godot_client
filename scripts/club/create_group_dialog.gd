@@ -51,11 +51,11 @@ func _on_create_pressed():
 	if group_name.is_empty():
 		return
 	 
-	var group = await Online.nakama_client.create_group_async(Online.nakama_session,group_name, group_desc, selected_avatar)
+	var group = await Global.Online.nakama_client.create_group_async(Global.Online.nakama_session,group_name, group_desc, selected_avatar)
 	if not group:
-		Global.PopupManager.show_message("创建群组失败")
+		Global.WindowPopup.show_message("创建群组失败")
 		return 
-	SignalMgr.AddClubSIG.emit(group)
+	Global.SignalMgr.AddClubSIG.emit(group)
 	# var new_group = {
 	# 				"id": group.id,
 	# 				"name": group.name,

@@ -1,11 +1,11 @@
 extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SceneMgr.set_current_scene("game")
-	SettingsMgr.show_settings()
-	# SettingsMgr.showNotify(false)
-	print("当前运行的节点名",SceneMgr.get_current_scene_name())
-	var result = await Online.sendDataRPC("list_games")
+	Global.SceneMgr.set_current_scene("game")
+	Global.SettingsMgr.show_settings()
+	# Global.SettingsMgr.showNotify(false)
+	print("当前运行的节点名",Global.SceneMgr.get_current_scene_name())
+	var result = await Global.Online.sendDataRPC("list_games")
 	print("获取游戏列表",result)
 	pass # Replace with function body.
 

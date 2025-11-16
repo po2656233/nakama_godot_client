@@ -14,17 +14,17 @@ var players_score := {}
 var match_started := false
 
 func _ready() -> void:
-	OnlineMatch.connect("error", Callable(self, "_on_OnlineMatch_error"))
-	OnlineMatch.connect("disconnected", Callable(self, "_on_OnlineMatch_disconnected"))
-	OnlineMatch.connect("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
-	OnlineMatch.connect("player_left", Callable(self, "_on_OnlineMatch_player_left"))
+	Global.OnlineMatch.connect("error", Callable(self, "_on_OnlineMatch_error"))
+	Global.OnlineMatch.connect("disconnected", Callable(self, "_on_OnlineMatch_disconnected"))
+	Global.OnlineMatch.connect("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
+	Global.OnlineMatch.connect("player_left", Callable(self, "_on_OnlineMatch_player_left"))
 	ready_screen.connect("ready_pressed",Callable(self, "_on_ReadyScreen_ready_pressed"))
 
 	randomize()
 	music.play_random()
 	#_on_TitleScreen_play_online()
-	#match_screen.matchmaker_player_count_control.value = OnlineGame.getGameMaxPeople(32)
-	#match_screen._on_OnlineMatch_joined(OnlineMatch.get_match_id())
+	#match_screen.matchmaker_player_count_control.value = Global.OnlineGame.getGameMaxPeople(32)
+	#match_screen._on_OnlineMatch_joined(Global.OnlineMatch.get_match_id())
 		#
 
 func _get_custom_rpc_methods() -> Array:
@@ -38,7 +38,7 @@ func _get_custom_rpc_methods() -> Array:
 #####
 
 func _on_TitleScreen_play_local() -> void:
-	OnlineGame.online_play = false
+	Global.OnlineGame.online_play = false
 
 	ui_layer.hide_screen()
 	ui_layer.show_back_button()
@@ -46,7 +46,7 @@ func _on_TitleScreen_play_local() -> void:
 	start_game()
 
 func _on_TitleScreen_play_online() -> void:
-	OnlineGame.online_play = true
+	Global.OnlineGame.online_play = true
 
 	# Show the game map in the background because we have nothing better.
 	game.reload_map()
@@ -69,18 +69,18 @@ func _on_UILayer_back_button() -> void:
 
 	stop_game()
 
-	if OnlineGame.online_play:
-		OnlineMatch.leave()
+	if Global.OnlineGame.online_play:
+		Global.OnlineMatch.leave()
 
 	if ui_layer.current_screen_name in ['ConnectionScreen', 'MatchScreen', 'CreditsScreen']:
 		ui_layer.show_screen("TitleScreen")
-	elif not OnlineGame.online_play:
+	elif not Global.OnlineGame.online_play:
 		ui_layer.show_screen("TitleScreen")
 	else:
 		ui_layer.show_screen("MatchScreen")
 
 func _on_ReadyScreen_ready_pressed() -> void:
-	OnlineMatch.custom_rpc_sync(self, "player_ready", [OnlineMatch.get_my_session_id()])
+	Global.OnlineMatch.custom_rpc_sync(self, "player_ready", [Global.OnlineMatch.get_my_session_id()])
 
 #####
 # OnlineMatch callbacks
@@ -104,11 +104,11 @@ func _on_OnlineMatch_player_left(player) -> void:
 	players_ready.erase(player.peer_id)
 
 func _on_OnlineMatch_player_status_changed(player, status) -> void:
-	if status == OnlineMatch.PlayerStatus.CONNECTED:
-		if OnlineMatch.is_server():
+	if status == Global.OnlineMatch.PlayerStatus.CONNECTED:
+		if Global.OnlineMatch.is_server():
 			# Tell this new player about all the other players that are already ready.
 			for session_id in players_ready:
-				OnlineMatch.custom_rpc_id(self, player.peer_id, "player_ready", [session_id])
+				Global.OnlineMatch.custom_rpc_id(self, player.peer_id, "player_ready", [session_id])
 
 #####
 # Gameplay methods and callbacks
@@ -117,16 +117,16 @@ func _on_OnlineMatch_player_status_changed(player, status) -> void:
 func player_ready(session_id: String) -> void:
 	ready_screen.set_status(session_id, "READY!")
 
-	if OnlineMatch.is_server() and not players_ready.has(session_id):
+	if Global.OnlineMatch.is_server() and not players_ready.has(session_id):
 		players_ready[session_id] = true
-		if players_ready.size() == OnlineMatch.players.size():
-			if OnlineMatch.match_state != OnlineMatch.MatchState.PLAYING:
-				OnlineMatch.start_playing()
+		if players_ready.size() == Global.OnlineMatch.players.size():
+			if Global.OnlineMatch.match_state != Global.OnlineMatch.MatchState.PLAYING:
+				Global.OnlineMatch.start_playing()
 			start_game()
 
 func start_game() -> void:
-	if OnlineGame.online_play:
-		players = OnlineMatch.get_player_names_by_peer_id()
+	if Global.OnlineGame.online_play:
+		players = Global.OnlineMatch.get_player_names_by_peer_id()
 	else:
 		players = {
 			1: "Player1",
@@ -136,7 +136,7 @@ func start_game() -> void:
 	game.game_start(players)
 
 func stop_game() -> void:
-	OnlineMatch.leave()
+	Global.OnlineMatch.leave()
 
 	players.clear()
 	players_ready.clear()
@@ -158,32 +158,32 @@ func _on_Game_game_started() -> void:
 		music.play_random()
 
 func _on_Game_player_dead(player_id: int) -> void:
-	if OnlineGame.online_play:
-		var my_id = OnlineMatch.get_unique_id()
+	if Global.OnlineGame.online_play:
+		var my_id = Global.OnlineMatch.get_unique_id()
 		if player_id == my_id:
 			ui_layer.show_message("You lose!")
 
 func _on_Game_game_stopped(player_id: int) -> void:
 	players_ready.clear()
 
-	if not OnlineGame.online_play:
+	if not Global.OnlineGame.online_play:
 		show_winner(players[player_id])
-	elif OnlineMatch.is_server():
+	elif Global.OnlineMatch.is_server():
 		if not players_score.has(player_id):
 			players_score[player_id] = 1
 		else:
 			players_score[player_id] += 1
 
-		var player_session_id = OnlineMatch.get_session_id(player_id)
+		var player_session_id = Global.OnlineMatch.get_session_id(player_id)
 		var is_match: bool = players_score[player_id] >= 5
-		OnlineMatch.custom_rpc_sync(self, "show_winner", [players[player_id], player_session_id, players_score[player_id], is_match])
+		Global.OnlineMatch.custom_rpc_sync(self, "show_winner", [players[player_id], player_session_id, players_score[player_id], is_match])
 
 func update_wins_leaderboard() -> void:
-	if not Online.nakama_session or Online.nakama_session.is_expired():
+	if not Global.Online.nakama_session or Global.Online.nakama_session.is_expired():
 		# If our session has expired, then wait until a new session is setup.
-		await Online.session_connected
+		await Global.Online.session_connected
 
-	Online.nakama_client.write_leaderboard_record_async(Online.nakama_session, 'fish_game_wins', 1)
+	Global.Online.nakama_client.write_leaderboard_record_async(Global.Online.nakama_session, 'fish_game_wins', 1)
 
 func show_winner(name1: String, session_id: String = '', score: int = 0, is_match: bool = false) -> void:
 	if is_match:
@@ -195,10 +195,10 @@ func show_winner(name1: String, session_id: String = '', score: int = 0, is_matc
 	if not game.game_playing:
 		return
 
-	if OnlineGame.online_play:
+	if Global.OnlineGame.online_play:
 		if is_match:
 			stop_game()
-			if session_id == OnlineMatch.my_session_id:
+			if session_id == Global.OnlineMatch.my_session_id:
 				update_wins_leaderboard()
 			ui_layer.show_screen("MatchScreen")
 		else:

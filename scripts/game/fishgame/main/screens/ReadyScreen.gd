@@ -11,11 +11,11 @@ signal ready_pressed ()
 
 func _ready() -> void:
 	clear_players()
-	OnlineMatch.connect("player_joined", Callable(self, "_on_OnlineMatch_player_joined"))
-	OnlineMatch.connect("player_left", Callable(self, "_on_OnlineMatch_player_left"))
-	OnlineMatch.connect("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
-	OnlineMatch.connect("match_ready", Callable(self, "_on_OnlineMatch_match_ready"))
-	OnlineMatch.connect("match_not_ready", Callable(self, "_on_OnlineMatch_match_not_ready"))
+	Global.OnlineMatch.connect("player_joined", Callable(self, "_on_OnlineMatch_player_joined"))
+	Global.OnlineMatch.connect("player_left", Callable(self, "_on_OnlineMatch_player_left"))
+	Global.OnlineMatch.connect("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
+	Global.OnlineMatch.connect("match_ready", Callable(self, "_on_OnlineMatch_match_ready"))
+	Global.OnlineMatch.connect("match_not_ready", Callable(self, "_on_OnlineMatch_match_not_ready"))
 
 func _show_screen(info: Dictionary = {}) -> void:
 	var players: Dictionary = info.get("players", {})
@@ -101,12 +101,12 @@ func _on_OnlineMatch_player_left(player) -> void:
 
 func _on_OnlineMatch_player_status_changed(player, status) -> void:
 	
-	if status == OnlineMatch.PlayerStatus.CONNECTED:
+	if status == Global.OnlineMatch.PlayerStatus.CONNECTED:
 		# Don't go backwards from 'READY!'
 		if get_status(player.session_id) != 'READY!':
 			set_status(player.session_id, 'Connected.')
 			
-	elif status == OnlineMatch.PlayerStatus.CONNECTING:
+	elif status == Global.OnlineMatch.PlayerStatus.CONNECTING:
 		set_status(player.session_id, 'Connecting...')
 
 func _on_OnlineMatch_match_ready(_players: Dictionary) -> void:

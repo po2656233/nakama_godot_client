@@ -54,14 +54,14 @@ func _ready():
 	tab_container.set_tab_title(0,"世界")
 	tab_container.set_tab_title(1,"俱乐部")
 	tab_container.set_tab_title(2,"好友")
-	if not OnlineLogin.player_data:
-		Global.PopupManager.show_message("未登录")
-		OnlineLogin.relogin()
+	if not Global.OnlineLogin.player_data:
+		Global.WindowPopup.show_message("未登录")
+		Global.OnlineLogin.relogin()
 		return
 	# 获取基础信息
-	myHeadicon = OnlineLogin.get_my_headIcon()
-	myUsername = OnlineLogin.get_my_name()
-	uid = OnlineLogin.get_my_id()
+	myHeadicon = Global.OnlineLogin.get_my_headIcon()
+	myUsername = Global.OnlineLogin.get_my_name()
+	uid = Global.OnlineLogin.get_my_id()
 	is_mobile = Util.isMobile()
 
 	# 虚拟键盘高度
@@ -90,18 +90,18 @@ func _ready():
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
-	SignalMgr.FullWindowSIG.connect(_on_fullscreen)
-	SignalMgr.NormalWindowSIG.connect(_on_normalscreen)
-	SignalMgr.FreshFriendListSIG.connect(_on_fresh_friend_list) # 刷新好友列表
-	SignalMgr.FreshClubListSIG.connect(_on_fresh_club_list) # 刷新俱乐部列表
-	SignalMgr.AddClubSIG.connect(_on_add_club) # 添加俱乐部
-	SignalMgr.UpdateClubSIG.connect(_on_update_club) # 更新俱乐部
-	SignalMgr.RecvFinishSIG.connect(_on_recv_finish) # 收到完成消息
-	OnlineChat.changeChannelSIG.connect(_on_change_channel)
+	Global.SignalMgr.FullWindowSIG.connect(_on_fullscreen)
+	Global.SignalMgr.NormalWindowSIG.connect(_on_normalscreen)
+	Global.SignalMgr.FreshFriendListSIG.connect(_on_fresh_friend_list) # 刷新好友列表
+	Global.SignalMgr.FreshClubListSIG.connect(_on_fresh_club_list) # 刷新俱乐部列表
+	Global.SignalMgr.AddClubSIG.connect(_on_add_club) # 添加俱乐部
+	Global.SignalMgr.UpdateClubSIG.connect(_on_update_club) # 更新俱乐部
+	Global.SignalMgr.RecvFinishSIG.connect(_on_recv_finish) # 收到完成消息
+	Global.OnlineChat.changeChannelSIG.connect(_on_change_channel)
 	
 	_on_socket_connected()
-	# Online.socket_connected.connect(_on_socket_connected)
-	OnlineChat.chat_history_received.connect(_on_history_message)
+	# Global.Online.socket_connected.connect(_on_socket_connected)
+	Global.OnlineChat.chat_history_received.connect(_on_history_message)
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -156,11 +156,11 @@ func initData():
 func _on_socket_connected():
 	print("连接成功,监听聊天 通知等消息")
 	# 使用示例 - 传入任意 socket 对象
-	if Online.nakama_socket:
-		Util.safe_connect(Online.nakama_socket, "received_channel_presence", self, "_on_channel_presence")
-		Util.safe_connect(Online.nakama_socket, "received_channel_message", self, "_on_received_message")
-		Util.safe_connect(Online.nakama_socket, "received_status_presence", self, "_on_status_presence") # 监听好友状态
-		Util.safe_connect(Online.nakama_socket, "received_notification", self, "_on_received_notify")
+	if Global.Online.nakama_socket:
+		Util.safe_connect(Global.Online.nakama_socket, "received_channel_presence", self, "_on_channel_presence")
+		Util.safe_connect(Global.Online.nakama_socket, "received_channel_message", self, "_on_received_message")
+		Util.safe_connect(Global.Online.nakama_socket, "received_status_presence", self, "_on_status_presence") # 监听好友状态
+		Util.safe_connect(Global.Online.nakama_socket, "received_notification", self, "_on_received_notify")
 	pass
 
 func _on_show_addfriend_pressed() -> void:
@@ -194,7 +194,7 @@ func _on_add_club(club):
 
 func _on_update_club(clubName):
 	print("更新俱乐部的信息-->:", clubName)
-	var result = await OnlineChat.search_groups(clubName)
+	var result = await Global.OnlineChat.search_groups(clubName)
 	if result:
 		for group in result.groups:
 			clubListItem._on_group_updated({
@@ -233,7 +233,7 @@ func _on_received_message(msg):
 	print("收到消息:", msg)
 	if add_message_to_history(msg.channel_id, msg):
 		if msg.sender_id != uid:
-			SignalMgr.RecvMessageSIG.emit(msg)
+			Global.SignalMgr.RecvMessageSIG.emit(msg)
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
 		ensure_scroll_to()
@@ -258,7 +258,7 @@ func _on_history_message(msgList):
 	# 	if isFull and message_id_cache[channel_id]:
 	# 		message_id_cache[channel_id].finish_history = true
 	# 		print("渠道" + channel_id + "历史消息加载完毕")
-	# 		DataManager.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
+	# 		Global.DataMgr.get_instance().set_data(uid+"_msg_cache", message_id_cache) 
 	# 		pass
 	# 	showLoadMore(!isFull)
 	# else:
@@ -278,7 +278,7 @@ func _on_status_presence(presence):
 	for joinItem in presence.joins:
 		changeOnline(joinItem.user_id, true)
 	if count > 1:
-		SignalMgr.OnlineSIG.emit()
+		Global.SignalMgr.OnlineSIG.emit()
 	if count == 0:
 		for leaveItem in presence.leaves:
 			changeOnline(leaveItem.user_id, false)
@@ -339,33 +339,33 @@ func _on_received_notify(notify):
 		NotifyStatus.WANT_FRIEND:
 			approval_data["type"] = "好友"
 			approval_data["status"] = 2
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalMgr.NewNotifySIG.emit()
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
+			Global.SignalMgr.NewNotifySIG.emit()
 		NotifyStatus.ACCEPT_FRIEND:
 			approval_data["type"] = "好友"
 			approval_data["status"] = 4
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			# SignalMgr.NewNotifySIG.emit()
-			SignalMgr.FreshFriendListSIG.emit()
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
+			# Global.SignalMgr.NewNotifySIG.emit()
+			Global.SignalMgr.FreshFriendListSIG.emit()
 		NotifyStatus.ACCEPT_GROUP:
 			approval_data["status"] = 4
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalMgr.NewNotifySIG.emit()
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
+			Global.SignalMgr.NewNotifySIG.emit()
 			pass
 		NotifyStatus.WANT_GROUP:
 			approval_data["status"] = 2
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalMgr.NewNotifySIG.emit()
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
+			Global.SignalMgr.NewNotifySIG.emit()
 			pass
 		NotifyStatus.FRIEND_JOIN:
-			SignalMgr.NewNotifySIG.emit()
+			Global.SignalMgr.NewNotifySIG.emit()
 			pass
 		NotifyStatus.SERVER_CLOSE:
 			pass
 		NotifyStatus.BANNED:
 			approval_data["status"] = 3
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
-			SignalMgr.NewNotifySIG.emit()
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
+			Global.SignalMgr.NewNotifySIG.emit()
 			pass
 		_:
 			pass
@@ -391,22 +391,22 @@ func _on_btn_send_pressed() -> void:
 	# 发送消息
 	var channel = getCurChannelData()
 	if channel:
-		OnlineChat.set_current_channel(channel)
-		var msg = OnlineChat.getMsgData(null)
+		Global.OnlineChat.set_current_channel(channel)
+		var msg = Global.OnlineChat.getMsgData(null)
 		msg.content = sendTextEdit.text.strip_edges()
 		msg.kind = mainPanle.current_tab
 		msg.type = ContentType.TEXT
-		msg.headicon = OnlineLogin.get_my_headIcon()
+		msg.headicon = Global.OnlineLogin.get_my_headIcon()
 		print("发送消息:", msg)
-		var ret = await OnlineChat.send_message(msg)
+		var ret = await Global.OnlineChat.send_message(msg)
 		if ret == OK:
-			SignalMgr.SendMessageSIG.emit(msg)
+			Global.SignalMgr.SendMessageSIG.emit(msg)
 			sendTextEdit.clear()
 			isToTop = false
 		else:
-			Global.PopupManager.show_message("发送失败")
+			Global.WindowPopup.show_message("发送失败")
 		return
-	Global.PopupManager.show_message("未指定频道")
+	Global.WindowPopup.show_message("未指定频道")
 	pass # Replace with function body.
 
 
@@ -430,18 +430,18 @@ func _load_more_history(forward: bool):
 		return
 
 	# 发起加载请求
-	await OnlineChat.get_chat_history(current_channel_id, MESSAGES_PER_PAGE, forward)
+	await Global.OnlineChat.get_chat_history(current_channel_id, MESSAGES_PER_PAGE, forward)
 	pass
 
 #################################################################
 # 获取好友列表
 func get_friends_list():
-	var friendlist = await OnlineChat.get_friends_list()
+	var friendlist = await Global.OnlineChat.get_friends_list()
 	if friendlist and friendlist.friends.size() > 0:
 		friendListItem.clear()
 		var friendIds = []
 		var friendNames = []
-		DataManager.get_instance().remove_friend_all(uid)
+		Global.DataMgr.get_instance().remove_friend_all(uid)
 		print("好友人数:", friendlist.friends.size())
 		for friend in friendlist.friends:
 			# 避免重复 
@@ -450,7 +450,7 @@ func get_friends_list():
 				continue
 			# 区分是否是互为好友 
 			if friend.state == 0:
-				var ret = await OnlineChat.add_channel_async(friend.user.id, 0)
+				var ret = await Global.OnlineChat.add_channel_async(friend.user.id, 0)
 				if ret:
 					var username = user.username
 					var friend_status = "在线" if user.online else "离线"
@@ -475,14 +475,14 @@ func get_friends_list():
 							"state": friend.state,
 							"online": friend.user.online,
 						})
-					DataManager.get_instance().add_uid_friend(uid, user.serialize())
+					Global.DataMgr.get_instance().add_uid_friend(uid, user.serialize())
 					friendListItem.set_item_custom_fg_color(index, onlineColor if user.online else leaveColor)
 					# 上线了则移至上方
 					friendListItem.move_item(index, 0 if user.online else friendListItem.item_count - 1)
 					print("好友--> ", index, "好友信息", friend.user)
 					pass
 			elif friend.state == 2: # 需要审批
-				SignalMgr.NewNotifySIG.emit(null)
+				Global.SignalMgr.NewNotifySIG.emit(null)
 				pass
 			# 状态
 			var approval_data = {
@@ -496,9 +496,9 @@ func get_friends_list():
 				"update_time": friend.user.update_time,
 				"status": friend.state,
 			}
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), approval_data)
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
 			pass
-		await OnlineChat.update_status_async("online")
+		await Global.OnlineChat.update_status_async("online")
 	print("获取好友列表")
 	pass
 ####
@@ -506,7 +506,7 @@ func add_club(group):
 	if group.name == "world":
 		return
 	print("俱乐部信息:", group)
-	var ret = await OnlineChat.add_channel_async(group.id, 2)
+	var ret = await Global.OnlineChat.add_channel_async(group.id, 2)
 	if ret:
 		var group_data = {
 				"id": group.id,
@@ -529,13 +529,13 @@ func add_club(group):
 #######################获取俱乐部###############################
 func update_club(group):
 	# 获取成员列表
-	var retsult = await OnlineChat.get_group_member_list_async(group.id)
+	var retsult = await Global.OnlineChat.get_group_member_list_async(group.id)
 	if not retsult:
 		return
 	var dataList = []
 	var isAdmin = false
 	for info1 in retsult.group_users:
-		if info1.user.id == OnlineLogin.get_my_id() and (info1.state == 0 or info1.state == 1):
+		if info1.user.id == Global.OnlineLogin.get_my_id() and (info1.state == 0 or info1.state == 1):
 			isAdmin = true
 			continue
 		if info1.state == 3: # 申请加入群组
@@ -554,14 +554,14 @@ func update_club(group):
 	# 是管理员
 	if isAdmin and dataList.size() > 0:
 		for data in dataList:
-			DataManager.get_instance().add_uid_approval(OnlineLogin.get_my_id(), data)
-	DataManager.get_instance().add_uid_club(OnlineLogin.get_my_id(), group)
+			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), data)
+	Global.DataMgr.get_instance().add_uid_club(Global.OnlineLogin.get_my_id(), group)
 	pass
 
 
 #######################获取俱乐部列表###############################
 func get_club_list():
-	var result = await OnlineChat.get_group_list(uid)
+	var result = await Global.OnlineChat.get_group_list(uid)
 	if result == null:
 		return
 	print("俱乐部数量:", result.user_groups.size())
@@ -591,7 +591,7 @@ func getCurChannelData():
 	match kind:
 		MessageKind.WORLD:
 			# 世界
-			channel = OnlineChat.get_world_channel()
+			channel = Global.OnlineChat.get_world_channel()
 			pass
 		MessageKind.CHAT:
 			# 好友
@@ -666,9 +666,9 @@ func _on_light_button_pressed() -> void:
 	light_switch.texture_normal = pressed
 	light_switch.texture_pressed = normal
 	if !isOpenLight:
-		SignalMgr.OpenLightSIG.emit()
+		Global.SignalMgr.OpenLightSIG.emit()
 	else:
-		SignalMgr.CloseLightSIG.emit()
+		Global.SignalMgr.CloseLightSIG.emit()
 	isOpenLight = !isOpenLight
 	pass # Replace with function body.
 
@@ -676,14 +676,14 @@ func _on_light_button_pressed() -> void:
 func _on_tab_container_tab_selected(tab: int) -> void:
 	if tab == 0 and first_world:
 		first_world = false
-		var world = OnlineChat.get_world_channel()
+		var world = Global.OnlineChat.get_world_channel()
 		if not world:
-			world = await OnlineChat.load_world_channel()
+			world = await Global.OnlineChat.load_world_channel()
 		if world:
-			DataManager.get_instance().set_world_channel_id(world.id)
+			Global.DataMgr.get_instance().set_world_channel_id(world.id)
 			_on_change_channel(world.id)
 		print("加载世界频道")
-			# await OnlineChat.get_chat_history(world.id)
+			# await Global.OnlineChat.get_chat_history(world.id)
 	elif tab == 1 and first_clubs:
 		first_clubs = false
 		# get_club_list()

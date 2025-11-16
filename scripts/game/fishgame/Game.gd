@@ -27,7 +27,7 @@ enum OpCode {
 }
 # 进入场景
 func _enter_tree():
-	SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
+	Global.SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
 	pass
 	
 # 接收匹配状态事件
@@ -39,12 +39,12 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 		print("Error parsing JSON: " + json_conv.get_error_message(), " ---", data)
 	var json_data = json_conv.get_data()
 	match data.op_code:
-		OnlineGame.game_status.Start:
-			OnlineGame.online_play = true
+		Global.OnlineGame.game_status.Start:
+			Global.OnlineGame.online_play = true
 			game_start(json_data['players'])	
 		OpCode.OpFishMove:
 			pass
-		OnlineGame.game_status.Playing:
+		Global.OnlineGame.game_status.Playing:
 			if typeof(json_data) != TYPE_FLOAT and json_data.args:
 				var parsed_args = str_to_var(json_data.args)
 				# 检查解析结果是否有效
@@ -82,8 +82,8 @@ func _get_custom_rpc_methods() -> Array:
 	]
 
 func game_start(players: Dictionary) -> void:
-	if OnlineGame.online_play:
-		OnlineMatch.custom_rpc_sync(self, '_do_game_setup', [players])
+	if Global.OnlineGame.online_play:
+		Global.OnlineMatch.custom_rpc_sync(self, '_do_game_setup', [players])
 	else:
 		_do_game_setup(players)
 
@@ -102,8 +102,8 @@ func _do_game_setup(players: Dictionary) -> void:
 	var sit = 0
 	for player_id in players:
 		sit = sit + 1
-		if player_id == OnlineLogin.get_my_id():
-			OnlineMatch.my_peer_id = sit
+		if player_id == Global.OnlineLogin.get_my_id():
+			Global.OnlineMatch.my_peer_id = sit
 		sitters[sit] = player_id
 		var other_player = Player.instantiate()
 		other_player.name = str(player_id)
@@ -115,19 +115,19 @@ func _do_game_setup(players: Dictionary) -> void:
 		other_player.rotation = map.get_node("PlayerStartPositions/Player" + str(sit)).rotation
 		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(player_id))
 		
-		if not OnlineGame.online_play:
+		if not Global.OnlineGame.online_play:
 			other_player.player_controlled = true
 			other_player.input_prefix = "player" + str(player_id) + "_"
 	
 	camera.update_position_and_zoom(false)
 
-	if OnlineGame.online_play:
-		var my_id := OnlineLogin.get_my_id()
+	if Global.OnlineGame.online_play:
+		var my_id = Global.OnlineLogin.get_my_id()
 		var my_player := players_node.get_node(str(my_id))
 		my_player.player_controlled = true
 
 		# Tell the host that we've finished setup.
-		OnlineMatch.custom_rpc_id_sync(self, OnlineMatch.my_peer_id, "_finished_game_setup", [my_id])
+		Global.OnlineMatch.custom_rpc_id_sync(self, Global.OnlineMatch.my_peer_id, "_finished_game_setup", [my_id])
 	else:
 		_do_game_start()
 
@@ -136,7 +136,7 @@ func _finished_game_setup(player_id) -> void:
 	players_setup[player_id] = players_alive[player_id]
 	#if players_setup.size() == players_alive.size():
 		# Once all clients have finished setup, tell them to start the game.
-	OnlineMatch.custom_rpc_sync(self, "_do_game_start")
+	Global.OnlineMatch.custom_rpc_sync(self, "_do_game_start")
 
 # Actually start the game on this client.
 func _do_game_start() -> void:

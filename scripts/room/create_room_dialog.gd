@@ -30,7 +30,7 @@ func _ready():
 	
 	# # 初始化UI状态
 	tax_container.visible = false
-	var games = await OnlineGame.getGameList()
+	var games = await Global.OnlineGame.getGameList()
 	for game in games:
 		game_type_option.add_item(game.name,game.id)
 		game_type_option.set_item_metadata(game_type_option.get_item_count() - 1, game) 
@@ -83,17 +83,17 @@ func _on_create_pressed():
 	# 模拟创建房间回包
 	if not _validate_room_data():
 		return
-	Global.PopupManager.show_confirm("确定创建吗？", _create_room, "确认")
+	Global.WindowPopup.show_confirm("确定创建吗？", _create_room, "确认")
 	pass
 
 func _create_room():
-	if Online.nakama_socket:
+	if Global.Online.nakama_socket:
 		# 匹配创建参数
-		# var match_maker_ticket = await Online.nakama_socket.add_matchmaker_async()
+		# var match_maker_ticket = await Global.Online.nakama_socket.add_matchmaker_async()
 		# print("匹配创建成功，票据: ", match_maker_ticket)
 
 		# 服务端创建牌桌
-		var res = await Online.sendDataRPC("create_table",{
+		var res = await Global.Online.sendDataRPC("create_table",{
 			"rid": -1,
 			"gid": game_type_option.get_selected_id(),
 			"name": room_name_option.text,
@@ -111,7 +111,7 @@ func _create_room():
 		})
 		if not res:
 			print("创建房间失败:")
-			Global.PopupManager.show_dynamic("创建房间失败")
+			Global.WindowPopup.show_dynamic("创建房间失败")
 			return
 		print("创建服务端托管成功",res)
 		room_created.emit({})
@@ -144,7 +144,7 @@ func _validate_room_data() -> bool:
 
 
 func _show_error(message: String):
-	Global.PopupManager.show_message(message)
+	Global.WindowPopup.show_message(message)
 	await get_tree().create_timer(1.5).timeout
 	show()
 	# var dialog = AcceptDialog.new()

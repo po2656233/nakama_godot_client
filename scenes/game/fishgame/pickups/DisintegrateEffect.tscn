@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://btorq3l8t3kev" path="res://assets/game/fishgame/kenney-platform-deluxe/request/rockSmall.png" id="1"]
 [ext_resource type="Script" uid="uid://c4unyilenafdg" path="res://scripts/game/fishgame/pickups/DisintegrateEffect.gd" id="2"]
-[ext_resource type="Gradient" path="res://themes/game/fishgame/pickups/DisintegrateEffectGradient.tres" id="3"]
+[ext_resource type="Gradient" uid="uid://bswed7wayuvd6" path="res://themes/game/fishgame/pickups/DisintegrateEffectGradient.tres" id="3"]
 
 [node name="DisintegrateEffect" type="CPUParticles2D"]
 emitting = false

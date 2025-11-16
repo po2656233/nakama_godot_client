@@ -52,8 +52,8 @@ func _ready():
 
 	# 连接搜索信号
 	$VBoxContainer/SearchBar/MarginContainer/HBoxContainer/SearchInput.text_changed.connect(_on_search_text_changed)
-	SignalMgr.OpenLightSIG.connect(_on_turnOnLight)
-	SignalMgr.CloseLightSIG.connect(_on_turnOffLight)
+	Global.SignalMgr.OpenLightSIG.connect(_on_turnOnLight)
+	Global.SignalMgr.CloseLightSIG.connect(_on_turnOffLight)
 	pass
 
 func clear() :
@@ -106,7 +106,7 @@ func _on_cliecked_group(item: Node):
 	if item != null:
 		item.setup_panel_style(true)
 		var clubInfo = item.get_group_data()
-		await OnlineChat.set_current_channel(clubInfo.channel, true) 
+		await Global.OnlineChat.set_current_channel(clubInfo.channel, true) 
 		
 
 

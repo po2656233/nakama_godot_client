@@ -52,7 +52,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 		return
 	isNothing = false
 	if isClub:
-		var result = await OnlineChat.search_groups(new_text)
+		var result = await Global.OnlineChat.search_groups(new_text)
 		print("俱乐部搜索",result)
 		_list.clear()
 		if result == null or result.groups.size() == 0:
@@ -68,7 +68,7 @@ func _on_line_edit_find_text_submitted(new_text:String):
 			if index != -1:
 				_list.set_item_metadata(index,club)
 	else:
-		var result = await OnlineChat.search_users(new_text)
+		var result = await Global.OnlineChat.search_users(new_text)
 		print("好友搜索",result)
 		_list.clear()
 		if result == null or result.users.size() == 0:
@@ -121,45 +121,45 @@ func _on_item_list_item_clicked(index:int, _at_position:Vector2, _mouse_button_i
 func _on_tb_add_pressed() -> void:
 	var selected_items = _list.get_selected_items()
 	var ids = []
-	if not OnlineLogin.player_data:
-		Global.PopupManager.show_message("未登录")
+	if not Global.OnlineLogin.player_data:
+		Global.WindowPopup.show_message("未登录")
 		return
-	var uid = OnlineLogin.get_my_id()
+	var uid = Global.OnlineLogin.get_my_id()
 	for item in selected_items:
 		var info = _list.get_item_metadata(selected_index)
 		if info:
-			var friend = DataManager.get_instance().get_uid_friendInfo(uid,info.id)
+			var friend = Global.DataMgr.get_instance().get_uid_friendInfo(uid,info.id)
 			if friend:
-				Global.PopupManager.show_message("已是好友,请勿重复添加")
+				Global.WindowPopup.show_message("已是好友,请勿重复添加")
 				return
 			ids.append(info.id)
 		pass
 	if ids.size() == 0:
 		# 创建俱乐部
 		if isClub:
-			var result = await OnlineChat.create_group_async(_search_box.text)
+			var result = await Global.OnlineChat.create_group_async(_search_box.text)
 			if result:
-				Global.PopupManager.show_message("创建俱乐部成功")
+				Global.WindowPopup.show_message("创建俱乐部成功")
 			else:
-				Global.PopupManager.show_message("创建俱乐部失败")
+				Global.WindowPopup.show_message("创建俱乐部失败")
 		else:
-			Global.PopupManager.show_message("没有选中用户")
+			Global.WindowPopup.show_message("没有选中用户")
 		return
 
 	# 添加俱乐部
 	if isClub:
 		for id in ids:
-			await OnlineChat.add_group_async(id)
+			await Global.OnlineChat.add_group_async(id)
 		return
 
 	# 添加好友
-	var ret = await OnlineChat.add_friends_async(ids)	
+	var ret = await Global.OnlineChat.add_friends_async(ids)	
 	if ret:
-		Global.PopupManager.show_message("已添加,请等待对方通过")
+		Global.WindowPopup.show_message("已添加,请等待对方通过")
 		_list.clear()
 		_search_box.text = ""
 	else:
-		Global.PopupManager.show_message("添加失败")
+		Global.WindowPopup.show_message("添加失败")
 
 	pass # Replace with function body.
 

@@ -424,12 +424,12 @@ func _on_game_card_selected(game_data: Dictionary):
 func launch_game(game_data: Dictionary):
 	"""启动游戏"""
 	if not game_data.installed:
-		Global.PopupManager.show_message("游戏未安装，请先安装游戏。", "提示", false)
+		Global.WindowPopup.show_message("游戏未安装，请先安装游戏。", "提示", false)
 		return
 	
 	var executable_path = game_data.get("executable_path", "")
 	if executable_path == "":
-		Global.PopupManager.show_message("找不到游戏执行文件。", "错误", false)
+		Global.WindowPopup.show_message("找不到游戏执行文件。", "错误", false)
 		return
 	
 	print("启动游戏: ", executable_path)
@@ -437,7 +437,7 @@ func launch_game(game_data: Dictionary):
 	# OS.execute(executable_path, [])
 	
 	# 模拟启动成功
-	Global.PopupManager.show_message("正在启动 " + game_data.title + "...", "启动游戏", false)
+	Global.WindowPopup.show_message("正在启动 " + game_data.title + "...", "启动游戏", false)
 
 func _on_search_pressed():
 	"""搜索按钮被点击"""
@@ -480,7 +480,7 @@ func _on_settings_pressed():
 	"""设置按钮被点击"""
 	print("打开设置")
 	# 这里可以打开设置界面
-	SettingsMgr.show_settings()
+	Global.SettingsMgr.show_settings()
 
 func update_pagination_ui():
 	"""更新分页UI"""

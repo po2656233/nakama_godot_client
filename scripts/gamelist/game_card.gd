@@ -65,7 +65,7 @@ func setup(data):
 	# gameImage.texture = img
 	if data.image:
 		for dragonBones in gameLogos:
-			DataManager.safe_free_node(dragonBones)
+			Global.DataMgr.safe_free_node(dragonBones)
 		gameImage.texture = await Util.load_texture_async(data.image,255,255)
 	else:
 		# gameImage.texture = img
@@ -77,7 +77,7 @@ func setup(data):
 				dragonBones.visible = true
 				print(data.title,"-->", index)
 			else:
-				DataManager.safe_free_node(dragonBones)
+				Global.DataMgr.safe_free_node(dragonBones)
 	if data.version:
 		version.text = "当前版本:"+data.version
 	pass

@@ -28,29 +28,29 @@ extends Node
 var isMute = false 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SignalMgr.BackgroundMusicSIG.connect(_on_backgroundMusic)
-	SignalMgr.WelcomeMusicSIG.connect(_on_welcomegMusic)
+	Global.SignalMgr.BackgroundMusicSIG.connect(_on_backgroundMusic)
+	Global.SignalMgr.WelcomeMusicSIG.connect(_on_welcomegMusic)
 
-	SignalMgr.NewMessageSIG.connect(_on_new_msg)
-	SignalMgr.SendMessageSIG.connect(_on_send_msg)
-	SignalMgr.RecvMessageSIG.connect(_on_recv_msg)
-	SignalMgr.OnlineSIG.connect(_on_online_msg)
+	Global.SignalMgr.NewMessageSIG.connect(_on_new_msg)
+	Global.SignalMgr.SendMessageSIG.connect(_on_send_msg)
+	Global.SignalMgr.RecvMessageSIG.connect(_on_recv_msg)
+	Global.SignalMgr.OnlineSIG.connect(_on_online_msg)
 
-	SignalMgr.NewEmailSIG.connect(_on_email_notify)
-	SignalMgr.NewNotifySIG.connect(_on_recv_notify)
+	Global.SignalMgr.NewEmailSIG.connect(_on_email_notify)
+	Global.SignalMgr.NewNotifySIG.connect(_on_recv_notify)
 
-	SignalMgr.GameMusicSIG.connect(_on_gameMusic)
-	SignalMgr.MuteSIG.connect(_on_mute)
-	SignalMgr.JoinSuccessMusicSIG.connect(_on_joinSuccessMusic)
-	SignalMgr.JoinErrorMusicSIG.connect(_on_joinErrorMusic)
+	Global.SignalMgr.GameMusicSIG.connect(_on_gameMusic)
+	Global.SignalMgr.MuteSIG.connect(_on_mute)
+	Global.SignalMgr.JoinSuccessMusicSIG.connect(_on_joinSuccessMusic)
+	Global.SignalMgr.JoinErrorMusicSIG.connect(_on_joinErrorMusic)
 	
-	SignalMgr.MatchingOkMusicSIG.connect(_on_matchingOkMusic)
-	SignalMgr.MatchingFailedMusicSIG.connect(_on_matchingFailedMusic)
-	SignalMgr.MatchingTimeMusicSIG.connect(_on_matchingTimeMusic)
+	Global.SignalMgr.MatchingOkMusicSIG.connect(_on_matchingOkMusic)
+	Global.SignalMgr.MatchingFailedMusicSIG.connect(_on_matchingFailedMusic)
+	Global.SignalMgr.MatchingTimeMusicSIG.connect(_on_matchingTimeMusic)
 
-	SignalMgr.MatchSuccessOkMusicSIG.connect(_on_matchSuccessOkMusic)
-	SignalMgr.MatchSuccessFailedMusicSIG.connect(_on_matchSuccessFailedMusic)
-	SignalMgr.MatchSuccessTimeMusicSIG.connect(_on_matchSuccessTimeMusic)
+	Global.SignalMgr.MatchSuccessOkMusicSIG.connect(_on_matchSuccessOkMusic)
+	Global.SignalMgr.MatchSuccessFailedMusicSIG.connect(_on_matchSuccessFailedMusic)
+	Global.SignalMgr.MatchSuccessTimeMusicSIG.connect(_on_matchSuccessTimeMusic)
 
 	pass # Replace with function body.
 
