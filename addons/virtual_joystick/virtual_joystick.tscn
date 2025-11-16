@@ -28,7 +28,7 @@ script/source = "extends CanvasLayer
 @export var action_up := \"ui_up\"
 ## 向下
 @export var action_down := \"ui_down\"
-##
+## 激活
 @export var action_accept := \"ui_accept\"
 
 @export_group(\"功能映射\")

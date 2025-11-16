@@ -19,7 +19,7 @@ func _state_physics_process(_delta: float) -> void:
 	do_move(input_vector)
 	
 	# If the player releases the jump key, then interrupt the jump.
-	if host.input_buffer.is_action_just_released("jump"):
+	if host.input_buffer.is_action_just_released("up"):
 		if host.vector.y < 0.0:
 			host.vector.y = 0.0
 	

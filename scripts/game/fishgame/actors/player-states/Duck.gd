@@ -19,7 +19,7 @@ func _state_physics_process(delta: float) -> void:
 	
 	if not host.input_buffer.is_action_pressed("down") or not host.is_on_floor():
 		get_parent().change_state("Idle")
-	elif host.input_buffer.is_action_just_pressed("jump"):
+	elif host.input_buffer.is_action_just_pressed("up"):
 		host.pass_through_one_way_platforms = true
 	else:
 		# If we haven't started moving by the next frame then we must not have

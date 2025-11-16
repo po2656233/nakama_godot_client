@@ -275,7 +275,7 @@ func _physics_process(delta: float) -> void:
 			if sync_forced or input_buffer_changed or sync_counter >= SYNC_DELAY:
 				sync_counter = 0
 				sync_forced = false
-				rpc("update_remote_player", input_buffer.buffer, state_machine.current_state.name, sync_state_info, global_position, vector, body_sprite.frame, flip_h, show_gliding, show_sliding, pass_through_one_way_platforms)
+				Global.OnlineMatch.custom_rpc(self, "update_remote_player", [input_buffer.buffer, state_machine.current_state.name, sync_state_info, global_position, vector, body_sprite.frame, flip_h, show_gliding, show_sliding, pass_through_one_way_platforms])
 				if sync_state_info.size() > 0:
 					sync_state_info.clear()
 		else:

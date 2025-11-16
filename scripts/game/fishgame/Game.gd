@@ -18,13 +18,13 @@ var sitters := {} #sit:id
 signal game_started ()
 signal player_dead (player_id)
 signal game_stopped (player_id)
-enum OpCode {
-	OpFishMove = 3000 , # 移动
-	OpFishJump,					# 跳跃
-	OpFishAttack,				  # 攻击
-	OpFishFight,				   # 开火
-	OpFishFinish,				  # 结束
-}
+#enum OpCode {
+	#OpFishMove = 3000 , # 移动
+	#OpFishJump,					# 跳跃
+	#OpFishAttack,				  # 攻击
+	#OpFishFight,				   # 开火
+	#OpFishFinish,				  # 结束
+#}
 # 进入场景
 func _enter_tree():
 	Global.SignalMgr.MatchStateEventSIG.connect(_on_received_match_state)
@@ -32,7 +32,7 @@ func _enter_tree():
 	
 # 接收匹配状态事件
 func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
-	#print("鱼人大作战游戏接收数据: ", data)
+	print("鱼人大作战游戏接收数据: ", data)
 	var json_conv = JSON.new()
 	var error_code = json_conv.parse(data.data,true)
 	if error_code != OK:
@@ -42,8 +42,6 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 		Global.OnlineGame.game_status.Start:
 			Global.OnlineGame.online_play = true
 			game_start(json_data['players'])	
-		OpCode.OpFishMove:
-			pass
 		Global.OnlineGame.game_status.Playing:
 			if typeof(json_data) != TYPE_FLOAT and json_data.args:
 				var parsed_args = str_to_var(json_data.args)
@@ -127,7 +125,7 @@ func _do_game_setup(players: Dictionary) -> void:
 		my_player.player_controlled = true
 
 		# Tell the host that we've finished setup.
-		Global.OnlineMatch.custom_rpc_id_sync(self, Global.OnlineMatch.my_peer_id, "_finished_game_setup", [my_id])
+		Global.OnlineMatch.custom_rpc_id(self, Global.OnlineMatch.my_peer_id, "_finished_game_setup", [my_id])
 	else:
 		_do_game_start()
 
