@@ -215,7 +215,6 @@ func _on_join_button_pressed():
 	pass
 
 func _on_favorite_button_toggled(_button_pressed: bool):
-	print("收藏请求1")
 	var result = await Global.OnlineGame.favoriteTable({
 		"tableId": room_data.get("id", 0),
 		"isFavorite": !is_favorite,

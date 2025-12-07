@@ -364,7 +364,7 @@ func _on_show_favorites_toggled(button_pressed: bool):
 		curSelect = SearchType.favorite
 		await loadRooms()
 		var original_y = show_favorites.position.y
-		_animate_button(show_favorites, "position:y", [original_y - 30, original_y, original_y + 30, original_y])
+		_animate_button(show_favorites, "position:y", [original_y - 30, original_y, original_y + 30, original_y],0.06)
 	else:
 		show_favorites.button_pressed = false
 		show_myrooms.button_pressed = false
@@ -378,7 +378,7 @@ func _on_show_myrooms_toggled(button_pressed: bool):
 		my_rooms.clear()
 		await loadRooms()
 		var original_x = show_myrooms.position.x
-		_animate_button(show_myrooms, "position:x", [original_x - 30, original_x, original_x + 30, original_x])
+		_animate_button(show_myrooms, "position:x", [original_x - 30, original_x, original_x + 30, original_x],0.06)
 	else:
 		show_favorites.button_pressed = false
 		show_myrooms.button_pressed = false
@@ -752,6 +752,6 @@ func _on_favorite_table_cb(result):
 	if result == null:
 		return 
 	await loadRooms()
-	print("收藏牌桌: ",result)
-	_refresh_room_list()
+	# print("收藏牌桌: ",result)
+	# _refresh_room_list()
 	pass
