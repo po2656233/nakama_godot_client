@@ -1743,6 +1743,108 @@ class ChineseChessTrusteeResp:
 			return PB_ERR.PARSE_INCOMPLETE
 		return result
 	
+class ChineseChessSelectReq:
+	func _init():
+		@warning_ignore("unused_variable")
+		var service
+		
+		__cell = PBField.new("cell", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
+		service = PBServiceField.new()
+		service.field = __cell
+		service.func_ref = Callable(self, "new_cell")
+		data[__cell.tag] = service
+		
+	var data = {}
+	
+	var __cell: PBField
+	func get_cell() -> ChineseChessCell:
+		return __cell.value
+	func clear_cell() -> void:
+		data[1].state = PB_SERVICE_STATE.UNFILLED
+		__cell.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
+	func new_cell() -> ChineseChessCell:
+		__cell.value = ChineseChessCell.new()
+		return __cell.value
+	
+	func _to_string() -> String:
+		return PBPacker.message_to_string(data)
+		
+	func to_bytes() -> PackedByteArray:
+		return PBPacker.pack_message(data)
+		
+	func from_bytes(bytes : PackedByteArray, offset : int = 0, limit : int = -1) -> int:
+		var cur_limit = bytes.size()
+		if limit != -1:
+			cur_limit = limit
+		var result = PBPacker.unpack_message(data, bytes, offset, cur_limit)
+		if result == cur_limit:
+			if PBPacker.check_required(data):
+				if limit == -1:
+					return PB_ERR.NO_ERRORS
+			else:
+				return PB_ERR.REQUIRED_FIELDS
+		elif limit == -1 && result > 0:
+			return PB_ERR.PARSE_INCOMPLETE
+		return result
+	
+class ChineseChessSelectResp:
+	func _init():
+		@warning_ignore("unused_variable")
+		var service
+		
+		__userID = PBField.new("userID", PB_DATA_TYPE.STRING, PB_RULE.OPTIONAL, 1, true, DEFAULT_VALUES_3[PB_DATA_TYPE.STRING])
+		service = PBServiceField.new()
+		service.field = __userID
+		data[__userID.tag] = service
+		
+		__cell = PBField.new("cell", PB_DATA_TYPE.MESSAGE, PB_RULE.OPTIONAL, 2, true, DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE])
+		service = PBServiceField.new()
+		service.field = __cell
+		service.func_ref = Callable(self, "new_cell")
+		data[__cell.tag] = service
+		
+	var data = {}
+	
+	var __userID: PBField
+	func get_userID() -> String:
+		return __userID.value
+	func clear_userID() -> void:
+		data[1].state = PB_SERVICE_STATE.UNFILLED
+		__userID.value = DEFAULT_VALUES_3[PB_DATA_TYPE.STRING]
+	func set_userID(value : String) -> void:
+		__userID.value = value
+	
+	var __cell: PBField
+	func get_cell() -> ChineseChessCell:
+		return __cell.value
+	func clear_cell() -> void:
+		data[2].state = PB_SERVICE_STATE.UNFILLED
+		__cell.value = DEFAULT_VALUES_3[PB_DATA_TYPE.MESSAGE]
+	func new_cell() -> ChineseChessCell:
+		__cell.value = ChineseChessCell.new()
+		return __cell.value
+	
+	func _to_string() -> String:
+		return PBPacker.message_to_string(data)
+		
+	func to_bytes() -> PackedByteArray:
+		return PBPacker.pack_message(data)
+		
+	func from_bytes(bytes : PackedByteArray, offset : int = 0, limit : int = -1) -> int:
+		var cur_limit = bytes.size()
+		if limit != -1:
+			cur_limit = limit
+		var result = PBPacker.unpack_message(data, bytes, offset, cur_limit)
+		if result == cur_limit:
+			if PBPacker.check_required(data):
+				if limit == -1:
+					return PB_ERR.NO_ERRORS
+			else:
+				return PB_ERR.REQUIRED_FIELDS
+		elif limit == -1 && result > 0:
+			return PB_ERR.PARSE_INCOMPLETE
+		return result
+	
 class ChineseChessMoveReq:
 	func _init():
 		@warning_ignore("unused_variable")

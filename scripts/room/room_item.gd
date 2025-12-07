@@ -17,11 +17,15 @@ signal favorite_toggled(is_favorite: bool)
 @onready var room_lock = $Front/MarginContainer/Panel/Lock
 @onready var author = $Author
 @onready var remove_button = $RemoveBtn
+@onready var downloadProgress = $CircularProgress
 
+# 背后卡片
 @onready var roomBack = $Back
 @onready var detail_panel = $Back/DetailPanel
 @onready var detail_info = $Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer/RoomInfo
 @onready var animation = $AnimationPlayer
+
+
 var room_style_path = "res://styles/room_panel_style.tres"
 var waiting_style_path = "res://styles/waiting_style.tres"
 var playing_style_path = "res://styles/playing_style.tres"
@@ -211,6 +215,7 @@ func _on_join_button_pressed():
 	pass
 
 func _on_favorite_button_toggled(_button_pressed: bool):
+	print("收藏请求1")
 	var result = await Global.OnlineGame.favoriteTable({
 		"tableId": room_data.get("id", 0),
 		"isFavorite": !is_favorite,
@@ -256,6 +261,7 @@ func flip():
 	await get_tree().create_timer(0.4).timeout
 	roomFront.visible = !is_flipped
 	roomBack.visible = is_flipped
+	downloadProgress.showSig.emit(!is_flipped)
 	is_flipped = !is_flipped
 	
 	await animation.animation_finished

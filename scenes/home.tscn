@@ -145,7 +145,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_size = 5
 
-[node name="Home" type="Control"]
+[node name="Home" type="Control" unique_id=635315379]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,7 +154,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4keq7")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1052312378]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -164,7 +164,7 @@ grow_vertical = 2
 texture = ExtResource("1_3pqew")
 expand_mode = 2
 
-[node name="AnnouncementScene" parent="." instance=ExtResource("14_7exda")]
+[node name="AnnouncementScene" parent="." unique_id=1879119643 instance=ExtResource("14_7exda")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.056
@@ -178,7 +178,7 @@ offset_bottom = 17.56
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Announcements" parent="." instance=ExtResource("3_w6nje")]
+[node name="Announcements" parent="." unique_id=151708676 instance=ExtResource("3_w6nje")]
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 1
 anchors_preset = 12
@@ -189,7 +189,7 @@ offset_right = -51.0
 offset_bottom = -6.0
 grow_vertical = 0
 
-[node name="HBoxContainerHome" type="HBoxContainer" parent="."]
+[node name="HBoxContainerHome" type="HBoxContainer" parent="." unique_id=1608015686]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 10
@@ -202,7 +202,7 @@ grow_horizontal = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="btn_start" type="Button" parent="HBoxContainerHome"]
+[node name="btn_start" type="Button" parent="HBoxContainerHome" unique_id=542601274]
 clip_contents = true
 custom_minimum_size = Vector2(120, 80)
 layout_mode = 2
@@ -217,7 +217,7 @@ icon = ExtResource("5_hrlg5")
 icon_alignment = 1
 expand_icon = true
 
-[node name="cur_game_name" type="Label" parent="HBoxContainerHome/btn_start"]
+[node name="cur_game_name" type="Label" parent="HBoxContainerHome/btn_start" unique_id=1911902686]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -226,14 +226,14 @@ anchor_bottom = 1.0
 offset_top = -24.0
 grow_horizontal = 2
 grow_vertical = 0
-tooltip_text = "快捷开始游戏；玩家需从竞技场、联盟、俱乐部等场景中预选或参与游戏。"
+tooltip_text = "快捷开始游戏；玩家需从竞技场、联盟等场景中预选或参与游戏。"
 mouse_filter = 1
 text = "预选游戏"
 label_settings = SubResource("LabelSettings_ip4d6")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="btn_room" type="Button" parent="HBoxContainerHome"]
+[node name="btn_room" type="Button" parent="HBoxContainerHome" unique_id=1169073337]
 clip_contents = true
 custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
@@ -245,7 +245,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
 theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "联盟"
 
-[node name="btn_match" type="Button" parent="HBoxContainerHome"]
+[node name="btn_match" type="Button" parent="HBoxContainerHome" unique_id=789984312]
 clip_contents = true
 custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
@@ -257,7 +257,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
 theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "竞技场"
 
-[node name="tb_home" type="TextureButton" parent="HBoxContainerHome"]
+[node name="tb_home" type="TextureButton" parent="HBoxContainerHome" unique_id=1466962816]
 custom_minimum_size = Vector2(120, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -269,7 +269,7 @@ texture_disabled = ExtResource("6_s23th")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="btn_ranking" type="Button" parent="HBoxContainerHome"]
+[node name="btn_ranking" type="Button" parent="HBoxContainerHome" unique_id=1428748683]
 clip_contents = true
 custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
@@ -281,7 +281,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
 theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "排行榜"
 
-[node name="btn_zhanji" type="Button" parent="HBoxContainerHome"]
+[node name="btn_zhanji" type="Button" parent="HBoxContainerHome" unique_id=326163404]
 clip_contents = true
 custom_minimum_size = Vector2(90, 55)
 layout_mode = 2
@@ -293,7 +293,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_kw3vv")
 theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "战绩"
 
-[node name="btn_store" type="Button" parent="HBoxContainerHome"]
+[node name="btn_store" type="Button" parent="HBoxContainerHome" unique_id=648600288]
 clip_contents = true
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
@@ -307,7 +307,7 @@ text = "商城"
 icon = ExtResource("6_bdbkb")
 expand_icon = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=330556872]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0564236
@@ -321,19 +321,19 @@ offset_bottom = 0.00036621094
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Personal" parent="VBoxContainer" instance=ExtResource("2_kagwf")]
+[node name="Personal" parent="VBoxContainer" unique_id=1609146244 instance=ExtResource("2_kagwf")]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 0
 metadata/_edit_group_ = true
 
-[node name="Chat" parent="VBoxContainer" instance=ExtResource("2_m51rd")]
+[node name="Chat" parent="VBoxContainer" unique_id=1846175729 instance=ExtResource("2_m51rd")]
 layout_mode = 2
 size_flags_vertical = 3
 toggle_button_path = NodePath("btn_popup")
 transition_duration = 0.3
 
-[node name="btn_popup" type="Button" parent="VBoxContainer/Chat"]
+[node name="btn_popup" type="Button" parent="VBoxContainer/Chat" unique_id=1802968661]
 custom_minimum_size = Vector2(60, 45)
 layout_mode = 1
 anchors_preset = 1
@@ -350,7 +350,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=567525164]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.446181
@@ -366,22 +366,22 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_p652v")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1322245940]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=132049639]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1667164510]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="btn_homepage" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="btn_homepage" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1362897912]
 visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
@@ -396,7 +396,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fcaqj")
 text = "主页"
 
-[node name="btn_herolist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="btn_herolist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1439656968]
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
@@ -410,7 +410,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "英雄列表"
 
-[node name="btn_matchlist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="btn_matchlist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1935418870]
 visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
@@ -425,7 +425,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "赛事列表"
 
-[node name="btn_ranklist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="btn_ranklist" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1064340969]
 visible = false
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
@@ -440,7 +440,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "排行榜"
 
-[node name="btn_mygoods" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="btn_mygoods" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=21374728]
 custom_minimum_size = Vector2(100, 60)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -455,7 +455,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "我的物品"
 
-[node name="btn_convert" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="btn_convert" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1095128149]
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
@@ -469,7 +469,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "兑换"
 
-[node name="btn_rechange" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="btn_rechange" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=772069937]
 custom_minimum_size = Vector2(80, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.843137, 0.847059, 0.239216, 1)
@@ -483,7 +483,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "充值"
 
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=28426259]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_5rkik")

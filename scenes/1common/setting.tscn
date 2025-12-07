@@ -38,7 +38,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awqwa"]
 draw_center = false
 
-[node name="Setting" type="Control"]
+[node name="Setting" type="Control" groups=["settings"]]
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0

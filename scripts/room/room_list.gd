@@ -119,8 +119,8 @@ func load_data():
 	# 游戏列表
 	await Global.OnlineGame.getGameList(-1,self,"_on_game_list")
 	pass
-
 # 添加房间数据
+
 func append_room(data):
 	print("添加 房间数据:", data)
 	var game_name = "未知游戏"
@@ -208,6 +208,7 @@ func remove_room(room_data):
 # 获取房间列表
 func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 	# room_list_info.clear()
+	print("当前查询类型",curSelect)
 	match curSelect:
 		SearchType.all:
 			await Global.OnlineGame.getTabelList({
@@ -219,7 +220,7 @@ func loadRooms(page=1, creatorId="", order="", name1="", isDesc=true):
 				"pageSize": int(page_size)
 			},self,"_on_get_table_list")
 		SearchType.favorite:
-			await Global.OnlineGame.getFavoriteList("",self,"_on_get_favorite_list")
+			await Global.OnlineGame.getFavoriteList({},self,"_on_get_favorite_list")
 		SearchType.my:
 			await Global.OnlineGame.getTabelList({
 				"creatorId": Global.OnlineLogin.get_my_id(),
@@ -315,7 +316,7 @@ func _refresh_room_list():
 	# 房间当前页的起始和结束索引
 	var start_idx = current_page * items_per_page
 	var end_idx = min(start_idx + items_per_page, filtered_rooms.size())
-	print("过滤后的房间数量:", filtered_rooms.size())
+	print("过滤后的房间数量:", filtered_rooms.size(), "当前查询类型:",curSelect)
 	# 创建房间列表项
 	for i in range(start_idx, end_idx):
 		var data = filtered_rooms[i]
@@ -451,6 +452,7 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 			favorite_ids.push_front(room_info.id)
 	else:
 		favorite_ids.erase(room_info.id)
+	print("收藏请求2",is_favorite)
 	await Global.OnlineGame.favoriteTable({
 		"tableId": room_info.id,
 		"isFavorite": is_favorite,
@@ -695,6 +697,7 @@ func _on_get_table_list(result):
 
 # 获取收藏房间列表回调
 func _on_get_favorite_list(result):
+	print("收藏列表返回结果",result)
 	favorite_rooms.clear()
 	favorite_ids.clear()
 	add_item(result)
@@ -748,7 +751,7 @@ func _on_join_table_err(result):
 func _on_favorite_table_cb(result):
 	if result == null:
 		return 
-	#await loadRooms()
+	await loadRooms()
 	print("收藏牌桌: ",result)
 	_refresh_room_list()
 	pass

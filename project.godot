@@ -13,6 +13,7 @@ config_version=5
 config/name="zhenzhizhonghua"
 config/description="游乐场"
 config/version="1.0.1"
+config/tags=PackedStringArray("排行榜", "游戏平台", "竞技", "自主房间", "角色游戏")
 run/main_scene="res://scenes/login.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/bg_color=Color(0.141176, 0.694118, 0.996078, 1)
@@ -40,6 +41,10 @@ project/assembly_name="zhenzhizhonghua"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/protobuf/plugin.cfg", "res://addons/snopek-state-machine/plugin.cfg", "res://addons/transitions/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg")
+
+[global_group]
+
+settings=""
 
 [gui]
 
@@ -110,10 +115,6 @@ ui_blop={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
 ]
 }
-
-
-
-
 
 [input_devices]
 

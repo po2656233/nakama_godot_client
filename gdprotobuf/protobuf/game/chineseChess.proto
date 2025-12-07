@@ -113,6 +113,14 @@ message ChineseChessTrusteeResp {
   string userID = 1; // 玩家ID
   bool isTrustee = 2; //是否托管
 }
+// 选中棋子
+message ChineseChessSelectReq{
+  ChineseChessCell cell = 1;
+}
+message ChineseChessSelectResp{
+  string userID = 1;
+  ChineseChessCell cell = 2;
+}
 // 移动
 message ChineseChessMoveReq {
     ChineseChessCell cell = 1;

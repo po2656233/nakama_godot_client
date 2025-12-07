@@ -110,9 +110,8 @@ func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 
 # 获取收藏列表
 func getFavoriteList(payload=null,obj:Object=null,work_cb:String="_on_work"):
-	if favorite_list.size() == 0:
-		var result = await Global.Online.sendDataRPC("favorite_list",payload,obj,work_cb)
-		favorite_list = result if result else []
+	var result = await Global.Online.sendDataRPC("favorite_list",payload,obj,work_cb)
+	favorite_list = result if result else []
 	return favorite_list
 
 

@@ -25,6 +25,7 @@ const PLAYER_CHESS_Z = preload("res://scenes/game/xiangqi/item/chess/chess_z.tsc
 
 enum OpCode {
 	OpXiangqiGameStart = 2000,               # 象棋游戏开始
+	OpXiangqiSelect,				# 选中某个棋子
 	OpXiangqiMove,  				# 象棋移动
 	OpXiangqiGameEnd,                 # 象棋游戏结束
 	OpXiangqiSurrender,               # 象棋投降
@@ -92,8 +93,13 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 	match data.op_code:
 		OpCode.OpXiangqiGameStart:
 			gameStart(data.data)	
+			return
+		OpCode.OpXiangqiSelect:
+			gameSelect(data.binary_data)
+			return
 		OpCode.OpXiangqiMove:
 			gameMove(data.binary_data)
+			return
 	pass
 ###############################################################################################
 func gameStart(data) -> void:
@@ -117,8 +123,24 @@ func gameStart(data) -> void:
 	print("象棋游戏开始 ", result," uid:",uid," my_clolor:",my_clolor)
 	pass
 
+func gameSelect(data)->void:
+	var resp = proto.ChineseChessSelectResp.new()
+	resp.from_bytes(data)
+	print("象棋游戏 选中棋子 解析后 ", resp)
+	var uid = Global.OnlineLogin.get_my_id()
+	print("象棋游戏 选中棋子 当前用户id ", uid, " 移动用户id ", resp.get_userID())
+	if uid == resp.get_userID():
+		return
+	var cell = resp.get_cell()
+	var orginX = cell.get_pos().get_row()
+	var orginY = cell.get_pos().get_col()
+	var orgin = chess_position_array[orginX][orginY]
+	# 同步玩家的位置
+	player_move.position = orgin.position
+	pass
+
 func gameMove(data) -> void:
-	print("象棋游戏移动 ", data)
+	#print("象棋游戏移动 ", data)
 	var resp = proto.ChineseChessMoveResp.new()
 	resp.from_bytes(data)
 	print("象棋游戏移动 解析后 ", resp)
@@ -150,7 +172,8 @@ func add_position() -> void:
 			chessposition.add_child(V_CHESS_QIZI)
 			V_CHESS_QIZI.position = Vector2(x * size1, y * size1)
 			V_CHESS_QIZI.V_position = Vector2(x, y)
-			V_CHESS_QIZI.connect("move", move)
+			V_CHESS_QIZI.connect("move", _on_move)
+			
 			V_CHESS_QIZI.chess_color = 0
 			if y >= 5:
 				V_CHESS_QIZI.chess_color = 1
@@ -244,8 +267,8 @@ func reture_chess(chess: int):
 			return PLAYER_CHESS_Z.instantiate()
 	pass
 
-
-func move(chess: chess_position):
+	
+func _on_move(chess: chess_position):
 	if start_player != my_clolor:
 		Global.WindowPopup.show_dynamic("等待对方操作")
 		cuowu.play()
@@ -263,6 +286,7 @@ func move(chess: chess_position):
 				V_chess = chess
 				player_move.visible = true
 				player_move.position = V_chess.position
+				_select_chess(chess)
 	elif chess == V_chess:
 		pass
 	else:
@@ -271,6 +295,7 @@ func move(chess: chess_position):
 				V_chess = chess
 				player_move.visible = true
 				player_move.position = V_chess.position
+				_select_chess(chess)
 			else:
 				if V_chess.play == null or not V_chess.play.has_method("move"):
 					cuowu.play()
@@ -471,6 +496,21 @@ func set_pre_move(pre_chess, new_chess):
 		V_chess = pre_chess
 		player_move.position = pre_chess.position
 	pre_chess = new_chess
+	pass
+
+func _select_chess(chess:chess_position):
+	# 选中棋子协议
+	var select_position = chess.V_position
+	var select_req = proto.ChineseChessSelectReq.new()
+	# 创建并填充 cell（起始格）
+	var cell = select_req.new_cell()
+	cell.set_piece(get_chess_type(chess.play))
+	var select_pos = cell.new_pos() if cell.has_method("new_pos") else cell.get_pos()
+	select_pos.set_row(select_position.x)
+	select_pos.set_col(select_position.y)
+	# 序列化为字节
+	var resp = select_req.to_bytes()
+	Global.OnlineGame.sendToMatchRpc(OpCode.OpXiangqiSelect, resp, null)
 	pass
 
 func _move_end(chess:chess_position) -> void:

@@ -290,6 +290,10 @@ func sendDataRPC(funcName: String, payload = null, obj: Object = null, work_cb: 
 	return result_wrapper.result # 返回最终结果
 
 # RPC 发送函数
-func acynDataRPC(funcName: String, payload = null, success_cb: Callable = Util.EMPTY_CALLABLE, failure_cb: Callable = Util.EMPTY_CALLABLE) -> void:
+func asyncDataRPC(funcName: String, payload = null, success_cb: Callable = Util.EMPTY_CALLABLE, failure_cb: Callable = Util.EMPTY_CALLABLE) -> void:
 	await Util.Asyn_Call(nakama_socket, "rpc_async", [funcName, payload], success_cb, failure_cb)
 	return
+
+# 广播自己的状态给其他玩家
+func asyncStateRPC(p_match_id, p_op_code : int, p_data : String, p_presences = null):
+	return nakama_socket.send_match_state_async(p_match_id, p_op_code, p_data, p_presences)

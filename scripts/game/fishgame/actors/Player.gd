@@ -74,7 +74,7 @@ const SYNC_DELAY := 3
 var sync_forced := false
 var sync_counter: int = 0
 var sync_state_info := {}
-
+var nickname = ""
 func _ready():
 	# Disable the state machine node's _physics_process() so that we can run
 	# it manually from here, and ensure everything happens in the right order.
@@ -92,9 +92,11 @@ func set_player_skin(_player_skin: int) -> void:
 			body_sprite.texture = skin_resources[player_skin]
 			fin_sprite.texture = skin_resources[player_skin]
 
-func set_player_name(_player_name: String) -> void:
+func set_nickname(_nickname: String) -> void:
 	# @todo Implement
+	nickname = _nickname
 	pass
+
 
 func set_flip_h(_flip_h: bool) -> void:
 	if flip_h != _flip_h:
@@ -159,12 +161,12 @@ func pickup_or_throw() -> void:
 		if current_pickup:
 			# We throw on all clients; the pickup knows to simulate physics
 			# only on the master, and sync to the puppets.
-			rpc("_do_throw")
+			Global.OnlineMatch.custom_rpc(self,"_do_throw")
 		else:
 			# We try to pickup only on the host so it can make sure that
 			# only one client gets it, and then the host will tell everyone
 			# else.
-			rpc_id(1, "_try_pickup")
+			Global.OnlineMatch.custom_rpc_id(self, int(name), "_try_pickup")
 
 @rpc("any_peer", "call_local") func _try_pickup() -> void:
 	for body in pickup_area.get_overlapping_bodies():
@@ -173,21 +175,50 @@ func pickup_or_throw() -> void:
 		body.pickup_state = Pickup.PickupState.PICKED_UP
 
 		if Global.OnlineGame.online_play:
-			rpc("_do_pickup", body.get_path())
+			var pickup_id = body.get_meta("id") if body.has_meta("id")  else str(body.name)
+			Global.OnlineMatch.custom_rpc_sync(self, '_do_pickup', [pickup_id])
 		else:
 			_do_pickup(body.get_path())
 
 		return
 
-@rpc("any_peer", "call_local") func _do_pickup(pickup_path: NodePath) -> void:
+# @rpc("any_peer", "call_local") func _do_pickup(pickup_path: NodePath) -> void:
+# 	sounds.play("Pickup")
+# 	current_pickup = get_node(pickup_path)
+# 	current_pickup.pickup(self)
+# 	current_pickup.get_parent().remove_child(current_pickup)
+
+# 	current_pickup_position = back_pickup_position if current_pickup.pickup_position == Pickup.PickupPosition.BACK else front_pickup_position
+# 	current_pickup_position.add_child(current_pickup)
+# 	current_pickup.position = -current_pickup.held_position.position
+
+@rpc("any_peer", "call_local") func _do_pickup(pickup_id: String) -> void:
 	sounds.play("Pickup")
-	current_pickup = get_node(pickup_path)
+	var map_objects = get_node_or_null("/root/Game/Map/Objects")
+	var node = null
+	if map_objects:
+		if map_objects.has_node(pickup_id):
+			node = map_objects.get_node(pickup_id)
+		else:
+			for c in map_objects.get_children():
+				if c.has_meta("id") and c.get_meta("id") == pickup_id:
+					node = c
+					break
+				if c.name == pickup_id:
+					node = c
+					break
+	if node == null:
+		print("Warning: 找不到 pickup，id=", pickup_id)
+		return
+	current_pickup = node
 	current_pickup.pickup(self)
 	current_pickup.get_parent().remove_child(current_pickup)
 
 	current_pickup_position = back_pickup_position if current_pickup.pickup_position == Pickup.PickupPosition.BACK else front_pickup_position
 	current_pickup_position.add_child(current_pickup)
 	current_pickup.position = -current_pickup.held_position.position
+
+
 
 @rpc("any_peer", "call_local") func _do_throw() -> void:
 	if current_pickup == null:
@@ -231,8 +262,8 @@ func die() -> void:
 	if Global.OnlineGame.online_play:
 		if is_multiplayer_authority():
 			if current_pickup:
-				rpc("_do_throw")
-			rpc("_do_die")
+				Global.OnlineMatch.custom_rpc(self,"_do_throw")
+			Global.OnlineMatch.custom_rpc(self,"_do_die")
 	else:
 		if current_pickup:
 			_do_throw()
@@ -296,5 +327,7 @@ func _physics_process(delta: float) -> void:
 	set_pass_through_one_way_platforms(_pass_through)
 
 func _on_StateMachine_state_changed(_state, info: Dictionary) -> void:
+	# if state_machine.current_state == _state:
+	# 	return
 	sync_forced = true
 	sync_state_info = info

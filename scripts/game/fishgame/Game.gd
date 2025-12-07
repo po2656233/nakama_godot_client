@@ -32,7 +32,7 @@ func _enter_tree():
 	
 # 接收匹配状态事件
 func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
-	print("鱼人大作战游戏接收数据: ", data)
+	#print("鱼人大作战游戏接收数据: ", data)
 	var json_conv = JSON.new()
 	var error_code = json_conv.parse(data.data,true)
 	if error_code != OK:
@@ -104,11 +104,11 @@ func _do_game_setup(players: Dictionary) -> void:
 			Global.OnlineMatch.my_peer_id = sit
 		sitters[sit] = player_id
 		var other_player = Player.instantiate()
-		other_player.name = str(player_id)
+		other_player.name = str(sit)
 		players_node.add_child(other_player)
 		other_player.set_multiplayer_authority(sit)
 		other_player.set_player_skin(sit-1)
-		other_player.set_player_name(str(sit)) #players[player_id].presence.Username
+		other_player.set_nickname(player_id) #players[player_id].presence.Username
 		other_player.position = map.get_node("PlayerStartPositions/Player" + str(sit)).position
 		other_player.rotation = map.get_node("PlayerStartPositions/Player" + str(sit)).rotation
 		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(player_id))
@@ -120,12 +120,13 @@ func _do_game_setup(players: Dictionary) -> void:
 	camera.update_position_and_zoom(false)
 
 	if Global.OnlineGame.online_play:
-		var my_id = Global.OnlineLogin.get_my_id()
-		var my_player := players_node.get_node(str(my_id))
+		var my_id = Global.OnlineLogin.get_my_id() 
+		var my_sit = Global.OnlineMatch.my_peer_id
+		var my_player := players_node.get_node(str(my_sit))
 		my_player.player_controlled = true
 
 		# Tell the host that we've finished setup.
-		Global.OnlineMatch.custom_rpc_id(self, Global.OnlineMatch.my_peer_id, "_finished_game_setup", [my_id])
+		Global.OnlineMatch.custom_rpc_id(self, my_sit, "_finished_game_setup", [my_id])
 	else:
 		_do_game_start()
 

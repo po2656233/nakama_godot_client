@@ -2,6 +2,7 @@ extends Control
 class_name CircularProgress
 
 signal loading_completed
+signal showSig(ok)
 
 @export var radius: float = 50.0
 @export var line_width: float = 8.0
@@ -15,6 +16,7 @@ signal loading_completed
 var progress: float = 0.0
 var is_loading: bool = false
 var is_completed: bool = false
+var is_show:bool = true
 var flash_timer: float = 0.0
 var flash_alpha: float = 0.0
 var completion_label: Label
@@ -26,7 +28,7 @@ func _ready():
 	
 	# 创建完成文本Label
 	create_completion_label()
-	
+	showSig.connect(_on_show)
 	await get_tree().create_timer(3).timeout
 	simulate_loading(3.0)
 
@@ -55,6 +57,8 @@ func create_completion_label():
 	add_child(completion_label)
 
 func _draw():
+	if not is_show:
+		return
 	var center = size / 2
 	
 	# 只在加载状态时绘制进度条
@@ -93,6 +97,15 @@ func _draw():
 		draw_arc(center, radius, 0, TAU, 32, background_color, line_width)
 		# 绘制感叹号形状图（占满整个圆形）
 		draw_exclamation_shape(center)
+
+func _on_show(ok):
+	is_show = ok
+	if ok:
+		self.show()
+	else:
+		self.hide()
+	pass
+
 
 func draw_exclamation_shape(center: Vector2):
 	# 绘制感叹号形状图（颠倒）
@@ -154,6 +167,8 @@ func complete_loading():
 	loading_completed.emit()
 
 func _process(delta):
+	if not is_show:
+		return
 	if is_completed:
 		flash_timer += delta
 		

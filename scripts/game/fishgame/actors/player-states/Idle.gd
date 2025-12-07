@@ -15,8 +15,9 @@ func _check_pickup_or_throw_or_use():
 	# Only do this on the client controlling this player, because we have 
 	# seperate system for sync'ing pickups and throws that this will conflict
 	# with if it runs on a remote player.
-	if Global.OnlineGame.online_play and not host.player_controlled:
-		return
+	# 暂时注释
+	# if Global.OnlineGame.online_play and not host.player_controlled:
+	# 	return
 	
 	# We use call_deferred() here so that those operation happen after we've
 	# moved the player, so we aren't, for example, shooting from our old position

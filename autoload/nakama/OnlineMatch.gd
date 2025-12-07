@@ -254,33 +254,15 @@ func is_server() -> bool:
 func is_network_master_for_node(node: Node) -> bool:
 	return node.get_multiplayer_authority() == my_peer_id
 
-func custom_rpc(node: Node, method: String, args: Array = []) -> void:
-	custom_rpc_id(node, my_peer_id, method, args)
-
-func custom_rpc_id(node: Node, id: int, method: String, args: Array = []) -> void:
-	# assert(match_state == MatchState.READY or match_state == MatchState.PLAYING)
-	# assert(match_id != '')
-	# assert(nakama_socket != null)
-	if nakama_socket == null:
-		nakama_socket = Global.Online.get_nakama_socket()
-	if nakama_socket:
-		nakama_socket.send_match_state_async(match_id, MatchOpCode.CUSTOM_RPC, JSON.stringify({
-			peer_id = id,
-			node_path = str(node.get_path()),
-			method = method,
-			args = var_to_str(args),
-		}))
-
-func custom_rpc_sync(node: Node, method: String, args: Array = []) -> void:
-	node.callv(method, args)
-	custom_rpc(node, method, args)
-
-func custom_rpc_id_sync(node: Node, id: int, method: String, args: Array = []) -> void:
-	if my_peer_id == id:
-		node.callv(method, args)
+func _check_enough_players() -> void:
+	if players.size() >= min_players:
+		match_state = MatchState.READY;
+		emit_signal("match_ready", players)
 	else:
-		custom_rpc_id(node, id, method, args)
+		match_state = MatchState.WAITING_FOR_ENOUGH_PLAYERS
 
+
+####################################事件响应(处理函数)##############################################
 func _on_nakama_error(data) -> void:
 	print("ERROR:")
 	print(data)
@@ -303,13 +285,8 @@ func _on_nakama_match_created(data: NakamaRTAPI.Match) -> void:
 	emit_signal("player_joined", my_player)
 	emit_signal("player_status_changed", my_player, PlayerStatus.CONNECTED)
 
-func _check_enough_players() -> void:
-	if players.size() >= min_players:
-		match_state = MatchState.READY;
-		emit_signal("match_ready", players)
-	else:
-		match_state = MatchState.WAITING_FOR_ENOUGH_PLAYERS
 
+# 匹配场景事件
 func _on_nakama_match_presence(data: NakamaRTAPI.MatchPresenceEvent) -> void:
 	for u in data.joins:
 		if u.session_id == my_session_id:
@@ -369,6 +346,7 @@ func _on_nakama_match_presence(data: NakamaRTAPI.MatchPresenceEvent) -> void:
 				if match_state == MatchState.READY || match_state == MatchState.PLAYING:
 					emit_signal("match_not_ready")
 
+# 成功加入匹配
 func _on_nakama_match_join(data: NakamaRTAPI.Match) -> void:
 	match_id = data.match_id
 	my_session_id = data.self_user.session_id
@@ -380,6 +358,7 @@ func _on_nakama_match_join(data: NakamaRTAPI.Match) -> void:
 		print("Chcking player count")
 		_check_enough_players()
 
+# 匹配池 对已匹配的对象进行处理
 func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 	if data.is_exception():
 		leave()
@@ -413,13 +392,14 @@ func _on_nakama_matchmaker_matched(data: NakamaRTAPI.MatchmakerMatched) -> void:
 		_on_nakama_match_join(result)
 		print("matchmaker match joined")
 
+# 匹配状态
 func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 	var test_json_conv = JSON.new()
 	var error_code = test_json_conv.parse(data.data,true)
 	if error_code != OK:
-		print("Error parsing JSON: " + test_json_conv.get_error_message(), " ---", data)
+		print("MATCH Error parsing JSON: " + test_json_conv.get_error_message(), " ---", data)
 		# Handle the error here (e.g., return, show a message)
-		# return
+		return
 	var json_result = test_json_conv.get_data()
 	# print('nakama玩家状态信息:', json_result)
 	var content = json_result
@@ -458,6 +438,39 @@ func _on_nakama_match_state(data: NakamaRTAPI.MatchData):
 		print("Unknown op_code:", data.op_code)
 	pass
 
+
+################################### RPC 协议传输#################################################
+func custom_rpc(node: Node, method: String, args: Array = []) -> void:
+	custom_rpc_id(node, my_peer_id, method, args)
+
+func custom_rpc_id(node: Node, id: int, method: String, args: Array = []) -> void:
+	# assert(match_state == MatchState.READY or match_state == MatchState.PLAYING)
+	# assert(match_id != '')
+	# assert(nakama_socket != null)
+	if nakama_socket == null:
+		nakama_socket = Global.Online.get_nakama_socket()
+	if nakama_socket:
+		nakama_socket.send_match_state_async(match_id, MatchOpCode.CUSTOM_RPC, JSON.stringify({
+			peer_id = id,
+			node_path = str(node.get_path()),
+			method = method,
+			args = var_to_str(args),
+		}))
+
+func custom_rpc_sync(node: Node, method: String, args: Array = []) -> void:
+	node.callv(method, args)
+	custom_rpc(node, method, args)
+
+func custom_rpc_id_sync(node: Node, id: int, method: String, args: Array = []) -> void:
+	if my_peer_id == id:
+		node.callv(method, args)
+	else:
+		custom_rpc_id(node, id, method, args)
+
+# 广播自己的状态给其他玩家 ***** 五颗星
+func AsyncMatchState(p_op_code : int, p_data : String, p_presences = null,success_cb: Callable = Util.EMPTY_CALLABLE,failure_cb: Callable = Util.EMPTY_CALLABLE):
+	await Util.Asyn_Call(Global.Online.nakama_socket,"send_match_state_async",[match_id,p_op_code,p_data,p_presences],success_cb,failure_cb)
+	pass
 
 ##############################################################################################################################
 # 获取匹配列表
