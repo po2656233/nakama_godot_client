@@ -75,8 +75,8 @@ func update_loading_progress(scope: int = 20,isRand:bool = true):
 		cur_progress_percent = cur_progress_percent + randi()%scope
 	else:
 		cur_progress_percent = scope
-	if cur_progress_percent >= 100:
-		cur_progress_percent = 99
+	if cur_progress_percent > 100:
+		cur_progress_percent = 100
 	Global.SignalMgr.LoadingSIG.emit(cur_progress_percent)
 	pass
 # func _show_screen(info: Dictionary = {}) -> void:

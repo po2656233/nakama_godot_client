@@ -25,7 +25,6 @@ var url_path = ""
 var http_request = HTTPRequest.new()
 var scene_files = []
 var is_http_request = false
-var is_full = false
 enum LOAD_TEPE{
 	LOADING = 1,
 	LOAD_GAME = 2
@@ -34,6 +33,7 @@ enum LOAD_TEPE{
 var load_type = LOAD_TEPE.LOADING
 
 func _ready():
+	set_process(false)
 	# 初始化进度条
 	init_data()
 	progress_bar.value = 0
@@ -59,12 +59,10 @@ func _process(delta):
 
 	# 平滑更新进度条
 	if progress < target_progress:
-		is_full = false
 		progress = min(progress + delta * 100, target_progress)
 	progress_bar.value = progress
 	update_progress_label(progress)
-	if progress == 100 and not is_full:
-		is_full = true
+	if progress == 100.0:
 		close_loading()
 	elif progress <= -1.0:
 		reback()
@@ -93,13 +91,13 @@ func reback():
 	pass
 
 func close_loading():
+	set_process(false)
+	await get_tree().create_timer(0.2).timeout
 	if load_type == LOAD_TEPE.LOADING:
 		Global.SceneMgr.switch_to_scene(next_scene, "tile_reveal", 1)
 	elif load_type == LOAD_TEPE.LOAD_GAME:
 		Global.SceneMgr.ToGameScene(next_scene)
 		await Global.OnlineGame.sendToMatch(Global.OnlineMatch.MatchState.LOADING_MAP_FINISH, "1")
-	var timer = get_tree().create_timer(0.2)
-	await timer.timeout
 	queue_free()
 	pass
 
@@ -110,11 +108,13 @@ func set_next_scene(scene_name: String):
 
 func set_progress(value: float):
 	# 设置目标进度值（0-100）
-	target_progress = clamp(value, -5, 100)
+	set_process(true)
+	target_progress = clamp(-5, value, 100)
 	pass
 
 func update_progress_label(value: float):
 	# 更新进度文本
+	print("进度:%d"% [round(value)])
 	progress_label.text = "Loading... %d%%" % [round(value)]
 	pass
 

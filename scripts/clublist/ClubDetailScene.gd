@@ -70,10 +70,9 @@ func _ready():
 
 func setup(club):
 	club_data = club
-	#$HBoxContainer/MembersPanel/InnerPanel/MembersListContainer/ClubNameLabel.text = club.name
-	
+	$HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/PlayerNameLabel.text = club.name
 	# 填充成员列表
-	#populate_members_list()
+	populate_members_list()
 	
 	# 填充游戏匹配标签
 	populate_game_tabs()
@@ -84,8 +83,7 @@ func switchPanel(isChat:bool):
 	pass
 
 func populate_members_list():
-	var members_list = $HBoxContainer/MembersPanel/InnerPanel/MembersListContainer/ScrollContainer/MembersList
-	
+	var members_list = $HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent
 	# 清除现有内容
 	for child in members_list.get_children():
 		child.queue_free()

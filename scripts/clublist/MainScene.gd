@@ -46,18 +46,19 @@ func populate_clubs_list():
 		
 
 func _on_club_pressed(club):
-	# 创建转场效果
-	var transition_rect = ColorRect.new()
-	transition_rect.color = Color(0.0, 0.0, 0.0, 0)
-	transition_rect.size = get_viewport_rect().size
-	add_child(transition_rect)
-	
-	# 执行转场动画
-	var tween = create_tween()
-	tween.tween_property(transition_rect, "color:a", 0.5, 0.3)
-	tween.tween_callback(func(): _show_club_detail(club))
-	tween.tween_property(transition_rect, "color:a", 0, 0.3)
-	tween.tween_callback(func(): transition_rect.queue_free())
+	_show_club_detail(club)
+	## 创建转场效果
+	#var transition_rect = ColorRect.new()
+	#transition_rect.color = Color(0.0, 0.0, 0.0, 0)
+	#transition_rect.size = get_viewport_rect().size
+	#add_child(transition_rect)
+	#
+	## 执行转场动画
+	#var tween = create_tween()
+	#tween.tween_property(transition_rect, "color:a", 0.5, 0.3)
+	#tween.tween_callback(func(): _show_club_detail(club))
+	#tween.tween_property(transition_rect, "color:a", 0, 0.3)
+	#tween.tween_callback(func(): transition_rect.queue_free())
 
 func _show_club_detail(club):
 	# 切换到俱乐部详情场景

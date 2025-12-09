@@ -40,7 +40,7 @@ func _on_btn_renwu_pressed() -> void:
 
 # 比赛
 func _on_btn_match_pressed() -> void:
-	Global.SceneMgr.switch_to_scene("clubhome","vertical-paint-brush",0.5) 
+	Global.SceneMgr.switch_to_scene("clublist","vertical-paint-brush",0.5) 
 	pass # Replace with function body.
 
 # 匹配
