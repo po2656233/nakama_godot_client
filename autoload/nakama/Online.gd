@@ -17,6 +17,8 @@ var nakama_socket: NakamaSocket = null
 var heartbeat_timer: Timer
 var is_ping_now = false
 var is_socket_connected = false
+var is_socket_reset = false
+var is_socket_close = false
 const HEARTBEAT_INTERVAL = 5.0 # 5秒发送一次心跳
 
 # 广播枚举
@@ -45,10 +47,12 @@ func _ready() -> void:
 func set_nakama_session(_nakama_session: NakamaSession) -> void:
 	nakama_session = _nakama_session
 	if nakama_session == null:
+		is_socket_reset = true
 		print("传入的session为null,关闭socket连接")
 		if nakama_socket: nakama_socket.close()
 		nakama_socket = null # 如果传入的session为null，关闭socket连接
 		return
+	is_socket_reset = false
 	create_and_connect_socket()
 	print("获取到session:\t", _nakama_session, "\n")
 	pass
@@ -155,17 +159,23 @@ func _listen_socket_events() -> void:
 func _on_socket_connected():
 	is_socket_connected = true
 	Global.SignalMgr.UpdateSocketSIG.emit(nakama_socket)
+	if is_socket_close:
+		Global.WindowPopup.show_dynamic("网络恢复")
+	is_socket_close = false
 	print("Socket 连接成功")
 
 ### socket关闭事件处理
 func _on_socket_closed():
 	is_socket_connected = false
 	print("Socket 被关闭")
-	Global.WindowPopup.show_dynamic("连接异常,请检测网络状况")
+	if not is_socket_reset:
+		is_socket_close = true
+		Global.WindowPopup.show_dynamic("连接断开,请检测网络状况")
 
 ### 处理socket错误
 func _on_socket_error(error):
 	print("socket error: " + str(error))
+	Global.WindowPopup.show_dynamic("连接异常,错误信息:"+str(error))
 	#if error == ERR_TIMEOUT:
 		#Global.WindowPopup.show_dynamic("连接超时,请稍后重试")
 

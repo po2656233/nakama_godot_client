@@ -114,7 +114,6 @@ func set_progress(value: float):
 
 func update_progress_label(value: float):
 	# 更新进度文本
-	print("进度:%d"% [round(value)])
 	progress_label.text = "Loading... %d%%" % [round(value)]
 	pass
 
