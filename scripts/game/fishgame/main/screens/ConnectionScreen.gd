@@ -55,10 +55,10 @@ func do_login(save_credentials: bool = false) -> void:
 		ui_layer.show_message("Logging in...")
 
 	var nakama_session = await Global.Online.nakama_client.authenticate_email_async(email, password, null, false)
-
 	if nakama_session.is_exception():
 		visible = true
 		ui_layer.show_message("Login failed!")
+		
 		print("登录失败 ",nakama_session.get_exception().message)
 		# Clear stored email and password, but leave the fields alone so the
 		# user can attempt to correct them.

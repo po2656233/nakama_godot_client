@@ -240,17 +240,18 @@ func relogin():
 		await Util.Asyn_Call(Global.Online.nakama_client, "authenticate_device_async", [device_id, "", false], _on_auth_success,Util.EMPTY_CALLABLE)
 
 # 退出
-func logout():
+func logout(isclear:bool = true):
 	reset()
 	Global.OnlineGame.initGameList()
 	_first_dev_login = true
 	if Global.Online.nakama_client and Global.Online.nakama_session:
 		Global.Online.nakama_client.session_logout_async(Global.Online.nakama_session)
 		Global.Online.nakama_session = null
-		var dir = DirAccess.open(USER_DIR)
-		if dir and OK == dir.remove(CREDENTIALS_FILENAME):
-			Global.WindowPopup.show_dynamic("清除缓存成功")
-		print("Logged out successfully")
+		if isclear :
+			var dir = DirAccess.open(USER_DIR)
+			if dir and OK == dir.remove(CREDENTIALS_FILENAME):
+				Global.WindowPopup.show_dynamic("清除缓存成功")
+			print("Logged out successfully")
 
 ####################################用户信息###########################################################
 # 第一次加载用户信息

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dxj70fb1mjaob"]
+[gd_resource type="Theme" format=3 uid="uid://dxj70fb1mjaob"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwibi"]
 content_margin_left = 5.0

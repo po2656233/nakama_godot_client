@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bensqtydtmcmw"]
+[gd_scene format=3 uid="uid://bensqtydtmcmw"]
 
 [ext_resource type="Texture2D" uid="uid://d3bjst7etlnwq" path="res://assets/login/btn_zhdl.png" id="1_lxatw"]
 [ext_resource type="Script" uid="uid://dlb2f8kyfeex3" path="res://scripts/login.gd" id="1_ohvyb"]
@@ -52,7 +52,7 @@ default_font_size = 24
 CheckBox/icons/checked = ExtResource("8_bvhrx")
 CheckBox/icons/unchecked = ExtResource("2_7flgm")
 
-[node name="login" type="Control"]
+[node name="login" type="Control" unique_id=1833282471]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,7 +61,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ohvyb")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=349494902]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,7 +69,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Panel"]
+[node name="NinePatchRect" type="NinePatchRect" parent="Panel" unique_id=1008196664]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,7 +78,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_xcnfk")
 
-[node name="TR_ShiLing" type="TextureRect" parent="Panel/NinePatchRect"]
+[node name="TR_ShiLing" type="TextureRect" parent="Panel/NinePatchRect" unique_id=1782305823]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -87,7 +87,7 @@ offset_bottom = 100.0
 texture = ExtResource("3_gk31c")
 expand_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1578735995]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.487847
@@ -104,32 +104,32 @@ theme_override_constants/separation = 20
 metadata/_edit_use_anchors_ = true
 metadata/_edit_group_ = true
 
-[node name="HBoxContainerUser" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerUser" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=268786667]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="username" type="Label" parent="Panel/VBoxContainer/HBoxContainerUser"]
+[node name="username" type="Label" parent="Panel/VBoxContainer/HBoxContainerUser" unique_id=397187052]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "用户名:"
 label_settings = SubResource("LabelSettings_m64nj")
 
-[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerUser"]
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerUser" unique_id=1642768939]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_rslk7")
 placeholder_text = "请输入用户名"
 
-[node name="HBoxContainerPsw" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerPsw" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1797960083]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="password" type="Label" parent="Panel/VBoxContainer/HBoxContainerPsw"]
+[node name="password" type="Label" parent="Panel/VBoxContainer/HBoxContainerPsw" unique_id=718573979]
 custom_minimum_size = Vector2(108, 50)
 layout_mode = 2
 text = "密码:"
@@ -137,7 +137,7 @@ label_settings = SubResource("LabelSettings_5bj3j")
 horizontal_alignment = 3
 vertical_alignment = 3
 
-[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerPsw"]
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerPsw" unique_id=1900880912]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -145,7 +145,7 @@ theme = SubResource("Theme_c05wv")
 placeholder_text = "请输入密码"
 secret = true
 
-[node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerPsw/LineEdit"]
+[node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerPsw/LineEdit" unique_id=1208592044]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -164,28 +164,28 @@ texture_pressed = ExtResource("4_ll34x")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="HBoxContainerRead" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerRead" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1786936629]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainerRead"]
+[node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainerRead" unique_id=187929294]
 layout_mode = 2
 theme = SubResource("Theme_ua8jr")
 button_pressed = true
 
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainerRead"]
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainerRead" unique_id=1685612231]
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("8_7tra2")
 stretch_mode = 2
 
-[node name="LinkButton" type="LinkButton" parent="Panel/VBoxContainer/HBoxContainerRead/TextureRect"]
+[node name="LinkButton" type="LinkButton" parent="Panel/VBoxContainer/HBoxContainerRead/TextureRect" unique_id=1036553317]
 layout_mode = 0
 offset_left = 187.0
 offset_top = -3.0
 offset_right = 304.0
 offset_bottom = 37.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=559020265]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -201,7 +201,7 @@ grow_vertical = 2
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="TR_login" type="TextureButton" parent="Panel/HBoxContainer"]
+[node name="TR_login" type="TextureButton" parent="Panel/HBoxContainer" unique_id=103229652]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -211,7 +211,7 @@ texture_pressed = ExtResource("4_1a3i5")
 texture_hover = ExtResource("4_8q84o")
 stretch_mode = 0
 
-[node name="TR_devlogin" type="TextureButton" parent="Panel/HBoxContainer"]
+[node name="TR_devlogin" type="TextureButton" parent="Panel/HBoxContainer" unique_id=600469915]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -222,7 +222,7 @@ texture_pressed = ExtResource("12_166ht")
 texture_hover = ExtResource("13_141h3")
 stretch_mode = 0
 
-[node name="HBoxContainerRegister" type="HBoxContainer" parent="."]
+[node name="HBoxContainerRegister" type="HBoxContainer" parent="." unique_id=2038981615]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -236,20 +236,20 @@ grow_horizontal = 0
 grow_vertical = 0
 alignment = 1
 
-[node name="TB_register" type="TextureButton" parent="HBoxContainerRegister"]
+[node name="TB_register" type="TextureButton" parent="HBoxContainerRegister" unique_id=1455628478]
 layout_mode = 2
 texture_normal = ExtResource("15_7rdsb")
 texture_pressed = ExtResource("11_yi4me")
 texture_hover = ExtResource("12_nqafn")
 texture_disabled = ExtResource("12_nqafn")
 
-[node name="TB_forget" type="TextureButton" parent="HBoxContainerRegister"]
+[node name="TB_forget" type="TextureButton" parent="HBoxContainerRegister" unique_id=40253445]
 layout_mode = 2
 texture_normal = ExtResource("18_kgkuh")
 texture_pressed = ExtResource("12_s581t")
 texture_hover = ExtResource("16_bvtl1")
 
-[node name="LoadingScreen" parent="." instance=ExtResource("20_abw8h")]
+[node name="LoadingScreen" parent="." unique_id=906468776 instance=ExtResource("20_abw8h")]
 visible = false
 layout_mode = 1
 

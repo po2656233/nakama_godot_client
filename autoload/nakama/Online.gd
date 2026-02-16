@@ -29,6 +29,11 @@ enum EnBroadcast {
 	LeaveTable = 4, # 离开桌子
 	TableOnline = 5, # 桌子在线人数
 }
+
+enum EnAbnormal {
+	OtherLogon = 115, # 异地登录
+}
+
 # # socket状态
 # var socket_state = {
 # 	"connected":"连接成功",
@@ -223,7 +228,8 @@ func _on_received_notification(notification1):
 		"notification":
 			pass
 		_:
-			push_warning("未知的通知类型:", notification1.category)
+			do_abnormal(notification1)
+			push_warning("未知的通知类型:", notification1)
 	pass
 
 ############################接收数据###########################################
@@ -256,6 +262,14 @@ func do_broadcast(notification1):
 			push_warning("未知的广播类型:", notification1.code)
 	pass
 
+func do_abnormal(notification1):
+	var content = JSON.parse_string(notification1.content)
+	match notification1.code:
+		EnAbnormal.OtherLogon:
+			Global.OnlineLogin.logout(false)
+			Global.WindowPopup.show_message(content.message, "警告", false)
+			Global.SceneMgr.switch_to_scene("login",Global.SceneMgr.get_transition_key("WIPE_LEFT"),0.5)
+		pass
 
 ############################主动发送数据###########################################
 # RPC 发送函数
