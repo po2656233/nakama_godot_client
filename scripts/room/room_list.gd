@@ -161,14 +161,14 @@ func append_room(data):
 		pass
 	var index = -1
 	for i in range(len(rooms)):
-		if rooms[i].id == data.get("id", 0):
+		if rooms[i].id == item.id:
 			index = i
 			break
 	if index != -1:
-		print("更新 房间数据1:", data.get("id", 0))
+		print("更新 房间数据1:", item.id)
 		rooms[index] = item
 	else:
-		print("添加 房间数据1:", data.get("id", 0))
+		print("添加 房间数据1:", item.id)
 		rooms.append(item)
 	match curSelect:
 		SearchType.all:
@@ -258,6 +258,7 @@ func enableBtn(is_disabled:bool):
 func add_item(result):
 	if result.has("items"):
 		print("获取房间数量:",result.items.size())
+		# 按 id 从大到小排序
 		for data in result.items:
 			append_room(data)
 		pass
@@ -398,6 +399,7 @@ func _apply_filters(rooms: Array) -> Array:
 	var filtered = []
 	var search_text = search_input.text.to_lower()
 	var selectGame = game_options.get_item_metadata(game_options.selected)
+	rooms.sort_custom(func(a, b):return a.id > b.id)
 	for room in rooms:
 		if search_text and not ("%s%s%s" % [room.room_name, room.game_name, room.room_id]).to_lower().contains(search_text):
 			continue
@@ -472,9 +474,9 @@ func _on_confirm_btn_pressed() -> void:
 
 func _set_join_btn(room_id,is_join = true):
 	for child in room_container.get_children():
-			if child.room_data.room_id == room_id:
-				child.set_join_btn(is_join)
-				break
+		if child.room_data.room_id == room_id:
+			child.set_join_btn(is_join)
+			break
 	pass
 
 # 取消房间

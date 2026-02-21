@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b6j8g4q3y7m5t"]
+[gd_scene format=3 uid="uid://b6j8g4q3y7m5t"]
 
 [ext_resource type="Script" uid="uid://dc5mlca1qu05" path="res://scripts/room/room_list.gd" id="1_2k3vw"]
 [ext_resource type="Texture2D" uid="uid://cxk66i3uvuq4n" path="res://assets/room/txt_h_xzfj.png" id="2_s5adk"]
@@ -166,7 +166,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="RoomList" type="Control"]
+[node name="RoomList" type="Control" unique_id=156365786]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,7 +176,7 @@ grow_vertical = 2
 script = ExtResource("1_2k3vw")
 items_per_page = 6
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=214252839]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,7 +185,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.121881, 0.408188, 0.643133, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1701747536]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,17 +194,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=1644003914]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=776071199]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer" unique_id=703181731]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "房间列表"
@@ -212,50 +212,50 @@ label_settings = SubResource("LabelSettings_mhfmw")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StatsPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="StatsPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/VBoxContainer" unique_id=244922337]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_stats")
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel" unique_id=1166510801]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer" unique_id=148814119]
 layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="TotalRooms" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer"]
+[node name="TotalRooms" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer" unique_id=444612147]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.676152, 0.789402, 0.82979, 1)
 theme_override_fonts/font = SubResource("SystemFont_fl3jv")
 text = "总房间数: 0"
 
-[node name="ActiveRooms" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer"]
+[node name="ActiveRooms" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer" unique_id=966540838]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.713726, 0.239216, 1)
 text = "活跃房间: 0"
 
-[node name="TotalPlayers" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer"]
+[node name="TotalPlayers" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/StatsPanel/MarginContainer/HBoxContainer" unique_id=846205188]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.87451, 0, 1)
 text = "在线玩家: 0"
 
-[node name="SearchBar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="SearchBar" type="HBoxContainer" parent="VBoxContainer" unique_id=1342524190]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="SearchInput" type="LineEdit" parent="VBoxContainer/SearchBar"]
+[node name="SearchInput" type="LineEdit" parent="VBoxContainer/SearchBar" unique_id=1118878004]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_search")
 placeholder_text = "查找..."
 right_icon = ExtResource("2_s5adk")
 
-[node name="SortOptions" type="OptionButton" parent="VBoxContainer/SearchBar"]
+[node name="SortOptions" type="OptionButton" parent="VBoxContainer/SearchBar" unique_id=2100175390]
 visible = false
 custom_minimum_size = Vector2(135, 40)
 layout_mode = 2
@@ -280,7 +280,7 @@ popup/item_5/id = 5
 popup/item_6/text = "未加锁"
 popup/item_6/id = 6
 
-[node name="GameOptions" type="OptionButton" parent="VBoxContainer/SearchBar"]
+[node name="GameOptions" type="OptionButton" parent="VBoxContainer/SearchBar" unique_id=2080142894]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
@@ -292,7 +292,7 @@ item_count = 1
 popup/item_0/text = "游戏类型"
 popup/item_0/id = 0
 
-[node name="ShowFavorites" type="Button" parent="VBoxContainer/SearchBar"]
+[node name="ShowFavorites" type="Button" parent="VBoxContainer/SearchBar" unique_id=101547581]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
@@ -300,7 +300,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_filter")
 toggle_mode = true
 text = "显示收藏"
 
-[node name="ShowMyRooms" type="Button" parent="VBoxContainer/SearchBar"]
+[node name="ShowMyRooms" type="Button" parent="VBoxContainer/SearchBar" unique_id=375180098]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
@@ -309,7 +309,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_osyog")
 toggle_mode = true
 text = "我创建的"
 
-[node name="CreateButton" type="Button" parent="VBoxContainer/SearchBar"]
+[node name="CreateButton" type="Button" parent="VBoxContainer/SearchBar" unique_id=457477382]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_refresh")
 theme_override_styles/focus = SubResource("StyleBoxFlat_6alr2")
@@ -318,17 +318,17 @@ clip_text = true
 icon_alignment = 1
 vertical_icon_alignment = 2
 
-[node name="RoomContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="RoomContainer" type="MarginContainer" parent="VBoxContainer" unique_id=1085660913]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 90
 theme_override_constants/margin_right = 90
 theme_override_constants/margin_bottom = 35
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/RoomContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/RoomContainer" unique_id=327993245]
 layout_mode = 2
 
-[node name="RoomList" type="FlowContainer" parent="VBoxContainer/RoomContainer/ScrollContainer"]
+[node name="RoomList" type="FlowContainer" parent="VBoxContainer/RoomContainer/ScrollContainer" unique_id=1231821307]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -336,7 +336,7 @@ theme_override_constants/h_separation = 35
 theme_override_constants/v_separation = 20
 alignment = 1
 
-[node name="PrevButton" type="Button" parent="."]
+[node name="PrevButton" type="Button" parent="." unique_id=1999386972]
 custom_minimum_size = Vector2(85, 50)
 layout_mode = 1
 anchors_preset = 4
@@ -361,7 +361,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="NextButton" type="Button" parent="."]
+[node name="NextButton" type="Button" parent="." unique_id=1554008614]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 1
 anchors_preset = 6
@@ -390,7 +390,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PageLabel" type="Label" parent="."]
+[node name="PageLabel" type="Label" parent="." unique_id=1163369746]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 1
 anchors_preset = 12
@@ -405,7 +405,7 @@ label_settings = SubResource("LabelSettings_31qvp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1321400560]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -414,12 +414,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="CenterContainer"]
+[node name="Panel" type="Panel" parent="CenterContainer" unique_id=493605480]
 custom_minimum_size = Vector2(350, 200)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q7y3c")
 
-[node name="RoomID" type="Label" parent="CenterContainer/Panel"]
+[node name="RoomID" type="Label" parent="CenterContainer/Panel" unique_id=1231026951]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -429,7 +429,7 @@ text = "房间ID"
 label_settings = SubResource("LabelSettings_gage8")
 horizontal_alignment = 1
 
-[node name="RoomPsw" type="LineEdit" parent="CenterContainer/Panel"]
+[node name="RoomPsw" type="LineEdit" parent="CenterContainer/Panel" unique_id=1408265136]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -448,7 +448,7 @@ placeholder_text = "请输入房间密码"
 virtual_keyboard_type = 6
 secret = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/Panel" unique_id=1522459194]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -462,7 +462,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="confirmBtn" type="Button" parent="CenterContainer/Panel/HBoxContainer"]
+[node name="confirmBtn" type="Button" parent="CenterContainer/Panel/HBoxContainer" unique_id=1522715466]
 custom_minimum_size = Vector2(65, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_02g8e")
@@ -471,7 +471,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_te5nl")
 theme_override_styles/focus = SubResource("StyleBoxFlat_tlaog")
 text = "加入"
 
-[node name="cancleBtn" type="Button" parent="CenterContainer/Panel/HBoxContainer"]
+[node name="cancleBtn" type="Button" parent="CenterContainer/Panel/HBoxContainer" unique_id=263107387]
 custom_minimum_size = Vector2(65, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_02g8e")
@@ -480,10 +480,10 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_te5nl")
 theme_override_styles/focus = SubResource("StyleBoxFlat_tlaog")
 text = "取消"
 
-[node name="CreateRoomDialog" parent="." instance=ExtResource("3_b0c4m")]
+[node name="CreateRoomDialog" parent="." unique_id=89275379 instance=ExtResource("3_b0c4m")]
 visible = false
 
-[node name="WaitingRoom" parent="." instance=ExtResource("7_10o3b")]
+[node name="WaitingRoom" parent="." unique_id=1335758528 instance=ExtResource("7_10o3b")]
 visible = false
 layout_mode = 1
 
