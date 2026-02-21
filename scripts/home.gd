@@ -45,7 +45,7 @@ func _on_btn_match_pressed() -> void:
 
 # 匹配
 func _on_btn_start_pressed() -> void:
-	Global.SceneMgr.switch_to_scene("gamelist","wipe-right",1.5) 
+	Global.SceneMgr.switch_to_scene("gamelist","wipe-right",1.0) 
 	pass # Replace with function body.
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bukbhl4duoh8v"]
+[gd_scene format=3 uid="uid://bukbhl4duoh8v"]
 
 [ext_resource type="Script" uid="uid://0ol0q40glyxg" path="res://scripts/game/xiangqi/xiangqi.gd" id="1_inhik"]
 [ext_resource type="Texture2D" uid="uid://b2nfgkamfjwk7" path="res://assets/game/xiangqi/bg.png" id="2_kdw55"]
@@ -9,32 +9,32 @@
 [ext_resource type="AudioStream" uid="uid://cv2ilwrgi35m3" path="res://assets/game/xiangqi/music/pieces_down_no.mp3" id="7_hfxpl"]
 [ext_resource type="AudioStream" uid="uid://c4l8lrfb2cpfy" path="res://assets/game/xiangqi/music/call_to_kill.mp3" id="8_cuw37"]
 
-[node name="xiangqi" type="Node2D"]
+[node name="xiangqi" type="Node2D" unique_id=2123996957]
 script = ExtResource("1_inhik")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1510696500]
 z_index = -10
 texture = ExtResource("2_kdw55")
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1874171270]
 
-[node name="chessposition" type="Node2D" parent="."]
+[node name="chessposition" type="Node2D" parent="." unique_id=1723053874]
 position = Vector2(-239, -262)
 metadata/_edit_lock_ = true
 
-[node name="b_chessposition" type="Node2D" parent="."]
+[node name="b_chessposition" type="Node2D" parent="." unique_id=79440424]
 position = Vector2(-239, -262)
 metadata/_edit_lock_ = true
 
-[node name="player_move" parent="b_chessposition" instance=ExtResource("3_ct6ix")]
+[node name="player_move" parent="b_chessposition" unique_id=244302594 instance=ExtResource("3_ct6ix")]
 visible = false
 
-[node name="over" type="CanvasLayer" parent="."]
+[node name="over" type="CanvasLayer" parent="." unique_id=274858913]
 unique_name_in_owner = true
 visible = false
 
-[node name="Label" type="Label" parent="over"]
+[node name="Label" type="Label" parent="over" unique_id=363648702]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -50,7 +50,7 @@ theme_override_fonts/font = ExtResource("4_ow5wa")
 theme_override_font_sizes/font_size = 50
 text = "红方获胜"
 
-[node name="Button" type="Button" parent="over"]
+[node name="Button" type="Button" parent="over" unique_id=2015975523]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -66,7 +66,7 @@ theme_override_fonts/font = ExtResource("4_ow5wa")
 theme_override_font_sizes/font_size = 50
 text = "再来一局"
 
-[node name="RebackBtn" type="Button" parent="."]
+[node name="RebackBtn" type="Button" parent="." unique_id=1359425]
 offset_left = 398.0
 offset_top = -320.0
 offset_right = 566.0
@@ -75,7 +75,7 @@ theme_override_fonts/font = ExtResource("4_ow5wa")
 theme_override_font_sizes/font_size = 50
 text = "返回"
 
-[node name="RestartBtn" type="Button" parent="."]
+[node name="RestartBtn" type="Button" parent="." unique_id=717001684]
 offset_left = -467.0
 offset_top = -17.0
 offset_right = -395.0
@@ -84,18 +84,18 @@ theme_override_fonts/font = ExtResource("4_ow5wa")
 theme_override_font_sizes/font_size = 50
 text = "再来一局"
 
-[node name="luozi" type="AudioStreamPlayer" parent="."]
+[node name="luozi" type="AudioStreamPlayer" parent="." unique_id=1712803899]
 stream = ExtResource("5_kfykb")
 volume_db = 10.0
 
-[node name="chi" type="AudioStreamPlayer" parent="."]
+[node name="chi" type="AudioStreamPlayer" parent="." unique_id=1150300318]
 stream = ExtResource("6_y8uem")
 volume_db = 12.0
 
-[node name="cuowu" type="AudioStreamPlayer" parent="."]
+[node name="cuowu" type="AudioStreamPlayer" parent="." unique_id=1310969482]
 stream = ExtResource("7_hfxpl")
 
-[node name="jiangjun" type="AudioStreamPlayer" parent="."]
+[node name="jiangjun" type="AudioStreamPlayer" parent="." unique_id=655468148]
 stream = ExtResource("8_cuw37")
 volume_db = 24.0
 

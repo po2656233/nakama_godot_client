@@ -9,7 +9,7 @@ var mouse_l:bool=false
 func _process(_delta: float) -> void:
 	if mouse_l:
 		if Input.is_action_just_pressed("mouse_l"):
-			print("选中棋子11111",play)
+			print("选中棋子",play)
 			move.emit(self)
 			
 

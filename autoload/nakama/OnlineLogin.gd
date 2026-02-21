@@ -97,7 +97,7 @@ func _on_register_success(result):
 
 # 注册失败
 func _on_register_failure(result):
-	var msg = result.get_exception().message
+	var msg = str(result) #.get_exception().message
 	# Nakama treats registration as logging in, so this is what we get if the
 	# the email is already is use but the password is wrong.
 	if msg == 'Invalid credentials.':
@@ -112,21 +112,21 @@ func _on_register_failure(result):
 
 	
 # 注册账号(注册完后直登)
-func register_account(myEmail, myPassword, save_credentials = false) -> void:
+func register_account(myEmail, myPassword, save_credentials = false) -> bool:
 	email = myEmail.strip_edges()
 	password = myPassword.strip_edges()
 	var username = email.split('@')[0]
 	if email == '':
 		Global.WindowPopup.show_dynamic("账号名不能为空")
-		return
+		return false
 	if password == '':
 		Global.WindowPopup.show_dynamic("密码不能为空")
-		return
+		return false
 	Global.WindowPopup.show_dynamic("正在创建账号...")
 	login_method = 'acc'
 	_save_credentials = save_credentials
-	await Util.Asyn_Call(Global.Online.nakama_client, "authenticate_email_async", [email, password, username, true], _on_register_success, _on_register_failure)
-	pass
+	return await  Util.Asyn_Call(Global.Online.nakama_client, "authenticate_email_async", [email, password, username, true], _on_register_success, _on_register_failure)
+	#pass
 
 
 ############################################【登录】#######################################################################

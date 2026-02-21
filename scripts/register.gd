@@ -36,10 +36,10 @@ func _on_tb_return_pressed() -> void:
 func _on_btn_register_pressed() -> void:
 	print("register")
 	if usernameEdit.text.is_empty():
-		await Global.Online.nakama_client.authenticate_device("",true)
+		await Global.Online.nakama_client.authenticate_device_async("",true)
 	if not checkValidity():
 		return
-	if await Global.Online.nakama_client.authenticate_email(usernameEdit.text, passwordEdit.text,"",true):
+	if await Global.OnlineLogin.register_account(usernameEdit.text + "@game.com", passwordEdit.text,true):
 		ProjectSettings.set("username",usernameEdit.text)
 		# ProjectSettings.set("password",passwordEdit.text)
 		Global.WindowPopup.show_confirm("注册成功", Callable(self,"_on_register_success"))
@@ -113,4 +113,3 @@ func _on_texture_qrpsw_button_up() -> void:
 func _on_texture_qrpsw_button_down() -> void:
 	qrpasswordEdit.secret = false
 	pass # Replace with function body.
-

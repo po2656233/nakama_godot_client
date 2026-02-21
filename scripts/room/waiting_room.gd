@@ -11,6 +11,7 @@ var time_left:float = 20.0
 var room_id = ""
 var game_name = ""
 var current_players = []
+
 @onready var player_list = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerList
 @onready var waiting_animation = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/WaitingAnimation
 @onready var room_info = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RoomInfo
@@ -18,6 +19,28 @@ var current_players = []
 @onready var cancleBtn = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CancelButton
 @onready var loading_scene = $LoadingScreen
 
+const PLAYER_COLORS := [
+	Color("#e6194b"),
+	Color("#3cb44b"),
+	Color("#ffe119"),
+	Color("#4363d8"),
+	Color("#f58231"),
+	Color("#911eb4"),
+	Color("#46f0f0"),
+	Color("#f032e6"),
+	Color("#bcf60c"),
+	Color("#fabebe"),
+	Color("#008080"),
+	Color("#e6beff"),
+	Color("#9a6324"),
+	Color("#fffac8"),
+	Color("#800000"),
+	Color("#aaffc3"),
+	Color("#808000"),
+	Color("#ffd8b1"),
+	Color("#000075"),
+	Color("#808080"),
+]
 func _ready():
 	# 初始化房间信息
 	room_info.text = "[center]房间号:[b][color=yellow]0000[/color][/b]    最小人数:[b][color=red]10[/color][/b]人    当前:[color=green]10[/color]人[/center] (满)" #"房间号：" + str(randi() % 10000).pad_zeros(4)
@@ -91,12 +114,15 @@ func reset(name1: String,roomId: String = "",playerMax:int=10):
 
 # 加入房间
 func add_player(player_uid,player_name: String,player_avatar = null):
-	if current_players.size() >= max_players:
+	var player_index = current_players.size()
+	if player_index >= max_players:
 		Global.WindowPopup.show_dynamic("房间已满，无法加入")
 		return
 	var player_item = player_scene.instantiate()
-	player_item.set_player_info(player_uid,player_name,player_avatar)
 	player_list.add_child(player_item)
+	if player_index < PLAYER_COLORS.size():
+		player_item.setColor(PLAYER_COLORS[player_index % PLAYER_COLORS.size()])
+	player_item.set_player_info(player_uid,player_name,player_avatar)
 	current_players.append(player_name)
 	print("加入房间", player_name, " 剩下", current_players)
 	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] 
@@ -113,6 +139,7 @@ func add_player(player_uid,player_name: String,player_avatar = null):
 func remove_player(uid: String):
 	if  time_left <= limit_time:
 		return
+	var player_count = 0
 	for player_item in player_list.get_children():
 		var playerUid = player_item.getUserId()
 		if playerUid == uid:
@@ -126,14 +153,15 @@ func remove_player(uid: String):
 			countdown.hide()
 			Waiting()
 			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
-			return
+		if player_count < PLAYER_COLORS.size():
+			player_item.setColor(PLAYER_COLORS[player_count])
+		player_count = player_count + 1
 	pass
 
 # 启动等待动画
 func start_waiting_animation():
 	if tween:
 		tween.kill()
-	
 	tween = create_tween()
 	tween.bind_node(self)
 	tween.set_loops()

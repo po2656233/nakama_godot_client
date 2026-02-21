@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cjg8aljwb2qbb"]
+[gd_scene format=3 uid="uid://cjg8aljwb2qbb"]
 
 [ext_resource type="Texture2D" uid="uid://bfhp8oh83rlcj" path="res://assets/login/register.jpg" id="1_mo4gw"]
 [ext_resource type="Script" uid="uid://b1pts2pucr8ly" path="res://scripts/register.gd" id="1_sij6y"]
@@ -74,7 +74,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_rgg4k")
 Button/styles/normal = SubResource("StyleBoxFlat_m8ad0")
 Button/styles/pressed = SubResource("StyleBoxFlat_4f8br")
 
-[node name="register" type="Control"]
+[node name="register" type="Control" unique_id=1028242761]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -83,7 +83,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sij6y")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=425002879]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,7 +92,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_5ok0u")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Panel"]
+[node name="NinePatchRect" type="NinePatchRect" parent="Panel" unique_id=29510844]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -101,7 +101,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_mo4gw")
 
-[node name="TR_ShiLing" type="TextureRect" parent="Panel/NinePatchRect"]
+[node name="TR_ShiLing" type="TextureRect" parent="Panel/NinePatchRect" unique_id=823294926]
 layout_mode = 1
 offset_left = 5.0
 offset_top = 5.0
@@ -110,7 +110,7 @@ offset_bottom = 100.0
 texture = ExtResource("3_mxuud")
 expand_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=99727553]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -125,34 +125,35 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="HBoxContainerUser" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerUser" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1476522654]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="username" type="Label" parent="Panel/VBoxContainer/HBoxContainerUser"]
+[node name="username" type="Label" parent="Panel/VBoxContainer/HBoxContainerUser" unique_id=536671431]
 custom_minimum_size = Vector2(145, 50)
 layout_mode = 2
 text = "用户名:"
 label_settings = SubResource("LabelSettings_44atk")
 horizontal_alignment = 3
 
-[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerUser"]
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerUser" unique_id=1495085669]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+focus_next = NodePath("../../HBoxContainerPsw/LineEdit")
 theme = SubResource("Theme_valiv")
 placeholder_text = "请输入用户名(1~8位)"
 max_length = 8
 
-[node name="HBoxContainerPsw" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerPsw" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=543957970]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="password" type="Label" parent="Panel/VBoxContainer/HBoxContainerPsw"]
+[node name="password" type="Label" parent="Panel/VBoxContainer/HBoxContainerPsw" unique_id=387879081]
 custom_minimum_size = Vector2(145, 50)
 layout_mode = 2
 text = "密码:"
@@ -160,17 +161,19 @@ label_settings = SubResource("LabelSettings_qq2mo")
 horizontal_alignment = 3
 vertical_alignment = 3
 
-[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerPsw"]
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerPsw" unique_id=339291040]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+focus_next = NodePath("../../HBoxContainerQrPsw2/LineEdit")
+focus_previous = NodePath("../../HBoxContainerUser/LineEdit")
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入密码(8~16位)"
 max_length = 16
 virtual_keyboard_type = 6
 secret = true
 
-[node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerPsw/LineEdit"]
+[node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerPsw/LineEdit" unique_id=145419091]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -187,13 +190,13 @@ texture_pressed = ExtResource("4_yx6uh")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="HBoxContainerQrPsw2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerQrPsw2" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=177063365]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="password" type="Label" parent="Panel/VBoxContainer/HBoxContainerQrPsw2"]
+[node name="password" type="Label" parent="Panel/VBoxContainer/HBoxContainerQrPsw2" unique_id=1450148441]
 custom_minimum_size = Vector2(145, 50)
 layout_mode = 2
 text = "确认密码:"
@@ -201,17 +204,19 @@ label_settings = SubResource("LabelSettings_qq2mo")
 horizontal_alignment = 3
 vertical_alignment = 3
 
-[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerQrPsw2"]
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerQrPsw2" unique_id=1103529095]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+focus_next = NodePath("../../HBoxContainerPhone/LineEdit")
+focus_previous = NodePath("../../HBoxContainerPsw/LineEdit")
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入确认密码"
 max_length = 16
 virtual_keyboard_type = 6
 secret = true
 
-[node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerQrPsw2/LineEdit"]
+[node name="TextureButton" type="TextureButton" parent="Panel/VBoxContainer/HBoxContainerQrPsw2/LineEdit" unique_id=1661672283]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -228,13 +233,13 @@ texture_pressed = ExtResource("4_yx6uh")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="HBoxContainerPhone" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerPhone" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1047533768]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="phone" type="Label" parent="Panel/VBoxContainer/HBoxContainerPhone"]
+[node name="phone" type="Label" parent="Panel/VBoxContainer/HBoxContainerPhone" unique_id=1350476399]
 custom_minimum_size = Vector2(145, 50)
 layout_mode = 2
 text = "手机号码:"
@@ -242,22 +247,24 @@ label_settings = SubResource("LabelSettings_qq2mo")
 horizontal_alignment = 3
 vertical_alignment = 3
 
-[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerPhone"]
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerPhone" unique_id=224481660]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+focus_next = NodePath("../../HBoxContainerVcode/LineEdit")
+focus_previous = NodePath("../../HBoxContainerQrPsw2/LineEdit")
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入手机号码"
 max_length = 16
 virtual_keyboard_type = 4
 
-[node name="HBoxContainerVcode" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerVcode" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=299648441]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="vcode" type="Label" parent="Panel/VBoxContainer/HBoxContainerVcode"]
+[node name="vcode" type="Label" parent="Panel/VBoxContainer/HBoxContainerVcode" unique_id=2053545732]
 custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "验证码:"
@@ -265,42 +272,46 @@ label_settings = SubResource("LabelSettings_ovyhm")
 horizontal_alignment = 3
 vertical_alignment = 3
 
-[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerVcode"]
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/HBoxContainerVcode" unique_id=86363201]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+focus_next = NodePath("../../HBoxContainerRead/CheckBox")
+focus_previous = NodePath("../../HBoxContainerPhone/LineEdit")
 theme = SubResource("Theme_xopox")
 placeholder_text = "请输入验证码"
 max_length = 8
 virtual_keyboard_type = 2
 
-[node name="btn_vcode" type="Button" parent="Panel/VBoxContainer/HBoxContainerVcode"]
+[node name="btn_vcode" type="Button" parent="Panel/VBoxContainer/HBoxContainerVcode" unique_id=1058720361]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme = SubResource("Theme_vg1hr")
 text = "发送验证码"
 
-[node name="HBoxContainerRead" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainerRead" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=2022923783]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainerRead"]
+[node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainerRead" unique_id=1242366601]
 layout_mode = 2
+focus_next = NodePath("../../../btn_register")
+focus_previous = NodePath(".")
 theme = ExtResource("5_wyo8s")
 
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainerRead"]
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainerRead" unique_id=1251157501]
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("4_vt4ww")
 stretch_mode = 2
 
-[node name="LinkButton" type="LinkButton" parent="Panel/VBoxContainer/HBoxContainerRead/TextureRect"]
+[node name="LinkButton" type="LinkButton" parent="Panel/VBoxContainer/HBoxContainerRead/TextureRect" unique_id=1059897156]
 layout_mode = 0
 offset_left = 192.0
 offset_top = -8.0
 offset_right = 299.0
 offset_bottom = 32.0
 
-[node name="btn_register" type="Button" parent="Panel"]
+[node name="btn_register" type="Button" parent="Panel" unique_id=1390646902]
 custom_minimum_size = Vector2(220, 55)
 layout_mode = 1
 anchors_preset = 8
@@ -314,10 +325,12 @@ offset_right = 110.0
 offset_bottom = 268.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_next = NodePath("../VBoxContainer/HBoxContainerUser/LineEdit")
+focus_previous = NodePath("../VBoxContainer/HBoxContainerRead/CheckBox")
 theme = SubResource("Theme_vvu0s")
 text = "立即注册"
 
-[node name="TB_return" type="TextureButton" parent="."]
+[node name="TB_return" type="TextureButton" parent="." unique_id=2089091288]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
