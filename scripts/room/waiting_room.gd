@@ -113,19 +113,25 @@ func reset(name1: String,roomId: String = "",playerMax:int=10):
 	pass
 
 # 加入房间
-func add_player(player_uid,player_name: String,player_avatar = null):
+func add_player(player_uid, player_name: String, player_avatar = null):
 	var player_index = current_players.size()
 	if player_index >= max_players:
 		Global.WindowPopup.show_dynamic("房间已满，无法加入")
 		return
+
 	var player_item = player_scene.instantiate()
 	player_list.add_child(player_item)
+
+	# 更新房间信息
 	if player_index < PLAYER_COLORS.size():
-		player_item.setColor(PLAYER_COLORS[player_index % PLAYER_COLORS.size()])
-	player_item.set_player_info(player_uid,player_name,player_avatar)
+		player_item.setColor(PLAYER_COLORS[player_index])
+	player_item.set_player_info(player_uid, player_name, player_avatar)
+
+	# 将玩家名称添加到当前玩家列表中
 	current_players.append(player_name)
 	print("加入房间", player_name, " 剩下", current_players)
 	room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] 
+	
 	#"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
 	if current_players.size() >= max_players:
 		ToBegin()
@@ -133,7 +139,14 @@ func add_player(player_uid,player_name: String,player_avatar = null):
 		countdown.show()
 		countdown.start(last_wait_time)
 		Global.SignalMgr.FullRoomSIG.emit(room_id)
-		
+
+	# 对玩家列表进行排序，确保显示顺序与加入顺序一致
+	var children = player_list.get_children()
+	children.sort_custom(func(a,b):
+		return a.uid.naturalnocasecmp_to(b.uid) > 0
+	)
+	for i in children.size():
+		player_list.move_child(children[i], i)	
 
 # 离开房间
 func remove_player(uid: String):
@@ -153,6 +166,7 @@ func remove_player(uid: String):
 			countdown.hide()
 			Waiting()
 			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
+			continue
 		if player_count < PLAYER_COLORS.size():
 			player_item.setColor(PLAYER_COLORS[player_count])
 		player_count = player_count + 1

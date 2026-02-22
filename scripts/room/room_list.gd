@@ -577,8 +577,10 @@ func _on_received_match_presence(data):
 			"uid": adder.user_id,
 			"username": adder.username
 		})
+		print("接收匹配状态 加入房间:[uid:%s name:%s]"%[adder.user_id, adder.username])
 		if waitingStart.room_id == data.match_id:
 			waitingStart.add_player(adder.user_id, adder.username)
+		pass
 	for adder in data.leaves:
 		leaves.append({
 			"uid": adder.user_id,
@@ -586,6 +588,8 @@ func _on_received_match_presence(data):
 		})
 		if waitingStart.room_id == data.match_id:
 			waitingStart.remove_player(adder.user_id)
+		pass
+
 	for i in range(room_list_info.size()):
 		var info = room_list_info[i]
 		if info.room_id == data.match_id:
@@ -596,6 +600,7 @@ func _on_received_match_presence(data):
 			room_list_info[i] = info
 			_update_items(info)
 			return
+		pass
 	pass
 
 # 接收在线桌子信息
