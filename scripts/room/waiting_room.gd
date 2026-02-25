@@ -123,8 +123,6 @@ func add_player(player_uid, player_name: String, player_avatar = null):
 	player_list.add_child(player_item)
 
 	# 更新房间信息
-	if player_index < PLAYER_COLORS.size():
-		player_item.setColor(PLAYER_COLORS[player_index])
 	player_item.set_player_info(player_uid, player_name, player_avatar)
 
 	# 将玩家名称添加到当前玩家列表中
@@ -147,12 +145,20 @@ func add_player(player_uid, player_name: String, player_avatar = null):
 	)
 	for i in children.size():
 		player_list.move_child(children[i], i)	
+	
+	# 重新分配颜色	
+	var player_count = 0
+	for item in player_list.get_children():
+		if player_count < PLAYER_COLORS.size():
+			item.setColor(PLAYER_COLORS[player_count])
+		player_count = player_count + 1
+	pass
 
 # 离开房间
 func remove_player(uid: String):
 	if  time_left <= limit_time:
 		return
-	var player_count = 0
+
 	for player_item in player_list.get_children():
 		var playerUid = player_item.getUserId()
 		if playerUid == uid:
@@ -166,9 +172,22 @@ func remove_player(uid: String):
 			countdown.hide()
 			Waiting()
 			room_info.text= "[center]房间号: [b][color=gold]%s[/color][/b]    最小人数: [b][color=#c0c0c0]%d[/color][/b]人    当前: [color=green]%d[/color]人[/center]"%[room_id.substr(0, 16),max_players,current_players.size()] #"[b]房间号:[/b]" + room_id +"    [b]最小人数:[/b][color=blue]"+str(max_players) +"[/color]人    [b]当前人数:[/b][color=green]"+str(current_players.size()) +"[/color]人"
-			continue
+			break
+		
+
+	# 对玩家列表进行排序，确保显示顺序与加入顺序一致
+	var children = player_list.get_children()
+	children.sort_custom(func(a,b):
+		return a.uid.naturalnocasecmp_to(b.uid) > 0
+	)
+	for i in children.size():
+		player_list.move_child(children[i], i)	
+
+	# 重新分配颜色	
+	var player_count = 0
+	for item in player_list.get_children():
 		if player_count < PLAYER_COLORS.size():
-			player_item.setColor(PLAYER_COLORS[player_count])
+			item.setColor(PLAYER_COLORS[player_count])
 		player_count = player_count + 1
 	pass
 
