@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://b6j8g4q3y7m5n"]
+[gd_scene format=3 uid="uid://b6j8g4q3y7m5n"]
 
 [ext_resource type="Script" uid="uid://dmrgiya8yo0qa" path="res://scripts/room/room_item.gd" id="1_gnanh"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
@@ -230,7 +230,7 @@ _data = {
 &"hover": SubResource("Animation_hover")
 }
 
-[node name="RoomItem" type="Panel"]
+[node name="RoomItem" type="Panel" unique_id=107251762]
 clip_contents = true
 custom_minimum_size = Vector2(450, 400)
 offset_right = 450.0
@@ -241,7 +241,7 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 script = ExtResource("1_gnanh")
 
-[node name="Author" type="Label" parent="."]
+[node name="Author" type="Label" parent="." unique_id=1708245743]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -257,7 +257,7 @@ vertical_alignment = 1
 visible_characters = 20
 visible_ratio = 20.0
 
-[node name="Front" type="TextureRect" parent="."]
+[node name="Front" type="TextureRect" parent="." unique_id=1098834103]
 layout_mode = 0
 offset_right = 450.0
 offset_bottom = 400.0
@@ -265,7 +265,7 @@ size_flags_vertical = 3
 texture = ExtResource("2_mcopm")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Front"]
+[node name="MarginContainer" type="MarginContainer" parent="Front" unique_id=561777823]
 layout_mode = 0
 offset_right = 450.0
 offset_bottom = 400.0
@@ -274,11 +274,11 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Panel" type="Panel" parent="Front/MarginContainer"]
+[node name="Panel" type="Panel" parent="Front/MarginContainer" unique_id=186256846]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a3edv")
 
-[node name="RoomID" type="Label" parent="Front/MarginContainer/Panel"]
+[node name="RoomID" type="Label" parent="Front/MarginContainer/Panel" unique_id=694081274]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -294,7 +294,7 @@ label_settings = SubResource("LabelSettings_3t4jk")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RoomName" type="Label" parent="Front/MarginContainer/Panel"]
+[node name="RoomName" type="Label" parent="Front/MarginContainer/Panel" unique_id=1445466974]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -308,7 +308,7 @@ label_settings = SubResource("LabelSettings_20nq0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameName" type="Label" parent="Front/MarginContainer/Panel"]
+[node name="GameName" type="Label" parent="Front/MarginContainer/Panel" unique_id=1915926857]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.049
@@ -329,7 +329,7 @@ text = "游戏类型"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BaseScoreTR" type="TextureRect" parent="Front/MarginContainer/Panel"]
+[node name="BaseScoreTR" type="TextureRect" parent="Front/MarginContainer/Panel" unique_id=1298298749]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 0
 anchor_left = -0.049
@@ -346,7 +346,7 @@ texture = ExtResource("3_fftwn")
 expand_mode = 4
 stretch_mode = 2
 
-[node name="BaseScore" type="Label" parent="Front/MarginContainer/Panel"]
+[node name="BaseScore" type="Label" parent="Front/MarginContainer/Panel" unique_id=150687383]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.049
@@ -361,7 +361,7 @@ grow_vertical = 0
 text = "110111111 分"
 label_settings = SubResource("LabelSettings_2tp5m")
 
-[node name="PlayerCount" type="Label" parent="Front/MarginContainer/Panel"]
+[node name="PlayerCount" type="Label" parent="Front/MarginContainer/Panel" unique_id=982313876]
 layout_mode = 0
 anchor_left = -0.049
 anchor_top = -0.026
@@ -376,7 +376,7 @@ label_settings = SubResource("LabelSettings_u0kmr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Status" type="Label" parent="Front/MarginContainer/Panel"]
+[node name="Status" type="Label" parent="Front/MarginContainer/Panel" unique_id=872227273]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.049
@@ -393,7 +393,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
 
-[node name="Lock" type="TextureRect" parent="Front/MarginContainer/Panel"]
+[node name="Lock" type="TextureRect" parent="Front/MarginContainer/Panel" unique_id=481425551]
 custom_minimum_size = Vector2(25, 30)
 layout_mode = 0
 anchor_left = -0.049
@@ -409,13 +409,13 @@ size_flags_vertical = 0
 texture = ExtResource("2_hrbh1")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Front/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Front/MarginContainer" unique_id=776112338]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="FavoriteButton" type="Button" parent="Front/MarginContainer/HBoxContainer"]
+[node name="FavoriteButton" type="Button" parent="Front/MarginContainer/HBoxContainer" unique_id=393133554]
 custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_mksyy")
@@ -424,7 +424,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_favorite")
 toggle_mode = true
 text = "☆ 收藏"
 
-[node name="JoinButton" type="Button" parent="Front/MarginContainer/HBoxContainer"]
+[node name="JoinButton" type="Button" parent="Front/MarginContainer/HBoxContainer" unique_id=1198648763]
 custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -433,7 +433,7 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 text = "加入房间"
 
-[node name="FlowLight" type="TextureRect" parent="Front"]
+[node name="FlowLight" type="TextureRect" parent="Front" unique_id=1707824643]
 material = SubResource("ShaderMaterial_uxbdl")
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -450,14 +450,14 @@ size_flags_horizontal = 4
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_rm5a5")
 
-[node name="Back" type="TextureRect" parent="."]
+[node name="Back" type="TextureRect" parent="." unique_id=793169370]
 visible = false
 layout_mode = 0
 offset_right = 450.0
 offset_bottom = 400.0
 mouse_filter = 2
 
-[node name="DetailPanel" type="PanelContainer" parent="Back"]
+[node name="DetailPanel" type="PanelContainer" parent="Back" unique_id=1333338142]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 0
 offset_right = 450.0
@@ -467,31 +467,31 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_gpdpq")
 
-[node name="MarginContainer" type="MarginContainer" parent="Back/DetailPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="Back/DetailPanel" unique_id=1221035292]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Back/DetailPanel/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Back/DetailPanel/MarginContainer" unique_id=1362124722]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_awtvm")
 follow_focus = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Back/DetailPanel/MarginContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Back/DetailPanel/MarginContainer/ScrollContainer" unique_id=644913098]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Title" type="Label" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1394153916]
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_exu74")
 text = "房间详情"
 label_settings = SubResource("LabelSettings_r0qha")
 horizontal_alignment = 1
 
-[node name="RoomInfo" type="RichTextLabel" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="RoomInfo" type="RichTextLabel" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1043342118]
 clip_contents = false
 layout_mode = 2
 focus_mode = 2
@@ -509,14 +509,14 @@ bbcode_enabled = true
 fit_content = true
 selection_enabled = true
 
-[node name="FlowLight" type="TextureRect" parent="Back/DetailPanel/MarginContainer"]
+[node name="FlowLight" type="TextureRect" parent="Back/DetailPanel/MarginContainer" unique_id=636607758]
 material = SubResource("ShaderMaterial_uxbdl")
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_rm5a5")
 
-[node name="RemoveBtn" type="TextureButton" parent="."]
+[node name="RemoveBtn" type="TextureButton" parent="." unique_id=1568996554]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -535,7 +535,7 @@ texture_normal = ExtResource("6_3km0x")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="CircularProgress" type="Control" parent="."]
+[node name="CircularProgress" type="Control" parent="." unique_id=1440342657]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -552,10 +552,8 @@ background_color = Color(0.170225, 0.366205, 0.488429, 0.501961)
 completion_text = "绪"
 text_color = Color(0.423076, 0.662606, 0.778746, 1)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_1")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=876261216]
+libraries/ = SubResource("AnimationLibrary_1")
 
 [connection signal="gui_input" from="Front/MarginContainer/Panel" to="." method="_on_gui_input"]
 [connection signal="pressed" from="RemoveBtn" to="." method="_on_texture_button_pressed"]

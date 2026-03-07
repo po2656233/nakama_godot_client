@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://olyw55q6qiff"]
+[gd_scene format=3 uid="uid://olyw55q6qiff"]
 
 [ext_resource type="Script" uid="uid://f64b3w0kit3d" path="res://scripts/game/fishgame/Main.gd" id="1_m5bt5"]
 [ext_resource type="PackedScene" uid="uid://ca6oqqdx0x6j7" path="res://scenes/game/fishgame/Game.tscn" id="2_7ylcu"]
@@ -19,16 +19,16 @@
 [ext_resource type="AudioStream" uid="uid://dq08cggjk6udo" path="res://assets/game/fishgame/music/FISHSTICKS.ogg" id="17_nqsdm"]
 [ext_resource type="AudioStream" uid="uid://cv7vi6w1ql5o5" path="res://assets/game/fishgame/music/THEME #1.ogg" id="18_b58ol"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1813433833]
 script = ExtResource("1_m5bt5")
 
-[node name="Game" parent="." instance=ExtResource("2_7ylcu")]
+[node name="Game" parent="." unique_id=1885564082 instance=ExtResource("2_7ylcu")]
 
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=496701436]
 process_mode = 3
 script = ExtResource("3_sfhfq")
 
-[node name="Screens" type="Control" parent="UILayer"]
+[node name="Screens" type="Control" parent="UILayer" unique_id=2024882214]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,14 +36,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitleScreen" parent="UILayer/Screens" instance=ExtResource("4_bxau0")]
+[node name="TitleScreen" parent="UILayer/Screens" unique_id=729575037 instance=ExtResource("4_bxau0")]
 layout_mode = 1
 
-[node name="ConnectionScreen" parent="UILayer/Screens" instance=ExtResource("5_ie8l5")]
+[node name="ConnectionScreen" parent="UILayer/Screens" unique_id=549132307 instance=ExtResource("5_ie8l5")]
 visible = false
 layout_mode = 1
 
-[node name="MatchScreen" parent="UILayer/Screens" instance=ExtResource("6_tvswn")]
+[node name="MatchScreen" parent="UILayer/Screens" unique_id=107614216 instance=ExtResource("6_tvswn")]
 visible = false
 layout_mode = 1
 offset_left = 0.0
@@ -55,7 +55,7 @@ offset_bottom = 0.0
 min_value = 1.0
 max_value = 8.0
 
-[node name="ReadyScreen" parent="UILayer/Screens" instance=ExtResource("7_0uwcx")]
+[node name="ReadyScreen" parent="UILayer/Screens" unique_id=1033753128 instance=ExtResource("7_0uwcx")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -64,7 +64,7 @@ anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="LeaderboardScreen" parent="UILayer/Screens" instance=ExtResource("8_o01sl")]
+[node name="LeaderboardScreen" parent="UILayer/Screens" unique_id=14584205 instance=ExtResource("8_o01sl")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -77,11 +77,11 @@ offset_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="CreditsScreen" parent="UILayer/Screens" instance=ExtResource("9_tqcnr")]
+[node name="CreditsScreen" parent="UILayer/Screens" unique_id=1680333527 instance=ExtResource("9_tqcnr")]
 visible = false
 layout_mode = 1
 
-[node name="Overlay" type="Control" parent="UILayer"]
+[node name="Overlay" type="Control" parent="UILayer" unique_id=567805118]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,7 +90,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Message" type="Label" parent="UILayer/Overlay"]
+[node name="Message" type="Label" parent="UILayer/Overlay" unique_id=1396802806]
 layout_mode = 0
 anchor_right = 1.0
 offset_top = 20.0
@@ -100,7 +100,7 @@ theme_override_font_sizes/font_size = 30
 text = "Waiting for players..."
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="UILayer/Overlay"]
+[node name="BackButton" type="Button" parent="UILayer/Overlay" unique_id=91323854]
 layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
@@ -113,7 +113,7 @@ icon = ExtResource("11_eq4gu")
 clip_text = true
 script = ExtResource("12_3usgs")
 
-[node name="MuteButton" type="Button" parent="UILayer/Overlay"]
+[node name="MuteButton" type="Button" parent="UILayer/Overlay" unique_id=903814509]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
@@ -125,22 +125,22 @@ icon = ExtResource("13_kejq2")
 clip_text = true
 script = ExtResource("12_3usgs")
 
-[node name="Music" type="Node" parent="."]
+[node name="Music" type="Node" parent="." unique_id=174725495]
 script = ExtResource("14_t7y3d")
 
-[node name="BuildUp" type="AudioStreamPlayer" parent="Music"]
+[node name="BuildUp" type="AudioStreamPlayer" parent="Music" unique_id=589818591]
 stream = ExtResource("15_wirgf")
 volume_db = -80.0
 
-[node name="DomeFighters" type="AudioStreamPlayer" parent="Music"]
+[node name="DomeFighters" type="AudioStreamPlayer" parent="Music" unique_id=309700775]
 stream = ExtResource("16_61xu8")
 volume_db = -80.0
 
-[node name="Fishsticks" type="AudioStreamPlayer" parent="Music"]
+[node name="Fishsticks" type="AudioStreamPlayer" parent="Music" unique_id=1750224027]
 stream = ExtResource("17_nqsdm")
 volume_db = -80.0
 
-[node name="Theme1" type="AudioStreamPlayer" parent="Music"]
+[node name="Theme1" type="AudioStreamPlayer" parent="Music" unique_id=90238233]
 stream = ExtResource("18_b58ol")
 volume_db = -80.0
 

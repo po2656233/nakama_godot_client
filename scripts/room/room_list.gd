@@ -664,7 +664,7 @@ func _on_join_room(room_info: Dictionary)->bool:
 		jion_dialog.visible = true
 		jion_room.text = "%s\nID:%s" % [room_info.room_name, room_info.room_id.substr(0,16)]
 		return true
-	print("加入房间-key:", jion_input.text)
+	print("加入房间-ID:", room_info.id, " 加入房间-key:", jion_input.text)
 	# 初始化等待房间
 	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
 	# 不加入网络重试

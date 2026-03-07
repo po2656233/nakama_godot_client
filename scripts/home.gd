@@ -50,5 +50,5 @@ func _on_btn_start_pressed() -> void:
 
 
 func _on_tb_home_pressed() -> void:
-	#Global.SceneMgr.switch_to_scene("local_game_list","vertical-paint-brush",0.2) 
+	#Global.SceneMgr.switch_to_scene("fishgame","vertical-paint-brush",0.2) 
 	pass # Replace with function body.
