@@ -108,7 +108,7 @@ func gameStart(data) -> void:
 	var json_conv = JSON.new()
 	var error_code = json_conv.parse(data,true)
 	if error_code != OK:
-		print("Error parsing JSON: " + json_conv.get_error_message(), " ---", data)
+		print("Error parsing JSON: " + json_conv.get_error_message(), " --- ", data)
 		return
 	# Global.SettingsMgr.show_settings() 
 
@@ -118,8 +118,11 @@ func gameStart(data) -> void:
 	var uid = Global.OnlineLogin.get_my_id()
 	if uid == result.redPlayer:
 		my_clolor = 1
+		Global.WindowPopup.show_dynamic("我方执 黑子, 请操控棋子")
 	else:
 		my_clolor = 0
+		Global.WindowPopup.show_dynamic("我方执 红子, 等待黑方先走")
+		
 	print("象棋游戏开始 ", result," uid:",uid," my_clolor:",my_clolor)
 	pass
 
@@ -559,11 +562,16 @@ func _move_end(chess:chess_position) -> void:
 		"form": from_position,
 		"to": to_position,
 	})
-	print("MOVE  ", strChess)
+	print("MOVE  ", strChess," chess_color:", chess.play.chess_color, " my_clolor:", my_clolor)
+	if chess.play.chess_color != my_clolor:
+		Global.WindowPopup.show_dynamic("请布阵我方棋子！")
+		pass
+		
 	Global.OnlineGame.sendToMatchRpc(OpCode.OpXiangqiMove, resp, null)
 	change_player()
 	player_move._change_color()
 	is_waiting_for_opponent = false
+	pass
 
 
 func change_player() -> void:
