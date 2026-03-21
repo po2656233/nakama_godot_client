@@ -118,10 +118,10 @@ func gameStart(data) -> void:
 	var uid = Global.OnlineLogin.get_my_id()
 	if uid == result.redPlayer:
 		my_clolor = 1
-		Global.WindowPopup.show_dynamic("我方执 黑子, 请操控棋子")
+		Global.WindowPopup.show_message("我方执 黑子, 开启您的征程吧","开局提示",false)
 	else:
 		my_clolor = 0
-		Global.WindowPopup.show_dynamic("我方执 红子, 等待黑方先走")
+		Global.WindowPopup.show_message("我方执 红子, 请等待黑方先走","开局提示",false)
 		
 	print("象棋游戏开始 ", result," uid:",uid," my_clolor:",my_clolor)
 	pass
