@@ -285,11 +285,10 @@ func _on_game_list(result):
 	if allgames.size() == 0:
 		Global.WindowPopup.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
-	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
-	curSelect = SearchType.favorite
-	loadRooms()
 	curSelect = SearchType.all
 	loadRooms()
+	# 需要标记收藏按钮状态，因此需要提前知道用户的收藏房间
+	await Global.OnlineGame.getFavoriteList({},self,"_on_get_my_favorites")
 	# 启用功能
 	enableBtn(true)
 	pass
@@ -451,12 +450,12 @@ func _on_room_favorite_toggled(is_favorite: bool, room_info: Dictionary):
 	if is_favorite:
 		var index = favorite_ids.find(func(id): return id == room_info.id)
 		if index == -1:
-			favorite_ids.push_front(room_info.id)
+			favorite_ids.push_front(int(room_info.id))
 	else:
-		favorite_ids.erase(room_info.id)
+		favorite_ids.erase(int(room_info.id))
 	print("收藏请求2",is_favorite)
 	await Global.OnlineGame.favoriteTable({
-		"tableId": room_info.id,
+		"tableId": int(room_info.id),
 		"isFavorite": is_favorite,
 	},self,"_on_favorite_table_cb")
 	pass
@@ -526,21 +525,21 @@ func _on_search_input_focus_exited() -> void:
 func _on_append_room(info):
 	var data = info.get("table", {})
 	var item = {
-			"id": data.get("id", 0),
-			"room_id": data.get("mid", 0), # str().md5_text().substr(8, 16),
+			"id": int(data.get("id", 0)),
+			"room_id": int(data.get("mid", 0)), # str().md5_text().substr(8, 16),
 			"room_name": data.get("name", ""),
 			"room_key": data.get("key", ""),
 			"is_locked": data.get("isLock", false),
 			"game_name": Global.OnlineGame.getGameName(data.get("gid", 0)),
-			"game_type": data.get("gid", 0),
+			"game_type": int(data.get("gid", 0)),
 			"creator_id": data.get("creatorId", ""),
 			"author": data.get("creator", ""),
-			"base_score": data.get("baseScore", 0),
-			"enter_score": data.get("enterScore", 0),
-			"current_round": data.get("maxRound", 0),
-			"player_count": data.get("sitCount", 0),
-			"max_players": data.get("maxSitter", 0),
-			"status": data.get("state", 0),
+			"base_score": int(data.get("baseScore", 0)),
+			"enter_score": int(data.get("enterScore", 0)),
+			"current_round": int(data.get("maxRound", 0)),
+			"player_count": int(data.get("sitCount", 0)),
+			"max_players": int(data.get("maxSitter", 0)),
+			"status": int(data.get("state", 0)),
 			"create_time": Util.format_china_time(data.get("openTime", 0), true),
 			"description": data.get("description", ""),
 			"players": data.get("players", []),
@@ -708,6 +707,22 @@ func _on_get_favorite_list(result):
 	favorite_rooms.clear()
 	favorite_ids.clear()
 	add_item(result)
+	pass
+
+# 获取我的收藏房间列表回调
+func _on_get_my_favorites(result):
+	print("我的收藏列表 返回结果",result)
+	if result.has("items"):
+		favorite_ids.clear()
+		print("获取 收藏数量:",result.items.size())
+		# 按 id 从大到小排序
+		for data in result.items:
+			if not favorite_ids.has(int(data.id)):
+				print("收藏房间ID:",int(data.id))
+				favorite_ids.push_front(int(data.id))
+				break
+		pass
+		_refresh_room_list()
 	pass
 ##################################################################################
 # 加入牌桌
