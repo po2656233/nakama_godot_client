@@ -6,12 +6,23 @@ extends Node
 var nakama_server_key: String = 'superman'
 var nakama_host: String = '172.22.58.44' # 'trytry.asia' #   #'localhost'
 var nakama_port: int = 8850 #
-var nakama_scheme: String = 'https'
+var nakama_scheme: String = 'http'
 
 # For other scripts to access:
 var nakama_client: NakamaClient: get = get_nakama_client
 var nakama_session: NakamaSession: get = get_nakama_session, set = set_nakama_session
 var nakama_socket: NakamaSocket = null
+
+func _init() -> void:
+	if OS.has_feature("web"):
+		# http 线上 注意修改
+		nakama_port = 7350
+		nakama_scheme = "http"
+	else:
+		# https
+		nakama_port = 8850
+		nakama_scheme = "https"
+	pass
 
 # 心跳管理
 var heartbeat_timer: Timer
@@ -46,7 +57,7 @@ enum EnAbnormal {
 ### 初始化
 func _ready() -> void:
 	nakama_client = get_nakama_client()
-	pass
+
 ###################################################################################
 ### 设置session
 func set_nakama_session(_nakama_session: NakamaSession) -> void:

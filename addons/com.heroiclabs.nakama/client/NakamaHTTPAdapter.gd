@@ -67,8 +67,16 @@ class AsyncRequest:
 			return
 		return await make_request()
 
+
+
 	func make_request():
 		##############[测试用,正式环境请移除]#########################
+		# var crypto = Crypto.new()
+		# # 生成 4096 比特 RSA 密钥。
+		# var key = crypto.generate_rsa(4096)
+		# # 使用给定的密钥生成自签名证书。
+		# var cert = crypto.generate_self_signed_certificate(key, "CN=myapi.local,O=A Game Company,C=IT")
+		# var opts =  TLSOptions.client_unsafe(cert)
 		var opts =  TLSOptions.client_unsafe()
 		request.set_tls_options( opts )
 		#######################################
