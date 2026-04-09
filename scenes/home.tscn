@@ -363,8 +363,8 @@ offset_right = -0.00012207031
 offset_bottom = -6.1035156e-05
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_p652v")
-metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1322245940]
 layout_mode = 2

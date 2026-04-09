@@ -720,7 +720,6 @@ func _on_get_my_favorites(result):
 			if not favorite_ids.has(int(data.id)):
 				print("收藏房间ID:",int(data.id))
 				favorite_ids.push_front(int(data.id))
-				break
 		pass
 		_refresh_room_list()
 	pass
