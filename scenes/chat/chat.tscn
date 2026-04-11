@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cibb7ou8lcdk1"]
+[gd_scene format=3 uid="uid://cibb7ou8lcdk1"]
 
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://themes/chat.tres" id="1_b4wfc"]
 [ext_resource type="Script" uid="uid://coomdxyaqfwje" path="res://scripts/chat/chat.gd" id="2_m52is"]
@@ -232,7 +232,7 @@ shadow_size = 10
 bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
 
-[node name="Chat" type="Control"]
+[node name="Chat" type="Control" unique_id=562094333]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -242,7 +242,7 @@ grow_vertical = 2
 theme = ExtResource("1_b4wfc")
 script = ExtResource("2_m52is")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=932637501]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -250,11 +250,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="MarginContainer"]
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=2024872063]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b7p85")
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer/Panel"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/Panel" unique_id=220569220]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -284,12 +284,12 @@ tab_alignment = 1
 current_tab = 1
 drag_to_rearrange_enabled = true
 
-[node name="world" type="Control" parent="MarginContainer/Panel/TabContainer"]
+[node name="world" type="Control" parent="MarginContainer/Panel/TabContainer" unique_id=399642846]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/world"]
+[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/world" unique_id=208620302]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -304,7 +304,7 @@ script = ExtResource("5_vsklf")
 factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk" unique_id=1997191506]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -316,12 +316,12 @@ grow_horizontal = 2
 grow_vertical = 2
 follow_focus = true
 
-[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer"]
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer" unique_id=2093790064]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/world/Panel_talk"]
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/world/Panel_talk" unique_id=257815287]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(50, 25)
@@ -341,25 +341,26 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="club" type="Control" parent="MarginContainer/Panel/TabContainer"]
+[node name="club" type="Control" parent="MarginContainer/Panel/TabContainer" unique_id=1655881582]
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="HSplitContainerClub" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club"]
+[node name="HSplitContainerClub" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club" unique_id=865505243]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+split_offsets = PackedInt32Array(250)
 split_offset = 250
 
-[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub" unique_id=1627133353]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer"]
+[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer" unique_id=617948684]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -369,7 +370,7 @@ script = ExtResource("5_vsklf")
 factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk" unique_id=1257934270]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -382,13 +383,13 @@ grow_vertical = 2
 focus_mode = 2
 follow_focus = true
 
-[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer"]
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" unique_id=147207539]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk"]
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk" unique_id=765485286]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(50, 25)
@@ -407,7 +408,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="AddClub" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer" instance=ExtResource("3_ndfss")]
+[node name="AddClub" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer" unique_id=763001684 instance=ExtResource("3_ndfss")]
 visible = false
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
@@ -415,14 +416,14 @@ size_flags_horizontal = 3
 placeholder_text = "查找俱乐部"
 isClub = true
 
-[node name="Panel_clubs" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
+[node name="Panel_clubs" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub" unique_id=12213407]
 custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_bk1xq")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs" unique_id=1514444937]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -430,16 +431,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GroupList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer" instance=ExtResource("7_0cs3x")]
+[node name="GroupList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer" unique_id=1612403943 instance=ExtResource("7_0cs3x")]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer"]
+[node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer" unique_id=908325005]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="HSplitContainerFriends" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends"]
+[node name="HSplitContainerFriends" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends" unique_id=1350725196]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -447,15 +448,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/autohide = 5
+split_offsets = PackedInt32Array(250)
 split_offset = 250
 
-[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends"]
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends" unique_id=1429433737]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 theme_override_constants/autohide = 5
 
-[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer"]
+[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer" unique_id=1962512871]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -465,7 +467,7 @@ script = ExtResource("5_vsklf")
 factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk" unique_id=762167367]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -479,13 +481,13 @@ grow_vertical = 2
 focus_mode = 2
 follow_focus = true
 
-[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer"]
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" unique_id=1646903985]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tooltip_text = "信息面板"
 
-[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk"]
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk" unique_id=2063953267]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(50, 25)
@@ -506,21 +508,21 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="AddFirends" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer" instance=ExtResource("3_ndfss")]
+[node name="AddFirends" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer" unique_id=779754984 instance=ExtResource("3_ndfss")]
 visible = false
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "输入用户名(查找)"
 
-[node name="Panel_friends" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends"]
+[node name="Panel_friends" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends" unique_id=1615023050]
 custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_bk1xq")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends" unique_id=197862529]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -530,7 +532,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="CheckButton" type="CheckButton" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer"]
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer" unique_id=670124029]
 layout_mode = 2
 tooltip_text = "打开或关闭添加好友面板"
 mouse_default_cursor_shape = 2
@@ -545,7 +547,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
 text = "好友面板"
 alignment = 1
 
-[node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer"]
+[node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer" unique_id=1326810608]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "好友列表"
@@ -558,7 +560,7 @@ auto_height = true
 script = ExtResource("4_3wj1b")
 Block = true
 
-[node name="input_area" type="PanelContainer" parent="MarginContainer/Panel"]
+[node name="input_area" type="PanelContainer" parent="MarginContainer/Panel" unique_id=617668803]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 1
 anchors_preset = 12
@@ -571,16 +573,16 @@ grow_vertical = 0
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_n8yms")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/input_area"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/input_area" unique_id=275659627]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/input_area/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/input_area/HBoxContainer" unique_id=1809900584]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer"]
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer" unique_id=952746981]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -595,13 +597,13 @@ wrap_mode = 1
 scroll_fit_content_height = true
 script = ExtResource("5_yrxgh")
 
-[node name="AttachmentButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer"]
+[node name="AttachmentButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer" unique_id=108187036]
 custom_minimum_size = Vector2(100, 45)
 layout_mode = 2
 tooltip_text = "添加附件"
 text = "+"
 
-[node name="SendButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer"]
+[node name="SendButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer" unique_id=555558960]
 custom_minimum_size = Vector2(120, 55)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -616,7 +618,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ayyfq")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
 text = "发送"
 
-[node name="light_switch" type="TextureButton" parent="MarginContainer/Panel"]
+[node name="light_switch" type="TextureButton" parent="MarginContainer/Panel" unique_id=61814311]
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 1
 offset_left = 14.0

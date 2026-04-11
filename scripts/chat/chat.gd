@@ -237,6 +237,12 @@ func _on_received_message(msg):
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
 		ensure_scroll_to()
+		await get_tree().create_timer(0.1).timeout
+		ensure_scroll_to()
+		await get_tree().create_timer(0.3).timeout
+		ensure_scroll_to()
+		await get_tree().create_timer(0.5).timeout
+		ensure_scroll_to()
 	pass
 
 # 收到历史消息----------------------
@@ -386,7 +392,7 @@ func _on_received_notify(notify):
 #################################################################
 func _on_btn_send_pressed() -> void:
 	if sendTextEdit.text.strip_edges() == "":
-		ensure_scroll_to()
+		await ensure_scroll_to()
 		return
 	# 发送消息
 	var channel = getCurChannelData()

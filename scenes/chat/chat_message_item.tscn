@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4q5x4j6n7saw"]
+[gd_scene format=3 uid="uid://b4q5x4j6n7saw"]
 
 [ext_resource type="Script" uid="uid://cc2nhii6yjmu1" path="res://scripts/chat/chat_message_item.gd" id="1_u4k5p"]
 
@@ -54,7 +54,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="ChatMessageItem" type="MarginContainer"]
+[node name="ChatMessageItem" type="MarginContainer" unique_id=1555322040]
 custom_minimum_size = Vector2(0, 62)
 anchors_preset = 10
 anchor_right = 1.0
@@ -65,43 +65,48 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 script = ExtResource("1_u4k5p")
 
-[node name="Content" type="VBoxContainer" parent="."]
+[node name="Content" type="VBoxContainer" parent="." unique_id=497678968]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="Header" type="HBoxContainer" parent="Content"]
+[node name="Header" type="HBoxContainer" parent="Content" unique_id=1012135215]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 alignment = 2
 
-[node name="HeadIcon" type="TextureRect" parent="Content/Header"]
+[node name="HeadIcon" type="TextureRect" parent="Content/Header" unique_id=1916707810]
+clip_contents = true
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 expand_mode = 1
 
-[node name="Nickname" type="Label" parent="Content/Header"]
+[node name="Nickname" type="Label" parent="Content/Header" unique_id=672104131]
+custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 text = "用户名"
+vertical_alignment = 1
 
-[node name="Time" type="Label" parent="Content/Header"]
+[node name="Time" type="Label" parent="Content/Header" unique_id=1279706497]
+custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 12
 text = "12:34"
+vertical_alignment = 1
 
-[node name="MessagePanel" type="PanelContainer" parent="Content"]
+[node name="MessagePanel" type="PanelContainer" parent="Content" unique_id=1464531718]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 
-[node name="MessageContent" type="VBoxContainer" parent="Content/MessagePanel"]
+[node name="MessageContent" type="VBoxContainer" parent="Content/MessagePanel" unique_id=1047313298]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Text" type="RichTextLabel" parent="Content/MessagePanel/MessageContent"]
+[node name="Text" type="RichTextLabel" parent="Content/MessagePanel/MessageContent" unique_id=748079207]
 clip_contents = false
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
@@ -114,55 +119,55 @@ fit_content = true
 scroll_following = true
 selection_enabled = true
 
-[node name="MediaPreview" type="TextureRect" parent="Content/MessagePanel/MessageContent"]
+[node name="MediaPreview" type="TextureRect" parent="Content/MessagePanel/MessageContent" unique_id=683783097]
 visible = false
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="FileInfo" type="PanelContainer" parent="Content/MessagePanel/MessageContent"]
+[node name="FileInfo" type="PanelContainer" parent="Content/MessagePanel/MessageContent" unique_id=395173228]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Content/MessagePanel/MessageContent/FileInfo"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Content/MessagePanel/MessageContent/FileInfo" unique_id=1744992719]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="FileIcon" type="TextureRect" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer"]
+[node name="FileIcon" type="TextureRect" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer" unique_id=1152677206]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer" unique_id=432581947]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="FileName" type="Label" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer/VBoxContainer"]
+[node name="FileName" type="Label" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer/VBoxContainer" unique_id=980594428]
 layout_mode = 2
 text = "文件名.txt"
 
-[node name="FileSize" type="Label" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer/VBoxContainer"]
+[node name="FileSize" type="Label" parent="Content/MessagePanel/MessageContent/FileInfo/HBoxContainer/VBoxContainer" unique_id=1899863924]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 theme_override_font_sizes/font_size = 12
 text = "1.5 MB"
 
-[node name="VoiceMessage" type="PanelContainer" parent="Content/MessagePanel/MessageContent"]
+[node name="VoiceMessage" type="PanelContainer" parent="Content/MessagePanel/MessageContent" unique_id=644407699]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Content/MessagePanel/MessageContent/VoiceMessage"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Content/MessagePanel/MessageContent/VoiceMessage" unique_id=1121531469]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="PlayButton" type="Button" parent="Content/MessagePanel/MessageContent/VoiceMessage/HBoxContainer"]
+[node name="PlayButton" type="Button" parent="Content/MessagePanel/MessageContent/VoiceMessage/HBoxContainer" unique_id=382130918]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 text = "▶"
 
-[node name="Duration" type="Label" parent="Content/MessagePanel/MessageContent/VoiceMessage/HBoxContainer"]
+[node name="Duration" type="Label" parent="Content/MessagePanel/MessageContent/VoiceMessage/HBoxContainer" unique_id=179285560]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "0:30"
