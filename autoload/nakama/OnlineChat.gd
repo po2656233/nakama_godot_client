@@ -91,12 +91,12 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 		print("Not in a chat channel or socket is wrong")
 		return FAILED
  
-	# 	# 先尝试加入频道
-	# var join_try = await Global.Online.nakama_client.join_chat_async(channelId)
-	# if join_try.is_exception():
-	# 	print("无法加入频道: ", join_try.get_exception().message)
-	# 	# 处理错误，比如通知用户或创建新频道
-	# 	return FAILED
+	# 先尝试加入频道 避免发消息时 无法获取渠道信息
+	var join_try = await Global.Online.nakama_client.join_chat_async(channelId)
+	if join_try.is_exception():
+		print("无法加入频道: ", join_try.get_exception().message)
+		# 处理错误，比如通知用户或创建新频道
+		return FAILED
 
 
 	# print("获取聊天历史",channelId," -->", limit, "-->",forward)
