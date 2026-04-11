@@ -327,7 +327,7 @@ func remove_data_array(key:String, field:String, value):
 	cached_data[key] = itemList
 	pass
 
-# 获取聊天记录
+# 删除聊天记录
 func remove_chat_history(uid:String, channelId:String, messageId:String=""):
 	var key = chat_key+uid
 	if not cached_data.has(key):
@@ -343,6 +343,23 @@ func remove_chat_history(uid:String, channelId:String, messageId:String=""):
 				msgList.append(msg)
 	cached_data[key][channelId] = msgList
 	return msgList
+
+
+# 更新聊天记录
+func update_chat_history(uid:String, channelId:String, msg):
+	var key = chat_key+uid
+	if not cached_data.has(key):
+		return 
+	if not cached_data[key].has(channelId):
+		return 
+
+	var messageId = msg.message_id
+	if messageId != "":
+		for message in cached_data[key][channelId]:
+			var msgObj =message  if not (message is String) else parse_message(message)
+			if msgObj.message_id == messageId:
+				message = msg._to_string()
+	return
 
 
 func remove_friend(uid:String, friendId:String):

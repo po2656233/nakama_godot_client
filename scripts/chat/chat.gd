@@ -682,14 +682,12 @@ func _on_light_button_pressed() -> void:
 func _on_tab_container_tab_selected(tab: int) -> void:
 	if tab == 0 and first_world:
 		first_world = false
-		var world = Global.OnlineChat.get_world_channel()
-		if not world:
-			world = await Global.OnlineChat.load_world_channel()
+		var world = await Global.OnlineChat.load_world_channel()
 		if world:
 			Global.DataMgr.get_instance().set_world_channel_id(world.id)
 			_on_change_channel(world.id)
-		print("加载世界频道")
-			# await Global.OnlineChat.get_chat_history(world.id)
+		print("加载世界频道",world)
+		await Global.OnlineChat.get_chat_history(world.id)
 	elif tab == 1 and first_clubs:
 		first_clubs = false
 		# get_club_list()

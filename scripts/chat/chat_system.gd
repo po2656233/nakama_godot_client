@@ -348,10 +348,16 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 		}
 		Global.DataMgr.get_instance().add_channel_list(uid, channel_id)
 		print("渠道---> " + str(channel_id) + " 初始化完毕")
-
+		
 	# 检查消息是否已存在
 	if has_message(channel_id, message_id):
-		# print("消息 %s 已经存在于渠道 %s" % [message_id, channel_id])
+		print("玩家:%s 收到消息 %s 已经存在于渠道 %s" % [uid, message_id, channel_id])
+		var content = JSON.parse_string(msg.content)
+		if content:
+			modify_message(channel_id, message_id, content.content)
+		else:
+			delete_message(channel_id, message_id)
+		refresh_current_channel_display(channel_id)
 		return false
 
 	# 添加消息到历史记录和ID缓存

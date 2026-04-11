@@ -83,9 +83,9 @@ func send_message(content: Dictionary) -> Error:
 		if "Must join channel before sending messages" in error_message:
 			# 先尝试加入频道 避免发消息时 无法获取渠道信息
 			var chType = NakamaSocket.ChannelType.DirectMessage
-			if content.kind == 1:
+			if int(content.kind) == 1:
 				chType = NakamaSocket.ChannelType.Room
-			elif content.kind == 2:
+			elif int(content.kind) == 2:
 				chType = NakamaSocket.ChannelType.Group
 			var join_try = await Global.Online.nakama_socket.join_chat_async(_current_channel.id, chType, true)
 			if join_try.is_exception():
@@ -357,15 +357,15 @@ func create_group_async(name1: String, description: String = "", avatar_url = nu
 	return result
 
 
-# 创建世界频道 一般不能使用
-func create_world_async():
-	var result = await Global.Online.nakama_client.create_group_async(Global.Online.nakama_session, "world", "世界渠道", null, "zh", true)
-	if result.is_exception():
-		print("Error create_world_async: ", result.get_exception().message)
-		return null
-	print("添加俱乐部: ", result)
-	# Global.SignalMgr.FreshClubListSIG.emit()
-	return result
+# # 创建世界频道 一般不能使用
+# func create_world_async():
+# 	var result = await Global.Online.nakama_client.create_group_async(Global.Online.nakama_session, "world", "世界渠道", null, "zh", true)
+# 	if result.is_exception():
+# 		print("Error create_world_async: ", result.get_exception().message)
+# 		return null
+# 	print("添加俱乐部: ", result)
+# 	# Global.SignalMgr.FreshClubListSIG.emit()
+# 	return result
 
 
 func get_world_channel():
