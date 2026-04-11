@@ -33,6 +33,7 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
+border_color = Color(0.18014875, 0.41692644, 0.34990206, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -266,6 +267,9 @@ grow_vertical = 2
 tooltip_text = "社交场"
 theme_override_colors/font_selected_color = Color(1, 0.843137, 0, 1)
 theme_override_colors/font_hovered_color = Color(0, 0.458824, 0.745098, 1)
+theme_override_constants/tab_separation = 50
+theme_override_constants/icon_separation = 10
+theme_override_constants/icon_max_width = 5
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = SubResource("SystemFont_2knlu")
 theme_override_font_sizes/font_size = 35
@@ -413,7 +417,7 @@ placeholder_text = "查找俱乐部"
 isClub = true
 
 [node name="Panel_clubs" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub"]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
@@ -510,7 +514,7 @@ size_flags_horizontal = 3
 placeholder_text = "输入用户名(查找)"
 
 [node name="Panel_friends" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends"]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0

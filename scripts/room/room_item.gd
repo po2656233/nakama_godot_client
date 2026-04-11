@@ -51,6 +51,7 @@ var is_flipped = true
 var is_hovering = false
 var is_animating = false
 var is_dragging = false
+var have_remove = false
 var drag_start_position = Vector2.ZERO
 var min_swipe_distance = 200  # 最小滑动距离
 var status_name = ["未知状态","等待中","进行中","已满员"]
@@ -83,7 +84,8 @@ func setup(data: Dictionary):
 	status_label.text = status_name[data.get("status", 0)]
 	room_lock.visible = data.get("is_locked", false)
 	author.text = "@"+data.get("author", "")+" "
-	remove_button.visible = data.get("author", "") == Global.OnlineLogin.get_my_name()
+	have_remove = data.get("author", "") == Global.OnlineLogin.get_my_name()
+	remove_button.visible = have_remove
 	# 根据状态设置状态标签样式
 	var style_path: String
 	match data.get("status", 0):  #"等待中" "进行中"  "已满员"
@@ -260,6 +262,8 @@ func flip():
 	await get_tree().create_timer(0.4).timeout
 	roomFront.visible = !is_flipped
 	roomBack.visible = is_flipped
+	if have_remove:
+		remove_button.visible = !is_flipped
 	downloadProgress.showSig.emit(!is_flipped)
 	is_flipped = !is_flipped
 	

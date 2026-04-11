@@ -1,7 +1,6 @@
 extends Control
 
-@onready var chatPanle = $VBoxContainer/Chat
-@onready var homePanle = $PanelContainer
+@onready var chatPanle = $PanelContainer/Chat
 @onready var cur_game_name: Label = $HBoxContainerHome/btn_start/cur_game_name
 
 func _ready():

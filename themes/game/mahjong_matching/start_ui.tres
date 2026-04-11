@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://vb12ay5d7wb4"]
+[gd_resource type="Theme" format=3 uid="uid://vb12ay5d7wb4"]
 
 [ext_resource type="Texture2D" uid="uid://ch15gu5rrhl01" path="res://assets/game/mahjong_matching/image/UI/smallbutton_hover.png" id="1_rvwul"]
 [ext_resource type="FontFile" uid="uid://d1ykbo1h8utc1" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="2_8xvg5"]
