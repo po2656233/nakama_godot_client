@@ -16,23 +16,20 @@ func add_message(text: String):
 
 # 滚动到底部的方法
 func scroll_to_bottom():
-	# 等待一帧以确保 UI 布局完成
-	await get_tree().process_frame
-	
-	# 选择最后一项并确保它可见
-	var last_idx = item_count - 1
-	if last_idx >= 0:
-		# 使用 scroll_to_item 方法滚动到指定项
-		scroll_to_item(last_idx)
-		
-		# 再等待一帧确保滚动生效
-		await get_tree().process_frame
-		
-		# 强制更新滚动条到最大值（双重保险）
-		get_v_scroll_bar().value = get_v_scroll_bar().max_value
-		
-		# 再等待一帧确保滚动生效
-		await get_tree().process_frame
+    # 确保在下一帧执行滚动，以便正确计算内容高度
+    call_deferred("_deferred_scroll_to_bottom")
+
+func _deferred_scroll_to_bottom():
+    # 选择最后一项并确保它可见
+    var last_idx = item_count - 1
+    if last_idx >= 0:
+        ensure_current_is_visible()
+        select(last_idx)
+        deselect(last_idx)
+        # 直接设置滚动条到最大值
+        get_v_scroll_bar().value = get_v_scroll_bar().max_value
+        signal_bottom.emit()
+
 
 # 当用户手动滚动时检测是否应该继续自动滚动
 func _on_scroll_changed(value: float):

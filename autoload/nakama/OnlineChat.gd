@@ -3,7 +3,7 @@ extends Node
 signal chat_message_received(message: Dictionary)
 signal chat_presence_changed(joins: Array, leaves: Array)
 signal chat_history_received(messages: Array)
-signal changeChannelSIG(id:String)
+signal changeChannelSIG(id: String)
 
 var _current_channel: NakamaRTAPI.Channel
 var _cursor_list_channel = null
@@ -12,7 +12,7 @@ var _world_channel = null
 var history_msg_count = {}
 # 聊天内容结构
 var DEFAULT_MESSAGE = {
-	"kind": 0,#2聊天 1俱乐部 0世界
+	"kind": 0, # 2聊天 1俱乐部 0世界
 	"type": 0,
 	"headicon": "",
 	"path": "",
@@ -25,13 +25,13 @@ var DEFAULT_MESSAGE = {
 
 
 # 设置当前聊天频道
-func set_current_channel(channel: NakamaRTAPI.Channel,isLoadhistory:bool=false):
+func set_current_channel(channel: NakamaRTAPI.Channel, isLoadhistory: bool = false):
 	if _current_channel == channel:
 		return
 	_cursor_list_channel = null
 	_current_channel = channel
 	if channel:
-		print("切换频道信号:",channel," 是否加载历史信息:",isLoadhistory)
+		print("切换频道信号:", channel, " 是否加载历史信息:", isLoadhistory)
 		changeChannelSIG.emit(channel.id)
 		if isLoadhistory:
 			await fetch_full_chat_history(channel.id)
@@ -42,28 +42,28 @@ func get_cursor_for_list_channel():
 	return _cursor_list_channel
 
 # Authentication
-func authenticate_device(username: String="", created:bool=false) -> bool:
+func authenticate_device(username: String = "", created: bool = false) -> bool:
 	var device_id = OS.get_unique_id()
-	var result = await Global.Online.nakama_client.authenticate_device_async(device_id,username,created)
+	var result = await Global.Online.nakama_client.authenticate_device_async(device_id, username, created)
 	if result.is_exception():
 		return false
 	return true
 
 
 # Authentication
-func authenticate_email(username: String,password: String,email: String="",  created:bool=false) -> bool:
+func authenticate_email(username: String, password: String, email: String = "", created: bool = false) -> bool:
 	if username.is_empty() and password.is_empty():
-		return await self.authenticate_device(username,created)
+		return await self.authenticate_device(username, created)
 	
 	if password.is_empty():
 		push_error("password is empty")
 		return false
 	
 	if email.is_empty():
-		email = username+"@game.com"
-	var result = await Global.Online.nakama_client.authenticate_email_async(email,password,username,created)
+		email = username + "@game.com"
+	var result = await Global.Online.nakama_client.authenticate_email_async(email, password, username, created)
 	if result.is_exception() or not result.is_valid():
-		print("发送登录请求失败",result.get_exception().message)
+		print("发送登录请求失败", result.get_exception().message)
 		return false
 	return true
 
@@ -74,7 +74,7 @@ func send_message(content: Dictionary) -> Error:
 	if _current_channel == null:
 		print("Not in a chat channel")
 		return FAILED
-	print("发送前确认:",_current_channel.id," 内容:",content)
+	print("发送前确认:", _current_channel.id, " 内容:", content)
 	var result = await Global.Online.nakama_socket.write_chat_message_async(_current_channel.id, content)
 	if result.is_exception():
 		var error_message = result.get_exception().message
@@ -87,7 +87,7 @@ func send_message(content: Dictionary) -> Error:
 				chType = NakamaSocket.ChannelType.Room
 			elif content.kind == 2:
 				chType = NakamaSocket.ChannelType.Group
-			var join_try = await Global.Online.nakama_socket.join_chat_async(_current_channel.id,chType, true)
+			var join_try = await Global.Online.nakama_socket.join_chat_async(_current_channel.id, chType, true)
 			if join_try.is_exception():
 				print("无法加入频道: ", join_try.get_exception().message)
 				# 处理错误，比如通知用户或创建新频道
@@ -95,18 +95,17 @@ func send_message(content: Dictionary) -> Error:
 			return await send_message(content) # 重新尝试发送消息
 		return FAILED
 	
-	print("发送反馈:",result)
+	print("发送反馈:", result)
 	return OK
 
 
-
 # 获取聊天历史
-func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false,cursor = null) -> Error:
+func get_chat_history(channelId: String = _current_channel.id, limit: int = 20, forward: bool = false, cursor = null) -> Error:
 	if channelId.is_empty():
 		print("Not in a chat channel or socket is wrong")
 		return FAILED
  
-	print("获取聊天历史",channelId," -->", limit, "-->",forward)
+	print("获取聊天历史", channelId, " -->", limit, "-->", forward)
 	if cursor == null:
 		cursor = _cursor_list_channel
 	var result = await Global.Online.nakama_client.list_channel_messages_async(Global.Online.nakama_session, channelId, limit, forward, cursor)
@@ -114,7 +113,7 @@ func get_chat_history(channelId:String = _current_channel.id, limit: int = 20, f
 		print("Failed to get chat history: ", result.get_exception().message)
 		return FAILED
 
-	print("获取当前历史大小:",result.messages.size())
+	print("获取当前历史大小:", result.messages.size())
 	var messages = []
 	for message in result.messages:
 		var content = JSON.parse_string(message.content)
@@ -170,7 +169,7 @@ func fetch_full_chat_history(channel_id: String, limit: int = 20):
 	pass
 
 
-func get_chat_history_all(channelId:String = _current_channel.id, limit: int = 20, forward: bool = false) -> Error:
+func get_chat_history_all(channelId: String = _current_channel.id, limit: int = 20, forward: bool = false) -> Error:
 	if channelId.is_empty():
 		print("Not in a chat channel or socket is wrong")
 		return FAILED
@@ -180,7 +179,7 @@ func get_chat_history_all(channelId:String = _current_channel.id, limit: int = 2
 			break
 	return OK
 
-func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
+func getMsgData(message: NakamaAPI.ApiChannelMessage) -> Dictionary:
 	if not message or not message.content:
 		return DEFAULT_MESSAGE
 	var content = JSON.parse_string(message.content)
@@ -192,10 +191,10 @@ func getMsgData(message:NakamaAPI.ApiChannelMessage)->Dictionary:
 			"username": message.username,
 			"content": content,
 			"path": Util.safe_get(content, "path", DEFAULT_MESSAGE.path),
-			"file": Util.safe_get(content,"file", DEFAULT_MESSAGE.file),
-			"size":Util.safe_get(content,"size", DEFAULT_MESSAGE.size),
-			"thumbnail": Util.safe_get(content,"thumbnail", DEFAULT_MESSAGE.thumbnail),
-			"duration": Util.safe_get(content,"duration", DEFAULT_MESSAGE.duration),
+			"file": Util.safe_get(content, "file", DEFAULT_MESSAGE.file),
+			"size": Util.safe_get(content, "size", DEFAULT_MESSAGE.size),
+			"thumbnail": Util.safe_get(content, "thumbnail", DEFAULT_MESSAGE.thumbnail),
+			"duration": Util.safe_get(content, "duration", DEFAULT_MESSAGE.duration),
 		}
 	return DEFAULT_MESSAGE
 
@@ -209,12 +208,12 @@ func upload_file(file_path: String) -> Dictionary:
 	var file_data = file.get_buffer(file.get_length())
 	var file_name = file_path.get_file()
 	
-	var result = await Global.Online.nakama_client.write_storage_objects_async(Global.Online.nakama_session, [{
+	var result = await Global.Online.nakama_client.write_storage_objects_async(Global.Online.nakama_session, [ {
 		"collection": "chat_files",
 		"key": file_name,
 		"value": {"path": file_path},
-		"permission_read": 2,  # Public read
-		"permission_write": 1  # Owner write
+		"permission_read": 2, # Public read
+		"permission_write": 1 # Owner write
 	}])
 	
 	if result.is_exception():
@@ -228,7 +227,7 @@ func upload_file(file_path: String) -> Dictionary:
 
 # 下载文件
 func download_file(file_info: Dictionary) -> Dictionary:
-	var result = await Global.Online.nakama_client.read_storage_objects_async(Global.Online.nakama_session, [{
+	var result = await Global.Online.nakama_client.read_storage_objects_async(Global.Online.nakama_session, [ {
 		"collection": "chat_files",
 		"key": file_info.name
 	}])
@@ -244,7 +243,7 @@ func download_file(file_info: Dictionary) -> Dictionary:
 
 # 处理接收到的消息
 func _on_channel_message(message: NakamaAPI.ApiChannelMessage):
-	chat_message_received.emit(message) 
+	chat_message_received.emit(message)
 
 # 处理频道状态变化
 func _on_channel_presence(presence: NakamaRTAPI.ChannelPresenceEvent):
@@ -266,7 +265,7 @@ func _notification(what: int):
 func search_users(username: String):
 	if not Global.Online.nakama_session:
 		return null
-	var result = await Global.Online.nakama_client.get_users_async(Global.Online.nakama_session,[], [username])
+	var result = await Global.Online.nakama_client.get_users_async(Global.Online.nakama_session, [], [username])
 	if result.is_exception():
 		print("Error search_users: ", result.get_exception().message)
 		return
@@ -276,7 +275,7 @@ func search_users(username: String):
 func search_users_rpc(username: String):
 	if not Global.Online.nakama_session:
 		return null
-	var result = await Global.Online.nakama_client.rpc_async(Global.Online.nakama_session,  "search_username", username)
+	var result = await Global.Online.nakama_client.rpc_async(Global.Online.nakama_session, "search_username", username)
 	if result.is_exception():
 		print("Error search_users_rpc: ", result.get_exception().message)
 		return null
@@ -318,7 +317,7 @@ func get_friends_list():
 
 # 获取俱乐部列表
 func get_group_list(uid: String):
-	var result = await Global.Online.nakama_client.list_user_groups_async(Global.Online.nakama_session,uid)
+	var result = await Global.Online.nakama_client.list_user_groups_async(Global.Online.nakama_session, uid)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return
@@ -328,7 +327,7 @@ func get_group_list(uid: String):
 
 # 获取俱乐部成员列表
 func get_group_member_list_async(group_id: String):
-	var result = await Global.Online.nakama_client.list_group_users_async(Global.Online.nakama_session,group_id)
+	var result = await Global.Online.nakama_client.list_group_users_async(Global.Online.nakama_session, group_id)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return null
@@ -337,7 +336,7 @@ func get_group_member_list_async(group_id: String):
 
 		
 # 添加好友
-func add_friends_async(friend_ids: Array)->bool:
+func add_friends_async(friend_ids: Array) -> bool:
 	if friend_ids.size() == 0:
 		return false
 	var result = await Global.Online.nakama_client.add_friends_async(Global.Online.nakama_session, friend_ids)
@@ -349,8 +348,8 @@ func add_friends_async(friend_ids: Array)->bool:
 
 		
 # 创建俱乐部 
-func create_group_async(name1: String, description : String = "", avatar_url = null):
-	var result = await Global.Online.nakama_client.create_group_async(Global.Online.nakama_session, name1, description, avatar_url,"zh",false)
+func create_group_async(name1: String, description: String = "", avatar_url = null):
+	var result = await Global.Online.nakama_client.create_group_async(Global.Online.nakama_session, name1, description, avatar_url, "zh", false)
 	if result.is_exception():
 		print("Error create_group_async: ", result.get_exception().message)
 		return null
@@ -360,7 +359,7 @@ func create_group_async(name1: String, description : String = "", avatar_url = n
 
 # 创建世界频道 一般不能使用
 func create_world_async():
-	var result = await Global.Online.nakama_client.create_group_async(Global.Online.nakama_session, "world", "世界渠道", null,"zh", true)
+	var result = await Global.Online.nakama_client.create_group_async(Global.Online.nakama_session, "world", "世界渠道", null, "zh", true)
 	if result.is_exception():
 		print("Error create_world_async: ", result.get_exception().message)
 		return null
@@ -376,70 +375,60 @@ func get_world_channel():
 func load_world_channel():
 	if _world_channel:
 		return _world_channel
-	var result = await search_groups("world")
-	##-----------------------
-	print("查找世界频道:\n\n ")
-	if not result:
+	
+	var ret = await add_channel_async("world", 1)
+	if not ret:
+		print("加入世界渠道失败")
+		Global.WindowPopup.show_dynamic("加入世界渠道失败")
 		return null
-	for group in result.groups:
-		# var group = info.group
-		print("查找世界频道: ", group)
-		if group.name == "world":
-			var ret1 = await Global.Online.nakama_client.join_group_async(Global.Online.nakama_session, group.id)
-			print("加入世界频道: ", ret1)
-			if ret1.is_exception():
-				Global.WindowPopup.show_dynamic("加入世界频道失败")
-				print("加入世界频道失败",ret1.get_exception().message)
-				return null
-			var ret = await add_channel_async(group.id, 2)
-			if not ret:
-				print("加入世界渠道失败")
-				Global.WindowPopup.show_dynamic("加入世界渠道失败")
-				return null
-			print("添加世界渠道频道: ", ret)
-			_world_channel = ret
-			# fetch_full_chat_history(_world_channel.id)
-			# get_chat_history_all(_world_channel.id)
-			fetch_older_messages(_world_channel.id,"")
-			return ret
-	return null
+	print("添加世界渠道频道: ", ret)
+	_world_channel = ret
+	# fetch_full_chat_history(_world_channel.id)
+	# get_chat_history_all(_world_channel.id)
+	fetch_older_messages(_world_channel.id, "")
+	return ret
 
 # 加入聊天频道
-func add_channel_async(targetId: String,tab:int = 0):
+func add_channel_async(targetId: String, tab: int = 0):
+	var isSaveMsg = true
+	var isShowMe = true
 	if Global.Online.nakama_socket:
 		var chType = NakamaSocket.ChannelType.DirectMessage
 		if tab == 1:
 			chType = NakamaSocket.ChannelType.Room
+			isSaveMsg = false
+			isShowMe = false
 		elif tab == 2:
 			chType = NakamaSocket.ChannelType.Group
-		var result = await Global.Online.nakama_socket.join_chat_async(targetId, chType, true)
+		var result = await Global.Online.nakama_socket.join_chat_async(targetId, chType, isSaveMsg, isShowMe)
 		if result.is_exception():
-			print("Error add_channel_async: ",result.get_exception().message, " ID:",  targetId," 类型:", chType)
+			print("Error add_channel_async: ", result.get_exception().message, " ID:", targetId, " 类型:", chType)
 			# push_error("Error add_channel_async: ", result.get_exception().message," ID:",  targetId," 类型:", chType)
 			return null
 		print("添加频道: ", result)
 		return result
 	return null
 
+# 群组（持久化社交群） 公会 / 战队 / 社团聊天  
 func add_group_async(group_name: String):
-	var result = await Global.Online.nakama_client.list_groups_async(Global.Online.nakama_session,group_name)
+	var result = await Global.Online.nakama_client.list_groups_async(Global.Online.nakama_session, group_name)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return null
 	for group in result.groups:
-		var ret = await Global.Online.nakama_client.join_group_async(Global.Online.nakama_session,group.id)
+		var ret = await Global.Online.nakama_client.join_group_async(Global.Online.nakama_session, group.id)
 		if ret.is_exception():
 			push_error("Error add_group_async: ", ret.get_exception().message)
 			return null
 		print("添加俱乐部: ", ret)
-		return ret 
+		return ret
 	return null
 
 
-func add_group_users_async(group_id: String,p_ids: PackedStringArray):
+func add_group_users_async(group_id: String, p_ids: PackedStringArray):
 	if group_id.is_empty() or p_ids.size() <= 0:
 		return false
-	var result = await Global.Online.nakama_client.add_group_users_async(Global.Online.nakama_session,group_id,p_ids)
+	var result = await Global.Online.nakama_client.add_group_users_async(Global.Online.nakama_session, group_id, p_ids)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return false
@@ -447,10 +436,10 @@ func add_group_users_async(group_id: String,p_ids: PackedStringArray):
 	return true
 
 # 降级权限
-func demote_group_users_async(group_id : String, p_ids : Array):
+func demote_group_users_async(group_id: String, p_ids: Array):
 	if group_id.is_empty() or p_ids.size() <= 0:
 		return false
-	var result = await Global.Online.nakama_client.demote_group_users_async(Global.Online.nakama_session,group_id,p_ids)
+	var result = await Global.Online.nakama_client.demote_group_users_async(Global.Online.nakama_session, group_id, p_ids)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return false
@@ -458,10 +447,10 @@ func demote_group_users_async(group_id : String, p_ids : Array):
 	return true
 
 # 提升权限
-func promote_group_users_async(group_id : String, p_ids: Array):
+func promote_group_users_async(group_id: String, p_ids: Array):
 	if group_id.is_empty() or p_ids.size() <= 0:
 		return false
-	var result = await Global.Online.nakama_client.promote_group_users_async(Global.Online.nakama_session,group_id,p_ids)
+	var result = await Global.Online.nakama_client.promote_group_users_async(Global.Online.nakama_session, group_id, p_ids)
 	if result.is_exception():
 		print("Error getting friends list: ", result.get_exception().message)
 		return false
@@ -469,7 +458,7 @@ func promote_group_users_async(group_id : String, p_ids: Array):
 	return true
 
 # 订阅好友
-func follow_users_async(p_ids : PackedStringArray, p_usernames : PackedStringArray):
+func follow_users_async(p_ids: PackedStringArray, p_usernames: PackedStringArray):
 	if Global.Online.nakama_socket:
 		await Global.Online.nakama_socket.unfollow_users_async(p_ids)
 		var result = await Global.Online.nakama_socket.follow_users_async(p_ids, p_usernames)
@@ -480,7 +469,7 @@ func follow_users_async(p_ids : PackedStringArray, p_usernames : PackedStringArr
 		return result
 	return null
 
-func update_status_async(_status:String):
+func update_status_async(_status: String):
 	if Global.Online.nakama_socket:
 		var result = await Global.Online.nakama_socket.update_status_async(_status)
 		if result.is_exception():
@@ -491,9 +480,8 @@ func update_status_async(_status:String):
 	return null
 
 
-
 # 阻止好友
-func refuse_friends_async(friend_id: String)->bool:
+func refuse_friends_async(friend_id: String) -> bool:
 	var result = await Global.Online.nakama_client.block_friends_async(Global.Online.nakama_session, [friend_id])
 	if result.is_exception():
 		print("Error refuse_friends_async: ", result.get_exception().message)
@@ -502,7 +490,7 @@ func refuse_friends_async(friend_id: String)->bool:
 	return true
 
 # 群组中禁言
-func ban_group_users_async(group_id: String,user_id: String)->bool:
+func ban_group_users_async(group_id: String, user_id: String) -> bool:
 	var result = await Global.Online.nakama_client.ban_group_users_async(Global.Online.nakama_session, group_id, [user_id])
 	if result.is_exception():
 		print("Error ban_group_users_async: ", result.get_exception().message)
@@ -511,7 +499,7 @@ func ban_group_users_async(group_id: String,user_id: String)->bool:
 	return true
 
 # 离开群组
-func leave_group(group_id: String)->bool:
+func leave_group(group_id: String) -> bool:
 	var result = await Global.Online.nakama_client.leave_group_async(Global.Online.nakama_session, group_id)
 	if result.is_exception():
 		print("Error leave_group: ", result.get_exception().message)
@@ -521,7 +509,7 @@ func leave_group(group_id: String)->bool:
 
 
 # 删除好友
-func remove_friend(user_id: String)->bool:
+func remove_friend(user_id: String) -> bool:
 	var result = await Global.Online.nakama_client.delete_friends_async(Global.Online.nakama_session, [user_id])
 	if result.is_exception():
 		print("Error removing friend: ", result.get_exception().message)
@@ -529,7 +517,7 @@ func remove_friend(user_id: String)->bool:
 	print("删除好友成功!!!")
 	return true
 
-func remove_group(group_id: String)->bool:
+func remove_group(group_id: String) -> bool:
 	var result = await Global.Online.nakama_client.delete_group_async(Global.Online.nakama_session, group_id)
 	if result.is_exception():
 		print("Error removing group: ", result.get_exception().message)
@@ -537,28 +525,28 @@ func remove_group(group_id: String)->bool:
 	print("删除俱乐部!!!")
 	return true
 
-func remove_gourp_user(group_id: String,user_id: String)->bool:
+func remove_gourp_user(group_id: String, user_id: String) -> bool:
 	var result = await Global.Online.nakama_client.kick_group_users_async(Global.Online.nakama_session, group_id, [user_id])
 	if result.is_exception():
 		print("Error removing group: ", result.get_exception().message)
 		return false
-	print("删除俱乐部用户!!!",result)
+	print("删除俱乐部用户!!!", result)
 	return true
 
 
-func remove_channel_message(channel_id:String,message_id: String)->bool:
+func remove_channel_message(channel_id: String, message_id: String) -> bool:
 	if Global.Online.nakama_socket:
-		var result= await Global.Online.nakama_socket.remove_chat_message_async(channel_id,message_id)
+		var result = await Global.Online.nakama_socket.remove_chat_message_async(channel_id, message_id)
 		if result.is_exception():
 			print("Error removing group: ", result.get_exception().message)
 			return false
-		return true 
+		return true
 	return false
 
 # 修改消息
-func reback_channel_message(channel_id:String,message_id: String,data:Dictionary)->bool:
+func reback_channel_message(channel_id: String, message_id: String, data: Dictionary) -> bool:
 	if Global.Online.nakama_socket:
-		var result= await Global.Online.nakama_socket.update_chat_message_async(channel_id,message_id,data)
+		var result = await Global.Online.nakama_socket.update_chat_message_async(channel_id, message_id, data)
 		if result.is_exception():
 			print("Error removing group: ", result.get_exception().message)
 			return false
@@ -571,4 +559,4 @@ func remove_message_by_id(messages: Array, target_message_id: String):
 		if messages[i].message_id == target_message_id:
 			messages.remove_at(i)
 			return true
-	return false 
+	return false
