@@ -28,7 +28,6 @@ func _deferred_scroll_to_bottom():
         deselect(last_idx)
         # 直接设置滚动条到最大值
         get_v_scroll_bar().value = get_v_scroll_bar().max_value
-        signal_bottom.emit()
 
 
 # 当用户手动滚动时检测是否应该继续自动滚动

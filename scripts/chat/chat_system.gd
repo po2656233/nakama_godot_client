@@ -9,7 +9,7 @@ const MESSAGES_PER_PAGE = 20 # 每次加载的消息数量
 var isToTop = false
 var message_index = 0
 var last_message_time: int = 0 # 最后一条消息的时间戳
-var today_timestamp = Util.get_today_start_timestamp()
+var last_shown_date: String = "" # 最后显示时间分割的日期字符串 (YYYY-MM-DD)
 var myUsername = "我"
 var myHeadicon = ""
 var uid = ""
@@ -94,18 +94,18 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 		timestamp = int(Time.get_unix_time_from_system())
 	
 	# 检查是否需要显示时间分割
-	# var show_time = false
-	var show_time = true # 显示时间
-	var timeEquation = timestamp - last_message_time
+	var show_time = true
 	var curMsgTime = Util.convert_to_china_time(timestamp)
-	var lastMsgTime = Util.convert_to_china_time(last_message_time)
 	
-	if last_message_time >= 0 and (timeEquation > TIME_INTERVAL_THRESHOLD or timestamp - today_timestamp > TIME_INTERVAL_THRESHOLD or curMsgTime.hour < lastMsgTime.hour):
+	# 获取当前消息的日期（年月日）
+	var current_date = "%04d-%02d-%02d" % [curMsgTime["year"], curMsgTime["month"], curMsgTime["day"]]
+	
+	# 只在日期变化时添加时间分割（每天只显示一次）
+	if last_message_time >= 0 and current_date != last_shown_date:
 		# 添加时间分割标签
 		add_time_separator(curMsgTime)
-		show_time = true
-		if timestamp - today_timestamp > TIME_INTERVAL_THRESHOLD:
-			today_timestamp = Util.get_today_start_timestamp()
+		# 更新最后显示的日期
+		last_shown_date = current_date
 
 	# 创建新的消息项
 	# 获取当前消息容器中的子控件数量
@@ -424,6 +424,8 @@ func clear_messages_item():
 		child.visible = false
 	# 重置最后消息时间
 	last_message_time = 0
+	# 重置最后显示的日期
+	last_shown_date = ""
 	pass
 
 # 确保滚动到底部并保持消息在可见区域内

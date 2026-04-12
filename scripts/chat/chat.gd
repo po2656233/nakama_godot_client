@@ -236,13 +236,12 @@ func _on_received_message(msg):
 			Global.SignalMgr.RecvMessageSIG.emit(msg)
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
-		ensure_scroll_to()
-		await get_tree().create_timer(0.1).timeout
-		ensure_scroll_to()
-		await get_tree().create_timer(0.3).timeout
-		ensure_scroll_to()
-		# await get_tree().create_timer(0.5).timeout
-		# ensure_scroll_to()
+		await ensure_scroll_to()
+		if not is_first:
+			await get_tree().create_timer(0.1).timeout
+			await ensure_scroll_to()
+			await get_tree().create_timer(0.3).timeout
+			await ensure_scroll_to()
 	pass
 
 # 收到历史消息----------------------
@@ -409,6 +408,7 @@ func _on_btn_send_pressed() -> void:
 			Global.SignalMgr.SendMessageSIG.emit(msg)
 			sendTextEdit.clear()
 			isToTop = false
+			is_first = false
 		else:
 			Global.WindowPopup.show_message("发送失败")
 		return

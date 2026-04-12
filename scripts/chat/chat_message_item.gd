@@ -196,7 +196,7 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	media_preview.visible = false
 	file_info.visible = false
 	voice_message.visible = false
-	
+
 	# 根据内容类型设置显示
 	if not content:
 		return
@@ -229,9 +229,9 @@ func _setup_text_message(text: String):
 	# 重置尺寸限制，让文本先自然布局
 	text_label.custom_minimum_size = Vector2.ZERO
 	text_label.size = Vector2.ZERO
-	
-	# 等待一帧以确保文本已经正确布局
-	# await get_tree().process_frame
+	text_label.modulate = Color(1, 1, 1)
+	if text == "[已撤回]" or text == "[正在撤销...]":
+		text_label.modulate = Color(0.5, 0.5, 0.5)
 	
 	# 获取文本的实际尺寸
 	var font = text_label.get_theme_font("normal_font")
@@ -247,6 +247,7 @@ func _setup_text_message(text: String):
 	# 设置最终尺寸
 	text_label.custom_minimum_size.x = final_width
 	text_label.size.x = final_width
+	text_label.visible = true
 	
 	# 确保父容器也更新尺寸
 	if message_panel:
@@ -254,6 +255,7 @@ func _setup_text_message(text: String):
 		message_panel.size.x = final_width
 	# 确保文本适应容器宽度和高度
 	_on_resized()
+
 
 # 设置图片消息
 func _setup_image_message(path: String):

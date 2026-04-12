@@ -123,7 +123,7 @@ bg_color = Color(0.137255, 0.423529, 0.45098, 0.376471)
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84rx4"]
-draw_center = false
+bg_color = Color(0.3353433, 0.67302763, 0.58436155, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5rkik"]
 bg_color = Color(0, 0.312937, 0.535686, 1)
@@ -372,11 +372,13 @@ theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
 theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
+theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
 text = "荣誉榜"
+flat = true
 
 [node name="btn_ranklist" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1391246026]
 visible = false
@@ -401,6 +403,7 @@ theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
 theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
@@ -416,6 +419,7 @@ theme_override_colors/font_focus_color = Color(0, 0.721569, 0.72549, 1)
 theme_override_colors/font_pressed_color = Color(0, 0.313726, 0.6, 1)
 theme_override_colors/font_hover_color = Color(0.843137, 0.847059, 0.239216, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0.447059, 0.635294, 1)
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
@@ -434,7 +438,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_oulow")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2180j")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fluuk")
 theme_override_styles/focus = SubResource("StyleBoxFlat_84rx4")
-text = "兑换充值"
+text = "兑换&充值"
+flat = true
 
 [node name="Panel" type="Panel" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1848537921]
 layout_mode = 2
