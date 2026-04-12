@@ -80,7 +80,7 @@ func send_message(content: Dictionary) -> Error:
 		var error_message = result.get_exception().message
 		print("Failed to send message: ", error_message)
 
-		if "Must join channel before sending messages" in error_message:
+		if "Must join channel" in error_message:
 			# 先尝试加入频道 避免发消息时 无法获取渠道信息
 			var chType = NakamaSocket.ChannelType.DirectMessage
 			if int(content.kind) == 1:

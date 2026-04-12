@@ -429,17 +429,17 @@ func _update_popup_menu_items():
 # 处理菜单项选择
 func _on_popup_menu_item_selected(id: int):
 	print("菜单项选择:", id)
+	var selected_text = text_label.get_selected_text()
 	match id:
 		0: # 复制
 			print("复制文本")
 			if has_selection:
-				var selected_text = text_label.get_selected_text()
 				DisplayServer.clipboard_set(selected_text)
 			else:
 				DisplayServer.clipboard_set(text_label.text)
 			Global.WindowPopup.show_message("已复制")
 		1: # 撤销
-			if is_self_message:
+			if is_self_message and selected_text != "[正在撤销...]" and selected_text != "[已撤回]":
 				text_label.text = "[正在撤销...]"
 				message_revoked.emit(self)
 		2: # 删除

@@ -234,10 +234,7 @@ func _on_message_revoked(message_item):
 # 处理消息删除
 func _on_message_deleted(message_item):
 	await Global.OnlineChat.remove_channel_message(message_item.channel_id, message_item.message_id)
-	 # 创建渐隐动画
-	message_item.visible = false
-	delete_message(message_item.channel_id, message_item.message_id)
-
+	pass
 
 # 删除消息的主函数
 func delete_message(channel_id: String, message_id: String):
@@ -246,8 +243,7 @@ func delete_message(channel_id: String, message_id: String):
 	var messages = Global.DataMgr.get_instance().get_chat_history(uid, channel_id)
 	if messages.is_empty():
 		return
-	Global.OnlineChat.remove_message_by_id(messages, message_id)
-	Global.DataMgr.get_instance().set_chat_history(uid, channel_id, messages)
+	Global.DataMgr.get_instance().remove_chat_history(uid, channel_id, message_id)
 	# 从ID缓存中删除
 	if channel_id in message_id_cache:
 		message_id_cache[channel_id].erase(message_id)

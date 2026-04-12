@@ -342,6 +342,7 @@ func remove_chat_history(uid:String, channelId:String, messageId:String=""):
 			if msg.message_id != messageId:
 				msgList.append(msg)
 	cached_data[key][channelId] = msgList
+	save_data()  # 每次设置数据后 自动保存
 	return msgList
 
 
@@ -359,11 +360,14 @@ func update_chat_history(uid:String, channelId:String, msg):
 			var msgObj =message  if not (message is String) else parse_message(message)
 			if msgObj.message_id == messageId:
 				message = msg._to_string()
+				save_data()  # 每次设置数据后 自动保存
+				return
 	return
 
 
 func remove_friend(uid:String, friendId:String):
 	remove_data_array(uid_friend_key + uid,"id",friendId)
+	save_data()  # 每次设置数据后 自动保存
 	pass
 
 func remove_friend_all(uid:String):
