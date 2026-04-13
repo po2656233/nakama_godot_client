@@ -353,7 +353,7 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 			modify_message(channel_id, message_id, content.content)
 		else:
 			delete_message(channel_id, message_id)
-		refresh_current_channel_display(channel_id)
+		refresh_current_channel_display(channel_id, false)
 		return false
 
 	# 添加消息到历史记录和ID缓存
@@ -385,7 +385,7 @@ func get_channel_messages(channel_id: String) -> Array:
 
 
 # 刷新当前channel的显示
-func refresh_current_channel_display(cid="") -> void:
+func refresh_current_channel_display(cid="", is_force: bool = true) -> void:
 	# 清空当前显示
 	clear_messages_item()
 	if cid == "":
@@ -397,7 +397,8 @@ func refresh_current_channel_display(cid="") -> void:
 		var content = msg.content if typeof(msg.content) != TYPE_STRING else JSON.parse_string(msg.content)
 		var code = msg.code if msg.has("code") else 0
 		add_message(cid, msg.message_id, content, msg.username, uid == msg.sender_id, Time.get_unix_time_from_datetime_string(msg.create_time), code)
-	ensure_scroll_to()
+	if is_force:
+		ensure_scroll_to()
 	pass
 
 func message_to_show(msg: NakamaAPI.ApiChannelMessage):

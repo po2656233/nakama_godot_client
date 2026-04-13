@@ -37,7 +37,7 @@ enum NotifyStatus {
 
 var onlineColor = Color.YELLOW
 var leaveColor = Color.GRAY
-var is_first = true
+# var is_first = true
 var is_mobile: bool = false
 var last_keyboard_height = 0
 var origin_height = 0
@@ -237,11 +237,11 @@ func _on_received_message(msg):
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
 		await ensure_scroll_to()
-		if not is_first:
-			await get_tree().create_timer(0.1).timeout
-			await ensure_scroll_to()
-			await get_tree().create_timer(0.3).timeout
-			await ensure_scroll_to()
+		# if not is_first:
+		# 	await get_tree().create_timer(0.1).timeout
+		# 	await ensure_scroll_to()
+		# 	await get_tree().create_timer(0.3).timeout
+		# 	await ensure_scroll_to()
 	pass
 
 # 收到历史消息----------------------
@@ -408,7 +408,7 @@ func _on_btn_send_pressed() -> void:
 			Global.SignalMgr.SendMessageSIG.emit(msg)
 			sendTextEdit.clear()
 			isToTop = false
-			is_first = false
+			# is_first = false
 		else:
 			Global.WindowPopup.show_message("发送失败")
 		return

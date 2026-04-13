@@ -180,11 +180,7 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	time_label.visible = show_time
 	if show_time:
 		time_label.text = time_str
-	if content.has("headicon") and content["headicon"] != null:
-		head_icon.texture = await Util.load_texture_async(content["headicon"])
-	else:
-		head_icon.visible = false
-
+	
 	channel_id = chanId
 	message_id = msgId
 	current_content = content
@@ -212,6 +208,12 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 			_setup_file_message(content["path"], content["name"], content["size"])
 		ContentType.VOICE:
 			_setup_voice_message(content["path"], content["duration"])
+	
+	# 异步加载头像，不阻塞其他UI设置
+	if content.has("headicon") and content["headicon"] != null:
+		_load_head_icon_async(content["headicon"])
+	else:
+		head_icon.visible = false
 	pass
 
 # 设置文本消息
@@ -219,8 +221,6 @@ func _setup_text_message(text: String):
 	if not text_label or text == "":
 		return
 		
-	text_label.visible = true
-	text_label.text = text
 	# text_label.push_font_size(24) 
 	
 	# 设置自动换行
@@ -232,7 +232,8 @@ func _setup_text_message(text: String):
 	text_label.modulate = Color(1, 1, 1)
 	if text == "[已撤回]" or text == "[正在撤销...]":
 		text_label.modulate = Color(0.5, 0.5, 0.5)
-	
+	text_label.text = text
+
 	# 获取文本的实际尺寸
 	var font = text_label.get_theme_font("normal_font")
 	var font_size = text_label.get_theme_font_size("normal_font_size")
@@ -448,3 +449,14 @@ func _on_popup_menu_item_selected(id: int):
 			if is_self_message:
 				message_deleted.emit(self)
 	pass
+
+# 异步加载头像
+func _load_head_icon_async(headicon_path: String):
+	# 先隐藏头像，避免显示旧纹理
+	head_icon.visible = false
+	# 在后台线程加载纹理
+	var texture = await Util.load_texture_async(headicon_path)
+	# 加载完成后设置纹理并显示
+	if texture:
+		head_icon.texture = texture
+		head_icon.visible = true

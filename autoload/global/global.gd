@@ -95,7 +95,6 @@ func _get(property: StringName):
 		return null
 		
 	var value = _globals[property]
-	
 	# 如果是脚本资源，自动实例化
 	if value is GDScript:
 		var instance = value.new()

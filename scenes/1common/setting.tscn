@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b88upmlmmwyiv"]
+[gd_scene format=3 uid="uid://b88upmlmmwyiv"]
 
 [ext_resource type="Script" uid="uid://bs04xax23soka" path="res://scripts/1common/setting.gd" id="1_ng6nc"]
 [ext_resource type="Texture2D" uid="uid://b3y5q5trn4jgq" path="res://assets/currency/notify.svg" id="2_p0qrl"]
@@ -38,7 +38,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awqwa"]
 draw_center = false
 
-[node name="Setting" type="Control" groups=["settings"]]
+[node name="Setting" type="Control" unique_id=1669301844 groups=["settings"]]
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
@@ -46,7 +46,7 @@ grow_horizontal = 2
 script = ExtResource("1_ng6nc")
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainerRightTop" type="HBoxContainer" parent="."]
+[node name="HBoxContainerRightTop" type="HBoxContainer" parent="." unique_id=1928234215]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 1
 anchors_preset = 1
@@ -60,7 +60,7 @@ grow_horizontal = 0
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="btn_email" type="Button" parent="HBoxContainerRightTop"]
+[node name="btn_email" type="Button" parent="HBoxContainerRightTop" unique_id=259760028]
 unique_name_in_owner = true
 clip_contents = true
 custom_minimum_size = Vector2(50, 50)
@@ -75,7 +75,7 @@ script = ExtResource("3_yogt2")
 normal_texture = ExtResource("6_xkbed")
 shake_texture = ExtResource("8_7btfg")
 
-[node name="btn_full" type="Button" parent="HBoxContainerRightTop"]
+[node name="btn_full" type="Button" parent="HBoxContainerRightTop" unique_id=106288196]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(50, 50)
@@ -88,7 +88,7 @@ icon = ExtResource("3_u7pao")
 icon_alignment = 2
 expand_icon = true
 
-[node name="MB_setting" type="MenuButton" parent="HBoxContainerRightTop"]
+[node name="MB_setting" type="MenuButton" parent="HBoxContainerRightTop" unique_id=1780409678]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -116,7 +116,7 @@ popup/item_4/text = "返回"
 popup/item_4/icon = ExtResource("11_evuvb")
 popup/item_4/id = 4
 
-[node name="btn_what" type="Button" parent="."]
+[node name="btn_what" type="Button" parent="." unique_id=279678469]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 1

@@ -246,6 +246,7 @@ func logout(isclear:bool = true):
 	_first_dev_login = true
 	if Global.Online.nakama_client and Global.Online.nakama_session:
 		Global.Online.nakama_client.session_logout_async(Global.Online.nakama_session)
+		Global.Online.nakama_socket.close()
 		Global.Online.nakama_session = null
 		if isclear :
 			var dir = DirAccess.open(USER_DIR)
