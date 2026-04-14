@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cqxkj2m7d4n1k"]
+[gd_scene format=3 uid="uid://cqxkj2m7d4n1k"]
 
 [ext_resource type="Script" uid="uid://dx6nli1e6pwen" path="res://scripts/email/mail_detail.gd" id="1_n2p4r"]
 [ext_resource type="Texture2D" uid="uid://byxoofshj56sj" path="res://assets/currency/reback1.png" id="2_hkh8y"]
@@ -39,7 +39,7 @@ bg_color = Color(0.341176, 0.576471, 0.341176, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vifji"]
 bg_color = Color(0.776471, 0.741176, 0.278431, 1)
 
-[node name="MailDetail" type="Control"]
+[node name="MailDetail" type="Control" unique_id=156682618]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,7 +48,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n2p4r")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1793564461]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,7 +57,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6x7xj")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1915241646]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,14 +69,14 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1881230262]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1391970119]
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1373293249]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_hkh8y")
@@ -87,35 +87,35 @@ icon = ExtResource("2_hkh8y")
 icon_alignment = 1
 expand_icon = true
 
-[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=460935273]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "邮件标题"
 horizontal_alignment = 1
 
-[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1998476383]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
 text = "2023-12-25 10:00:00"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer" unique_id=2074291127]
 layout_mode = 2
 
-[node name="ContentLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="ContentLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=65884705]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_vertical = 3
 text = "邮件内容"
 autowrap_mode = 2
 
-[node name="RewardLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="RewardLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1437995543]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.921569, 0.682353, 0, 1)
 text = "奖励: 1000金币 50宝石"
 horizontal_alignment = 1
 
-[node name="ClaimButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="ClaimButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1823420483]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4

@@ -10,7 +10,7 @@ signal closeMailSIG()
 #var mail_manger: MailMgr
 
 func _ready():
-	#mail_manger = get_node("/root/MailMgr")
+	#mail_manger = Global.MailMgr
 	Global.MailMgr.set_mail_list_node(self)  # 设置引用
 	clear_button.pressed.connect(_on_clear_button_pressed)
 	_load_mail_list()

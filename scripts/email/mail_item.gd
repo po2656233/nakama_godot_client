@@ -7,7 +7,7 @@ extends Button
 var mail_data: Dictionary
 
 func _ready():
-	var mail_system = get_node("/root/Global.MailMgr.")
+	var mail_system = Global.MailMgr
 	mail_system.mail_claimed.connect(_on_mail_claimed)
 
 func setup(data: Dictionary):

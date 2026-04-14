@@ -101,9 +101,11 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	var current_date = "%04d-%02d-%02d" % [curMsgTime["year"], curMsgTime["month"], curMsgTime["day"]]
 	
 	# 只在日期变化时添加时间分割（每天只显示一次）
-	if last_message_time >= 0 and current_date != last_shown_date:
+	# 并且时间间隔超过5分钟才显示时间分割
+	var time_diff = timestamp - last_message_time
+	if last_message_time >= 0 and time_diff >= 60:  # 300秒 = 5分钟
 		# 添加时间分割标签
-		add_time_separator(curMsgTime)
+		add_time_separator(timestamp)
 		# 更新最后显示的日期
 		last_shown_date = current_date
 
@@ -144,7 +146,7 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	# 格式化时间字符串
 	var time_str = ""
 	if show_time:
-		time_str = "%02d:%02d" % [curMsgTime["hour"], curMsgTime["minute"]]
+		time_str = "%02d:%02d:%02d  " % [curMsgTime["hour"], curMsgTime["minute"], curMsgTime["second"]]
 	
 	# 设置消息内容
 	message_item.set_message(chanId, msgId, content, nickname, msg_type, show_time, time_str)
@@ -155,12 +157,8 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	pass
 
 # 添加时间分割线
-func add_time_separator(datetime: Dictionary):
-	var time_str = "%d-%02d-%02d" % [
-		datetime["year"],
-		datetime["month"],
-		datetime["day"]
-	]
+func add_time_separator(timestamp: int):
+	var time_str = Util.format_date_separator(timestamp)
 	add_center_message(time_str)
 	pass
 

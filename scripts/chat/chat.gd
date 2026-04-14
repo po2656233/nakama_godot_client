@@ -50,7 +50,9 @@ var first_world = true
 
 # 初始化 
 func _ready():
-
+	first_friends = true
+	first_clubs = true
+	first_world = true
 	tab_container.set_tab_title(0,"世界")
 	tab_container.set_tab_title(1,"俱乐部")
 	tab_container.set_tab_title(2,"好友")
@@ -87,6 +89,7 @@ func _ready():
 	# 线程开启加载俱乐部成员
 	# startThread()
 	call_thread_safe("initData")
+	await Global.OnlineChat.load_world_channel()
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
@@ -682,7 +685,7 @@ func _on_light_button_pressed() -> void:
 func _on_tab_container_tab_selected(tab: int) -> void:
 	if tab == 0 and first_world:
 		first_world = false
-		var world = await Global.OnlineChat.load_world_channel()
+		var world = await Global.OnlineChat.get_world_channel()
 		if world:
 			Global.DataMgr.get_instance().set_world_channel_id(world.id)
 			_on_change_channel(world.id)
