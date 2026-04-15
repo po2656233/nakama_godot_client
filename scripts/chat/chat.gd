@@ -89,7 +89,9 @@ func _ready():
 	# 线程开启加载俱乐部成员
 	# startThread()
 	call_thread_safe("initData")
-	await Global.OnlineChat.load_world_channel()
+	call_thread_safe("get_world_channel")
+	call_thread_safe("get_club_list")
+	call_thread_safe("get_friends_list")
 
 	# 连接信号
 	sendTextEdit.finished.connect(_on_btn_send_pressed)
@@ -305,7 +307,8 @@ func changeOnline(user_id: String, online: bool) -> int:
 			if user.display_name:
 				username += '(' + user.display_name + ')'
 					# 显示好友在线状态
-			username += '[在线]' if online else '[离线]'
+			# username += '\t[在线]' if online else '\t[离线]'
+			username += '' if online else ' \t[离线]'
 			friendListItem.set_item_text(i, username)
 			friendListItem.set_item_metadata(i, friend)
 			friendListItem.set_item_custom_fg_color(i, onlineColor if online else leaveColor)
@@ -348,7 +351,7 @@ func _on_received_notify(notify):
 			approval_data["type"] = "好友"
 			approval_data["status"] = 2
 			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
-			Global.SignalMgr.NewNotifySIG.emit()
+			Global.SignalMgr.NewNotifySIG.emit(approval_data)
 		NotifyStatus.ACCEPT_FRIEND:
 			approval_data["type"] = "好友"
 			approval_data["status"] = 4
@@ -358,22 +361,22 @@ func _on_received_notify(notify):
 		NotifyStatus.ACCEPT_GROUP:
 			approval_data["status"] = 4
 			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
-			Global.SignalMgr.NewNotifySIG.emit()
+			Global.SignalMgr.NewNotifySIG.emit(approval_data)
 			pass
 		NotifyStatus.WANT_GROUP:
 			approval_data["status"] = 2
 			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
-			Global.SignalMgr.NewNotifySIG.emit()
+			Global.SignalMgr.NewNotifySIG.emit(approval_data)
 			pass
 		NotifyStatus.FRIEND_JOIN:
-			Global.SignalMgr.NewNotifySIG.emit()
+			Global.SignalMgr.NewNotifySIG.emit(approval_data)
 			pass
 		NotifyStatus.SERVER_CLOSE:
 			pass
 		NotifyStatus.BANNED:
 			approval_data["status"] = 3
 			Global.DataMgr.get_instance().add_uid_approval(Global.OnlineLogin.get_my_id(), approval_data)
-			Global.SignalMgr.NewNotifySIG.emit()
+			Global.SignalMgr.NewNotifySIG.emit(approval_data)
 			pass
 		_:
 			pass
@@ -440,6 +443,17 @@ func _load_more_history(forward: bool):
 
 	# 发起加载请求
 	await Global.OnlineChat.get_chat_history(current_channel_id, MESSAGES_PER_PAGE, forward)
+	pass
+
+#################################################################
+# 获取世界渠道
+func get_world_channel():
+	var world = await Global.OnlineChat.load_world_channel()
+	if world:
+		Global.DataMgr.get_instance().set_world_channel_id(world.id)
+		#_on_change_channel(world.id)
+		print("加载世界频道",world)
+		await Global.OnlineChat.get_chat_history(world.id)
 	pass
 
 #################################################################
@@ -685,12 +699,7 @@ func _on_light_button_pressed() -> void:
 func _on_tab_container_tab_selected(tab: int) -> void:
 	if tab == 0 and first_world:
 		first_world = false
-		var world = await Global.OnlineChat.get_world_channel()
-		if world:
-			Global.DataMgr.get_instance().set_world_channel_id(world.id)
-			_on_change_channel(world.id)
-		print("加载世界频道",world)
-		await Global.OnlineChat.get_chat_history(world.id)
+		call_thread_safe("get_world_channel")
 	elif tab == 1 and first_clubs:
 		first_clubs = false
 		# get_club_list()

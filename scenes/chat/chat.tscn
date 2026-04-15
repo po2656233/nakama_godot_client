@@ -558,6 +558,7 @@ theme_override_styles/selected_focus = SubResource("StyleBoxFlat_wpep7")
 theme_override_styles/cursor = SubResource("StyleBoxFlat_256f6")
 auto_height = true
 script = ExtResource("4_3wj1b")
+custom_color = Color(0.09843243, 0.45232075, 0.6983498, 1)
 Block = true
 
 [node name="input_area" type="PanelContainer" parent="MarginContainer/Panel" unique_id=617668803]
