@@ -241,7 +241,7 @@ func _on_received_message(msg):
 			Global.SignalMgr.RecvMessageSIG.emit(msg)
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
-		await ensure_scroll_to()
+		ensure_scroll_to()
 		# if not is_first:
 		# 	await get_tree().create_timer(0.1).timeout
 		# 	await ensure_scroll_to()
