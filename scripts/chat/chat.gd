@@ -454,6 +454,7 @@ func get_world_channel():
 		#_on_change_channel(world.id)
 		print("加载世界频道",world)
 		await Global.OnlineChat.get_chat_history(world.id)
+		ensure_scroll_to()
 	pass
 
 #################################################################
