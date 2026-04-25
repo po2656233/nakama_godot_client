@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://riqfmggkqpft"]
+[gd_scene format=3 uid="uid://riqfmggkqpft"]
 
 [ext_resource type="Script" uid="uid://cwwwgcrhwjekg" path="res://scripts/approval/approval_form.gd" id="1_m2p3q"]
 [ext_resource type="Texture2D" uid="uid://7lqek46tetex" path="res://assets/currency/close.svg" id="2_8w8cs"]
@@ -6,13 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://ch0adttkqctmh" path="res://assets/currency/close1.svg" id="4_d1wjj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
-bg_color = Color(0.65098, 0.764706, 0.87451, 1)
+bg_color = Color(0.5733507, 0.7084413, 0.83790535, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j4mxs"]
 bg_color = Color(0.768627, 0.6, 0.6, 1)
 draw_center = false
 
-[node name="ApprovalForm" type="Control"]
+[node name="ApprovalForm" type="Control" unique_id=146152675]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_m2p3q")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=18136205]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1130425737]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,11 +42,11 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=2121184574]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1735276972]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
@@ -54,20 +54,20 @@ theme_override_font_sizes/font_size = 28
 text = "审批表单"
 horizontal_alignment = 1
 
-[node name="HeaderContainer" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HeaderContainer" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1724748087]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_j4mxs")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer" unique_id=1236287785]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer" unique_id=442488461]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="TypeHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+[node name="TypeHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer" unique_id=604977892]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.6, 1, 1)
@@ -75,7 +75,7 @@ text = "类型"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NameHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+[node name="NameHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer" unique_id=709582414]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -83,7 +83,7 @@ text = "名称"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ClubHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+[node name="ClubHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer" unique_id=1692745764]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -91,7 +91,7 @@ text = "俱乐部"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ApplyTimeHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+[node name="ApplyTimeHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer" unique_id=1208462751]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -99,7 +99,7 @@ text = "申请时间"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ApprovalTimeHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+[node name="ApprovalTimeHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer" unique_id=1016062577]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -107,7 +107,7 @@ text = "审批时间"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StatusHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+[node name="StatusHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer" unique_id=1411263636]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -115,7 +115,7 @@ text = "状态"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonSpaceHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer"]
+[node name="ButtonSpaceHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/HeaderContainer/MarginContainer/HBoxContainer" unique_id=987681251]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -123,22 +123,22 @@ text = "操作"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer" unique_id=698610087]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1599861482]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RequestList" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="RequestList" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1023422475]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="CloseButton" type="TextureButton" parent="Panel"]
+[node name="CloseButton" type="TextureButton" parent="Panel" unique_id=1529805317]
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 offset_left = 4.0
