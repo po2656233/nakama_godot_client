@@ -235,13 +235,13 @@ func _on_recv_finish():
 func _on_received_message(msg):
 	if msg.message_id == "":
 		return
-	print("收到消息:", msg)
+	print("收到消息_on_received_message:", msg)
 	if add_message_to_history(msg.channel_id, msg):
 		if msg.sender_id != uid:
 			Global.SignalMgr.RecvMessageSIG.emit(msg)
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
-		ensure_scroll_to()
+		refresh_current_channel_display(msg.channel_id)
 		# if not is_first:
 		# 	await get_tree().create_timer(0.1).timeout
 		# 	await ensure_scroll_to()
@@ -251,7 +251,7 @@ func _on_received_message(msg):
 
 # 收到历史消息----------------------
 func _on_history_message(msgList):
-	print("收到历史消息:", msgList.size())
+	print("收到历史消息:_on_history_message:", msgList.size())
 	# 校验是否有新消息
 	var channel_id = ""
 	var haveNew = false

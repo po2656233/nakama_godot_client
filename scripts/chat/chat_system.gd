@@ -101,9 +101,9 @@ func add_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	var current_date = "%04d-%02d-%02d" % [curMsgTime["year"], curMsgTime["month"], curMsgTime["day"]]
 	
 	# 只在日期变化时添加时间分割（每天只显示一次）
-	# 并且时间间隔超过5分钟才显示时间分割
+	# 并且时间间隔超过2分钟才显示时间分割
 	var time_diff = timestamp - last_message_time
-	if last_message_time >= 0 and time_diff >= 60:  # 300秒 = 5分钟
+	if last_message_time >= 0 and time_diff >= 120:  # 120秒 = 2分钟
 		# 添加时间分割标签
 		add_time_separator(timestamp)
 		# 更新最后显示的日期
