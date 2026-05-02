@@ -43,16 +43,16 @@ var last_keyboard_height = 0
 var origin_height = 0
 var button: Button
 var isOpenLight = false
-var first_friends = true
-var first_clubs = true
-var first_world = true
+var first_friends = false
+var first_clubs = false
+var first_world = false
 
-
-# 初始化 
-func _ready():
+func _init() -> void:
 	first_friends = true
 	first_clubs = true
 	first_world = true
+# 初始化 
+func _ready():
 	tab_container.set_tab_title(0,"世界")
 	tab_container.set_tab_title(1,"俱乐部")
 	tab_container.set_tab_title(2,"好友")

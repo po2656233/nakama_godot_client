@@ -48,5 +48,6 @@ var ResponeMapping = {
 	"Session expired.": "会话已过期",
 	"Invalid credentials.": "账号或密码错误，请检查后重试",
 	"User account not found.": "该账号未注册",
+	"Device ID is required.": "缺少设备ID"
 
 }
