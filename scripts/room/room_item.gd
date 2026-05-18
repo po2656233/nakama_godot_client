@@ -3,6 +3,7 @@ extends Panel
 signal room_selected(room_data: Dictionary)
 signal join_room(room_data: Dictionary)
 signal favorite_toggled(is_favorite: bool)
+signal show_select()
 
 # 节点引用
 @onready var roomFront = $Front
@@ -48,7 +49,6 @@ const FAVORITE_NORMAL_COLOR = Color(0.84, 0.402, 0.136, 0.741)
 const FAVORITE_ACTIVE_COLOR = Color(0.49, 0.55, 0.14)
 # 滑动相关变量
 var is_flipped = true
-var is_hovering = false
 var is_animating = false
 var is_dragging = false
 var have_remove = false
@@ -59,10 +59,9 @@ var status_name = ["未知状态","等待中","进行中","已满员"]
 func _ready():
 	# 初始化收藏按钮样式
 	_update_favorite_button()
-
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
+	
 	gui_input.connect(_on_gui_input)
+	show_select.connect(_on_show_select)
 	join_button.pressed.connect(_on_join_button_pressed)
 	favorite_button.toggled.connect(_on_favorite_button_toggled)
 
@@ -151,20 +150,13 @@ func _update_favorite_button():
 	# favorite_button.disabled = is_favorite
 	pass
 
-func _on_mouse_entered():
-	if not is_hovering and not animation.is_playing():
-		is_hovering = true
+func _on_show_select():
 		animation.play("hover")
-	pass
 
-func _on_mouse_exited():
-	if is_hovering:
-		is_hovering = false
-		scale = Vector2(1, 1)  # 直接重置缩放，不使用动画
-	pass
 
 func _on_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
+		show_select.emit()
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			 # 如果没有明显的拖动，则视为点击，且双击
 			if event.double_click and  (event.position - drag_start_position).length() < min_swipe_distance:
