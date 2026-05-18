@@ -59,7 +59,6 @@ var status_name = ["未知状态","等待中","进行中","已满员"]
 func _ready():
 	# 初始化收藏按钮样式
 	_update_favorite_button()
-	
 	gui_input.connect(_on_gui_input)
 	show_select.connect(_on_show_select)
 	join_button.pressed.connect(_on_join_button_pressed)
@@ -156,7 +155,7 @@ func _on_show_select():
 
 func _on_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
-		show_select.emit()
+		
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			 # 如果没有明显的拖动，则视为点击，且双击
 			if event.double_click and  (event.position - drag_start_position).length() < min_swipe_distance:
@@ -167,6 +166,8 @@ func _on_gui_input(event: InputEvent):
 				# 开始拖动
 				drag_start_position = event.position
 				is_dragging = true
+				if not is_animating:
+					show_select.emit()
 			else:
 				# 结束拖动
 				is_dragging = false
