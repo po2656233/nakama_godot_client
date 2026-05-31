@@ -31,7 +31,7 @@ var room_style_path = "res://styles/room_panel_style.tres"
 var waiting_style_path = "res://styles/waiting_style.tres"
 var playing_style_path = "res://styles/playing_style.tres"
 var full_style_path = "res://styles/full_style.tres"
-# var default_style_path = "res://styles/default_style.tres"
+var default_style_path = "res://styles/default_style.tres"
 
 var hover_tween: Tween
 var pulse_tween: Tween
@@ -54,7 +54,7 @@ var is_dragging = false
 var have_remove = false
 var drag_start_position = Vector2.ZERO
 var min_swipe_distance = 200  # 最小滑动距离
-var status_name = ["未知状态","等待中","进行中","已满员"]
+var status_name = ["空闲","等待中","已满员","进行中"]
 
 func _ready():
 	# 初始化收藏按钮样式
@@ -72,30 +72,39 @@ func getBBCodeContent(field, value):
 func setup(data: Dictionary):
 	if join_button:
 		join_button.set_disabled(true)
+	var player_count = int(data.get("player_count", 0))
+	var max_players = int(data.get("max_players", 0))
+	var status = int(data.get("status", 0))
+	
 	room_data = data.duplicate()
 	is_favorite = data.is_favorite
 	room_name_label.text = data.get("room_name", "")
 	game_name_label.text = data.get("game_name", "")
 	room_id_label.text = data.get("room_id", "").substr(0, 16)
 	base_score_label.text = str(data.get("base_score", 0))+" 分"
-	player_count_label.text = "%d/%d" % [data.get("player_count", 0), data.get("max_players", 0)]
-	status_label.text = status_name[data.get("status", 0)]
+	player_count_label.text = "%d/%d" % [player_count, max_players]
+	
 	room_lock.visible = data.get("is_locked", false)
 	author.text = "@"+data.get("author", "")+" "
 	have_remove = data.get("author", "") == Global.OnlineLogin.get_my_name()
 	remove_button.visible = have_remove
 	# 根据状态设置状态标签样式
-	var style_path: String
-	match data.get("status", 0):  #"等待中" "进行中"  "已满员"
-		0:
-			style_path = waiting_style_path
-		1:
-			style_path = playing_style_path
-		2:
-			style_path = full_style_path
-		_:
-			style_path = waiting_style_path
+	var style_path: String = default_style_path
 	
+	if player_count == 0:
+		status = 0
+		style_path = waiting_style_path
+	elif player_count == max_players:
+		if status == 1:
+			status = 2
+		else:
+			status = 3
+		style_path = full_style_path
+	elif 0 < player_count :
+		status = 1
+		style_path = playing_style_path
+	
+	status_label.text = status_name[status]
 	var style = load(style_path)
 	if style:
 		status_label.add_theme_stylebox_override("normal", style)
