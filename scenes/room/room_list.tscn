@@ -413,6 +413,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 
 [node name="Panel" type="Panel" parent="CenterContainer" unique_id=493605480]
 custom_minimum_size = Vector2(350, 200)

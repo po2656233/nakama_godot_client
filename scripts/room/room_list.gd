@@ -664,14 +664,14 @@ func _on_join_room(room_info: Dictionary)->bool:
 		jion_room.text = "%s\nID:%s" % [room_info.room_name, room_info.room_id.substr(0,16)]
 		return true
 	print("加入房间-ID:", room_info.id, " 加入房间-key:", jion_input.text)
-	# 初始化等待房间
-	waitingStart.reset(enName, room_info.room_id, room_info.max_players)
+
 	# 不加入网络重试
 	is_doing_enter = true
 	var result = await Global.Online.nakama_socket.rpc_async("join_table",{
 		"tableId": int(room_info.id),
 		"tableKey": jion_input.text
 	})
+	
 	_on_join_table_cb(result)
 	return true
 
@@ -745,7 +745,9 @@ func _on_join_table_cb(result):
 	if not result_1:
 		_on_join_table_err("")
 		return
-		
+	
+	# 初始化等待房间
+	waitingStart.reset(selected_room_info.room_name, selected_room_info.room_id, selected_room_info.max_players)
 	waitingStart.Waiting()
 	print("加入房间成功", result_1)
 	Global.SignalMgr.JoinSuccessMusicSIG.emit(selected_room_info.room_id)
@@ -754,18 +756,17 @@ func _on_join_table_cb(result):
 
 func _on_join_table_err(result):
 	print("加入房间失败:", result)
+	# waitingStart.Hide()
 	if result in Errors.ResponeMapping:
 		Global.WindowPopup.show_dynamic("加入房间失败: %s" % Errors.ResponeMapping[result])
 	else:
 		Global.WindowPopup.show_dynamic("加入房间失败: %s" % result)
-	await get_tree().create_timer(0.5).timeout
-	waitingStart.Hide()
+	# await get_tree().create_timer(0.5).timeout
 	Global.SignalMgr.JoinErrorMusicSIG.emit()
-	
-	jion_dialog.visible = false
+	jion_dialog.visible = true
 	jion_input.text = ""
-	selected_room_info = {}
-	_refresh_room_list()
+	#selected_room_info = {}
+	#_refresh_room_list()
 	pass
 
 # 显示收藏房间
