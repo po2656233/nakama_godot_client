@@ -22,7 +22,7 @@ var scenes ={
 		"clublist":"res://scenes/clublist/ClubScene.tscn",
 		"clubhome":"res://scenes/clublist/ClubDetailScene.tscn",
 		"gamelist":"res://scenes/gamelist/game_list.tscn",
-		"roomlist":"res://scenes/room/room_list.tscn",
+		"roomlist":"res://scenes/roomlist/room_list.tscn",
 		"matching":"res://scenes/match/matching.tscn",
 		"matchSuccess":"res://scenes/game/match_success.tscn",
 		"leaderboard":"res://scenes/1common/leaderboard.tscn",
