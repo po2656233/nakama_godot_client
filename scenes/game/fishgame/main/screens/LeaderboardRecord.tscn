@@ -1,28 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://cayvxiy4iyp3"]
+[gd_scene format=3 uid="uid://cayvxiy4iyp3"]
 
-[ext_resource type="Script" uid="uid://dm85iybclmsjv" path="res://scripts/game/fishgame/main/screens/LeaderboardRecord.gd" id="2"]
+[ext_resource type="Script" uid="uid://dygthkcs1wg30" path="res://scripts/game/fishgame/main/screens/LeaderboardRecord.gd" id="2"]
 
-[node name="HBoxContainer" type="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" unique_id=40432352]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 14.0
 size_flags_horizontal = 3
 script = ExtResource("2")
 
-[node name="Spacer1" type="Control" parent="."]
+[node name="Spacer1" type="Control" parent="." unique_id=1823991345]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="UsernameLabel" type="Label" parent="."]
+[node name="UsernameLabel" type="Label" parent="." unique_id=1383468413]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Username"
 
-[node name="WinsLabel" type="Label" parent="."]
+[node name="WinsLabel" type="Label" parent="." unique_id=1181536731]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "10"
 
-[node name="Spacer2" type="Control" parent="."]
+[node name="Spacer2" type="Control" parent="." unique_id=1263811325]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2

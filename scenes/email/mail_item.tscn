@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6j8p4q3yqx6k"]
+[gd_scene format=3 uid="uid://b6j8p4q3yqx6k"]
 
 [ext_resource type="Script" uid="uid://btsndo4kmiydi" path="res://scripts/email/mail_item.gd" id="1_kxn4r"]
 
@@ -30,7 +30,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="MailItem" type="Button"]
+[node name="MailItem" type="Button" unique_id=672936496]
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0
@@ -42,7 +42,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_mwxv8")
 theme_override_styles/focus = SubResource("StyleBoxFlat_8omkr")
 script = ExtResource("1_kxn4r")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1412341035]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,21 +53,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=634023640]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TitleLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=574557337]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "邮件标题"
 
-[node name="TimeLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="TimeLabel" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1295175472]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
 text = "2023-12-25 10:00:00"
 
-[node name="StatusLabel" type="Label" parent="HBoxContainer"]
+[node name="StatusLabel" type="Label" parent="HBoxContainer" unique_id=798486020]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16

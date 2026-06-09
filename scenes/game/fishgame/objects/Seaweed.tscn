@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://t6s6oi440wyk"]
+[gd_scene format=3 uid="uid://t6s6oi440wyk"]
 
 [ext_resource type="Texture2D" uid="uid://d3k3nt5xwxyfo" path="res://assets/game/fishgame/sprites/decorations1.png" id="1"]
 
@@ -24,17 +24,15 @@ _data = {
 &"Idle": SubResource("1")
 }
 
-[node name="Seaweed" type="Node2D"]
+[node name="Seaweed" type="Node2D" unique_id=685061281]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=617692065]
 position = Vector2(-24, -51)
 texture = ExtResource("1")
 centered = false
 hframes = 5
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_r5w4h")
-}
-autoplay = "Idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1119382820]
+libraries/ = SubResource("AnimationLibrary_r5w4h")
+autoplay = &"Idle"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bg4j5rkijtx26"]
+[gd_scene format=3 uid="uid://bg4j5rkijtx26"]
 
 [ext_resource type="Script" uid="uid://bndt5pqwef8kp" path="res://scripts/clublist/ClubDetailScene.gd" id="1_oybbq"]
 
@@ -81,7 +81,7 @@ font_color = Color(1, 0.0117647, 0, 1)
 outline_size = 2
 outline_color = Color(0.551962, 0.769573, 0.613218, 1)
 
-[node name="ClubDetailScene" type="Control"]
+[node name="ClubDetailScene" type="Control" unique_id=95267185]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,7 +90,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_oybbq")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=68153458]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,7 +99,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0784314, 0.121569, 0.196078, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1001043065]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,13 +112,13 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="GameMatchPanel" type="Panel" parent="HBoxContainer"]
+[node name="GameMatchPanel" type="Panel" parent="HBoxContainer" unique_id=1760445787]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 theme_override_styles/panel = SubResource("StyleBoxFlat_5grkc")
 
-[node name="InnerPanel" type="Panel" parent="HBoxContainer/GameMatchPanel"]
+[node name="InnerPanel" type="Panel" parent="HBoxContainer/GameMatchPanel" unique_id=2045810067]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -131,7 +131,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_gfrqh")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/GameMatchPanel/InnerPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/GameMatchPanel/InnerPanel" unique_id=215270508]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,17 +143,17 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameMatchLabel" type="Label" parent="HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer"]
+[node name="GameMatchLabel" type="Label" parent="HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer" unique_id=747645512]
 layout_mode = 2
 text = "游戏匹配状态"
 label_settings = SubResource("LabelSettings_x2wud")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer" unique_id=939467162]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TabContainer" type="TabContainer" parent="HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer/GameMatchPanel/InnerPanel/VBoxContainer" unique_id=927893073]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_j4uwh")
@@ -162,13 +162,13 @@ theme_override_styles/tab_focus = SubResource("StyleBoxFlat_5wsdl")
 tab_alignment = 1
 drag_to_rearrange_enabled = true
 
-[node name="ChatPanel" type="Panel" parent="HBoxContainer"]
+[node name="ChatPanel" type="Panel" parent="HBoxContainer" unique_id=2036802217]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 theme_override_styles/panel = SubResource("StyleBoxFlat_5grkc")
 
-[node name="InnerPanel" type="Panel" parent="HBoxContainer/ChatPanel"]
+[node name="InnerPanel" type="Panel" parent="HBoxContainer/ChatPanel" unique_id=2061278262]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -181,7 +181,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8f32n")
 
-[node name="ChatContainer" type="VBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel"]
+[node name="ChatContainer" type="VBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel" unique_id=1466128177]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -193,42 +193,42 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ChatTitleLabel" type="Label" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+[node name="ChatTitleLabel" type="Label" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer" unique_id=1642988747]
 layout_mode = 2
 text = "游戏聊天"
 label_settings = SubResource("LabelSettings_x2wud")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer" unique_id=1710146559]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ChatMessages" type="ScrollContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+[node name="ChatMessages" type="ScrollContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer" unique_id=539653091]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_kymcp")
 
-[node name="MessagesList" type="VBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages"]
+[node name="MessagesList" type="VBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatMessages" unique_id=2136137951]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="ChatInputContainer" type="HBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+[node name="ChatInputContainer" type="HBoxContainer" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer" unique_id=737225054]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ChatInput" type="LineEdit" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer"]
+[node name="ChatInput" type="LineEdit" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer" unique_id=1341854557]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "输入消息..."
 
-[node name="SendButton" type="Button" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer"]
+[node name="SendButton" type="Button" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer/ChatInputContainer" unique_id=382734822]
 layout_mode = 2
 text = "发送"
 
-[node name="BackButton" type="Button" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer"]
+[node name="BackButton" type="Button" parent="HBoxContainer/ChatPanel/InnerPanel/ChatContainer" unique_id=16939408]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.24926916, 0.99782056, 0.92836744, 1)
@@ -236,14 +236,14 @@ theme_override_colors/font_focus_color = Color(0.8659674, 0.988923, 0.872517, 1)
 theme_override_colors/font_pressed_color = Color(0.6592748, 0.97690326, 0.3289545, 1)
 text = "进入俱乐部列表"
 
-[node name="MembersPanel" type="Panel" parent="HBoxContainer"]
+[node name="MembersPanel" type="Panel" parent="HBoxContainer" unique_id=2069580685]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 theme_override_styles/panel = SubResource("StyleBoxFlat_5grkc")
 
-[node name="InnerPanel" type="Panel" parent="HBoxContainer/MembersPanel"]
+[node name="InnerPanel" type="Panel" parent="HBoxContainer/MembersPanel" unique_id=1179550267]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -256,7 +256,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8f32n")
 
-[node name="PlayerInfoContainer" type="VBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel"]
+[node name="PlayerInfoContainer" type="VBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel" unique_id=1848657725]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -268,68 +268,68 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerNameLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer"]
+[node name="PlayerNameLabel" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer" unique_id=1066740365]
 layout_mode = 2
 text = "玩家信息"
 label_settings = SubResource("LabelSettings_x2wud")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer" unique_id=1320245177]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer" unique_id=271389323]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_kymcp")
 
-[node name="PlayerInfoContent" type="VBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer"]
+[node name="PlayerInfoContent" type="VBoxContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer" unique_id=1269335040]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="InfoSection" type="GridContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent"]
+[node name="InfoSection" type="GridContainer" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent" unique_id=795799857]
 layout_mode = 2
 columns = 2
 
-[node name="Level" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="Level" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection" unique_id=283138633]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "等级:"
 horizontal_alignment = 2
 
-[node name="LevelValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="LevelValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection" unique_id=1009171322]
 layout_mode = 2
 text = "1111"
 label_settings = SubResource("LabelSettings_oybbq")
 
-[node name="Points" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="Points" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection" unique_id=1822915275]
 layout_mode = 2
 text = "积分:"
 horizontal_alignment = 2
 
-[node name="PointsValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="PointsValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection" unique_id=1138096221]
 layout_mode = 2
 text = "111"
 label_settings = SubResource("LabelSettings_vnwtm")
 
-[node name="Rank" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="Rank" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection" unique_id=532484083]
 layout_mode = 2
 text = "最高排名:"
 horizontal_alignment = 2
 
-[node name="RankValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection"]
+[node name="RankValue" type="Label" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer/ScrollContainer/PlayerInfoContent/InfoSection" unique_id=1692010613]
 layout_mode = 2
 text = "ddd"
 label_settings = SubResource("LabelSettings_jyjxc")
 
-[node name="BackButton" type="Button" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer"]
+[node name="BackButton" type="Button" parent="HBoxContainer/MembersPanel/InnerPanel/PlayerInfoContainer" unique_id=364875802]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 text = "返回聊天"
 
-[node name="AnimationParticles" type="CPUParticles2D" parent="."]
+[node name="AnimationParticles" type="CPUParticles2D" parent="." unique_id=1616786317]
 position = Vector2(640, 0)
 amount = 30
 lifetime = 8.0

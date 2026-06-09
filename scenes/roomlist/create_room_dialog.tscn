@@ -1,6 +1,6 @@
-[gd_scene load_steps=30 format=3 uid="uid://15qsfdusk3fu"]
+[gd_scene format=3 uid="uid://15qsfdusk3fu"]
 
-[ext_resource type="Script" uid="uid://nnsf5i14kxmo" path="res://scripts/room/create_room_dialog.gd" id="1_2gsk4"]
+[ext_resource type="Script" uid="uid://nnsf5i14kxmo" path="res://scripts/roomlist/create_room_dialog.gd" id="1_2gsk4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7mx"]
 bg_color = Color(0.165511, 0.526981, 0.734506, 1)
@@ -239,7 +239,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="CreateRoomDialog" type="Window"]
+[node name="CreateRoomDialog" type="Window" unique_id=1515210344]
 transparent_bg = true
 oversampling_override = 1.0
 title = "创建游戏房间"
@@ -251,7 +251,7 @@ transparent = true
 popup_window = true
 script = ExtResource("1_2gsk4")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1039122331]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -264,11 +264,11 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Panel" type="Panel" parent="MarginContainer"]
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1559583184]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fu7mx")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel" unique_id=2115072413]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -278,7 +278,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="name" type="Label" parent="MarginContainer/Panel/VBoxContainer"]
+[node name="name" type="Label" parent="MarginContainer/Panel/VBoxContainer" unique_id=137944309]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "创建房间"
@@ -287,12 +287,12 @@ horizontal_alignment = 1
 vertical_alignment = 2
 uppercase = true
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/VBoxContainer" unique_id=798303924]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_nr032")
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer" unique_id=1235627482]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -300,13 +300,13 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 25
 columns = 2
 
-[node name="GameType" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="GameType" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=1822789953]
 layout_mode = 2
 text = "*游戏类型:"
 label_settings = SubResource("LabelSettings_yxaj3")
 horizontal_alignment = 2
 
-[node name="GameTypeOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="GameTypeOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=1361595974]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -334,46 +334,46 @@ theme_override_constants/arrow_margin = 10
 theme_override_constants/modulate_arrow = 10
 alignment = 1
 
-[node name="RoomName" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="RoomName" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=1612185494]
 layout_mode = 2
 text = "*房间名称:"
 label_settings = SubResource("LabelSettings_yxaj3")
 horizontal_alignment = 2
 
-[node name="RoomContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="RoomContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=468844092]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RoomNameOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer"]
+[node name="RoomNameOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer" unique_id=1505304132]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 placeholder_text = "房间名(1~8字符)"
 max_length = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer" unique_id=2121618169]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RoomPassword" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer/HBoxContainer"]
+[node name="RoomPassword" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer/HBoxContainer" unique_id=1919616514]
 layout_mode = 2
 text = "密码:"
 label_settings = SubResource("LabelSettings_yxaj3")
 horizontal_alignment = 2
 
-[node name="RoomPasswordOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer/HBoxContainer"]
+[node name="RoomPasswordOption" type="LineEdit" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/RoomContainer/HBoxContainer" unique_id=638135214]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 placeholder_text = "密码(选填,8字符内)"
 max_length = 8
 secret = true
 
-[node name="GameSection" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="GameSection" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=1600473688]
 layout_mode = 2
 text = "*赛制:"
 label_settings = SubResource("LabelSettings_yxaj3")
 horizontal_alignment = 2
 
-[node name="GameSectionOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="GameSectionOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=1378263726]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.180392, 0.972549, 0.968627, 1)
 theme_override_colors/font_focus_color = Color(0.180392, 0.972549, 0.968627, 1)
@@ -397,13 +397,13 @@ popup/item_1/id = 1
 popup/item_2/text = "世界杯"
 popup/item_2/id = 2
 
-[node name="GameMode" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="GameMode" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=2087183954]
 layout_mode = 2
 text = "*模式:"
 label_settings = SubResource("LabelSettings_yxaj3")
 horizontal_alignment = 2
 
-[node name="GameModeOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="GameModeOption" type="OptionButton" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=394520408]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.988235, 0.941176, 0, 1)
 theme_override_colors/font_focus_color = Color(0.988235, 0.941176, 0, 1)
@@ -426,42 +426,42 @@ popup/item_1/id = 1
 popup/item_2/text = "钻石模式"
 popup/item_2/id = 2
 
-[node name="Players" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="Players" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=707446112]
 layout_mode = 2
 text = "*游戏人数:"
 label_settings = SubResource("LabelSettings_yxaj3")
 horizontal_alignment = 2
 
-[node name="PlayersOption" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="PlayersOption" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=501789107]
 layout_mode = 2
 theme_override_constants/separation = 15
 alignment = 2
 
-[node name="PlayersSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption"]
+[node name="PlayersSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption" unique_id=1726954634]
 layout_mode = 2
 size_flags_horizontal = 3
 value = 2.0
 suffix = " 人"
 
-[node name="SpectatorCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption"]
+[node name="SpectatorCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/PlayersOption" unique_id=1996713500]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0, 0.976471, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "允许观战"
 
-[node name="Score" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="Score" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=89815914]
 layout_mode = 2
 text = "*基础分数:"
 label_settings = SubResource("LabelSettings_yxaj3")
 horizontal_alignment = 2
 
-[node name="ScoreOption" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="ScoreOption" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=1043689966]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="BaseScoreSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/ScoreOption"]
+[node name="BaseScoreSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/ScoreOption" unique_id=1100799657]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_up22p")
@@ -471,7 +471,7 @@ value = 100.0
 prefix = "底注: "
 suffix = "分"
 
-[node name="EntryScoreSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/ScoreOption"]
+[node name="EntryScoreSpinBox" type="SpinBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/ScoreOption" unique_id=645164192]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_vqlca")
@@ -480,33 +480,33 @@ value = 10000.0
 prefix = "携带入场:"
 suffix = "分"
 
-[node name="TaxCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="TaxCheck" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=276383110]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = SubResource("SystemFont_rxca7")
 theme_override_font_sizes/font_size = 19
 text = "税收:"
 
-[node name="TaxContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="TaxContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer" unique_id=738087232]
 layout_mode = 2
 
-[node name="TaxSlider" type="HSlider" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/TaxContainer"]
+[node name="TaxSlider" type="HSlider" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/TaxContainer" unique_id=1080061839]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 step = 0.1
 value = 5.0
 
-[node name="TaxValue" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/TaxContainer"]
+[node name="TaxValue" type="Label" parent="MarginContainer/Panel/VBoxContainer/ScrollContainer/GridContainer/TaxContainer" unique_id=399618660]
 layout_mode = 2
 text = "5%"
 
-[node name="ButtonSection" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer"]
+[node name="ButtonSection" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer" unique_id=451367661]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="CreateButton" type="Button" parent="MarginContainer/Panel/VBoxContainer/ButtonSection"]
+[node name="CreateButton" type="Button" parent="MarginContainer/Panel/VBoxContainer/ButtonSection" unique_id=257636306]
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_8h8lc")
@@ -515,7 +515,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_8ljqd")
 theme_override_styles/focus = SubResource("StyleBoxFlat_c1elv")
 text = "创建"
 
-[node name="CancelButton" type="Button" parent="MarginContainer/Panel/VBoxContainer/ButtonSection"]
+[node name="CancelButton" type="Button" parent="MarginContainer/Panel/VBoxContainer/ButtonSection" unique_id=1911991065]
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_8h8lc")
@@ -524,7 +524,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_8ljqd")
 theme_override_styles/focus = SubResource("StyleBoxFlat_c1elv")
 text = "取消"
 
-[node name="Control" type="Control" parent="MarginContainer/Panel/VBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/Panel/VBoxContainer" unique_id=1513655377]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 

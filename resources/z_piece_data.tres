@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b5ynowy668do0"]
+[gd_resource type="Resource" format=3 uid="uid://b5ynowy668do0"]
 
 [ext_resource type="Texture2D" uid="uid://d4lhgw2colkdv" path="res://assets/game/tetris/Purple.png" id="1_jbaxo"]
 [ext_resource type="Script" uid="uid://dvj8qincti0i1" path="res://scripts/game/tetris/piece_data.gd" id="2_6y2px"]

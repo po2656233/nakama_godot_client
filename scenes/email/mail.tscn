@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3gvlbaf4oebi"]
+[gd_scene format=3 uid="uid://b3gvlbaf4oebi"]
 
 [ext_resource type="Script" uid="uid://c20srin7wcmsm" path="res://scripts/email/mail.gd" id="1_csb40"]
 [ext_resource type="PackedScene" uid="uid://b2n4rqcyg1p8k" path="res://scenes/email/mail_list.tscn" id="1_l2p4r"]
 [ext_resource type="PackedScene" uid="uid://cqxkj2m7d4n1k" path="res://scenes/email/mail_detail.tscn" id="2_m3p4r"]
 
-[node name="Mail" type="Control"]
+[node name="Mail" type="Control" unique_id=1580221222]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,19 +13,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_csb40")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=646403708]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+split_offsets = PackedInt32Array(350)
 split_offset = 350
 
-[node name="MailList" parent="HSplitContainer" instance=ExtResource("1_l2p4r")]
+[node name="MailList" parent="HSplitContainer" unique_id=1793030427 instance=ExtResource("1_l2p4r")]
 layout_mode = 2
 
-[node name="MailDetail" parent="HSplitContainer" instance=ExtResource("2_m3p4r")]
+[node name="MailDetail" parent="HSplitContainer" unique_id=875857074 instance=ExtResource("2_m3p4r")]
 layout_mode = 2
 
 [connection signal="closeMailSIG" from="HSplitContainer/MailList" to="." method="_on_close_button_pressed"]

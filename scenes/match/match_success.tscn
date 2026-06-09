@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://riqfmggkqpfx"]
+[gd_scene format=3 uid="uid://riqfmggkqpfx"]
 
 [ext_resource type="Script" uid="uid://co2to721iqur1" path="res://scripts/match/match_success.gd" id="1_xxxxx"]
 [ext_resource type="Texture2D" uid="uid://ccvgj06knupmo" path="res://assets/room/item.png" id="2_fc1y7"]
@@ -48,7 +48,7 @@ draw_center = false
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85xwb"]
 draw_center = false
 
-[node name="MatchSuccess" type="Window"]
+[node name="MatchSuccess" type="Window" unique_id=802758030]
 process_mode = 3
 oversampling_override = 1.0
 title = "匹配成功"
@@ -59,7 +59,7 @@ unresizable = true
 borderless = true
 script = ExtResource("1_xxxxx")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=2115866089]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -67,7 +67,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xxxxx")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1237022370]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,7 +76,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="HeaderLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="HeaderLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1665161546]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -85,15 +85,15 @@ label_settings = SubResource("LabelSettings_x2c8t")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=903346553]
 layout_mode = 2
 
-[node name="ReadyLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="ReadyLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1660930196]
 layout_mode = 2
 size_flags_horizontal = 0
 label_settings = SubResource("LabelSettings_3u3mi")
 
-[node name="TimerLabel" type="RichTextLabel" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="TimerLabel" type="RichTextLabel" parent="Panel/VBoxContainer/HBoxContainer" unique_id=167075885]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/normal_font_size = 22
@@ -103,7 +103,7 @@ text = "进入游戏倒计时: 00 秒   "
 fit_content = true
 autowrap_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer" unique_id=465756784]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
@@ -111,13 +111,13 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 5
 
-[node name="ButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1647234902]
 layout_mode = 2
 size_flags_vertical = 10
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="AcceptButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+[node name="AcceptButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer" unique_id=176208013]
 custom_minimum_size = Vector2(135, 65)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0194218, 0.654311, 0.588068, 1)
@@ -134,7 +134,7 @@ icon = ExtResource("2_fc1y7")
 flat = true
 icon_alignment = 1
 
-[node name="DeclineButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer"]
+[node name="DeclineButton" type="Button" parent="Panel/VBoxContainer/ButtonContainer" unique_id=31759972]
 custom_minimum_size = Vector2(135, 65)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.566092, 1.38376e-06, 3.36915e-07, 1)
@@ -150,5 +150,5 @@ icon = ExtResource("2_fc1y7")
 flat = true
 icon_alignment = 1
 
-[node name="empty" type="Panel" parent="Panel/VBoxContainer"]
+[node name="empty" type="Panel" parent="Panel/VBoxContainer" unique_id=1331533071]
 layout_mode = 2

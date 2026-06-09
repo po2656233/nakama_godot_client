@@ -1,7 +1,7 @@
 extends Control
 
 signal quitRoomSIG()
-var player_scene = preload("res://scenes/room/player_item.tscn") 
+var player_scene = preload("res://scenes/roomlist/player_item.tscn") 
 var tween:Tween
 var is_no_enter = false
 var max_players = 4

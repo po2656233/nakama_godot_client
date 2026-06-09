@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6j8y8j4q4q"]
+[gd_scene format=3 uid="uid://b6j8y8j4q4q"]
 
 [ext_resource type="Script" uid="uid://cmn8smmcd88vg" path="res://scripts/1common/loading/loading_screen.gd" id="1_2gkkn"]
 [ext_resource type="Texture2D" uid="uid://dw5qoy21fuvv3" path="res://assets/bg/bg_login.jpg" id="2_hsgnm"]
@@ -54,7 +54,7 @@ shadow_color = Color(0.353135, 0.675318, 0.598314, 0.6)
 shadow_size = 3
 shadow_offset = Vector2(2, 2)
 
-[node name="LoadingScreen" type="Control"]
+[node name="LoadingScreen" type="Control" unique_id=2040794360]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,7 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2gkkn")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1649164556]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -73,7 +73,7 @@ grow_vertical = 2
 texture = ExtResource("2_hsgnm")
 expand_mode = 1
 
-[node name="rightwrong" type="Label" parent="."]
+[node name="rightwrong" type="Label" parent="." unique_id=418290323]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -83,7 +83,7 @@ text = "正    反"
 label_settings = SubResource("LabelSettings_hsgnm")
 horizontal_alignment = 3
 
-[node name="noway" type="Label" parent="."]
+[node name="noway" type="Label" parent="." unique_id=754682905]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -100,7 +100,7 @@ text = "无    不"
 label_settings = SubResource("LabelSettings_2d1qb")
 horizontal_alignment = 1
 
-[node name="board" parent="." instance=ExtResource("3_hsgnm")]
+[node name="board" parent="." unique_id=1392200620 instance=ExtResource("3_hsgnm")]
 visible = false
 custom_minimum_size = Vector2(550, 0)
 layout_mode = 1
@@ -115,7 +115,7 @@ offset_bottom = 50.0
 grow_vertical = 1
 size_flags_horizontal = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=721219472]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -128,10 +128,10 @@ theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1564250215]
 layout_mode = 2
 
-[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2107934896]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0.728822, 0.728822, 0.728822, 1)
@@ -141,7 +141,7 @@ theme_override_font_sizes/font_size = 30
 text = "Load... 0%"
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer" unique_id=1744564513]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_ngnld")

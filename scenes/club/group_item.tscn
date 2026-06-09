@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://riqfmggkqpf3"]
+[gd_scene format=3 uid="uid://riqfmggkqpf3"]
 
 [ext_resource type="Script" uid="uid://dnfjs8m7ne0r3" path="res://scripts/club/group_item.gd" id="1_xxxxx"]
 [ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://assets/currency/email.svg" id="2_alo0b"]
@@ -18,45 +18,45 @@ font_color = Color(1, 1, 0.396078, 1)
 font_size = 14
 font_color = Color(0.834614, 0.834614, 0.834614, 1)
 
-[node name="GroupItem" type="PanelContainer"]
+[node name="GroupItem" type="PanelContainer" unique_id=1649730926]
 custom_minimum_size = Vector2(0, 65)
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_yqodf")
 script = ExtResource("1_xxxxx")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=414139567]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1347135935]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="GroupIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="GroupIcon" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1722834794]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=409640030]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=617697196]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="GroupName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="GroupName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=987979621]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "俱乐部名称"
 label_settings = SubResource("LabelSettings_fy74u")
 
-[node name="NotificationIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="NotificationIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=715031024]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -64,7 +64,7 @@ texture = ExtResource("2_alo0b")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=7656760]
 custom_minimum_size = Vector2(60, 25)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -74,12 +74,12 @@ vertical_alignment = 2
 autowrap_mode = 3
 text_overrun_behavior = 4
 
-[node name="MemberCount" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="MemberCount" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1500743404]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 text = "成员数: 0"
 
-[node name="ManageButton" type="MenuButton" parent="MarginContainer/HBoxContainer"]
+[node name="ManageButton" type="MenuButton" parent="MarginContainer/HBoxContainer" unique_id=758497885]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "管理"

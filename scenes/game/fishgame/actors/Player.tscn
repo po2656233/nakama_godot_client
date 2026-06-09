@@ -1,27 +1,27 @@
-[gd_scene load_steps=45 format=3 uid="uid://bmwfav666pnl2"]
+[gd_scene format=3 uid="uid://bmwfav666pnl2"]
 
 [ext_resource type="Texture2D" uid="uid://bl43ogjyj4s3l" path="res://assets/game/fishgame/sprites/whale_orange.png" id="1"]
-[ext_resource type="Script" uid="uid://djp48vni7wba" path="res://scripts/game/fishgame/actors/player-states/Hurt.gd" id="2"]
-[ext_resource type="Script" uid="uid://brv2jdqqvvk6c" path="res://scripts/game/fishgame/actors/player-states/Dead.gd" id="3"]
-[ext_resource type="Script" uid="uid://bei151um6i34e" path="res://scripts/game/fishgame/actors/player-states/Duck.gd" id="4"]
+[ext_resource type="Script" uid="uid://yqtaj0mum4u7" path="res://scripts/game/fishgame/actors/player-states/Hurt.gd" id="2"]
+[ext_resource type="Script" uid="uid://c8q01f3atqhkl" path="res://scripts/game/fishgame/actors/player-states/Dead.gd" id="3"]
+[ext_resource type="Script" uid="uid://15pn31rxh7rq" path="res://scripts/game/fishgame/actors/player-states/Duck.gd" id="4"]
 [ext_resource type="AudioStream" uid="uid://bhku21udirugy" path="res://assets/game/fishgame/sounds/jump.wav" id="5"]
-[ext_resource type="Script" uid="uid://cs7o2qxhfol4o" path="res://scripts/game/fishgame/components/Sounds.gd" id="6"]
+[ext_resource type="Script" uid="uid://cilljk2ne1fhu" path="res://scripts/game/fishgame/components/Sounds.gd" id="6"]
 [ext_resource type="AudioStream" uid="uid://j47ysmb18ol8" path="res://assets/game/fishgame/sounds/pickup.wav" id="7"]
 [ext_resource type="AudioStream" uid="uid://cu15xuj0hl7pe" path="res://assets/game/fishgame/sounds/throw.wav" id="8"]
-[ext_resource type="Script" uid="uid://wp3yd3tfaroy" path="res://scripts/game/fishgame/actors/Player.gd" id="9"]
+[ext_resource type="Script" uid="uid://dld0vwn80alna" path="res://scripts/game/fishgame/actors/Player.gd" id="9"]
 [ext_resource type="AudioStream" uid="uid://1vf3oxqcpbrw" path="res://assets/game/fishgame/sounds/hurt.wav" id="10"]
-[ext_resource type="Script" uid="uid://bhrl7i3ewt1gs" path="res://scripts/game/fishgame/actors/player-states/Move.gd" id="11"]
+[ext_resource type="Script" uid="uid://bp4nei0a130xg" path="res://scripts/game/fishgame/actors/player-states/Move.gd" id="11"]
 [ext_resource type="Script" uid="uid://5qpsw1fd1cgb" path="res://addons/snopek-state-machine/StateMachine.gd" id="12"]
 [ext_resource type="AudioStream" uid="uid://cln7oaurwgtj0" path="res://assets/game/fishgame/sounds/explosions/explosion3.wav" id="13"]
 [ext_resource type="AudioStream" uid="uid://dylenbvypqw8m" path="res://assets/game/fishgame/sounds/explosions/explosion2.wav" id="14"]
-[ext_resource type="Script" uid="uid://bdt37iivdc1ta" path="res://scripts/game/fishgame/actors/player-states/Jump.gd" id="15"]
-[ext_resource type="Script" uid="uid://crliblgnowgi3" path="res://scripts/game/fishgame/actors/player-states/Idle.gd" id="16"]
+[ext_resource type="Script" uid="uid://diir7n7tejmuo" path="res://scripts/game/fishgame/actors/player-states/Jump.gd" id="15"]
+[ext_resource type="Script" uid="uid://brran58rnmbn4" path="res://scripts/game/fishgame/actors/player-states/Idle.gd" id="16"]
 [ext_resource type="AudioStream" uid="uid://bnvioqxf6g4fe" path="res://assets/game/fishgame/sounds/explosions/explosion1.wav" id="17"]
-[ext_resource type="Script" uid="uid://b8jm1ht38kubk" path="res://scripts/game/fishgame/actors/player-states/Slide.gd" id="18"]
+[ext_resource type="Script" uid="uid://b61yin8rqa6gd" path="res://scripts/game/fishgame/actors/player-states/Slide.gd" id="18"]
 [ext_resource type="AudioStream" uid="uid://c445ptdn27pja" path="res://assets/game/fishgame/sounds/blops/blop3.wav" id="19"]
 [ext_resource type="AudioStream" uid="uid://c15tjqd25vxqm" path="res://assets/game/fishgame/sounds/blops/blop1.wav" id="20"]
 [ext_resource type="AudioStream" uid="uid://b4i6a0piemiyc" path="res://assets/game/fishgame/sounds/blops/blop2.wav" id="21"]
-[ext_resource type="Script" uid="uid://cwcnn0f5mkol" path="res://scripts/game/fishgame/actors/player-states/Fall.gd" id="22"]
+[ext_resource type="Script" uid="uid://dx0rncvsxeuu" path="res://scripts/game/fishgame/actors/player-states/Fall.gd" id="22"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(29, 56)
@@ -438,66 +438,66 @@ _data = {
 &"Slide": SubResource("20")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=154420972]
 texture_filter = 1
 collision_layer = 2
 collision_mask = 17
 script = ExtResource("9")
 
-[node name="BackPickupPosition" type="Marker2D" parent="."]
+[node name="BackPickupPosition" type="Marker2D" parent="." unique_id=1110311715]
 position = Vector2(14, -20)
 
-[node name="BodySprite" type="Sprite2D" parent="."]
+[node name="BodySprite" type="Sprite2D" parent="." unique_id=259105867]
 position = Vector2(65, -47)
 texture = ExtResource("1")
 offset = Vector2(-65, 16)
 hframes = 7
 vframes = 22
 
-[node name="FinSprite" type="Sprite2D" parent="."]
+[node name="FinSprite" type="Sprite2D" parent="." unique_id=1691260692]
 position = Vector2(0, -31)
 texture = ExtResource("1")
 hframes = 7
 vframes = 22
 frame = 7
 
-[node name="FrontPickupPosition" type="Marker2D" parent="."]
+[node name="FrontPickupPosition" type="Marker2D" parent="." unique_id=278453291]
 position = Vector2(-2, -20)
 
-[node name="StandingCollisionShape" type="CollisionShape2D" parent="."]
+[node name="StandingCollisionShape" type="CollisionShape2D" parent="." unique_id=1178557546]
 position = Vector2(2, -28)
 shape = SubResource("1")
 
-[node name="DuckingCollisionShape" type="CollisionShape2D" parent="."]
+[node name="DuckingCollisionShape" type="CollisionShape2D" parent="." unique_id=1905467300]
 position = Vector2(2, -19)
 shape = SubResource("2")
 disabled = true
 
-[node name="SlidingCollisionShape" type="CollisionShape2D" parent="."]
+[node name="SlidingCollisionShape" type="CollisionShape2D" parent="." unique_id=2053899729]
 position = Vector2(0, -14)
 shape = SubResource("3")
 disabled = true
 
-[node name="PickupArea" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="." unique_id=293670391]
 position = Vector2(2, 0)
 collision_layer = 0
 collision_mask = 8
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" unique_id=1429717067]
 modulate = Color(0.827451, 0, 1, 1)
 position = Vector2(0, -14)
 shape = SubResource("4")
 
-[node name="PassThroughDetectorArea" type="Area2D" parent="."]
+[node name="PassThroughDetectorArea" type="Area2D" parent="." unique_id=985910163]
 position = Vector2(2, 0)
 collision_layer = 0
 collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PassThroughDetectorArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PassThroughDetectorArea" unique_id=993542569]
 shape = SubResource("5")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." unique_id=1351598583]
 script = ExtResource("12")
 allowed_transitions = "Idle -> Move
 Idle -> Jump
@@ -518,82 +518,78 @@ Slide -> Idle
 Hurt -> Idle
 Hurt -> Dead"
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1397765374]
 script = ExtResource("16")
 
-[node name="Move" type="Node" parent="StateMachine"]
+[node name="Move" type="Node" parent="StateMachine" unique_id=141594506]
 script = ExtResource("11")
 
-[node name="Jump" type="Node" parent="StateMachine"]
+[node name="Jump" type="Node" parent="StateMachine" unique_id=1077159271]
 script = ExtResource("15")
 
-[node name="Fall" type="Node" parent="StateMachine"]
+[node name="Fall" type="Node" parent="StateMachine" unique_id=1881478415]
 script = ExtResource("22")
 
-[node name="Duck" type="Node" parent="StateMachine"]
+[node name="Duck" type="Node" parent="StateMachine" unique_id=140782281]
 script = ExtResource("4")
 
-[node name="Slide" type="Node" parent="StateMachine"]
+[node name="Slide" type="Node" parent="StateMachine" unique_id=657063298]
 script = ExtResource("18")
 
-[node name="Hurt" type="Node" parent="StateMachine"]
+[node name="Hurt" type="Node" parent="StateMachine" unique_id=1880190086]
 script = ExtResource("2")
 
-[node name="Timer" type="Timer" parent="StateMachine/Hurt"]
+[node name="Timer" type="Timer" parent="StateMachine/Hurt" unique_id=1434448718]
 wait_time = 0.2
 one_shot = true
 
-[node name="Dead" type="Node" parent="StateMachine"]
+[node name="Dead" type="Node" parent="StateMachine" unique_id=135153575]
 script = ExtResource("3")
 
-[node name="SpriteAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ur4oq")
-}
-autoplay = "Idle"
+[node name="SpriteAnimationPlayer" type="AnimationPlayer" parent="." unique_id=460412535]
+libraries/ = SubResource("AnimationLibrary_ur4oq")
+autoplay = &"Idle"
 
-[node name="PickupAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_fihx8")
-}
-autoplay = "Idle"
+[node name="PickupAnimationPlayer" type="AnimationPlayer" parent="." unique_id=899376004]
+libraries/ = SubResource("AnimationLibrary_fihx8")
+autoplay = &"Idle"
 
-[node name="Sounds" type="Node" parent="."]
+[node name="Sounds" type="Node" parent="." unique_id=410769347]
 script = ExtResource("6")
 
-[node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds" unique_id=291772816]
 stream = ExtResource("5")
 volume_db = -5.0
 
-[node name="Pickup" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Pickup" type="AudioStreamPlayer" parent="Sounds" unique_id=1787964241]
 stream = ExtResource("7")
 
-[node name="Throw" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Throw" type="AudioStreamPlayer" parent="Sounds" unique_id=1618853860]
 stream = ExtResource("8")
 
-[node name="Hurt" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Hurt" type="AudioStreamPlayer" parent="Sounds" unique_id=1010622334]
 stream = ExtResource("10")
 
-[node name="Explode" type="Node" parent="Sounds"]
+[node name="Explode" type="Node" parent="Sounds" unique_id=276192382]
 
-[node name="Explode1" type="AudioStreamPlayer" parent="Sounds/Explode"]
+[node name="Explode1" type="AudioStreamPlayer" parent="Sounds/Explode" unique_id=1088101819]
 stream = ExtResource("17")
 
-[node name="Explode2" type="AudioStreamPlayer" parent="Sounds/Explode"]
+[node name="Explode2" type="AudioStreamPlayer" parent="Sounds/Explode" unique_id=2059174398]
 stream = ExtResource("14")
 
-[node name="Explode3" type="AudioStreamPlayer" parent="Sounds/Explode"]
+[node name="Explode3" type="AudioStreamPlayer" parent="Sounds/Explode" unique_id=47646928]
 stream = ExtResource("13")
 
-[node name="Blop" type="Node" parent="Sounds"]
+[node name="Blop" type="Node" parent="Sounds" unique_id=936012630]
 
-[node name="Blop1" type="AudioStreamPlayer" parent="Sounds/Blop"]
+[node name="Blop1" type="AudioStreamPlayer" parent="Sounds/Blop" unique_id=1570264089]
 stream = ExtResource("20")
 
-[node name="Blop2" type="AudioStreamPlayer" parent="Sounds/Blop"]
+[node name="Blop2" type="AudioStreamPlayer" parent="Sounds/Blop" unique_id=533880808]
 stream = ExtResource("21")
 
-[node name="Blop3" type="AudioStreamPlayer" parent="Sounds/Blop"]
+[node name="Blop3" type="AudioStreamPlayer" parent="Sounds/Blop" unique_id=1238600387]
 stream = ExtResource("19")
 
 [connection signal="frame_changed" from="BodySprite" to="." method="_on_BodySprite_frame_changed"]

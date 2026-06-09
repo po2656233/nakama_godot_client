@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b6x8uy4q7d5xw"]
+[gd_scene format=3 uid="uid://b6x8uy4q7d5xw"]
 
 [ext_resource type="Script" uid="uid://c3875nag3ggm5" path="res://scripts/1common/gallery_form.gd" id="1_kvvyf"]
 [ext_resource type="Texture2D" uid="uid://o4a8tnql62kj" path="res://assets/currency/previous.png" id="2_y6vxb"]
@@ -44,7 +44,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nmwwb"]
 
-[node name="GalleryForm" type="Control"]
+[node name="GalleryForm" type="Control" unique_id=1447277551]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,7 +53,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kvvyf")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=370565517]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,11 +65,11 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=442313821]
 layout_mode = 2
 alignment = 1
 
-[node name="PrevButton" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="PrevButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=1516539278]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7lw01")
@@ -87,13 +87,13 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=2060925496]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="ItemContainer" type="FlowContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="ItemContainer" type="FlowContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=867177476]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/h_separation = 35
@@ -102,13 +102,13 @@ alignment = 1
 last_wrap_alignment = 2
 vertical = true
 
-[node name="PageLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="PageLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=94209246]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "1/1"
 horizontal_alignment = 1
 
-[node name="NextButton" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="NextButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=2120682672]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8

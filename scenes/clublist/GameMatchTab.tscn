@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6d2a4cgdqdew"]
+[gd_scene format=3 uid="uid://c6d2a4cgdqdew"]
 
 [ext_resource type="Script" uid="uid://ca6oi3mnp7wgf" path="res://scripts/clublist/GameMatchTab.gd" id="1_22nfy"]
 [ext_resource type="FontFile" uid="uid://d1ykbo1h8utc1" path="res://assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf" id="2_o8v82"]
@@ -93,7 +93,7 @@ corner_radius_bottom_left = 6
 expand_margin_left = 5.0
 expand_margin_right = 5.0
 
-[node name="GameMatchTab" type="Control"]
+[node name="GameMatchTab" type="Control" unique_id=1910209520]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,7 +102,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_22nfy")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=631449880]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,40 +110,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=1943316007]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer"]
+[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer" unique_id=1262714602]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ryjag")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=1868903606]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="GameStatusLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="GameStatusLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=132684973]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_oxwe2")
 text = "匹配状态: 等待中"
 label_settings = SubResource("LabelSettings_vrgfl")
 
-[node name="PlayersCountLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="PlayersCountLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=1596845429]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_22nfy")
 text = "玩家数: 0/10"
 label_settings = SubResource("LabelSettings_vrgfl")
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=209631154]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_22nfy")
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer" unique_id=895800180]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
@@ -151,41 +151,41 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer2"]
+[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer2" unique_id=1166453101]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8vglp")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2" unique_id=1569772206]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/VBoxContainer" unique_id=643235524]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "  等待中的玩家:"
 label_settings = SubResource("LabelSettings_vrgfl")
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/VBoxContainer" unique_id=1477641771]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_6rwia")
 
-[node name="WaitingPlayersList" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/VBoxContainer/ScrollContainer"]
+[node name="WaitingPlayersList" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/VBoxContainer/ScrollContainer" unique_id=1970037543]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer" unique_id=378987646]
 layout_mode = 2
 
-[node name="OPContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer3"]
+[node name="OPContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer3" unique_id=1243960151]
 layout_mode = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="JoinQueueButton" type="Button" parent="VBoxContainer/MarginContainer3/OPContainer"]
+[node name="JoinQueueButton" type="Button" parent="VBoxContainer/MarginContainer3/OPContainer" unique_id=1782803966]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -196,7 +196,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_o8v82")
 theme_override_styles/hover = SubResource("StyleBoxFlat_o8v82")
 text = "加入匹配队列"
 
-[node name="LeaveQueueButton" type="Button" parent="VBoxContainer/MarginContainer3/OPContainer"]
+[node name="LeaveQueueButton" type="Button" parent="VBoxContainer/MarginContainer3/OPContainer" unique_id=1108427610]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -208,7 +208,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_vn5un")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_uutlr")
 text = "离开匹配队列"
 
-[node name="MatchAnimationParticles" type="CPUParticles2D" parent="."]
+[node name="MatchAnimationParticles" type="CPUParticles2D" parent="." unique_id=648696751]
 position = Vector2(300, 100)
 emitting = false
 amount = 50

@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://peeyd3oo0tsh"]
+[gd_scene format=3 uid="uid://peeyd3oo0tsh"]
 
 [ext_resource type="Script" uid="uid://cd6l1stu3gdo7" path="res://scripts/game/tetris/ghost_tetromino.gd" id="1_nh8bx"]
 
-[node name="ghost_tetromino" type="Node2D"]
+[node name="ghost_tetromino" type="Node2D" unique_id=1917415896]
 script = ExtResource("1_nh8bx")

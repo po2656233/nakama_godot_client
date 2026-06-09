@@ -1,29 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwt07lai7dnka"]
+[gd_scene format=3 uid="uid://cwt07lai7dnka"]
 
-[ext_resource type="Script" uid="uid://p1opdym3jtqo" path="res://scripts/game/mahjong_matching/prefabs/prefab_mahjong.gd" id="1_bv2jq"]
+[ext_resource type="Script" uid="uid://ceyx5twlcrld4" path="res://scripts/game/mahjong_matching/prefabs/prefab_mahjong.gd" id="1_bv2jq"]
 [ext_resource type="Texture2D" uid="uid://cgi0sdge22ps0" path="res://assets/game/mahjong_matching/image/texture/01.svg" id="2_kkkgu"]
 [ext_resource type="Texture2D" uid="uid://cgluvrdnp3qo3" path="res://assets/game/mahjong_matching/image/UI/board.png" id="3_biew8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7i6g5"]
 size = Vector2(49, 65)
 
-[node name="Prefab-mahjong" type="Node2D"]
+[node name="Prefab-mahjong" type="Node2D" unique_id=1307145427]
 y_sort_enabled = true
 position = Vector2(30, 40)
 script = ExtResource("1_bv2jq")
 metadata/piece = 0
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1135724913]
 scale = Vector2(0.32, 0.32)
 texture = ExtResource("2_kkkgu")
 region_rect = Rect2(0, 40, 150, 200)
 
-[node name="board" type="Sprite2D" parent="."]
+[node name="board" type="Sprite2D" parent="." unique_id=616777340]
 texture = ExtResource("3_biew8")
 
-[node name="ClickArea" type="Area2D" parent="."]
+[node name="ClickArea" type="Area2D" parent="." unique_id=391791261]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea" unique_id=90854063]
 position = Vector2(-6.5, 7.5)
 shape = SubResource("RectangleShape2D_7i6g5")
 

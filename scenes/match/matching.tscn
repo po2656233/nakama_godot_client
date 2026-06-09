@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b6x8j0p7n6xj"]
+[gd_scene format=3 uid="uid://b6x8j0p7n6xj"]
 
 [ext_resource type="Script" uid="uid://c6dck2wiksuux" path="res://scripts/match/matching.gd" id="1_tlue5"]
 [ext_resource type="Shader" uid="uid://bb85safeckk6b" path="res://shaders/progress_circle.gdshader" id="2_p1m5x"]
@@ -180,7 +180,7 @@ _data = {
 &"success_flash": SubResource("Animation_k7m2p")
 }
 
-[node name="Matching" type="Control"]
+[node name="Matching" type="Control" unique_id=684667034]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -192,7 +192,7 @@ grow_vertical = 2
 theme = SubResource("Theme_8pgp0")
 script = ExtResource("1_tlue5")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1245730493]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.553
@@ -207,7 +207,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ieusa")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=2079035804]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -219,7 +219,7 @@ offset_bottom = 556.0
 grow_horizontal = 2
 theme_override_constants/separation = 25
 
-[node name="NameLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1826709390]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "游戏名"
@@ -227,7 +227,7 @@ label_settings = SubResource("LabelSettings_5ksme")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="Panel/VBoxContainer" unique_id=67353423]
 modulate = Color(0.955175, 0.904035, 0.986151, 1)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -236,7 +236,7 @@ text = "等待开始匹配..."
 label_settings = SubResource("LabelSettings_4dcj2")
 horizontal_alignment = 1
 
-[node name="TimerLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="TimerLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1455600473]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 48
@@ -244,7 +244,7 @@ text = "00:00"
 label_settings = SubResource("LabelSettings_k0q2c")
 horizontal_alignment = 1
 
-[node name="ProgressCircle" type="ColorRect" parent="Panel/VBoxContainer"]
+[node name="ProgressCircle" type="ColorRect" parent="Panel/VBoxContainer" unique_id=440428352]
 material = SubResource("ShaderMaterial_bnmqq")
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
@@ -252,18 +252,18 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.538823, 0.436949, 0.762096, 1)
 
-[node name="VSplitContainer" type="VSplitContainer" parent="Panel/VBoxContainer"]
+[node name="VSplitContainer" type="VSplitContainer" parent="Panel/VBoxContainer" unique_id=579208461]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 25
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1860675880]
 layout_mode = 2
 theme_override_constants/separation = 65
 alignment = 1
 
-[node name="StartButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="StartButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=933344606]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -275,7 +275,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
 theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
 text = "开始匹配"
 
-[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=128295717]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -287,7 +287,5 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
 theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
 text = "取消"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_8p4vq")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=709390554]
+libraries/ = SubResource("AnimationLibrary_8p4vq")

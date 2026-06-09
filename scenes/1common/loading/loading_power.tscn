@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://drp4jv1y6o7x3"]
+[gd_scene format=3 uid="uid://drp4jv1y6o7x3"]
 
 [ext_resource type="Script" uid="uid://q624ak88nj2s" path="res://scripts/1common/loading/loading_power.gd" id="1_eqbnf"]
 [ext_resource type="Texture2D" uid="uid://blk2fi66wxu7r" path="res://assets/currency/loading/progress_background.svg" id="2_j2eub"]
@@ -204,7 +204,7 @@ _data = {
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_r7tjp"]
 
-[node name="LoadingScreen" type="Control"]
+[node name="LoadingScreen" type="Control" unique_id=874078024]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,7 +213,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_eqbnf")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=618512292]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,7 +222,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0588235, 0.109804, 0.160784, 1)
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=271158548]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -236,7 +236,7 @@ theme_override_font_sizes/font_size = 46
 text = "能量填充系统"
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="TextureProgressBar" parent="."]
+[node name="ProgressBar" type="TextureProgressBar" parent="." unique_id=195756157]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -261,7 +261,7 @@ texture_under = ExtResource("2_j2eub")
 texture_over = ExtResource("4_rqy2c")
 texture_progress = ExtResource("3_2cq87")
 
-[node name="PercentageLabel" type="Label" parent="."]
+[node name="PercentageLabel" type="Label" parent="." unique_id=1899141572]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -279,7 +279,7 @@ theme_override_font_sizes/font_size = 28
 text = "50%"
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="."]
+[node name="StatusLabel" type="Label" parent="." unique_id=845652226]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -296,17 +296,13 @@ text = "注入能量中..."
 label_settings = SubResource("LabelSettings_64yfn")
 horizontal_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_x5qdq")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=735830469]
+libraries/ = SubResource("AnimationLibrary_x5qdq")
 
-[node name="StatusAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_5t8cd")
-}
+[node name="StatusAnimation" type="AnimationPlayer" parent="." unique_id=931847171]
+libraries/ = SubResource("AnimationLibrary_5t8cd")
 
-[node name="WaterSound" type="AudioStreamPlayer" parent="."]
+[node name="WaterSound" type="AudioStreamPlayer" parent="." unique_id=826325021]
 stream = SubResource("AudioStreamGenerator_r7tjp")
 volume_db = -15.0
 pitch_scale = 0.8

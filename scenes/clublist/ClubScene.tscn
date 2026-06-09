@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0xciqvrqhyav"]
+[gd_scene format=3 uid="uid://b0xciqvrqhyav"]
 
 [ext_resource type="Script" uid="uid://xw6ckv82msgu" path="res://scripts/clublist/MainScene.gd" id="1_bfnd6"]
 
@@ -27,7 +27,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="MainScene" type="Control"]
+[node name="MainScene" type="Control" unique_id=844172075]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +36,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bfnd6")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=317309405]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +45,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0784314, 0.121569, 0.196078, 1)
 
-[node name="ClubsPanel" type="Panel" parent="."]
+[node name="ClubsPanel" type="Panel" parent="." unique_id=305901969]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,7 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_w7urg")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ClubsPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ClubsPanel" unique_id=2083988381]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,28 +67,28 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="ClubsPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="ClubsPanel/VBoxContainer" unique_id=53709778]
 layout_mode = 2
 text = "俱乐部列表"
 label_settings = SubResource("LabelSettings_0p4ir")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="ClubsPanel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="ClubsPanel/VBoxContainer" unique_id=979560278]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ClubsPanel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ClubsPanel/VBoxContainer" unique_id=1202086276]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_qh3tb")
 
-[node name="ClubsList" type="VBoxContainer" parent="ClubsPanel/VBoxContainer/ScrollContainer"]
+[node name="ClubsList" type="VBoxContainer" parent="ClubsPanel/VBoxContainer/ScrollContainer" unique_id=1714962807]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 15
 
-[node name="AnimationParticles" type="CPUParticles2D" parent="."]
+[node name="AnimationParticles" type="CPUParticles2D" parent="." unique_id=294648257]
 position = Vector2(640, 0)
 amount = 30
 lifetime = 8.0

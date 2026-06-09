@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqxvn8yqxqxqx"]
+[gd_scene format=3 uid="uid://bqxvn8yqxqxqx"]
 
 [ext_resource type="Script" uid="uid://4vt5frcudgqe" path="res://scripts/1common/loading/circular/load_circular.gd" id="1_0x8yq"]
 [ext_resource type="Script" uid="uid://08qpkdj0hjxv" path="res://scripts/1common/loading/circular/circular_progress.gd" id="2_1x9yq"]
 
-[node name="loading_circular" type="Control"]
+[node name="loading_circular" type="Control" unique_id=385409412]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0x8yq")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=607041557]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.1, 0.1, 0.15, 1)
 
-[node name="CircularProgress" type="Control" parent="."]
+[node name="CircularProgress" type="Control" parent="." unique_id=1011700688]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,7 +38,7 @@ script = ExtResource("2_1x9yq")
 progress_color = Color(0.2, 0.8, 1, 1)
 background_color = Color(0.3, 0.3, 0.3, 0.5)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1893800952]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -49,24 +49,24 @@ offset_right = 300.0
 offset_bottom = -20.0
 grow_vertical = 0
 
-[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="VBoxContainer" unique_id=1112049734]
 layout_mode = 2
 text = "准备就绪"
 horizontal_alignment = 1
 
-[node name="ProgressLabel" type="Label" parent="VBoxContainer"]
+[node name="ProgressLabel" type="Label" parent="VBoxContainer" unique_id=684191382]
 layout_mode = 2
 text = "进度: 0%"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=884894468]
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="VBoxContainer"]
+[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=1269209547]
 layout_mode = 2
 text = "开始加载"
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=266911265]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

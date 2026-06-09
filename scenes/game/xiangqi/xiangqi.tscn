@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bukbhl4duoh8v"]
 
-[ext_resource type="Script" uid="uid://0ol0q40glyxg" path="res://scripts/game/xiangqi/xiangqi.gd" id="1_inhik"]
+[ext_resource type="Script" uid="uid://cx3wne01i0l2" path="res://scripts/game/xiangqi/xiangqi.gd" id="1_inhik"]
 [ext_resource type="Texture2D" uid="uid://b2nfgkamfjwk7" path="res://assets/game/xiangqi/bg.png" id="2_kdw55"]
 [ext_resource type="PackedScene" uid="uid://btvhpsmpk8tg3" path="res://scenes/game/xiangqi/move/player_move.tscn" id="3_ct6ix"]
 [ext_resource type="FontFile" uid="uid://dke7jbtml1fil" path="res://assets/game/xiangqi/font/SmileySans-Oblique.ttf" id="4_ow5wa"]

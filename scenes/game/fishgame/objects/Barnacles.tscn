@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://r4yrwhrhw0m3"]
+[gd_scene format=3 uid="uid://r4yrwhrhw0m3"]
 
 [ext_resource type="Texture2D" uid="uid://d3k3nt5xwxyfo" path="res://assets/game/fishgame/sprites/decorations1.png" id="1"]
 
@@ -24,9 +24,9 @@ _data = {
 &"Idle": SubResource("1")
 }
 
-[node name="Barnacles" type="Node2D"]
+[node name="Barnacles" type="Node2D" unique_id=1053093226]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=347352258]
 position = Vector2(-24, -51)
 texture = ExtResource("1")
 centered = false
@@ -34,8 +34,6 @@ hframes = 5
 vframes = 2
 frame = 5
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_fupuh")
-}
-autoplay = "Idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=739936205]
+libraries/ = SubResource("AnimationLibrary_fupuh")
+autoplay = &"Idle"

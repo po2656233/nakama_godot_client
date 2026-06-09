@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://b6j8g4q3y7m5n"]
 
-[ext_resource type="Script" uid="uid://dmrgiya8yo0qa" path="res://scripts/room/room_item.gd" id="1_gnanh"]
-[ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="2_hrbh1"]
-[ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_mcopm"]
-[ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_fftwn"]
-[ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shaders/flow_light.gdshader" id="5_p3dne"]
-[ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_3km0x"]
-[ext_resource type="Script" uid="uid://08qpkdj0hjxv" path="res://scripts/1common/loading/circular/circular_progress.gd" id="10_a2pe3"]
+[ext_resource type="Script" uid="uid://dmrgiya8yo0qa" path="res://scripts/roomlist/room_item.gd" id="1_ungxs"]
+[ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_63jwt"]
+[ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_2atjt"]
+[ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="4_g0ok2"]
+[ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shaders/flow_light.gdshader" id="5_bqmbc"]
+[ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_gksva"]
+[ext_resource type="Script" uid="uid://08qpkdj0hjxv" path="res://scripts/1common/loading/circular/circular_progress.gd" id="7_idn37"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.567014, 0.771032, 0.875651, 1)
@@ -113,7 +113,7 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uxbdl"]
 resource_local_to_scene = true
-shader = ExtResource("5_p3dne")
+shader = ExtResource("5_bqmbc")
 shader_parameter/progress = 2.0
 shader_parameter/angle = 2.206
 shader_parameter/n = 0.163
@@ -232,7 +232,7 @@ pivot_offset = Vector2(350, 60)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
-script = ExtResource("1_gnanh")
+script = ExtResource("1_ungxs")
 
 [node name="Author" type="Label" parent="." unique_id=58180932]
 layout_mode = 1
@@ -255,7 +255,7 @@ layout_mode = 0
 offset_right = 450.0
 offset_bottom = 400.0
 size_flags_vertical = 3
-texture = ExtResource("2_mcopm")
+texture = ExtResource("2_63jwt")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Front" unique_id=575330286]
@@ -335,7 +335,7 @@ offset_right = 85.09
 offset_bottom = 333.49
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("3_fftwn")
+texture = ExtResource("3_2atjt")
 expand_mode = 4
 stretch_mode = 2
 
@@ -399,7 +399,7 @@ offset_right = 333.09
 offset_bottom = 266.932
 size_flags_horizontal = 8
 size_flags_vertical = 0
-texture = ExtResource("2_hrbh1")
+texture = ExtResource("4_g0ok2")
 expand_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Front/MarginContainer" unique_id=967420291]
@@ -522,7 +522,7 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-texture_normal = ExtResource("6_3km0x")
+texture_normal = ExtResource("6_gksva")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -537,7 +537,7 @@ offset_right = 58.0
 offset_bottom = 118.0
 grow_horizontal = 0
 scale = Vector2(0.5, 0.5)
-script = ExtResource("10_a2pe3")
+script = ExtResource("7_idn37")
 progress_color = Color(1.44392e-06, 0.557247, 0.711925, 1)
 background_color = Color(0.170225, 0.366205, 0.488429, 0.501961)
 completion_text = "绪"

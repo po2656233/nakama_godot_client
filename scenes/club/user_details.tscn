@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://riqfmggkqpf8"]
+[gd_scene format=3 uid="uid://riqfmggkqpf8"]
 
 [ext_resource type="Script" uid="uid://cg3idhlxqd0sx" path="res://scripts/club/user_details.gd" id="1_kept2"]
 [ext_resource type="Texture2D" uid="uid://dyudb8ry74m70" path="res://assets/default_avatar.svg" id="2_v7o7n"]
 [ext_resource type="Script" uid="uid://fiimvlqcebki" path="res://scripts/1common/copyable_label.gd" id="3_ljiin"]
 
-[node name="UserDetails" type="Control"]
+[node name="UserDetails" type="Control" unique_id=1435203256]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kept2")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1470154964]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.117647, 0.231373, 0.2, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1855243772]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,11 +30,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Header" type="Panel" parent="VBoxContainer"]
+[node name="Header" type="Panel" parent="VBoxContainer" unique_id=1324186817]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="VBoxContainer/Header"]
+[node name="BackButton" type="Button" parent="VBoxContainer/Header" unique_id=494510062]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -46,7 +46,7 @@ offset_bottom = 15.5
 grow_vertical = 2
 text = "返回"
 
-[node name="Title" type="Label" parent="VBoxContainer/Header"]
+[node name="Title" type="Label" parent="VBoxContainer/Header" unique_id=398737040]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -62,20 +62,20 @@ grow_vertical = 2
 text = "用户详情"
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=2075200956]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ContentContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="ContentContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=2139521347]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
 
-[node name="BasicInfo" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer"]
+[node name="BasicInfo" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer" unique_id=1472324500]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo" unique_id=1930964075]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,40 +87,40 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer" unique_id=731496779]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Avatar" type="TextureRect" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer"]
+[node name="Avatar" type="TextureRect" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer" unique_id=1077590234]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 texture = ExtResource("2_v7o7n")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer" unique_id=980421117]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Nickname" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Nickname" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1222486617]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "昵称"
 script = ExtResource("3_ljiin")
 
-[node name="Signature" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Signature" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/BasicInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=191120610]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
 text = "这是个性签名"
 autowrap_mode = 3
 
-[node name="Stats" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer"]
+[node name="Stats" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer" unique_id=1415579407]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats" unique_id=314613529]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -132,60 +132,60 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer" unique_id=1398871183]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Level" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
+[node name="Level" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer" unique_id=1805683963]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level" unique_id=129975763]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
 text = "等级"
 horizontal_alignment = 1
 
-[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level"]
+[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Level" unique_id=1298356062]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Score" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
+[node name="Score" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer" unique_id=283433843]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score" unique_id=747657120]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
 text = "积分"
 horizontal_alignment = 1
 
-[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score"]
+[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Score" unique_id=740307930]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Rank" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer"]
+[node name="Rank" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer" unique_id=2052944985]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Rank"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Rank" unique_id=207809170]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
 text = "排名"
 horizontal_alignment = 1
 
-[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Rank"]
+[node name="Value" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/Stats/MarginContainer/HBoxContainer/Rank" unique_id=1221011229]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="GameStats" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer"]
+[node name="GameStats" type="Panel" parent="VBoxContainer/ScrollContainer/ContentContainer" unique_id=80049720]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats" unique_id=1537919127]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -197,32 +197,32 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer" unique_id=1175438089]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Title" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer" unique_id=1567932973]
 layout_mode = 2
 text = "游戏统计"
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer" unique_id=1955116157]
 layout_mode = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 15
 columns = 2
 
-[node name="TotalGames" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+[node name="TotalGames" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer" unique_id=1038870185]
 layout_mode = 2
 text = "总场次：0"
 
-[node name="WinRate" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+[node name="WinRate" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer" unique_id=259109882]
 layout_mode = 2
 text = "胜率：0%"
 
-[node name="HighestScore" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+[node name="HighestScore" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer" unique_id=846737795]
 layout_mode = 2
 text = "最高分：0"
 
-[node name="AverageScore" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer"]
+[node name="AverageScore" type="Label" parent="VBoxContainer/ScrollContainer/ContentContainer/GameStats/MarginContainer/VBoxContainer/GridContainer" unique_id=159077920]
 layout_mode = 2
 text = "平均分：0"

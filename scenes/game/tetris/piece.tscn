@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://ohv2dbvddn45"]
+[gd_scene format=3 uid="uid://ohv2dbvddn45"]
 
 [ext_resource type="Script" uid="uid://0h4l1uvdal0g" path="res://scripts/game/tetris/piece.gd" id="1_3daak"]
 [ext_resource type="Texture2D" uid="uid://bjf3jiap1gfg7" path="res://assets/game/tetris/Yellow.png" id="2_a7m5y"]
@@ -6,12 +6,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jmyax"]
 size = Vector2(48, 48)
 
-[node name="Piece" type="Area2D"]
+[node name="Piece" type="Area2D" unique_id=1837662518]
 script = ExtResource("1_3daak")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=979485451]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_a7m5y")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1316408921]
 shape = SubResource("RectangleShape2D_jmyax")

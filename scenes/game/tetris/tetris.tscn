@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjshm244ivhhy"]
+[gd_scene format=3 uid="uid://cjshm244ivhhy"]
 
 [ext_resource type="Texture2D" uid="uid://dj1olp7v7y623" path="res://assets/game/tetris/Border.png" id="1_nuxsd"]
 [ext_resource type="Texture2D" uid="uid://dddenph2txf1h" path="res://assets/game/tetris/Grid.png" id="2_8uhot"]
@@ -10,12 +10,12 @@
 [sub_resource type="LabelSettings" id="LabelSettings_yjf4s"]
 font_size = 32
 
-[node name="main" type="Node"]
+[node name="main" type="Node" unique_id=1889772417]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1657447902]
 zoom = Vector2(0.5, 0.5)
 
-[node name="Border" type="TextureRect" parent="."]
+[node name="Border" type="TextureRect" parent="." unique_id=735939177]
 offset_left = -256.0
 offset_top = -496.0
 offset_right = 1794.0
@@ -23,7 +23,7 @@ offset_bottom = 3474.0
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_nuxsd")
 
-[node name="GridTexture" type="TextureRect" parent="Border"]
+[node name="GridTexture" type="TextureRect" parent="Border" unique_id=36055985]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -39,11 +39,11 @@ grow_vertical = 2
 texture = ExtResource("2_8uhot")
 stretch_mode = 1
 
-[node name="Board" type="Node" parent="."]
+[node name="Board" type="Node" parent="." unique_id=280700326]
 script = ExtResource("3_iagnp")
 tetromino_scene = ExtResource("4_vop11")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1273644720]
 offset_left = 296.0
 offset_top = -485.0
 offset_right = 496.0
@@ -53,7 +53,7 @@ theme_override_font_sizes/font_size = 35
 text = "NEXT TETROMINO"
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1385242182]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -66,12 +66,12 @@ offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PieceSpawner" type="Node" parent="."]
+[node name="PieceSpawner" type="Node" parent="." unique_id=1553234514]
 script = ExtResource("5_wc88g")
 
-[node name="UI" parent="." instance=ExtResource("6_6icgs")]
+[node name="UI" parent="." unique_id=388823635 instance=ExtResource("6_6icgs")]
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="." unique_id=1874498532]
 unique_name_in_owner = true
 offset_left = 346.0
 offset_top = -174.0
@@ -83,7 +83,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=31542880]
 offset_left = -810.0
 offset_top = -490.0
 offset_right = -264.0

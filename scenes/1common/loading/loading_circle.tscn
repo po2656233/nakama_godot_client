@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cnjcuw1254s0x"]
+[gd_scene format=3 uid="uid://cnjcuw1254s0x"]
 
 [ext_resource type="Script" uid="uid://cywp43kgdl1pi" path="res://scripts/1common/loading/loading_circle.gd" id="1_1mgu0"]
 
@@ -295,7 +295,7 @@ _data = {
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_r7tjp"]
 
-[node name="LoadingScreen" type="Control"]
+[node name="LoadingScreen" type="Control" unique_id=2085340330]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -306,7 +306,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1mgu0")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=1779945075]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -315,7 +315,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0392157, 0.0784314, 0.117647, 1)
 
-[node name="BackgroundGlow" type="TextureRect" parent="."]
+[node name="BackgroundGlow" type="TextureRect" parent="." unique_id=573689778]
 modulate = Color(1, 1, 1, 0.27451)
 layout_mode = 1
 anchors_preset = 8
@@ -332,7 +332,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_jsy3i")
 expand_mode = 1
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=1282860102]
 visible = false
 layout_mode = 1
 anchors_preset = 5
@@ -345,7 +345,7 @@ grow_horizontal = 2
 text = "能量填充系统"
 horizontal_alignment = 1
 
-[node name="SphereProgress" type="ColorRect" parent="."]
+[node name="SphereProgress" type="ColorRect" parent="." unique_id=1218732264]
 material = SubResource("ShaderMaterial_jct1w")
 layout_mode = 1
 anchors_preset = 8
@@ -361,7 +361,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0627451, 0.0745098, 0.109804, 1)
 
-[node name="GlowCircle" type="TextureRect" parent="SphereProgress"]
+[node name="GlowCircle" type="TextureRect" parent="SphereProgress" unique_id=882408359]
 modulate = Color(0.152941, 0.345098, 0.85098, 0.149)
 layout_mode = 1
 anchors_preset = 8
@@ -378,7 +378,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_k2wd4")
 expand_mode = 1
 
-[node name="PercentageLabel" type="Label" parent="."]
+[node name="PercentageLabel" type="Label" parent="." unique_id=1354400441]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -396,7 +396,7 @@ theme_override_font_sizes/font_size = 28
 text = "10%"
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="."]
+[node name="StatusLabel" type="Label" parent="." unique_id=1452359604]
 visible = false
 modulate = Color(0.894922, 0.894922, 0.894922, 1)
 layout_mode = 1
@@ -414,17 +414,13 @@ text = "注入能量中..."
 label_settings = SubResource("LabelSettings_64yfn")
 horizontal_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_x5qdq")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=54819296]
+libraries/ = SubResource("AnimationLibrary_x5qdq")
 
-[node name="StatusAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_5t8cd")
-}
+[node name="StatusAnimation" type="AnimationPlayer" parent="." unique_id=517945526]
+libraries/ = SubResource("AnimationLibrary_5t8cd")
 
-[node name="WaterSound" type="AudioStreamPlayer" parent="."]
+[node name="WaterSound" type="AudioStreamPlayer" parent="." unique_id=1965105400]
 stream = SubResource("AudioStreamGenerator_r7tjp")
 volume_db = -15.0
 pitch_scale = 0.8

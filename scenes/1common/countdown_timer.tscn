@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ryqfmggkqpxe"]
+[gd_scene format=3 uid="uid://ryqfmggkqpxe"]
 
 [ext_resource type="Script" uid="uid://737754m2v3g3" path="res://scripts/1common/countdown_timer.gd" id="1_xxxxx"]
 [ext_resource type="AudioStream" uid="uid://r6as7qelxqcx" path="res://assets/music/tick.mp3" id="2_cmetn"]
@@ -75,10 +75,10 @@ _data = {
 &"pulse": SubResource("Animation_1")
 }
 
-[node name="CountdownTimer" type="Node2D"]
+[node name="CountdownTimer" type="Node2D" unique_id=245055572]
 script = ExtResource("1_xxxxx")
 
-[node name="ProgressCircle" type="ProgressBar" parent="."]
+[node name="ProgressCircle" type="ProgressBar" parent="." unique_id=1855891457]
 custom_minimum_size = Vector2(200, 200)
 offset_right = 200.0
 offset_bottom = 200.0
@@ -88,7 +88,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_w1rnf")
 value = 100.0
 show_percentage = false
 
-[node name="TimeLabel" type="Label" parent="."]
+[node name="TimeLabel" type="Label" parent="." unique_id=1782268974]
 custom_minimum_size = Vector2(0, 100)
 anchors_preset = 15
 anchor_right = 1.0
@@ -103,23 +103,21 @@ text = "0"
 label_settings = SubResource("LabelSettings_gxvpb")
 horizontal_alignment = 1
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=353134320]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_1")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=41356079]
+libraries/ = SubResource("AnimationLibrary_1")
 
-[node name="TickSound" type="AudioStreamPlayer" parent="."]
+[node name="TickSound" type="AudioStreamPlayer" parent="." unique_id=1723571914]
 stream = ExtResource("2_cmetn")
 
-[node name="TimeoutSound" type="AudioStreamPlayer" parent="."]
+[node name="TimeoutSound" type="AudioStreamPlayer" parent="." unique_id=1466544827]
 stream = ExtResource("3_yjwb7")
 
-[node name="TimeoverSound" type="AudioStreamPlayer" parent="."]
+[node name="TimeoverSound" type="AudioStreamPlayer" parent="." unique_id=845805379]
 stream = ExtResource("4_yv3yn")
 
-[node name="DragonBones" type="DragonBones" parent="."]
+[node name="DragonBones" type="DragonBones" parent="." unique_id=1219288647]
 factory = ExtResource("5_kdx38")
 instantiate_dragon_bones_data_name = "daojishitongyong"
 armature_settings = {

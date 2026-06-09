@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://be3byx2jjlvkr"]
+[gd_scene format=3 uid="uid://be3byx2jjlvkr"]
 
 [ext_resource type="Script" uid="uid://b1p3kvelh68k1" path="res://scripts/clublist/WaitingPlayerItem.gd" id="1_g1krc"]
 
@@ -29,7 +29,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="WaitingPlayerItem" type="Panel"]
+[node name="WaitingPlayerItem" type="Panel" unique_id=1458303081]
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,7 +41,7 @@ mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_0i8sv")
 script = ExtResource("1_g1krc")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1487594575]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,12 +54,12 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=376426931]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="PlayerNameLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+[node name="PlayerNameLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=912426156]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.988235, 0.952941, 0, 1)
@@ -75,12 +75,12 @@ theme_override_fonts/font = SubResource("SystemFont_tsrp1")
 theme_override_font_sizes/font_size = 18
 text = "玩家名称"
 
-[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/HBoxContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/HBoxContainer" unique_id=2032703945]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ReadyLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+[node name="ReadyLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1048769806]
 layout_mode = 2
 mouse_filter = 1
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -89,7 +89,7 @@ theme_override_fonts/font = SubResource("SystemFont_g1krc")
 theme_override_font_sizes/font_size = 18
 text = "已准备"
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="." unique_id=1852064489]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -101,7 +101,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_0i8sv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_vbwdy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g1krc")
 
-[node name="StatusParticles" type="CPUParticles2D" parent="."]
+[node name="StatusParticles" type="CPUParticles2D" parent="." unique_id=2133355050]
 position = Vector2(15, 20)
 emitting = false
 amount = 12

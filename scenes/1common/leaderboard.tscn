@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://riqfmggkqpfe"]
+[gd_scene format=3 uid="uid://riqfmggkqpfe"]
 
 [ext_resource type="Script" uid="uid://dgpp751fm8v83" path="res://scripts/1common/leaderboard.gd" id="1_w6k3d"]
 
@@ -20,7 +20,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_dkral")
 Button/styles/normal = SubResource("StyleBoxFlat_476p1")
 Button/styles/pressed = SubResource("StyleBoxFlat_cij1y")
 
-[node name="Leaderboard" type="Control"]
+[node name="Leaderboard" type="Control" unique_id=1332580176]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w6k3d")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=1129074680]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,7 +38,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5lrv6")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1818513018]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,76 +50,76 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1761663629]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=956929850]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "排行榜"
 horizontal_alignment = 1
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer" unique_id=1308074735]
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
 current_tab = 0
 
-[node name="日排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+[node name="日排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=326434013]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/日排行"]
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/日排行" unique_id=816101207]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="周排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+[node name="周排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=514186141]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/周排行"]
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/周排行" unique_id=1361614291]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="月排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+[node name="月排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=1077583309]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/月排行"]
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/月排行" unique_id=2091397683]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="季度排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+[node name="季度排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=298644158]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
-[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/季度排行"]
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/季度排行" unique_id=896450119]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="年中排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+[node name="年中排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=2140887699]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 4
 
-[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/年中排行"]
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/年中排行" unique_id=1718609120]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="年终排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+[node name="年终排行" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=395372295]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 5
 
-[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/年终排行"]
+[node name="RankList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/年终排行" unique_id=823746116]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Btn_out" type="Button" parent="."]
+[node name="Btn_out" type="Button" parent="." unique_id=1762072433]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c8p4xkj6p2n8w"]
 
-[ext_resource type="Script" uid="uid://clrx0if7d7mpk" path="res://scripts/room/player_item.gd" id="1_q5idr"]
+[ext_resource type="Script" uid="uid://clrx0if7d7mpk" path="res://scripts/roomlist/player_item.gd" id="1_3gyso"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ko5ak"]
 font_color = Color(1, 1, 0, 1)
@@ -12,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_q5idr")
+script = ExtResource("1_3gyso")
 
 [node name="PlayerAvatar" type="CenterContainer" parent="." unique_id=1547929491]
 custom_minimum_size = Vector2(40, 40)

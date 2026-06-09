@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cenfjvramyfek"]
+[gd_scene format=3 uid="uid://cenfjvramyfek"]
 
 [ext_resource type="Script" uid="uid://bwpjwhu616utw" path="res://scripts/1common/tabbed_panel.gd" id="1_script"]
 
-[node name="TabbedPanel" type="Control"]
+[node name="TabbedPanel" type="Control" unique_id=737315640]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=498363088]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.12, 0.14, 0.19, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1437447821]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,16 +32,16 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer" unique_id=1061855395]
 layout_mode = 2
 tab_alignment = 1
 current_tab = 0
 
-[node name="Dashboard" type="Control" parent="MarginContainer/TabContainer"]
+[node name="Dashboard" type="Control" parent="MarginContainer/TabContainer" unique_id=1443637733]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Dashboard"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Dashboard" unique_id=844370651]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,22 +50,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="WelcomeLabel" type="Label" parent="MarginContainer/TabContainer/Dashboard/VBoxContainer"]
+[node name="WelcomeLabel" type="Label" parent="MarginContainer/TabContainer/Dashboard/VBoxContainer" unique_id=1270239458]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Welcome to Dashboard"
 horizontal_alignment = 1
 
-[node name="Stats" type="GridContainer" parent="MarginContainer/TabContainer/Dashboard/VBoxContainer"]
+[node name="Stats" type="GridContainer" parent="MarginContainer/TabContainer/Dashboard/VBoxContainer" unique_id=66751428]
 layout_mode = 2
 columns = 3
 
-[node name="Profile" type="Control" parent="MarginContainer/TabContainer"]
+[node name="Profile" type="Control" parent="MarginContainer/TabContainer" unique_id=378152104]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Profile"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Profile" unique_id=1298045542]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -74,18 +74,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="ProfileHeader" type="Label" parent="MarginContainer/TabContainer/Profile/VBoxContainer"]
+[node name="ProfileHeader" type="Label" parent="MarginContainer/TabContainer/Profile/VBoxContainer" unique_id=1617777620]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "User Profile"
 horizontal_alignment = 1
 
-[node name="Settings" type="Control" parent="MarginContainer/TabContainer"]
+[node name="Settings" type="Control" parent="MarginContainer/TabContainer" unique_id=168993154]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/Settings"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/Settings" unique_id=1935822947]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -93,23 +93,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Settings/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Settings/ScrollContainer" unique_id=1434925752]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="SettingsHeader" type="Label" parent="MarginContainer/TabContainer/Settings/ScrollContainer/VBoxContainer"]
+[node name="SettingsHeader" type="Label" parent="MarginContainer/TabContainer/Settings/ScrollContainer/VBoxContainer" unique_id=269890669]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Settings"
 horizontal_alignment = 1
 
-[node name="Help" type="Control" parent="MarginContainer/TabContainer"]
+[node name="Help" type="Control" parent="MarginContainer/TabContainer" unique_id=1255968682]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Help"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Help" unique_id=1968571519]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,7 +118,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="HelpHeader" type="Label" parent="MarginContainer/TabContainer/Help/VBoxContainer"]
+[node name="HelpHeader" type="Label" parent="MarginContainer/TabContainer/Help/VBoxContainer" unique_id=2028190046]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Help & Support"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://duk1crphy5j8f"]
+[gd_scene format=3 uid="uid://duk1crphy5j8f"]
 
 [ext_resource type="Script" uid="uid://b8fwefc1knge1" path="res://scripts/1common/find_friend.gd" id="1_54668"]
 [ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://themes/chat.tres" id="2_a7bd4"]
@@ -40,7 +40,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="Firends" type="Control"]
+[node name="Firends" type="Control" unique_id=1403381422]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,7 +49,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_54668")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=614683049]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -60,7 +60,7 @@ grow_vertical = 2
 theme = ExtResource("2_a7bd4")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ipxp4")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=221191793]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -70,21 +70,21 @@ offset_right = -17.0
 offset_bottom = 57.0
 grow_horizontal = 2
 
-[node name="LineEdit_find" type="LineEdit" parent="Panel/HBoxContainer"]
+[node name="LineEdit_find" type="LineEdit" parent="Panel/HBoxContainer" unique_id=1385812408]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_x2pc1")
 theme_override_styles/focus = SubResource("StyleBoxFlat_03han")
 placeholder_text = "查找"
 
-[node name="tb_add" type="TextureButton" parent="Panel/HBoxContainer"]
+[node name="tb_add" type="TextureButton" parent="Panel/HBoxContainer" unique_id=547594183]
 layout_mode = 2
 texture_normal = ExtResource("3_on8jn")
 texture_pressed = ExtResource("4_o61lp")
 texture_hover = ExtResource("5_g27v3")
 stretch_mode = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=393887684]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,7 +96,7 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ItemList" type="ItemList" parent="Panel/ScrollContainer"]
+[node name="ItemList" type="ItemList" parent="Panel/ScrollContainer" unique_id=13173665]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

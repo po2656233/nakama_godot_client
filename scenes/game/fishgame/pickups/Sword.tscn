@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://28kguvi6h41f"]
+[gd_scene format=3 uid="uid://28kguvi6h41f"]
 
 [ext_resource type="PackedScene" uid="uid://bmnok1dwyv3cl" path="res://scenes/game/fishgame/pickups/Pickup.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://crbg3ina60g5" path="res://assets/game/fishgame/sprites/sword.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://sev5loavtd7v" path="res://scenes/game/fishgame/components/Hitbox.tscn" id="3"]
-[ext_resource type="Script" uid="uid://11486el1d5oq" path="res://scripts/game/fishgame/pickups/Sword.gd" id="4"]
+[ext_resource type="Script" uid="uid://den1sq5vvbnsv" path="res://scripts/game/fishgame/pickups/Sword.gd" id="4"]
 [ext_resource type="AudioStream" uid="uid://cvdovib4h48vb" path="res://assets/game/fishgame/sounds/sword.wav" id="5"]
-[ext_resource type="Script" uid="uid://cs7o2qxhfol4o" path="res://scripts/game/fishgame/components/Sounds.gd" id="6"]
+[ext_resource type="Script" uid="uid://cilljk2ne1fhu" path="res://scripts/game/fishgame/components/Sounds.gd" id="6"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(25.89, 65.296)
@@ -73,40 +73,38 @@ _data = {
 &"Swing": SubResource("3")
 }
 
-[node name="Sword" instance=ExtResource("1")]
+[node name="Sword" unique_id=466024227 instance=ExtResource("1")]
 script = ExtResource("4")
 pickup_position = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" type="Sprite2D" parent="." index="0" unique_id=1017833288]
 position = Vector2(24, -39)
 texture = ExtResource("2")
 hframes = 4
 vframes = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1" unique_id=1121755679]
 position = Vector2(14, -29.5)
 rotation = 0.486947
 shape = SubResource("1")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
-libraries = {
-&"": SubResource("AnimationLibrary_2uljv")
-}
-autoplay = "Idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2" unique_id=701314547]
+libraries/ = SubResource("AnimationLibrary_2uljv")
+autoplay = &"Idle"
 
-[node name="Hitbox" parent="." index="3" instance=ExtResource("3")]
+[node name="Hitbox" parent="." index="3" unique_id=1250732418 instance=ExtResource("3")]
 position = Vector2(29, -23.5)
 collision_mask = 2
 disabled = true
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox" index="0"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox" index="0" unique_id=1538087722]
 polygon = PackedVector2Array(-23, -5.5, -16, -18.5, -8, -48.5, 9, -34.5, 25, -4.5, 27, 16.5, 22, 25.5, 8, 30.5, -3, 30.5, -23, 20.5)
 
-[node name="Sounds" type="Node" parent="." index="4"]
+[node name="Sounds" type="Node" parent="." index="4" unique_id=1358572605]
 script = ExtResource("6")
 
-[node name="Swing" type="AudioStreamPlayer" parent="Sounds" index="0"]
+[node name="Swing" type="AudioStreamPlayer" parent="Sounds" index="0" unique_id=1531418630]
 stream = ExtResource("5")
 
-[node name="HeldPosition" parent="." index="5"]
+[node name="HeldPosition" parent="." index="5" unique_id=1324158309]
 position = Vector2(0, -8.5)

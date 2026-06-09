@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://btvhpsmpk8tg3"]
+[gd_scene format=3 uid="uid://btvhpsmpk8tg3"]
 
-[ext_resource type="Script" uid="uid://c61y58ypb1glj" path="res://scripts/game/xiangqi/move/player_move.gd" id="1_80evl"]
+[ext_resource type="Script" uid="uid://c2d6nfrvelpi2" path="res://scripts/game/xiangqi/move/player_move.gd" id="1_80evl"]
 [ext_resource type="Texture2D" uid="uid://cja1ctr56n2xu" path="res://assets/game/xiangqi/r_box.png" id="1_rcm2p"]
 [ext_resource type="Texture2D" uid="uid://ba85vwbdu8rdt" path="res://assets/game/xiangqi/b_box.png" id="3_igjsx"]
 
@@ -42,13 +42,11 @@ _data = {
 &"blink": SubResource("Animation_thw30")
 }
 
-[node name="player_move" type="Sprite2D"]
+[node name="player_move" type="Sprite2D" unique_id=1650118242]
 texture = ExtResource("1_rcm2p")
 script = ExtResource("1_80evl")
 red = ExtResource("1_rcm2p")
 black = ExtResource("3_igjsx")
 
-[node name="movePlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_lrrep")
-}
+[node name="movePlayer" type="AnimationPlayer" parent="." unique_id=517016205]
+libraries/ = SubResource("AnimationLibrary_lrrep")

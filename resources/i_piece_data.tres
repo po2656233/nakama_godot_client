@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cyd43r7tkl62f"]
+[gd_resource type="Resource" format=3 uid="uid://cyd43r7tkl62f"]
 
 [ext_resource type="Texture2D" uid="uid://bvhiy4egr6qkq" path="res://assets/game/tetris/Cyan.png" id="1_runxs"]
 [ext_resource type="Script" uid="uid://dvj8qincti0i1" path="res://scripts/game/tetris/piece_data.gd" id="2_4n53t"]

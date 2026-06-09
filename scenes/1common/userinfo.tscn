@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1aona8sdssrn"]
+[gd_scene format=3 uid="uid://d1aona8sdssrn"]
 
 [ext_resource type="Texture2D" uid="uid://bwk6gbfvjlu16" path="res://assets/hall/btn_cjfj_db.png" id="1_wpirf"]
 [ext_resource type="Texture2D" uid="uid://d22ptqlov36ls" path="res://assets/level/ic_user_level_2.svg" id="2_4k68i"]
@@ -37,14 +37,14 @@ ProgressBar/font_sizes/font_size = 14
 ProgressBar/styles/background = SubResource("StyleBoxFlat_i6g6x")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_wxd4g")
 
-[node name="Userinfo" type="Node2D"]
+[node name="Userinfo" type="Node2D" unique_id=637689819]
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1334109165]
 offset_right = 520.0
 offset_bottom = 100.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_v6g44")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=689557883]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,17 +56,17 @@ theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer" unique_id=1181299064]
 layout_mode = 2
 
-[node name="TR_HEAD" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer"]
+[node name="TR_HEAD" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer" unique_id=1079072079]
 custom_minimum_size = Vector2(50, 95)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("1_wpirf")
 expand_mode = 2
 
-[node name="TR_Level" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/TR_HEAD"]
+[node name="TR_Level" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/TR_HEAD" unique_id=108675114]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 1
 anchors_preset = 7
@@ -82,61 +82,61 @@ grow_vertical = 0
 texture = ExtResource("2_4k68i")
 expand_mode = 1
 
-[node name="VBoxContainerInfo" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+[node name="VBoxContainerInfo" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=1541160705]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo" unique_id=304625014]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2" unique_id=1805067902]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="account" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer"]
+[node name="account" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer" unique_id=1555204441]
 layout_mode = 2
 text = "账号"
 script = ExtResource("2_b4kpl")
 
-[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer" unique_id=475219804]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer" unique_id=1136421411]
 layout_mode = 2
 
-[node name="HBoxContainerGold" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainerGold" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer" unique_id=1434294475]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerGold"]
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerGold" unique_id=962961754]
 layout_mode = 2
 texture = ExtResource("3_k3jga")
 expand_mode = 2
 
-[node name="gold" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerGold"]
+[node name="gold" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerGold" unique_id=910769583]
 layout_mode = 2
 text = "0"
 
-[node name="HBoxContainerDiamond" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainerDiamond" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer" unique_id=1078702439]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerDiamond"]
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerDiamond" unique_id=2069408453]
 layout_mode = 2
 texture = ExtResource("2_c8moe")
 expand_mode = 2
 
-[node name="diamond" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerDiamond"]
+[node name="diamond" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2/VBoxContainer/HBoxContainer/HBoxContainerDiamond" unique_id=1597669545]
 layout_mode = 2
 text = "0"
 
-[node name="TR_LEVEL" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2"]
+[node name="TR_LEVEL" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo/HBoxContainer2" unique_id=1810417623]
 layout_mode = 2
 texture = ExtResource("6_3om3u")
 expand_mode = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo"]
+[node name="ProgressBar" type="ProgressBar" parent="Panel/MarginContainer/HBoxContainer/VBoxContainerInfo" unique_id=642801042]
 layout_mode = 2
 size_flags_vertical = 6
 theme = SubResource("Theme_lr7ab")

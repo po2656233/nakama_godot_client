@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bofkhvgxv0kij"]
+[gd_scene format=3 uid="uid://bofkhvgxv0kij"]
 
 [ext_resource type="Script" uid="uid://dr1wxj4psvfef" path="res://scripts/clublist/MemberItem.gd" id="1_4qkrf"]
 
@@ -28,14 +28,14 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="MemberItem" type="Panel"]
+[node name="MemberItem" type="Panel" unique_id=1236407156]
 custom_minimum_size = Vector2(0, 50)
 offset_right = 147.0
 offset_bottom = 50.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_xk6vy")
 script = ExtResource("1_4qkrf")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=584426826]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,11 +48,11 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1320479729]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MemberNameLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+[node name="MemberNameLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1785195012]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
@@ -60,17 +60,17 @@ text = "成员名称"
 label_settings = SubResource("LabelSettings_21qdl")
 vertical_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+[node name="StatusLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=332968023]
 layout_mode = 2
 mouse_filter = 1
 text = "在线"
 
-[node name="InfoIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="InfoIcon" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=681656508]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Glow" type="Panel" parent="."]
+[node name="Glow" type="Panel" parent="." unique_id=498191116]
 visible = false
 self_modulate = Color(1, 1, 1, 0.137255)
 layout_mode = 1
@@ -81,7 +81,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4qkrf")
 
-[node name="PanelButton" type="Button" parent="."]
+[node name="PanelButton" type="Button" parent="." unique_id=1313895746]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

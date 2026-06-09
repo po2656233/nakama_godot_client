@@ -1,6 +1,6 @@
 extends Control
 
-const roomItem = preload("res://scenes/room/room_item.tscn")
+const roomItem = preload("res://scenes/roomlist/room_item.tscn")
 const SAVE_PATH = "user://room_list_info.json"
 
 @onready var search_input = $VBoxContainer/SearchBar/SearchInput

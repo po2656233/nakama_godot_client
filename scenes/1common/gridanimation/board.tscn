@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://egr5pjwvrrk5"]
+[gd_scene format=3 uid="uid://egr5pjwvrrk5"]
 
 [ext_resource type="Script" uid="uid://ufshjk6jge6l" path="res://scenes/1common/gridanimation/board.gd" id="1_75gkp"]
 
-[node name="board" type="Control"]
+[node name="board" type="Control" unique_id=528070864]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_75gkp")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=70049361]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,5 +23,5 @@ grow_vertical = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 
-[node name="Control" type="Control" parent="MarginContainer"]
+[node name="Control" type="Control" parent="MarginContainer" unique_id=2027751980]
 layout_mode = 2

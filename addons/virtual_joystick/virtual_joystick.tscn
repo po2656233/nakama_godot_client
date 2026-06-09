@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cn4ssax8bfua3"]
+[gd_scene format=3 uid="uid://cn4ssax8bfua3"]
 
 [ext_resource type="Script" uid="uid://r768hvr811jf" path="res://addons/virtual_joystick/scripts/virtual_joystick.gd" id="1_otik3"]
 [ext_resource type="Texture2D" uid="uid://d1kpl1ws5ywfr" path="res://addons/virtual_joystick/sprites/joystick.png" id="2_otik3"]
@@ -246,17 +246,17 @@ radius = 120.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_odx7s"]
 radius = 120.0
 
-[node name="VirtualJoystick" type="CanvasLayer"]
+[node name="VirtualJoystick" type="CanvasLayer" unique_id=1527198680]
 script = SubResource("GDScript_f5fmp")
 
-[node name="VirtualJoystick" type="Node2D" parent="."]
+[node name="VirtualJoystick" type="Node2D" parent="." unique_id=669778342]
 position = Vector2(68, 575)
 script = ExtResource("1_otik3")
 border = ExtResource("2_otik3")
 stick = ExtResource("3_v2x7c")
 stick_pressed = ExtResource("4_n6pya")
 
-[node name="A" type="TouchScreenButton" parent="."]
+[node name="A" type="TouchScreenButton" parent="." unique_id=1512281019]
 position = Vector2(1044, 547)
 scale = Vector2(0.385, 0.42)
 texture_normal = ExtResource("5_y5rfs")
@@ -264,14 +264,14 @@ texture_pressed = ExtResource("6_lbygl")
 bitmask = SubResource("BitMap_ve3v5")
 shape = SubResource("CircleShape2D_bxl0k")
 
-[node name="X" type="TouchScreenButton" parent="."]
+[node name="X" type="TouchScreenButton" parent="." unique_id=72752988]
 position = Vector2(1054, 469)
 scale = Vector2(0.4, 0.3)
 texture_normal = ExtResource("7_ki73v")
 texture_pressed = ExtResource("8_0rpfe")
 shape = SubResource("CircleShape2D_idrfl")
 
-[node name="add" type="TextureButton" parent="X"]
+[node name="add" type="TextureButton" parent="X" unique_id=691506652]
 visible = false
 anchors_preset = 5
 anchor_left = 0.5
@@ -285,14 +285,14 @@ texture_normal = ExtResource("9_xye7w")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Y" type="TouchScreenButton" parent="."]
+[node name="Y" type="TouchScreenButton" parent="." unique_id=64085836]
 position = Vector2(964, 502)
 scale = Vector2(0.402685, 0.3)
 texture_normal = ExtResource("10_7tkbt")
 texture_pressed = ExtResource("11_yyxml")
 shape = SubResource("CircleShape2D_lqbxo")
 
-[node name="add" type="TextureButton" parent="Y"]
+[node name="add" type="TextureButton" parent="Y" unique_id=154454015]
 visible = false
 custom_minimum_size = Vector2(45, 45)
 anchors_preset = 5
@@ -307,14 +307,14 @@ texture_normal = ExtResource("9_xye7w")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="B" type="TouchScreenButton" parent="."]
+[node name="B" type="TouchScreenButton" parent="." unique_id=568128597]
 position = Vector2(945, 575)
 scale = Vector2(0.402, 0.3)
 texture_normal = ExtResource("12_v537s")
 texture_pressed = ExtResource("13_chgpf")
 shape = SubResource("CircleShape2D_jc337")
 
-[node name="add" type="TextureButton" parent="B"]
+[node name="add" type="TextureButton" parent="B" unique_id=511254900]
 visible = false
 custom_minimum_size = Vector2(45, 45)
 offset_left = -69.652
@@ -325,7 +325,7 @@ texture_normal = ExtResource("9_xye7w")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Z" type="TouchScreenButton" parent="."]
+[node name="Z" type="TouchScreenButton" parent="." unique_id=1355193321]
 visible = false
 position = Vector2(349, 291)
 scale = Vector2(0.4, 0.31016)
@@ -333,7 +333,7 @@ texture_normal = ExtResource("14_67kmq")
 texture_pressed = ExtResource("15_vhoqs")
 shape = SubResource("CircleShape2D_odx7s")
 
-[node name="add" type="TextureButton" parent="Z"]
+[node name="add" type="TextureButton" parent="Z" unique_id=169876710]
 visible = false
 anchors_preset = 5
 anchor_left = 0.5
