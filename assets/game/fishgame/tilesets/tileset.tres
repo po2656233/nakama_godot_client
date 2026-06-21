@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" format=3 uid="uid://eael5sneujok"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://eael5sneujok"]
 
 [ext_resource type="Texture2D" uid="uid://ckj3op2hl4pb3" path="res://assets/game/fishgame/tilesets/tileset1.png" id="1"]
 

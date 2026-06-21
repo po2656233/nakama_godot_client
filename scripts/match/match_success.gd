@@ -9,8 +9,8 @@ extends Window
 @onready var accept_button = $Panel/VBoxContainer/ButtonContainer/AcceptButton
 @onready var decline_button = $Panel/VBoxContainer/ButtonContainer/DeclineButton
 
-var png = preload("res://assets/game/snake1.png")
-var png1 = preload("res://assets/game/snake2.png")
+var png = preload("res://assets/match/snake1.png")
+var png1 = preload("res://assets/match/snake2.png")
 var timer = Timer.new()
 var player_icons: Array[TextureRect] = []
 var player_total = 0

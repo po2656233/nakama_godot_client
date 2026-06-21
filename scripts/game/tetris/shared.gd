@@ -43,13 +43,13 @@ var wall_kicks_jlostz = [
 ]
 
 var data = {
-	Tetromino.I: preload("res://resources/i_piece_data.tres"),
-	Tetromino.J: preload("res://resources/j_piece_data.tres"),
-	Tetromino.L: preload("res://resources/l_piece_data.tres"),
-	Tetromino.O: preload("res://resources/o_piece_data.tres"),
-	Tetromino.S: preload("res://resources/s_piece_data.tres"),
-	Tetromino.T: preload("res://resources/t_piece_data.tres"),
-	Tetromino.Z: preload("res://resources/z_piece_data.tres")
+	Tetromino.I: preload("res://assets/game/tetris/resources/i_piece_data.tres"),
+	Tetromino.J: preload("res://assets/game/tetris/resources/j_piece_data.tres"),
+	Tetromino.L: preload("res://assets/game/tetris/resources/l_piece_data.tres"),
+	Tetromino.O: preload("res://assets/game/tetris/resources/o_piece_data.tres"),
+	Tetromino.S: preload("res://assets/game/tetris/resources/s_piece_data.tres"),
+	Tetromino.T: preload("res://assets/game/tetris/resources/t_piece_data.tres"),
+	Tetromino.Z: preload("res://assets/game/tetris/resources/z_piece_data.tres")
 }
 
 var clockwise_rotation_matrix = [Vector2(0, -1), Vector2(1, 0)]
