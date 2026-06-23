@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c4j05v6wfo823" path="res://scenes/game/tetris/tetromino.tscn" id="4_vop11"]
 [ext_resource type="Script" uid="uid://mciyoo8ahaac" path="res://scripts/game/tetris/piece_spawner.gd" id="5_wc88g"]
 [ext_resource type="PackedScene" uid="uid://ct2meksk8huhw" path="res://scenes/game/tetris/ui.tscn" id="6_6icgs"]
+[ext_resource type="PackedScene" uid="uid://cn4ssax8bfua3" path="res://addons/virtual_joystick/virtual_joystick.tscn" id="7_k2doy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yjf4s"]
 font_size = 32
@@ -73,6 +74,7 @@ script = ExtResource("5_wc88g")
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=1874498532]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 50)
 offset_left = 346.0
 offset_top = -174.0
 offset_right = 562.0
@@ -114,3 +116,5 @@ text = "俄罗斯方块中有七种不同形状的砖块，每种砖块由四个
 
 @著作 陈志华 		联系方式:13500011584"
 scroll_active = false
+
+[node name="VirtualJoystick" parent="." unique_id=1527198680 instance=ExtResource("7_k2doy")]
