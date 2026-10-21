@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c7ep8pypwhby8"]
 
-[ext_resource type="Script" uid="uid://djepxgoqfgsu1" path="res://scripts/gamelist/local_game_card.gd" id="1_0a1b2"]
+[ext_resource type="Script" uid="uid://dr3aoa468k01v" path="res://scripts/gamelist/local_game_card.gd" id="1_0a1b2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_elegant_card"]
 bg_color = Color(0.95, 0.95, 0.98, 0.95)
@@ -220,6 +220,7 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 6
 
 [node name="GameDescription" type="Label" parent="MarginContainer/VBoxContainer/DescriptionContainer/MarginContainer" unique_id=1389684474]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.3, 0.4, 0.9)
 theme_override_font_sizes/font_size = 11
