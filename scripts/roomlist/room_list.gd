@@ -642,7 +642,7 @@ func _on_join_room(room_info: Dictionary)->bool:
 		Global.WindowPopup.show_dynamic("已有房间,请等待离开")
 		_set_join_btn(room_info.room_id)
 		return false
-	var enName = Global.OnlineGame.getGameEnName(room_info.game_type).to_lower() 
+	var enName = Global.OnlineGame.getGameEnName(room_info.game_type.to_int()).to_lower() 
 	# 检查游戏本地是否存在，不存在则网络下载
 	if not Global.SceneMgr.has_scene(enName):
 		print('第一次加载游戏...',enName)
@@ -733,7 +733,7 @@ func _on_join_table_cb(result):
 		_on_join_table_err(result.get_exception().message)
 		return
 	var tab_info = JSON.parse_string(result.payload )
-	if tab_info.tableId != selected_room_info.id:
+	if tab_info.tableId.to_int() != selected_room_info.id:
 		_on_join_table_err("")
 		return 
 	# 进入房间

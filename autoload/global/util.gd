@@ -254,7 +254,29 @@ func convert_to_china_time(timestamp: int) -> Dictionary:
 	return Time.get_datetime_dict_from_unix_time(adjusted_timestamp)
 
 # 格式化东八区时间显示
-func format_china_time(timestamp: int, show_seconds: bool = false) -> String:
+
+# 内部安全转换工具：无论传入是 String("1710484245" 或 "2024-03-15 12:00:00")、float 还是 int，都转换为 int 时间戳
+func _parse_to_unix_timestamp(time_val: Variant) -> int:
+	if time_val is int:
+		return time_val
+	elif time_val is float:
+		return int(time_val)
+	elif time_val is String:
+		var s = time_val.strip_edges()
+		# 如果是纯数字字符串（如 "1710484245"）
+		if s.is_valid_int():
+			return s.to_int()
+		# 如果是日期时间字符串（如 "2024-03-15 14:30:45" 或 ISO格式）
+		var parsed = Time.get_unix_time_from_datetime_string(s)
+		if parsed != -1:
+			return parsed
+	push_warning("无法解析的时间格式: %s，已回退为当前时间" % str(time_val))
+	return int(Time.get_unix_time_from_system())
+
+
+# 格式化东八区时间显示（现在支持传入 int、float 或 String）
+func format_china_time(raw_timestamp: Variant, show_seconds: bool = false) -> String:
+	var timestamp: int = _parse_to_unix_timestamp(raw_timestamp)
 	var time_dict = convert_to_china_time(timestamp)
 	
 	# 获取今天凌晨的时间戳
@@ -292,8 +314,9 @@ func format_china_time(timestamp: int, show_seconds: bool = false) -> String:
 		]
 
 
-# 格式化东八区时间显示
-func format_china_time_for_msg(timestamp: int, show_seconds: bool = false) -> String:
+# 消息时间格式化（同样增强为支持 Variant）
+func format_china_time_for_msg(raw_timestamp: Variant, show_seconds: bool = false) -> String:
+	var timestamp: int = _parse_to_unix_timestamp(raw_timestamp)
 	var current_timestamp = int(Time.get_unix_time_from_system())
 	var time_diff = current_timestamp - timestamp
 	
@@ -304,15 +327,12 @@ func format_china_time_for_msg(timestamp: int, show_seconds: bool = false) -> St
 	var time_dict = convert_to_china_time(timestamp)
 	var current_time_dict = convert_to_china_time(current_timestamp)
 	
-	# 获取今天凌晨的时间戳
 	var today_start = get_today_start_timestamp()
 	var yesterday_start = today_start - 24 * 60 * 60
 	
-	# 计算本周的开始时间（周一）
-	var current_weekday = current_time_dict.weekday  # 1=Monday, 7=Sunday
+	var current_weekday = current_time_dict.weekday
 	var week_start = today_start - (current_weekday - 1) * 24 * 60 * 60
 	
-	# 获取本年的开始时间
 	var year_start_dict = {
 		"year": current_time_dict.year,
 		"month": 1,
@@ -324,21 +344,17 @@ func format_china_time_for_msg(timestamp: int, show_seconds: bool = false) -> St
 	const CHINA_TIMEZONE_OFFSET = 8 * 60 * 60
 	var year_start = Time.get_unix_time_from_datetime_dict(year_start_dict) - CHINA_TIMEZONE_OFFSET
 	
-	# 根据时间判断显示格式
 	if timestamp >= yesterday_start and timestamp < today_start:
-		# 昨天的消息
 		if show_seconds:
 			return "昨天 %02d:%02d:%02d" % [time_dict.hour, time_dict.minute, time_dict.second]
 		return "昨天 %02d:%02d" % [time_dict.hour, time_dict.minute]
 	elif timestamp >= week_start and timestamp < yesterday_start:
-		# 本周内（非昨天）的消息
 		var weekday_names = ["", "周一", "周二", "周三", "周四", "周五", "周六", "周日"]
 		var weekday_name = weekday_names[time_dict.weekday] if time_dict.weekday >= 1 and time_dict.weekday <= 7 else ""
 		if show_seconds:
 			return "%s %02d:%02d:%02d" % [weekday_name, time_dict.hour, time_dict.minute, time_dict.second]
 		return "%s %02d:%02d" % [weekday_name, time_dict.hour, time_dict.minute]
 	elif timestamp >= year_start:
-		# 本年内的消息（不显示年份）
 		if show_seconds:
 			return "%02d-%02d %02d:%02d:%02d" % [
 				time_dict.month,
@@ -354,7 +370,6 @@ func format_china_time_for_msg(timestamp: int, show_seconds: bool = false) -> St
 			time_dict.minute
 		]
 	else:
-		# 更早的消息显示完整日期（包含年份）
 		if show_seconds:
 			return "%d-%02d-%02d %02d:%02d:%02d" % [
 				time_dict.year,
