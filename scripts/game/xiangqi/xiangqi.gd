@@ -1,4 +1,4 @@
-extends Node2D
+extends GameBase2D
 
 @onready var b_chessposition: Node2D = $b_chessposition
 @onready var player_move: Sprite2D = $b_chessposition/player_move
@@ -637,14 +637,12 @@ func game_over() -> void:
 
 
 func _on_button_button_down() -> void:
-	get_tree().change_scene_to_file("res://scenes/game/xiangqi/xiangqi.tscn")
+	if not restart_game():
+		get_tree().reload_current_scene()
 
 
 func _on_reback_btn_pressed() -> void:
-	Global.SceneMgr.go_back()
-	# queue_free()
-	
-	pass # Replace with function body.
+	await exit_game()
 
 # 检查"将军""绝杀""困毙"状态
 func check_xiangqi_status():

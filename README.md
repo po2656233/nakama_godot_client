@@ -54,6 +54,25 @@
 ### 客服支持
 - **📞 客服支持** 为用户提供全天候的咨询服务，解决游戏中的问题，确保良好的用户体验。
 
+## 项目结构
+
+```
+autoload/          全局服务：Global 注册表、SceneMgr、Online* 网络、窗口
+scenes/            页面与预制体（scenes/game/<key>/ 为子游戏入口）
+scripts/
+  game/core/       子游戏框架：GameRegistry / GameLauncher / GameBase
+  game/template/   新子游戏模板
+  game/<key>/      中国象棋、俄罗斯方块、麻将连连看、捕鱼
+  1common/         通用 UI（加载、设置、弹窗、排行榜）
+  chat/ roomlist/ match/ club/ gamelist/ email/ ...
+assets/game/       各子游戏资源
+docs/              架构、子游戏接入指南
+tools/             headless 校验脚本
+```
+
+新增子游戏请看 [docs/GAME_DEVELOPMENT.md](docs/GAME_DEVELOPMENT.md)；
+分层与服务职责见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
+
 ## 如何开始
 
 1. **📝 [注册账号](https://www.zhezhizhonghua.com/register)**：访问我们的官网或下载客户端，注册一个新账号。

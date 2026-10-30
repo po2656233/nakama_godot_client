@@ -11,59 +11,70 @@ func _ready() -> void:
 	reliable_queue = ReliableMessageQueue.new()
 	add_child(reliable_queue)
 
-# 通用异步调用封装
-# 参数:
-#   caller: 调用对象实例
-#   method_name: 异步方法名 (字符串)
-#   args: 参数数组
-#   on_success: 成功回调函数 (Callable)
-#   on_failure: 失败回调函数 (Callable)
-# 优化后的异步调用方法
-func Asyn_Call(caller: Object, method_name: String, args: Array, on_success: Callable, on_failure: Callable, inqueue: bool = true) -> bool:
-	print("Obj:%s:<<< FUNC:[%s] >>>|||<<<args:[%s]>>>\n" % [str(caller),method_name,str(args)])
-	# 验证方法是否存在
-	if not caller or not caller.has_method(method_name):
-		push_error("Method not found: %s" % method_name)
-		if on_failure and on_failure.is_valid(): on_failure.call("Method not found")
+## 通用异步调用封装（Callable 版本）
+## 参数：
+##   callable: 异步方法（如 Global.Online.nakama_client.authenticate_email_async）
+##   args: 传给方法的参数数组
+##   on_success / on_failure: 成功/失败回调；失败参数为已中文化的错误文本
+##   inqueue: 网络类错误是否放入可靠队列，待重连后重发
+## 返回：是否成功（业务异常也视为失败）
+func async_call(
+	callable: Callable,
+	args: Array = [],
+	on_success: Callable = Util.EMPTY_CALLABLE,
+	on_failure: Callable = Util.EMPTY_CALLABLE,
+	inqueue: bool = true
+) -> bool:
+	if not callable.is_valid():
+		push_error("[Util] 无效的异步 Callable")
+		_notify_failure(on_failure, "调用无效")
 		return false
 
-	# 验证回调函数是否有效
-	if not on_success or not on_success.is_valid():
-		push_error("Invalid on_success callback")
-		return false
-	if not on_failure or not on_failure.is_valid():
-		push_error("Invalid on_failure callback")
+	# Godot 4.7：直接 await 协程调用结果，不能 await result.completed。
+	var result = await callable.callv(args)
+
+	if result is NakamaAsyncResult and result.is_exception():
+		var raw_message: String = result.get_exception().message
+		var message := Errors.humanize(raw_message)
+		_notify_failure(on_failure, message)
+		Global.WindowPopup.show_dynamic(message)
+
+		# 只有网络类错误才值得重试，业务错误直接失败，避免死循环。
+		if inqueue and Errors.is_network_error(raw_message):
+			reliable_queue.EnqueueMessage(
+				str(callable.get_method()),
+				args,
+				callable.get_object(),
+				on_success,
+				on_failure
+			)
 		return false
 
-	# 执行异步调用
-	var task = caller.callv(method_name, args)
-	if not (task is Object) or !task.has_method("is_valid") or !task.is_valid():
-		if on_failure and on_failure.is_valid(): on_failure.call("Invalid async task")
-		return false
-
-	# 使用协程处理异步结果
-	var result = await task.completed
-	
-	# 处理结果
-	if result != null and result.has_method("is_exception") and result.is_exception():
-		# 有异常反馈，也被认为是执行成功了
-		var errMsg = result.get_exception().message
-		if on_failure and on_failure.is_valid(): on_failure.call(errMsg)
-
-		 # 网络异常,则视为执行失败
-		if errMsg in Errors.ResponeMapping:
-			errMsg = Errors.ResponeMapping[errMsg]
-			if inqueue:
-				var msg_id = reliable_queue.EnqueueMessage(method_name,args,caller,on_success, on_failure)
-				if not msg_id:
-					print("添加至消息队列重试 func_name:", method_name," payload:", args, " msg_id:", msg_id)
-			print("Network error occurred: %s will resend:%s" % [errMsg,inqueue])
-		print("Asyn_Call Failure: %s" % errMsg)	
-		Global.WindowPopup.show_dynamic(errMsg)
-		return false
-	print("Asyn_Call Success: %s" % str(result))
-	if on_success and on_success.is_valid(): on_success.call(result)
+	_notify_success(on_success, result)
 	return true
+
+## 兼容旧调用方式：caller + 方法名。
+func Asyn_Call(
+	caller: Object,
+	method_name: String,
+	args: Array,
+	on_success: Callable = Util.EMPTY_CALLABLE,
+	on_failure: Callable = Util.EMPTY_CALLABLE,
+	inqueue: bool = true
+) -> bool:
+	if caller == null or not caller.has_method(method_name):
+		push_error("[Util] 方法不存在: %s" % method_name)
+		_notify_failure(on_failure, "方法不存在")
+		return false
+	return await async_call(Callable(caller, method_name), args, on_success, on_failure, inqueue)
+
+func _notify_success(callback: Callable, result: Variant) -> void:
+	if callback.is_valid():
+		callback.call(result)
+
+func _notify_failure(callback: Callable, message: String) -> void:
+	if callback.is_valid():
+		callback.call(message)
 
 # 改进的安全连接函数
 func safe_connect(obj: Object, signal_name: String, target: Object, method: String) -> void:

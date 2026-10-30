@@ -1,119 +1,64 @@
 extends Control
 
-var game_card_scene = preload("res://scenes/gamelist/game_card.tscn")
+## 模块：游戏列表（匹配入口）
+## 职责：拉取服务端游戏列表、渲染游戏卡片、发起匹配并在匹配成功后交给加载页。
+## 依赖：Global.OnlineGame / Global.OnlineMatch / Global.SignalMgr / Global.SceneMgr。
 
-@onready var game_list = $Background/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/HBoxContainer
-@onready var scrollContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer
+const GAME_CARD_SCENE := preload("res://scenes/gamelist/game_card.tscn")
+
+@onready var game_list: HBoxContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/HBoxContainer
+@onready var scroll_container: ScrollContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer
 @onready var matching = $Matching
-@onready var match_sucess = $MatchSuccess
+@onready var match_success = $MatchSuccess
 @onready var loading_scene = $LoadingScreen
 
-var game_id:int = -1
-var curMatchId = ""
-# 示例游戏数据
-var games_data =[]
-var already_ids = []
-#var games_data =[
-	# {
-	# 	"id": 1001,
-	# 	"name":"史诗冒险之旅",
-	# 	"title": "Adventure Quest",
-	# 	"description": "在这个充满魔法和神秘的世界中，你将扮演一位勇敢的冒险者，探索未知的土地，与强大的怪物战斗，解开古老的谜题。\n\n[b]特色：[/b]\n- 开放世界探索\n- 丰富的任务系统\n- 独特的战斗机制",
-	# 	"selectTime": Time.get_datetime_dict_from_system(),
-	# 	"version":"",
-	# 	"image": "",
-	# },
-	# {
-	# 	"id": 1002,
-	# 	"name":"星际探索",
-	# 	"title": "Space Explorer",
-	# 	"description": "[center][b]星际探索[/b][/center]\n\n穿越星际，探索未知的星系。在这个科幻世界中，你将指挥自己的飞船，与外星文明接触，发现宇宙的奥秘。\n\n[b]特色：[/b]\n- 真实的物理系统\n- 多样的星球生态\n- 深度的剧情体验",
-	# 	# "image": preload("res://assets/placeholder.svg"),
-	# 	"selectTime": Time.get_datetime_dict_from_system(),
-	# 	"version":"",
-	# 	"image": "",
-	# },
-	# {
-	# 	"id": 1003,
-	# 	"name":"极速赛车大师",
-	# 	"title": "Racing Master",
-	# 	"description": "体验极速与激情！在世界各地的赛道上展现你的驾驶技巧，解锁各种精美的赛车，成为赛道之王。\n\n[b]特色：[/b]\n- 真实的赛车物理\n- 丰富的赛道选择\n- 多人在线竞技",
-	# 	# "image": preload("res://assets/placeholder.svg"),
-	# 	"selectTime": Time.get_datetime_dict_from_system(),
-	# 	"version":"",
-	# 	"image": "",
-	# },
-	 #{
-	 	#"id": 1004,
-	 	#"name":"解谜世界",
-	 	#"title": "Puzzle World",
-	 	#"description": "[center][b]解谜世界[/b][/center]\n\n进入一个充满智慧挑战的世界。解开错综复杂的谜题，探索隐藏的秘密，提升你的逻辑思维能力。\n\n[b]特色：[/b]\n- 渐进的难度曲线\n- 独特的解谜机制\n- 精美的艺术风格",
-	 	## "image": preload("res://assets/placeholder.svg"),
-	 	#"selectTime": Time.get_datetime_dict_from_system(),
-	 	#"version":"",
-	 	#"image": "",
-	 #}
-#]
+var game_id: int = -1
+var cur_match_id := ""
+var games_data: Array = []
+var already_ids: Array = []
 
-		
-func _ready(): 
-	print("当前运行的节点名",Global.SceneMgr.get_current_scene_name())
-	# Global.WindowDrag.register_drag_zone(self) 
-	Global.SettingsMgr.show_settings() 
+func _ready() -> void:
+	Global.SettingsMgr.show_settings()
 	Global.SceneMgr.set_previous_name("gamelist")
-	print("游戏列表--->")
-	scrollContainer.get_h_scroll_bar().custom_minimum_size.y = 20
-
+	scroll_container.get_h_scroll_bar().custom_minimum_size.y = 20
 	loading_scene.hide()
-	# 加载数据
+
 	load_data()
-	
-	
-	# 连接匹配信号
-	matching.match_sucess.connect(_on_match_sucess)
+	matching.match_sucess.connect(_on_match_success)
 	matching.match_cancel.connect(_on_match_cancel)
 	Global.SignalMgr.StartGameSIG.connect(_on_game_start)
 	Global.SignalMgr.CancleGameSIG.connect(_on_game_cancel)
-	pass
 
-# 加载游戏数据
-func load_data():
-	# 为了界面
-	var games = Global.OnlineGame.getGameListOld()
-	if games.size() > 0:
-		set_game_list(games)
-	Global.OnlineGame.getGameList(-1,self,"_on_game_list")
-	#await get_tree().process_frame
+# ---------------------------------------------------------------------
+# 游戏列表
+# ---------------------------------------------------------------------
 
-# 加载游戏列表
-func _on_game_list(result):
-	# 获取游戏列表
-	var games = Util.sort_by_filed(result,"id")
-	set_game_list(games)
+func load_data() -> void:
+	var cached: Array = Global.OnlineGame.getGameListOld()
+	if cached.size() > 0:
+		set_game_list(cached)
+	Global.OnlineGame.getGameList(-1, self, "_on_game_list")
 
-func set_game_list(games):
-	if games.size() == 0:
+func _on_game_list(result) -> void:
+	set_game_list(Util.sort_by_filed(result, "id"))
+
+func set_game_list(games: Array) -> void:
+	if games.is_empty():
 		Global.WindowPopup.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
-	# 添加游戏
+
 	for item in games:
-		if item.id in already_ids:
+		if item.id in already_ids or int(item.max_player) < 2:
+			# 单机游戏不参与匹配
 			continue
-		print("----------------------------------->\n\n",item)
-		if item.max_player < 2:# 单机游戏不参与匹配
-			continue
-		var description = "[center][b]%s[/b][/center]\n\n"%[item.name]
-		if item.special:
-			description += "[color=blue][b]特色：[/b][/color]\n"+item.special+"\n\n"
-		if item.rules:
-			description += "[color=green][b][font_size=24]规则介绍：[/font_size][/b][/color]\n"+item.rules+"\n\n"
+
 		already_ids.append(item.id)
 		games_data.append({
 			"id": item.id,
 			"kid": item.kid,
 			"name": item.en_name,
 			"title": item.name,
-			"description": description,
+			"description": _build_description(item),
 			"image": item.logo,
 			"version": item.updated_at,
 			"max_player": int(item.max_player),
@@ -121,89 +66,75 @@ func set_game_list(games):
 			"state": int(item.state),
 		})
 
-	# 加载游戏数据
 	for item in games_data:
-		on_add_game_data(item)
-	pass
+		_add_game_card(item)
 
+func _build_description(item) -> String:
+	var text := "[center][b]%s[/b][/center]\n\n" % item.name
+	if item.special:
+		text += "[color=blue][b]特色：[/b][/color]\n" + item.special + "\n\n"
+	if item.rules:
+		text += "[color=green][b][font_size=24]规则介绍：[/font_size][/b][/color]\n" + item.rules + "\n\n"
+	return text
 
-# 添加游戏
-func on_add_game_data(data):
-	var card = game_card_scene.instantiate()
+func _add_game_card(data: Dictionary) -> void:
+	var card := GAME_CARD_SCENE.instantiate()
 	game_list.add_child(card)
 	card.setup(data)
 	card.game_selected.connect(_on_game_selected)
-	card.show()
 
+# ---------------------------------------------------------------------
+# 匹配流程
+# ---------------------------------------------------------------------
 
-# 游戏选择
-func _on_game_selected(itemNode):
-	match_sucess.hide()
-	if itemNode.game_data:
-		matching.gamename = itemNode.game_data["title"]
-		matching.maxplayer = itemNode.game_data["max_player"]
-		game_id = itemNode.game_data["id"]
-	game_list.move_child(itemNode,0)
-	
+func _on_game_selected(card) -> void:
+	match_success.hide()
+	if card.game_data:
+		matching.gamename = card.game_data["title"]
+		matching.maxplayer = card.game_data["max_player"]
+		game_id = card.game_data["id"]
+
+	game_list.move_child(card, 0)
 	matching.match_start.emit()
-	switch_controls(scrollContainer, matching)
-	pass
+	_switch_controls(scroll_container, matching)
 
-# 取消匹配
-func _on_match_cancel():
-	match_sucess.hide()
-	switch_controls(matching, scrollContainer)
-	pass
+func _on_match_cancel() -> void:
+	match_success.hide()
+	_switch_controls(matching, scroll_container)
 
-# 匹配成功
-func _on_match_sucess(matchData):
-	curMatchId = matchData.match_id
-	match_sucess.reset(game_id, matching.maxplayer)
+func _on_match_success(match_data) -> void:
+	cur_match_id = match_data.match_id
+	match_success.reset(game_id, matching.maxplayer)
 	matching.hide()
-	match_sucess.start(1.0)
-	match_sucess.popup_centered()
-	pass
+	match_success.start(1.0)
+	match_success.popup_centered()
 
-# 游戏取消
-func _on_game_cancel(_game_id):
+func _on_game_cancel(game_id_value) -> void:
 	await Global.OnlineMatch.LeaveMatch()
-	print("取消准备游戏 match_id:", curMatchId)
+	print("[GameList] 取消准备游戏 match_id:", cur_match_id)
 	await get_tree().create_timer(1.5).timeout
 	Global.WindowPopup.show_dynamic("游戏已取消")
-	match_sucess.hide()
-	switch_controls(matching, scrollContainer)
-	pass
+	match_success.hide()
+	_switch_controls(matching, scroll_container)
 
-# 游戏开始
-func _on_game_start(game_id_1):
+func _on_game_start(game_id_value) -> void:
 	Global.SignalMgr.WelcomeMusicSIG.emit()
-	#await get_tree().create_timer(1.0).timeout
-	#Global.WindowPopup.show_dynamic("游戏开始")
-	# 加载游戏
-	loading_scene.show()
-	Global.SignalMgr.LoadingGameSIG.emit(game_id_1)
-	
-	var gameEnName = Global.OnlineGame.getGameEnName(game_id_1)
-	# Global.SceneMgr.ToGameScene(gameEnName)
-	print("游戏开始 game_id:", game_id_1, " name:", gameEnName)
-	Global.SignalMgr.GameKeepSIG.emit(1,game_id_1,-1,curMatchId,gameEnName)
-	pass
+	# 每次开局都重载加载页状态，避免上一次的 100% 进度直接触发关闭。
+	loading_scene.Show()
+	Global.SignalMgr.LoadingGameSIG.emit(game_id_value)
 
+	var game_en_name: String = Global.OnlineGame.getGameEnName(game_id_value)
+	print("[GameList] 游戏开始 game_id:", game_id_value, " en_name:", game_en_name)
+	Global.SignalMgr.GameKeepSIG.emit(1, game_id_value, -1, cur_match_id, game_en_name)
 
-# 切换控件
-func switch_controls(controlAHide, controlBShow):
-	var tween = create_tween()
+func _switch_controls(control_hide: Control, control_show: Control) -> void:
+	control_show.visible = true
+	control_show.modulate.a = 0.0
+	control_hide.modulate.a = 1.0
+
+	var tween := create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
-
-	# 确保 control_b 一开始是完全透明的
-	# controlBShow.modulate.a = 0
-	controlBShow.visible = true
-	
-	# 同时进行两个动画
-	# control_a 淡出
-	tween.parallel().tween_property(controlAHide, "modulate", Color(1, 1, 1, 0), 1.0)
-	controlAHide.visible = false
-
-	# control_b 淡入
-	tween.parallel().tween_property(controlBShow, "modulate", Color(1, 1, 1, 1), 1.0)
+	tween.parallel().tween_property(control_hide, "modulate:a", 0.0, 1.0)
+	tween.parallel().tween_property(control_show, "modulate:a", 1.0, 1.0)
+	tween.tween_callback(func(): control_hide.visible = false)

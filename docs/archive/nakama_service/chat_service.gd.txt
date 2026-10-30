@@ -1,0 +1,87 @@
+# ChatService.gd
+extends Node
+
+var core: Node
+var network: Node
+
+var current_channel: NakamaRTAPI.Channel
+var cursor_list_channel = null
+
+signal chat_message_received(message: Dictionary)
+signal chat_presence_changed(joins: Array, leaves: Array)
+signal chat_history_received(messages: Array)
+signal channel_changed(channel: NakamaRTAPI.Channel)
+
+const DEFAULT_MESSAGE = {
+	"kind": 0, "type": 0, "headicon": "", "path": "",
+	"content": "", "file": "", "size": 0, "thumbnail": "", "duration": 0,
+}
+
+func _ready() -> void:
+	if "NakamaCore" in Global: core = Global.NakamaCore
+	if "NetworkService" in Global: network = Global.NetworkService
+	if network:
+		network.channel_message_received.connect(_on_channel_message)
+
+func set_current_channel(channel: NakamaRTAPI.Channel, load_history: bool = false) -> void:
+	if current_channel == channel: return
+	cursor_list_channel = null
+	current_channel = channel
+	if channel:
+		channel_changed.emit(channel)
+		if load_history:
+			await fetch_chat_history(channel.id, 20, true)
+
+func send_message(content: Dictionary) -> Error:
+	if not current_channel:
+		return FAILED
+	if not core or not core.socket:
+		return FAILED
+	var result = await core.socket.write_chat_message_async(current_channel.id, content)
+	if result is NakamaAsyncResult and result.is_exception():
+		if "Must join channel" in result.exception.message:
+			return await _auto_join_and_retry(content)
+		return FAILED
+	return OK
+
+func _auto_join_and_retry(content: Dictionary) -> Error:
+	var ch_type = NakamaSocket.ChannelType.DirectMessage
+	if int(content.get("kind", 0)) == 1: ch_type = NakamaSocket.ChannelType.Room
+	elif int(content.get("kind", 0)) == 2: ch_type = NakamaSocket.ChannelType.Group
+	var join_result = await core.socket.join_chat_async(current_channel.id, ch_type, true)
+	if join_result is NakamaAsyncResult and join_result.is_exception():
+		return FAILED
+	return await send_message(content)
+
+func fetch_chat_history(channel_id: String, limit: int = 20, forward: bool = false, cursor = null) -> Error:
+	if channel_id.is_empty() or not core: return FAILED
+	if cursor == null: cursor = cursor_list_channel
+	var result = await core.client.list_channel_messages_async(core.session, channel_id, limit, forward, cursor)
+	if result is NakamaAsyncResult and result.is_exception():
+		return FAILED
+	var messages = []
+	for msg in result.messages:
+		var parsed = JSON.parse_string(msg.content)
+		if parsed: messages.append(msg)
+	chat_history_received.emit(messages)
+	cursor_list_channel = result.next_cursor
+	return OK
+
+func upload_file(file_path: String) -> Dictionary:
+	if not core or not core.session: return {"error": "No session"}
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if not file: return {"error": "File not found"}
+	var file_name = file_path.get_file()
+	var result = await core.client.write_storage_objects_async(core.session, [{])
+	if result is NakamaAsyncResult and result.is_exception():
+		return {"error": result.exception.message}
+	return {"path": file_path, "name": file_name, "size": file.get_length()}
+
+func _on_channel_message(message) -> void:
+	chat_message_received.emit(message)
+
+func format_message_data(message: NakamaAPI.ApiChannelMessage) -> Dictionary:
+	if not message or not message.content: return DEFAULT_MESSAGE
+	var content = JSON.parse_string(message.content)
+	if not content: return DEFAULT_MESSAGE
+	return {"username": message.username, "content": content}

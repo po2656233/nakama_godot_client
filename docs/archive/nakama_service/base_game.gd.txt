@@ -1,0 +1,42 @@
+# BaseGame.gd
+# Base class for game-specific logic.
+# Extend this class for any sub-game (e.g., Tetris, Xiangqi).
+extends Node
+
+var game_service: Node
+
+## Called when the GameService attaches this game as the active game.
+func on_game_service_attached(service: Node) -> void:
+	game_service = service
+
+## Sends an RPC to the target peer ID. If target_id is 0, it's sent to the "owner" or everyone based on implementation.
+func send_rpc(method: String, args: Array = [], target_id: int = 0) -> void:
+	if not game_service:
+		push_error("[BaseGame] GameService not attached!")
+		return
+	game_service.send_rpc(self, method, args, target_id)
+
+## Sync RPC: calls the method locally and sends it to the target peer.
+func send_rpc_sync(method: String, args: Array = [], target_id: int = 0) -> void:
+	if not game_service:
+		push_error("[BaseGame] GameService not attached!")
+		return
+	if target_id == 0 or target_id == game_service.my_peer_id:
+		callv(method, args)
+	send_rpc(method, args, target_id)
+
+## Sends a raw match state update to all players in the match.
+func send_match_state(op_code: int, data: Variant) -> void:
+	if not game_service:
+		push_error("[BaseGame] GameService not attached!")
+		return
+	game_service.send_match_state_rpc(op_code, data)
+
+## Returns true if the local player is the match host.
+func is_host() -> bool:
+	return game_service.is_server() if game_service else false
+
+## Gets the name of a player by their peer ID.
+func get_player_name(peer_id: int) -> String:
+	return game_service.get_peer_name(peer_id) if game_service else "Unknown"
+<EOF>

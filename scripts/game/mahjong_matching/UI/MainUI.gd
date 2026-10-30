@@ -11,8 +11,11 @@ func _process(delta):
 
 func _on_back_button_pressed():
 	$ClickButtonPlayer.play()
-	get_tree().change_scene_to_file("res://scenes/game/mahjong_matching/level/start_ui.tscn")
-	pass
+	var game := get_parent()
+	if game != null and game.has_method("exit_game"):
+		await game.exit_game()
+	else:
+		Global.SceneMgr.go_back()
 
 func _on_restart_button_pressed():
 	$ClickButtonPlayer.play()

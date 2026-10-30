@@ -51,3 +51,40 @@ var ResponeMapping = {
 	"Device ID is required.": "缺少设备ID"
 
 }
+
+## 可重试的网络类错误特征（小写匹配）。业务错误不在此列。
+const NETWORK_ERROR_MARKERS: Array = [
+	"cancelled",
+	"connection",
+	"timeout",
+	"network",
+	"socket",
+	"websocket",
+	"tls",
+	"certificate",
+	"eof",
+	"unreachable",
+	"refused",
+	"failed to decode",
+	"httprequest",
+]
+
+## 把服务端/插件错误文本转成中文；找不到映射就原样返回。
+func humanize(message: String) -> String:
+	var text := message.strip_edges()
+	if text.is_empty():
+		return "操作失败，请稍后重试"
+	if ResponeMapping.has(text):
+		return ResponeMapping[text]
+	for key in ResponeMapping:
+		if text.contains(str(key)):
+			return str(ResponeMapping[key])
+	return text
+
+## 是否属于“可以等重连后重试”的网络错误。
+func is_network_error(message: String) -> bool:
+	var lower := message.to_lower()
+	for marker in NETWORK_ERROR_MARKERS:
+		if lower.contains(marker):
+			return true
+	return false

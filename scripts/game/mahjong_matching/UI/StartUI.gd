@@ -12,8 +12,9 @@ func _process(delta):
 	pass
 
 func _on_start_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/game/mahjong_matching/level/main_game.tscn")
-	pass
+	if Global.has_global("GameLauncher") and Global.GameLauncher.start_game("mahjong_matching"):
+		return
+	Global.SceneMgr.switch_to_scene("mahjong_matching")
 
 func _on_quit_button_pressed():
 	get_tree().quit()

@@ -209,7 +209,7 @@ func _on_countdown_timeout():
 		var timer = get_tree().create_timer(1)
 		await timer.timeout
 		Global.SceneMgr.set_previous_name("roomlist")
-		loading_scene.show()
+		loading_scene.Show()
 		
 		var game_id = Global.OnlineGame.getGameID(game_name)
 		print("准备游戏 game_id:", game_id, " name:", game_name)

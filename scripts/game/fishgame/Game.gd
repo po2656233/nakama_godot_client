@@ -1,4 +1,4 @@
-extends Node2D
+extends GameBase2D
 
 var Player = preload("res://scenes/game/fishgame/actors/Player.tscn")
 

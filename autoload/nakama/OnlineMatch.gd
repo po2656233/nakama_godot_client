@@ -10,13 +10,13 @@ var max_players := 4
 var client_version := 'dev'
 
 # Nakama variables:
-var nakama_socket: NakamaSocket # : set = _set_readonly_variable
-var my_session_id: String: get = get_my_session_id # , set = _set_readonly_variable
-var match_id: String: get = get_match_id, set = set_match_id # , set = _set_readonly_variable
-var matchmaker_ticket: String: get = get_matchmaker_ticket # , set = _set_readonly_variable
+var nakama_socket: NakamaSocket
+var my_session_id: String = ""
+var match_id: String = ""
+var matchmaker_ticket: String = ""
 
 # RPC variables:
-var my_peer_id: int # : set = _set_readonly_variable
+var my_peer_id: int
 
 var players: Dictionary
 var my_player: Player = null
@@ -31,7 +31,7 @@ enum MatchState {
 	PLAYING = 5,
 	LOADING_MAP_FINISH = 9999,
 }
-var match_state: int = MatchState.LOBBY: get = get_match_state # , set = _set_readonly_variable
+var match_state: int = MatchState.LOBBY
 
 enum MatchMode {
 	NONE = 0,
@@ -39,7 +39,7 @@ enum MatchMode {
 	JOIN = 2,
 	MATCHMAKER = 3,
 }
-var match_mode: int = MatchMode.NONE: get = get_match_mode # , set = _set_readonly_variable
+var match_mode: int = MatchMode.NONE
 
 enum PlayerStatus {
 	CONNECTING = 0,
@@ -103,10 +103,6 @@ static func unserialize_players(_players: Dictionary) -> Dictionary:
 	return result
 
 ######################################################################################
-# 设置只读变量的函数
-func _set_readonly_variable(_value) -> void:
-	pass
-
 func _set_nakama_socket(_nakama_socket: NakamaSocket) -> void:
 	if nakama_socket == _nakama_socket:
 		return
@@ -561,10 +557,7 @@ func LeaveMatch(p_match_id: String = ""):
 		return
 	var result = await Global.Online.nakama_socket.leave_match_async(p_match_id)
 	if result.is_exception():
-		if Errors.ResponeMapping[result.get_exception().message]:
-			Global.WindowPopup.show_dynamic("离开匹配失败 " + Errors.ResponeMapping[result.get_exception().message])
-		else:
-			Global.WindowPopup.show_dynamic("离开匹配失败 " + result.get_exception().message)
+		Global.WindowPopup.show_dynamic("离开匹配失败 " + Errors.humanize(result.get_exception().message))
 		return result
 	print("离开匹配成功--->>>", p_match_id)
 	match_id = ""

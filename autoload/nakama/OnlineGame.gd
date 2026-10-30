@@ -106,6 +106,10 @@ func getGameList(kind:int=-1,obj:Object=null,work_cb:String="_on_work"):
 		result = [] 
 	return result
 
+## 兼容 OnlineMatch.getMatchList() 的通用 RPC 入口。
+func RpcListData(rpc_name: String, payload: Dictionary = {}) -> Variant:
+	return await Global.Online.sendDataRPC(rpc_name, payload)
+
 
 
 # 获取收藏列表

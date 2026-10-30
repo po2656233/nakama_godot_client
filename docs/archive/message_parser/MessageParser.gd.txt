@@ -1,0 +1,145 @@
+extends Node
+class_name MessageParser
+
+# --- 核心消息解析逻辑 (基于原始项目协议) ---
+
+## 解析一个格式化的聊天消息字符串，将其分解为结构化字典。
+# 输入的文本格式非常严格：Key1: Value1, Key2: Value2...
+# 返回值是一个包含所有字段（如 content, create_time, sender_id 等）的 Dictionary。
+func parse_message(text: String) -> Dictionary:
+	var result = {}
+
+	# 定义协议中的字段名和其前缀 (用于查找和提取)
+	const FIELD_CONTENT = "content: "
+	const FIELD_CREATE_TIME = "create_time: "
+	const FIELD_CHANNEL_ID = "channel_id: "
+	const FIELD_CODE = "code: "
+	const FIELD_GROUP_ID = "group_id: "
+	const FIELD_MESSAGE_ID = "message_id: "
+	const FIELD_PERSISTENT = "persistent: "
+	const FIELD_ROOM_NAME = "room_name: "
+	const FIELD_SENDER_ID = "sender_id: "
+	const FIELD_UPDATE_TIME = "update_time: "
+	const FIELD_USER_ID_ONE = "user_id_one: "
+	const FIELD_USER_ID_TWO = "user_id_two: "
+	const FIELD_USERNAME = "username: "
+
+	# 规范化文本：移除转义的反斜杠，便于后续查找
+	text = text.replace("\\", "")
+
+	# --- 1. 解析内容 (Content) ---
+	var content_start = text.find(FIELD_CONTENT) + FIELD_CONTENT.length()
+	var content_end = text.find(", " + FIELD_CREATE_TIME) # 使用下一个字段的开始作为结束边界
+	if content_start != -1 and content_end != -1:
+		var content_str = text.substr(content_start, content_end - content_start)
+		# 尝试解析为 JSON (假设内容部分是一个JSON字符串)
+		var json = JSON.new()
+		var parse_result = json.parse(content_str)
+		if parse_result == OK:
+			result["content"] = json.get_data()
+		else:
+			result["content"] = {}
+
+	# --- 2. 解析创建时间 (Create Time) ---
+	var create_time_start = text.find(FIELD_CREATE_TIME) + FIELD_CREATE_TIME.length()
+	var create_time_end = text.find(", " + FIELD_GROUP_ID)
+	if create_time_start != -1 and create_time_end != -1:
+		result["create_time"] = text.substr(create_time_start, create_time_end - create_time_start)
+
+	# --- 3. 解析频道ID (Channel ID) ---
+	var channel_start = text.find(FIELD_CHANNEL_ID) + FIELD_CHANNEL_ID.length()
+	var channel_end = text.find(", " + FIELD_CODE)
+	if channel_start != -1 and channel_end != -1:
+		var channel_id = text.substr(channel_start, channel_end - channel_start)
+		result["channel_id"] = "" if channel_id == "<null>" else channel_id.replace(".", "")
+
+	# --- 4. 解析代码 (Code) ---
+	var code_start = text.find(FIELD_CODE) + FIELD_CODE.length()
+	var code_end = text.find(", " + FIELD_CONTENT)
+	if code_start != -1 and code_end != -1:
+		var code_str = text.substr(code_start, code_end - code_start).strip_edges()
+		result["code"] = 0 if code_str.to_int() == 0 and not code_str.is_empty() else int(code_str)
+
+	# --- 5. 解析群组ID (Group ID) ---
+	var group_id_start = text.find(FIELD_GROUP_ID) + FIELD_GROUP_ID.length()
+	var group_id_end = text.find(", " + FIELD_MESSAGE_ID)
+	if group_id_start != -1 and group_id_end != -1:
+		var group_id = text.substr(group_id_start, group_id_end - group_id_start).strip_edges()
+		result["group_id"] = "" if group_id == "<null>" else group_id
+
+	# --- 6. 解析消息ID (Message ID) ---
+	var message_id_start = text.find(FIELD_MESSAGE_ID) + FIELD_MESSAGE_ID.length()
+	var message_id_end = text.find(", " + FIELD_PERSISTENT)
+	if message_id_start != -1 and message_id_end != -1:
+		result["message_id"] = text.substr(message_id_start, message_id_end - message_id_start).strip_edges()
+
+	# --- 7. 解析持久化标志 (Persistent) ---
+	var persistent_start = text.find(FIELD_PERSISTENT) + FIELD_PERSISTENT.length()
+	var persistent_end = text.find(", " + FIELD_ROOM_NAME)
+	if persistent_start != -1 and persistent_end != -1:
+		var p_str = text.substr(persistent_start, persistent_end - persistent_start).strip_edges().lower()
+		result["persistent"] = (p_str == "true")
+
+	# --- 8. 解析房间名 (Room Name) ---
+	var room_name_start = text.find(FIELD_ROOM_NAME) + FIELD_ROOM_NAME.length()
+	var room_name_end = text.find(", " + FIELD_SENDER_ID)
+	if room_name_start != -1 and room_name_end != -1:
+		var room_name = text.substr(room_name_start, room_name_end - room_name_start).strip_edges()
+		result["room_name"] = "" if room_name == "<null>" else room_name
+
+	# --- 9. 解析发送者ID (Sender ID) ---
+	var sender_id_start = text.find(FIELD_SENDER_ID) + FIELD_SENDER_ID.length()
+	var sender_id_end = text.find(", " + FIELD_UPDATE_TIME)
+	if sender_id_start != -1 and sender_id_end != -1:
+		result["sender_id"] = text.substr(sender_id_start, sender_id_end - sender_id_start).strip_edges()
+
+	# --- 10. 解析更新时间 (Update Time) ---
+	var update_time_start = text.find(FIELD_UPDATE_TIME) + FIELD_UPDATE_TIME.length()
+	var update_time_end = text.find(", " + FIELD_USER_ID_ONE)
+	if update_time_start != -1 and update_time_end != -1:
+		result["update_time"] = text.substr(update_time_start, update_time_end - update_time_start).strip_edges()
+
+	# --- 11. 解析用户ID一 (User ID One) ---
+	var user_id_one_start = text.find(FIELD_USER_ID_ONE) + FIELD_USER_ID_ONE.length()
+	var user_id_one_end = text.find(", " + FIELD_USER_ID_TWO)
+	if user_id_one_start != -1 and user_id_one_end != -1:
+		result["user_id_one"] = text.substr(user_id_one_start, user_id_one_end - user_id_one_start).strip_edges()
+
+	# --- 12. 解析用户ID二 (User ID Two) ---
+	var user_id_two_start = text.find(FIELD_USER_ID_TWO) + FIELD_USER_ID_TWO.length()
+	var user_id_two_end = text.find(", " + FIELD_USERNAME)
+	if user_id_two_start != -1 and user_id_two_end != -1:
+		result["user_id_two"] = text.substr(user_id_two_start, user_id_two_end - user_id_two_start).strip_edges()
+
+	# --- 13. 解析用户名 (Username) ---
+	var username_start = text.find(FIELD_USERNAME) + FIELD_USERNAME.length()
+	if username_start != -1:
+		var username = text.substr(username_start).strip_edges().rstrip(",")
+		result["username"] = "" if username == "<null>" else username
+
+	return result
+
+
+# --- 辅助函数 (原有的结构化数据操作，保留) ---
+
+# 内部安全转换工具：将消息内容（可能为 String 格式的 JSON）解析成 Dictionary。
+func parse_message(text: String) -> Dictionary:
+	# 核心逻辑已在上文定义，此重载仅用于保持与原有调用的兼容性。
+	return parse_message(text)
+
+# 用于获取特定字段的值 (通用数据访问器)
+# 注意：如果传入的是字典类型的数据，应直接使用字典语法；如果是字符串消息，则需要解析。
+func get_field_value(item, field: String):
+	if item == null: return null
+	
+	# 如果输入是包含协议信息的原始聊天记录字符串，我们先尝试将其解析为结构体
+	var dict = parse_message(item)
+	if dict.has("content"): # 假设内容字段存在则认为需要消息解析流程
+		return dict.get(field, null)
+
+	# 如果输入已经是 Dictionary (来自数据层)，则直接访问
+	if item is Dictionary:
+		return item.get(field)
+		
+	# 其他情况，按原始逻辑处理（这里为简化和聚焦优化，保留字典访问为主）
+	return None

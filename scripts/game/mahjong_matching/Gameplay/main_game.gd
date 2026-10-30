@@ -1,4 +1,4 @@
-extends Node2D
+extends GameBase2D
 
 var board_size = Vector2(17,8)
 var piece_types = 34

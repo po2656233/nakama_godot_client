@@ -21,4 +21,7 @@ func show_game_over(score :int):
 
 
 func _on_button_pressed():
+	if Global.has_global("GameLauncher") and Global.GameLauncher.is_game_running():
+		if Global.GameLauncher.restart_game():
+			return
 	get_tree().reload_current_scene()
