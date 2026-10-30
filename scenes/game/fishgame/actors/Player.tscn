@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://dld0vwn80alna" path="res://scripts/game/fishgame/actors/Player.gd" id="9"]
 [ext_resource type="AudioStream" uid="uid://1vf3oxqcpbrw" path="res://assets/game/fishgame/sounds/hurt.wav" id="10"]
 [ext_resource type="Script" uid="uid://bp4nei0a130xg" path="res://scripts/game/fishgame/actors/player-states/Move.gd" id="11"]
-[ext_resource type="Script" uid="uid://5qpsw1fd1cgb" path="res://addons/snopek-state-machine/StateMachine.gd" id="12"]
+[ext_resource type="Script" uid="uid://cpkcjog70knhj" path="res://addons/snopek-state-machine/StateMachine.gd" id="12"]
 [ext_resource type="AudioStream" uid="uid://cln7oaurwgtj0" path="res://assets/game/fishgame/sounds/explosions/explosion3.wav" id="13"]
 [ext_resource type="AudioStream" uid="uid://dylenbvypqw8m" path="res://assets/game/fishgame/sounds/explosions/explosion2.wav" id="14"]
 [ext_resource type="Script" uid="uid://diir7n7tejmuo" path="res://scripts/game/fishgame/actors/player-states/Jump.gd" id="15"]

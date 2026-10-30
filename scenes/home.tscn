@@ -203,8 +203,8 @@ theme_override_constants/separation = 25
 alignment = 1
 
 [node name="btn_start" type="Button" parent="HBoxContainerHome" unique_id=542601274]
-clip_contents = true
 custom_minimum_size = Vector2(120, 80)
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -234,8 +234,8 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="btn_room" type="Button" parent="HBoxContainerHome" unique_id=1169073337]
-clip_contents = true
 custom_minimum_size = Vector2(90, 55)
+clip_contents = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
@@ -246,8 +246,8 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "联盟"
 
 [node name="btn_match" type="Button" parent="HBoxContainerHome" unique_id=789984312]
-clip_contents = true
 custom_minimum_size = Vector2(90, 55)
+clip_contents = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
@@ -270,8 +270,8 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="btn_ranking" type="Button" parent="HBoxContainerHome" unique_id=1428748683]
-clip_contents = true
 custom_minimum_size = Vector2(90, 55)
+clip_contents = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
@@ -282,8 +282,8 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "排行榜"
 
 [node name="btn_zhanji" type="Button" parent="HBoxContainerHome" unique_id=326163404]
-clip_contents = true
 custom_minimum_size = Vector2(90, 55)
+clip_contents = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)
 theme_override_font_sizes/font_size = 22
@@ -294,8 +294,8 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_n31td")
 text = "战绩"
 
 [node name="btn_store" type="Button" parent="HBoxContainerHome" unique_id=648600288]
-clip_contents = true
 custom_minimum_size = Vector2(150, 80)
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.556863, 0.0862745, 0.0588235, 1)

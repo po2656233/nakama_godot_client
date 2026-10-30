@@ -62,8 +62,8 @@ alignment = 2
 
 [node name="btn_email" type="Button" parent="HBoxContainerRightTop" unique_id=259760028]
 unique_name_in_owner = true
-clip_contents = true
 custom_minimum_size = Vector2(50, 50)
+clip_contents = true
 layout_mode = 2
 tooltip_text = "邮件信息"
 theme_override_styles/normal = SubResource("StyleBoxFlat_cw5id")
@@ -77,8 +77,8 @@ shake_texture = ExtResource("8_7btfg")
 
 [node name="btn_full" type="Button" parent="HBoxContainerRightTop" unique_id=106288196]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(50, 50)
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "窗体缩放"

@@ -60,8 +60,8 @@ func set_global(service_name: String, value: Variant) -> void:
 func list_services() -> Array[String]:
 	_ensure_registry()
 	var names: Array[String] = []
-	for name in _paths.keys():
-		names.append(str(name))
+	for name1 in _paths.keys():
+		names.append(str(name1))
 	names.sort()
 	return names
 
@@ -107,16 +107,16 @@ func _load_registry() -> void:
 
 ## 通过 Global.Xxx 访问时触发。
 func _get(property: StringName) -> Variant:
-	var name := str(property)
-	if _instances.has(name):
-		return _instances[name]
+	var name1 := str(property)
+	if _instances.has(name1):
+		return _instances[name1]
 
 	_ensure_registry()
-	if not _paths.has(name):
-		push_error("[Global] 未注册的服务: %s（请检查 global_config.cfg）" % name)
+	if not _paths.has(name1):
+		push_error("[Global] 未注册的服务: %s（请检查 global_config.cfg）" % name1)
 		return null
 
-	var resource = _load_resource(str(_paths[name]))
+	var resource = _load_resource(str(_paths[name1]))
 	if resource == null:
 		return null
 
@@ -124,17 +124,17 @@ func _get(property: StringName) -> Variant:
 		var instance = resource.new()
 		if instance is Node:
 			add_child(instance)
-		_instances[name] = instance
+		_instances[name1] = instance
 		return instance
 
 	if resource is PackedScene:
 		var scene_instance = resource.instantiate()
 		if scene_instance is Node:
 			add_child(scene_instance)
-		_instances[name] = scene_instance
+		_instances[name1] = scene_instance
 		return scene_instance
 
-	_instances[name] = resource
+	_instances[name1] = resource
 	return resource
 
 func _load_resource(path: String):

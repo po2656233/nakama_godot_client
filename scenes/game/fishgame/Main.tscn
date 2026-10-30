@@ -51,7 +51,7 @@ offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="SpinBox" parent="UILayer/Screens/MatchScreen/PanelContainer/VBoxContainer/MatchPanel" index="1"]
+[node name="SpinBox" parent="UILayer/Screens/MatchScreen/PanelContainer/VBoxContainer/MatchPanel" parent_id_path=PackedInt32Array(107614216, 292942157) index="1" unique_id=1935186093]
 min_value = 1.0
 max_value = 8.0
 

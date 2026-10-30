@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://riqfmggkqpf2"]
 
-[ext_resource type="Script" uid="uid://blwjlb7013ppp" path="res://scripts/club/create_group_dialog.gd" id="1_xxxxx"]
+[ext_resource type="Script" uid="uid://bqr4xaqrm1oje" path="res://scripts/club/create_group_dialog.gd" id="1_xxxxx"]
 [ext_resource type="Texture2D" uid="uid://c173ewu8ehnwl" path="res://assets/currency/chooseHead.svg" id="2_8gx7m"]
 
 [node name="CreateGroupDialog" type="Control" unique_id=1889640168]

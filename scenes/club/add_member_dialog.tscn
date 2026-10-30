@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://riqfmggkqph1"]
 
-[ext_resource type="Script" uid="uid://drmkehstkx3m1" path="res://scripts/club/add_member_dialog.gd" id="1_xxxxx"]
+[ext_resource type="Script" uid="uid://qcc0iccsx48d" path="res://scripts/club/add_member_dialog.gd" id="1_xxxxx"]
 
 [node name="AddMemberDialog" type="Control" unique_id=1150051191]
 layout_mode = 3

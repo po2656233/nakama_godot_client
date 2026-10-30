@@ -109,7 +109,7 @@ func _on_match_success(match_data) -> void:
 	match_success.start(1.0)
 	match_success.popup_centered()
 
-func _on_game_cancel(game_id_value) -> void:
+func _on_game_cancel(_game_id_value) -> void:
 	await Global.OnlineMatch.LeaveMatch()
 	print("[GameList] 取消准备游戏 match_id:", cur_match_id)
 	await get_tree().create_timer(1.5).timeout

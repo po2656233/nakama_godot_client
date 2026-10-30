@@ -192,19 +192,19 @@ func _on_received_match_presence(match_presence) -> void:
 func _on_received_status_presence(status_presence) -> void:
 	Global.SignalMgr.StatusPresenceEventSIG.emit(status_presence)
 
-func _on_received_notification(notification) -> void:
-	match notification.subject:
+func _on_received_notification(notification1) -> void:
+	match notification1.subject:
 		"broadcast":
-			do_broadcast(notification)
+			do_broadcast(notification1)
 		_:
-			do_abnormal(notification)
+			do_abnormal(notification1)
 
 func _on_received_message(channel_message) -> void:
 	Global.SignalMgr.RecvMessageSIG.emit(channel_message)
 
-func do_broadcast(notification) -> void:
-	var content = JSON.parse_string(notification.content)
-	match notification.code:
+func do_broadcast(notification1) -> void:
+	var content = JSON.parse_string(notification1.content)
+	match notification1.code:
 		EnBroadcast.CreateTable:
 			Global.SignalMgr.CreateRoomSIG.emit(content)
 		EnBroadcast.RemoveTable:
@@ -216,11 +216,11 @@ func do_broadcast(notification) -> void:
 		EnBroadcast.TableOnline:
 			Global.SignalMgr.OnlineCountSIG.emit(content)
 		_:
-			push_warning("Unknown broadcast code: %s" % str(notification.code))
+			push_warning("Unknown broadcast code: %s" % str(notification1.code))
 
-func do_abnormal(notification) -> void:
-	var content = JSON.parse_string(notification.content)
-	match notification.code:
+func do_abnormal(notification1) -> void:
+	var content = JSON.parse_string(notification1.content)
+	match notification1.code:
 		EnAbnormal.OtherLogon:
 			Global.OnlineLogin.logout(false)
 			Global.WindowPopup.show_message(content.get("message", "Other logon detected"), "Warning", false)

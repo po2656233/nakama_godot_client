@@ -146,7 +146,7 @@ volume_db = 5.0
 [node name="Empty" type="AudioStreamPlayer" parent="Sounds" index="1" unique_id=2056619248]
 stream = ExtResource("6")
 
-[node name="HeldPosition" parent="." index="9"]
+[node name="HeldPosition" parent="." index="9" unique_id=1324158309]
 position = Vector2(-17, 0)
 
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_CooldownTimer_timeout"]

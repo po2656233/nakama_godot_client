@@ -38,12 +38,12 @@ func keys() -> Array[String]:
 func count() -> int:
 	return _games.size()
 
-func has(name: String) -> bool:
-	return find(name) != null
+func has(name1: String) -> bool:
+	return find(name1) != null
 
 ## 按 key 或别名查找；找不到返回 null（调用方负责提示）。
-func find(name: String) -> GameDescriptor:
-	var token := str(name).strip_edges().to_lower()
+func find(name1: String) -> GameDescriptor:
+	var token := str(name1).strip_edges().to_lower()
 	if token.is_empty():
 		return null
 	if _games.has(token):
@@ -53,8 +53,8 @@ func find(name: String) -> GameDescriptor:
 		return _games.get(aliased_key)
 	return null
 
-func get_scene_path(name: String) -> String:
-	var descriptor := find(name)
+func get_scene_path(name1: String) -> String:
+	var descriptor := find(name1)
 	return descriptor.scene_path if descriptor != null else ""
 
 ## 注册/更新一个游戏。overwrite=false 时已存在则原样返回。
@@ -76,9 +76,9 @@ func register(data: Dictionary, overwrite: bool = true) -> GameDescriptor:
 
 	_games[descriptor.key] = descriptor
 	for alias in descriptor.aliases:
-		var owner: String = _aliases.get(alias, "")
-		if not owner.is_empty() and owner != descriptor.key:
-			push_warning("[GameRegistry] 别名冲突: %s 已属于 %s" % [alias, owner])
+		var owner1: String = _aliases.get(alias, "")
+		if not owner1.is_empty() and owner1 != descriptor.key:
+			push_warning("[GameRegistry] 别名冲突: %s 已属于 %s" % [alias, owner1])
 			continue
 		_aliases[alias] = descriptor.key
 
@@ -95,8 +95,8 @@ func register_external(key: String, scene_path: String, meta: Dictionary = {}) -
 		data["title"] = key
 	return register(data, true)
 
-func unregister(name: String) -> bool:
-	var descriptor := find(name)
+func unregister(name1: String) -> bool:
+	var descriptor := find(name1)
 	if descriptor == null:
 		return false
 	_games.erase(descriptor.key)

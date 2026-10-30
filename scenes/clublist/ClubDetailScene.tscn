@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bg4j5rkijtx26"]
 
-[ext_resource type="Script" uid="uid://bndt5pqwef8kp" path="res://scripts/clublist/ClubDetailScene.gd" id="1_oybbq"]
+[ext_resource type="Script" uid="uid://dw63mlei2rxmt" path="res://scripts/clublist/ClubDetailScene.gd" id="1_oybbq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5grkc"]
 bg_color = Color(0.0509804, 0.0862745, 0.141176, 1)

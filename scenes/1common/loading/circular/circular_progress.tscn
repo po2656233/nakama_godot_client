@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bqxvn8yqxqxqx"]
 
 [ext_resource type="Script" uid="uid://4vt5frcudgqe" path="res://scripts/1common/loading/circular/load_circular.gd" id="1_0x8yq"]
-[ext_resource type="Script" uid="uid://08qpkdj0hjxv" path="res://scripts/1common/loading/circular/circular_progress.gd" id="2_1x9yq"]
+[ext_resource type="Script" uid="uid://b2njfps7yn365" path="res://scripts/1common/loading/circular/circular_progress.gd" id="2_1x9yq"]
 
 [node name="loading_circular" type="Control" unique_id=385409412]
 layout_mode = 3

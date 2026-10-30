@@ -323,8 +323,8 @@ size_flags_vertical = 3
 
 [node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/world/Panel_talk" unique_id=257815287]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(50, 25)
+clip_contents = true
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -391,8 +391,8 @@ size_flags_vertical = 3
 
 [node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk" unique_id=765485286]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(50, 25)
+clip_contents = true
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -489,8 +489,8 @@ tooltip_text = "信息面板"
 
 [node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk" unique_id=2063953267]
 visible = false
-clip_contents = true
 custom_minimum_size = Vector2(50, 25)
+clip_contents = true
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
