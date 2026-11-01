@@ -187,6 +187,16 @@ RTC：
 
 已知限制：桌面端无内置 WebRTC peer connection，当前为“Nakama 信令 + 应用层媒体帧转发”；
 生产环境建议服务端补 SFU/转发节点。
+## P11 = PROMPT_REFACTOR 阶段 4：子游戏迁移到 GameBase + 验收
+
+- `games/tetris/scripts/tetris_game.gd`：tetris 入口根节点改为 `extends GameBase`，
+  实现 `on_game_init(room_info, bridge)` / `on_game_start()` / `on_game_destroy()`；
+  `games/tetris/entry.tscn` 根节点挂载该脚本；
+- `SignalMgr.GameDestroyedSIG(gameId)`：SceneRouter 调用 `on_game_destroy()` 后广播，便于验收释放；
+- `games/tetris/scripts/ui.gd`：结算面板返回优先走 `GameHostBridge.request_exit_game()`；
+- `tools/test_phase4.gd`：24 项断言——
+  从游戏列表进入 → 退出回 `gamelist`；从房间列表进入 → 退出回 `roomlist`；
+  `on_game_start`/`on_game_destroy` 被调用、`room_info` 注入、场景实例被释放。
 ## 验证记录
 
 各阶段门禁结果：

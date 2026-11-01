@@ -135,7 +135,7 @@ func exit_game(result: GameResult = null) -> void:
 	if context == null:
 		context = _context_from_launcher()
 
-	_destroy_game_instance()
+	_destroy_game_instance(context)
 	await _notify_leave_room(context)
 
 	# 交给启动器做结算/离开对局；导航由本路由负责（navigate_back=false）。
@@ -203,7 +203,7 @@ func _context_from_launcher() -> NavigationContext:
 # ---------------------------------------------------------------------
 
 ## 触发子游戏 on_game_destroy()（只触发一次），切断信号/定时器/Tween。
-func _destroy_game_instance() -> void:
+func _destroy_game_instance(context: NavigationContext) -> void:
 	if not Global.has_global("GameLauncher"):
 		return
 	var game: Node = Global.GameLauncher.get_game()
@@ -214,6 +214,8 @@ func _destroy_game_instance() -> void:
 	game.set_meta("__game_destroyed", true)
 	if game.has_method("on_game_destroy"):
 		game.call("on_game_destroy")
+	if Global.has_global("SignalMgr"):
+		Global.SignalMgr.GameDestroyedSIG.emit(context.game_id if context != null else "")
 
 ## 通知服务端离开房间（best-effort，失败只告警）。
 func _notify_leave_room(context: NavigationContext) -> void:

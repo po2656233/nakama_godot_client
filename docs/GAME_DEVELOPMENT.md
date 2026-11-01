@@ -75,6 +75,7 @@ description = "单机跑酷。"
 
 ```gdscript
 extends GameBase2D     # UI 类用 GameBaseControl，纯 Node 根用 GameBase
+# 参考实现：games/tetris/scripts/tetris_game.gd（extends GameBase）
 
 func on_game_init(room_info: Dictionary, bridge: GameHostBridge) -> void:
     # 注入房间信息与宿主桥（进入树之前调用）

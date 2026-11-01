@@ -24,4 +24,7 @@ func _on_button_pressed():
 	if GameHostBridge.current != null and GameHostBridge.current.is_running():
 		if GameHostBridge.current.restart():
 			return
-	get_tree().reload_current_scene()
+	if GameHostBridge.current != null:
+		GameHostBridge.current.request_exit_game()
+	else:
+		get_tree().reload_current_scene()

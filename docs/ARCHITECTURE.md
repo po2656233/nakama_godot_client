@@ -163,7 +163,9 @@ GameLauncher.start_game(key, options)
 2. 子游戏之间不得互相引用 `res://games/<other>/`；
 3. 每个 `games/<key>/` 必须含 `game_meta.tres` + `entry.tscn`，`entry_scene` 指向本目录 `entry.tscn`；
 4. `game_meta.game_id` == 目录名，且 game_id 全局唯一；
-5. `entry.tscn` 必须可加载并实例化。
+5. `entry.tscn` 必须可加载并实例化；
+6. 场景根节点必须实现生命周期契约（`GameBase` / `GameBase2D` / `GameBaseControl`），
+   并在 `on_game_destroy()` 中断信号、停 Timer/Tween；参考实现：`games/tetris/scripts/tetris_game.gd`。
 
 ### 4.2 原生骨骼动画（DragonBones 平替，阶段 2）
 
@@ -302,5 +304,7 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 - 部分 `.tscn` 的 `ext_resource uid` 与本机 `.uid`/`.import` 不一致时，Godot 会回退到路径加载（仅警告）。
 - `.uid` / `.import` 被 `.gitignore` 忽略（机器本地缓存），因此场景里的 `uid://` 引用在不同机器上会回退到路径加载并打印 warning，属正常现象；如需彻底消除，应把这两类文件纳入版本管理。
 - 端到端联调需要真实 Nakama 服务端，建议在登录、聊天、房间、匹配四条链路各过一次冒烟。
-- 按 PROMPT_REFACTOR 的阶段计划：阶段 1（插件底座 + 上下文导航）与阶段 2（DragonBones 原生平替）已完成；
-  RTC 音视频（阶段 3）、子游戏深度迁移（阶段 4）进行中。
+- 按 PROMPT_REFACTOR 的阶段计划：阶段 1（插件底座 + 上下文导航）、阶段 2（DragonBones 原生平替）、
+  阶段 3（Global 拆解 + RTC 音视频）、阶段 4（tetris 迁移到 GameBase 并完成导航/释放验收）均已完成；
+  其余子游戏（chinesechess / mahjong_matching / fishgame）仍以 `GameHostBridge.current` 方式接入，
+  可参照 tetris 逐步迁移到 `GameBase*` 生命周期契约。

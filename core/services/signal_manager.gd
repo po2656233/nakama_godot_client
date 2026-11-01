@@ -120,6 +120,9 @@ signal CancleGameSIG(gid)
 # 退出游戏
 @warning_ignore("unused_signal")
 signal ExitGameSIG(gid) 
+# 子游戏 on_game_destroy() 已执行（用于内存/资源释放验收）
+@warning_ignore("unused_signal")
+signal GameDestroyedSIG(gameId)
 # 从子游戏返回（导航回退）：source 见 NavigationContext.EntrySource
 @warning_ignore("unused_signal")
 signal GameReturnedSIG(source, gameId, roomId)

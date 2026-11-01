@@ -7,11 +7,13 @@
 [ext_resource type="Script" uid="uid://mciyoo8ahaac" path="res://games/tetris/scripts/piece_spawner.gd" id="5_wc88g"]
 [ext_resource type="PackedScene" uid="uid://ct2meksk8huhw" path="res://games/tetris/scenes/ui.tscn" id="6_6icgs"]
 [ext_resource type="PackedScene" uid="uid://cn4ssax8bfua3" path="res://addons/virtual_joystick/virtual_joystick.tscn" id="7_k2doy"]
+[ext_resource type="Script" path="res://games/tetris/scripts/tetris_game.gd" id="8_game"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yjf4s"]
 font_size = 32
 
 [node name="main" type="Node" unique_id=1889772417]
+script = ExtResource("8_game")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1657447902]
 zoom = Vector2(0.5, 0.5)
