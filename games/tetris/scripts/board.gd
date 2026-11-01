@@ -15,8 +15,8 @@ var next_tetromino
 var tetrominos: Array[Tetromino] = []
 @export var tetromino_scene: PackedScene
 
-func spawn_tetromino(type: Shared.Tetromino, is_next_piece, spawn_position):
-	var tetromino_data = Global.Shared.data[type]
+func spawn_tetromino(type: TetrisTypes.Tetromino, is_next_piece, spawn_position):
+	var tetromino_data = TetrisShared.shared().data[type]
 	var tetromino = tetromino_scene.instantiate() as Tetromino
 	
 	tetromino.tetromino_data = tetromino_data

@@ -32,7 +32,6 @@ const DEFAULT_SERVICES := {
 	# 子游戏框架
 	"GameRegistry": "res://core/framework/game_registry.gd",
 	"GameLauncher": "res://core/framework/game_launcher.gd",
-	"Shared": "res://games/tetris/scripts/shared.gd",
 }
 
 ## 服务名 -> 资源路径（未实例化）

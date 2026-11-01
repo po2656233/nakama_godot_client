@@ -16,11 +16,11 @@ func _show_screen(_info: Dictionary = {}) -> void:
 	ui_layer.hide_message()
 
 	# If our session has expired, show the ConnectionScreen again.
-	if Global.Online.nakama_session == null or Global.Online.nakama_session.is_expired():
+	if GameBridge.current.nakama_session == null or GameBridge.current.nakama_session.is_expired():
 		ui_layer.show_screen("ConnectionScreen", { reconnect = true, next_screen = "LeaderboardScreen" })
 		return
 
-	var result: NakamaAPI.ApiLeaderboardRecordList = await Global.Online.nakama_client.list_leaderboard_records_async(Global.Online.nakama_session, 'fish_game_wins')
+	var result: NakamaAPI.ApiLeaderboardRecordList = await GameBridge.current.nakama_client.list_leaderboard_records_async(GameBridge.current.nakama_session, 'fish_game_wins')
 	if result.is_exception():
 		ui_layer.show_message("Unable to retrieve leaderboard")
 		ui_layer.show_screen("MatchScreen")

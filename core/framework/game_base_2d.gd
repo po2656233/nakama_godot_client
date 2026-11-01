@@ -8,6 +8,12 @@ extends Node2D
 ##   - 子类如需扩展 on_game_context()/on_game_launched() 等钩子，记得调用 super()。
 
 var game_context: GameContext = null
+## 框架桥：子游戏唯一允许的框架入口（GameLauncher 注入）。
+var bridge: GameBridge = null
+
+## 由 GameLauncher 在实例化后调用：注入框架桥。
+func on_game_bridge(p_bridge: GameBridge) -> void:
+	bridge = p_bridge
 
 ## 由 GameLauncher 在实例化后调用。
 func on_game_context(context: GameContext) -> void:

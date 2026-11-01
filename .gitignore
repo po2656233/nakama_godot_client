@@ -36,3 +36,7 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# refactor migration logs/journals (regenerable)
+tools/refactor/journal/
+

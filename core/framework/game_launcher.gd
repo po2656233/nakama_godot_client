@@ -16,6 +16,8 @@ signal game_restarted(context: GameContext)
 const REBACK_SCENE := preload("res://shared/ui/reback.tscn")
 
 var current_context: GameContext = null
+## 子游戏桥（插件唯一对外通道）
+var bridge: GameBridge = null
 var current_game: Node = null
 var last_result: GameResult = null
 
@@ -61,6 +63,8 @@ func exit_game(result: GameResult = null) -> void:
 
 	current_game = null
 	current_context = null
+	bridge = null
+	GameBridge.clear()
 	_exit_in_progress = false
 	game_exited.emit(context)
 	Global.SceneMgr.go_back(exit_transition, 1.0)
@@ -109,7 +113,8 @@ func _launch(key: String, options: Dictionary, is_restart: bool) -> bool:
 	current_game = game
 	current_context = context
 	last_result = null
-	_bind_context(game, context)
+	bridge = GameBridge.create(context)
+	_bind_context(game, context, bridge)
 
 	var transition := str(options.get("transition", "cross"))
 	var transition_time := float(options.get("transition_time", 0.6))
@@ -121,11 +126,15 @@ func _launch(key: String, options: Dictionary, is_restart: bool) -> bool:
 
 func _resolve(key: String) -> GameDescriptor:
 	if not Global.has_global("GameRegistry"):
-		push_error("[GameLauncher] GameRegistry 未注册，请检查 autoload/global/global_config.cfg")
+		push_error("[GameLauncher] GameRegistry 未注册，请检查 core/bootstrap/global_config.cfg")
 		return null
 	return Global.GameRegistry.find(key)
 
-func _bind_context(game: Node, context: GameContext) -> void:
+func _bind_context(game: Node, context: GameContext, bridge: GameBridge) -> void:
+	# 约定 0：子游戏通过桥访问框架能力，不直接碰 Global.Online*。
+	if game.has_method("on_game_bridge"):
+		game.call("on_game_bridge", bridge)
+	game.set_meta("game_bridge", bridge)
 	# 约定 1：实现 on_game_context() 的游戏（推荐继承 GameBase2D/GameBaseControl）直接拿到上下文。
 	if game.has_method("on_game_context"):
 		game.call("on_game_context", context)

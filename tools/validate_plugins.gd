@@ -19,13 +19,9 @@ const META_FILE := "game_meta.tres"
 const ENTRY_FILE := "entry.tscn"
 const IGNORED_DIRS := ["template"]
 
+## 子游戏不得直接访问任何 Global.* 服务（唯一入口是 GameBridge）。
 const FORBIDDEN_TOKENS := [
-	"Global.Online",
-	"Global.DataMgr",
-	"Global.MailMgr",
-	"Global.SceneMgr",
-	"Global.WindowPopup",
-	"Global.Shared",
+	"Global.",
 ]
 
 var _strict := false

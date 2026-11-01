@@ -12,9 +12,9 @@ func _process(delta):
 	pass
 
 func _on_start_button_pressed():
-	if Global.has_global("GameLauncher") and Global.GameLauncher.start_game("mahjong_matching"):
+	if GameBridge.current != null and GameBridge.current.restart():
 		return
-	Global.SceneMgr.switch_to_scene("mahjong_matching")
+	GameBridge.current.restart()
 
 func _on_quit_button_pressed():
 	get_tree().quit()

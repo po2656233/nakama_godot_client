@@ -1,8 +1,14 @@
-extends Node
-class_name Shared
-enum Tetromino {
-	I,O, T, J, L, S, Z
-}
+extends RefCounted
+class_name TetrisShared
+
+## 俄罗斯方块私有常量表（原全局服务 Global.Shared 退化为游戏内单例）。
+static var _instance: TetrisShared = null
+
+static func shared() -> TetrisShared:
+	if _instance == null:
+		_instance = TetrisShared.new()
+	return _instance
+const Tetromino = TetrisTypes.Tetromino
 
 var cells = {
 	Tetromino.I: [Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(2, 0)],

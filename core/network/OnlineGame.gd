@@ -32,15 +32,8 @@ var kind_en_names = {
 	11: "mahjong"
 }
 
-enum game_status {
-	Waiting  = 1,
-	Loading,
-	Start,
-	Playing,
-	Opening,
-	Over,
-	Stop
-}
+const game_status = GameProtocol.GameStatus
+
 #####################################################################
 # 有效的RPC函数
 # var rpc_funcs = [

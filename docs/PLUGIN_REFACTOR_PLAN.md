@@ -284,5 +284,5 @@ powershell -File tools/refactor/apply_moves.ps1 -Map tools/refactor/maps/p1_shar
 | P2 core/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 174/174；框架 34/34；基础层/异步测试通过；引用 0 新增悬空 | autoload/ 消失；Global/Util/Errors → core/bootstrap；SceneMgr → core/scene；Online* → core/network |
 | P3 lobby/ + app/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 174/174；框架 34/34；引用 0 新增悬空 | 125 文件迁移；scripts/ 与 scenes/ 只剩 game/（P4 处理） |
 | P4 games/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 176/176；框架 34/34；插件结构/冒烟 0 失败 | 484 文件迁移；每游戏 game_meta.tres + entry.tscn；GameCatalog 删除、Registry 改 meta 扫描 |
-| P5 契约与沙盒 | 🔄 进行中 | validate_plugins 结构 0 失败；沙盒违规 134（待迁移） | 需要 GameBridge + 子游戏调用点迁移 |
+| P5 契约与沙盒 | ✅ 完成 | validate_plugins --strict-sandbox：结构 0 失败、沙盒 0 违规；生命周期冒烟 16/16 | GameBridge/GameProtocol 落地，games/** 零 Global 引用，Global.Shared 移除 |
 | P6 验证与文档 | ⏳ 待开始 | — | — |

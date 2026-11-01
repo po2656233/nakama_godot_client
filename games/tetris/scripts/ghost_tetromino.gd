@@ -8,7 +8,7 @@ class_name GhostTetromino
 var tetromino_data: Resource
 
 func _ready():
-	var tetromino_cells = Global.Shared.cells[tetromino_data.tetromino_type]
+	var tetromino_cells = TetrisShared.shared().cells[tetromino_data.tetromino_type]
 	
 	for cell in tetromino_cells:
 		var piece = piece_scene.instantiate() as Piece

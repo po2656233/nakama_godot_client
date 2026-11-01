@@ -22,36 +22,19 @@ var players: Dictionary
 var my_player: Player = null
 var _next_peer_id: int
 
-enum MatchState {
-	LOBBY = 0,
-	MATCHING = 1,
-	CONNECTING = 2,
-	WAITING_FOR_ENOUGH_PLAYERS = 3,
-	READY = 4,
-	PLAYING = 5,
-	LOADING_MAP_FINISH = 9999,
-}
+const MatchState = GameProtocol.MatchState
+
 var match_state: int = MatchState.LOBBY
 
-enum MatchMode {
-	NONE = 0,
-	CREATE = 1,
-	JOIN = 2,
-	MATCHMAKER = 3,
-}
+const MatchMode = GameProtocol.MatchMode
+
 var match_mode: int = MatchMode.NONE
 
-enum PlayerStatus {
-	CONNECTING = 0,
-	CONNECTED = 1,
-}
+const PlayerStatus = GameProtocol.PlayerStatus
 
-enum MatchOpCode {
-	CUSTOM_RPC = 9001,
-	JOIN_SUCCESS = 9002,
-	JOIN_ERROR = 9003,
-	
-}
+
+const MatchOpCode = GameProtocol.MatchOpCode
+
 
 signal error(message)
 signal disconnected()

@@ -43,7 +43,7 @@ var is_drawing: bool = false
 var rate_speed: float = 1.0
 
 func _ready():
-	tetromino_cells = Global.Shared.cells[tetromino_data.tetromino_type]
+	tetromino_cells = TetrisShared.shared().cells[tetromino_data.tetromino_type]
 	touch_start_position = Vector2(get_viewport().size.x / 2, 0)
 	touch_last_position = Vector2.ZERO
 	for cell in tetromino_cells:
@@ -55,7 +55,7 @@ func _ready():
 	
 	if is_next_piece == false:
 		position = tetromino_data.spawn_position	
-		wall_kicks = Global.Shared.wall_kicks_i if tetromino_data.tetromino_type == Global.Shared.Tetromino.I else Global.Shared.wall_kicks_jlostz
+		wall_kicks = TetrisShared.shared().wall_kicks_i if tetromino_data.tetromino_type == TetrisTypes.Tetromino.I else TetrisShared.shared().wall_kicks_jlostz
 		ghost_tetromino = ghost_tetromino_scene.instantiate() as GhostTetromino
 		ghost_tetromino.tetromino_data = tetromino_data
 		get_tree().root.add_child.call_deferred(ghost_tetromino)
@@ -227,7 +227,7 @@ func is_colliding_with_other_tetrominos(direction: Vector2, starting_global_posi
 
 func rotate_tetromino(direction: int):
 	var original_rotation_index = rotation_index
-	if tetromino_data.tetromino_type == Shared.Tetromino.O:
+	if tetromino_data.tetromino_type == TetrisTypes.Tetromino.O:
 		return
 	apply_rotation(direction)
 	
@@ -257,9 +257,9 @@ func get_wall_kick_index(current_rotation_index: int, rotation_direction):
 	return wrap(wall_kick_index, 0 , wall_kicks.size())
 
 func apply_rotation(direction: int):
-	var rotation_matrix = Global.Shared.clockwise_rotation_matrix if direction == 1 else Global.Shared.counter_clockwise_rotation_matrix
+	var rotation_matrix = TetrisShared.shared().clockwise_rotation_matrix if direction == 1 else TetrisShared.shared().counter_clockwise_rotation_matrix
 	
-	tetromino_cells = Global.Shared.cells[tetromino_data.tetromino_type]
+	tetromino_cells = TetrisShared.shared().cells[tetromino_data.tetromino_type]
 	
 	for i in tetromino_cells.size():
 		var cell = tetromino_cells[i]
