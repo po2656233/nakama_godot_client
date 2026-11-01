@@ -85,8 +85,8 @@
 - `tools/test_async_call.gd`：验证 `Util.Asyn_Call` 的成功、业务异常、网络异常与重试入队。
 - `tools/test_foundation.gd`：验证错误中文化、时间格式、旧消息解析、`OnlineMatch` 属性可写、场景注册表。
 - `godot --headless --path . --quit-after 180`：主场景启动冒烟。
-- `godot --headless --path . res://scenes/home.tscn --quit-after 120`：主页/聊天初始化冒烟。
-- `godot --headless --path . res://scenes/chat/chat.tscn --quit-after 120`：聊天场景初始化冒烟。
+- `godot --headless --path . res://lobby/home/home.tscn --quit-after 120`：主页/聊天初始化冒烟。
+- `godot --headless --path . res://lobby/chat/chat.tscn --quit-after 120`：聊天场景初始化冒烟。
 - 俱乐部列表/成员列表/成员项/创建/加入/资料弹窗、查找好友、审批、公告场景逐个 headless 实例化冒烟。
 
 > 说明：本机沙箱不允许写 `user://`，启动时会打印“存档写入失败”，这是环境限制，不是代码回归。

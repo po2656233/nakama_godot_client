@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://wad33loyt5dk"]
+
+[ext_resource type="Script" uid="uid://bf3xqmkqqch38" path="res://lobby/gamelist/local_game_list.gd" id="1_0a1b2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.1, 0.1, 0.15, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.4, 0.6, 0.8)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="LocalGameList" type="Control" unique_id=1192761055]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0a1b2")
+
+[node name="Background" type="Panel" parent="." unique_id=1164284052]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background" unique_id=1416692206]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer" unique_id=1939602854]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HeaderContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=442026312]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="Background/MarginContainer/VBoxContainer/HeaderContainer" unique_id=1767071670]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 32
+text = "本地游戏库"
+
+[node name="SearchContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer/HeaderContainer" unique_id=1344494062]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="SearchBar" type="LineEdit" parent="Background/MarginContainer/VBoxContainer/HeaderContainer/SearchContainer" unique_id=2025596975]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "搜索游戏名称、作者或描述..."
+
+[node name="SearchButton" type="Button" parent="Background/MarginContainer/VBoxContainer/HeaderContainer/SearchContainer" unique_id=1656961154]
+layout_mode = 2
+text = "搜索"
+
+[node name="FilterButton" type="Button" parent="Background/MarginContainer/VBoxContainer/HeaderContainer" unique_id=1698555203]
+layout_mode = 2
+text = "全部游戏"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=444407430]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1795945066]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GameGrid" type="GridContainer" parent="Background/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer" unique_id=1825767669]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 3
+
+[node name="StatusLabel" type="Label" parent="Background/MarginContainer/VBoxContainer" unique_id=798469258]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "正在加载游戏列表..."
+horizontal_alignment = 1
+
+[node name="PaginationContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=1371173092]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="PrevButton" type="Button" parent="Background/MarginContainer/VBoxContainer/PaginationContainer" unique_id=1248169597]
+layout_mode = 2
+disabled = true
+text = "◀ 上一页"
+
+[node name="PageInfo" type="Label" parent="Background/MarginContainer/VBoxContainer/PaginationContainer" unique_id=865545381]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+text = "第 1 页 / 共 1 页"
+horizontal_alignment = 1
+
+[node name="NextButton" type="Button" parent="Background/MarginContainer/VBoxContainer/PaginationContainer" unique_id=171718336]
+layout_mode = 2
+disabled = true
+text = "下一页 ▶"
+
+[node name="FooterContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=574131910]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="RefreshButton" type="Button" parent="Background/MarginContainer/VBoxContainer/FooterContainer" unique_id=966343593]
+layout_mode = 2
+text = "刷新列表"
+
+[node name="SettingsButton" type="Button" parent="Background/MarginContainer/VBoxContainer/FooterContainer" unique_id=1700297398]
+layout_mode = 2
+text = "设置"
+
+[node name="HSeparator" type="HSeparator" parent="Background/MarginContainer/VBoxContainer/FooterContainer" unique_id=1056436911]
+layout_mode = 2
+size_flags_horizontal = 3

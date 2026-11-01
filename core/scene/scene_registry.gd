@@ -7,17 +7,17 @@ extends RefCounted
 ## 应用级页面路由（子游戏见 scripts/game/core/game_catalog.gd）。
 const DEFAULT_ROUTES := {
 	"loading": "res://shared/ui/loading/loading_screen.tscn",
-	"login": "res://scenes/login.tscn",
-	"register": "res://scenes/register.tscn",
-	"home": "res://scenes/home.tscn",
-	"email": "res://scenes/email/mail.tscn",
-	"approval": "res://scenes/approval/approval_form.tscn",
-	"clublist": "res://scenes/clublist/ClubScene.tscn",
-	"clubhome": "res://scenes/clublist/ClubDetailScene.tscn",
-	"gamelist": "res://scenes/gamelist/game_list.tscn",
-	"roomlist": "res://scenes/roomlist/room_list.tscn",
-	"matching": "res://scenes/match/matching.tscn",
-	"matchSuccess": "res://scenes/match/match_success.tscn",
+	"login": "res://app/login/login.tscn",
+	"register": "res://app/register/register.tscn",
+	"home": "res://lobby/home/home.tscn",
+	"email": "res://lobby/email/mail.tscn",
+	"approval": "res://lobby/approval/approval_form.tscn",
+	"clublist": "res://lobby/club/list/ClubScene.tscn",
+	"clubhome": "res://lobby/club/list/ClubDetailScene.tscn",
+	"gamelist": "res://lobby/gamelist/game_list.tscn",
+	"roomlist": "res://lobby/room/room_list.tscn",
+	"matching": "res://lobby/match/matching.tscn",
+	"matchSuccess": "res://lobby/match/match_success.tscn",
 	"leaderboard": "res://shared/ui/leaderboard.tscn",
 }
 

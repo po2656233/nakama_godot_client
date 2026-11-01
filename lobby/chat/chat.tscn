@@ -1,0 +1,647 @@
+[gd_scene format=3 uid="uid://cibb7ou8lcdk1"]
+
+[ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://shared/styles/themes/chat.tres" id="1_b4wfc"]
+[ext_resource type="Script" uid="uid://coomdxyaqfwje" path="res://lobby/chat/chat.gd" id="2_m52is"]
+[ext_resource type="PackedScene" uid="uid://duk1crphy5j8f" path="res://lobby/chat/find_friend.tscn" id="3_ndfss"]
+[ext_resource type="Script" uid="uid://bhtqigqpfmpu2" path="res://shared/ui/itemList.gd" id="4_3wj1b"]
+[ext_resource type="Script" uid="uid://n2h2h626rma" path="res://shared/ui/controls/color_change_control.gd" id="5_vsklf"]
+[ext_resource type="Script" uid="uid://c4mi1r8k25wwe" path="res://shared/ui/controls/TE_send.gd" id="5_yrxgh"]
+[ext_resource type="PackedScene" uid="uid://riqfmggkqpf4" path="res://lobby/club/group_list.tscn" id="7_0cs3x"]
+[ext_resource type="Texture2D" uid="uid://dbfy6a2vu8372" path="res://assets/chat/upmore1.svg" id="7_8p5lf"]
+[ext_resource type="Texture2D" uid="uid://bs3sp7rcewbji" path="res://assets/currency/light3.png" id="9_001t8"]
+[ext_resource type="Texture2D" uid="uid://c0yjbbu1qk33i" path="res://assets/currency/light1.png" id="10_rl2rc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7p85"]
+bg_color = Color(0.219608, 0.458824, 0.282353, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.290196, 0.333333, 0.376471, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 10
+
+[sub_resource type="SystemFont" id="SystemFont_2knlu"]
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss6pv"]
+bg_color = Color(0.266667, 0.462745, 0.592157, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.18014875, 0.41692644, 0.34990206, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymw4y"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulhag"]
+bg_color = Color(0.219608, 0.458824, 0.282353, 1)
+draw_center = false
+border_width_left = 10
+border_width_right = 10
+border_color = Color(0.8, 0.8, 0.8, 0)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceaav"]
+bg_color = Color(0.945098, 0.901961, 0.243137, 0.945098)
+border_width_left = 10
+border_width_right = 10
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5o8v3"]
+bg_color = Color(0.8, 0.501961, 0.133333, 0.968627)
+border_width_left = 10
+border_width_right = 10
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_orn7s"]
+bg_color = Color(0.129412, 0.290196, 0.380392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahplc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sg1j"]
+bg_color = Color(0.176471, 0.380392, 0.498039, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.513726, 0.447059, 0.8, 0)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1krri"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbkeq"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gxk1"]
+bg_color = Color(0.294118, 0.556863, 0.454902, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.360784, 0.360784, 0.360784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_size = 2
+
+[sub_resource type="Theme" id="Theme_bk1xq"]
+Panel/styles/panel = SubResource("StyleBoxFlat_7gxk1")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apc2m"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8rtf"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgtgl"]
+bg_color = Color(0.0196078, 0.388235, 0.576471, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2w1l2"]
+bg_color = Color(0.298039, 0.113725, 0.556863, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7agav"]
+bg_color = Color(0, 0.14902, 0.329412, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wpep7"]
+bg_color = Color(0.16966, 0.399681, 0.75114, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_256f6"]
+bg_color = Color(0.226513, 0.622745, 0.952637, 1)
+draw_center = false
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8yms"]
+bg_color = Color(0.027451, 0.196078, 0.301961, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.0196078, 0.262745, 0.376471, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52lde"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1efha"]
+bg_color = Color(0.145098, 0.341176, 0.286275, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.607843, 0.623529, 0.607843, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfaqc"]
+bg_color = Color(0.321569, 0.419608, 0.913725, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.827451, 0.584314, 0.262745, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayyfq"]
+bg_color = Color(0.113725, 0.431373, 0.580392, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.266667, 0.345098, 0.811765, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajf2a"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+
+[node name="Chat" type="Control" unique_id=562094333]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_b4wfc")
+script = ExtResource("2_m52is")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=932637501]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=2024872063]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b7p85")
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/Panel" unique_id=220569220]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 26.0
+offset_right = -1.0
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "社交场"
+theme_override_colors/font_selected_color = Color(1, 0.843137, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0.458824, 0.745098, 1)
+theme_override_constants/tab_separation = 50
+theme_override_constants/icon_separation = 10
+theme_override_constants/icon_max_width = 5
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_2knlu")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/panel = SubResource("StyleBoxFlat_ss6pv")
+theme_override_styles/tabbar_background = SubResource("StyleBoxFlat_ymw4y")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ulhag")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_ceaav")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5o8v3")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_orn7s")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_ahplc")
+tab_alignment = 1
+current_tab = 1
+drag_to_rearrange_enabled = true
+
+[node name="world" type="Control" parent="MarginContainer/Panel/TabContainer" unique_id=399642846]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/world" unique_id=208620302]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+tooltip_text = "世界面板"
+theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
+script = ExtResource("5_vsklf")
+factor = 1.7
+custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk" unique_id=1997191506]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer" unique_id=2093790064]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/world/Panel_talk" unique_id=257815287]
+visible = false
+custom_minimum_size = Vector2(50, 25)
+clip_contents = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -4.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_1krri")
+icon = ExtResource("7_8p5lf")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="club" type="Control" parent="MarginContainer/Panel/TabContainer" unique_id=1655881582]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="HSplitContainerClub" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club" unique_id=865505243]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offsets = PackedInt32Array(250)
+split_offset = 250
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub" unique_id=1627133353]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer" unique_id=617948684]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "俱乐部面板"
+theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
+script = ExtResource("5_vsklf")
+factor = 1.7
+custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk" unique_id=1257934270]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+follow_focus = true
+
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" unique_id=147207539]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk" unique_id=765485286]
+visible = false
+custom_minimum_size = Vector2(50, 25)
+clip_contents = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 25.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_xbkeq")
+icon = ExtResource("7_8p5lf")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="AddClub" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer" unique_id=763001684 instance=ExtResource("3_ndfss")]
+visible = false
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "查找俱乐部"
+isClub = true
+
+[node name="Panel_clubs" type="Panel" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub" unique_id=12213407]
+custom_minimum_size = Vector2(225, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme = SubResource("Theme_bk1xq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs" unique_id=1514444937]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GroupList" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/Panel_clubs/VBoxContainer" unique_id=1612403943 instance=ExtResource("7_0cs3x")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="friends" type="Control" parent="MarginContainer/Panel/TabContainer" unique_id=908325005]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="HSplitContainerFriends" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends" unique_id=1350725196]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/autohide = 5
+split_offsets = PackedInt32Array(250)
+split_offset = 250
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends" unique_id=1429433737]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/autohide = 5
+
+[node name="Panel_talk" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer" unique_id=1962512871]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "信息面板"
+theme_override_styles/panel = SubResource("StyleBoxFlat_0sg1j")
+script = ExtResource("5_vsklf")
+factor = 1.7
+custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk" unique_id=762167367]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+follow_focus = true
+
+[node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" unique_id=1646903985]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "信息面板"
+
+[node name="btn_upmore" type="Button" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk" unique_id=2063953267]
+visible = false
+custom_minimum_size = Vector2(50, 25)
+clip_contents = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = -7.0
+offset_right = 25.0
+offset_bottom = 27.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_apc2m")
+icon = ExtResource("7_8p5lf")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="AddFirends" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer" unique_id=779754984 instance=ExtResource("3_ndfss")]
+visible = false
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "输入用户名(查找)"
+
+[node name="Panel_friends" type="Panel" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends" unique_id=1615023050]
+custom_minimum_size = Vector2(225, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme = SubResource("Theme_bk1xq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends" unique_id=197862529]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer" unique_id=670124029]
+layout_mode = 2
+tooltip_text = "打开或关闭添加好友面板"
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_focus_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_hover_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_colors/font_outline_color = Color(0.176471, 0.282353, 0.243137, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_p8rtf")
+text = "好友面板"
+alignment = 1
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer" unique_id=1326810608]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "好友列表"
+theme_override_styles/panel = SubResource("StyleBoxFlat_hgtgl")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_2w1l2")
+theme_override_styles/selected = SubResource("StyleBoxFlat_7agav")
+theme_override_styles/selected_focus = SubResource("StyleBoxFlat_wpep7")
+theme_override_styles/cursor = SubResource("StyleBoxFlat_256f6")
+auto_height = true
+script = ExtResource("4_3wj1b")
+custom_color = Color(0.09843243, 0.45232075, 0.6983498, 1)
+Block = true
+
+[node name="input_area" type="PanelContainer" parent="MarginContainer/Panel" unique_id=617668803]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -55.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_n8yms")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/input_area" unique_id=275659627]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/input_area/HBoxContainer" unique_id=1809900584]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer" unique_id=952746981]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+tooltip_text = "消息发送框"
+theme_override_colors/selection_color = Color(0.666667, 0.588235, 0.466667, 1)
+theme_override_colors/background_color = Color(0.0980392, 0.168627, 0.235294, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_52lde")
+placeholder_text = "请输入..."
+wrap_mode = 1
+scroll_fit_content_height = true
+script = ExtResource("5_yrxgh")
+
+[node name="AttachmentButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer" unique_id=108187036]
+custom_minimum_size = Vector2(100, 45)
+layout_mode = 2
+tooltip_text = "添加附件"
+text = "+"
+
+[node name="SendButton" type="Button" parent="MarginContainer/Panel/input_area/HBoxContainer" unique_id=555558960]
+custom_minimum_size = Vector2(120, 55)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "发送输入框文本至指定渠道"
+theme_override_colors/font_focus_color = Color(0, 0.866667, 0.964706, 1)
+theme_override_colors/font_pressed_color = Color(0.85098, 0.831373, 0.156863, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.776471, 0.568627, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_1efha")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pfaqc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ayyfq")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ajf2a")
+text = "发送"
+
+[node name="light_switch" type="TextureButton" parent="MarginContainer/Panel" unique_id=61814311]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 1
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 77.0
+offset_bottom = 73.0
+texture_normal = ExtResource("9_001t8")
+texture_pressed = ExtResource("10_rl2rc")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="tab_selected" from="MarginContainer/Panel/TabContainer" to="." method="_on_tab_container_tab_selected"]
+[connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
+[connection signal="pressed" from="MarginContainer/Panel/TabContainer/world/Panel_talk/btn_upmore" to="." method="_on_btn_upmore_pressed"]
+[connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
+[connection signal="pressed" from="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/btn_upmore" to="." method="_on_btn_upmore_pressed"]
+[connection signal="scroll_ended" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/ScrollContainer" to="." method="_on_msg_scroll_ended"]
+[connection signal="pressed" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk/btn_upmore" to="." method="_on_btn_upmore_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/CheckButton" to="." method="_on_show_addfriend_pressed"]
+[connection signal="gui_input" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_gui_input"]
+[connection signal="item_selected" from="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" to="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/Panel_friends/VBoxContainer/ItemList" method="_on_item_selected"]
+[connection signal="focus_entered" from="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/Panel/input_area/HBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_focus_exited"]
+[connection signal="pressed" from="MarginContainer/Panel/input_area/HBoxContainer/SendButton" to="." method="_on_btn_send_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/light_switch" to="." method="_on_light_button_pressed"]

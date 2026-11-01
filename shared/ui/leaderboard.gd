@@ -1,6 +1,6 @@
 extends Control
 
-var home_scene = load("res://scenes/home.tscn")
+var home_scene = load("res://lobby/home/home.tscn")
 # 排行榜类型枚举
 enum RankType {
 	DAILY,

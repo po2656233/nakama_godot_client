@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://riqfmggkqpf4"]
+
+[ext_resource type="Script" uid="uid://csgkudhn65yok" path="res://lobby/club/group_list.gd" id="1_lhinq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ej2n"]
+bg_color = Color(0.041569, 0.330115, 0.543947, 0.913725)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="GroupList" type="Control" unique_id=111304910]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lhinq")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=938443050]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="SearchBar" type="Panel" parent="VBoxContainer" unique_id=1609628092]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/SearchBar" unique_id=1797982369]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/SearchBar/MarginContainer" unique_id=369329415]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ManagerButton" type="MenuButton" parent="VBoxContainer/SearchBar/MarginContainer/HBoxContainer" unique_id=822635062]
+layout_mode = 2
+text = "管理"
+
+[node name="SearchInput" type="LineEdit" parent="VBoxContainer/SearchBar/MarginContainer/HBoxContainer" unique_id=1358484837]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "搜索俱乐部..."
+
+[node name="SortButton" type="MenuButton" parent="VBoxContainer/SearchBar/MarginContainer/HBoxContainer" unique_id=2099405968]
+layout_mode = 2
+text = "排序"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1018665814]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0ej2n")
+
+[node name="GroupContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=953896318]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10

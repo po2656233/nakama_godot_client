@@ -1,0 +1,551 @@
+[gd_scene format=3 uid="uid://b6j8g4q3y7m5n"]
+
+[ext_resource type="Script" uid="uid://dwtdbnyiojtqv" path="res://lobby/room/room_item.gd" id="1_ungxs"]
+[ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_63jwt"]
+[ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_2atjt"]
+[ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="4_g0ok2"]
+[ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shared/styles/shaders/flow_light.gdshader" id="5_bqmbc"]
+[ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_gksva"]
+[ext_resource type="Script" uid="uid://b2njfps7yn365" path="res://shared/ui/loading/circular/circular_progress.gd" id="7_idn37"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.567014, 0.771032, 0.875651, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="SystemFont" id="SystemFont_iwbqy"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_d6prt"]
+font = SubResource("SystemFont_iwbqy")
+font_color = Color(0.263992, 0.216563, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3edv"]
+draw_center = false
+
+[sub_resource type="SystemFont" id="SystemFont_toid0"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_3t4jk"]
+font = SubResource("SystemFont_toid0")
+font_size = 20
+font_color = Color(0.306901, 0.372661, 0.256599, 1)
+outline_size = 3
+outline_color = Color(0.541195, 0.678073, 1, 1)
+shadow_size = 5
+shadow_color = Color(0.356296, 0.560086, 0.648328, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_20nq0"]
+font_size = 28
+font_color = Color(0.99524, 0.928726, 0, 1)
+outline_size = 5
+outline_color = Color(0.0389729, 0.145328, 0.143721, 1)
+shadow_size = 10
+shadow_color = Color(0.207488, 0.287536, 0.2092, 0.807843)
+
+[sub_resource type="SystemFont" id="SystemFont_0rn8l"]
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8os5m"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.65098, 0.72549, 0.639216, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.300986, 0.615095, 0.454209, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.47451, 0.435294, 0.454902, 0.6)
+shadow_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_2tp5m"]
+font_size = 25
+font_color = Color(1, 0.917647, 0.976471, 1)
+outline_size = 5
+outline_color = Color(0.507852, 0.192499, 0.509968, 1)
+shadow_size = 3
+shadow_color = Color(0.385493, 0.385492, 0.385492, 0.952941)
+
+[sub_resource type="SystemFont" id="SystemFont_w2vb5"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_u0kmr"]
+font = SubResource("SystemFont_w2vb5")
+font_size = 15
+font_color = Color(0.634316, 0.727066, 0.566808, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_dk6k1"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_je7d3"]
+font = SubResource("SystemFont_dk6k1")
+font_color = Color(0.324847, 0.384107, 0.619454, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_mksyy"]
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_favorite"]
+bg_color = Color(0.839698, 0.401707, 0.135815, 0.741176)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="SystemFont" id="SystemFont_iw4mb"]
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.996078, 0.819608, 0.313726, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uxbdl"]
+resource_local_to_scene = true
+shader = ExtResource("5_bqmbc")
+shader_parameter/progress = 2.0
+shader_parameter/angle = 2.206
+shader_parameter/n = 0.163
+
+[sub_resource type="Gradient" id="Gradient_yvwfo"]
+offsets = PackedFloat32Array(0, 0.996241)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rm5a5"]
+gradient = SubResource("Gradient_yvwfo")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpdpq"]
+bg_color = Color(0.309804, 0.278431, 0.584314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awtvm"]
+content_margin_top = 5.0
+bg_color = Color(0.298039, 0.647059, 0.784314, 0.992157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="SystemFont" id="SystemFont_exu74"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_giqyn"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_r0qha"]
+font = SubResource("SystemFont_giqyn")
+font_size = 25
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5apy1"]
+content_margin_left = 15.0
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1rv88"]
+draw_center = false
+
+[sub_resource type="Animation" id="Animation_6stlh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_flip"]
+resource_name = "flip"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 1), Vector2(1, 1)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Front/FlowLight:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.233333, 2)
+}
+
+[sub_resource type="Animation" id="Animation_hover"]
+resource_name = "hover"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.466667),
+"transitions": PackedFloat32Array(0.287175, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
+_data = {
+&"RESET": SubResource("Animation_6stlh"),
+&"flip": SubResource("Animation_flip"),
+&"hover": SubResource("Animation_hover")
+}
+
+[node name="RoomItem" type="Panel" unique_id=1614460272]
+custom_minimum_size = Vector2(450, 400)
+clip_contents = true
+offset_right = 450.0
+offset_bottom = 400.0
+pivot_offset = Vector2(350, 60)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("1_ungxs")
+
+[node name="Author" type="Label" parent="." unique_id=58180932]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_right = 15.0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "@"
+label_settings = SubResource("LabelSettings_d6prt")
+vertical_alignment = 1
+visible_characters = 20
+visible_ratio = 20.0
+
+[node name="Front" type="TextureRect" parent="." unique_id=1466744518]
+layout_mode = 0
+offset_right = 450.0
+offset_bottom = 400.0
+size_flags_vertical = 3
+texture = ExtResource("2_63jwt")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Front" unique_id=575330286]
+layout_mode = 0
+offset_right = 450.0
+offset_bottom = 400.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Panel" type="Panel" parent="Front/MarginContainer" unique_id=1554791676]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a3edv")
+
+[node name="RoomID" type="Label" parent="Front/MarginContainer/Panel" unique_id=1227776720]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -137.0
+offset_top = 152.0
+offset_right = 127.0
+offset_bottom = 180.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "ID:"
+label_settings = SubResource("LabelSettings_3t4jk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoomName" type="Label" parent="Front/MarginContainer/Panel" unique_id=542881710]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 17.0
+offset_bottom = 56.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "房间名称"
+label_settings = SubResource("LabelSettings_20nq0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameName" type="Label" parent="Front/MarginContainer/Panel" unique_id=1092101558]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 12.09
+offset_top = 2.932
+offset_right = 92.09
+offset_bottom = 30.932
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.396485, 0.897576, 0.637114, 1)
+theme_override_colors/font_outline_color = Color(0.702754, 0.66326, 0.281439, 1)
+theme_override_fonts/font = SubResource("SystemFont_0rn8l")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8os5m")
+text = "游戏类型"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BaseScoreTR" type="TextureRect" parent="Front/MarginContainer/Panel" unique_id=604902877]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 0
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 53.09
+offset_top = 265.49
+offset_right = 85.09
+offset_bottom = 333.49
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_2atjt")
+expand_mode = 4
+stretch_mode = 2
+
+[node name="BaseScore" type="Label" parent="Front/MarginContainer/Panel" unique_id=355735582]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 89.09
+offset_top = 278.932
+offset_right = 249.09
+offset_bottom = 313.932
+grow_vertical = 0
+text = "110111111 分"
+label_settings = SubResource("LabelSettings_2tp5m")
+
+[node name="PlayerCount" type="Label" parent="Front/MarginContainer/Panel" unique_id=608296449]
+layout_mode = 0
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 275.09
+offset_top = 195.49
+offset_right = 320.09
+offset_bottom = 220.49
+text = "人数："
+label_settings = SubResource("LabelSettings_u0kmr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Status" type="Label" parent="Front/MarginContainer/Panel" unique_id=370814317]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 280.09
+offset_top = 218.49
+offset_right = 320.09
+offset_bottom = 282.49
+text = "状态"
+label_settings = SubResource("LabelSettings_je7d3")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="Lock" type="TextureRect" parent="Front/MarginContainer/Panel" unique_id=1766776377]
+custom_minimum_size = Vector2(25, 30)
+layout_mode = 0
+anchor_left = -0.049
+anchor_top = -0.026
+anchor_right = -0.049
+anchor_bottom = -0.026
+offset_left = 308.09
+offset_top = 236.932
+offset_right = 333.09
+offset_bottom = 266.932
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = ExtResource("4_g0ok2")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Front/MarginContainer" unique_id=967420291]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="FavoriteButton" type="Button" parent="Front/MarginContainer/HBoxContainer" unique_id=1543529686]
+custom_minimum_size = Vector2(120, 35)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_mksyy")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_favorite")
+toggle_mode = true
+text = "☆ 收藏"
+
+[node name="JoinButton" type="Button" parent="Front/MarginContainer/HBoxContainer" unique_id=310570683]
+custom_minimum_size = Vector2(120, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_iw4mb")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "加入房间"
+
+[node name="FlowLight" type="TextureRect" parent="Front" unique_id=66515391]
+material = SubResource("ShaderMaterial_uxbdl")
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_rm5a5")
+
+[node name="Back" type="TextureRect" parent="." unique_id=1936972674]
+visible = false
+layout_mode = 0
+offset_right = 450.0
+offset_bottom = 400.0
+mouse_filter = 2
+
+[node name="DetailPanel" type="PanelContainer" parent="Back" unique_id=1309143404]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_right = 450.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gpdpq")
+
+[node name="MarginContainer" type="MarginContainer" parent="Back/DetailPanel" unique_id=336491703]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Back/DetailPanel/MarginContainer" unique_id=1705529615]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_awtvm")
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Back/DetailPanel/MarginContainer/ScrollContainer" unique_id=2066075464]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1035926241]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_exu74")
+text = "房间详情"
+label_settings = SubResource("LabelSettings_r0qha")
+horizontal_alignment = 1
+
+[node name="RoomInfo" type="RichTextLabel" parent="Back/DetailPanel/MarginContainer/ScrollContainer/VBoxContainer" unique_id=641670395]
+clip_contents = false
+layout_mode = 2
+focus_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_5apy1")
+theme_override_styles/focus = SubResource("StyleBoxFlat_1rv88")
+bbcode_enabled = true
+fit_content = true
+selection_enabled = true
+
+[node name="FlowLight" type="TextureRect" parent="Back/DetailPanel/MarginContainer" unique_id=1091447186]
+material = SubResource("ShaderMaterial_uxbdl")
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_rm5a5")
+
+[node name="RemoveBtn" type="TextureButton" parent="." unique_id=2146211585]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture_normal = ExtResource("6_gksva")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CircularProgress" type="Control" parent="." unique_id=361869618]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_top = 2.0
+offset_right = 58.0
+offset_bottom = 118.0
+grow_horizontal = 0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("7_idn37")
+progress_color = Color(1.44392e-06, 0.557247, 0.711925, 1)
+background_color = Color(0.170225, 0.366205, 0.488429, 0.501961)
+completion_text = "绪"
+text_color = Color(0.2704513, 0.3729329, 0.5096842, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1931930090]
+libraries/ = SubResource("AnimationLibrary_1")
+
+[connection signal="gui_input" from="Front/MarginContainer/Panel" to="." method="_on_gui_input"]
+[connection signal="pressed" from="RemoveBtn" to="." method="_on_texture_button_pressed"]

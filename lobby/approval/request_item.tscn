@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://bgbatvnfppinv"]
+
+[ext_resource type="Script" uid="uid://bg8b13ujlikgm" path="res://lobby/approval/request_item.gd" id="1_y4k3r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jicjk"]
+draw_center = false
+
+[sub_resource type="SystemFont" id="SystemFont_iptnt"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_iptnt"]
+font = SubResource("SystemFont_iptnt")
+font_size = 18
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0.30323282, 0.30323282, 0.30323282, 1)
+shadow_color = Color(0.1611864, 0.34364703, 0.35403958, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_p1ktb"]
+font_size = 19
+font_color = Color(0.686275, 0.0431373, 0, 0.839216)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20yxo"]
+bg_color = Color(0.0705882, 0.243137, 0.0941176, 0.901961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gaclh"]
+bg_color = Color(0.419608, 0.729412, 0.623529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1o0ve"]
+bg_color = Color(0.752941, 0.552941, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyred"]
+bg_color = Color(0.368627, 0.172549, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d3awi"]
+bg_color = Color(0.733333, 0.372549, 0.133333, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jplxy"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[node name="RequestItem" type="PanelContainer" unique_id=528297981]
+custom_minimum_size = Vector2(0, 60)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jicjk")
+script = ExtResource("1_y4k3r")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=284352327]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1480401007]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TypeLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1880199066]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.6, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9098039)
+theme_override_colors/font_outline_color = Color(0.39215687, 0.6431373, 0.39215687, 1)
+text = "用户"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=106191843]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "张三"
+label_settings = SubResource("LabelSettings_iptnt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClubLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1147931205]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "好好俱乐部"
+label_settings = SubResource("LabelSettings_p1ktb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ApplyTimeLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=609824667]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.52860665, 0.5286066, 3.85046e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9098039)
+theme_override_colors/font_outline_color = Color(0, 0.42352942, 0, 0.7882353)
+text = "2024-12-07 10:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ApprovalTimeLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=302824102]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.0014294991, 0.0029717567, 0.013092014, 0.99607843)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "2024-12-07 11:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=13140815]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "待审批"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1978065939]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ApproveButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer" unique_id=182280121]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.188235, 0.513726, 0.301961, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_20yxo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gaclh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1o0ve")
+text = "同意"
+
+[node name="RejectButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer" unique_id=1784182717]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85098, 0.27451, 0.27451, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_eyred")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_d3awi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jplxy")
+text = "拒绝"

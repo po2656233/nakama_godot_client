@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://riqfmggkqpfd"]
+
+[ext_resource type="Script" uid="uid://ceh38q6f7syuo" path="res://lobby/gamelist/game_list.gd" id="1_xxxxx"]
+[ext_resource type="PackedScene" uid="uid://b6x8j0p7n6xj" path="res://lobby/match/matching.tscn" id="2_kgill"]
+[ext_resource type="PackedScene" uid="uid://riqfmggkqpfx" path="res://lobby/match/match_success.tscn" id="3_8wtxj"]
+[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://shared/ui/loading/loading_screen.tscn" id="4_uxysp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.205356, 0.473676, 0.592367, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bntsk"]
+font_size = 28
+font_color = Color(0.752941, 0.827451, 0.0862745, 1)
+
+[node name="GameList" type="Control" unique_id=1808357057]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_xxxxx")
+
+[node name="Background" type="PanelContainer" parent="." unique_id=626817517]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background" unique_id=1381533066]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer" unique_id=645029340]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="Background/MarginContainer/VBoxContainer" unique_id=1365515788]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "游戏列表"
+label_settings = SubResource("LabelSettings_bntsk")
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=1129049764]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/VBoxContainer/ScrollContainer" unique_id=317618942]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer" unique_id=930632253]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 150
+
+[node name="Matching" parent="." unique_id=763137804 instance=ExtResource("2_kgill")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 0.0
+offset_bottom = 0.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+size_flags_stretch_ratio = 3.0
+mouse_filter = 2
+
+[node name="MatchSuccess" parent="." unique_id=1890056179 instance=ExtResource("3_8wtxj")]
+visible = false
+
+[node name="LoadingScreen" parent="." unique_id=557128938 instance=ExtResource("4_uxysp")]
+visible = false
+layout_mode = 1

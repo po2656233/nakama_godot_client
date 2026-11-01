@@ -6,7 +6,7 @@ extends Control
 @onready var fullBtn = $HBoxContainerRightTop/btn_full
 
 
-var mail_scene = load("res://scenes/email/mail.tscn")
+var mail_scene = load("res://lobby/email/mail.tscn")
 var novolume = preload("res://assets/currency/novolume.png")
 var volume = preload("res://assets/currency/volume.png")
 

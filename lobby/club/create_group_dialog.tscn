@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://riqfmggkqpf2"]
+
+[ext_resource type="Script" uid="uid://bqr4xaqrm1oje" path="res://lobby/club/create_group_dialog.gd" id="1_xxxxx"]
+[ext_resource type="Texture2D" uid="uid://c173ewu8ehnwl" path="res://assets/currency/chooseHead.svg" id="2_8gx7m"]
+
+[node name="CreateGroupDialog" type="Control" unique_id=1889640168]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xxxxx")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1746315086]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="Panel" type="Panel" parent="." unique_id=1326307980]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=241846872]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1414151906]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1181456378]
+layout_mode = 2
+text = "创建俱乐部"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=605032573]
+layout_mode = 2
+text = "选择头像"
+
+[node name="GroupAvatar" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/Label" unique_id=640049917]
+custom_minimum_size = Vector2(60, 45)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -22.5
+offset_right = 30.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+texture = ExtResource("2_8gx7m")
+expand_mode = 1
+
+[node name="GroupNameInput" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer" unique_id=383708756]
+layout_mode = 2
+placeholder_text = "群组名称"
+
+[node name="GroupDescInput" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer" unique_id=1837487344]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+placeholder_text = "群组简介（可选）"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=480602279]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/ButtonContainer" unique_id=1972861599]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "取消"
+
+[node name="CreateButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/ButtonContainer" unique_id=1495721514]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "创建"
+
+[connection signal="focus_entered" from="Panel/MarginContainer/VBoxContainer/GroupNameInput" to="." method="_on_input_focus_entered"]
+[connection signal="focus_exited" from="Panel/MarginContainer/VBoxContainer/GroupNameInput" to="." method="_on_input_focus_exited"]
+[connection signal="focus_entered" from="Panel/MarginContainer/VBoxContainer/GroupDescInput" to="." method="_on_input_focus_entered"]
+[connection signal="focus_exited" from="Panel/MarginContainer/VBoxContainer/GroupDescInput" to="." method="_on_input_focus_exited"]

@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://b6x8yd4hj6n8w"]
+
+[ext_resource type="Script" uid="uid://l0n5ge8q6pka" path="res://lobby/room/waiting_room.gd" id="1_2w3vq"]
+[ext_resource type="PackedScene" uid="uid://ryqfmggkqpxe" path="res://shared/ui/countdown_timer.tscn" id="2_bgkmg"]
+[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://shared/ui/loading/loading_screen.tscn" id="3_h1ti0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.0901961, 0.152941, 0.219608, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io71a"]
+bg_color = Color(0.342197, 0.187184, 0.187367, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.237469, 0.271058, 0.306106, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6rmcv"]
+bg_color = Color(0.63552, 0.60745, 0.410225, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.666355, 0.655684, 0.501071, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxmux"]
+bg_color = Color(0.0742709, 0.00687578, 0.178601, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.255659, 0.255659, 0.255659, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8i22"]
+bg_color = Color(0.0610417, 0.474252, 0.55323, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.290061, 0.630606, 0.415877, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="WaitingRoom" type="Control" unique_id=1080471862]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2w3vq")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1488309242]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0784314, 0.0901961, 0.121569, 1)
+
+[node name="BackgroundPattern" type="TextureRect" parent="." unique_id=1441141753]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1449755992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1816644431]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Control" type="Control" parent="CenterContainer/PanelContainer" unique_id=496833273]
+custom_minimum_size = Vector2(85, 85)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="CountdownTimer" parent="CenterContainer/PanelContainer/Control" unique_id=711175282 instance=ExtResource("2_bgkmg")]
+visible = false
+position = Vector2(0, 4.99998)
+scale = Vector2(0.4, 0.4)
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=670056330]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=964409985]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1714938456]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "等待其他玩家加入..."
+horizontal_alignment = 1
+
+[node name="RoomInfo" type="RichTextLabel" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=293387968]
+custom_minimum_size = Vector2(550, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.321858, 0.538656, 0.636054, 1)
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]房间号:[b][color=gold]0000[/color][/b]    最小人数:[b][color=#c0c0c0]10[/color][/b]人    当前:[color=#4c7856]10[/color]人[/center] (满)"
+autowrap_mode = 0
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=915972469]
+layout_mode = 2
+
+[node name="PlayerList" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1114333581]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="WaitingAnimation" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=660712935]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.391497, 0.629197, 0.777006, 1)
+text = "● ● ●"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=173087406]
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1116027380]
+custom_minimum_size = Vector2(200, 58)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_io71a")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6rmcv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_oxmux")
+theme_override_styles/focus = SubResource("StyleBoxFlat_m8i22")
+text = "取消等待"
+
+[node name="LoadingScreen" parent="." unique_id=444948609 instance=ExtResource("3_h1ti0")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

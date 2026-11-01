@@ -1,0 +1,291 @@
+[gd_scene format=3 uid="uid://b6x8j0p7n6xj"]
+
+[ext_resource type="Script" uid="uid://c6dck2wiksuux" path="res://lobby/match/matching.gd" id="1_tlue5"]
+[ext_resource type="Shader" uid="uid://bb85safeckk6b" path="res://shared/styles/shaders/progress_circle.gdshader" id="2_p1m5x"]
+
+[sub_resource type="Theme" id="Theme_8pgp0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ieusa"]
+bg_color = Color(0.118673, 0.309605, 0.392007, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.470588, 0.866667, 0.956863, 0.580392)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="SystemFont" id="SystemFont_rf2y2"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ksme"]
+font = SubResource("SystemFont_rf2y2")
+font_size = 48
+font_color = Color(1, 1, 0.176471, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_r2hto"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4dcj2"]
+font = SubResource("SystemFont_r2hto")
+font_size = 36
+font_color = Color(1, 0, 0, 0.784314)
+
+[sub_resource type="LabelSettings" id="LabelSettings_k0q2c"]
+font_size = 36
+font_color = Color(0.352941, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bnmqq"]
+shader = ExtResource("2_p1m5x")
+shader_parameter/color = Color(0.856947, 0.715422, 0.538069, 1)
+shader_parameter/thickness = 0.1
+shader_parameter/progress = 0.0
+shader_parameter/glow_strength = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8v4p"]
+bg_color = Color(0.137255, 0.486275, 0.678431, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_681q7"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g306g"]
+bg_color = Color(0.995617, 0.784119, 0.514017, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.566817, 0.888328, 0.639869, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_80lqc"]
+bg_color = Color(0.430008, 0.585536, 0.94734, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Animation" id="Animation_3rm6i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/VBoxContainer/StatusLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 100)]
+}
+
+[sub_resource type="Animation" id="Animation_x4p3r"]
+resource_name = "failed_shake"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/VBoxContainer/StatusLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 100), Vector2(-10, 100), Vector2(10, 100), Vector2(0, 100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/VBoxContainer/StatusLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 2.73207),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.988235, 0.741176, 1), Color(1, 0.929788, 0.917735, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n8p6r"]
+resource_name = "matching_pulse"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/VBoxContainer/ProgressCircle:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k7m2p"]
+resource_name = "success_flash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/VBoxContainer/StatusLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.925767, 0.936132, 0.894594, 1), Color(0.955175, 0.904035, 0.986151, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/VBoxContainer/StatusLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 0.166667, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 0.466517, 0.554785, 1),
+"update": 0,
+"values": [Vector2(80, 100), Vector2(60, 100), Vector2(80, 100), Vector2(100, 100), Vector2(80, 100)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8p4vq"]
+_data = {
+&"RESET": SubResource("Animation_3rm6i"),
+&"failed_shake": SubResource("Animation_x4p3r"),
+&"matching_pulse": SubResource("Animation_n8p6r"),
+&"success_flash": SubResource("Animation_k7m2p")
+}
+
+[node name="Matching" type="Control" unique_id=684667034]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_8pgp0")
+script = ExtResource("1_tlue5")
+
+[node name="Panel" type="Panel" parent="." unique_id=1245730493]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.553
+anchor_top = 0.5
+anchor_right = 0.553
+anchor_bottom = 0.5
+offset_left = -275.056
+offset_top = -292.0
+offset_right = 274.944
+offset_bottom = 308.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ieusa")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=2079035804]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -152.0
+offset_top = 10.0
+offset_right = 153.0
+offset_bottom = 556.0
+grow_horizontal = 2
+theme_override_constants/separation = 25
+
+[node name="NameLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1826709390]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "游戏名"
+label_settings = SubResource("LabelSettings_5ksme")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Panel/VBoxContainer" unique_id=67353423]
+modulate = Color(0.955175, 0.904035, 0.986151, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "等待开始匹配..."
+label_settings = SubResource("LabelSettings_4dcj2")
+horizontal_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1455600473]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+text = "00:00"
+label_settings = SubResource("LabelSettings_k0q2c")
+horizontal_alignment = 1
+
+[node name="ProgressCircle" type="ColorRect" parent="Panel/VBoxContainer" unique_id=440428352]
+material = SubResource("ShaderMaterial_bnmqq")
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.538823, 0.436949, 0.762096, 1)
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Panel/VBoxContainer" unique_id=579208461]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1860675880]
+layout_mode = 2
+theme_override_constants/separation = 65
+alignment = 1
+
+[node name="StartButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=933344606]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8v4p")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_681q7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
+text = "开始匹配"
+
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=128295717]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8v4p")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_681q7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g306g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_80lqc")
+text = "取消"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=709390554]
+libraries/ = SubResource("AnimationLibrary_8p4vq")
