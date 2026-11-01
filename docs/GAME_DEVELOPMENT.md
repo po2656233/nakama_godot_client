@@ -195,6 +195,25 @@ match state:
 - 对局 ID / 座位 / 玩家表：`match_id`、`my_peer_id`、`players`、`get_player_names_by_peer_id()`；
 - 不要自己 `LeaveMatch`，退出时框架统一处理。
 
+## 6.1 骨骼动画（NativeCharacterAvatar，替代 DragonBones）
+
+原生骨骼动画由 `tools/dragonbones_converter.gd` 从 DragonBones 的 `_ske.json/_tex.json` 生成，
+使用 `shared/avatar/native_character_avatar.gd` 播放：
+
+```gdscript
+@onready var avatar: NativeCharacterAvatar = $Avatar
+
+func _ready() -> void:
+    if avatar.has_animation("animation"):
+        avatar.play_animation("animation", true, 0.2)
+
+func stop_effect() -> void:
+    avatar.stop_animation()
+```
+
+`NativeCharacterAvatar` API：`play_animation(name, loop=true, blend_time=0.2)`、
+`stop_animation()`、`set_skin(name) -> bool`、`has_animation(name) -> bool`、`animation_names()`。
+`avatar_scene` 指向生成的原生 `.tscn`，`autoplay_animation` 可配置进入树后自动播放。
 ## 7. 沙盒规则（校验会拦截）
 
 1. `games/**/*.gd` 不得出现任何 `Global.`（唯一入口是 `GameHostBridge.current`）；

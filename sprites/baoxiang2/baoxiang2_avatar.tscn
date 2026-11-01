@@ -1,0 +1,2539 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://sprites/baoxiang2/lhdb_gaojichang_1_tex.png" id="1_qtrdy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_374kr"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 233, 269, 217)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjhi5"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jdji2"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqr4u"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hgwq"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(272, 233, 214, 193)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2b0if"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(481, 487, 22, 36)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgpvk"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(426, 487, 53, 54)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwdmi"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(331, 577, 45, 42)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kb7eo"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 1, 349, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8b6f"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(272, 428, 212, 57)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7aki7"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(469, 134, 41, 38)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2a2hf"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q4t1k"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ua4mg"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h55vh"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(73, 572, 58, 36)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1eyn"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(425, 68, 1, 1)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dlax"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(425, 73, 68, 59)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82eis"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(331, 521, 52, 54)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_up8tf"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(430, 1, 69, 70)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o08j4"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(352, 1, 76, 65)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jcn4x"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfw63"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(385, 567, 116, 20)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k5lsc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfbd3"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(213, 541, 116, 22)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4i6te"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stien"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(213, 515, 116, 24)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cv5oh"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m575f"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(215, 487, 116, 26)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uysnt"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u1faw"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(352, 200, 116, 28)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y2xqq"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euq1g"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(352, 168, 115, 30)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n7dga"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35oa8"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(352, 134, 109, 32)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t2dxa"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0ayi"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 452, 100, 33)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0sixl"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n37xc"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(333, 487, 91, 32)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nehx1"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmpxt"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 520, 80, 31)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m173o"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyx1k"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 553, 70, 30)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fyse0"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgoqc"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(208, 452, 60, 28)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xs10n"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkq0g"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(73, 612, 49, 26)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dgdkq"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxse0"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(469, 174, 39, 24)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qa34u"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1et5"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(193, 613, 29, 22)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xfof4"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbwk2"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(73, 553, 6, 15)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_27drk"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6t1i"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(83, 520, 12, 15)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qfetx"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ig44k"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(481, 525, 23, 16)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5kymo"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0byx5"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(385, 521, 35, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vb4e7"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7nhk"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 621, 46, 22)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t6g1n"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dv1g"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(133, 586, 58, 26)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yw68b"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ri5cw"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 585, 70, 28)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2jwnv"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6moxx"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(83, 542, 83, 28)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ik3s1"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnafd"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(1, 487, 94, 31)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_378nb"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqxvb"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(103, 452, 103, 31)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bq0t8"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyyd6"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(103, 485, 110, 28)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lk6tq"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfnuj"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(97, 515, 114, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ig4wk"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5lr8"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(385, 543, 115, 22)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_24d5u"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swhk8"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(168, 565, 115, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_87s30"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orpfn"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(378, 612, 115, 15)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ct7xi"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_foka7"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_buhx5"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3y7s"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(158, 634, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u65so"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ae8i"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(158, 614, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4psue"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rw8u5"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(49, 640, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u2g2e"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14pmi"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(124, 614, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vdo1w"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gr8aj"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(264, 612, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bw13c"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tospt"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(378, 589, 32, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_regsn"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dbvp"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(412, 589, 31, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jdya1"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68x4f"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(481, 589, 30, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bduv3"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybsnq"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(124, 637, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wvabw"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3oasy"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(193, 586, 33, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bquye"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gx8j"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(470, 200, 34, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m0xok"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_duxsa"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(228, 586, 34, 24)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_73gvy"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66i2k"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(228, 612, 34, 23)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hf40o"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7qvu"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(168, 542, 34, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_30dbi"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6m3nn"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(445, 589, 34, 18)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njp4o"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q8q4k"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0nfj"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6dalc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7o8x"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(158, 634, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4e3aw"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy777"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(158, 614, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_erm7p"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mccf7"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(49, 640, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tqf0y"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_278eg"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(124, 614, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5sddh"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4h13j"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(264, 612, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ipv1n"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kh7ni"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(378, 589, 32, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4d04x"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgiwr"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(412, 589, 31, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_35r7h"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgm4l"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(481, 589, 30, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kqrba"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khqhb"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(124, 637, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nwbel"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj1k1"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(193, 586, 33, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5flkc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j642s"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(470, 200, 34, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fd3pv"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30gx2"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(228, 586, 34, 24)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_usch5"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqafl"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(228, 612, 34, 23)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_updpp"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4w34x"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(168, 542, 34, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_w0vdm"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y87s"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(445, 589, 34, 18)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs6pw"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(285, 565, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2msv"]
+atlas = ExtResource("1_qtrdy")
+region = Rect2(352, 68, 71, 57)
+filter_clip = true
+
+[sub_resource type="Animation" id="Animation_qr4wc"]
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_7:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-4.02, -38.23), Vector2(-4.02, 5.68), Vector2(-4.02, -38.23), Vector2(-4.02, 5.68), Vector2(-4.02, -38.23)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_9:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(46.78, -17.6), Vector2(46.78, 4.29), Vector2(46.78, -17.6), Vector2(46.78, 4.29), Vector2(46.78, -17.6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_10:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(19.62, -9.56), Vector2(19.62, 2.39), Vector2(19.62, -9.56), Vector2(19.62, 2.39), Vector2(19.62, -9.56)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_11:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-42.75, -16.6), Vector2(-42.75, 3.82), Vector2(-42.75, -16.6), Vector2(-42.75, 3.82), Vector2(-42.75, -16.6)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-78.47, -0.89), Vector2(0.75, 1.98), Vector2(-78.47, -0.89), Vector2(0.75, 1.98), Vector2(-78.47, -0.89)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/zhubao3:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.1666666, 2, 3.1666667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.06, -15.81), Vector2(1.06, 0.62), Vector2(1.06, -15.81), Vector2(1.06, 0.62), Vector2(1.06, -15.81)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Skeleton2D/root/gaojichang_5:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 1.4666667, 2, 2.4666667, 3.4666667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.38, 2.71), Vector2(-106.89, 75.01), Vector2(0.81, 5.82), Vector2(0.38, 2.71), Vector2(-106.89, 75.01), Vector2(0.81, 5.82), Vector2(0.38, 2.71)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Skeleton2D/root/gaojichang_3A/g/gaojichang_2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 2, 2.5, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.44, 87.39), Vector2(3.53, 87.39), Vector2(-4.41, 87.39), Vector2(-0.44, 87.39), Vector2(3.53, 87.39), Vector2(-4.41, 87.39), Vector2(-0.44, 87.39)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 2, 2.5, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.62, -165.54), Vector2(2.44, -165.54), Vector2(0.81, -165.54), Vector2(1.62, -165.54), Vector2(2.44, -165.54), Vector2(0.81, -165.54), Vector2(1.62, -165.54)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1.8333334, 2.1, 2.3666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.4, 1.4), Vector2(0, 0), Vector2(1.4, 1.4), Vector2(0, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA2:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1.8333334, 2.1, 2.3666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.4, 1.4), Vector2(0, 0), Vector2(1.4, 1.4), Vector2(0, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Skeleton2D/root/gaojichang_3A/g/texiaoA3:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.6333333, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.3, 1.3), Vector2(0, 0), Vector2(1.3, 1.3), Vector2(0, 0)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Skeleton2D/root/gaojichang_3A/g/texiaoA4:scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.6333333, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.3, 1.3), Vector2(0, 0), Vector2(1.3, 1.3), Vector2(0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13/texiaoA7:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 1.7, 1.9666667, 2.2333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.3, 1.3), Vector2(0, 0), Vector2(1.3, 1.3), Vector2(0, 0)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13/texiaoA8:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 1.7, 1.9666667, 2.2333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.3, 1.3), Vector2(0, 0), Vector2(1.3, 1.3), Vector2(0, 0)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA9:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 0.73333335, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.2, 1.2), Vector2(0, 0), Vector2(1.2, 1.2), Vector2(0, 0)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA10:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 0.73333335, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.2, 1.2), Vector2(0, 0), Vector2(1.2, 1.2), Vector2(0, 0)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Skeleton2D/root/gaojichang_3A/gaojichang_1:scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.94, 0.98), Vector2(1, 1), Vector2(0.94, 0.98), Vector2(1, 1)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Skeleton2D/root/gaojichang_3A/gaojichang_3A3/gaojichang_hhA/gaojichang_hhC:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(14.4, 0.6), Vector2(0.01, -3.14), Vector2(14.4, 0.6), Vector2(0.01, -3.14), Vector2(14.4, 0.6)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Skeleton2D/root/gaojichang_3A/gaojichang_3A3/gaojichang_hhA/gaojichang_hhb:position")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.03, 0.6), Vector2(-0.17, -3.14), Vector2(0.03, 0.6), Vector2(-0.17, -3.14), Vector2(0.03, 0.6)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA/texiaoA_d0:visible")
+tracks/20/interp = 0
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 1.8333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA2/texiaoA2_d0:visible")
+tracks/21/interp = 0
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 1.8333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA2/texiaoA2_d0:modulate")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 1.8333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.56), Color(1, 1, 1, 1)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Skeleton2D/root/gaojichang_3A/g/texiaoA3/texiaoA3_d0:visible")
+tracks/23/interp = 0
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Skeleton2D/root/gaojichang_3A/g/texiaoA4/texiaoA4_d0:visible")
+tracks/24/interp = 0
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Skeleton2D/root/gaojichang_3A/g/texiaoA4/texiaoA4_d0:modulate")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.25), Color(1, 1, 1, 1)]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13/texiaoA7/texiaoA7_d0:visible")
+tracks/26/interp = 0
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13/texiaoA8/texiaoA8_d0:visible")
+tracks/27/interp = 0
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13/texiaoA8/texiaoA8_d0:modulate")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 1.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.43), Color(1, 1, 1, 1)]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA9/texiaoA9_d0:visible")
+tracks/29/interp = 0
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA10/texiaoA10_d0:visible")
+tracks/30/interp = 0
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("Skeleton2D/root/gaojichang_5/texiaoA10/texiaoA10_d0:modulate")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d0:visible")
+tracks/32/interp = 0
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d1:visible")
+tracks/33/interp = 0
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d2:visible")
+tracks/34/interp = 0
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d3:visible")
+tracks/35/interp = 0
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d4:visible")
+tracks/36/interp = 0
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d5:visible")
+tracks/37/interp = 0
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d6:visible")
+tracks/38/interp = 0
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d7:visible")
+tracks/39/interp = 0
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/40/type = "value"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d8:visible")
+tracks/40/interp = 0
+tracks/40/loop_wrap = true
+tracks/40/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/41/type = "value"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d9:visible")
+tracks/41/interp = 0
+tracks/41/loop_wrap = true
+tracks/41/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d10:visible")
+tracks/42/interp = 0
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d11:visible")
+tracks/43/interp = 0
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d12:visible")
+tracks/44/interp = 0
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d13:visible")
+tracks/45/interp = 0
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgS_00000/xzsgS_00000_d14:visible")
+tracks/46/interp = 0
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d0:visible")
+tracks/47/interp = 0
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d1:visible")
+tracks/48/interp = 0
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d2:visible")
+tracks/49/interp = 0
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/50/type = "value"
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d3:visible")
+tracks/50/interp = 0
+tracks/50/loop_wrap = true
+tracks/50/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/51/type = "value"
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d4:visible")
+tracks/51/interp = 0
+tracks/51/loop_wrap = true
+tracks/51/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/52/type = "value"
+tracks/52/imported = false
+tracks/52/enabled = true
+tracks/52/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d5:visible")
+tracks/52/interp = 0
+tracks/52/loop_wrap = true
+tracks/52/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/53/type = "value"
+tracks/53/imported = false
+tracks/53/enabled = true
+tracks/53/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d6:visible")
+tracks/53/interp = 0
+tracks/53/loop_wrap = true
+tracks/53/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/54/type = "value"
+tracks/54/imported = false
+tracks/54/enabled = true
+tracks/54/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d7:visible")
+tracks/54/interp = 0
+tracks/54/loop_wrap = true
+tracks/54/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/55/type = "value"
+tracks/55/imported = false
+tracks/55/enabled = true
+tracks/55/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d8:visible")
+tracks/55/interp = 0
+tracks/55/loop_wrap = true
+tracks/55/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/56/type = "value"
+tracks/56/imported = false
+tracks/56/enabled = true
+tracks/56/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d9:visible")
+tracks/56/interp = 0
+tracks/56/loop_wrap = true
+tracks/56/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/57/type = "value"
+tracks/57/imported = false
+tracks/57/enabled = true
+tracks/57/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d10:visible")
+tracks/57/interp = 0
+tracks/57/loop_wrap = true
+tracks/57/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/58/type = "value"
+tracks/58/imported = false
+tracks/58/enabled = true
+tracks/58/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d11:visible")
+tracks/58/interp = 0
+tracks/58/loop_wrap = true
+tracks/58/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/59/type = "value"
+tracks/59/imported = false
+tracks/59/enabled = true
+tracks/59/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d12:visible")
+tracks/59/interp = 0
+tracks/59/loop_wrap = true
+tracks/59/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/60/type = "value"
+tracks/60/imported = false
+tracks/60/enabled = true
+tracks/60/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d13:visible")
+tracks/60/interp = 0
+tracks/60/loop_wrap = true
+tracks/60/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/61/type = "value"
+tracks/61/imported = false
+tracks/61/enabled = true
+tracks/61/path = NodePath("Skeleton2D/root/gaojichang_3A/xzsgx_00001/xzsgx_00001_d14:visible")
+tracks/61/interp = 0
+tracks/61/loop_wrap = true
+tracks/61/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/62/type = "value"
+tracks/62/imported = false
+tracks/62/enabled = true
+tracks/62/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d0:visible")
+tracks/62/interp = 0
+tracks/62/loop_wrap = true
+tracks/62/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/63/type = "value"
+tracks/63/imported = false
+tracks/63/enabled = true
+tracks/63/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d1:visible")
+tracks/63/interp = 0
+tracks/63/loop_wrap = true
+tracks/63/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/64/type = "value"
+tracks/64/imported = false
+tracks/64/enabled = true
+tracks/64/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d2:visible")
+tracks/64/interp = 0
+tracks/64/loop_wrap = true
+tracks/64/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/65/type = "value"
+tracks/65/imported = false
+tracks/65/enabled = true
+tracks/65/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d3:visible")
+tracks/65/interp = 0
+tracks/65/loop_wrap = true
+tracks/65/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/66/type = "value"
+tracks/66/imported = false
+tracks/66/enabled = true
+tracks/66/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d4:visible")
+tracks/66/interp = 0
+tracks/66/loop_wrap = true
+tracks/66/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/67/type = "value"
+tracks/67/imported = false
+tracks/67/enabled = true
+tracks/67/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d5:visible")
+tracks/67/interp = 0
+tracks/67/loop_wrap = true
+tracks/67/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/68/type = "value"
+tracks/68/imported = false
+tracks/68/enabled = true
+tracks/68/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d6:visible")
+tracks/68/interp = 0
+tracks/68/loop_wrap = true
+tracks/68/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/69/type = "value"
+tracks/69/imported = false
+tracks/69/enabled = true
+tracks/69/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d7:visible")
+tracks/69/interp = 0
+tracks/69/loop_wrap = true
+tracks/69/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/70/type = "value"
+tracks/70/imported = false
+tracks/70/enabled = true
+tracks/70/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d8:visible")
+tracks/70/interp = 0
+tracks/70/loop_wrap = true
+tracks/70/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/71/type = "value"
+tracks/71/imported = false
+tracks/71/enabled = true
+tracks/71/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d9:visible")
+tracks/71/interp = 0
+tracks/71/loop_wrap = true
+tracks/71/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/72/type = "value"
+tracks/72/imported = false
+tracks/72/enabled = true
+tracks/72/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d10:visible")
+tracks/72/interp = 0
+tracks/72/loop_wrap = true
+tracks/72/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/73/type = "value"
+tracks/73/imported = false
+tracks/73/enabled = true
+tracks/73/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d11:visible")
+tracks/73/interp = 0
+tracks/73/loop_wrap = true
+tracks/73/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/74/type = "value"
+tracks/74/imported = false
+tracks/74/enabled = true
+tracks/74/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d12:visible")
+tracks/74/interp = 0
+tracks/74/loop_wrap = true
+tracks/74/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/75/type = "value"
+tracks/75/imported = false
+tracks/75/enabled = true
+tracks/75/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d13:visible")
+tracks/75/interp = 0
+tracks/75/loop_wrap = true
+tracks/75/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/76/type = "value"
+tracks/76/imported = false
+tracks/76/enabled = true
+tracks/76/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_00000/ybg_00000_d14:visible")
+tracks/76/interp = 0
+tracks/76/loop_wrap = true
+tracks/76/keys = {
+"times": PackedFloat32Array(0, 1.1333333, 1.2, 1.2666667, 1.3333334, 1.4, 1.4666667, 1.5333333, 1.6, 1.6666666, 1.7333333, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/77/type = "value"
+tracks/77/imported = false
+tracks/77/enabled = true
+tracks/77/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d0:visible")
+tracks/77/interp = 0
+tracks/77/loop_wrap = true
+tracks/77/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/78/type = "value"
+tracks/78/imported = false
+tracks/78/enabled = true
+tracks/78/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d1:visible")
+tracks/78/interp = 0
+tracks/78/loop_wrap = true
+tracks/78/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/79/type = "value"
+tracks/79/imported = false
+tracks/79/enabled = true
+tracks/79/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d2:visible")
+tracks/79/interp = 0
+tracks/79/loop_wrap = true
+tracks/79/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/80/type = "value"
+tracks/80/imported = false
+tracks/80/enabled = true
+tracks/80/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d3:visible")
+tracks/80/interp = 0
+tracks/80/loop_wrap = true
+tracks/80/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/81/type = "value"
+tracks/81/imported = false
+tracks/81/enabled = true
+tracks/81/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d4:visible")
+tracks/81/interp = 0
+tracks/81/loop_wrap = true
+tracks/81/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/82/type = "value"
+tracks/82/imported = false
+tracks/82/enabled = true
+tracks/82/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d5:visible")
+tracks/82/interp = 0
+tracks/82/loop_wrap = true
+tracks/82/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/83/type = "value"
+tracks/83/imported = false
+tracks/83/enabled = true
+tracks/83/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d6:visible")
+tracks/83/interp = 0
+tracks/83/loop_wrap = true
+tracks/83/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/84/type = "value"
+tracks/84/imported = false
+tracks/84/enabled = true
+tracks/84/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d7:visible")
+tracks/84/interp = 0
+tracks/84/loop_wrap = true
+tracks/84/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/85/type = "value"
+tracks/85/imported = false
+tracks/85/enabled = true
+tracks/85/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d8:visible")
+tracks/85/interp = 0
+tracks/85/loop_wrap = true
+tracks/85/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/86/type = "value"
+tracks/86/imported = false
+tracks/86/enabled = true
+tracks/86/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d9:visible")
+tracks/86/interp = 0
+tracks/86/loop_wrap = true
+tracks/86/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/87/type = "value"
+tracks/87/imported = false
+tracks/87/enabled = true
+tracks/87/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d10:visible")
+tracks/87/interp = 0
+tracks/87/loop_wrap = true
+tracks/87/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/88/type = "value"
+tracks/88/imported = false
+tracks/88/enabled = true
+tracks/88/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d11:visible")
+tracks/88/interp = 0
+tracks/88/loop_wrap = true
+tracks/88/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/89/type = "value"
+tracks/89/imported = false
+tracks/89/enabled = true
+tracks/89/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d12:visible")
+tracks/89/interp = 0
+tracks/89/loop_wrap = true
+tracks/89/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/90/type = "value"
+tracks/90/imported = false
+tracks/90/enabled = true
+tracks/90/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d13:visible")
+tracks/90/interp = 0
+tracks/90/loop_wrap = true
+tracks/90/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/91/type = "value"
+tracks/91/imported = false
+tracks/91/enabled = true
+tracks/91/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d14:visible")
+tracks/91/interp = 0
+tracks/91/loop_wrap = true
+tracks/91/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/92/type = "value"
+tracks/92/imported = false
+tracks/92/enabled = true
+tracks/92/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d0:modulate")
+tracks/92/interp = 1
+tracks/92/loop_wrap = true
+tracks/92/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/93/type = "value"
+tracks/93/imported = false
+tracks/93/enabled = true
+tracks/93/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d1:modulate")
+tracks/93/interp = 1
+tracks/93/loop_wrap = true
+tracks/93/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/94/type = "value"
+tracks/94/imported = false
+tracks/94/enabled = true
+tracks/94/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d2:modulate")
+tracks/94/interp = 1
+tracks/94/loop_wrap = true
+tracks/94/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/95/type = "value"
+tracks/95/imported = false
+tracks/95/enabled = true
+tracks/95/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d3:modulate")
+tracks/95/interp = 1
+tracks/95/loop_wrap = true
+tracks/95/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/96/type = "value"
+tracks/96/imported = false
+tracks/96/enabled = true
+tracks/96/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d4:modulate")
+tracks/96/interp = 1
+tracks/96/loop_wrap = true
+tracks/96/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/97/type = "value"
+tracks/97/imported = false
+tracks/97/enabled = true
+tracks/97/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d5:modulate")
+tracks/97/interp = 1
+tracks/97/loop_wrap = true
+tracks/97/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/98/type = "value"
+tracks/98/imported = false
+tracks/98/enabled = true
+tracks/98/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d6:modulate")
+tracks/98/interp = 1
+tracks/98/loop_wrap = true
+tracks/98/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/99/type = "value"
+tracks/99/imported = false
+tracks/99/enabled = true
+tracks/99/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d7:modulate")
+tracks/99/interp = 1
+tracks/99/loop_wrap = true
+tracks/99/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/100/type = "value"
+tracks/100/imported = false
+tracks/100/enabled = true
+tracks/100/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d8:modulate")
+tracks/100/interp = 1
+tracks/100/loop_wrap = true
+tracks/100/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/101/type = "value"
+tracks/101/imported = false
+tracks/101/enabled = true
+tracks/101/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d9:modulate")
+tracks/101/interp = 1
+tracks/101/loop_wrap = true
+tracks/101/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/102/type = "value"
+tracks/102/imported = false
+tracks/102/enabled = true
+tracks/102/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d10:modulate")
+tracks/102/interp = 1
+tracks/102/loop_wrap = true
+tracks/102/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/103/type = "value"
+tracks/103/imported = false
+tracks/103/enabled = true
+tracks/103/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d11:modulate")
+tracks/103/interp = 1
+tracks/103/loop_wrap = true
+tracks/103/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/104/type = "value"
+tracks/104/imported = false
+tracks/104/enabled = true
+tracks/104/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d12:modulate")
+tracks/104/interp = 1
+tracks/104/loop_wrap = true
+tracks/104/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/105/type = "value"
+tracks/105/imported = false
+tracks/105/enabled = true
+tracks/105/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d13:modulate")
+tracks/105/interp = 1
+tracks/105/loop_wrap = true
+tracks/105/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/106/type = "value"
+tracks/106/imported = false
+tracks/106/enabled = true
+tracks/106/path = NodePath("Skeleton2D/root/gaojichang_5/ybg_0/ybg_0_d14:modulate")
+tracks/106/interp = 1
+tracks/106/loop_wrap = true
+tracks/106/keys = {
+"times": PackedFloat32Array(0, 2.7333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m472u"]
+_data = {
+&"animation": SubResource("Animation_qr4wc")
+}
+
+[node name="AvatarRoot" type="Node2D" unique_id=1341308766]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=801767489]
+
+[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=1405438507]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_3A" type="Bone2D" parent="Skeleton2D/root" unique_id=108302074]
+position = Vector2(8.31, 125.23)
+rest = Transform2D(1, 0, 0, 1, 8.31, 125.23)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_1" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=80594431]
+position = Vector2(-3.37, -9.32)
+rest = Transform2D(1, 0, 0, 1, -3.37, -9.32)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_1_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_1" unique_id=634013588]
+position = Vector2(-12.77, -175.14)
+texture = SubResource("AtlasTexture_374kr")
+
+[node name="g" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=2006510775]
+position = Vector2(-20.95, -286.92)
+rest = Transform2D(1, 0, 0, 1, -20.95, -286.92)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA3" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/g" unique_id=1903272689]
+position = Vector2(-55.46, 3.96)
+scale = Vector2(1.3, 1.3)
+rest = Transform2D(1.3, 0, 0, 1.3, -55.46, 3.96)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA3_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/g/texiaoA3" unique_id=977718534]
+texture = SubResource("AtlasTexture_kjhi5")
+
+[node name="texiaoA4" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/g" unique_id=2091431305]
+position = Vector2(-55.46, 3.96)
+scale = Vector2(1.3, 1.3)
+rest = Transform2D(1.3, 0, 0, 1.3, -55.46, 3.96)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA4_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/g/texiaoA4" unique_id=487271301]
+material = SubResource("CanvasItemMaterial_jdji2")
+texture = SubResource("AtlasTexture_cqr4u")
+
+[node name="gaojichang_2" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/g" unique_id=1591259720]
+position = Vector2(-14.12, 87.39)
+rest = Transform2D(1, 0, 0, 1, -14.12, 87.39)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_4" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/g" unique_id=1130716312]
+position = Vector2(-99.4, 65.32)
+rest = Transform2D(1, 0, 0, 1, -99.4, 65.32)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_2_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/g/gaojichang_4" unique_id=1483426915]
+texture = SubResource("AtlasTexture_4hgwq")
+
+[node name="gaojichang_3A3" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=722632888]
+position = Vector2(0.42, -105.96)
+rest = Transform2D(1, 0, 0, 1, 0.42, -105.96)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_hhA" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_3A3" unique_id=1376624084]
+position = Vector2(52.58, -42.15)
+rest = Transform2D(1, 0, 0, 1, 52.58, -42.15)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_hhC" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_3A3/gaojichang_hhA" unique_id=2015791163]
+position = Vector2(14.4, 17.29)
+rotation = 1.3011429
+rest = Transform2D(0.2663974, 0.9638633, -0.9638633, 0.2663974, 14.4, 17.29)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_hhC_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_3A3/gaojichang_hhA/gaojichang_hhC" unique_id=1184124023]
+position = Vector2(11.94, -6.48)
+rotation = -1.3011429
+texture = SubResource("AtlasTexture_2b0if")
+
+[node name="gaojichang_hhb" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_3A3/gaojichang_hhA" unique_id=1046368283]
+position = Vector2(9.02, 17.65)
+rotation = 1.2452924
+rest = Transform2D(0.31978628, 0.9474897, -0.9474897, 0.31978628, 9.02, 17.65)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_hhb_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_3A3/gaojichang_hhA/gaojichang_hhb" unique_id=2131190826]
+position = Vector2(19.68, 7.1)
+rotation = -1.2452924
+texture = SubResource("AtlasTexture_xgpvk")
+
+[node name="gaojichang_hhA_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_3A3/gaojichang_hhA" unique_id=999515746]
+position = Vector2(3.36, 14.9)
+texture = SubResource("AtlasTexture_iwdmi")
+
+[node name="gaojichang_3A_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_3A3" unique_id=1303522063]
+texture = SubResource("AtlasTexture_kb7eo")
+
+[node name="gaojichang_6" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=515836375]
+position = Vector2(48.97, -204.52)
+rest = Transform2D(1, 0, 0, 1, 48.97, -204.52)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_4_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/gaojichang_6" unique_id=940677665]
+position = Vector2(-69.6, 13.07)
+texture = SubResource("AtlasTexture_i8b6f")
+
+[node name="zhubao" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=27136244]
+position = Vector2(1.57, -165.54)
+rest = Transform2D(1, 0, 0, 1, 1.57, -165.54)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_8" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao" unique_id=276864117]
+position = Vector2(-60.36, -40.74)
+rest = Transform2D(1, 0, 0, 1, -60.36, -40.74)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_8_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_8" unique_id=1242273278]
+position = Vector2(0.66, -1.67)
+texture = SubResource("AtlasTexture_7aki7")
+
+[node name="gaojichang_13" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao" unique_id=301362353]
+position = Vector2(-78.47, -23.64)
+rest = Transform2D(1, 0, 0, 1, -78.47, -23.64)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA7" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13" unique_id=543973911]
+position = Vector2(-9.47, -13.91)
+scale = Vector2(1.3, 1.3)
+rest = Transform2D(1.3, 0, 0, 1.3, -9.47, -13.91)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA7_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13/texiaoA7" unique_id=1206510581]
+texture = SubResource("AtlasTexture_2a2hf")
+
+[node name="texiaoA8" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13" unique_id=120219609]
+position = Vector2(-9.47, -13.91)
+scale = Vector2(1.3, 1.3)
+rest = Transform2D(1.3, 0, 0, 1.3, -9.47, -13.91)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA8_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13/texiaoA8" unique_id=1235650613]
+material = SubResource("CanvasItemMaterial_q4t1k")
+texture = SubResource("AtlasTexture_ua4mg")
+
+[node name="gaojichang_13_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_13" unique_id=1734563111]
+position = Vector2(-1.73, -6.77)
+texture = SubResource("AtlasTexture_h55vh")
+
+[node name="zhubao3" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao" unique_id=44131522]
+position = Vector2(1.06, -15.81)
+rest = Transform2D(1, 0, 0, 1, 1.06, -15.81)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhubao_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/zhubao3" unique_id=1088951975]
+position = Vector2(1.74, 1.4)
+texture = SubResource("AtlasTexture_f1eyn")
+
+[node name="gaojichang_11" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao" unique_id=1521119426]
+position = Vector2(-42.75, -16.6)
+rest = Transform2D(1, 0, 0, 1, -42.75, -16.6)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_11_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_11" unique_id=2036652464]
+position = Vector2(0.55, -19.31)
+texture = SubResource("AtlasTexture_3dlax")
+
+[node name="gaojichang_7" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao" unique_id=188524792]
+position = Vector2(-4.02, -38.23)
+rest = Transform2D(1, 0, 0, 1, -4.02, -38.23)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_7_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_7" unique_id=75684028]
+position = Vector2(-12.18, -19.18)
+texture = SubResource("AtlasTexture_82eis")
+
+[node name="gaojichang_9" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao" unique_id=1904816265]
+position = Vector2(46.78, -17.6)
+rest = Transform2D(1, 0, 0, 1, 46.78, -17.6)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_9_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_9" unique_id=1604552322]
+position = Vector2(-4.48, -29.81)
+texture = SubResource("AtlasTexture_up8tf")
+
+[node name="gaojichang_10" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A/zhubao" unique_id=369420048]
+position = Vector2(19.62, -9.56)
+rest = Transform2D(1, 0, 0, 1, 19.62, -9.56)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="gaojichang_10_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/zhubao/gaojichang_10" unique_id=1821959335]
+position = Vector2(-7.82, -25.35)
+texture = SubResource("AtlasTexture_o08j4")
+
+[node name="xzsgS_00000" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=762426600]
+position = Vector2(-21.8, -160.51)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, -21.8, -160.51)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="xzsgS_00000_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=1459011173]
+material = SubResource("CanvasItemMaterial_jcn4x")
+texture = SubResource("AtlasTexture_lfw63")
+
+[node name="xzsgS_00000_d1" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=2067080780]
+visible = false
+material = SubResource("CanvasItemMaterial_k5lsc")
+texture = SubResource("AtlasTexture_dfbd3")
+
+[node name="xzsgS_00000_d2" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=1304797340]
+visible = false
+material = SubResource("CanvasItemMaterial_4i6te")
+texture = SubResource("AtlasTexture_stien")
+
+[node name="xzsgS_00000_d3" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=1231820560]
+visible = false
+material = SubResource("CanvasItemMaterial_cv5oh")
+texture = SubResource("AtlasTexture_m575f")
+
+[node name="xzsgS_00000_d4" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=853624346]
+visible = false
+material = SubResource("CanvasItemMaterial_uysnt")
+texture = SubResource("AtlasTexture_u1faw")
+
+[node name="xzsgS_00000_d5" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=2096376324]
+visible = false
+material = SubResource("CanvasItemMaterial_y2xqq")
+texture = SubResource("AtlasTexture_euq1g")
+
+[node name="xzsgS_00000_d6" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=1146032538]
+visible = false
+material = SubResource("CanvasItemMaterial_n7dga")
+texture = SubResource("AtlasTexture_35oa8")
+
+[node name="xzsgS_00000_d7" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=2042870541]
+visible = false
+material = SubResource("CanvasItemMaterial_t2dxa")
+texture = SubResource("AtlasTexture_g0ayi")
+
+[node name="xzsgS_00000_d8" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=867182769]
+visible = false
+material = SubResource("CanvasItemMaterial_0sixl")
+texture = SubResource("AtlasTexture_n37xc")
+
+[node name="xzsgS_00000_d9" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=139990341]
+visible = false
+material = SubResource("CanvasItemMaterial_nehx1")
+texture = SubResource("AtlasTexture_vmpxt")
+
+[node name="xzsgS_00000_d10" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=2118761850]
+visible = false
+material = SubResource("CanvasItemMaterial_m173o")
+texture = SubResource("AtlasTexture_eyx1k")
+
+[node name="xzsgS_00000_d11" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=580931395]
+visible = false
+material = SubResource("CanvasItemMaterial_fyse0")
+texture = SubResource("AtlasTexture_qgoqc")
+
+[node name="xzsgS_00000_d12" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=1862996792]
+visible = false
+material = SubResource("CanvasItemMaterial_xs10n")
+texture = SubResource("AtlasTexture_kkq0g")
+
+[node name="xzsgS_00000_d13" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=775848389]
+visible = false
+material = SubResource("CanvasItemMaterial_dgdkq")
+texture = SubResource("AtlasTexture_kxse0")
+
+[node name="xzsgS_00000_d14" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgS_00000" unique_id=617846320]
+visible = false
+material = SubResource("CanvasItemMaterial_qa34u")
+texture = SubResource("AtlasTexture_x1et5")
+
+[node name="gaojichang_3A2" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=852555543]
+position = Vector2(-1.74, -65.68)
+rest = Transform2D(1, 0, 0, 1, -1.74, -65.68)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="xzsgx_00001" type="Bone2D" parent="Skeleton2D/root/gaojichang_3A" unique_id=1450981939]
+position = Vector2(-22.25, -83.59)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, -22.25, -83.59)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="xzsgx_00001_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=722731431]
+material = SubResource("CanvasItemMaterial_xfof4")
+texture = SubResource("AtlasTexture_dbwk2")
+
+[node name="xzsgx_00001_d1" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=343455120]
+visible = false
+material = SubResource("CanvasItemMaterial_27drk")
+texture = SubResource("AtlasTexture_t6t1i")
+
+[node name="xzsgx_00001_d2" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1744081226]
+visible = false
+material = SubResource("CanvasItemMaterial_qfetx")
+texture = SubResource("AtlasTexture_ig44k")
+
+[node name="xzsgx_00001_d3" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=628739282]
+visible = false
+material = SubResource("CanvasItemMaterial_5kymo")
+texture = SubResource("AtlasTexture_0byx5")
+
+[node name="xzsgx_00001_d4" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1261307694]
+visible = false
+material = SubResource("CanvasItemMaterial_vb4e7")
+texture = SubResource("AtlasTexture_v7nhk")
+
+[node name="xzsgx_00001_d5" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=83737569]
+visible = false
+material = SubResource("CanvasItemMaterial_t6g1n")
+texture = SubResource("AtlasTexture_3dv1g")
+
+[node name="xzsgx_00001_d6" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=143977010]
+visible = false
+material = SubResource("CanvasItemMaterial_yw68b")
+texture = SubResource("AtlasTexture_ri5cw")
+
+[node name="xzsgx_00001_d7" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=153553083]
+visible = false
+material = SubResource("CanvasItemMaterial_2jwnv")
+texture = SubResource("AtlasTexture_6moxx")
+
+[node name="xzsgx_00001_d8" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1976038176]
+visible = false
+material = SubResource("CanvasItemMaterial_ik3s1")
+texture = SubResource("AtlasTexture_nnafd")
+
+[node name="xzsgx_00001_d9" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1717896833]
+visible = false
+material = SubResource("CanvasItemMaterial_378nb")
+texture = SubResource("AtlasTexture_eqxvb")
+
+[node name="xzsgx_00001_d10" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1939928229]
+visible = false
+material = SubResource("CanvasItemMaterial_bq0t8")
+texture = SubResource("AtlasTexture_nyyd6")
+
+[node name="xzsgx_00001_d11" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1926756999]
+visible = false
+material = SubResource("CanvasItemMaterial_lk6tq")
+texture = SubResource("AtlasTexture_bfnuj")
+
+[node name="xzsgx_00001_d12" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1219459599]
+visible = false
+material = SubResource("CanvasItemMaterial_ig4wk")
+texture = SubResource("AtlasTexture_h5lr8")
+
+[node name="xzsgx_00001_d13" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=1565265414]
+visible = false
+material = SubResource("CanvasItemMaterial_24d5u")
+position = Vector2(0.43, -0.43)
+texture = SubResource("AtlasTexture_swhk8")
+
+[node name="xzsgx_00001_d14" type="Sprite2D" parent="Skeleton2D/root/gaojichang_3A/xzsgx_00001" unique_id=595087902]
+visible = false
+material = SubResource("CanvasItemMaterial_87s30")
+texture = SubResource("AtlasTexture_orpfn")
+
+[node name="gaojichang_5" type="Bone2D" parent="Skeleton2D/root" unique_id=606864706]
+position = Vector2(-106.89, 75.01)
+rest = Transform2D(1, 0, 0, 1, -106.89, 75.01)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA10" type="Bone2D" parent="Skeleton2D/root/gaojichang_5" unique_id=682032005]
+position = Vector2(-19.73, -45.33)
+scale = Vector2(1.2, 1.2)
+rest = Transform2D(1.2, 0, 0, 1.2, -19.73, -45.33)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA10_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/texiaoA10" unique_id=1242053932]
+material = SubResource("CanvasItemMaterial_ct7xi")
+texture = SubResource("AtlasTexture_foka7")
+
+[node name="ybg_0" type="Bone2D" parent="Skeleton2D/root/gaojichang_5" unique_id=1204409100]
+position = Vector2(9.33, -22.81)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, 9.33, -22.81)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="ybg_0_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=981267088]
+material = SubResource("CanvasItemMaterial_buhx5")
+texture = SubResource("AtlasTexture_w3y7s")
+
+[node name="ybg_0_d1" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=241291843]
+visible = false
+material = SubResource("CanvasItemMaterial_u65so")
+texture = SubResource("AtlasTexture_3ae8i")
+
+[node name="ybg_0_d2" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=1298057782]
+visible = false
+material = SubResource("CanvasItemMaterial_4psue")
+texture = SubResource("AtlasTexture_rw8u5")
+
+[node name="ybg_0_d3" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=654349830]
+visible = false
+material = SubResource("CanvasItemMaterial_u2g2e")
+texture = SubResource("AtlasTexture_14pmi")
+
+[node name="ybg_0_d4" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=633157753]
+visible = false
+material = SubResource("CanvasItemMaterial_vdo1w")
+texture = SubResource("AtlasTexture_gr8aj")
+
+[node name="ybg_0_d5" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=2069539847]
+visible = false
+material = SubResource("CanvasItemMaterial_bw13c")
+texture = SubResource("AtlasTexture_tospt")
+
+[node name="ybg_0_d6" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=95346136]
+visible = false
+material = SubResource("CanvasItemMaterial_regsn")
+texture = SubResource("AtlasTexture_7dbvp")
+
+[node name="ybg_0_d7" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=2056133724]
+visible = false
+material = SubResource("CanvasItemMaterial_jdya1")
+texture = SubResource("AtlasTexture_68x4f")
+
+[node name="ybg_0_d8" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=291986012]
+visible = false
+material = SubResource("CanvasItemMaterial_bduv3")
+texture = SubResource("AtlasTexture_ybsnq")
+
+[node name="ybg_0_d9" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=1125828652]
+visible = false
+material = SubResource("CanvasItemMaterial_wvabw")
+texture = SubResource("AtlasTexture_3oasy")
+
+[node name="ybg_0_d10" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=1107604940]
+visible = false
+material = SubResource("CanvasItemMaterial_bquye")
+texture = SubResource("AtlasTexture_7gx8j")
+
+[node name="ybg_0_d11" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=1232558223]
+visible = false
+material = SubResource("CanvasItemMaterial_m0xok")
+texture = SubResource("AtlasTexture_duxsa")
+
+[node name="ybg_0_d12" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=1048497873]
+visible = false
+material = SubResource("CanvasItemMaterial_73gvy")
+texture = SubResource("AtlasTexture_66i2k")
+
+[node name="ybg_0_d13" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=718905384]
+visible = false
+material = SubResource("CanvasItemMaterial_hf40o")
+texture = SubResource("AtlasTexture_w7qvu")
+
+[node name="ybg_0_d14" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_0" unique_id=1591979567]
+visible = false
+material = SubResource("CanvasItemMaterial_30dbi")
+texture = SubResource("AtlasTexture_6m3nn")
+
+[node name="texiaoA9" type="Bone2D" parent="Skeleton2D/root/gaojichang_5" unique_id=2110968936]
+position = Vector2(-19.73, -45.33)
+scale = Vector2(1.2, 1.2)
+rest = Transform2D(1.2, 0, 0, 1.2, -19.73, -45.33)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA9_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/texiaoA9" unique_id=530954205]
+texture = SubResource("AtlasTexture_njp4o")
+
+[node name="texiaoA2" type="Bone2D" parent="Skeleton2D/root/gaojichang_5" unique_id=651099194]
+position = Vector2(35.52, -31.41)
+scale = Vector2(1.4, 1.4)
+rest = Transform2D(1.4, 0, 0, 1.4, 35.52, -31.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA2_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/texiaoA2" unique_id=199335495]
+material = SubResource("CanvasItemMaterial_q8q4k")
+texture = SubResource("AtlasTexture_q0nfj")
+
+[node name="ybg_00000" type="Bone2D" parent="Skeleton2D/root/gaojichang_5" unique_id=673340123]
+position = Vector2(9.33, -22.81)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, 9.33, -22.81)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="ybg_00000_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=568296977]
+material = SubResource("CanvasItemMaterial_6dalc")
+texture = SubResource("AtlasTexture_b7o8x")
+
+[node name="ybg_00000_d1" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=1116398561]
+visible = false
+material = SubResource("CanvasItemMaterial_4e3aw")
+texture = SubResource("AtlasTexture_wy777")
+
+[node name="ybg_00000_d2" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=952928831]
+visible = false
+material = SubResource("CanvasItemMaterial_erm7p")
+texture = SubResource("AtlasTexture_mccf7")
+
+[node name="ybg_00000_d3" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=1759202824]
+visible = false
+material = SubResource("CanvasItemMaterial_tqf0y")
+texture = SubResource("AtlasTexture_278eg")
+
+[node name="ybg_00000_d4" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=1011407939]
+visible = false
+material = SubResource("CanvasItemMaterial_5sddh")
+texture = SubResource("AtlasTexture_4h13j")
+
+[node name="ybg_00000_d5" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=1787033860]
+visible = false
+material = SubResource("CanvasItemMaterial_ipv1n")
+texture = SubResource("AtlasTexture_kh7ni")
+
+[node name="ybg_00000_d6" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=1025876021]
+visible = false
+material = SubResource("CanvasItemMaterial_4d04x")
+texture = SubResource("AtlasTexture_vgiwr")
+
+[node name="ybg_00000_d7" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=156615142]
+visible = false
+material = SubResource("CanvasItemMaterial_35r7h")
+texture = SubResource("AtlasTexture_wgm4l")
+
+[node name="ybg_00000_d8" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=544657011]
+visible = false
+material = SubResource("CanvasItemMaterial_kqrba")
+texture = SubResource("AtlasTexture_khqhb")
+
+[node name="ybg_00000_d9" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=567217090]
+visible = false
+material = SubResource("CanvasItemMaterial_nwbel")
+texture = SubResource("AtlasTexture_aj1k1")
+
+[node name="ybg_00000_d10" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=1457302109]
+visible = false
+material = SubResource("CanvasItemMaterial_5flkc")
+texture = SubResource("AtlasTexture_j642s")
+
+[node name="ybg_00000_d11" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=586590010]
+visible = false
+material = SubResource("CanvasItemMaterial_fd3pv")
+texture = SubResource("AtlasTexture_30gx2")
+
+[node name="ybg_00000_d12" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=1405065724]
+visible = false
+material = SubResource("CanvasItemMaterial_usch5")
+texture = SubResource("AtlasTexture_dqafl")
+
+[node name="ybg_00000_d13" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=856008800]
+visible = false
+material = SubResource("CanvasItemMaterial_updpp")
+texture = SubResource("AtlasTexture_4w34x")
+
+[node name="ybg_00000_d14" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/ybg_00000" unique_id=910226239]
+visible = false
+material = SubResource("CanvasItemMaterial_w0vdm")
+texture = SubResource("AtlasTexture_7y87s")
+
+[node name="texiaoA" type="Bone2D" parent="Skeleton2D/root/gaojichang_5" unique_id=624967810]
+position = Vector2(35.52, -31.41)
+scale = Vector2(1.4, 1.4)
+rest = Transform2D(1.4, 0, 0, 1.4, 35.52, -31.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5/texiaoA" unique_id=283876315]
+texture = SubResource("AtlasTexture_vs6pw")
+
+[node name="gaojichang_5_d0" type="Sprite2D" parent="Skeleton2D/root/gaojichang_5" unique_id=1484417041]
+position = Vector2(10.56, -20.66)
+texture = SubResource("AtlasTexture_d2msv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1321440239]
+libraries/ = SubResource("AnimationLibrary_m472u")

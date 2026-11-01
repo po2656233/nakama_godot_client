@@ -10,14 +10,15 @@ signal timeleft(value) #还剩余多少时间
 @onready var timeout_sound = $TimeoutSound
 @onready var timerover_sound = $TimeoverSound
 @onready var timer = $Timer
-@onready var texiao = $DragonBones
+@onready var texiao: NativeCharacterAvatar = $Avatar
 var time_left: float = 20.0
 var warn_left: float = 10.0
 var is_running: bool = false
 
 func _ready():
 	# start(13,9)
-	texiao.visible = false
+	if texiao != null:
+		texiao.visible = false
 	pass
 	
 func _process(_delta):
@@ -56,7 +57,8 @@ func stop():
 	animation_player.stop()
 	update_time_label()
 	await get_tree().create_timer(1.0).timeout
-	texiao.visible = false
+	if texiao != null:
+		texiao.visible = false
 	pass
 
 func _on_timer_timeout():

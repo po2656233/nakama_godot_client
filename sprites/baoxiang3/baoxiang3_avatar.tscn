@@ -1,0 +1,4047 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://sprites/baoxiang3/lhdb_zhizunchang_tex.png" id="1_twfg7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqais"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(119, 539, 63, 61)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sd7lv"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(370, 342, 62, 84)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw61q"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(426, 476, 54, 70)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nf0gv"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(639, 483, 66, 40)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xydq0"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(243, 306, 59, 34)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mpws"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(550, 286, 36, 37)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4h36h"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(381, 536, 39, 35)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_045ua"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(829, 240, 52, 41)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1hp0"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(234, 492, 71, 57)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vuw3b"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(777, 458, 67, 54)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2q4a"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(381, 495, 40, 39)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gefu3"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(356, 428, 68, 65)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e23p4"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(523, 453, 114, 33)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwv8f"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(892, 1, 104, 113)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qs7kp"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(633, 1, 257, 122)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o27oo"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7ksk"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(727, 483, 34, 13)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xt40b"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6oy4x"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(829, 283, 34, 16)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4g6xl"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfkwi"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(448, 286, 35, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gx2od"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qq0mb"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(182, 624, 35, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f6wm3"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3flcn"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(184, 581, 35, 20)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fels8"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmh1e"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(344, 549, 35, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dxr3n"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fm6qq"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(307, 549, 35, 22)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i4jry"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cp57m"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(321, 470, 33, 22)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_276s7"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2mj3"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(232, 551, 34, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m3dya"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3y7e"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(108, 602, 35, 20)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k2mbg"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0vdr"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(145, 602, 35, 20)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hyat2"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tt34"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(344, 572, 35, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v6alt"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4obfw"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(232, 574, 35, 20)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1v2ga"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0upx5"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(304, 573, 35, 20)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_r7yq8"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73f4q"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(182, 603, 35, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k0x8n"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ij3oc"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(865, 283, 18, 15)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_luosw"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqfiu"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(707, 513, 18, 22)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ntosd"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30jtx"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(707, 483, 18, 28)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lc1e0"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3s2cv"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(241, 596, 18, 35)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d3hu7"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjlyy"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1000, 475, 18, 41)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sgogr"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_javby"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1000, 426, 18, 47)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2te8o"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54awa"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(998, 1, 18, 48)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0cl7w"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykqyd"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(88, 576, 18, 48)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1x1jj"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctvlv"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(998, 51, 18, 48)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lgmoc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w428s"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1002, 357, 18, 47)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_h37gc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwutt"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(523, 368, 18, 43)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sxatg"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgpu1"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(221, 596, 18, 37)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hbim7"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fo5a7"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(304, 306, 17, 30)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7hb3h"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2btca"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(727, 498, 17, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ilc2o"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8biyq"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1002, 406, 17, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_af8s7"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ae0ip"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(895, 178, 128, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4fg25"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s84eh"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(331, 224, 128, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wo664"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55pwv"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(895, 240, 128, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jk5ma"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vydyi"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(892, 116, 129, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_55xsu"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxa2w"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(633, 176, 129, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_whn0s"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmxwh"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(764, 178, 129, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_accmx"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu4wv"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(461, 224, 127, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mfdxl"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8y7fg"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(590, 238, 118, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3iyyd"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h2tx"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(826, 302, 109, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n4g72"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmxyq"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(448, 306, 100, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k50sd"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kbs8"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(909, 364, 91, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lpima"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ibmp"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(909, 426, 89, 60)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_x2asc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6i6d"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(434, 368, 87, 59)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rr0qi"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iaks2"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(937, 302, 83, 53)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_thnt2"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2r16o"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(237, 432, 82, 48)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tuob6"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s68e8"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(321, 432, 32, 36)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o5udk"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_100jk"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(184, 539, 46, 40)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aefhk"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_583im"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(846, 458, 59, 44)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3655c"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kykr2"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(777, 514, 73, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4p0hy"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbmq1"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 576, 85, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ixufd"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5rbp"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(426, 429, 95, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rsabd"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nasek"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 447, 104, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lpdkg"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvg64"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(119, 492, 113, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jm3fj"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdv6h"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(120, 306, 121, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lxxqc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5yaw"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(782, 411, 125, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pagvs"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ewfn"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(782, 364, 125, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jbgav"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hknv8"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(243, 342, 125, 42)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4g5nd"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ksdr"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(523, 415, 125, 36)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_db4x1"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rvws"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(650, 415, 125, 33)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_smmlh"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve8qe"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(650, 450, 125, 31)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2brvu"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_61unq"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqr8k"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uaue4"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mjrj2"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gdct"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_53flv"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31lvt"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(141, 624, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v1212"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_co4by"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 649, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_htipk"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ir6f"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(37, 648, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wf61n"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vw1an"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(73, 626, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gmeuh"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si1xc"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(73, 647, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_emv15"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ye7a"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(269, 574, 32, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_odeku"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2smq"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(108, 624, 31, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6f07a"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7skn"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(107, 647, 30, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pq15r"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cv4x"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(141, 644, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tja3q"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fslg"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(482, 476, 33, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8oor0"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0txv1"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(550, 325, 34, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7oxq3"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlsgh"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 623, 34, 24)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dh2gf"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mnw7"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(37, 623, 34, 23)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fwk8o"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_674a3"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(268, 551, 34, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l6vce"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0bwa"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(485, 286, 34, 18)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cli3u"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1yuhl"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuoqq"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i5tg2"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfa5i"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(141, 624, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uq1or"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ximsi"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 649, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5spyd"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6kbm"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(37, 648, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f081r"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shcqs"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(73, 626, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2uyym"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwu2u"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(73, 647, 32, 19)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ckr3c"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vap26"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(269, 574, 32, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qxrde"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb2c1"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(108, 624, 31, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8np5d"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfyr1"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(107, 647, 30, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vb2l7"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgula"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(141, 644, 32, 18)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xo0u0"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ax8x"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(482, 476, 33, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a1sq7"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5dyk"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(550, 325, 34, 25)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jowc2"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quguy"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 623, 34, 24)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3e4m4"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n0o7"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(37, 623, 34, 23)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5mogi"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jr60"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(268, 551, 34, 21)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_56dx4"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xj6df"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(485, 286, 34, 18)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qspl"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i761r"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4s30l"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yeh5q"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sydhe"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ln661"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1ewy"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ucx34"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wk0q"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fws1"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(331, 1, 300, 221)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_67go1"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3csdt"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fi3qw"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag60t"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 1, 328, 303)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2t8r"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gg56s"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f453r"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(842, 125, 44, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_h05tl"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bihpb"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(667, 361, 113, 52)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jidhu"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwyts"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(550, 361, 115, 52)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l06hi"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jxr2"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(331, 286, 115, 54)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_h5x46"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7a4i"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(708, 300, 116, 59)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xjpxc"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfjcu"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(590, 300, 116, 59)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f283y"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmanx"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(710, 240, 117, 55)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rou6m"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1us8e"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 306, 117, 47)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_p3udn"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dy57"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 535, 116, 39)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v86xu"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63qah"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 494, 116, 39)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jfkds"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtotr"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 402, 116, 43)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iohuo"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7n3jp"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(119, 446, 116, 44)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nyyb2"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_448rf"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(238, 386, 116, 44)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t1rgx"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgea0"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(120, 353, 116, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mwfgt"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x375i"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(1, 355, 116, 45)
+filter_clip = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5447i"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4n3q"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(119, 400, 116, 44)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75md0"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(633, 125, 207, 49)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5u6ui"]
+atlas = ExtResource("1_twfg7")
+region = Rect2(307, 495, 72, 52)
+filter_clip = true
+
+[sub_resource type="Animation" id="Animation_3ts7c"]
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/root/bone2/zhizunXZGG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.93, 3.75), Vector2(0.93, -5.63), Vector2(0.93, 3.75), Vector2(0.93, -5.63), Vector2(0.93, 3.75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/root/bone2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.65, -190.11), Vector2(-0.65, 4.12), Vector2(-0.65, -190.11), Vector2(-0.65, 4.12), Vector2(-0.65, -190.11)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/root/zhizun_TY:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0.99), Vector2(1, 1), Vector2(1, 0.99), Vector2(1, 1), Vector2(1, 0.99)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/root/bone/zhizun_bzrx3:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.4, 2, 2.4, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(4.61, 1.14), Vector2(4.61, -40.12), Vector2(4.61, 2.84), Vector2(4.61, 1.14), Vector2(4.61, -40.12), Vector2(4.61, 2.84), Vector2(4.61, 1.14)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/root/bone/zhizun_bzhbs1:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.4, 2, 2.4, 3.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(15.38, 1.86), Vector2(15.38, 2.78), Vector2(15.38, 0.47), Vector2(15.38, 1.86), Vector2(15.38, 2.78), Vector2(15.38, 0.47), Vector2(15.38, 1.86)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/root/bone/zhizun_rx4:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 1.4666667, 2, 2.4666667, 3.4666667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(72.19, 2.2), Vector2(72.19, 2.33), Vector2(72.19, 3.35), Vector2(72.19, 2.2), Vector2(72.19, 2.33), Vector2(72.19, 3.35), Vector2(72.19, 2.2)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Skeleton2D/root/bone/zhizun_jyb3:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.3, 2.3, 3.3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-59.37, 1.37), Vector2(-59.37, 2.1), Vector2(-59.37, -0.33), Vector2(-59.37, 2.1), Vector2(-59.37, -0.33), Vector2(-59.37, 1.37)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Skeleton2D/root/bone/zhizun_jb3:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-15.72, 2.59), Vector2(-15.72, 4.24), Vector2(-15.72, 2.59), Vector2(-15.72, 4.24), Vector2(-15.72, 2.59)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Skeleton2D/root/bone/zhizun_jb2:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.43333334, 1.4333333, 2, 2.4333334, 3.4333334, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.87, 2.95), Vector2(-0.54, 4.79), Vector2(-1.29, 0.54), Vector2(-0.87, 2.95), Vector2(-0.54, 4.79), Vector2(-1.29, 0.54), Vector2(-0.87, 2.95)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Skeleton2D/root/bone/zhizun_jb1:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 1.4666667, 2, 2.4666667, 3.4666667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(70.39, 2.56), Vector2(70.39, 3.86), Vector2(70.39, 1.07), Vector2(70.39, 2.56), Vector2(70.39, 3.86), Vector2(70.39, 1.07), Vector2(70.39, 2.56)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Skeleton2D/root/bone/zhizun_zb1:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-6.19, 21.66), Vector2(-6.19, 1.07), Vector2(-6.19, 21.66), Vector2(-6.19, 1.07), Vector2(-6.19, 21.66)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Skeleton2D/root/bone/zhizun_bzrx1:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 1.4666667, 2, 2.4666667, 3.4666667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(104.03, 0.7), Vector2(104.03, 74.23), Vector2(104.03, 1.51), Vector2(104.03, 0.7), Vector2(104.03, 74.23), Vector2(104.03, 1.51), Vector2(104.03, 0.7)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Skeleton2D/root/bone/zhizun_bzrx2:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.6333333, 1.6333333, 2, 2.6333334, 3.6333334, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(122.89, 0.95), Vector2(122.89, 54.32), Vector2(122.89, 1.51), Vector2(122.89, 0.95), Vector2(122.89, 54.32), Vector2(122.89, 1.51), Vector2(122.89, 0.95)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Skeleton2D/root/bone/zhizun_lbs:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 1.3666667, 2, 2.3666666, 3.3666666, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(35.71, 2.02), Vector2(35.71, 4.25), Vector2(35.71, -69.3), Vector2(35.71, 2.02), Vector2(35.71, 4.25), Vector2(35.71, -69.3), Vector2(35.71, 2.02)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Skeleton2D/root/xx/texiaoA:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 1.4333333, 1.7666667, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Skeleton2D/root/xx/texiaoA2:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 1.4333333, 1.7666667, 2.0666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Skeleton2D/root/xx2/texiaoA3:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 2.6333334, 2.9666667, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Skeleton2D/root/xx2/texiaoA4:scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 2.6333334, 2.9666667, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Skeleton2D/root/xx3/texiaoA5:scale")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 3, 3.3333333, 3.6333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Skeleton2D/root/xx3/texiaoA6:scale")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 3, 3.3333333, 3.6333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Skeleton2D/root/xx4/texiaoA7:scale")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 2.4, 2.7333333, 3.0333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Skeleton2D/root/xx4/texiaoA8:scale")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 2.4, 2.7333333, 3.0333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Skeleton2D/root/xx5/texiaoA9:scale")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 3.1, 3.4333334, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Skeleton2D/root/xx5/texiaoA10:scale")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 3.1, 3.4333334, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Skeleton2D/root/xx6/texiaoA11:scale")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 2.7, 3.0333333, 3.3333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Skeleton2D/root/xx6/texiaoA12:scale")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 2.7, 3.0333333, 3.3333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Skeleton2D/root/xx7/texiaoA13:scale")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.6, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("Skeleton2D/root/xx7/texiaoA14:scale")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.6, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("Skeleton2D/root/xx8/texiaoA15:scale")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.93333334, 1.2333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("Skeleton2D/root/xx8/texiaoA16:scale")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.93333334, 1.2333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d0:visible")
+tracks/30/interp = 0
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d1:visible")
+tracks/31/interp = 0
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d2:visible")
+tracks/32/interp = 0
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d3:visible")
+tracks/33/interp = 0
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d4:visible")
+tracks/34/interp = 0
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d5:visible")
+tracks/35/interp = 0
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d6:visible")
+tracks/36/interp = 0
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d7:visible")
+tracks/37/interp = 0
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d8:visible")
+tracks/38/interp = 0
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d9:visible")
+tracks/39/interp = 0
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/40/type = "value"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d10:visible")
+tracks/40/interp = 0
+tracks/40/loop_wrap = true
+tracks/40/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/41/type = "value"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d11:visible")
+tracks/41/interp = 0
+tracks/41/loop_wrap = true
+tracks/41/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d12:visible")
+tracks/42/interp = 0
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d13:visible")
+tracks/43/interp = 0
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("Skeleton2D/root/jybg_00000/jybg_00000_d14:visible")
+tracks/44/interp = 0
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d0:visible")
+tracks/45/interp = 0
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d1:visible")
+tracks/46/interp = 0
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d2:visible")
+tracks/47/interp = 0
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d3:visible")
+tracks/48/interp = 0
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d4:visible")
+tracks/49/interp = 0
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/50/type = "value"
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d5:visible")
+tracks/50/interp = 0
+tracks/50/loop_wrap = true
+tracks/50/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/51/type = "value"
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d6:visible")
+tracks/51/interp = 0
+tracks/51/loop_wrap = true
+tracks/51/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/52/type = "value"
+tracks/52/imported = false
+tracks/52/enabled = true
+tracks/52/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d7:visible")
+tracks/52/interp = 0
+tracks/52/loop_wrap = true
+tracks/52/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/53/type = "value"
+tracks/53/imported = false
+tracks/53/enabled = true
+tracks/53/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d8:visible")
+tracks/53/interp = 0
+tracks/53/loop_wrap = true
+tracks/53/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/54/type = "value"
+tracks/54/imported = false
+tracks/54/enabled = true
+tracks/54/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d9:visible")
+tracks/54/interp = 0
+tracks/54/loop_wrap = true
+tracks/54/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/55/type = "value"
+tracks/55/imported = false
+tracks/55/enabled = true
+tracks/55/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d10:visible")
+tracks/55/interp = 0
+tracks/55/loop_wrap = true
+tracks/55/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/56/type = "value"
+tracks/56/imported = false
+tracks/56/enabled = true
+tracks/56/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d11:visible")
+tracks/56/interp = 0
+tracks/56/loop_wrap = true
+tracks/56/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/57/type = "value"
+tracks/57/imported = false
+tracks/57/enabled = true
+tracks/57/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d12:visible")
+tracks/57/interp = 0
+tracks/57/loop_wrap = true
+tracks/57/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/58/type = "value"
+tracks/58/imported = false
+tracks/58/enabled = true
+tracks/58/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d13:visible")
+tracks/58/interp = 0
+tracks/58/loop_wrap = true
+tracks/58/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/59/type = "value"
+tracks/59/imported = false
+tracks/59/enabled = true
+tracks/59/path = NodePath("Skeleton2D/root/sge_00000/sge_00000_d14:visible")
+tracks/59/interp = 0
+tracks/59/loop_wrap = true
+tracks/59/keys = {
+"times": PackedFloat32Array(0, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666, 1.2333333, 1.3, 1.3666667, 1.4333333, 1.5, 1.5666667, 1.6333333, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true]
+}
+tracks/60/type = "value"
+tracks/60/imported = false
+tracks/60/enabled = true
+tracks/60/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d0:visible")
+tracks/60/interp = 0
+tracks/60/loop_wrap = true
+tracks/60/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/61/type = "value"
+tracks/61/imported = false
+tracks/61/enabled = true
+tracks/61/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d1:visible")
+tracks/61/interp = 0
+tracks/61/loop_wrap = true
+tracks/61/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/62/type = "value"
+tracks/62/imported = false
+tracks/62/enabled = true
+tracks/62/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d2:visible")
+tracks/62/interp = 0
+tracks/62/loop_wrap = true
+tracks/62/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/63/type = "value"
+tracks/63/imported = false
+tracks/63/enabled = true
+tracks/63/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d3:visible")
+tracks/63/interp = 0
+tracks/63/loop_wrap = true
+tracks/63/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/64/type = "value"
+tracks/64/imported = false
+tracks/64/enabled = true
+tracks/64/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d4:visible")
+tracks/64/interp = 0
+tracks/64/loop_wrap = true
+tracks/64/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/65/type = "value"
+tracks/65/imported = false
+tracks/65/enabled = true
+tracks/65/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d5:visible")
+tracks/65/interp = 0
+tracks/65/loop_wrap = true
+tracks/65/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/66/type = "value"
+tracks/66/imported = false
+tracks/66/enabled = true
+tracks/66/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d6:visible")
+tracks/66/interp = 0
+tracks/66/loop_wrap = true
+tracks/66/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/67/type = "value"
+tracks/67/imported = false
+tracks/67/enabled = true
+tracks/67/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d7:visible")
+tracks/67/interp = 0
+tracks/67/loop_wrap = true
+tracks/67/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/68/type = "value"
+tracks/68/imported = false
+tracks/68/enabled = true
+tracks/68/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d8:visible")
+tracks/68/interp = 0
+tracks/68/loop_wrap = true
+tracks/68/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/69/type = "value"
+tracks/69/imported = false
+tracks/69/enabled = true
+tracks/69/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d9:visible")
+tracks/69/interp = 0
+tracks/69/loop_wrap = true
+tracks/69/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/70/type = "value"
+tracks/70/imported = false
+tracks/70/enabled = true
+tracks/70/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d10:visible")
+tracks/70/interp = 0
+tracks/70/loop_wrap = true
+tracks/70/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/71/type = "value"
+tracks/71/imported = false
+tracks/71/enabled = true
+tracks/71/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d11:visible")
+tracks/71/interp = 0
+tracks/71/loop_wrap = true
+tracks/71/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/72/type = "value"
+tracks/72/imported = false
+tracks/72/enabled = true
+tracks/72/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d12:visible")
+tracks/72/interp = 0
+tracks/72/loop_wrap = true
+tracks/72/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/73/type = "value"
+tracks/73/imported = false
+tracks/73/enabled = true
+tracks/73/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d13:visible")
+tracks/73/interp = 0
+tracks/73/loop_wrap = true
+tracks/73/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/74/type = "value"
+tracks/74/imported = false
+tracks/74/enabled = true
+tracks/74/path = NodePath("Skeleton2D/root/sgxzgg_00000/sgxzgg_00000_d14:visible")
+tracks/74/interp = 0
+tracks/74/loop_wrap = true
+tracks/74/keys = {
+"times": PackedFloat32Array(0, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/75/type = "value"
+tracks/75/imported = false
+tracks/75/enabled = true
+tracks/75/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d0:visible")
+tracks/75/interp = 0
+tracks/75/loop_wrap = true
+tracks/75/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/76/type = "value"
+tracks/76/imported = false
+tracks/76/enabled = true
+tracks/76/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d1:visible")
+tracks/76/interp = 0
+tracks/76/loop_wrap = true
+tracks/76/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/77/type = "value"
+tracks/77/imported = false
+tracks/77/enabled = true
+tracks/77/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d2:visible")
+tracks/77/interp = 0
+tracks/77/loop_wrap = true
+tracks/77/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/78/type = "value"
+tracks/78/imported = false
+tracks/78/enabled = true
+tracks/78/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d3:visible")
+tracks/78/interp = 0
+tracks/78/loop_wrap = true
+tracks/78/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/79/type = "value"
+tracks/79/imported = false
+tracks/79/enabled = true
+tracks/79/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d4:visible")
+tracks/79/interp = 0
+tracks/79/loop_wrap = true
+tracks/79/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/80/type = "value"
+tracks/80/imported = false
+tracks/80/enabled = true
+tracks/80/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d5:visible")
+tracks/80/interp = 0
+tracks/80/loop_wrap = true
+tracks/80/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/81/type = "value"
+tracks/81/imported = false
+tracks/81/enabled = true
+tracks/81/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d6:visible")
+tracks/81/interp = 0
+tracks/81/loop_wrap = true
+tracks/81/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/82/type = "value"
+tracks/82/imported = false
+tracks/82/enabled = true
+tracks/82/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d7:visible")
+tracks/82/interp = 0
+tracks/82/loop_wrap = true
+tracks/82/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/83/type = "value"
+tracks/83/imported = false
+tracks/83/enabled = true
+tracks/83/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d8:visible")
+tracks/83/interp = 0
+tracks/83/loop_wrap = true
+tracks/83/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/84/type = "value"
+tracks/84/imported = false
+tracks/84/enabled = true
+tracks/84/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d9:visible")
+tracks/84/interp = 0
+tracks/84/loop_wrap = true
+tracks/84/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/85/type = "value"
+tracks/85/imported = false
+tracks/85/enabled = true
+tracks/85/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d10:visible")
+tracks/85/interp = 0
+tracks/85/loop_wrap = true
+tracks/85/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/86/type = "value"
+tracks/86/imported = false
+tracks/86/enabled = true
+tracks/86/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d11:visible")
+tracks/86/interp = 0
+tracks/86/loop_wrap = true
+tracks/86/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/87/type = "value"
+tracks/87/imported = false
+tracks/87/enabled = true
+tracks/87/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d12:visible")
+tracks/87/interp = 0
+tracks/87/loop_wrap = true
+tracks/87/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/88/type = "value"
+tracks/88/imported = false
+tracks/88/enabled = true
+tracks/88/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d13:visible")
+tracks/88/interp = 0
+tracks/88/loop_wrap = true
+tracks/88/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/89/type = "value"
+tracks/89/imported = false
+tracks/89/enabled = true
+tracks/89/path = NodePath("Skeleton2D/root/sgxzs_00000/sgxzs_00000_d14:visible")
+tracks/89/interp = 0
+tracks/89/loop_wrap = true
+tracks/89/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.5666667, 1.6333333, 1.7, 1.7666667, 1.8333334, 1.9, 1.9666667, 2.0333333, 2.1, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/90/type = "value"
+tracks/90/imported = false
+tracks/90/enabled = true
+tracks/90/path = NodePath("Skeleton2D/root/xx/texiaoA/texiaoA_d0:visible")
+tracks/90/interp = 0
+tracks/90/loop_wrap = true
+tracks/90/keys = {
+"times": PackedFloat32Array(0, 1.4333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/91/type = "value"
+tracks/91/imported = false
+tracks/91/enabled = true
+tracks/91/path = NodePath("Skeleton2D/root/xx/texiaoA2/texiaoA2_d0:visible")
+tracks/91/interp = 0
+tracks/91/loop_wrap = true
+tracks/91/keys = {
+"times": PackedFloat32Array(0, 1.4333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/92/type = "value"
+tracks/92/imported = false
+tracks/92/enabled = true
+tracks/92/path = NodePath("Skeleton2D/root/xx/texiaoA2/texiaoA2_d0:modulate")
+tracks/92/interp = 1
+tracks/92/loop_wrap = true
+tracks/92/keys = {
+"times": PackedFloat32Array(0, 1.4333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 1)]
+}
+tracks/93/type = "value"
+tracks/93/imported = false
+tracks/93/enabled = true
+tracks/93/path = NodePath("Skeleton2D/root/xx2/texiaoA3/texiaoA3_d0:visible")
+tracks/93/interp = 0
+tracks/93/loop_wrap = true
+tracks/93/keys = {
+"times": PackedFloat32Array(0, 2.6333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/94/type = "value"
+tracks/94/imported = false
+tracks/94/enabled = true
+tracks/94/path = NodePath("Skeleton2D/root/xx2/texiaoA4/texiaoA4_d0:visible")
+tracks/94/interp = 0
+tracks/94/loop_wrap = true
+tracks/94/keys = {
+"times": PackedFloat32Array(0, 2.6333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/95/type = "value"
+tracks/95/imported = false
+tracks/95/enabled = true
+tracks/95/path = NodePath("Skeleton2D/root/xx2/texiaoA4/texiaoA4_d0:modulate")
+tracks/95/interp = 1
+tracks/95/loop_wrap = true
+tracks/95/keys = {
+"times": PackedFloat32Array(0, 2.6333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 1)]
+}
+tracks/96/type = "value"
+tracks/96/imported = false
+tracks/96/enabled = true
+tracks/96/path = NodePath("Skeleton2D/root/xx3/texiaoA5/texiaoA5_d0:visible")
+tracks/96/interp = 0
+tracks/96/loop_wrap = true
+tracks/96/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/97/type = "value"
+tracks/97/imported = false
+tracks/97/enabled = true
+tracks/97/path = NodePath("Skeleton2D/root/xx3/texiaoA5/texiaoA5_d0:modulate")
+tracks/97/interp = 1
+tracks/97/loop_wrap = true
+tracks/97/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.54)]
+}
+tracks/98/type = "value"
+tracks/98/imported = false
+tracks/98/enabled = true
+tracks/98/path = NodePath("Skeleton2D/root/xx3/texiaoA6/texiaoA6_d0:visible")
+tracks/98/interp = 0
+tracks/98/loop_wrap = true
+tracks/98/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/99/type = "value"
+tracks/99/imported = false
+tracks/99/enabled = true
+tracks/99/path = NodePath("Skeleton2D/root/xx3/texiaoA6/texiaoA6_d0:modulate")
+tracks/99/interp = 1
+tracks/99/loop_wrap = true
+tracks/99/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 0.54)]
+}
+tracks/100/type = "value"
+tracks/100/imported = false
+tracks/100/enabled = true
+tracks/100/path = NodePath("Skeleton2D/root/xx4/texiaoA7/texiaoA7_d0:visible")
+tracks/100/interp = 0
+tracks/100/loop_wrap = true
+tracks/100/keys = {
+"times": PackedFloat32Array(0, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/101/type = "value"
+tracks/101/imported = false
+tracks/101/enabled = true
+tracks/101/path = NodePath("Skeleton2D/root/xx4/texiaoA8/texiaoA8_d0:visible")
+tracks/101/interp = 0
+tracks/101/loop_wrap = true
+tracks/101/keys = {
+"times": PackedFloat32Array(0, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/102/type = "value"
+tracks/102/imported = false
+tracks/102/enabled = true
+tracks/102/path = NodePath("Skeleton2D/root/xx4/texiaoA8/texiaoA8_d0:modulate")
+tracks/102/interp = 1
+tracks/102/loop_wrap = true
+tracks/102/keys = {
+"times": PackedFloat32Array(0, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 1)]
+}
+tracks/103/type = "value"
+tracks/103/imported = false
+tracks/103/enabled = true
+tracks/103/path = NodePath("Skeleton2D/root/xx5/texiaoA9/texiaoA9_d0:visible")
+tracks/103/interp = 0
+tracks/103/loop_wrap = true
+tracks/103/keys = {
+"times": PackedFloat32Array(0, 3.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/104/type = "value"
+tracks/104/imported = false
+tracks/104/enabled = true
+tracks/104/path = NodePath("Skeleton2D/root/xx5/texiaoA10/texiaoA10_d0:visible")
+tracks/104/interp = 0
+tracks/104/loop_wrap = true
+tracks/104/keys = {
+"times": PackedFloat32Array(0, 3.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/105/type = "value"
+tracks/105/imported = false
+tracks/105/enabled = true
+tracks/105/path = NodePath("Skeleton2D/root/xx5/texiaoA10/texiaoA10_d0:modulate")
+tracks/105/interp = 1
+tracks/105/loop_wrap = true
+tracks/105/keys = {
+"times": PackedFloat32Array(0, 3.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 1)]
+}
+tracks/106/type = "value"
+tracks/106/imported = false
+tracks/106/enabled = true
+tracks/106/path = NodePath("Skeleton2D/root/xx6/texiaoA11/texiaoA11_d0:visible")
+tracks/106/interp = 0
+tracks/106/loop_wrap = true
+tracks/106/keys = {
+"times": PackedFloat32Array(0, 2.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/107/type = "value"
+tracks/107/imported = false
+tracks/107/enabled = true
+tracks/107/path = NodePath("Skeleton2D/root/xx6/texiaoA12/texiaoA12_d0:visible")
+tracks/107/interp = 0
+tracks/107/loop_wrap = true
+tracks/107/keys = {
+"times": PackedFloat32Array(0, 2.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/108/type = "value"
+tracks/108/imported = false
+tracks/108/enabled = true
+tracks/108/path = NodePath("Skeleton2D/root/xx6/texiaoA12/texiaoA12_d0:modulate")
+tracks/108/interp = 1
+tracks/108/loop_wrap = true
+tracks/108/keys = {
+"times": PackedFloat32Array(0, 2.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 1)]
+}
+tracks/109/type = "value"
+tracks/109/imported = false
+tracks/109/enabled = true
+tracks/109/path = NodePath("Skeleton2D/root/xx7/texiaoA13/texiaoA13_d0:visible")
+tracks/109/interp = 0
+tracks/109/loop_wrap = true
+tracks/109/keys = {
+"times": PackedFloat32Array(0, 2.2666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/110/type = "value"
+tracks/110/imported = false
+tracks/110/enabled = true
+tracks/110/path = NodePath("Skeleton2D/root/xx7/texiaoA14/texiaoA14_d0:visible")
+tracks/110/interp = 0
+tracks/110/loop_wrap = true
+tracks/110/keys = {
+"times": PackedFloat32Array(0, 2.2666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/111/type = "value"
+tracks/111/imported = false
+tracks/111/enabled = true
+tracks/111/path = NodePath("Skeleton2D/root/xx7/texiaoA14/texiaoA14_d0:modulate")
+tracks/111/interp = 1
+tracks/111/loop_wrap = true
+tracks/111/keys = {
+"times": PackedFloat32Array(0, 2.2666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 1)]
+}
+tracks/112/type = "value"
+tracks/112/imported = false
+tracks/112/enabled = true
+tracks/112/path = NodePath("Skeleton2D/root/xx8/texiaoA15/texiaoA15_d0:visible")
+tracks/112/interp = 0
+tracks/112/loop_wrap = true
+tracks/112/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/113/type = "value"
+tracks/113/imported = false
+tracks/113/enabled = true
+tracks/113/path = NodePath("Skeleton2D/root/xx8/texiaoA16/texiaoA16_d0:visible")
+tracks/113/interp = 0
+tracks/113/loop_wrap = true
+tracks/113/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/114/type = "value"
+tracks/114/imported = false
+tracks/114/enabled = true
+tracks/114/path = NodePath("Skeleton2D/root/xx8/texiaoA16/texiaoA16_d0:modulate")
+tracks/114/interp = 1
+tracks/114/loop_wrap = true
+tracks/114/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.54), Color(1, 1, 1, 1)]
+}
+tracks/115/type = "value"
+tracks/115/imported = false
+tracks/115/enabled = true
+tracks/115/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d0:visible")
+tracks/115/interp = 0
+tracks/115/loop_wrap = true
+tracks/115/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/116/type = "value"
+tracks/116/imported = false
+tracks/116/enabled = true
+tracks/116/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d1:visible")
+tracks/116/interp = 0
+tracks/116/loop_wrap = true
+tracks/116/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/117/type = "value"
+tracks/117/imported = false
+tracks/117/enabled = true
+tracks/117/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d2:visible")
+tracks/117/interp = 0
+tracks/117/loop_wrap = true
+tracks/117/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/118/type = "value"
+tracks/118/imported = false
+tracks/118/enabled = true
+tracks/118/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d3:visible")
+tracks/118/interp = 0
+tracks/118/loop_wrap = true
+tracks/118/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/119/type = "value"
+tracks/119/imported = false
+tracks/119/enabled = true
+tracks/119/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d4:visible")
+tracks/119/interp = 0
+tracks/119/loop_wrap = true
+tracks/119/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/120/type = "value"
+tracks/120/imported = false
+tracks/120/enabled = true
+tracks/120/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d5:visible")
+tracks/120/interp = 0
+tracks/120/loop_wrap = true
+tracks/120/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/121/type = "value"
+tracks/121/imported = false
+tracks/121/enabled = true
+tracks/121/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d6:visible")
+tracks/121/interp = 0
+tracks/121/loop_wrap = true
+tracks/121/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/122/type = "value"
+tracks/122/imported = false
+tracks/122/enabled = true
+tracks/122/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d7:visible")
+tracks/122/interp = 0
+tracks/122/loop_wrap = true
+tracks/122/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/123/type = "value"
+tracks/123/imported = false
+tracks/123/enabled = true
+tracks/123/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d8:visible")
+tracks/123/interp = 0
+tracks/123/loop_wrap = true
+tracks/123/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/124/type = "value"
+tracks/124/imported = false
+tracks/124/enabled = true
+tracks/124/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d9:visible")
+tracks/124/interp = 0
+tracks/124/loop_wrap = true
+tracks/124/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/125/type = "value"
+tracks/125/imported = false
+tracks/125/enabled = true
+tracks/125/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d10:visible")
+tracks/125/interp = 0
+tracks/125/loop_wrap = true
+tracks/125/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/126/type = "value"
+tracks/126/imported = false
+tracks/126/enabled = true
+tracks/126/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d11:visible")
+tracks/126/interp = 0
+tracks/126/loop_wrap = true
+tracks/126/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/127/type = "value"
+tracks/127/imported = false
+tracks/127/enabled = true
+tracks/127/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d12:visible")
+tracks/127/interp = 0
+tracks/127/loop_wrap = true
+tracks/127/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/128/type = "value"
+tracks/128/imported = false
+tracks/128/enabled = true
+tracks/128/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d13:visible")
+tracks/128/interp = 0
+tracks/128/loop_wrap = true
+tracks/128/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/129/type = "value"
+tracks/129/imported = false
+tracks/129/enabled = true
+tracks/129/path = NodePath("Skeleton2D/root/xzgy_00000/xzgy_00000_d14:visible")
+tracks/129/interp = 0
+tracks/129/loop_wrap = true
+tracks/129/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.93333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/130/type = "value"
+tracks/130/imported = false
+tracks/130/enabled = true
+tracks/130/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d0:visible")
+tracks/130/interp = 0
+tracks/130/loop_wrap = true
+tracks/130/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/131/type = "value"
+tracks/131/imported = false
+tracks/131/enabled = true
+tracks/131/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d1:visible")
+tracks/131/interp = 0
+tracks/131/loop_wrap = true
+tracks/131/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/132/type = "value"
+tracks/132/imported = false
+tracks/132/enabled = true
+tracks/132/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d2:visible")
+tracks/132/interp = 0
+tracks/132/loop_wrap = true
+tracks/132/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/133/type = "value"
+tracks/133/imported = false
+tracks/133/enabled = true
+tracks/133/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d3:visible")
+tracks/133/interp = 0
+tracks/133/loop_wrap = true
+tracks/133/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/134/type = "value"
+tracks/134/imported = false
+tracks/134/enabled = true
+tracks/134/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d4:visible")
+tracks/134/interp = 0
+tracks/134/loop_wrap = true
+tracks/134/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/135/type = "value"
+tracks/135/imported = false
+tracks/135/enabled = true
+tracks/135/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d5:visible")
+tracks/135/interp = 0
+tracks/135/loop_wrap = true
+tracks/135/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/136/type = "value"
+tracks/136/imported = false
+tracks/136/enabled = true
+tracks/136/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d6:visible")
+tracks/136/interp = 0
+tracks/136/loop_wrap = true
+tracks/136/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/137/type = "value"
+tracks/137/imported = false
+tracks/137/enabled = true
+tracks/137/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d7:visible")
+tracks/137/interp = 0
+tracks/137/loop_wrap = true
+tracks/137/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/138/type = "value"
+tracks/138/imported = false
+tracks/138/enabled = true
+tracks/138/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d8:visible")
+tracks/138/interp = 0
+tracks/138/loop_wrap = true
+tracks/138/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/139/type = "value"
+tracks/139/imported = false
+tracks/139/enabled = true
+tracks/139/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d9:visible")
+tracks/139/interp = 0
+tracks/139/loop_wrap = true
+tracks/139/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/140/type = "value"
+tracks/140/imported = false
+tracks/140/enabled = true
+tracks/140/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d10:visible")
+tracks/140/interp = 0
+tracks/140/loop_wrap = true
+tracks/140/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/141/type = "value"
+tracks/141/imported = false
+tracks/141/enabled = true
+tracks/141/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d11:visible")
+tracks/141/interp = 0
+tracks/141/loop_wrap = true
+tracks/141/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/142/type = "value"
+tracks/142/imported = false
+tracks/142/enabled = true
+tracks/142/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d12:visible")
+tracks/142/interp = 0
+tracks/142/loop_wrap = true
+tracks/142/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/143/type = "value"
+tracks/143/imported = false
+tracks/143/enabled = true
+tracks/143/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d13:visible")
+tracks/143/interp = 0
+tracks/143/loop_wrap = true
+tracks/143/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/144/type = "value"
+tracks/144/imported = false
+tracks/144/enabled = true
+tracks/144/path = NodePath("Skeleton2D/root/ybg_00000/ybg_00000_d14:visible")
+tracks/144/interp = 0
+tracks/144/loop_wrap = true
+tracks/144/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.36666667, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.7, 0.76666665, 0.8333333, 0.9, 0.96666664, 1.0333333, 1.1, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/145/type = "value"
+tracks/145/imported = false
+tracks/145/enabled = true
+tracks/145/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d0:visible")
+tracks/145/interp = 0
+tracks/145/loop_wrap = true
+tracks/145/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/146/type = "value"
+tracks/146/imported = false
+tracks/146/enabled = true
+tracks/146/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d1:visible")
+tracks/146/interp = 0
+tracks/146/loop_wrap = true
+tracks/146/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/147/type = "value"
+tracks/147/imported = false
+tracks/147/enabled = true
+tracks/147/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d2:visible")
+tracks/147/interp = 0
+tracks/147/loop_wrap = true
+tracks/147/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/148/type = "value"
+tracks/148/imported = false
+tracks/148/enabled = true
+tracks/148/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d3:visible")
+tracks/148/interp = 0
+tracks/148/loop_wrap = true
+tracks/148/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/149/type = "value"
+tracks/149/imported = false
+tracks/149/enabled = true
+tracks/149/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d4:visible")
+tracks/149/interp = 0
+tracks/149/loop_wrap = true
+tracks/149/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/150/type = "value"
+tracks/150/imported = false
+tracks/150/enabled = true
+tracks/150/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d5:visible")
+tracks/150/interp = 0
+tracks/150/loop_wrap = true
+tracks/150/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/151/type = "value"
+tracks/151/imported = false
+tracks/151/enabled = true
+tracks/151/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d6:visible")
+tracks/151/interp = 0
+tracks/151/loop_wrap = true
+tracks/151/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/152/type = "value"
+tracks/152/imported = false
+tracks/152/enabled = true
+tracks/152/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d7:visible")
+tracks/152/interp = 0
+tracks/152/loop_wrap = true
+tracks/152/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/153/type = "value"
+tracks/153/imported = false
+tracks/153/enabled = true
+tracks/153/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d8:visible")
+tracks/153/interp = 0
+tracks/153/loop_wrap = true
+tracks/153/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/154/type = "value"
+tracks/154/imported = false
+tracks/154/enabled = true
+tracks/154/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d9:visible")
+tracks/154/interp = 0
+tracks/154/loop_wrap = true
+tracks/154/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/155/type = "value"
+tracks/155/imported = false
+tracks/155/enabled = true
+tracks/155/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d10:visible")
+tracks/155/interp = 0
+tracks/155/loop_wrap = true
+tracks/155/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/156/type = "value"
+tracks/156/imported = false
+tracks/156/enabled = true
+tracks/156/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d11:visible")
+tracks/156/interp = 0
+tracks/156/loop_wrap = true
+tracks/156/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/157/type = "value"
+tracks/157/imported = false
+tracks/157/enabled = true
+tracks/157/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d12:visible")
+tracks/157/interp = 0
+tracks/157/loop_wrap = true
+tracks/157/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/158/type = "value"
+tracks/158/imported = false
+tracks/158/enabled = true
+tracks/158/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d13:visible")
+tracks/158/interp = 0
+tracks/158/loop_wrap = true
+tracks/158/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/159/type = "value"
+tracks/159/imported = false
+tracks/159/enabled = true
+tracks/159/path = NodePath("Skeleton2D/root/ybg_0/ybg_0_d14:visible")
+tracks/159/interp = 0
+tracks/159/loop_wrap = true
+tracks/159/keys = {
+"times": PackedFloat32Array(0, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.5, 2.5666666, 2.6333334, 2.7, 2.7666667, 2.8333333, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t7kla"]
+_data = {
+&"animation": SubResource("Animation_3ts7c")
+}
+
+[node name="AvatarRoot" type="Node2D" unique_id=915407829]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=549566640]
+
+[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=978719796]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="bone" type="Bone2D" parent="Skeleton2D/root" unique_id=1949144091]
+position = Vector2(-23.57, -30.36)
+rest = Transform2D(1, 0, 0, 1, -23.57, -30.36)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_bzhbs1" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1783398469]
+position = Vector2(15.38, -62.68)
+rest = Transform2D(1, 0, 0, 1, 15.38, -62.68)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_bzhbs1_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_bzhbs1" unique_id=240480504]
+position = Vector2(-1.44, 28.43)
+texture = SubResource("AtlasTexture_xqais")
+
+[node name="zhizun_bzrx1" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1139023269]
+position = Vector2(104.03, 74.23)
+rest = Transform2D(1, 0, 0, 1, 104.03, 74.23)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_bzrx1_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_bzrx1" unique_id=444577759]
+position = Vector2(-0.59, 6.06)
+texture = SubResource("AtlasTexture_sd7lv")
+
+[node name="zhizun_bzrx2" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1593632110]
+position = Vector2(122.89, 54.32)
+rest = Transform2D(1, 0, 0, 1, 122.89, 54.32)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_bzrx2_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_bzrx2" unique_id=2146915170]
+position = Vector2(-6.46, 11.97)
+texture = SubResource("AtlasTexture_yw61q")
+
+[node name="zhizun_bzrx3" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=479617455]
+position = Vector2(4.61, -40.12)
+rest = Transform2D(1, 0, 0, 1, 4.61, -40.12)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_bzrx3_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_bzrx3" unique_id=1190807517]
+position = Vector2(1.82, 21.41)
+texture = SubResource("AtlasTexture_nf0gv")
+
+[node name="zhizun_jb1" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=651134639]
+position = Vector2(70.39, -10.82)
+rest = Transform2D(1, 0, 0, 1, 70.39, -10.82)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_jb1_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_jb1" unique_id=177130549]
+position = Vector2(-8.46, -1.89)
+texture = SubResource("AtlasTexture_xydq0")
+
+[node name="zhizun_jb2" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1227269622]
+position = Vector2(106.27, -48.93)
+rest = Transform2D(1, 0, 0, 1, 106.27, -48.93)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_jb2_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_jb2" unique_id=542991634]
+position = Vector2(-14.84, 12.67)
+texture = SubResource("AtlasTexture_1mpws")
+
+[node name="zhizun_jb3" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=26932489]
+position = Vector2(-15.72, -60.89)
+rest = Transform2D(1, 0, 0, 1, -15.72, -60.89)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_jb3_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_jb3" unique_id=2055357587]
+position = Vector2(9.65, 19.63)
+texture = SubResource("AtlasTexture_4h36h")
+
+[node name="zhizun_jyb1" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1794803809]
+position = Vector2(-83.04, 128.2)
+rest = Transform2D(1, 0, 0, 1, -83.04, 128.2)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_jyb1_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_jyb1" unique_id=190431139]
+position = Vector2(5.47, -23.42)
+texture = SubResource("AtlasTexture_045ua")
+
+[node name="zhizun_jyb2" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1323322570]
+position = Vector2(-55.27, 126.63)
+rest = Transform2D(1, 0, 0, 1, -55.27, 126.63)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_jyb2_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_jyb2" unique_id=2046553216]
+position = Vector2(-3.8, -30.84)
+texture = SubResource("AtlasTexture_d1hp0")
+
+[node name="zhizun_jyb3" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=686381179]
+position = Vector2(-59.37, -49.69)
+rest = Transform2D(1, 0, 0, 1, -59.37, -49.69)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_jyb3_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_jyb3" unique_id=1743847908]
+position = Vector2(3.31, 17.98)
+texture = SubResource("AtlasTexture_vuw3b")
+
+[node name="zhizun_lbs" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=439630340]
+position = Vector2(35.71, -69.3)
+rest = Transform2D(1, 0, 0, 1, 35.71, -69.3)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_lbs_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_lbs" unique_id=262879544]
+position = Vector2(-2.28, 20.2)
+texture = SubResource("AtlasTexture_u2q4a")
+
+[node name="zhizun_rx4" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=406003773]
+position = Vector2(72.19, -65.67)
+rest = Transform2D(1, 0, 0, 1, 72.19, -65.67)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_rx4_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_rx4" unique_id=1761130287]
+position = Vector2(-7.75, 31.42)
+texture = SubResource("AtlasTexture_gefu3")
+
+[node name="zhizun_zb1" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1560669706]
+position = Vector2(-6.19, 21.66)
+rest = Transform2D(1, 0, 0, 1, -6.19, 21.66)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_zb1_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_zb1" unique_id=1563117036]
+position = Vector2(17.62, -31.31)
+texture = SubResource("AtlasTexture_e23p4")
+
+[node name="zhizun_zb2" type="Bone2D" parent="Skeleton2D/root/bone" unique_id=1495198849]
+position = Vector2(0.85, -19.54)
+rest = Transform2D(1, 0, 0, 1, 0.85, -19.54)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_zb4" type="Bone2D" parent="Skeleton2D/root/bone/zhizun_zb2" unique_id=2037896899]
+position = Vector2(-9.54, 0.83)
+rotation = 1.5896459
+rest = Transform2D(-0.01884842, 0.9998224, -0.9998224, -0.01884842, -9.54, 0.83)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_zb3" type="Bone2D" parent="Skeleton2D/root/bone/zhizun_zb2/zhizun_zb4" unique_id=716559893]
+position = Vector2(17.05, -0.65)
+rotation = -0.06719518
+rest = Transform2D(0.99774325, -0.067144625, 0.067144625, 0.99774325, 17.05, -0.65)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_zb6" type="Bone2D" parent="Skeleton2D/root/bone/zhizun_zb2/zhizun_zb4/zhizun_zb3" unique_id=936051080]
+position = Vector2(18.41, -0.42)
+rotation = 0.002268928
+rest = Transform2D(0.99999744, 0.0022689262, -0.0022689262, 0.99999744, 18.41, -0.42)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_zb5" type="Bone2D" parent="Skeleton2D/root/bone/zhizun_zb2/zhizun_zb4/zhizun_zb3/zhizun_zb6" unique_id=644454556]
+position = Vector2(22.33, 0.05)
+rotation = -0.007853982
+rest = Transform2D(0.9999692, -0.007853901, 0.007853901, 0.9999692, 22.33, 0.05)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_zb8" type="Bone2D" parent="Skeleton2D/root/bone/zhizun_zb2/zhizun_zb4/zhizun_zb3/zhizun_zb6/zhizun_zb5" unique_id=709605665]
+position = Vector2(24.69, -0.96)
+rotation = -0.063180916
+rest = Transform2D(0.99800473, -0.06313889, 0.06313889, 0.99800473, 24.69, -0.96)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_zb2_d0" type="Sprite2D" parent="Skeleton2D/root/bone/zhizun_zb2/zhizun_zb4/zhizun_zb3/zhizun_zb6/zhizun_zb5/zhizun_zb8" unique_id=402846626]
+texture = SubResource("AtlasTexture_cwv8f")
+
+[node name="bone2" type="Bone2D" parent="Skeleton2D/root" unique_id=1801496239]
+position = Vector2(-0.65, -190.11)
+rest = Transform2D(1, 0, 0, 1, -0.65, -190.11)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizunXZGG" type="Bone2D" parent="Skeleton2D/root/bone2" unique_id=1723637773]
+position = Vector2(0.93, 76.78)
+rest = Transform2D(1, 0, 0, 1, 0.93, 76.78)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizunXZGG_d0" type="Sprite2D" parent="Skeleton2D/root/bone2/zhizunXZGG" unique_id=1566630786]
+texture = SubResource("AtlasTexture_qs7kp")
+
+[node name="jybg_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=1616723994]
+position = Vector2(-75.77, -55.84)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, -75.77, -55.84)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="jybg_00000_d0" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=643925546]
+material = SubResource("CanvasItemMaterial_o27oo")
+texture = SubResource("AtlasTexture_v7ksk")
+
+[node name="jybg_00000_d1" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=1279596470]
+visible = false
+material = SubResource("CanvasItemMaterial_xt40b")
+texture = SubResource("AtlasTexture_6oy4x")
+
+[node name="jybg_00000_d2" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=1497485767]
+visible = false
+material = SubResource("CanvasItemMaterial_4g6xl")
+texture = SubResource("AtlasTexture_wfkwi")
+
+[node name="jybg_00000_d3" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=2104090009]
+visible = false
+material = SubResource("CanvasItemMaterial_gx2od")
+texture = SubResource("AtlasTexture_qq0mb")
+
+[node name="jybg_00000_d4" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=549766271]
+visible = false
+material = SubResource("CanvasItemMaterial_f6wm3")
+texture = SubResource("AtlasTexture_3flcn")
+
+[node name="jybg_00000_d5" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=672062640]
+visible = false
+material = SubResource("CanvasItemMaterial_fels8")
+texture = SubResource("AtlasTexture_fmh1e")
+
+[node name="jybg_00000_d6" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=585458190]
+visible = false
+material = SubResource("CanvasItemMaterial_dxr3n")
+texture = SubResource("AtlasTexture_fm6qq")
+
+[node name="jybg_00000_d7" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=1772434602]
+visible = false
+material = SubResource("CanvasItemMaterial_i4jry")
+texture = SubResource("AtlasTexture_cp57m")
+
+[node name="jybg_00000_d8" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=321924125]
+visible = false
+material = SubResource("CanvasItemMaterial_276s7")
+texture = SubResource("AtlasTexture_c2mj3")
+
+[node name="jybg_00000_d9" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=1718909078]
+visible = false
+material = SubResource("CanvasItemMaterial_m3dya")
+texture = SubResource("AtlasTexture_h3y7e")
+
+[node name="jybg_00000_d10" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=1473296567]
+visible = false
+material = SubResource("CanvasItemMaterial_k2mbg")
+texture = SubResource("AtlasTexture_k0vdr")
+
+[node name="jybg_00000_d11" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=2065559912]
+visible = false
+material = SubResource("CanvasItemMaterial_hyat2")
+texture = SubResource("AtlasTexture_6tt34")
+
+[node name="jybg_00000_d12" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=1175739289]
+visible = false
+material = SubResource("CanvasItemMaterial_v6alt")
+texture = SubResource("AtlasTexture_4obfw")
+
+[node name="jybg_00000_d13" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=922512256]
+visible = false
+material = SubResource("CanvasItemMaterial_1v2ga")
+texture = SubResource("AtlasTexture_0upx5")
+
+[node name="jybg_00000_d14" type="Sprite2D" parent="Skeleton2D/root/jybg_00000" unique_id=1300688855]
+visible = false
+material = SubResource("CanvasItemMaterial_r7yq8")
+texture = SubResource("AtlasTexture_73f4q")
+
+[node name="sge_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=1341403144]
+position = Vector2(31.86, 63.81)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, 31.86, 63.81)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="sge_00000_d0" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=1698533853]
+material = SubResource("CanvasItemMaterial_k0x8n")
+texture = SubResource("AtlasTexture_ij3oc")
+
+[node name="sge_00000_d1" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=1047435713]
+visible = false
+material = SubResource("CanvasItemMaterial_luosw")
+texture = SubResource("AtlasTexture_eqfiu")
+
+[node name="sge_00000_d2" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=38614812]
+visible = false
+material = SubResource("CanvasItemMaterial_ntosd")
+texture = SubResource("AtlasTexture_30jtx")
+
+[node name="sge_00000_d3" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=1317731313]
+visible = false
+material = SubResource("CanvasItemMaterial_lc1e0")
+texture = SubResource("AtlasTexture_3s2cv")
+
+[node name="sge_00000_d4" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=1797589413]
+visible = false
+material = SubResource("CanvasItemMaterial_d3hu7")
+texture = SubResource("AtlasTexture_xjlyy")
+
+[node name="sge_00000_d5" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=1473338824]
+visible = false
+material = SubResource("CanvasItemMaterial_sgogr")
+texture = SubResource("AtlasTexture_javby")
+
+[node name="sge_00000_d6" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=764690668]
+visible = false
+material = SubResource("CanvasItemMaterial_2te8o")
+texture = SubResource("AtlasTexture_54awa")
+
+[node name="sge_00000_d7" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=766854716]
+visible = false
+material = SubResource("CanvasItemMaterial_0cl7w")
+texture = SubResource("AtlasTexture_ykqyd")
+
+[node name="sge_00000_d8" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=811628128]
+visible = false
+material = SubResource("CanvasItemMaterial_1x1jj")
+texture = SubResource("AtlasTexture_ctvlv")
+
+[node name="sge_00000_d9" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=2066028868]
+visible = false
+material = SubResource("CanvasItemMaterial_lgmoc")
+texture = SubResource("AtlasTexture_w428s")
+
+[node name="sge_00000_d10" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=818256562]
+visible = false
+material = SubResource("CanvasItemMaterial_h37gc")
+texture = SubResource("AtlasTexture_nwutt")
+
+[node name="sge_00000_d11" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=2020628123]
+visible = false
+material = SubResource("CanvasItemMaterial_sxatg")
+texture = SubResource("AtlasTexture_cgpu1")
+
+[node name="sge_00000_d12" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=753291239]
+visible = false
+material = SubResource("CanvasItemMaterial_hbim7")
+texture = SubResource("AtlasTexture_fo5a7")
+
+[node name="sge_00000_d13" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=2044536209]
+visible = false
+material = SubResource("CanvasItemMaterial_7hb3h")
+texture = SubResource("AtlasTexture_2btca")
+
+[node name="sge_00000_d14" type="Sprite2D" parent="Skeleton2D/root/sge_00000" unique_id=2082032520]
+visible = false
+material = SubResource("CanvasItemMaterial_ilc2o")
+texture = SubResource("AtlasTexture_8biyq")
+
+[node name="sgxzgg_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=225985625]
+position = Vector2(-1.79, -125.7)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, -1.79, -125.7)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="sgxzgg_00000_d0" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=1848385342]
+material = SubResource("CanvasItemMaterial_af8s7")
+texture = SubResource("AtlasTexture_ae0ip")
+
+[node name="sgxzgg_00000_d1" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=1738888]
+visible = false
+material = SubResource("CanvasItemMaterial_4fg25")
+texture = SubResource("AtlasTexture_s84eh")
+
+[node name="sgxzgg_00000_d2" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=702291581]
+visible = false
+material = SubResource("CanvasItemMaterial_wo664")
+texture = SubResource("AtlasTexture_55pwv")
+
+[node name="sgxzgg_00000_d3" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=1360653497]
+visible = false
+material = SubResource("CanvasItemMaterial_jk5ma")
+texture = SubResource("AtlasTexture_vydyi")
+
+[node name="sgxzgg_00000_d4" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=2027958097]
+visible = false
+material = SubResource("CanvasItemMaterial_55xsu")
+texture = SubResource("AtlasTexture_nxa2w")
+
+[node name="sgxzgg_00000_d5" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=1281627572]
+visible = false
+material = SubResource("CanvasItemMaterial_whn0s")
+texture = SubResource("AtlasTexture_dmxwh")
+
+[node name="sgxzgg_00000_d6" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=838059520]
+visible = false
+material = SubResource("CanvasItemMaterial_accmx")
+texture = SubResource("AtlasTexture_wu4wv")
+
+[node name="sgxzgg_00000_d7" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=191694268]
+visible = false
+material = SubResource("CanvasItemMaterial_mfdxl")
+texture = SubResource("AtlasTexture_8y7fg")
+
+[node name="sgxzgg_00000_d8" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=529842396]
+visible = false
+material = SubResource("CanvasItemMaterial_3iyyd")
+texture = SubResource("AtlasTexture_1h2tx")
+
+[node name="sgxzgg_00000_d9" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=773516068]
+visible = false
+material = SubResource("CanvasItemMaterial_n4g72")
+texture = SubResource("AtlasTexture_wmxyq")
+
+[node name="sgxzgg_00000_d10" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=222269206]
+visible = false
+material = SubResource("CanvasItemMaterial_k50sd")
+texture = SubResource("AtlasTexture_8kbs8")
+
+[node name="sgxzgg_00000_d11" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=174418878]
+visible = false
+material = SubResource("CanvasItemMaterial_lpima")
+texture = SubResource("AtlasTexture_5ibmp")
+
+[node name="sgxzgg_00000_d12" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=2046498746]
+visible = false
+material = SubResource("CanvasItemMaterial_x2asc")
+texture = SubResource("AtlasTexture_h6i6d")
+
+[node name="sgxzgg_00000_d13" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=284996628]
+visible = false
+material = SubResource("CanvasItemMaterial_rr0qi")
+texture = SubResource("AtlasTexture_iaks2")
+
+[node name="sgxzgg_00000_d14" type="Sprite2D" parent="Skeleton2D/root/sgxzgg_00000" unique_id=481935233]
+visible = false
+material = SubResource("CanvasItemMaterial_thnt2")
+texture = SubResource("AtlasTexture_2r16o")
+
+[node name="sgxzs_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=1250108207]
+position = Vector2(-9.8, -19.36)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, -9.8, -19.36)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="sgxzs_00000_d0" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1681228183]
+material = SubResource("CanvasItemMaterial_tuob6")
+texture = SubResource("AtlasTexture_s68e8")
+
+[node name="sgxzs_00000_d1" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1495574910]
+visible = false
+material = SubResource("CanvasItemMaterial_o5udk")
+texture = SubResource("AtlasTexture_100jk")
+
+[node name="sgxzs_00000_d2" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1626871393]
+visible = false
+material = SubResource("CanvasItemMaterial_aefhk")
+texture = SubResource("AtlasTexture_583im")
+
+[node name="sgxzs_00000_d3" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=540399800]
+visible = false
+material = SubResource("CanvasItemMaterial_3655c")
+texture = SubResource("AtlasTexture_kykr2")
+
+[node name="sgxzs_00000_d4" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1983275737]
+visible = false
+material = SubResource("CanvasItemMaterial_4p0hy")
+texture = SubResource("AtlasTexture_jbmq1")
+
+[node name="sgxzs_00000_d5" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1262069815]
+visible = false
+material = SubResource("CanvasItemMaterial_ixufd")
+texture = SubResource("AtlasTexture_o5rbp")
+
+[node name="sgxzs_00000_d6" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1094365546]
+visible = false
+material = SubResource("CanvasItemMaterial_rsabd")
+texture = SubResource("AtlasTexture_nasek")
+
+[node name="sgxzs_00000_d7" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=493868732]
+visible = false
+material = SubResource("CanvasItemMaterial_lpdkg")
+texture = SubResource("AtlasTexture_pvg64")
+
+[node name="sgxzs_00000_d8" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1580674017]
+visible = false
+material = SubResource("CanvasItemMaterial_jm3fj")
+texture = SubResource("AtlasTexture_mdv6h")
+
+[node name="sgxzs_00000_d9" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=377215936]
+visible = false
+material = SubResource("CanvasItemMaterial_lxxqc")
+texture = SubResource("AtlasTexture_i5yaw")
+
+[node name="sgxzs_00000_d10" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=195653079]
+visible = false
+material = SubResource("CanvasItemMaterial_pagvs")
+texture = SubResource("AtlasTexture_4ewfn")
+
+[node name="sgxzs_00000_d11" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=959156164]
+visible = false
+material = SubResource("CanvasItemMaterial_jbgav")
+texture = SubResource("AtlasTexture_hknv8")
+
+[node name="sgxzs_00000_d12" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=828684874]
+visible = false
+material = SubResource("CanvasItemMaterial_4g5nd")
+texture = SubResource("AtlasTexture_4ksdr")
+
+[node name="sgxzs_00000_d13" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=71362199]
+visible = false
+material = SubResource("CanvasItemMaterial_db4x1")
+texture = SubResource("AtlasTexture_8rvws")
+
+[node name="sgxzs_00000_d14" type="Sprite2D" parent="Skeleton2D/root/sgxzs_00000" unique_id=1299342835]
+visible = false
+material = SubResource("CanvasItemMaterial_smmlh")
+texture = SubResource("AtlasTexture_ve8qe")
+
+[node name="xx" type="Bone2D" parent="Skeleton2D/root" unique_id=583537729]
+position = Vector2(-105.62, -67.9)
+rest = Transform2D(1, 0, 0, 1, -105.62, -67.9)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA" type="Bone2D" parent="Skeleton2D/root/xx" unique_id=696419076]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA_d0" type="Sprite2D" parent="Skeleton2D/root/xx/texiaoA" unique_id=92334696]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_2brvu")
+
+[node name="texiaoA2" type="Bone2D" parent="Skeleton2D/root/xx" unique_id=1477446852]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA2_d0" type="Sprite2D" parent="Skeleton2D/root/xx/texiaoA2" unique_id=491576227]
+material = SubResource("CanvasItemMaterial_61unq")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_hqr8k")
+
+[node name="xx8" type="Bone2D" parent="Skeleton2D/root" unique_id=1654078823]
+position = Vector2(-80.72, 69.08)
+rest = Transform2D(1, 0, 0, 1, -80.72, 69.08)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA15" type="Bone2D" parent="Skeleton2D/root/xx8" unique_id=1062051576]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA15_d0" type="Sprite2D" parent="Skeleton2D/root/xx8/texiaoA15" unique_id=984977189]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_uaue4")
+
+[node name="texiaoA16" type="Bone2D" parent="Skeleton2D/root/xx8" unique_id=1915086437]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA16_d0" type="Sprite2D" parent="Skeleton2D/root/xx8/texiaoA16" unique_id=367302659]
+material = SubResource("CanvasItemMaterial_mjrj2")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_3gdct")
+
+[node name="ybg_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=1519587883]
+position = Vector2(-100.72, 71.73)
+scale = Vector2(1.598, 1.598)
+rest = Transform2D(1.598, 0, 0, 1.598, -100.72, 71.73)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="ybg_00000_d0" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=642956790]
+material = SubResource("CanvasItemMaterial_53flv")
+texture = SubResource("AtlasTexture_31lvt")
+
+[node name="ybg_00000_d1" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=105031483]
+visible = false
+material = SubResource("CanvasItemMaterial_v1212")
+texture = SubResource("AtlasTexture_co4by")
+
+[node name="ybg_00000_d2" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=1629177491]
+visible = false
+material = SubResource("CanvasItemMaterial_htipk")
+texture = SubResource("AtlasTexture_5ir6f")
+
+[node name="ybg_00000_d3" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=62823839]
+visible = false
+material = SubResource("CanvasItemMaterial_wf61n")
+texture = SubResource("AtlasTexture_vw1an")
+
+[node name="ybg_00000_d4" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=1079242167]
+visible = false
+material = SubResource("CanvasItemMaterial_gmeuh")
+texture = SubResource("AtlasTexture_si1xc")
+
+[node name="ybg_00000_d5" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=831533032]
+visible = false
+material = SubResource("CanvasItemMaterial_emv15")
+texture = SubResource("AtlasTexture_2ye7a")
+
+[node name="ybg_00000_d6" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=1543503597]
+visible = false
+material = SubResource("CanvasItemMaterial_odeku")
+texture = SubResource("AtlasTexture_p2smq")
+
+[node name="ybg_00000_d7" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=223213376]
+visible = false
+material = SubResource("CanvasItemMaterial_6f07a")
+texture = SubResource("AtlasTexture_p7skn")
+
+[node name="ybg_00000_d8" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=57654174]
+visible = false
+material = SubResource("CanvasItemMaterial_pq15r")
+texture = SubResource("AtlasTexture_4cv4x")
+
+[node name="ybg_00000_d9" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=751216]
+visible = false
+material = SubResource("CanvasItemMaterial_tja3q")
+texture = SubResource("AtlasTexture_1fslg")
+
+[node name="ybg_00000_d10" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=910177185]
+visible = false
+material = SubResource("CanvasItemMaterial_8oor0")
+texture = SubResource("AtlasTexture_0txv1")
+
+[node name="ybg_00000_d11" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=1988503159]
+visible = false
+material = SubResource("CanvasItemMaterial_7oxq3")
+texture = SubResource("AtlasTexture_dlsgh")
+
+[node name="ybg_00000_d12" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=1088212285]
+visible = false
+material = SubResource("CanvasItemMaterial_dh2gf")
+texture = SubResource("AtlasTexture_1mnw7")
+
+[node name="ybg_00000_d13" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=1140969430]
+visible = false
+material = SubResource("CanvasItemMaterial_fwk8o")
+texture = SubResource("AtlasTexture_674a3")
+
+[node name="ybg_00000_d14" type="Sprite2D" parent="Skeleton2D/root/ybg_00000" unique_id=117636216]
+visible = false
+material = SubResource("CanvasItemMaterial_l6vce")
+texture = SubResource("AtlasTexture_j0bwa")
+
+[node name="xx2" type="Bone2D" parent="Skeleton2D/root" unique_id=901151413]
+position = Vector2(41.59, -52.99)
+scale = Vector2(1.3, 1.3)
+rest = Transform2D(1.3, 0, 0, 1.3, 41.59, -52.99)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA3" type="Bone2D" parent="Skeleton2D/root/xx2" unique_id=704040216]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA3_d0" type="Sprite2D" parent="Skeleton2D/root/xx2/texiaoA3" unique_id=1821959163]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_cli3u")
+
+[node name="texiaoA4" type="Bone2D" parent="Skeleton2D/root/xx2" unique_id=1595332511]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA4_d0" type="Sprite2D" parent="Skeleton2D/root/xx2/texiaoA4" unique_id=1151540552]
+material = SubResource("CanvasItemMaterial_1yuhl")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_wuoqq")
+
+[node name="ybg_0" type="Bone2D" parent="Skeleton2D/root" unique_id=887174540]
+position = Vector2(-87.75, 61.61)
+scale = Vector2(2.2, 2.2)
+rest = Transform2D(2.2, 0, 0, 2.2, -87.75, 61.61)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="ybg_0_d0" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=1447904773]
+material = SubResource("CanvasItemMaterial_i5tg2")
+texture = SubResource("AtlasTexture_xfa5i")
+
+[node name="ybg_0_d1" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=782457847]
+visible = false
+material = SubResource("CanvasItemMaterial_uq1or")
+texture = SubResource("AtlasTexture_ximsi")
+
+[node name="ybg_0_d2" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=1807709413]
+visible = false
+material = SubResource("CanvasItemMaterial_5spyd")
+texture = SubResource("AtlasTexture_g6kbm")
+
+[node name="ybg_0_d3" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=1482097359]
+visible = false
+material = SubResource("CanvasItemMaterial_f081r")
+texture = SubResource("AtlasTexture_shcqs")
+
+[node name="ybg_0_d4" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=173244107]
+visible = false
+material = SubResource("CanvasItemMaterial_2uyym")
+texture = SubResource("AtlasTexture_cwu2u")
+
+[node name="ybg_0_d5" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=521417821]
+visible = false
+material = SubResource("CanvasItemMaterial_ckr3c")
+texture = SubResource("AtlasTexture_vap26")
+
+[node name="ybg_0_d6" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=249344299]
+visible = false
+material = SubResource("CanvasItemMaterial_qxrde")
+texture = SubResource("AtlasTexture_nb2c1")
+
+[node name="ybg_0_d7" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=1077205992]
+visible = false
+material = SubResource("CanvasItemMaterial_8np5d")
+texture = SubResource("AtlasTexture_wfyr1")
+
+[node name="ybg_0_d8" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=187108367]
+visible = false
+material = SubResource("CanvasItemMaterial_vb2l7")
+texture = SubResource("AtlasTexture_pgula")
+
+[node name="ybg_0_d9" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=439761598]
+visible = false
+material = SubResource("CanvasItemMaterial_xo0u0")
+texture = SubResource("AtlasTexture_2ax8x")
+
+[node name="ybg_0_d10" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=1961528032]
+visible = false
+material = SubResource("CanvasItemMaterial_a1sq7")
+texture = SubResource("AtlasTexture_s5dyk")
+
+[node name="ybg_0_d11" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=1100997837]
+visible = false
+material = SubResource("CanvasItemMaterial_jowc2")
+texture = SubResource("AtlasTexture_quguy")
+
+[node name="ybg_0_d12" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=1213033174]
+visible = false
+material = SubResource("CanvasItemMaterial_3e4m4")
+texture = SubResource("AtlasTexture_1n0o7")
+
+[node name="ybg_0_d13" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=722516304]
+visible = false
+material = SubResource("CanvasItemMaterial_5mogi")
+texture = SubResource("AtlasTexture_5jr60")
+
+[node name="ybg_0_d14" type="Sprite2D" parent="Skeleton2D/root/ybg_0" unique_id=284951843]
+visible = false
+material = SubResource("CanvasItemMaterial_56dx4")
+texture = SubResource("AtlasTexture_xj6df")
+
+[node name="xx7" type="Bone2D" parent="Skeleton2D/root" unique_id=1382966232]
+position = Vector2(-118.9, 55.99)
+rest = Transform2D(1, 0, 0, 1, -118.9, 55.99)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA13" type="Bone2D" parent="Skeleton2D/root/xx7" unique_id=930247912]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA13_d0" type="Sprite2D" parent="Skeleton2D/root/xx7/texiaoA13" unique_id=1604375031]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_4qspl")
+
+[node name="texiaoA14" type="Bone2D" parent="Skeleton2D/root/xx7" unique_id=389756010]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA14_d0" type="Sprite2D" parent="Skeleton2D/root/xx7/texiaoA14" unique_id=2082113042]
+material = SubResource("CanvasItemMaterial_i761r")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_4s30l")
+
+[node name="xx3" type="Bone2D" parent="Skeleton2D/root" unique_id=538253328]
+position = Vector2(-25.32, -182.74)
+scale = Vector2(1.3, 1.3)
+rest = Transform2D(1.3, 0, 0, 1.3, -25.32, -182.74)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA6" type="Bone2D" parent="Skeleton2D/root/xx3" unique_id=322759019]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA6_d0" type="Sprite2D" parent="Skeleton2D/root/xx3/texiaoA6" unique_id=1645185665]
+material = SubResource("CanvasItemMaterial_yeh5q")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_sydhe")
+
+[node name="texiaoA5" type="Bone2D" parent="Skeleton2D/root/xx3" unique_id=1488854022]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA5_d0" type="Sprite2D" parent="Skeleton2D/root/xx3/texiaoA5" unique_id=556284536]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_ln661")
+
+[node name="xx5" type="Bone2D" parent="Skeleton2D/root" unique_id=895762603]
+position = Vector2(-107.67, 40.15)
+rest = Transform2D(1, 0, 0, 1, -107.67, 40.15)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA9" type="Bone2D" parent="Skeleton2D/root/xx5" unique_id=1462174229]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA9_d0" type="Sprite2D" parent="Skeleton2D/root/xx5/texiaoA9" unique_id=862930376]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_j1ewy")
+
+[node name="texiaoA10" type="Bone2D" parent="Skeleton2D/root/xx5" unique_id=1479154669]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA10_d0" type="Sprite2D" parent="Skeleton2D/root/xx5/texiaoA10" unique_id=892227600]
+material = SubResource("CanvasItemMaterial_ucx34")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_6wk0q")
+
+[node name="zhizun_XZ" type="Bone2D" parent="Skeleton2D/root" unique_id=1448062881]
+position = Vector2(-2.4, 85.75)
+rest = Transform2D(1, 0, 0, 1, -2.4, 85.75)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_XZ_d0" type="Sprite2D" parent="Skeleton2D/root/zhizun_XZ" unique_id=2098466462]
+position = Vector2(-25.74, -86.32)
+texture = SubResource("AtlasTexture_2fws1")
+
+[node name="xx4" type="Bone2D" parent="Skeleton2D/root" unique_id=1641370596]
+position = Vector2(-74.75, -79.22)
+rest = Transform2D(1, 0, 0, 1, -74.75, -79.22)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA8" type="Bone2D" parent="Skeleton2D/root/xx4" unique_id=1713591567]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA8_d0" type="Sprite2D" parent="Skeleton2D/root/xx4/texiaoA8" unique_id=887917233]
+material = SubResource("CanvasItemMaterial_67go1")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_3csdt")
+
+[node name="texiaoA7" type="Bone2D" parent="Skeleton2D/root/xx4" unique_id=1570265061]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA7_d0" type="Sprite2D" parent="Skeleton2D/root/xx4/texiaoA7" unique_id=42464884]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_fi3qw")
+
+[node name="zhizun_TY" type="Bone2D" parent="Skeleton2D/root" unique_id=2006416070]
+position = Vector2(0.28, 110.6)
+rest = Transform2D(1, 0, 0, 1, 0.28, 110.6)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="zhizun_TY_d0" type="Sprite2D" parent="Skeleton2D/root/zhizun_TY" unique_id=1092338980]
+position = Vector2(-16.43, -122.04)
+texture = SubResource("AtlasTexture_ag60t")
+
+[node name="xx6" type="Bone2D" parent="Skeleton2D/root" unique_id=51763723]
+position = Vector2(-71.75, 48.89)
+rest = Transform2D(1, 0, 0, 1, -71.75, 48.89)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA11" type="Bone2D" parent="Skeleton2D/root/xx6" unique_id=542529845]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA11_d0" type="Sprite2D" parent="Skeleton2D/root/xx6/texiaoA11" unique_id=1972629723]
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_v2t8r")
+
+[node name="texiaoA12" type="Bone2D" parent="Skeleton2D/root/xx6" unique_id=299211205]
+position = Vector2(-1.01, 0.41)
+rest = Transform2D(1, 0, 0, 1, -1.01, 0.41)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="texiaoA12_d0" type="Sprite2D" parent="Skeleton2D/root/xx6/texiaoA12" unique_id=721770364]
+material = SubResource("CanvasItemMaterial_gg56s")
+position = Vector2(0.82, -0.77)
+texture = SubResource("AtlasTexture_f453r")
+
+[node name="xzgy_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=2083506392]
+position = Vector2(-10.47, 31.49)
+scale = Vector2(2, 2)
+rest = Transform2D(2, 0, 0, 2, -10.47, 31.49)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="xzgy_00000_d0" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1229914533]
+material = SubResource("CanvasItemMaterial_h05tl")
+texture = SubResource("AtlasTexture_bihpb")
+
+[node name="xzgy_00000_d1" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=407554661]
+visible = false
+material = SubResource("CanvasItemMaterial_jidhu")
+texture = SubResource("AtlasTexture_jwyts")
+
+[node name="xzgy_00000_d2" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1816260043]
+visible = false
+material = SubResource("CanvasItemMaterial_l06hi")
+texture = SubResource("AtlasTexture_8jxr2")
+
+[node name="xzgy_00000_d3" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=192015029]
+visible = false
+material = SubResource("CanvasItemMaterial_h5x46")
+texture = SubResource("AtlasTexture_k7a4i")
+
+[node name="xzgy_00000_d4" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1819551255]
+visible = false
+material = SubResource("CanvasItemMaterial_xjpxc")
+texture = SubResource("AtlasTexture_qfjcu")
+
+[node name="xzgy_00000_d5" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1954509107]
+visible = false
+material = SubResource("CanvasItemMaterial_f283y")
+texture = SubResource("AtlasTexture_vmanx")
+
+[node name="xzgy_00000_d6" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=2041997505]
+visible = false
+material = SubResource("CanvasItemMaterial_rou6m")
+texture = SubResource("AtlasTexture_1us8e")
+
+[node name="xzgy_00000_d7" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1080772736]
+visible = false
+material = SubResource("CanvasItemMaterial_p3udn")
+texture = SubResource("AtlasTexture_2dy57")
+
+[node name="xzgy_00000_d8" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1427322027]
+visible = false
+material = SubResource("CanvasItemMaterial_v86xu")
+texture = SubResource("AtlasTexture_63qah")
+
+[node name="xzgy_00000_d9" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1589768595]
+visible = false
+material = SubResource("CanvasItemMaterial_jfkds")
+texture = SubResource("AtlasTexture_gtotr")
+
+[node name="xzgy_00000_d10" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1965023913]
+visible = false
+material = SubResource("CanvasItemMaterial_iohuo")
+texture = SubResource("AtlasTexture_7n3jp")
+
+[node name="xzgy_00000_d11" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=1851274149]
+visible = false
+material = SubResource("CanvasItemMaterial_nyyb2")
+texture = SubResource("AtlasTexture_448rf")
+
+[node name="xzgy_00000_d12" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=897355585]
+visible = false
+material = SubResource("CanvasItemMaterial_t1rgx")
+texture = SubResource("AtlasTexture_tgea0")
+
+[node name="xzgy_00000_d13" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=659167756]
+visible = false
+material = SubResource("CanvasItemMaterial_mwfgt")
+texture = SubResource("AtlasTexture_x375i")
+
+[node name="xzgy_00000_d14" type="Sprite2D" parent="Skeleton2D/root/xzgy_00000" unique_id=248191181]
+visible = false
+material = SubResource("CanvasItemMaterial_5447i")
+texture = SubResource("AtlasTexture_b4n3q")
+
+[node name="zhizun_xzhmd_d0" type="Sprite2D" parent="Skeleton2D/root" unique_id=1019186915]
+position = Vector2(-10.64, -49.58)
+texture = SubResource("AtlasTexture_75md0")
+
+[node name="zhizun_jyb2ty_d0" type="Sprite2D" parent="Skeleton2D/root" unique_id=1156002854]
+position = Vector2(-78.14, 68.92)
+texture = SubResource("AtlasTexture_5u6ui")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=560920998]
+libraries/ = SubResource("AnimationLibrary_t7kla")

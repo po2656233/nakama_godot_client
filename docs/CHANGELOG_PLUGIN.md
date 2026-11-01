@@ -149,6 +149,22 @@ core/  shared/  lobby/  games/  app/  assets/  addons/  gdprotobuf/  docs/  tool
 - 4 个 `game_meta.tres` 改为 `GameMetadata` 字段（`key→game_id`、`title→display_name`）；
 - `tools/validate_plugins.gd` 校验新字段与人数/能力配置；
 - 新增 `tools/test_navigation.gd`（26 项断言：来源映射、pending 生命周期、进入/退出全链路）。
+## P9 = PROMPT_REFACTOR 阶段 2：DragonBones 原生平替（pilot）
+
+新增：
+
+- `tools/dragonbones_converter.gd`：DragonBones `_ske.json` + `_tex.json` + 图集 -> 原生
+  `Skeleton2D + Bone2D + Sprite2D + AnimationPlayer` 场景；支持骨骼 translate/scale/rotate、
+  插槽 displayFrame/colorFrame(aM)、blendMode=add、zOrder；贝塞尔曲线暂按线性近似；
+- `shared/avatar/native_character_avatar.gd`：`NativeCharacterAvatar` 门面
+  （`play_animation/stop_animation/set_skin/has_animation/animation_names`）；
+- 生成 8 套原生骨骼场景：`sprites/daojishi/daojishi_avatar.tscn` 及
+  `sprites/{dibeichang,jiangbei,puke,baoxiang1-4}/<name>_avatar.tscn`；
+- `shared/ui/countdown_timer.tscn` 由 `DragonBones` 节点改为 `NativeCharacterAvatar`（pilot 平替）；
+- 新增 `tools/test_avatar.gd`（22 项断言：结构/动画/门面 API/场景替换）。
+
+注意：`lobby/gamelist/game_card.tscn` 的 7 个 DragonBones 节点尚未替换，
+`addons/gddragonbones` 暂保留；替换 + 视觉验证后再删除该插件（约 278 MB）。
 ## 验证记录
 
 各阶段门禁结果：

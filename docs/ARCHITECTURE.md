@@ -20,6 +20,7 @@ res://
 ├── shared/                      跨模块共享（无业务语义）
 │   ├── ui/                      通用 UI（设置、排行榜、加载、弹窗、列表、返回按钮…）
 │   │   ├── controls/ loading/ popup/ gridanimation/
+│   ├── avatar/                  原生骨骼动画门面 NativeCharacterAvatar（DragonBones 平替）
 │   ├── utils/                   无状态工具
 │   └── styles/                  主题、样式、字体、Shader
 ├── lobby/                       大厅与社交（脚本与场景同目录）
@@ -158,6 +159,32 @@ GameLauncher.start_game(key, options)
 4. `game_meta.game_id` == 目录名，且 game_id 全局唯一；
 5. `entry.tscn` 必须可加载并实例化。
 
+### 4.2 原生骨骼动画（DragonBones 平替，阶段 2）
+
+`addons/gddragonbones` 是 GDExtension，目标是替换为 Godot 原生 `Skeleton2D + Bone2D + AnimationPlayer`：
+
+- `tools/dragonbones_converter.gd`：解析 DragonBones 的 `_ske.json` / `_tex.json` + 图集 png，
+  生成原生 `.tscn`（骨骼层级、插槽 Sprite、blendMode=add、display/alpha/scale/translate 动画轨道）。
+
+```powershell
+$g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
+& $g --headless --path . --script res://tools/dragonbones_converter.gd -- `
+    --ske=res://sprites/daojishi/daojishitongyong_ske.json `
+    --tex=res://sprites/daojishi/daojishitongyong_tex.json `
+    --out=res://sprites/daojishi/daojishi_avatar.tscn
+```
+
+- `shared/avatar/native_character_avatar.gd`：统一门面（`play_animation/stop_animation/
+  set_skin/has_animation`），由 `avatar_scene` 指向生成的原生场景，自动查找 `AnimationPlayer`。
+
+当前状态：
+
+| 资产 | 原生场景 | 是否已替换使用方 |
+| --- | --- | --- |
+| 倒计时 `daojishi` | `sprites/daojishi/daojishi_avatar.tscn` | ✅ `shared/ui/countdown_timer.tscn` 已改用 `NativeCharacterAvatar` |
+| 游戏卡片 7 套（dibeichang/jiangbei/puke/baoxiang1-4） | `sprites/<name>/<name>_avatar.tscn` | ⏳ 已生成，`lobby/gamelist/game_card.tscn` 待替换 |
+
+等 `game_card` 替换完成并验证后，即可删除 `addons/gddragonbones`（约 278 MB）。
 ## 5. 异步调用规范
 
 Godot 4.7 中，动态调用异步函数必须等待返回值本身：

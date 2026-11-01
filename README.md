@@ -67,6 +67,7 @@ core/              平台底层
   framework/       子游戏插件契约（GameMetadata / GameBase* / GameHostBridge / GameRegistry / GameLauncher）
 shared/            跨模块共享
   ui/              通用 UI（加载、设置、弹窗、排行榜、返回按钮…）
+  avatar/          原生骨骼动画门面（DragonBones 平替）
   utils/ styles/   工具类、主题/字体/Shader
 lobby/             大厅与社交：home chat club room match gamelist email approval announcement
 app/               应用外壳页：login register
