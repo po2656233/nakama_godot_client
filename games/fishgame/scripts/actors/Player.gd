@@ -152,7 +152,7 @@ func reset_state() -> void:
 	visible = true
 
 func pickup_or_throw() -> void:
-	if not GameBridge.current.online_play:
+	if not GameHostBridge.current.online_play:
 		if current_pickup:
 			_do_throw()
 		else:
@@ -161,12 +161,12 @@ func pickup_or_throw() -> void:
 		if current_pickup:
 			# We throw on all clients; the pickup knows to simulate physics
 			# only on the master, and sync to the puppets.
-			GameBridge.current.custom_rpc(self,"_do_throw")
+			GameHostBridge.current.custom_rpc(self,"_do_throw")
 		else:
 			# We try to pickup only on the host so it can make sure that
 			# only one client gets it, and then the host will tell everyone
 			# else.
-			GameBridge.current.custom_rpc_id(self, int(name), "_try_pickup")
+			GameHostBridge.current.custom_rpc_id(self, int(name), "_try_pickup")
 
 @rpc("any_peer", "call_local") func _try_pickup() -> void:
 	for body in pickup_area.get_overlapping_bodies():
@@ -174,9 +174,9 @@ func pickup_or_throw() -> void:
 			continue
 		body.pickup_state = Pickup.PickupState.PICKED_UP
 
-		if GameBridge.current.online_play:
+		if GameHostBridge.current.online_play:
 			var pickup_id = body.get_meta("id") if body.has_meta("id")  else str(body.name)
-			GameBridge.current.custom_rpc_sync(self, '_do_pickup', [pickup_id])
+			GameHostBridge.current.custom_rpc_sync(self, '_do_pickup', [pickup_id])
 		else:
 			_do_pickup(body.get_path())
 
@@ -259,11 +259,11 @@ func hurt(node: Node2D) -> void:
 	})
 
 func die() -> void:
-	if GameBridge.current.online_play:
+	if GameHostBridge.current.online_play:
 		if is_multiplayer_authority():
 			if current_pickup:
-				GameBridge.current.custom_rpc(self,"_do_throw")
-			GameBridge.current.custom_rpc(self,"_do_die")
+				GameHostBridge.current.custom_rpc(self,"_do_throw")
+			GameHostBridge.current.custom_rpc(self,"_do_die")
 	else:
 		if current_pickup:
 			_do_throw()
@@ -299,14 +299,14 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	vector = velocity
 
-	if GameBridge.current.online_play:
+	if GameHostBridge.current.online_play:
 		if player_controlled:
 			# Sync every so many physics frames.
 			sync_counter += 1
 			if sync_forced or input_buffer_changed or sync_counter >= SYNC_DELAY:
 				sync_counter = 0
 				sync_forced = false
-				GameBridge.current.custom_rpc(self, "update_remote_player", [input_buffer.buffer, state_machine.current_state.name, sync_state_info, global_position, vector, body_sprite.frame, flip_h, show_gliding, show_sliding, pass_through_one_way_platforms])
+				GameHostBridge.current.custom_rpc(self, "update_remote_player", [input_buffer.buffer, state_machine.current_state.name, sync_state_info, global_position, vector, body_sprite.frame, flip_h, show_gliding, show_sliding, pass_through_one_way_platforms])
 				if sync_state_info.size() > 0:
 					sync_state_info.clear()
 		else:

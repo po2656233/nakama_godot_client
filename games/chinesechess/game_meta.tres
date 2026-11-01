@@ -1,13 +1,16 @@
-[gd_resource type="Resource" script_class="GameMeta" format=3 uid="uid://gvlsyq6x6ab5"]
+[gd_resource type="Resource" script_class="GameMetadata" format=3 uid="uid://gvlsyq6x6ab5"]
 
-[ext_resource type="Script" uid="uid://deabqqjvrrk3v" path="res://core/framework/game_meta.gd" id="1_572ox"]
+[ext_resource type="Script" uid="uid://d1ikr2fyrh0my" path="res://core/framework/game_metadata.gd" id="1"]
 
 [resource]
-script = ExtResource("1_572ox")
-key = "chinesechess"
-title = "中国象棋"
-entry_scene = "res://games/chinesechess/entry.tscn"
+script = ExtResource("1")
+game_id = "chinesechess"
+display_name = "中国象棋"
+min_players = 2
 max_players = 2
+entry_scene = "res://games/chinesechess/entry.tscn"
+support_voice = true
+support_video = false
 online = true
 show_back_button = false
 order = 10

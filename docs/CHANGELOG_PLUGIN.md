@@ -14,7 +14,7 @@
 | P2 | `autoload/` → `core/{bootstrap,network,scene,services,window}` | 40 |
 | P3 | 大厅业务 → `lobby/`；登录注册 → `app/` | 125 |
 | P4 | 子游戏自包含 → `games/<key>/`（meta + entry） | 484 |
-| P5 | `GameBridge` / `GameProtocol`，子游戏零 `Global.*` | 24 个脚本改写 |
+| P5 | `GameHostBridge` / `GameProtocol`，子游戏零 `Global.*` | 24 个脚本改写 |
 | P6 | 文档重写与全量校验 | — |
 
 累计移动/重命名约 **760 个文件**，重写 `res://` 引用 **600+ 处**。
@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | 子游戏注册不再用 `GameCatalog.BUILTIN` | 新增游戏不再改框架代码 | 在 `games/<key>/game_meta.tres` 声明 |
 | 子游戏入口从 `scenes/game/<k>/<k>.tscn` 改为 `games/<k>/entry.tscn` | 外部下载包布局变化 | 打包时按新布局；旧布局有 `entry.tscn` 兜底 |
-| 子游戏内禁止 `Global.*` | 旧游戏脚本需适配 | 改用 `GameBridge.current` / `GameProtocol` |
+| 子游戏内禁止 `Global.*` | 旧游戏脚本需适配 | 改用 `GameHostBridge.current` / `GameProtocol` |
 | `Global.Shared` 服务移除 | 俄罗斯方块常量表不再全局可见 | 游戏内 `TetrisShared.shared()` / `TetrisTypes` |
 | `Global.OnlineMatch.MatchState` 等枚举 | 数值不变，但定义迁到 `GameProtocol` | `OnlineMatch`/`OnlineGame` 已别名兼容，外部可继续用旧写法 |
 | 目录路径 | 场景/脚本/资源路径全部变化 | 见下方“最终目录” |
@@ -72,10 +72,10 @@ games/template/
 - `loading_screen.gd` 下载解压布局改为 `res://games/<key>/entry.tscn`；
 - 新增 `tools/validate_plugins.gd`（结构 + 实例化冒烟 + 沙盒 lint）。
 
-## P5 `GameBridge` / `GameProtocol`
+## P5 `GameHostBridge` / `GameProtocol`
 
 - 新增 `core/framework/game_bridge.gd`：子游戏唯一框架入口（UI / 生命周期 / 网络 / 对局），
-  `GameBridge.current` 由 `GameLauncher` 创建与清空；
+  `GameHostBridge.current` 由 `GameLauncher` 创建与清空；
 - 新增 `core/framework/game_protocol.gd`：`MatchState` / `MatchMode` / `PlayerStatus` / `GameStatus`
   唯一来源，`OnlineMatch`/`OnlineGame` 改为别名引用；
 - `GameLauncher` 注入 `on_game_bridge(bridge)` + `game_bridge` meta；基类新增 `bridge` 成员；
@@ -119,6 +119,36 @@ core/  shared/  lobby/  games/  app/  assets/  addons/  gdprotobuf/  docs/  tool
   一次性迁移工具（`tools/refactor/*`）与外部游戏适配脚本（`tools/外部游戏*.gd/py`）已删除（git 历史可找回）；
 - **清理机器本地残留**：删除 115 个失去宿主文件的 `.uid`/`.import`，移除 `scripts/`、`autoload/`、
   `shaders/` 等 36 个残留空目录。
+## P8 = PROMPT_REFACTOR 阶段 1：插件底座 + 上下文感知导航
+
+> 以 `PROMPT_REFACTOR.md` 为新的总纲；本阶段只做“可插拔底座与智能导航栈”。
+
+新增：
+
+- `core/navigation/navigation_context.gd`：`NavigationContext`（EntrySource + game_id/room_id/extra_data，
+  支持 `to_dict/from_dict` 与 `GAME_LIST/ROOM_LIST/CLUB_ROOM_LIST/CHAT_INVITE` 工厂）；
+- `core/navigation/scene_router.gd`：`SceneRouter`（Global 服务）——
+  导航栈、`prepare_*()`/`enter_game()`/`enter_pending_game()`、`exit_game()` 按来源回退、
+  `on_game_destroy()` 资源释放、`leave_table` 离房通知、`SignalMgr.GameReturnedSIG`；
+- `core/framework/game_metadata.gd`：`GameMetadata`（替代 `GameMeta`）——
+  `game_id/display_name/icon/min_players/max_players/entry_scene/support_voice/support_video` 等；
+- `core/framework/game_base.gd`：`GameBase` 生命周期契约（Node）；
+  `GameBase2D` / `GameBaseControl` 同步实现同一契约（Node2D/Control 单继承限制）；
+- `core/framework/game_host_bridge.gd`：`GameHostBridge`（由 `GameBridge` 更名）新增
+  `send_match_data()` / `request_exit_game()` / `set_ready_status()` / `ready_status_changed`。
+
+行为变化：
+
+- 进入子游戏统一走 `SceneRouter`（`loading_screen`、`SceneMgr.to_game_scene` 已切换）；
+- 退出按进入来源回退：游戏列表 → `gamelist`、房间列表 → `roomlist`、俱乐部 → `clubhome`、聊天邀请 → `home`；
+- 退出前先调用子游戏 `on_game_destroy()`（幂等），再 `GameLauncher.exit_game(result, navigate_back=false)`；
+- `GameLauncher.exit_game()` 新增 `navigate_back` 参数；`on_game_init(room_info, bridge)` 在进入树前注入。
+
+迁移：
+
+- 4 个 `game_meta.tres` 改为 `GameMetadata` 字段（`key→game_id`、`title→display_name`）；
+- `tools/validate_plugins.gd` 校验新字段与人数/能力配置；
+- 新增 `tools/test_navigation.gd`（26 项断言：来源映射、pending 生命周期、进入/退出全链路）。
 ## 验证记录
 
 各阶段门禁结果：

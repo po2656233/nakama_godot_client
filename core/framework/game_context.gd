@@ -43,6 +43,12 @@ static func create(descriptor: GameDescriptor, p_options: Dictionary = {}) -> Ga
 
 	return context
 
+## 导航上下文（由 SceneRouter 通过 options 注入；没有则返回 GAME_LIST 来源）。
+func navigation() -> NavigationContext:
+	if options.get("nav_context") is NavigationContext:
+		return options["nav_context"]
+	return NavigationContext.for_game_list(key)
+
 func get_option(name: String, default_value: Variant = null) -> Variant:
 	return options.get(name, default_value)
 

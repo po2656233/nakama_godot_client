@@ -30,6 +30,7 @@ const DEFAULT_SERVICES := {
 	"FancyFade": "res://addons/transitions/FancyFade.gd",
 	"FadeScene": "res://addons/transitions/FadeScene.gd",
 	# 子游戏框架
+	"SceneRouter": "res://core/navigation/scene_router.gd",
 	"GameRegistry": "res://core/framework/game_registry.gd",
 	"GameLauncher": "res://core/framework/game_launcher.gd",
 }

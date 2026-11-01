@@ -11,11 +11,12 @@ res://
 │   ├── bootstrap/               Global / Util / Errors（autoload）+ global_config.cfg
 │   ├── network/                 Online / OnlineLogin / OnlineChat / OnlineGame / OnlineMatch / MessageQueue
 │   ├── scene/                   SceneMgr + 路由表 + 转场 + 叠加页
+│   ├── navigation/              SceneRouter + NavigationContext（上下文感知回退）
 │   ├── services/                SignalMgr / SettingsMgr / DataMgr / MailMgr
 │   ├── window/                  无边框拖动、消息框
-│   └── framework/               插件契约：GameMeta / GameRegistry / GameLauncher /
-│                                GameBridge / GameProtocol / GameContext / GameResult /
-│                                GameDescriptor / GameBase2D / GameBaseControl
+│   └── framework/               插件契约：GameMetadata / GameBase* / GameHostBridge /
+│                                GameRegistry / GameLauncher / GameProtocol /
+│                                GameContext / GameResult / GameDescriptor
 ├── shared/                      跨模块共享（无业务语义）
 │   ├── ui/                      通用 UI（设置、排行榜、加载、弹窗、列表、返回按钮…）
 │   │   ├── controls/ loading/ popup/ gridanimation/
@@ -58,6 +59,7 @@ res://
 | --- | --- | --- |
 | `SignalMgr` | `core/services/signal_manager.gd` | 跨模块信号总线 |
 | `SceneMgr` | `core/scene/scene_manager.gd` | 场景路由、切换/返回、转场、叠加页 |
+| `SceneRouter` | `core/navigation/scene_router.gd` | 子游戏进入/退出、导航栈、按来源上下文回退 |
 | `SettingsMgr` | `core/services/settings_manager.gd` | 设置面板与背景音乐 |
 | `DataMgr` | `core/services/data_manager.gd` | 本地存档、聊天记录、好友/俱乐部缓存 |
 | `MailMgr` | `core/services/mail_manager.gd` | 邮件列表（本地 mock） |
@@ -82,7 +84,7 @@ res://
         ▼
 全局服务层（SceneMgr / SettingsMgr / DataMgr / GameRegistry / GameLauncher）
         │
-        ├── 子游戏插件（games/<key>，只通过 GameBridge / GameProtocol 访问框架）
+        ├── 子游戏插件（games/<key>，只通过 GameHostBridge / GameProtocol 访问框架）
         │
         ▼
 网络层（Online / OnlineLogin / OnlineChat / OnlineGame / OnlineMatch）
@@ -96,39 +98,52 @@ Nakama 插件（addons/com.heroiclabs.nakama）+ 服务端
 - UI 不直接操作 `NakamaClient`，统一走 `Global.Online*`；
 - 跨模块事件走 `SignalMgr`，避免 UI 之间直接连线；
 - 页面切换统一走 `SceneMgr`，不在业务里手动 `change_scene_to_file()`；
-- 子游戏启动/退出/重开统一走 `GameLauncher`，游戏内只通过 `GameBridge` 回调；
+- 子游戏启动/退出/重开统一走 `GameLauncher`，游戏内只通过 `GameHostBridge` 回调；
 - 本地持久化统一走 `DataMgr`，UI 不直接读写 `user://`。
 
 ## 4. 子游戏插件框架
 
 ```
-games/<key>/game_meta.tres（GameMeta 自描述）
+games/<key>/game_meta.tres（GameMetadata 自描述）
       │  GameRegistry 扫描 res://games/* + user://games/*
       ▼
-GameDescriptor（key/别名/入口/人数/联机）
+GameDescriptor（key/别名/入口/人数/联机/音视频能力）
       │
       ▼
+SceneRouter.enter_game(game_id, room_info, NavigationContext)   ← UI 唯一入口
+      │  （下载游戏的加载页用 enter_pending_game() 消费 pending 上下文）
+      ▼
 GameLauncher.start_game(key, options)
-      ├─ 创建 GameBridge（唯一对外通道，写入 GameBridge.current）
+      ├─ 创建 GameHostBridge（唯一对外通道，写入 GameHostBridge.current）
       ├─ 实例化 entry.tscn
-      ├─ 注入 context / bridge（on_game_bridge / on_game_context）
-      ├─ SceneMgr 切换场景
-      ├─ 挂统一返回按钮 __GameHUD（可配置）
-      ├─ on_game_launched
+      ├─ 注入 on_game_init(room_info, bridge) / on_game_context(context)
+      ├─ SceneMgr 切换场景 + 挂 __GameHUD（可配置）
+      ├─ on_game_launched → on_game_start
       └─ 联机时通知服务端 LOADING_MAP_FINISH
-退出：exit_game(result?) → on_game_result → on_game_exit → game_finished → LeaveMatch → go_back
-重开：restart_game() → 保留 match/room 上下文重新实例化
+退出：SceneRouter.exit_game()
+      ├─ 调子游戏 on_game_destroy()（断信号/停 Timer/Tween，只一次）
+      ├─ 通知服务端离开房间（leave_table，best-effort）
+      ├─ GameLauncher.exit_game(result, navigate_back=false)（on_game_result/on_game_exit/LeaveMatch）
+      └─ 按 NavigationContext.source 回退：
+            GAME_LIST → gamelist；ROOM_LIST → roomlist；CLUB_ROOM_LIST → clubhome；CHAT_INVITE → home
+           并广播 SignalMgr.GameReturnedSIG(source, gameId, roomId) 供页面刷新
+重开：restart_game()（保留 match/room 上下文，先 on_game_destroy 旧实例）
 结算：finish_game(result)
 ```
 
 关键文件：
 
-- `core/framework/game_meta.gd`：插件元数据（key/title/entry_scene/人数/联机/别名/顺序/版本）；
+- `core/navigation/navigation_context.gd`：`NavigationContext`（来源枚举 + game_id/room_id/extra_data）；
+- `core/navigation/scene_router.gd`：`SceneRouter`（进入/退出、导航栈、按来源回退、资源释放）；
+- `core/framework/game_metadata.gd`：`GameMetadata`（game_id/display_name/icon/min_players/max_players/
+  entry_scene/support_voice/support_video/online/别名/顺序/版本）；
 - `core/framework/game_registry.gd`：扫描 `res://games/*/game_meta.tres` 与 `user://games/*`，建立索引；
-- `core/framework/game_launcher.gd`：启动、上下文与桥注入、HUD、退出/重开/结算；
-- `core/framework/game_bridge.gd`：子游戏唯一允许的框架入口（UI/生命周期/网络/对局）；
+- `core/framework/game_launcher.gd`：启动、上下文与桥注入、on_game_init/on_game_start、HUD、退出/重开/结算；
+- `core/framework/game_host_bridge.gd`：`GameHostBridge`（唯一框架入口：UI/生命周期/网络/对局/
+  send_match_data/request_exit_game/set_ready_status）；
+- `core/framework/game_base.gd`、`game_base_2d.gd`、`game_base_control.gd`：
+  生命周期契约 `on_game_init/on_game_start/on_network_packet/on_game_pause/on_game_resume/on_game_destroy`；
 - `core/framework/game_protocol.gd`：`MatchState` / `MatchMode` / `PlayerStatus` / `GameStatus` 唯一来源；
-- `core/framework/game_base_2d.gd`、`game_base_control.gd`：推荐基类（自带 `bridge` 成员）；
 - `games/template/`：复制用模板。
 
 接入步骤见 [GAME_DEVELOPMENT.md](GAME_DEVELOPMENT.md)。
@@ -137,10 +152,10 @@ GameLauncher.start_game(key, options)
 
 `tools/validate_plugins.gd --strict-sandbox` 会强制以下约束：
 
-1. `games/**/*.gd` 不得出现任何 `Global.` 访问（唯一入口是 `GameBridge.current`）；
+1. `games/**/*.gd` 不得出现任何 `Global.` 访问（唯一入口是 `GameHostBridge.current`）；
 2. 子游戏之间不得互相引用 `res://games/<other>/`；
 3. 每个 `games/<key>/` 必须含 `game_meta.tres` + `entry.tscn`，`entry_scene` 指向本目录 `entry.tscn`；
-4. `game_meta.key` == 目录名，且 key 全局唯一；
+4. `game_meta.game_id` == 目录名，且 game_id 全局唯一；
 5. `entry.tscn` 必须可加载并实例化。
 
 ## 5. 异步调用规范
@@ -222,7 +237,7 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 - `addons/`、`gdprotobuf/` 为第三方/生成代码，未重构；仓库只保留实际使用的 6 个插件
   （Nakama、protobuf、snopek-state-machine、transitions、virtual_joystick、gddragonbones）。
 - 子游戏内部玩法（fishgame / tetris / chinesechess / mahjong_matching）只保证入口与桥接兼容，
-  内部玩法未逐行重写；fishgame 的多人同步仍以 Nakama match 状态为主，通过 `GameBridge` 转发。
+  内部玩法未逐行重写；fishgame 的多人同步仍以 Nakama match 状态为主，通过 `GameHostBridge` 转发。
 - 下载游戏目前仍解压到 `res://games/<key>/`，导出包中 `res://` 只读，正式发布前应迁移到
   `user://` + PCK（`GameRegistry` 已支持扫描 `user://games`）。
 - `refs_baseline.json` 里有 8 处历史悬空引用（`res://icons/*.png`、`res://scenes/main_game.tscn`、
@@ -230,3 +245,5 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 - 部分 `.tscn` 的 `ext_resource uid` 与本机 `.uid`/`.import` 不一致时，Godot 会回退到路径加载（仅警告）。
 - `.uid` / `.import` 被 `.gitignore` 忽略（机器本地缓存），因此场景里的 `uid://` 引用在不同机器上会回退到路径加载并打印 warning，属正常现象；如需彻底消除，应把这两类文件纳入版本管理。
 - 端到端联调需要真实 Nakama 服务端，建议在登录、聊天、房间、匹配四条链路各过一次冒烟。
+- 按 PROMPT_REFACTOR 的阶段计划：阶段 1（插件底座 + 上下文导航）已完成；DragonBones 原生平替（阶段 2）、
+  RTC 音视频（阶段 3）、剩余子游戏插件迁移（阶段 4）尚未开始。

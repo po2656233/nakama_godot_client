@@ -19,7 +19,7 @@ const META_FILE := "game_meta.tres"
 const ENTRY_FILE := "entry.tscn"
 const IGNORED_DIRS := ["template"]
 
-## 子游戏不得直接访问任何 Global.* 服务（唯一入口是 GameBridge）。
+## 子游戏不得直接访问任何 Global.* 服务（唯一入口是 GameHostBridge）。
 const FORBIDDEN_TOKENS := [
 	"Global.",
 ]
@@ -75,22 +75,28 @@ func _check_plugin(dir_name: String) -> void:
 
 	var meta: Resource = ResourceLoader.load(meta_path)
 	if meta == null or not meta.has_method("is_valid"):
-		_errors.append("%s: %s 不是 GameMeta" % [dir_name, META_FILE])
+		_errors.append("%s: %s 不是 GameMetadata" % [dir_name, META_FILE])
 		return
 	if not meta.call("is_valid"):
-		_errors.append("%s: game_meta 无效（key/entry_scene 为空）" % dir_name)
+		_errors.append("%s: game_meta 无效（game_id/entry_scene 为空）" % dir_name)
 		return
 
-	var key := str(meta.get("key"))
+	var key := str(meta.get("game_id"))
 	var entry_scene := str(meta.get("entry_scene"))
 	if key != dir_name:
-		_errors.append("%s: key(%s) 与目录名不一致" % [dir_name, key])
+		_errors.append("%s: game_id(%s) 与目录名不一致" % [dir_name, key])
 	if entry_scene != entry_path:
 		_errors.append("%s: entry_scene(%s) 应为 %s" % [dir_name, entry_scene, entry_path])
 	if not ResourceLoader.exists(entry_scene):
 		_errors.append("%s: entry_scene 不存在: %s" % [dir_name, entry_scene])
+	var min_players := int(meta.get("min_players"))
+	var max_players := int(meta.get("max_players"))
+	if min_players < 1 or max_players < min_players:
+		_errors.append("%s: 人数配置非法（min=%d, max=%d）" % [dir_name, min_players, max_players])
+	if not meta.get("support_voice") is bool or not meta.get("support_video") is bool:
+		_errors.append("%s: support_voice/support_video 必须是 bool" % dir_name)
 	if _keys.has(key):
-		_errors.append("%s: key 重复（已由 %s 使用）" % [dir_name, _keys[key]])
+		_errors.append("%s: game_id 重复（已由 %s 使用）" % [dir_name, _keys[key]])
 	_keys[key] = dir_name
 
 	var packed: Resource = ResourceLoader.load(entry_path)

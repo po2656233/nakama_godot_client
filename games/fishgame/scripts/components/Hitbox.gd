@@ -17,5 +17,5 @@ func _update_disabled() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if not disabled and body.has_method('hurt'):
-		if not GameBridge.current.online_play or body.is_multiplayer_authority():
+		if not GameHostBridge.current.online_play or body.is_multiplayer_authority():
 			body.hurt(self)

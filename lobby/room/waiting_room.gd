@@ -213,6 +213,9 @@ func _on_countdown_timeout():
 		
 		var game_id = Global.OnlineGame.getGameID(game_name)
 		print("准备游戏 game_id:", game_id, " name:", game_name)
+		# 登记导航来源：从房间列表进入，退出时回到房间列表。
+		if Global.has_global("SceneRouter"):
+			Global.SceneRouter.prepare(NavigationContext.for_room_list(str(game_name), str(room_id)))
 		Global.SignalMgr.LoadingGameSIG.emit(game_id)
 
 # 计时器回调

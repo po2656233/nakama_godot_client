@@ -20,7 +20,7 @@ func _do_generate() -> void:
 		return
 
 	var pickup_name = Util.find_unique_name(pickup_parent, 'Pickup-')
-	if GameBridge.current.online_play:
+	if GameHostBridge.current.online_play:
 		rpc("generate", pickup_name)
 	else:
 		generate(pickup_name)
@@ -44,11 +44,11 @@ func _on_current_pickup_picked_up() -> void:
 	current_pickup.disconnect("picked_up", Callable(self, "_on_current_pickup_picked_up"))
 	current_pickup = null
 
-	if not GameBridge.current.online_play or is_multiplayer_authority():
+	if not GameHostBridge.current.online_play or is_multiplayer_authority():
 		timer.start()
 
 func map_object_start() -> void:
-	if current_pickup == null and (not GameBridge.current.online_play or is_multiplayer_authority()):
+	if current_pickup == null and (not GameHostBridge.current.online_play or is_multiplayer_authority()):
 		_do_generate()
 	timer.wait_time = regenerate_delay
 

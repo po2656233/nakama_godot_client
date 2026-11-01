@@ -32,7 +32,7 @@ func use() -> void:
 	cooldown_timer.start()
 
 	if ammo > 0:
-		if not GameBridge.current.online_play:
+		if not GameHostBridge.current.online_play:
 			_start_use()
 		else:
 			rpc("_start_use")
@@ -46,14 +46,14 @@ func use() -> void:
 	animation_player.play("Shoot")
 
 func _fire_projectile() -> void:
-	if GameBridge.current.online_play and not use_by_player.is_multiplayer_authority():
+	if GameHostBridge.current.online_play and not use_by_player.is_multiplayer_authority():
 		return
 
 	var projectile_name = Util.find_unique_name(original_parent, 'Projectile-')
 	var projectile_vector: Vector2 = (Vector2.RIGHT * projectile_velocity).rotated(global_rotation)
 	var projectile_dud: bool = dud_detector.get_overlapping_bodies().size() > 0
 
-	if not GameBridge.current.online_play:
+	if not GameHostBridge.current.online_play:
 		_do_fire_projectile(projectile_name, projectile_position.global_position, projectile_vector, projectile_range, projectile_dud)
 	else:
 		rpc("_do_fire_projectile", projectile_name, projectile_position.global_position, projectile_vector, projectile_range, projectile_dud)
@@ -77,7 +77,7 @@ func _fire_projectile() -> void:
 
 func _on_throw_finished() -> void:
 	if ammo <= 0:
-		if not GameBridge.current.online_play:
+		if not GameHostBridge.current.online_play:
 			_disintegrate()
 		else:
 			rpc("_disintegrate")

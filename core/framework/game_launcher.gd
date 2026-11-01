@@ -17,7 +17,7 @@ const REBACK_SCENE := preload("res://shared/ui/reback.tscn")
 
 var current_context: GameContext = null
 ## 子游戏桥（插件唯一对外通道）
-var bridge: GameBridge = null
+var bridge: GameHostBridge = null
 var current_game: Node = null
 var last_result: GameResult = null
 
@@ -37,8 +37,9 @@ func restart_game() -> bool:
 		return false
 	return _launch(current_context.key, current_context.options, true)
 
-## 结束当前游戏并返回上一页；result 非空时先广播结算结果。
-func exit_game(result: GameResult = null) -> void:
+## 结束当前游戏；result 非空时先广播结算结果。
+## navigate_back=false 时只清理状态，由 SceneRouter 决定返回哪个页面。
+func exit_game(result: GameResult = null, navigate_back: bool = true) -> void:
 	if _exit_in_progress:
 		return
 	var context := current_context
@@ -49,6 +50,7 @@ func exit_game(result: GameResult = null) -> void:
 
 	_exit_in_progress = true
 	var exit_transition := str(context.get_option("exit_transition", "cross"))
+	_destroy_game(game)
 	if is_instance_valid(game):
 		if result != null and game.has_method("on_game_result"):
 			game.call("on_game_result", result)
@@ -64,10 +66,11 @@ func exit_game(result: GameResult = null) -> void:
 	current_game = null
 	current_context = null
 	bridge = null
-	GameBridge.clear()
+	GameHostBridge.clear()
 	_exit_in_progress = false
 	game_exited.emit(context)
-	Global.SceneMgr.go_back(exit_transition, 1.0)
+	if navigate_back:
+		Global.SceneMgr.go_back(exit_transition, 1.0)
 
 ## 只上报结算，不退出（子游戏可以展示自己的结算界面）。
 func finish_game(result: GameResult) -> void:
@@ -89,6 +92,8 @@ func current_key() -> String:
 	return current_context.key if current_context != null else ""
 
 func _launch(key: String, options: Dictionary, is_restart: bool) -> bool:
+	if is_restart:
+		_destroy_game(current_game)
 	var descriptor := _resolve(key)
 	if descriptor == null:
 		Global.WindowPopup.show_dynamic("%s 正在招商中..." % key)
@@ -113,8 +118,11 @@ func _launch(key: String, options: Dictionary, is_restart: bool) -> bool:
 	current_game = game
 	current_context = context
 	last_result = null
-	bridge = GameBridge.create(context)
+	bridge = GameHostBridge.create(context)
 	_bind_context(game, context, bridge)
+	# 新契约：注入房间信息 + 宿主桥（在场景进入树之前）。
+	if game.has_method("on_game_init"):
+		game.call("on_game_init", _room_info(context), bridge)
 
 	var transition := str(options.get("transition", "cross"))
 	var transition_time := float(options.get("transition_time", 0.6))
@@ -130,7 +138,7 @@ func _resolve(key: String) -> GameDescriptor:
 		return null
 	return Global.GameRegistry.find(key)
 
-func _bind_context(game: Node, context: GameContext, bridge1: GameBridge) -> void:
+func _bind_context(game: Node, context: GameContext, bridge1: GameHostBridge) -> void:
 	# 约定 0：子游戏通过桥访问框架能力，不直接碰 Global.Online*。
 	if game.has_method("on_game_bridge"):
 		game.call("on_game_bridge", bridge1)
@@ -148,8 +156,11 @@ func _finish_launch(game: Node, descriptor: GameDescriptor, context: GameContext
 		return
 
 	_install_hud(game, descriptor)
+	# 生命周期：优先走旧钩子（基类会转发到 on_game_start），否则直接调用新钩子。
 	if game.has_method("on_game_launched"):
 		game.call("on_game_launched", context)
+	elif game.has_method("on_game_start"):
+		game.call("on_game_start")
 
 	if is_restart:
 		game_restarted.emit(context)
@@ -187,3 +198,28 @@ func _leave_online_match(context: GameContext) -> void:
 	if Global.Online.nakama_socket == null:
 		return
 	await Global.OnlineMatch.LeaveMatch(context.match_id)
+
+# ---------------------------------------------------------------------
+# 生命周期辅助
+# ---------------------------------------------------------------------
+
+## 从 GameContext 提取房间/对局信息，供 on_game_init(room_info, bridge) 使用。
+func _room_info(context: GameContext) -> Dictionary:
+	if context == null:
+		return {}
+	var info := context.options.duplicate(true)
+	info["game_id"] = context.key
+	info["room_id"] = context.room_id
+	info["match_id"] = context.match_id
+	info["mode"] = context.mode
+	return info
+
+## 触发子游戏 on_game_destroy()（幂等）：断信号、停 Timer/Tween。
+func _destroy_game(game: Node) -> void:
+	if game == null or not is_instance_valid(game):
+		return
+	if game.get_meta("__game_destroyed", false):
+		return
+	game.set_meta("__game_destroyed", true)
+	if game.has_method("on_game_destroy"):
+		game.call("on_game_destroy")

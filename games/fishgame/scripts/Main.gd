@@ -14,17 +14,17 @@ var players_score := {}
 var match_started := false
 
 func _ready() -> void:
-	GameBridge.current.connect_match_signal("error", Callable(self, "_on_OnlineMatch_error"))
-	GameBridge.current.connect_match_signal("disconnected", Callable(self, "_on_OnlineMatch_disconnected"))
-	GameBridge.current.connect_match_signal("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
-	GameBridge.current.connect_match_signal("player_left", Callable(self, "_on_OnlineMatch_player_left"))
+	GameHostBridge.current.connect_match_signal("error", Callable(self, "_on_OnlineMatch_error"))
+	GameHostBridge.current.connect_match_signal("disconnected", Callable(self, "_on_OnlineMatch_disconnected"))
+	GameHostBridge.current.connect_match_signal("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
+	GameHostBridge.current.connect_match_signal("player_left", Callable(self, "_on_OnlineMatch_player_left"))
 	ready_screen.connect("ready_pressed",Callable(self, "_on_ReadyScreen_ready_pressed"))
 
 	randomize()
 	music.play_random()
 	#_on_TitleScreen_play_online()
-	#match_screen.matchmaker_player_count_control.value = GameBridge.current.get_game_max_people(32)
-	#match_screen._on_OnlineMatch_joined(GameBridge.current.get_match_id())
+	#match_screen.matchmaker_player_count_control.value = GameHostBridge.current.get_game_max_people(32)
+	#match_screen._on_OnlineMatch_joined(GameHostBridge.current.get_match_id())
 		#
 
 func _get_custom_rpc_methods() -> Array:
@@ -38,7 +38,7 @@ func _get_custom_rpc_methods() -> Array:
 #####
 
 func _on_TitleScreen_play_local() -> void:
-	GameBridge.current.online_play = false
+	GameHostBridge.current.online_play = false
 
 	ui_layer.hide_screen()
 	ui_layer.show_back_button()
@@ -46,7 +46,7 @@ func _on_TitleScreen_play_local() -> void:
 	start_game()
 
 func _on_TitleScreen_play_online() -> void:
-	GameBridge.current.online_play = true
+	GameHostBridge.current.online_play = true
 
 	# Show the game map in the background because we have nothing better.
 	game.reload_map()
@@ -69,18 +69,18 @@ func _on_UILayer_back_button() -> void:
 
 	stop_game()
 
-	if GameBridge.current.online_play:
-		GameBridge.current.leave()
+	if GameHostBridge.current.online_play:
+		GameHostBridge.current.leave()
 
 	if ui_layer.current_screen_name in ['ConnectionScreen', 'MatchScreen', 'CreditsScreen']:
 		ui_layer.show_screen("TitleScreen")
-	elif not GameBridge.current.online_play:
+	elif not GameHostBridge.current.online_play:
 		ui_layer.show_screen("TitleScreen")
 	else:
 		ui_layer.show_screen("MatchScreen")
 
 func _on_ReadyScreen_ready_pressed() -> void:
-	GameBridge.current.custom_rpc_sync(self, "player_ready", [GameBridge.current.get_my_session_id()])
+	GameHostBridge.current.custom_rpc_sync(self, "player_ready", [GameHostBridge.current.get_my_session_id()])
 
 #####
 # OnlineMatch callbacks
@@ -105,10 +105,10 @@ func _on_OnlineMatch_player_left(player) -> void:
 
 func _on_OnlineMatch_player_status_changed(player, status) -> void:
 	if status == GameProtocol.PlayerStatus.CONNECTED:
-		if GameBridge.current.is_server():
+		if GameHostBridge.current.is_server():
 			# Tell this new player about all the other players that are already ready.
 			for session_id in players_ready:
-				GameBridge.current.custom_rpc_id(self, player.peer_id, "player_ready", [session_id])
+				GameHostBridge.current.custom_rpc_id(self, player.peer_id, "player_ready", [session_id])
 
 #####
 # Gameplay methods and callbacks
@@ -117,16 +117,16 @@ func _on_OnlineMatch_player_status_changed(player, status) -> void:
 func player_ready(session_id: String) -> void:
 	ready_screen.set_status(session_id, "READY!")
 
-	if GameBridge.current.is_server() and not players_ready.has(session_id):
+	if GameHostBridge.current.is_server() and not players_ready.has(session_id):
 		players_ready[session_id] = true
-		if players_ready.size() == GameBridge.current.players.size():
-			if GameBridge.current.match_state != GameProtocol.MatchState.PLAYING:
-				GameBridge.current.start_playing()
+		if players_ready.size() == GameHostBridge.current.players.size():
+			if GameHostBridge.current.match_state != GameProtocol.MatchState.PLAYING:
+				GameHostBridge.current.start_playing()
 			start_game()
 
 func start_game() -> void:
-	if GameBridge.current.online_play:
-		players = GameBridge.current.get_player_names_by_peer_id()
+	if GameHostBridge.current.online_play:
+		players = GameHostBridge.current.get_player_names_by_peer_id()
 	else:
 		players = {
 			1: "Player1",
@@ -136,7 +136,7 @@ func start_game() -> void:
 	game.game_start(players)
 
 func stop_game() -> void:
-	GameBridge.current.leave()
+	GameHostBridge.current.leave()
 
 	players.clear()
 	players_ready.clear()
@@ -158,32 +158,32 @@ func _on_Game_game_started() -> void:
 		music.play_random()
 
 func _on_Game_player_dead(player_id: int) -> void:
-	if GameBridge.current.online_play:
-		var my_id = GameBridge.current.get_unique_id()
+	if GameHostBridge.current.online_play:
+		var my_id = GameHostBridge.current.get_unique_id()
 		if player_id == my_id:
 			ui_layer.show_message("You lose!")
 
 func _on_Game_game_stopped(player_id: int) -> void:
 	players_ready.clear()
 
-	if not GameBridge.current.online_play:
+	if not GameHostBridge.current.online_play:
 		show_winner(players[player_id])
-	elif GameBridge.current.is_server():
+	elif GameHostBridge.current.is_server():
 		if not players_score.has(player_id):
 			players_score[player_id] = 1
 		else:
 			players_score[player_id] += 1
 
-		var player_session_id = GameBridge.current.get_session_id(player_id)
+		var player_session_id = GameHostBridge.current.get_session_id(player_id)
 		var is_match: bool = players_score[player_id] >= 5
-		GameBridge.current.custom_rpc_sync(self, "show_winner", [players[player_id], player_session_id, players_score[player_id], is_match])
+		GameHostBridge.current.custom_rpc_sync(self, "show_winner", [players[player_id], player_session_id, players_score[player_id], is_match])
 
 func update_wins_leaderboard() -> void:
-	if not GameBridge.current.nakama_session or GameBridge.current.nakama_session.is_expired():
+	if not GameHostBridge.current.nakama_session or GameHostBridge.current.nakama_session.is_expired():
 		# If our session has expired, then wait until a new session is setup.
-		await GameBridge.current.wait_session_connected()
+		await GameHostBridge.current.wait_session_connected()
 
-	GameBridge.current.nakama_client.write_leaderboard_record_async(GameBridge.current.nakama_session, 'fish_game_wins', 1)
+	GameHostBridge.current.nakama_client.write_leaderboard_record_async(GameHostBridge.current.nakama_session, 'fish_game_wins', 1)
 
 func show_winner(name1: String, session_id: String = '', score: int = 0, is_match: bool = false) -> void:
 	if is_match:
@@ -195,10 +195,10 @@ func show_winner(name1: String, session_id: String = '', score: int = 0, is_matc
 	if not game.game_playing:
 		return
 
-	if GameBridge.current.online_play:
+	if GameHostBridge.current.online_play:
 		if is_match:
 			stop_game()
-			if session_id == GameBridge.current.my_session_id:
+			if session_id == GameHostBridge.current.my_session_id:
 				update_wins_leaderboard()
 			ui_layer.show_screen("MatchScreen")
 		else:

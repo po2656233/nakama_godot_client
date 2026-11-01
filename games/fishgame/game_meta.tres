@@ -1,14 +1,18 @@
-[gd_resource type="Resource" script_class="GameMeta" format=3 uid="uid://dss6q7461pp17"]
+[gd_resource type="Resource" script_class="GameMetadata" format=3 uid="uid://dss6q7461pp17"]
 
-[ext_resource type="Script" uid="uid://deabqqjvrrk3v" path="res://core/framework/game_meta.gd" id="1_3vn3j"]
+[ext_resource type="Script" uid="uid://d1ikr2fyrh0my" path="res://core/framework/game_metadata.gd" id="1"]
 
 [resource]
-script = ExtResource("1_3vn3j")
-key = "fishgame"
-title = "捕鱼大作战"
-entry_scene = "res://games/fishgame/entry.tscn"
+script = ExtResource("1")
+game_id = "fishgame"
+display_name = "捕鱼大作战"
+min_players = 1
 max_players = 4
+entry_scene = "res://games/fishgame/entry.tscn"
+support_voice = true
+support_video = true
 online = true
+show_back_button = true
 order = 40
 aliases = PackedStringArray("fish")
 tags = PackedStringArray("动作", "对战")

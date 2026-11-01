@@ -3,13 +3,18 @@ extends RefCounted
 
 ## 模块：子游戏描述
 ## 职责：描述一个可启动的子游戏（键名、场景、人数、是否联机等）。
-## 用途：GameMeta（games/<key>/game_meta.tres）声明数据，GameRegistry 建立索引，GameLauncher 按它启动场景。
+## 用途：GameMetadata（games/<key>/game_meta.tres）声明数据，GameRegistry 建立索引，GameLauncher 按它启动场景。
 ## 说明：key 必须与服务端游戏列表的 en_name 一致（大小写不敏感）。
 
 var key: String = ""
 var title: String = ""
 var scene_path: String = ""
+## 列表/房间图标（来自 GameMetadata.icon）
+var icon: Texture2D = null
+var min_players: int = 1
 var max_players: int = 1
+var support_voice: bool = false
+var support_video: bool = false
 var online: bool = false
 var show_back_button: bool = true
 var order: int = 0
@@ -22,7 +27,11 @@ func _init(data: Dictionary = {}) -> void:
 	key = _normalize_token(str(data.get("key", "")))
 	title = str(data.get("title", key))
 	scene_path = str(data.get("scene", data.get("scene_path", ""))).strip_edges()
-	max_players = maxi(1, int(data.get("max_players", 1)))
+	icon = data.get("icon", null) as Texture2D
+	min_players = maxi(1, int(data.get("min_players", 1)))
+	max_players = maxi(min_players, int(data.get("max_players", 1)))
+	support_voice = bool(data.get("support_voice", false))
+	support_video = bool(data.get("support_video", false))
 	online = bool(data.get("online", false))
 	show_back_button = bool(data.get("show_back_button", true))
 	order = int(data.get("order", 0))

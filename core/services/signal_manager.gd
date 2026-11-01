@@ -120,6 +120,10 @@ signal CancleGameSIG(gid)
 # 退出游戏
 @warning_ignore("unused_signal")
 signal ExitGameSIG(gid) 
+# 从子游戏返回（导航回退）：source 见 NavigationContext.EntrySource
+@warning_ignore("unused_signal")
+signal GameReturnedSIG(source, gameId, roomId)
+
 # 恢复游戏 保存上一次玩过的游戏
 @warning_ignore("unused_signal")
 signal GameKeepSIG(mode,gid,rid,mid,gname) 

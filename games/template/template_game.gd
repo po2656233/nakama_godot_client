@@ -6,7 +6,7 @@ extends GameBase2D
 ##   1. 复制 games/template 为 games/<key>/；
 ##   2. entry.tscn 根节点挂本脚本；
 ##   3. game_meta.tres 填 key/title/entry_scene（入口固定 entry.tscn）；
-##   4. 在游戏列表/房间流程里用 GameBridge.current.restart("<key>") 启动。
+##   4. 在游戏列表/房间流程里用 GameHostBridge.current.restart("<key>") 启动。
 
 func on_game_launched(context: GameContext) -> void:
 	print("[TemplateGame] 启动: %s, 人数上限: %s, 联机: %s" % [

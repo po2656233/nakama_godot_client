@@ -1,3 +1,6 @@
+> ⚠️ **已被 PROMPT_REFACTOR.md 取代**：自 2026-11-01 起，子游戏插件化按 PROMPT_REFACTOR 的阶段计划推进，
+> 本文件保留为上一轮结构重构（P0–P6）的历史记录。
+
 # 插拔化重构总计划（.cursorrules 的工程化落地）
 
 > 本文件把 `.cursorrules` 的三条使命拆成**可执行、可验证、可回滚**的阶段任务。
@@ -18,7 +21,7 @@
 | 结构极致清晰 | `res://` 下只保留 `core/ shared/ lobby/ games/ app/ assets/ addons/ gdprotobuf/ docs/ tools/`；不存在 `scripts/`、`scenes/`、`autoload/`、`1common/`、`themes/game/` |
 | 功能内聚 | 每个业务模块的 `.gd` 与 `.tscn` 同目录；无跨层硬编码路径 |
 | 子游戏彻底插拔 | 新增/删除一个子游戏 = 增删 `games/<key>/` 一个目录；大厅代码零改动；目录自带 `game_meta.tres` + `entry.tscn` + `scripts/` + `assets/` |
-| 沙盒隔离 | 子游戏内不出现 `Global.Online*` / `Global.DataMgr` / `Global.SceneMgr` / `Global.WindowPopup`，只通过 `GameBridge`；不引用其他子游戏文件 |
+| 沙盒隔离 | 子游戏内不出现 `Global.Online*` / `Global.DataMgr` / `Global.SceneMgr` / `Global.WindowPopup`，只通过 `GameHostBridge`；不引用其他子游戏文件 |
 | 工程质量 | `--headless --editor --quit` 零脚本错误；`check_refs.ps1` 零新增悬空；`validate_plugins.gd` 零违规；`validate_scripts` / `validate_game_framework` 通过 |
 
 ---
@@ -48,7 +51,7 @@ res://
 │   ├── services/                SignalMgr / SettingsMgr / DataMgr / MailMgr
 │   ├── window/                  无边框拖动、消息框
 │   └── framework/               插件契约：GameMeta / GamePlugin(GameBase*) / GameRegistry /
-│                                GameLauncher / GameBridge / GameContext / GameResult / GameInstaller
+│                                GameLauncher / GameHostBridge / GameContext / GameResult / GameInstaller
 ├── shared/                      跨模块共享（无业务语义）
 │   ├── ui/                      通用 UI：设置、排行榜、加载、弹窗、列表、返回按钮、倒计时…
 │   │   ├── controls/            轻量控件行为（抖动、变色、可复制文本…）
@@ -123,7 +126,7 @@ res://
 
 ```text
 GameRegistry 发现 --> GameLauncher.start_game(key, options)
-  ├─ 创建 GameBridge(context)              # 唯一对外通道
+  ├─ 创建 GameHostBridge(context)              # 唯一对外通道
   ├─ 实例化 entry.tscn
   ├─ on_game_context(context, bridge)      # 注入，等价旧 on_game_context
   ├─ SceneMgr 切换场景
@@ -135,7 +138,7 @@ GameRegistry 发现 --> GameLauncher.start_game(key, options)
 结算：finish_game(result)
 ```
 
-### 3.4 `GameBridge` 窄接口（子游戏唯一允许的框架入口）
+### 3.4 `GameHostBridge` 窄接口（子游戏唯一允许的框架入口）
 
 | 分类 | API |
 | --- | --- |
@@ -221,7 +224,7 @@ GameRegistry 发现 --> GameLauncher.start_game(key, options)
 
 ### P5 契约与沙盒
 
-- `GameBridge` 落地，`GamePlugin2D/Control` 基类暴露 bridge 方法；
+- `GameHostBridge` 落地，`GamePlugin2D/Control` 基类暴露 bridge 方法；
 - 迁移子游戏内的 `Global.*` 调用到 bridge；
 - 移除 `Global.Shared`（俄罗斯方块常量改为游戏内 `TetrisShared`，不经全局服务）；
 - `tools/validate_plugins.gd` 上线，违规数必须为 0；
@@ -288,5 +291,5 @@ powershell -File tools/refactor/apply_moves.ps1 -Map tools/refactor/maps/p1_shar
 | P2 core/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 174/174；框架 34/34；基础层/异步测试通过；引用 0 新增悬空 | autoload/ 消失；Global/Util/Errors → core/bootstrap；SceneMgr → core/scene；Online* → core/network |
 | P3 lobby/ + app/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 174/174；框架 34/34；引用 0 新增悬空 | 125 文件迁移；scripts/ 与 scenes/ 只剩 game/（P4 处理） |
 | P4 games/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 176/176；框架 34/34；插件结构/冒烟 0 失败 | 484 文件迁移；每游戏 game_meta.tres + entry.tscn；GameCatalog 删除、Registry 改 meta 扫描 |
-| P5 契约与沙盒 | ✅ 完成 | validate_plugins --strict-sandbox：结构 0 失败、沙盒 0 违规；生命周期冒烟 16/16 | GameBridge/GameProtocol 落地，games/** 零 Global 引用，Global.Shared 移除 |
+| P5 契约与沙盒 | ✅ 完成 | validate_plugins --strict-sandbox：结构 0 失败、沙盒 0 违规；生命周期冒烟 16/16 | GameHostBridge/GameProtocol 落地，games/** 零 Global 引用，Global.Shared 移除 |
 | P6 验证与文档 | ✅ 完成 | 导入 0 错误；引用 0 新增悬空；场景 107/107；脚本 180/180；框架 34/34；插件 strict 0 违规；生命周期 16/16；基础层/异步 0 失败 | ARCHITECTURE / GAME_DEVELOPMENT / CHANGELOG_PLUGIN 重写，.cursorrules 拓扑同步 |

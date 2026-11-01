@@ -11,11 +11,11 @@ signal ready_pressed ()
 
 func _ready() -> void:
 	clear_players()
-	GameBridge.current.connect_match_signal("player_joined", Callable(self, "_on_OnlineMatch_player_joined"))
-	GameBridge.current.connect_match_signal("player_left", Callable(self, "_on_OnlineMatch_player_left"))
-	GameBridge.current.connect_match_signal("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
-	GameBridge.current.connect_match_signal("match_ready", Callable(self, "_on_OnlineMatch_match_ready"))
-	GameBridge.current.connect_match_signal("match_not_ready", Callable(self, "_on_OnlineMatch_match_not_ready"))
+	GameHostBridge.current.connect_match_signal("player_joined", Callable(self, "_on_OnlineMatch_player_joined"))
+	GameHostBridge.current.connect_match_signal("player_left", Callable(self, "_on_OnlineMatch_player_left"))
+	GameHostBridge.current.connect_match_signal("player_status_changed", Callable(self, "_on_OnlineMatch_player_status_changed"))
+	GameHostBridge.current.connect_match_signal("match_ready", Callable(self, "_on_OnlineMatch_match_ready"))
+	GameHostBridge.current.connect_match_signal("match_not_ready", Callable(self, "_on_OnlineMatch_match_not_ready"))
 
 func _show_screen(info: Dictionary = {}) -> void:
 	var players: Dictionary = info.get("players", {})

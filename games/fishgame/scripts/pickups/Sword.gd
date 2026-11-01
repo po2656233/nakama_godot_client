@@ -7,7 +7,7 @@ func use() -> void:
 	if animation_player.is_playing():
 		return
 
-	if not GameBridge.current.online_play:
+	if not GameHostBridge.current.online_play:
 		_do_use()
 	else:
 		rpc("_do_use")

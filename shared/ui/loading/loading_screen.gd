@@ -108,10 +108,16 @@ func close_loading() -> void:
 
 	match load_type:
 		LoadType.GAME:
-			var started: bool = Global.GameLauncher.start_game(game_key, {
+			# 走 SceneRouter：消费导航上下文（房间列表/游戏列表来源），退出时才能精准回退。
+			var started := false
+			var load_options := {
 				"transition": "tile_reveal",
 				"transition_time": 1.0,
-			})
+			}
+			if Global.has_global("SceneRouter"):
+				started = Global.SceneRouter.enter_pending_game(game_key, load_options)
+			else:
+				started = Global.GameLauncher.start_game(game_key, load_options)
 			if not started:
 				_is_closing = false
 				reback()

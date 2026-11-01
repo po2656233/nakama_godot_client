@@ -61,9 +61,10 @@ core/              平台底层
   bootstrap/       Global / Util / Errors（autoload）与 global_config.cfg
   network/         Online* / MessageQueue（Nakama 封装）
   scene/           SceneMgr、路由表、转场、叠加页
+  navigation/      SceneRouter + NavigationContext（进入/退出与上下文回退）
   services/        SignalMgr / SettingsMgr / DataMgr / MailMgr
   window/          无边框窗口、消息框
-  framework/       子游戏插件契约（GameMeta / GameRegistry / GameLauncher / GameBridge）
+  framework/       子游戏插件契约（GameMetadata / GameBase* / GameHostBridge / GameRegistry / GameLauncher）
 shared/            跨模块共享
   ui/              通用 UI（加载、设置、弹窗、排行榜、返回按钮…）
   utils/ styles/   工具类、主题/字体/Shader

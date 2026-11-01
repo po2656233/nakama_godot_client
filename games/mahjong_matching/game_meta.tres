@@ -1,12 +1,18 @@
-[gd_resource type="Resource" script_class="GameMeta" format=3 uid="uid://c8jcjek178lt0"]
+[gd_resource type="Resource" script_class="GameMetadata" format=3 uid="uid://c8jcjek178lt0"]
 
-[ext_resource type="Script" uid="uid://deabqqjvrrk3v" path="res://core/framework/game_meta.gd" id="1_0yl1y"]
+[ext_resource type="Script" uid="uid://d1ikr2fyrh0my" path="res://core/framework/game_metadata.gd" id="1"]
 
 [resource]
-script = ExtResource("1_0yl1y")
-key = "mahjong_matching"
-title = "麻将连连看"
+script = ExtResource("1")
+game_id = "mahjong_matching"
+display_name = "麻将连连看"
+min_players = 1
+max_players = 1
 entry_scene = "res://games/mahjong_matching/entry.tscn"
+support_voice = false
+support_video = false
+online = false
+show_back_button = true
 order = 30
 aliases = PackedStringArray("mahjong")
 tags = PackedStringArray("益智", "单机")

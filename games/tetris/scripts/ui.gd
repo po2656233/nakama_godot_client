@@ -21,7 +21,7 @@ func show_game_over(score :int):
 
 
 func _on_button_pressed():
-	if GameBridge.current != null and GameBridge.current.is_running():
-		if GameBridge.current.restart():
+	if GameHostBridge.current != null and GameHostBridge.current.is_running():
+		if GameHostBridge.current.restart():
 			return
 	get_tree().reload_current_scene()

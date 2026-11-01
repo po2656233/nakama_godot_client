@@ -1,22 +1,28 @@
-class_name GameBridge
+class_name GameHostBridge
 extends RefCounted
 
 ## 模块：子游戏桥接层（插件唯一允许的框架入口）
 ## 职责：把子游戏需要的框架能力收敛成一个窄接口，屏蔽 Global.* 全局服务。
-## 生命周期：GameLauncher 启动子游戏时创建并写入 `GameBridge.current`，退出/重开时清空。
+## 生命周期：GameLauncher 启动子游戏时创建并写入 `GameHostBridge.current`，退出/重开时清空。
 ## 用法：
-##   GameBridge.current.toast("提示")
-##   GameBridge.current.send_match_rpc(op, data)
-##   await GameBridge.current.exit()
+##   GameHostBridge.current.toast("提示")
+##   GameHostBridge.current.send_match_rpc(op, data)
+##   await GameHostBridge.current.exit()
 ## 说明：
 ##   - 子游戏不得直接访问 Global.Online* / Global.OnlineMatch / Global.SceneMgr / Global.WindowPopup；
 ##   - 需要新能力时在这里加方法，而不是把 Global 服务名透传出去。
 
 ## 当前运行中的子游戏桥（同一时间只有一个子游戏，故用静态引用）。
-static var current: GameBridge = null
+static var current: GameHostBridge = null
+
+## 准备状态变化（set_ready_status 触发）。
+signal ready_status_changed(is_ready: bool)
+## 收到对局数据（子游戏可连接，代替直接订阅网络层）。
+signal match_data_received(op_code: int, payload: Variant)
 
 var context: GameContext = null
 var key: String = ""
+var _is_ready := false
 
 func _init(p_context: GameContext = null) -> void:
 	context = p_context
@@ -24,8 +30,8 @@ func _init(p_context: GameContext = null) -> void:
 		key = context.key
 
 ## 创建一个桥并设为当前桥。
-static func create(p_context: GameContext) -> GameBridge:
-	var bridge := GameBridge.new(p_context)
+static func create(p_context: GameContext) -> GameHostBridge:
+	var bridge := GameHostBridge.new(p_context)
 	current = bridge
 	return bridge
 
@@ -80,10 +86,22 @@ func open_settings(state: int = 0) -> void:
 # 生命周期
 # ---------------------------------------------------------------------
 
-## 退出游戏（等待启动器完成 LeaveMatch / 转场）。
+## 退出游戏：走 SceneRouter，按进入来源回到房间列表/游戏列表。
 func exit(result: GameResult = null) -> void:
-	if Global.has_global("GameLauncher"):
+	if Global.has_global("SceneRouter"):
+		await Global.SceneRouter.exit_game(result)
+	elif Global.has_global("GameLauncher"):
 		await Global.GameLauncher.exit_game(result)
+
+## 子游戏请求退出（PROMPT_REFACTOR 2.3 ③）。
+func request_exit_game() -> void:
+	await exit()
+
+## 获取本局房间/对局信息（只读副本）。
+func room_info() -> Dictionary:
+	if context == null:
+		return {}
+	return context.options.duplicate(true)
 
 ## 用当前上下文重开一局。
 func restart() -> bool:
@@ -133,7 +151,7 @@ func get_socket() -> NakamaSocket:
 	return nakama_socket
 
 func is_nakama_socket_connected() -> bool:
-	return Global.has_global("Online") and Global.Online.is_nakama_socket_connected()
+	return Global.has_global("Online") and bool(Global.Online.is_socket_connected)
 
 func connect_nakama_socket() -> void:
 	if Global.has_global("Online"):
@@ -171,6 +189,29 @@ func send_match_state(op_code: int, data: String, presences = null):
 ## 发送二进制对局 RPC（原 OnlineGame.sendToMatchRpc）。
 func send_match_rpc(op_code: int, data: PackedByteArray, presences = null):
 	return await Global.OnlineGame.sendToMatchRpc(op_code, data, presences)
+
+## 统一发送对局数据（PROMPT_REFACTOR 2.3 ③）：
+## String 原样、PackedByteArray 走 raw RPC、其余（字典/数组）自动 JSON。
+func send_match_data(op_code: int, payload: Variant) -> void:
+	if payload is PackedByteArray:
+		await send_match_rpc(op_code, payload)
+	elif payload is String:
+		await send_match_state(op_code, payload)
+	else:
+		await send_match_state(op_code, JSON.stringify(payload))
+
+## 上报准备状态（PROMPT_REFACTOR 2.3 ③）。
+## 本地立即生效并广播 ready_status_changed；联机时附带一条 ready 状态包。
+func set_ready_status(is_ready: bool) -> void:
+	if _is_ready == is_ready:
+		return
+	_is_ready = is_ready
+	ready_status_changed.emit(is_ready)
+	if is_online():
+		send_match_data(GameProtocol.MatchOpCode.CUSTOM_RPC, {"t": "ready", "v": is_ready})
+
+func is_ready() -> bool:
+	return _is_ready
 
 func get_game_max_people(game_id: int) -> int:
 	return int(Global.OnlineGame.getGameMaxPeople(game_id))

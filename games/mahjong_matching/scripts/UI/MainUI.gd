@@ -15,7 +15,7 @@ func _on_back_button_pressed():
 	if game != null and game.has_method("exit_game"):
 		await game.exit_game()
 	else:
-		GameBridge.current.exit()
+		GameHostBridge.current.exit()
 
 func _on_restart_button_pressed():
 	$ClickButtonPlayer.play()

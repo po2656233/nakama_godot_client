@@ -12,7 +12,10 @@ func _on_button_pressed() -> void:
 	_busy = true
 
 	if Global.has_global("GameLauncher") and Global.GameLauncher.is_game_running():
-		await Global.GameLauncher.exit_game()
+		if Global.has_global("SceneRouter"):
+			await Global.SceneRouter.exit_game()
+		else:
+			await Global.GameLauncher.exit_game()
 		return
 
 	Global.SceneMgr.go_back()

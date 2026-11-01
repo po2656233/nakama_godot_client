@@ -54,7 +54,7 @@ func do_login(save_credentials: bool = false) -> void:
 	else:
 		ui_layer.show_message("Logging in...")
 
-	var nakama_session = await GameBridge.current.nakama_client.authenticate_email_async(email, password, null, false)
+	var nakama_session = await GameHostBridge.current.nakama_client.authenticate_email_async(email, password, null, false)
 	if nakama_session.is_exception():
 		visible = true
 		ui_layer.show_message("Login failed!")
@@ -65,13 +65,13 @@ func do_login(save_credentials: bool = false) -> void:
 		email = ''
 		password = ''
 
-		# We always set GameBridge.current.nakama_session in case something is yielding
+		# We always set GameHostBridge.current.nakama_session in case something is yielding
 		# on the "session_changed" signal.
-		GameBridge.current.nakama_session = null
+		GameHostBridge.current.nakama_session = null
 	else:
 		if save_credentials:
 			_save_credentials()
-		GameBridge.current.nakama_session = nakama_session
+		GameHostBridge.current.nakama_session = nakama_session
 		ui_layer.hide_message()
 
 		if _next_screen:
@@ -102,7 +102,7 @@ func _on_CreateAccountButton_pressed() -> void:
 	visible = false
 	ui_layer.show_message("Creating account...")
 
-	var nakama_session = await GameBridge.current.nakama_client.authenticate_email_async(email, password, username, true)
+	var nakama_session = await GameHostBridge.current.nakama_client.authenticate_email_async(email, password, username, true)
 
 	if nakama_session.is_exception():
 		visible = true
@@ -116,12 +116,12 @@ func _on_CreateAccountButton_pressed() -> void:
 			msg = "Unable to create account"
 		ui_layer.show_message(msg)
 
-		# We always set GameBridge.current.nakama_session in case something is yielding
+		# We always set GameHostBridge.current.nakama_session in case something is yielding
 		# on the "session_changed" signal.
-		GameBridge.current.nakama_session = null
+		GameHostBridge.current.nakama_session = null
 	else:
 		if save_credentials:
 			_save_credentials()
-		GameBridge.current.nakama_session = nakama_session
+		GameHostBridge.current.nakama_session = nakama_session
 		ui_layer.hide_message()
 		ui_layer.show_screen("MatchScreen")

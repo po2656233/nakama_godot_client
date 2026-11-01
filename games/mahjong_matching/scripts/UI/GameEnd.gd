@@ -12,14 +12,14 @@ func _process(delta):
 
 func _on_quit_button_pressed():
 	# 从游戏内退出统一走启动器：处理离开对局、返回上一页。
-	if GameBridge.current != null and GameBridge.current.is_running():
-		await GameBridge.current.exit()
+	if GameHostBridge.current != null and GameHostBridge.current.is_running():
+		await GameHostBridge.current.exit()
 	else:
 		get_tree().quit()
 
 func _on_again_button_pressed():
 	self.visible = false
-	if GameBridge.current != null and GameBridge.current.is_running():
-		if GameBridge.current.restart():
+	if GameHostBridge.current != null and GameHostBridge.current.is_running():
+		if GameHostBridge.current.restart():
 			return
 	get_tree().reload_current_scene()

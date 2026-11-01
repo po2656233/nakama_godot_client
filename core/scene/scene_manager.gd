@@ -159,6 +159,8 @@ func to_game_scene(game_name: String) -> bool:
 	var key := game_name.strip_edges()
 	if key.is_empty():
 		return false
+	if Global.has_global("SceneRouter"):
+		return Global.SceneRouter.enter_game(key)
 	if not Global.has_global("GameLauncher"):
 		Global.WindowPopup.show_dynamic("游戏启动器未就绪")
 		push_error("[SceneMgr] GameLauncher 未注册")

@@ -119,6 +119,10 @@ func _on_game_cancel(_game_id_value) -> void:
 
 func _on_game_start(game_id_value) -> void:
 	Global.SignalMgr.WelcomeMusicSIG.emit()
+	# 登记导航来源：从游戏列表进入，退出时回到游戏列表。
+	if Global.has_global("SceneRouter"):
+		var en_name := str(Global.OnlineGame.getGameEnName(game_id_value))
+		Global.SceneRouter.prepare(NavigationContext.for_game_list(en_name))
 	# 每次开局都重载加载页状态，避免上一次的 100% 进度直接触发关闭。
 	loading_scene.Show()
 	Global.SignalMgr.LoadingGameSIG.emit(game_id_value)

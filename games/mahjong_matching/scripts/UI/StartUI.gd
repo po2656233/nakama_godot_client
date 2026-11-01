@@ -12,9 +12,9 @@ func _process(delta):
 	pass
 
 func _on_start_button_pressed():
-	if GameBridge.current != null and GameBridge.current.restart():
+	if GameHostBridge.current != null and GameHostBridge.current.restart():
 		return
-	GameBridge.current.restart()
+	GameHostBridge.current.restart()
 
 func _on_quit_button_pressed():
 	get_tree().quit()

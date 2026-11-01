@@ -16,7 +16,7 @@ func _check_pickup_or_throw_or_use():
 	# seperate system for sync'ing pickups and throws that this will conflict
 	# with if it runs on a remote player.
 	# 暂时注释
-	# if GameBridge.current.online_play and not host.player_controlled:
+	# if GameHostBridge.current.online_play and not host.player_controlled:
 	# 	return
 	
 	# We use call_deferred() here so that those operation happen after we've

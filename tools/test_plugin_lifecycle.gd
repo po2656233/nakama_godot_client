@@ -1,12 +1,12 @@
 extends SceneTree
 
-## 子游戏生命周期冒烟：验证 GameLauncher + GameBridge + 插件场景能真正跑起来。
+## 子游戏生命周期冒烟：验证 GameLauncher + GameHostBridge + 插件场景能真正跑起来。
 ##
 ## 流程：start_game("tetris") -> 上下文/桥注入 -> 场景进入树 -> exit_game -> 状态清空
 ## 用法：godot --headless --path . --script res://tools/test_plugin_lifecycle.gd
 ## 退出码：0 通过；1 失败。
 ##
-## 注意：本脚本不能静态引用 GameBridge / GameContext 等全局类，
+## 注意：本脚本不能静态引用 GameHostBridge / GameContext 等全局类，
 ##       否则会在 autoload 就绪前触发编译（Global 标识符不可见）。
 
 var _passed := 0

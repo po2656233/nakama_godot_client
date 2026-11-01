@@ -27,7 +27,7 @@ signal game_stopped (player_id)
 #}
 # 进入场景
 func _enter_tree():
-	GameBridge.current.connect_match_state(_on_received_match_state)
+	GameHostBridge.current.connect_match_state(_on_received_match_state)
 	pass
 	
 # 接收匹配状态事件
@@ -40,7 +40,7 @@ func _on_received_match_state(data: NakamaRTAPI.MatchData) -> void:
 	var json_data = json_conv.get_data()
 	match data.op_code:
 		GameProtocol.GameStatus.Start:
-			GameBridge.current.online_play = true
+			GameHostBridge.current.online_play = true
 			game_start(json_data['players'])	
 		GameProtocol.GameStatus.Playing:
 			if typeof(json_data) != TYPE_FLOAT and json_data.args:
@@ -80,8 +80,8 @@ func _get_custom_rpc_methods() -> Array:
 	]
 
 func game_start(players: Dictionary) -> void:
-	if GameBridge.current.online_play:
-		GameBridge.current.custom_rpc_sync(self, '_do_game_setup', [players])
+	if GameHostBridge.current.online_play:
+		GameHostBridge.current.custom_rpc_sync(self, '_do_game_setup', [players])
 	else:
 		_do_game_setup(players)
 
@@ -100,8 +100,8 @@ func _do_game_setup(players: Dictionary) -> void:
 	var sit = 0
 	for player_id in players:
 		sit = sit + 1
-		if player_id == GameBridge.current.get_my_id():
-			GameBridge.current.my_peer_id = sit
+		if player_id == GameHostBridge.current.get_my_id():
+			GameHostBridge.current.my_peer_id = sit
 		sitters[sit] = player_id
 		var other_player = Player.instantiate()
 		other_player.name = str(sit)
@@ -113,20 +113,20 @@ func _do_game_setup(players: Dictionary) -> void:
 		other_player.rotation = map.get_node("PlayerStartPositions/Player" + str(sit)).rotation
 		other_player.connect("player_dead", Callable(self, "_on_player_dead").bind(player_id))
 		
-		if not GameBridge.current.online_play:
+		if not GameHostBridge.current.online_play:
 			other_player.player_controlled = true
 			other_player.input_prefix = "player" + str(player_id) + "_"
 	
 	camera.update_position_and_zoom(false)
 
-	if GameBridge.current.online_play:
-		var my_id = GameBridge.current.get_my_id() 
-		var my_sit = GameBridge.current.my_peer_id
+	if GameHostBridge.current.online_play:
+		var my_id = GameHostBridge.current.get_my_id() 
+		var my_sit = GameHostBridge.current.my_peer_id
 		var my_player := players_node.get_node(str(my_sit))
 		my_player.player_controlled = true
 
 		# Tell the host that we've finished setup.
-		GameBridge.current.custom_rpc_id(self, my_sit, "_finished_game_setup", [my_id])
+		GameHostBridge.current.custom_rpc_id(self, my_sit, "_finished_game_setup", [my_id])
 	else:
 		_do_game_start()
 
@@ -135,7 +135,7 @@ func _finished_game_setup(player_id) -> void:
 	players_setup[player_id] = players_alive[player_id]
 	#if players_setup.size() == players_alive.size():
 		# Once all clients have finished setup, tell them to start the game.
-	GameBridge.current.custom_rpc_sync(self, "_do_game_start")
+	GameHostBridge.current.custom_rpc_sync(self, "_do_game_start")
 
 # Actually start the game on this client.
 func _do_game_start() -> void:

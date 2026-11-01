@@ -110,9 +110,9 @@ func _physics_process(delta: float) -> void:
 		move_and_collide(collision.get_normal() * collision.get_remainder().length())
 
 	# Sleep the object if it gets below certain linear/angular velocity thresholds.
-	if not GameBridge.current.online_play or is_multiplayer_authority():
+	if not GameHostBridge.current.online_play or is_multiplayer_authority():
 		if linear_velocity.length() < MIN_LINEAR_VELOCITY and angular_velocity < MIN_ANGULAR_VELOCITY:
-			if GameBridge.current.online_play:
+			if GameHostBridge.current.online_play:
 				rpc('_do_physics_finished', global_transform)
 			else:
 				_do_physics_finished(global_transform)

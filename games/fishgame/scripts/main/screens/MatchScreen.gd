@@ -7,9 +7,9 @@ func _ready() -> void:
 	$PanelContainer/VBoxContainer/MatchPanel/MatchButton.connect("pressed", Callable(self, "_on_match_button_pressed").bind(GameProtocol.MatchMode.MATCHMAKER))
 	$PanelContainer/VBoxContainer/CreatePanel/CreateButton.connect("pressed", Callable(self, "_on_match_button_pressed").bind(GameProtocol.MatchMode.CREATE))
 	$PanelContainer/VBoxContainer/JoinPanel/JoinButton.connect("pressed", Callable(self, "_on_match_button_pressed").bind(GameProtocol.MatchMode.JOIN))
-	GameBridge.current.connect_match_signal("matchmaker_matched", Callable(self, "_on_OnlineMatch_matchmaker_matched"))
-	GameBridge.current.connect_match_signal("match_created", Callable(self, "_on_OnlineMatch_created"))
-	GameBridge.current.connect_match_signal("match_joined", Callable(self, "_on_OnlineMatch_joined"))
+	GameHostBridge.current.connect_match_signal("matchmaker_matched", Callable(self, "_on_OnlineMatch_matchmaker_matched"))
+	GameHostBridge.current.connect_match_signal("match_created", Callable(self, "_on_OnlineMatch_created"))
+	GameHostBridge.current.connect_match_signal("match_joined", Callable(self, "_on_OnlineMatch_joined"))
 	pass
 
 func _show_screen(_info: Dictionary = {}) -> void:
@@ -18,18 +18,18 @@ func _show_screen(_info: Dictionary = {}) -> void:
 
 func _on_match_button_pressed(mode) -> void:
 	# If our session has expired, show the ConnectionScreen again.
-	if GameBridge.current.nakama_session == null or GameBridge.current.nakama_session.is_expired():
+	if GameHostBridge.current.nakama_session == null or GameHostBridge.current.nakama_session.is_expired():
 		ui_layer.show_screen("ConnectionScreen", { reconnect = true, next_screen = null })
 		# Wait to see if we get a new valid session.
-		await GameBridge.current.wait_session_changed()
-		if GameBridge.current.nakama_session == null:
+		await GameHostBridge.current.wait_session_changed()
+		if GameHostBridge.current.nakama_session == null:
 			return
 
 	# Connect socket to realtime Nakama API if not connected.
-	#if not GameBridge.current.is_nakama_socket_connected():
+	#if not GameHostBridge.current.is_nakama_socket_connected():
 		#print("socket not connected")
-		#GameBridge.current.connect_nakama_socket()
-		#await GameBridge.current.wait_socket_connected()
+		#GameHostBridge.current.connect_nakama_socket()
+		#await GameHostBridge.current.wait_socket_connected()
 
 	ui_layer.hide_message()
 	# Call internal method to do actual work.
@@ -55,7 +55,7 @@ func _start_matchmaking() -> void:
 		#query = "+properties.game:fish_game +properties.engine:godot",
 	#}
 	var gamename= "fish_game"
-	GameBridge.current.join_matchmaker({
+	GameHostBridge.current.join_matchmaker({
 		"query": " +properties.game:%s " %gamename,
 		"min_count": min_players,
 		"max_count": min_players,
@@ -69,7 +69,7 @@ func _start_matchmaking() -> void:
 		}
 		})
 	print("Match_screen_start_matchmaking")
-	#GameBridge.current.start_matchmaking(GameBridge.current.nakama_socket, data)
+	#GameHostBridge.current.start_matchmaking(GameHostBridge.current.nakama_socket, data)
 
 func _on_OnlineMatch_matchmaker_matched(_players: Dictionary):
 	print("Joined Match function")
@@ -77,7 +77,7 @@ func _on_OnlineMatch_matchmaker_matched(_players: Dictionary):
 	ui_layer.show_screen("ReadyScreen", { players = _players })
 
 func _create_match() -> void:
-	GameBridge.current.create_match()
+	GameHostBridge.current.create_match()
 
 func _on_OnlineMatch_created(match_id: String):
 	ui_layer.show_screen("ReadyScreen", { match_id = match_id, clear = true })
@@ -90,7 +90,7 @@ func _join_match() -> void:
 	if not match_id.ends_with('.'):
 		match_id += '.'
 	print("Joining Match with ID: " + match_id)
-	GameBridge.current.join_match(match_id)
+	GameHostBridge.current.join_match(match_id)
 
 func _on_OnlineMatch_joined(match_id: String):
 	print("Match Joined")
