@@ -125,7 +125,11 @@ func _resolve(key: String) -> GameDescriptor:
 		return null
 	return Global.GameRegistry.find(key)
 
-func _bind_context(game: Node, context: GameContext) -> void:
+func _bind_context(game: Node, context: GameContext, bridge1: GameBridge) -> void:
+	# 约定 0：子游戏通过桥访问框架能力，不直接碰 Global.Online*。
+	if game.has_method("on_game_bridge"):
+		game.call("on_game_bridge", bridge1)
+	game.set_meta("game_bridge", bridge1)
 	# 约定 1：实现 on_game_context() 的游戏（推荐继承 GameBase2D/GameBaseControl）直接拿到上下文。
 	if game.has_method("on_game_context"):
 		game.call("on_game_context", context)
