@@ -1,9 +1,43 @@
 # 折纸屋客户端架构说明
 
-> 本文描述当前代码分层、服务职责、子游戏接入方式。
-> 目标：**页面与子游戏解耦、路由与业务解耦、公共能力只保留一份**。
+> 本文描述重构后的代码分层、服务职责、子游戏插件契约与校验方式。
+> 目标：**页面与子游戏解耦、路由与业务解耦、公共能力只保留一份、子游戏可整目录插拔**。
 
-## 1. 启动与全局服务
+## 1. 目录拓扑
+
+```text
+res://
+├── core/                        平台底层
+│   ├── bootstrap/               Global / Util / Errors（autoload）+ global_config.cfg
+│   ├── network/                 Online / OnlineLogin / OnlineChat / OnlineGame / OnlineMatch / MessageQueue
+│   ├── scene/                   SceneMgr + 路由表 + 转场 + 叠加页
+│   ├── services/                SignalMgr / SettingsMgr / DataMgr / MailMgr
+│   ├── window/                  无边框拖动、消息框
+│   └── framework/               插件契约：GameMeta / GameRegistry / GameLauncher /
+│                                GameBridge / GameProtocol / GameContext / GameResult /
+│                                GameDescriptor / GameBase2D / GameBaseControl
+├── shared/                      跨模块共享（无业务语义）
+│   ├── ui/                      通用 UI（设置、排行榜、加载、弹窗、列表、返回按钮…）
+│   │   ├── controls/ loading/ popup/ gridanimation/
+│   ├── utils/                   无状态工具
+│   └── styles/                  主题、样式、字体、Shader（含 shaderlib 安装目录）
+├── lobby/                       大厅与社交（脚本与场景同目录）
+│   ├── home/ chat/ club/ room/ match/ gamelist/ email/ approval/ announcement/
+│   └── club/list/               俱乐部详情（与成员管理分目录）
+├── app/                         应用外壳页：login/ register/
+├── games/                       ★ 完全隔离的子游戏插件目录
+│   ├── chinesechess/            game_meta.tres + entry.tscn + scripts/ + scenes/ + assets/
+│   ├── tetris/  mahjong_matching/  fishgame/
+│   └── template/                复制用模板（注册表扫描时跳过）
+├── assets/                      共享美术/音频/字体（子游戏私有资源放在各自 games/<key>/assets 下）
+├── addons/ gdprotobuf/          第三方与生成代码（默认不改）
+├── docs/                        架构、接入指南、重构记录
+└── tools/                       headless 校验与迁移工具
+```
+
+> 目录名 `app/` 存放登录/注册这类“应用外壳”页面，不属于大厅，也不算平台底层。
+
+## 2. 启动与全局服务
 
 `project.godot` 只注册 4 个 autoload：
 
@@ -14,48 +48,41 @@
 | 3 | `Util` | 异步调用、排序、时间、图片、可靠消息队列 |
 | 4 | `Errors` | 错误中文化、网络错误识别 |
 
-`Global` 启动时读取 `autoload/global/global_config.cfg`，把“服务名 -> 脚本路径”登记到内存；
-第一次访问 `Global.Xxx` 时才实例化并挂到 `Global` 节点下。配置文件缺项会用
-`global.gd` 里的 `DEFAULT_SERVICES` 补齐，且**不再读取 `user://` 缓存**，避免旧路径覆盖新配置。
+`Global` 启动时读取 `core/bootstrap/global_config.cfg`，把“服务名 -> 脚本路径”登记到内存；
+第一次访问 `Global.Xxx` 时才实例化并挂到 `Global` 节点下。配置缺项会用 `global.gd` 里的
+`DEFAULT_SERVICES` 补齐，且**不读取 `user://` 缓存**，避免旧路径覆盖新配置。
 
 ### 服务一览
 
 | 服务 | 文件 | 职责 |
 | --- | --- | --- |
-| `SignalMgr` | `autoload/managers/signal_manager.gd` | 跨模块信号总线 |
-| `SceneMgr` | `autoload/managers/scene_manager.gd` | 场景路由、切换/返回、转场、叠加页 |
-| `SettingsMgr` | `autoload/managers/settings_manager.gd` | 设置面板与背景音乐 |
-| `DataMgr` | `autoload/managers/data_manager.gd` | 本地存档、聊天记录、好友/俱乐部缓存 |
-| `MailMgr` | `autoload/managers/mail_manager.gd` | 邮件列表（本地 mock） |
-| `WindowDrag` | `autoload/window/drag.gd` | 无边框窗口拖动 / 全屏 |
-| `WindowPopup` | `autoload/window/popup.gd` | 消息框、确认框、飘字 |
-| `Online` | `autoload/nakama/Online.gd` | Client / Session / Socket / 心跳 / RPC |
-| `OnlineLogin` | `autoload/nakama/OnlineLogin.gd` | 登录、注册、玩家资料 |
-| `OnlineChat` | `autoload/nakama/OnlineChat.gd` | 频道、消息、好友、俱乐部 |
-| `OnlineGame` | `autoload/nakama/OnlineGame.gd` | 游戏列表、房间 RPC、对局消息 |
-| `OnlineMatch` | `autoload/nakama/OnlineMatch.gd` | 对局创建/加入/匹配、自定义 RPC |
-| `GameRegistry` | `scripts/game/core/game_registry.gd` | 子游戏清单与 key/别名查询 |
-| `GameLauncher` | `scripts/game/core/game_launcher.gd` | 子游戏启动、上下文注入、退出/重开/结算 |
-| `MessageQueue` | `autoload/nakama/MessageQueue.gd` | 可靠重发队列（`Util.reliable_queue` 内部实例，不注册为 Global 服务） |
-| `FancyFade` / `Transitions` | `addons/transitions/` | 第三方转场动画 |
+| `SignalMgr` | `core/services/signal_manager.gd` | 跨模块信号总线 |
+| `SceneMgr` | `core/scene/scene_manager.gd` | 场景路由、切换/返回、转场、叠加页 |
+| `SettingsMgr` | `core/services/settings_manager.gd` | 设置面板与背景音乐 |
+| `DataMgr` | `core/services/data_manager.gd` | 本地存档、聊天记录、好友/俱乐部缓存 |
+| `MailMgr` | `core/services/mail_manager.gd` | 邮件列表（本地 mock） |
+| `WindowDrag` | `core/window/drag.gd` | 无边框窗口拖动 / 全屏 |
+| `WindowPopup` | `core/window/popup.gd` | 消息框、确认框、飘字 |
+| `Online` | `core/network/Online.gd` | Client / Session / Socket / 心跳 / RPC |
+| `OnlineLogin` | `core/network/OnlineLogin.gd` | 登录、注册、玩家资料 |
+| `OnlineChat` | `core/network/OnlineChat.gd` | 频道、消息、好友、俱乐部 |
+| `OnlineGame` | `core/network/OnlineGame.gd` | 游戏列表、房间 RPC、对局消息 |
+| `OnlineMatch` | `core/network/OnlineMatch.gd` | 对局创建/加入/匹配、自定义 RPC |
+| `GameRegistry` | `core/framework/game_registry.gd` | 插件发现与 key/别名索引 |
+| `GameLauncher` | `core/framework/game_launcher.gd` | 插件启动、桥注入、退出/重开/结算 |
 
-`SceneMgr` 内部由三个小模块组成，职责单一：
+`SceneMgr` 内部由三个小模块组成：`scene_registry.gd`（路由表）、`scene_transition.gd`（转场）、
+`scene_overlay.gd`（叠加页）。
 
-| 模块 | 文件 | 职责 |
-| --- | --- | --- |
-| 路由表 | `autoload/managers/scene_registry.gd` | 只维护“页面名 -> 路径” |
-| 转场 | `autoload/managers/scene_transition.gd` | 转场类型表 + 调用 `FancyFade` |
-| 叠加页 | `autoload/managers/scene_overlay.gd` | 在当前场景上层开页面 |
-
-## 2. 分层与依赖方向
+## 3. 分层与依赖方向
 
 ```
-场景 / UI 脚本（scenes + scripts）
-        │  只通过 Global.Xxx 调用
+页面 / UI（lobby、app、shared/ui）
+        │  只通过 Global.Xxx 调用框架服务
         ▼
 全局服务层（SceneMgr / SettingsMgr / DataMgr / GameRegistry / GameLauncher）
         │
-        ├── 子游戏层（scripts/game/<key>，继承 GameBase2D / GameBaseControl）
+        ├── 子游戏插件（games/<key>，只通过 GameBridge / GameProtocol 访问框架）
         │
         ▼
 网络层（Online / OnlineLogin / OnlineChat / OnlineGame / OnlineMatch）
@@ -69,68 +96,54 @@ Nakama 插件（addons/com.heroiclabs.nakama）+ 服务端
 - UI 不直接操作 `NakamaClient`，统一走 `Global.Online*`；
 - 跨模块事件走 `SignalMgr`，避免 UI 之间直接连线；
 - 页面切换统一走 `SceneMgr`，不在业务里手动 `change_scene_to_file()`；
-- 子游戏启动/退出/重开统一走 `GameLauncher`，不直接改场景；
+- 子游戏启动/退出/重开统一走 `GameLauncher`，游戏内只通过 `GameBridge` 回调；
 - 本地持久化统一走 `DataMgr`，UI 不直接读写 `user://`。
 
-## 3. 子游戏框架
+## 4. 子游戏插件框架
 
 ```
-GameCatalog（数据清单）
+games/<key>/game_meta.tres（GameMeta 自描述）
+      │  GameRegistry 扫描 res://games/* + user://games/*
+      ▼
+GameDescriptor（key/别名/入口/人数/联机）
       │
       ▼
-GameRegistry（Global.GameRegistry）──查 key/别名──> GameDescriptor
-      │
-      ▼
-GameLauncher（Global.GameLauncher）
-      ├─ 实例化场景
-      ├─ 注入 GameContext（房间、对局、模式、入口页）
-      ├─ 挂统一返回按钮 HUD
-      ├─ 通知服务端 LOADING_MAP_FINISH
-      └─ 统一 exit_game / restart_game / finish_game
-      │
-      ▼
-子游戏（GameBase2D / GameBaseControl）
+GameLauncher.start_game(key, options)
+      ├─ 创建 GameBridge（唯一对外通道，写入 GameBridge.current）
+      ├─ 实例化 entry.tscn
+      ├─ 注入 context / bridge（on_game_bridge / on_game_context）
+      ├─ SceneMgr 切换场景
+      ├─ 挂统一返回按钮 __GameHUD（可配置）
+      ├─ on_game_launched
+      └─ 联机时通知服务端 LOADING_MAP_FINISH
+退出：exit_game(result?) → on_game_result → on_game_exit → game_finished → LeaveMatch → go_back
+重开：restart_game() → 保留 match/room 上下文重新实例化
+结算：finish_game(result)
 ```
 
 关键文件：
 
-- `scripts/game/core/game_catalog.gd`：**新增游戏只改这里**（key、标题、场景、人数、联机、别名）；
-- `scripts/game/core/game_registry.gd`：key/别名索引 + 下载游戏的运行时注册；
-- `scripts/game/core/game_launcher.gd`：启动、上下文、HUD、退出/重开/结算；
-- `scripts/game/core/game_context.gd`：启动上下文；
-- `scripts/game/core/game_result.gd`：统一结算结果；
-- `scripts/game/core/game_base_2d.gd`、`game_base_control.gd`：子游戏基类；
-- `scripts/game/template/`：复制用模板。
+- `core/framework/game_meta.gd`：插件元数据（key/title/entry_scene/人数/联机/别名/顺序/版本）；
+- `core/framework/game_registry.gd`：扫描 `res://games/*/game_meta.tres` 与 `user://games/*`，建立索引；
+- `core/framework/game_launcher.gd`：启动、上下文与桥注入、HUD、退出/重开/结算；
+- `core/framework/game_bridge.gd`：子游戏唯一允许的框架入口（UI/生命周期/网络/对局）；
+- `core/framework/game_protocol.gd`：`MatchState` / `MatchMode` / `PlayerStatus` / `GameStatus` 唯一来源；
+- `core/framework/game_base_2d.gd`、`game_base_control.gd`：推荐基类（自带 `bridge` 成员）；
+- `games/template/`：复制用模板。
 
-子游戏接入步骤见 [GAME_DEVELOPMENT.md](GAME_DEVELOPMENT.md)。
+接入步骤见 [GAME_DEVELOPMENT.md](GAME_DEVELOPMENT.md)。
 
-### 3.1 启动流程
+### 4.1 沙盒规则
 
-```
-游戏列表/房间
-  └─ Global.SignalMgr.LoadingGameSIG.emit(game_id)
-       └─ loading_screen.gd
-            ├─ 本地已有场景 -> GameLauncher.start_game(en_name)
-            └─ 本地缺失     -> 下载 zip、解压、GameRegistry.register_external()
-                               -> GameLauncher.start_game(en_name)
-                                   ├─ GameRegistry.find() -> GameDescriptor
-                                   ├─ SceneMgr.switch_to_scene_instance()
-                                   ├─ 注入 GameContext + 挂 __GameHUD
-                                   └─ OnlineGame.sendToMatch(LOADING_MAP_FINISH)
-```
+`tools/validate_plugins.gd --strict-sandbox` 会强制以下约束：
 
-### 3.2 退出流程
+1. `games/**/*.gd` 不得出现任何 `Global.` 访问（唯一入口是 `GameBridge.current`）；
+2. 子游戏之间不得互相引用 `res://games/<other>/`；
+3. 每个 `games/<key>/` 必须含 `game_meta.tres` + `entry.tscn`，`entry_scene` 指向本目录 `entry.tscn`；
+4. `game_meta.key` == 目录名，且 key 全局唯一；
+5. `entry.tscn` 必须可加载并实例化。
 
-```
-返回按钮 / 游戏内退出
-  └─ GameLauncher.exit_game(result?)
-       ├─ 回调 on_game_result / on_game_exit
-       ├─ 广播 game_finished
-       ├─ OnlineMatch.LeaveMatch(match_id)（仅联机）
-       └─ SceneMgr.go_back()
-```
-
-## 4. 异步调用规范
+## 5. 异步调用规范
 
 Godot 4.7 中，动态调用异步函数必须等待返回值本身：
 
@@ -152,23 +165,12 @@ await Util.Asyn_Call(
 )
 ```
 
-也可以传 Callable：
-
-```gdscript
-await Util.async_call(
-    Global.Online.nakama_client.authenticate_email_async,
-    [email, password, null, false],
-    on_success,
-    on_failure
-)
-```
-
 - 返回 `NakamaAsyncResult` 且 `is_exception()` 为真时视为失败；
 - 失败文本先经 `Errors.humanize()` 中文化；
 - 仅 `Errors.is_network_error()` 为真的错误进入 `MessageQueue`，业务错误不重试；
 - 登录/注册类接口不重试（见 `Errors.Non_Retry_API`）。
 
-## 5. 数据与存档
+## 6. 数据与存档
 
 `DataMgr` 使用 `user://game_data.save` 保存一个字典：
 
@@ -183,50 +185,48 @@ await Util.async_call(
 
 写入采用“临时文件 + 重命名”，避免写一半崩溃损坏存档。
 
-## 6. 目录说明
-
-```
-autoload/                全局服务（启动、管理器、Nakama 封装、窗口）
-  global/                Global / Util / Errors / global_config.cfg
-  managers/              SceneMgr / SettingsMgr / DataMgr / MailMgr / SignalMgr
-  nakama/                Online* 网络服务
-  window/                无边框拖动、弹窗
-scenes/                  页面与预制体
-scripts/
-  game/core/             子游戏框架（注册表、启动器、上下文、基类）
-  game/template/         新子游戏模板
-  game/<key>/            各内置子游戏
-  1common/               通用 UI（设置、加载、排行榜、弹窗、列表）
-  chat/ roomlist/ match/ clublist/ club/ gamelist/ email/ ...
-assets/game/<key>/       子游戏资源
-addons/                  第三方插件（不改）
-gdprotobuf/              协议生成代码（不改）
-docs/                    架构与接入文档
-tools/                   headless 校验脚本
-```
-
 ## 7. 校验方式
 
 ```powershell
+$g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
+
 # 1. 全项目导入/脚本编译检查
-& 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe' --headless --path . --editor --quit
+& $g --headless --path . --editor --quit
 
-# 2. 批量加载业务脚本
-& 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe' --headless --path . --script res://tools/validate_scripts.gd
+# 2. 引用完整性（对比 refs_baseline.json，只报新增悬空）
+& $g --headless --path . --script res://tools/validate_refs.gd
 
-# 3. 子游戏框架校验
-& 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe' --headless --path . --script res://tools/validate_game_framework.gd
+# 3. 场景可加载性（逐个 ResourceLoader.load）
+& $g --headless --path . --script res://tools/validate_scenes.gd
 
-# 4. 基础层 / 异步封装测试
-& 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe' --headless --path . --script res://tools/test_foundation.gd
-& 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe' --headless --path . --script res://tools/test_async_call.gd
+# 4. 业务脚本加载
+& $g --headless --path . --script res://tools/validate_scripts.gd
+
+# 5. 插件契约 + 沙盒
+& $g --headless --path . --script res://tools/validate_plugins.gd -- --strict-sandbox
+
+# 6. 框架与生命周期
+& $g --headless --path . --script res://tools/validate_game_framework.gd
+& $g --headless --path . --script res://tools/test_plugin_lifecycle.gd
+
+# 7. 基础层 / 异步封装测试
+& $g --headless --path . --script res://tools/test_foundation.gd
+& $g --headless --path . --script res://tools/test_async_call.gd
 ```
+
+> 无服务端时 `test_plugin_lifecycle` 退出阶段会打印若干网络错误（返回大厅后聊天页会请求
+> 俱乐部列表），属预期噪声，判定看最后的 `通过 N 项，失败 0 项`。
 
 ## 8. 已知边界
 
-- `addons/`、`gdprotobuf/` 为第三方/生成代码，未重构；
-- 子游戏内部玩法（fishgame / tetris / xiangqi / mahjong）只保证入口兼容，内部玩法未逐行重写；
-- 下载游戏目前仍解压到 `res://scenes/game/`，在导出包中 `res://` 只读，后续应迁移到 `user://` 或 PCK；
-- 部分 `.tscn` 的 `ext_resource uid` 与本机 `.uid`/`.import` 不一致，Godot 会回退到路径加载（仅警告）；
-- `docs/archive/` 存放未接入的旧原型，不属于构建；
+- `addons/`、`gdprotobuf/` 为第三方/生成代码，未重构；`shader_library` 的默认安装路径常量
+  指向 `res://shared/styles/shaders/shaderlib/`（随目录迁移改了一行）。
+- 子游戏内部玩法（fishgame / tetris / chinesechess / mahjong_matching）只保证入口与桥接兼容，
+  内部玩法未逐行重写；fishgame 的多人同步仍以 Nakama match 状态为主，通过 `GameBridge` 转发。
+- 下载游戏目前仍解压到 `res://games/<key>/`，导出包中 `res://` 只读，正式发布前应迁移到
+  `user://` + PCK（`GameRegistry` 已支持扫描 `user://games`）。
+- `refs_baseline.json` 里有 8 处历史悬空引用（`res://icons/*.png`、`res://scenes/main_game.tscn`、
+  两张 currency svg、joystick `mark.bmp`），不属于本轮范围，后续清理。
+- 部分 `.tscn` 的 `ext_resource uid` 与本机 `.uid`/`.import` 不一致时，Godot 会回退到路径加载（仅警告）。
+- `docs/archive/` 存放未接入的旧原型，不属于构建。
 - 端到端联调需要真实 Nakama 服务端，建议在登录、聊天、房间、匹配四条链路各过一次冒烟。

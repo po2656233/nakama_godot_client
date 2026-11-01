@@ -1,7 +1,7 @@
 extends RefCounted
 class_name TetrisShared
 
-## 俄罗斯方块私有常量表（原全局服务 Global.Shared 退化为游戏内单例）。
+## 俄罗斯方块私有常量表（原全局 Shared 服务退化为游戏内单例）。
 static var _instance: TetrisShared = null
 
 static func shared() -> TetrisShared:

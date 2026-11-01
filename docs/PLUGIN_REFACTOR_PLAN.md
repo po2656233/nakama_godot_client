@@ -285,4 +285,4 @@ powershell -File tools/refactor/apply_moves.ps1 -Map tools/refactor/maps/p1_shar
 | P3 lobby/ + app/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 174/174；框架 34/34；引用 0 新增悬空 | 125 文件迁移；scripts/ 与 scenes/ 只剩 game/（P4 处理） |
 | P4 games/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 176/176；框架 34/34；插件结构/冒烟 0 失败 | 484 文件迁移；每游戏 game_meta.tres + entry.tscn；GameCatalog 删除、Registry 改 meta 扫描 |
 | P5 契约与沙盒 | ✅ 完成 | validate_plugins --strict-sandbox：结构 0 失败、沙盒 0 违规；生命周期冒烟 16/16 | GameBridge/GameProtocol 落地，games/** 零 Global 引用，Global.Shared 移除 |
-| P6 验证与文档 | ⏳ 待开始 | — | — |
+| P6 验证与文档 | ✅ 完成 | 导入 0 错误；引用 0 新增悬空；场景 107/107；脚本 180/180；框架 34/34；插件 strict 0 违规；生命周期 16/16；基础层/异步 0 失败 | ARCHITECTURE / GAME_DEVELOPMENT / CHANGELOG_PLUGIN 重写，.cursorrules 拓扑同步 |

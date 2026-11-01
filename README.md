@@ -57,21 +57,27 @@
 ## 项目结构
 
 ```
-autoload/          全局服务：Global 注册表、SceneMgr、Online* 网络、窗口
-scenes/            页面与预制体（scenes/game/<key>/ 为子游戏入口）
-scripts/
-  game/core/       子游戏框架：GameRegistry / GameLauncher / GameBase
-  game/template/   新子游戏模板
-  game/<key>/      中国象棋、俄罗斯方块、麻将连连看、捕鱼
-  1common/         通用 UI（加载、设置、弹窗、排行榜）
-  chat/ roomlist/ match/ club/ gamelist/ email/ ...
-assets/game/       各子游戏资源
-docs/              架构、子游戏接入指南
-tools/             headless 校验脚本
+core/              平台底层
+  bootstrap/       Global / Util / Errors（autoload）与 global_config.cfg
+  network/         Online* / MessageQueue（Nakama 封装）
+  scene/           SceneMgr、路由表、转场、叠加页
+  services/        SignalMgr / SettingsMgr / DataMgr / MailMgr
+  window/          无边框窗口、消息框
+  framework/       子游戏插件契约（GameMeta / GameRegistry / GameLauncher / GameBridge）
+shared/            跨模块共享
+  ui/              通用 UI（加载、设置、弹窗、排行榜、返回按钮…）
+  utils/ styles/   工具类、主题/字体/Shader
+lobby/             大厅与社交：home chat club room match gamelist email approval announcement
+app/               应用外壳页：login register
+games/<key>/       子游戏插件（自包含）：game_meta.tres + entry.tscn + scripts/ + assets/
+assets/            共享美术/音频/字体
+docs/              架构、子游戏接入指南、重构记录
+tools/             headless 校验与迁移工具
 ```
 
 新增子游戏请看 [docs/GAME_DEVELOPMENT.md](docs/GAME_DEVELOPMENT.md)；
-分层与服务职责见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
+分层与服务职责见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)；
+本次插拔化重构的变更记录见 [docs/CHANGELOG_PLUGIN.md](docs/CHANGELOG_PLUGIN.md)。
 
 ## 如何开始
 

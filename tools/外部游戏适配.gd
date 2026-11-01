@@ -96,18 +96,19 @@ func _handle_file(file_path: String, base_dir: String, game_name: String) -> voi
 	if _is_in_target_path(file_path, game_name):
 		return
 	
+	# 插件布局：games/<key>/{entry.tscn, scripts/, assets/}
 	match ext:
-		"tscn": _move_to_category(file_path, base_dir, "scenes/game/%s" % game_name)
-		"gd": _move_to_category(file_path, base_dir, "scripts/game/%s" % game_name)
-		"tres": _move_to_category(file_path, base_dir, "themes/game/%s" % game_name)
-		"gdshader": _move_to_category(file_path, base_dir, "shaders/game/%s" % game_name)
-		"png", "jpg", "webp": _move_to_category(file_path, base_dir, "assets/game/%s/image" % game_name)
-		"wav", "ogg": _move_to_category(file_path, base_dir, "assets/game/%s/sound" % game_name)
-		"ttf", "otf": _move_to_category(file_path, base_dir, "assets/game/%s/font" % game_name)
+		"tscn": _move_to_category(file_path, base_dir, "games/%s" % game_name)
+		"gd": _move_to_category(file_path, base_dir, "games/%s/scripts" % game_name)
+		"tres": _move_to_category(file_path, base_dir, "games/%s/assets" % game_name)
+		"gdshader": _move_to_category(file_path, base_dir, "games/%s/assets/shaders" % game_name)
+		"png", "jpg", "webp": _move_to_category(file_path, base_dir, "games/%s/assets/image" % game_name)
+		"wav", "ogg": _move_to_category(file_path, base_dir, "games/%s/assets/sound" % game_name)
+		"ttf", "otf": _move_to_category(file_path, base_dir, "games/%s/assets/font" % game_name)
 		"import", "uid": _delete_file(file_path)
 
 func _is_in_target_path(path: String, game_name: String) -> bool:
-	return path.contains("scenes/game") || path.contains("assets/game/%s" % game_name)
+	return path.contains("games/%s/" % game_name)
 
 func _move_to_category(src: String, base_dir: String, category: String) -> void:
 	var rel_path := src.replace(base_dir, "")
