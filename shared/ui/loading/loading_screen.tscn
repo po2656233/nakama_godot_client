@@ -1,0 +1,149 @@
+[gd_scene format=3 uid="uid://b6j8y8j4q4q"]
+
+[ext_resource type="Script" uid="uid://druypmjykb82u" path="res://shared/ui/loading/loading_screen.gd" id="1_2gkkn"]
+[ext_resource type="Texture2D" uid="uid://duyc41ffxpnrn" path="res://assets/bg/bg_login.jpg" id="2_hsgnm"]
+[ext_resource type="PackedScene" uid="uid://egr5pjwvrrk5" path="res://shared/ui/gridanimation/board.tscn" id="3_hsgnm"]
+
+[sub_resource type="SystemFont" id="SystemFont_2gkkn"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_hsgnm"]
+font = SubResource("SystemFont_2gkkn")
+font_size = 46
+font_color = Color(0.41623, 0.671764, 0.569814, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_1ji86"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_2d1qb"]
+font = SubResource("SystemFont_1ji86")
+font_size = 50
+font_color = Color(0.492538, 0.733682, 0.423409, 1)
+outline_size = 2
+shadow_size = 2
+
+[sub_resource type="SystemFont" id="SystemFont_hsgnm"]
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ngnld"]
+bg_color = Color(0.211765, 0.643137, 0.792157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.572198, 0.856859, 0.89133, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0.364706, 0, 0.6)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tlhce"]
+bg_color = Color(0.00392157, 0.109804, 0.239216, 1)
+border_width_top = 5
+border_width_bottom = 5
+border_color = Color(0.40528, 0.911681, 0.699217, 1)
+border_blend = true
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.353135, 0.675318, 0.598314, 0.6)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[node name="LoadingScreen" type="Control" unique_id=2040794360]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2gkkn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1649164556]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hsgnm")
+expand_mode = 1
+
+[node name="rightwrong" type="Label" parent="." unique_id=418290323]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 68.0
+grow_horizontal = 2
+text = "正    反"
+label_settings = SubResource("LabelSettings_hsgnm")
+horizontal_alignment = 3
+
+[node name="noway" type="Label" parent="." unique_id=754682905]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = 2.5
+offset_right = 72.0
+offset_bottom = 75.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "无    不"
+label_settings = SubResource("LabelSettings_2d1qb")
+horizontal_alignment = 1
+
+[node name="board" parent="." unique_id=1392200620 instance=ExtResource("3_hsgnm")]
+visible = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -275.0
+offset_top = 50.0
+offset_right = 275.0
+offset_bottom = 50.0
+grow_vertical = 1
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=721219472]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1564250215]
+layout_mode = 2
+
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2107934896]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.728822, 0.728822, 0.728822, 1)
+theme_override_constants/line_spacing = 20
+theme_override_fonts/font = SubResource("SystemFont_hsgnm")
+theme_override_font_sizes/font_size = 30
+text = "Load... 0%"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer" unique_id=1744564513]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_ngnld")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tlhce")
+show_percentage = false

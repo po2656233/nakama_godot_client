@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b6x8j0p7n6xj"]
 
 [ext_resource type="Script" uid="uid://c6dck2wiksuux" path="res://scripts/match/matching.gd" id="1_tlue5"]
-[ext_resource type="Shader" uid="uid://bb85safeckk6b" path="res://shaders/progress_circle.gdshader" id="2_p1m5x"]
+[ext_resource type="Shader" uid="uid://bb85safeckk6b" path="res://shared/styles/shaders/progress_circle.gdshader" id="2_p1m5x"]
 
 [sub_resource type="Theme" id="Theme_8pgp0"]
 

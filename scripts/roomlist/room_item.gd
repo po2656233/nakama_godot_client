@@ -27,11 +27,11 @@ signal show_select()
 @onready var animation = $AnimationPlayer
 
 
-var room_style_path = "res://styles/room_panel_style.tres"
-var waiting_style_path = "res://styles/waiting_style.tres"
-var playing_style_path = "res://styles/playing_style.tres"
-var full_style_path = "res://styles/full_style.tres"
-var default_style_path = "res://styles/default_style.tres"
+var room_style_path = "res://shared/styles/styles/room_panel_style.tres"
+var waiting_style_path = "res://shared/styles/styles/waiting_style.tres"
+var playing_style_path = "res://shared/styles/styles/playing_style.tres"
+var full_style_path = "res://shared/styles/styles/full_style.tres"
+var default_style_path = "res://shared/styles/styles/default_style.tres"
 
 var hover_tween: Tween
 var pulse_tween: Tween

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://v282l3wda1un" path="res://scripts/gamelist/dragon_bones.gd" id="4_2lxpo"]
 [ext_resource type="DragonBonesFactory" uid="uid://dgjv2vifuj6ro" path="res://sprites/jiangbei/jiangbei_ske.dbfactory" id="4_gloe0"]
 [ext_resource type="Script" uid="uid://6apsvbh4ylww" path="res://scripts/gamelist/description.gd" id="6_6l74d"]
-[ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shaders/flow_light.gdshader" id="7_keqs5"]
+[ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shared/styles/shaders/flow_light.gdshader" id="7_keqs5"]
 [ext_resource type="DragonBonesFactory" uid="uid://ba10jeacbbkbj" path="res://sprites/baoxiang1/lhdb_chujichang_ske.dbfactory" id="8_gcjtt"]
 [ext_resource type="DragonBonesFactory" uid="uid://dy3my0454rvqt" path="res://sprites/baoxiang2/lhdb_gaojichang_1_ske.dbfactory" id="9_ahfpy"]
 [ext_resource type="DragonBonesFactory" uid="uid://cv5b87wdv2s1h" path="res://sprites/baoxiang3/lhdb_zhizunchang_ske.dbfactory" id="10_0c0hg"]

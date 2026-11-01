@@ -13,7 +13,7 @@ signal game_finished(result: GameResult)
 signal game_exited(context: GameContext)
 signal game_restarted(context: GameContext)
 
-const REBACK_SCENE := preload("res://scenes/1common/reback.tscn")
+const REBACK_SCENE := preload("res://shared/ui/reback.tscn")
 
 var current_context: GameContext = null
 var current_game: Node = null

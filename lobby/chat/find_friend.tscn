@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://duk1crphy5j8f"]
+
+[ext_resource type="Script" uid="uid://b8fwefc1knge1" path="res://lobby/chat/find_friend.gd" id="1_54668"]
+[ext_resource type="Theme" uid="uid://dxj70fb1mjaob" path="res://shared/styles/themes/chat.tres" id="2_a7bd4"]
+[ext_resource type="Texture2D" uid="uid://edm34hfg0egi" path="res://assets/hall/btn_jia.png" id="3_on8jn"]
+[ext_resource type="Script" uid="uid://c7ivuidqgh6st" path="res://shared/ui/itemlist_ctrl.gd" id="3_qwje4"]
+[ext_resource type="Texture2D" uid="uid://c3nkmrq40xd4p" path="res://assets/hall/btn_jia _xuant.png" id="4_o61lp"]
+[ext_resource type="Texture2D" uid="uid://iuonmkrhiqvo" path="res://assets/hall/btn_jia_enx.png" id="5_g27v3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipxp4"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.141176, 0.278431, 0.196078, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.290196, 0.333333, 0.376471, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_offset = Vector2(10, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x2pc1"]
+content_margin_left = 20.0
+bg_color = Color(0.120345, 0.17538, 0.120918, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03han"]
+content_margin_left = 20.0
+bg_color = Color(0.0666667, 0.0980392, 0.184314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Firends" type="Control" unique_id=1403381422]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_54668")
+
+[node name="Panel" type="Panel" parent="." unique_id=614683049]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_a7bd4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ipxp4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=221191793]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 14.0
+offset_top = 6.0
+offset_right = -17.0
+offset_bottom = 57.0
+grow_horizontal = 2
+
+[node name="LineEdit_find" type="LineEdit" parent="Panel/HBoxContainer" unique_id=1385812408]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_x2pc1")
+theme_override_styles/focus = SubResource("StyleBoxFlat_03han")
+placeholder_text = "查找"
+
+[node name="tb_add" type="TextureButton" parent="Panel/HBoxContainer" unique_id=547594183]
+layout_mode = 2
+texture_normal = ExtResource("3_on8jn")
+texture_pressed = ExtResource("4_o61lp")
+texture_hover = ExtResource("5_g27v3")
+stretch_mode = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=393887684]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 60.0
+offset_right = -14.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemList" type="ItemList" parent="Panel/ScrollContainer" unique_id=13173665]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_hovered_color = Color(0.968627, 0.807843, 0, 1)
+theme_override_colors/font_selected_color = Color(0.776471, 0.862745, 0.729412, 1)
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 2
+theme_override_constants/line_separation = 10
+theme_override_constants/icon_margin = 10
+allow_reselect = true
+allow_rmb_select = true
+script = ExtResource("3_qwje4")
+
+[connection signal="text_changed" from="Panel/HBoxContainer/LineEdit_find" to="." method="_on_line_edit_find_text_changed"]
+[connection signal="pressed" from="Panel/HBoxContainer/tb_add" to="." method="_on_tb_add_pressed"]
+[connection signal="gui_input" from="Panel/ScrollContainer/ItemList" to="." method="_on_item_list_gui_input"]
+[connection signal="item_clicked" from="Panel/ScrollContainer/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="item_selected" from="Panel/ScrollContainer/ItemList" to="." method="_on_item_list_item_selected"]

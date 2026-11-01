@@ -1,0 +1,426 @@
+[gd_scene format=3 uid="uid://cnjcuw1254s0x"]
+
+[ext_resource type="Script" uid="uid://cywp43kgdl1pi" path="res://shared/ui/loading/loading_circle.gd" id="1_1mgu0"]
+
+[sub_resource type="Gradient" id="Gradient_0vhb8"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.133333, 0.321569, 0.45098, 0.12549, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jsy3i"]
+gradient = SubResource("Gradient_0vhb8")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Shader" id="Shader_1mgu0"]
+code = "shader_type canvas_item;
+
+uniform sampler2D gradient_texture;
+uniform float progress : hint_range(0.0, 1.0) = 0.0;
+uniform float border_thickness : hint_range(0.0, 0.1) = 0.02;
+uniform vec4 border_color : source_color = vec4(0.8, 0.3, 1.0, 0.2);
+uniform float pulse_amplitude : hint_range(0.0, 0.1) = 0.03;
+uniform float pulse_frequency = 1.5;
+uniform float glow_intensity : hint_range(0.0, 1.0) = 0.3;
+
+void fragment() {
+    // 计算到中心的距离
+    vec2 center = vec2(0.5, 0.5);
+    float dist = distance(UV, center);
+    
+    // 创建圆形
+    float circle_alpha = smoothstep(0.5, 0.49, dist);
+    
+    // 创建填充效果 (基于进度)
+    float fill_cutoff = 0.5 - progress * 0.5;
+    float fill_alpha = smoothstep(fill_cutoff + 0.02, fill_cutoff, dist);
+    
+    // 边缘发光效果 - 更柔和
+    float border = smoothstep(0.2, 0.2 - border_thickness, dist) * 
+                  smoothstep(fill_cutoff, fill_cutoff + border_thickness, dist);
+    
+    // 添加柔和的脉冲效果
+    float pulse = sin(TIME * pulse_frequency) * pulse_amplitude;
+    float pulse_border = smoothstep(fill_cutoff + pulse, fill_cutoff + pulse + border_thickness, dist);
+    
+    // 获取渐变颜色
+    vec4 gradient_color = texture(gradient_texture, vec2(UV.y, 0.0));
+    
+    // 计算球体边缘柔和高光
+    float highlight = 1.0 - smoothstep(0.0, 0.45, dist);
+    highlight = pow(highlight, 2.0) * 0.8;
+    
+    // 组合所有效果，但降低强度
+    vec4 fill_color = gradient_color * fill_alpha;
+    vec4 border_effect = border_color * border * (1.0 + 0.3 * sin(TIME * pulse_frequency));
+    vec4 highlight_color = vec4(1.0, 1.0, 1.0, highlight * 0.3);
+    vec4 pulse_effect = border_color * pulse_border * 0.3;
+    
+    // 最终颜色 - 更柔和的混合
+    COLOR = fill_color + border_effect + highlight_color + pulse_effect;
+    COLOR.a *= circle_alpha;
+    
+    // 外部发光 - 更柔和
+    float glow = smoothstep(0.5 + border_thickness, 0.5 - border_thickness * 2.0, dist);
+    COLOR += border_color * glow * glow_intensity * (0.4 + 0.3 * sin(TIME * pulse_frequency));
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_1sv2s"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(0.156863, 0.431373, 0.65098, 0.9, 0.25098, 0.54902, 0.772549, 0.9, 0.352941, 0.65098, 0.85098, 0.9, 0.580392, 0.8, 0.94902, 0.8)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_plsr6"]
+gradient = SubResource("Gradient_1sv2s")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jct1w"]
+shader = SubResource("Shader_1mgu0")
+shader_parameter/gradient_texture = SubResource("GradientTexture2D_plsr6")
+shader_parameter/progress = 0.1
+shader_parameter/border_thickness = 0.02
+shader_parameter/border_color = Color(0.8, 0.9, 1, 0.4)
+shader_parameter/pulse_amplitude = 0.03
+shader_parameter/pulse_frequency = 1.5
+shader_parameter/glow_intensity = 0.25
+
+[sub_resource type="Gradient" id="Gradient_qo4rv"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(0.156863, 0.431373, 0.65098, 0.9, 0.25098, 0.54902, 0.772549, 0.9, 0.352941, 0.65098, 0.85098, 0.9, 0.580392, 0.8, 0.94902, 0.8)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k2wd4"]
+gradient = SubResource("Gradient_qo4rv")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="FontVariation" id="FontVariation_oghxi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_64yfn"]
+font = SubResource("FontVariation_oghxi")
+font_size = 18
+font_color = Color(0.780392, 0.882353, 1, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.392157)
+
+[sub_resource type="Animation" id="Animation_x62i6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SphereProgress:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PercentageLabel:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.972549, 0.0941176, 0.0941176, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SphereProgress:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PercentageLabel:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StatusLabel:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8r1lu"]
+resource_name = "complete"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SphereProgress:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.310617, 0.310617, 0.310617, 1), Color(1.2, 1.2, 1.2, 1), Color(0, 0.504068, 0.506701, 1), Color(1.2, 1.2, 1.2, 1), Color(1, 1, 0.188235, 1), Color(1.2, 0.521569, 1.2, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PercentageLabel:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StatusLabel:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.5, 0.7),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SphereProgress:material:shader_parameter/glow_intensity")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.7, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.25, 0.4, 0.3, 0.35, 0.25]
+}
+
+[sub_resource type="Animation" id="Animation_2qqed"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SphereProgress:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(3.06112e-05, 0.522468, 0.86186, 0.95), Color(0.266575, 0.266575, 0.266575, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PercentageLabel:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.443554, 0.106259, 0.202838, 1), Color(0.916305, 0.20425, 0.314474, 1), Color(1, 0.211765, 0.0823529, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x5qdq"]
+_data = {
+&"RESET": SubResource("Animation_x62i6"),
+&"complete": SubResource("Animation_8r1lu"),
+&"idle": SubResource("Animation_2qqed")
+}
+
+[sub_resource type="Animation" id="Animation_5tqmj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StatusLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.894922, 0.894922, 0.894922, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_b8tow"]
+resource_name = "status_change"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StatusLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(0, 0.548337, 0.548555, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5t8cd"]
+_data = {
+&"RESET": SubResource("Animation_5tqmj"),
+&"status_change": SubResource("Animation_b8tow")
+}
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_r7tjp"]
+
+[node name="LoadingScreen" type="Control" unique_id=2085340330]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1072.0
+offset_bottom = -568.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1mgu0")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1779945075]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0392157, 0.0784314, 0.117647, 1)
+
+[node name="BackgroundGlow" type="TextureRect" parent="." unique_id=573689778]
+modulate = Color(1, 1, 1, 0.27451)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_jsy3i")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="." unique_id=1282860102]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_right = 46.0
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "能量填充系统"
+horizontal_alignment = 1
+
+[node name="SphereProgress" type="ColorRect" parent="." unique_id=1218732264]
+material = SubResource("ShaderMaterial_jct1w")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0627451, 0.0745098, 0.109804, 1)
+
+[node name="GlowCircle" type="TextureRect" parent="SphereProgress" unique_id=882408359]
+modulate = Color(0.152941, 0.345098, 0.85098, 0.149)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_k2wd4")
+expand_mode = 1
+
+[node name="PercentageLabel" type="Label" parent="." unique_id=1354400441]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -21.0
+offset_right = 28.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.972549, 0.0941176, 0.0941176, 1)
+theme_override_font_sizes/font_size = 28
+text = "10%"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="." unique_id=1452359604]
+visible = false
+modulate = Color(0.894922, 0.894922, 0.894922, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.5
+offset_top = -27.0
+offset_right = 52.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "注入能量中..."
+label_settings = SubResource("LabelSettings_64yfn")
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=54819296]
+libraries/ = SubResource("AnimationLibrary_x5qdq")
+
+[node name="StatusAnimation" type="AnimationPlayer" parent="." unique_id=517945526]
+libraries/ = SubResource("AnimationLibrary_5t8cd")
+
+[node name="WaterSound" type="AudioStreamPlayer" parent="." unique_id=1965105400]
+stream = SubResource("AudioStreamGenerator_r7tjp")
+volume_db = -15.0
+pitch_scale = 0.8

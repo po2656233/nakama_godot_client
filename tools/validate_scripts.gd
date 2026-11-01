@@ -3,7 +3,7 @@ extends SceneTree
 ## 开发辅助：批量加载业务脚本，暴露解析/编译错误。
 ## 用法：godot --headless --path . --script res://tools/validate_scripts.gd
 
-const ROOTS := ["res://autoload", "res://scripts"]
+const ROOTS := ["res://autoload", "res://core", "res://shared", "res://lobby", "res://games", "res://app", "res://scripts", "res://scenes", "res://tools"]
 var _failed: Array[String] = []
 var _total := 0
 
@@ -24,7 +24,6 @@ func _validate() -> void:
 func _scan(dir_path: String) -> void:
 	var dir := DirAccess.open(dir_path)
 	if dir == null:
-		push_warning("无法打开目录: " + dir_path)
 		return
 	dir.list_dir_begin()
 	var name := dir.get_next()

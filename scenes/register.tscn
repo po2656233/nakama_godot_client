@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b513am8b84bug" path="res://assets/lobby/shiling.png" id="3_mxuud"]
 [ext_resource type="Texture2D" uid="uid://cylapxjt4grlm" path="res://assets/login/btn_yhxy.png" id="4_vt4ww"]
 [ext_resource type="Texture2D" uid="uid://b3w6o68ukeere" path="res://assets/login/openeye.svg" id="4_yx6uh"]
-[ext_resource type="Theme" uid="uid://kra0w10s7t24" path="res://themes/checkbutton.tres" id="5_wyo8s"]
+[ext_resource type="Theme" uid="uid://kra0w10s7t24" path="res://shared/styles/themes/checkbutton.tres" id="5_wyo8s"]
 [ext_resource type="Texture2D" uid="uid://r3uh6ep8dsff" path="res://assets/hall/db_cbl_0.png" id="9_njh8n"]
 [ext_resource type="Texture2D" uid="uid://brkgpsvkueqq3" path="res://assets/hall/db_cbl_0_0.png" id="10_dkx4k"]
 

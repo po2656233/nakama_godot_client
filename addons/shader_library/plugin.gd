@@ -3,7 +3,7 @@ extends EditorPlugin
 
 const SETTING_SHADERS_PATH = "shader_library/general/shaders_folder"
 const SETTING_PREVIOUS_PATH = "shader_library/internal/previous_shaders_folder"
-const DEFAULT_SHADERS_PATH = "res://shaders/shaderlib/"
+const DEFAULT_SHADERS_PATH = "res://shared/styles/shaders/shaderlib/"
 
 var shader_browser: Control
 

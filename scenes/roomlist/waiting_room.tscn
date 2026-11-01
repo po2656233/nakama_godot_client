@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b6x8yd4hj6n8w"]
 
 [ext_resource type="Script" uid="uid://l0n5ge8q6pka" path="res://scripts/roomlist/waiting_room.gd" id="1_2w3vq"]
-[ext_resource type="PackedScene" uid="uid://ryqfmggkqpxe" path="res://scenes/1common/countdown_timer.tscn" id="2_bgkmg"]
-[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://scenes/1common/loading/loading_screen.tscn" id="3_h1ti0"]
+[ext_resource type="PackedScene" uid="uid://ryqfmggkqpxe" path="res://shared/ui/countdown_timer.tscn" id="2_bgkmg"]
+[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://shared/ui/loading/loading_screen.tscn" id="3_h1ti0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.0901961, 0.152941, 0.219608, 1)

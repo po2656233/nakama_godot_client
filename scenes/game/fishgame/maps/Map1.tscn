@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://r4yrwhrhw0m3" path="res://scenes/game/fishgame/objects/Barnacles.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://cieahbe34cjdl" path="res://scenes/game/fishgame/objects/TimedGeneratorFlat.tscn" id="9"]
 [ext_resource type="PackedScene" uid="uid://cn4ssax8bfua3" path="res://addons/virtual_joystick/virtual_joystick.tscn" id="9_nqcub"]
-[ext_resource type="PackedScene" uid="uid://b88upmlmmwyiv" path="res://scenes/1common/setting.tscn" id="10_g7o4q"]
+[ext_resource type="PackedScene" uid="uid://b88upmlmmwyiv" path="res://shared/ui/setting.tscn" id="10_g7o4q"]
 
 [node name="Map1" type="Node2D" unique_id=644213673]
 texture_filter = 1

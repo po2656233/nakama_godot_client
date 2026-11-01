@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ceh38q6f7syuo" path="res://scripts/gamelist/game_list.gd" id="1_xxxxx"]
 [ext_resource type="PackedScene" uid="uid://b6x8j0p7n6xj" path="res://scenes/match/matching.tscn" id="2_kgill"]
 [ext_resource type="PackedScene" uid="uid://riqfmggkqpfx" path="res://scenes/match/match_success.tscn" id="3_8wtxj"]
-[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://scenes/1common/loading/loading_screen.tscn" id="4_uxysp"]
+[ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://shared/ui/loading/loading_screen.tscn" id="4_uxysp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.205356, 0.473676, 0.592367, 1)

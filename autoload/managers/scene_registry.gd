@@ -6,7 +6,7 @@ extends RefCounted
 
 ## 应用级页面路由（子游戏见 scripts/game/core/game_catalog.gd）。
 const DEFAULT_ROUTES := {
-	"loading": "res://scenes/1common/loading/loading_screen.tscn",
+	"loading": "res://shared/ui/loading/loading_screen.tscn",
 	"login": "res://scenes/login.tscn",
 	"register": "res://scenes/register.tscn",
 	"home": "res://scenes/home.tscn",
@@ -18,7 +18,7 @@ const DEFAULT_ROUTES := {
 	"roomlist": "res://scenes/roomlist/room_list.tscn",
 	"matching": "res://scenes/match/matching.tscn",
 	"matchSuccess": "res://scenes/match/match_success.tscn",
-	"leaderboard": "res://scenes/1common/leaderboard.tscn",
+	"leaderboard": "res://shared/ui/leaderboard.tscn",
 }
 
 var _paths: Dictionary = {}

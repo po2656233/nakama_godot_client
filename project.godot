@@ -48,7 +48,7 @@ settings=""
 
 [gui]
 
-theme/custom_font="res://assets/font/SourceHanSansSC-Normal.otf"
+theme/custom_font="res://shared/styles/fonts/SourceHanSansSC-Normal.otf"
 
 [input]
 
@@ -130,4 +130,4 @@ rendering/quality/driver/name="opengl3"
 
 [shader_library]
 
-internal/previous_shaders_folder="res://shaders/shaderlib/"
+internal/previous_shaders_folder="res://shared/styles/shaders/shaderlib/"
