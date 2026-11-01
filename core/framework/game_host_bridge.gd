@@ -202,11 +202,11 @@ func send_match_data(op_code: int, payload: Variant) -> void:
 
 ## 上报准备状态（PROMPT_REFACTOR 2.3 ③）。
 ## 本地立即生效并广播 ready_status_changed；联机时附带一条 ready 状态包。
-func set_ready_status(is_ready: bool) -> void:
-	if _is_ready == is_ready:
+func set_ready_status(is_ready_1: bool) -> void:
+	if _is_ready == is_ready_1:
 		return
-	_is_ready = is_ready
-	ready_status_changed.emit(is_ready)
+	_is_ready = is_ready_1
+	ready_status_changed.emit(is_ready_1)
 	if is_online():
 		send_match_data(GameProtocol.MatchOpCode.CUSTOM_RPC, {"t": "ready", "v": is_ready})
 

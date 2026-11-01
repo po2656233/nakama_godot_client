@@ -1,12 +1,12 @@
-﻿{
-    "missing": {
-        "res://assets/currency/closelight.svg": ["assets/currency/closelight.svg.import"],
-        "res://assets/currency/openlight.svg": ["assets/currency/openlight.svg.import"],
-        "res://assets/images/joystick/mark.bmp": ["addons/virtual_joystick/textures/mark.bmp.import"],
-        "res://icons/dashboard.png": ["shared/ui/tabbed_panel.gd"],
-        "res://icons/help.png": ["shared/ui/tabbed_panel.gd"],
-        "res://icons/profile.png": ["shared/ui/tabbed_panel.gd"],
-        "res://icons/settings.png": ["shared/ui/tabbed_panel.gd"],
-        "res://scenes/main_game.tscn": ["shared/ui/loading/loading_circle.gd", "shared/ui/loading/loading_power.gd"]
-    }
+{
+	"missing": {
+		"res://assets/currency/closelight.svg": ["assets/currency/closelight.svg.import"],
+		"res://assets/currency/openlight.svg": ["assets/currency/openlight.svg.import"],
+		"res://assets/images/joystick/mark.bmp": ["addons/virtual_joystick/textures/mark.bmp.import"],
+		"res://icons/dashboard.png": ["shared/ui/tabbed_panel.gd"],
+		"res://icons/help.png": ["shared/ui/tabbed_panel.gd"],
+		"res://icons/profile.png": ["shared/ui/tabbed_panel.gd"],
+		"res://icons/settings.png": ["shared/ui/tabbed_panel.gd"],
+		"res://scenes/main_game.tscn": ["shared/ui/loading/loading_circle.gd", "shared/ui/loading/loading_power.gd"]
+	}
 }

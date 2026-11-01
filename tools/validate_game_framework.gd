@@ -37,15 +37,15 @@ func _run() -> void:
 	var registry = global.GameRegistry
 	for key in EXPECTED_KEYS:
 		_check(registry.has(key), "注册表包含 %s" % key)
-		var descriptor = registry.find(key)
-		_check(descriptor != null, "%s 可解析为 GameDescriptor" % key)
-		if descriptor != null:
-			_check(descriptor.scene_exists(), "%s 场景存在: %s" % [key, descriptor.scene_path])
-			_check(ResourceLoader.load(descriptor.scene_path) is PackedScene, "%s 场景可加载" % key)
+		var descriptor1 = registry.find(key)
+		_check(descriptor1 != null, "%s 可解析为 GameDescriptor" % key)
+		if descriptor1 != null:
+			_check(descriptor1.scene_exists(), "%s 场景存在: %s" % [key, descriptor1.scene_path])
+			_check(ResourceLoader.load(descriptor1.scene_path) is PackedScene, "%s 场景可加载" % key)
 
 	for alias in EXPECTED_ALIASES:
-		var descriptor = registry.find(alias)
-		_check(descriptor != null and descriptor.key == EXPECTED_ALIASES[alias], "别名 %s -> %s" % [alias, EXPECTED_ALIASES[alias]])
+		var descriptor1 = registry.find(alias)
+		_check(descriptor1 != null and descriptor1.key == EXPECTED_ALIASES[alias], "别名 %s -> %s" % [alias, EXPECTED_ALIASES[alias]])
 
 	_check(registry.find("not_a_real_game") == null, "未知游戏返回 null")
 	_check(registry.validate().is_empty(), "内置游戏清单校验通过: %s" % str(registry.validate()))

@@ -68,28 +68,28 @@ func _convert() -> bool:
 	if atlas == null:
 		return false
 
-	var root := Node2D.new()
-	root.name = "AvatarRoot"
+	var root1 := Node2D.new()
+	root1.name = "AvatarRoot"
 	if not is_equal_approx(_global_scale, 1.0):
-		root.scale = Vector2(_global_scale, _global_scale)
+		root1.scale = Vector2(_global_scale, _global_scale)
 	var skeleton := Skeleton2D.new()
 	skeleton.name = "Skeleton2D"
-	root.add_child(skeleton)
+	root1.add_child(skeleton)
 
 	var bone_nodes := _build_bones(armature, skeleton)
 	var slot_nodes := _build_slots(armature, bone_nodes, atlas, tex, skeleton)
-	var player := _build_animations(armature, bone_nodes, slot_nodes, frame_rate, root)
+	var player := _build_animations(armature, bone_nodes, slot_nodes, frame_rate, root1)
 	if player != null:
-		root.add_child(player)
+		root1.add_child(player)
 
-	_set_owner_recursive(root, root)
+	_set_owner_recursive(root1, root1)
 	var packed := PackedScene.new()
-	if packed.pack(root) != OK:
+	if packed.pack(root1) != OK:
 		push_error("[converter] PackedScene.pack 失败")
-		root.free()
+		root1.free()
 		return false
 	var err := ResourceSaver.save(packed, _out_path)
-	root.free()
+	root1.free()
 	if err != OK:
 		push_error("[converter] 保存失败 %s: %s" % [_out_path, err])
 		return false
@@ -411,10 +411,10 @@ func _has_change(keys: Array, rest: Variant) -> bool:
 			return true
 	return false
 
-func _rel_path(node: Node, root: Node) -> String:
+func _rel_path(node: Node, root1: Node) -> String:
 	var parts: Array[String] = []
 	var current: Node = node
-	while current != null and current != root:
+	while current != null and current != root1:
 		parts.push_front(str(current.name))
 		current = current.get_parent()
 	return "/".join(parts)
@@ -431,7 +431,7 @@ func _safe_name(raw: String) -> String:
 		result = "Node"
 	return result
 
-func _set_owner_recursive(node: Node, root: Node) -> void:
+func _set_owner_recursive(node: Node, root1: Node) -> void:
 	for child in node.get_children():
-		child.owner = root
-		_set_owner_recursive(child, root)
+		child.owner = root1
+		_set_owner_recursive(child, root1)

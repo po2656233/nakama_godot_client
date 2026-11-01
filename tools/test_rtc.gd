@@ -70,7 +70,7 @@ func _run() -> void:
 		signaling.call_rejected.connect(func(peer, reason): _rejected = [peer, reason])
 		signaling.call_ended.connect(func(peer, reason): _ended = [peer, reason])
 		signaling.offer_received.connect(func(peer, sdp): _offers = [peer, sdp])
-		signaling.audio_received.connect(func(peer, frames): _audio = [peer, frames])
+		signaling.audio_received.connect(func(peer, audio_frames): _audio = [peer, audio_frames])
 
 		var kinds: Dictionary = protocol.get_script_constant_map()["Kind"]
 		var invite_payload: String = protocol.encode(int(kinds["CALL_INVITE"]), {"from": "peer-1", "video": true})
