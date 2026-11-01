@@ -62,12 +62,14 @@ core/              平台底层
   network/         Online* / MessageQueue（Nakama 封装）
   scene/           SceneMgr、路由表、转场、叠加页
   navigation/      SceneRouter + NavigationContext（进入/退出与上下文回退）
+  rtc/             RTC 信令、麦克风采集/回放、摄像头
   services/        SignalMgr / SettingsMgr / DataMgr / MailMgr
   window/          无边框窗口、消息框
   framework/       子游戏插件契约（GameMetadata / GameBase* / GameHostBridge / GameRegistry / GameLauncher）
 shared/            跨模块共享
   ui/              通用 UI（加载、设置、弹窗、排行榜、返回按钮…）
   avatar/          原生骨骼动画门面（DragonBones 平替）
+  ui/rtc/          通话面板 / 视频网格
   utils/ styles/   工具类、主题/字体/Shader
 lobby/             大厅与社交：home chat club room match gamelist email approval announcement
 app/               应用外壳页：login register

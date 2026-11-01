@@ -12,6 +12,7 @@ res://
 │   ├── network/                 Online / OnlineLogin / OnlineChat / OnlineGame / OnlineMatch / MessageQueue
 │   ├── scene/                   SceneMgr + 路由表 + 转场 + 叠加页
 │   ├── navigation/              SceneRouter + NavigationContext（上下文感知回退）
+│   ├── rtc/                     RtcSignaling / RtcMedia / RtcProtocol（音视频信令与采集）
 │   ├── services/                SignalMgr / SettingsMgr / DataMgr / MailMgr
 │   ├── window/                  无边框拖动、消息框
 │   └── framework/               插件契约：GameMetadata / GameBase* / GameHostBridge /
@@ -21,6 +22,7 @@ res://
 │   ├── ui/                      通用 UI（设置、排行榜、加载、弹窗、列表、返回按钮…）
 │   │   ├── controls/ loading/ popup/ gridanimation/
 │   ├── avatar/                  原生骨骼动画门面 NativeCharacterAvatar（DragonBones 平替）
+│   ├── ui/rtc/                  通话面板 CallModal / 视频网格 RtcVideoGrid
 │   ├── utils/                   无状态工具
 │   └── styles/                  主题、样式、字体、Shader
 ├── lobby/                       大厅与社交（脚本与场景同目录）
@@ -50,9 +52,11 @@ res://
 | 3 | `Util` | 异步调用、排序、时间、图片、可靠消息队列 |
 | 4 | `Errors` | 错误中文化、网络错误识别 |
 
-`Global` 启动时读取 `core/bootstrap/global_config.cfg`，把“服务名 -> 脚本路径”登记到内存；
-第一次访问 `Global.Xxx` 时才实例化并挂到 `Global` 节点下。配置缺项会用 `global.gd` 里的
-`DEFAULT_SERVICES` 补齐，且**不读取 `user://` 缓存**，避免旧路径覆盖新配置。
+`Global` 已按阶段 3 拆解为三个小模块：`ServiceCatalog`（只读配置 + 内置兜底）、
+`ServiceContainer`（懒加载/缓存/挂载）、`global.gd`（薄门面）。
+启动时读取 `core/bootstrap/global_config.cfg`，第一次访问 `Global.Xxx` 时才实例化并挂到
+`Global` 节点下；配置缺项用 `ServiceCatalog.DEFAULT_SERVICES` 补齐，且**不读取 `user://` 缓存**，
+避免旧路径覆盖新配置。
 
 ### 服务一览
 
@@ -73,6 +77,8 @@ res://
 | `OnlineMatch` | `core/network/OnlineMatch.gd` | 对局创建/加入/匹配、自定义 RPC |
 | `GameRegistry` | `core/framework/game_registry.gd` | 插件发现与 key/别名索引 |
 | `GameLauncher` | `core/framework/game_launcher.gd` | 插件启动、桥注入、退出/重开/结算 |
+| `RtcSignaling` | `core/rtc/rtc_signaling.gd` | 通话状态机 + Nakama 信令（invite/accept/reject/hangup/offer/answer/ice） |
+| `RtcMedia` | `core/rtc/rtc_media.gd` | 麦克风采集/回放、摄像头 CameraTexture |
 
 `SceneMgr` 内部由三个小模块组成：`scene_registry.gd`（路由表）、`scene_transition.gd`（转场）、
 `scene_overlay.gd`（叠加页）。
@@ -186,6 +192,29 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 | shaibao / startgame | `sprites/<name>/<name>_avatar.tscn` | 备用资产，已转换 |
 
 `addons/gddragonbones`（约 278 MB）与全部 `*.dbfactory` / `*_dragon_bones_factory.tres` 已删除，项目不再包含 GDExtension。
+### 4.3 实时语音/视频（RTC，阶段 3）
+
+```text
+Global.RtcSignaling（信令状态机 + Nakama match state）
+  ├─ invite/accept/reject/hang_up，状态 IDLE -> OUTGOING/INCOMING -> IN_CALL
+  ├─ OFFER / ANSWER / ICE：协商载荷透传（sdp/candidate 字符串）
+  └─ AUDIO / VIDEO：base64 内联帧（调用方控制帧率/体积）
+        ▲                                   ▲
+        │                                   │
+Global.RtcMedia（本地媒体管道）        shared/ui/rtc/CallModal、RtcVideoGrid
+  ├─ AudioStreamMicrophone -> AudioEffectCapture -> audio_frame 信号
+  ├─ push_remote_audio() -> AudioStreamGeneratorPlayback
+  └─ CameraServer/CameraFeed -> CameraTexture -> TextureRect
+```
+
+- 信令 op_code = `RtcProtocol.OP_BASE + Kind`（7301…7309），通过 `OnlineGame.sendToMatch` 发送；
+  收到对局数据时由 `SignalMgr.MatchStateEventSIG` 转给 `RtcSignaling.handle_packet()`；
+- 无 socket（单机/headless）时 `_send` 只告警并返回 false，状态机仍可本地演练；
+- 无麦克风/摄像头时 `RtcMedia` 优雅降级（返回 false/null），不会崩溃；
+- UI：`CallModal.tscn` 负责来电/呼叫面板，`RtcVideoGrid.tscn` 负责对端视频格、麦克风/摄像头/挂断按钮。
+
+> 说明：Godot 桌面端没有内置 WebRTC peer connection，当前实现是
+> “Nakama 信令 + 应用层媒体帧转发”；生产环境建议服务端增加 SFU/转发节点。
 ## 5. 异步调用规范
 
 Godot 4.7 中，动态调用异步函数必须等待返回值本身：

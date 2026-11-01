@@ -166,6 +166,27 @@ core/  shared/  lobby/  games/  app/  assets/  addons/  gdprotobuf/  docs/  tool
 收尾：`lobby/gamelist/game_card.tscn` 的 7 个 DragonBones 节点已替换为 `NativeCharacterAvatar`；
 `addons/gddragonbones`、全部 `*.dbfactory` 与 `*_dragon_bones_factory.tres` 已删除（约 -278 MB），项目不再包含任何 GDExtension。
 另外转换了 shaibao / startgame 两套备用资产。
+## P10 = PROMPT_REFACTOR 阶段 3：Global 拆解 + RTC 音视频
+
+Global 拆解（消灭上帝对象）：
+
+- `core/bootstrap/service_catalog.gd`：`ServiceCatalog`，只负责配置读取与内置兜底；
+- `core/bootstrap/service_container.gd`：`ServiceContainer`，只负责懒加载/缓存/挂载；
+- `core/bootstrap/global.gd`：变为薄门面，公开 API 不变。
+
+RTC：
+
+- `core/rtc/rtc_protocol.gd`：`RtcProtocol`（Kind/CallState、op_code、JSON + base64 编解码）；
+- `core/rtc/rtc_signaling.gd`：`RtcSignaling`（通话状态机、Nakama match state 信令、
+  offer/answer/ice 透传、音视频帧转发、无 socket 降级）；
+- `core/rtc/rtc_media.gd`：`RtcMedia`（AudioEffectCapture 采集、AudioStreamGenerator 回放、
+  CameraServer/CameraFeed -> CameraTexture）；
+- `shared/ui/rtc/call_modal.gd/.tscn`：来电/呼叫面板；
+- `shared/ui/rtc/rtc_video_grid.gd/.tscn`：视频网格、JPEG 帧显示、麦克风/摄像头/挂断；
+- `tools/test_rtc.gd`：34 项断言（协议/状态机/媒体降级/UI 实例化）。
+
+已知限制：桌面端无内置 WebRTC peer connection，当前为“Nakama 信令 + 应用层媒体帧转发”；
+生产环境建议服务端补 SFU/转发节点。
 ## 验证记录
 
 各阶段门禁结果：
