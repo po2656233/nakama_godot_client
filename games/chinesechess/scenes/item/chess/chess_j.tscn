@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://2hfel3ui8bkk"]
 
 [ext_resource type="Texture2D" uid="uid://reuou6bkkluq" path="res://games/chinesechess/assets/r_j.png" id="1_mkwxg"]
-[ext_resource type="Script" uid="uid://cq06xrirf64j7" path="res://games/chinesechess/scripts/item/chess/chess_j.gd" id="2_jgar3"]
+[ext_resource type="Script" uid="uid://cebe2iy1w53x5" path="res://games/chinesechess/scripts/item/chess/chess_j.gd" id="2_jgar3"]
 [ext_resource type="Texture2D" uid="uid://dpjliqk4sadwp" path="res://games/chinesechess/assets/b_j.png" id="3_o32uf"]
 
 [node name="player_chess_j" type="Sprite2D" unique_id=710709524]

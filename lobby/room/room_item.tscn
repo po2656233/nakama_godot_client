@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://b6j8g4q3y7m5n"]
 
-[ext_resource type="Script" uid="uid://dwtdbnyiojtqv" path="res://lobby/room/room_item.gd" id="1_ungxs"]
+[ext_resource type="Script" uid="uid://dt10a216modfy" path="res://lobby/room/room_item.gd" id="1_ungxs"]
 [ext_resource type="Texture2D" uid="uid://bnt1aar8tu8s1" path="res://assets/room/room0202.png" id="2_63jwt"]
 [ext_resource type="Texture2D" uid="uid://bxsqq1wmirnkl" path="res://assets/room/ssz_dizhu.png" id="3_2atjt"]
 [ext_resource type="Texture2D" uid="uid://um05khs8o58d" path="res://assets/currency/lock.svg" id="4_g0ok2"]
 [ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shared/styles/shaders/flow_light.gdshader" id="5_bqmbc"]
 [ext_resource type="Texture2D" uid="uid://ceqqe53i0d3hl" path="res://assets/hall/delete.svg" id="6_gksva"]
-[ext_resource type="Script" uid="uid://b2njfps7yn365" path="res://shared/ui/loading/circular/circular_progress.gd" id="7_idn37"]
+[ext_resource type="Script" uid="uid://dekfvnk65kaft" path="res://shared/ui/loading/circular/circular_progress.gd" id="7_idn37"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.567014, 0.771032, 0.875651, 1)

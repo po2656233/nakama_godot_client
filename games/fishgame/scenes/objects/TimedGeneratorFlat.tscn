@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cieahbe34cjdl"]
 
 [ext_resource type="Texture2D" uid="uid://b6eokvar35iln" path="res://games/fishgame/assets/sprites/generator_flat.png" id="1"]
-[ext_resource type="Script" uid="uid://c1gqnmdtrjhsb" path="res://games/fishgame/scripts/objects/TimedGenerator.gd" id="2"]
+[ext_resource type="Script" uid="uid://cgtrm3yfdsue" path="res://games/fishgame/scripts/objects/TimedGenerator.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://btorq3l8t3kev" path="res://games/fishgame/assets/kenney-platform-deluxe/request/rockSmall.png" id="3"]
 
 [sub_resource type="Curve" id="3"]

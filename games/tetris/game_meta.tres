@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="GameMeta" format=3]
+[gd_resource type="Resource" script_class="GameMeta" format=3 uid="uid://b0uy3avi0khhb"]
 
-[ext_resource type="Script" path="res://core/framework/game_meta.gd" id="1_b8fpi"]
+[ext_resource type="Script" uid="uid://deabqqjvrrk3v" path="res://core/framework/game_meta.gd" id="1_b8fpi"]
 
 [resource]
 script = ExtResource("1_b8fpi")

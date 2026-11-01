@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c8p4xkj6p2n8w"]
 
-[ext_resource type="Script" uid="uid://dll70pl3j013r" path="res://lobby/room/player_item.gd" id="1_3gyso"]
+[ext_resource type="Script" uid="uid://y6ogp40wuy11" path="res://lobby/room/player_item.gd" id="1_3gyso"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ko5ak"]
 font_color = Color(1, 1, 0, 1)

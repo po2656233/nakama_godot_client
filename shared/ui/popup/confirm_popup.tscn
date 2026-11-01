@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c4q6y8r4g3m5n"]
 
-[ext_resource type="Script" uid="uid://b7jy47ajcbdba" path="res://shared/ui/popup/confirm_popup.gd" id="1_hp3g5"]
+[ext_resource type="Script" uid="uid://bx6v1scy80lga" path="res://shared/ui/popup/confirm_popup.gd" id="1_hp3g5"]
 
 [node name="ConfirmPopup" type="Control" unique_id=1949202284]
 layout_mode = 3

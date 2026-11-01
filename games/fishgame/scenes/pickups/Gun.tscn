@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://btrrj3ou03vi1" path="res://games/fishgame/assets/sprites/gun.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://bmnok1dwyv3cl" path="res://games/fishgame/scenes/pickups/Pickup.tscn" id="2"]
-[ext_resource type="Script" uid="uid://bpw4wlr6rk2q3" path="res://games/fishgame/scripts/pickups/Gun.gd" id="3"]
+[ext_resource type="Script" uid="uid://qd2sy1unu1aq" path="res://games/fishgame/scripts/pickups/Gun.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://50oxtntd4exh" path="res://games/fishgame/scenes/pickups/Projectile.tscn" id="3_x8mes"]
 [ext_resource type="AudioStream" uid="uid://gdu4rgvlqmh6" path="res://games/fishgame/assets/sounds/shoot.ogg" id="4"]
-[ext_resource type="Script" uid="uid://cilljk2ne1fhu" path="res://games/fishgame/scripts/components/Sounds.gd" id="5"]
+[ext_resource type="Script" uid="uid://t56oyr1e0u5l" path="res://games/fishgame/scripts/components/Sounds.gd" id="5"]
 [ext_resource type="AudioStream" uid="uid://d3hgd7crqibrc" path="res://games/fishgame/assets/sounds/empty.wav" id="6"]
 
 [sub_resource type="CapsuleShape2D" id="1"]

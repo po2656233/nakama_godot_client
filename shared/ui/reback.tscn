@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://co63x3gke2mp2"]
 
 [ext_resource type="Texture2D" uid="uid://bu3lfr454jcni" path="res://assets/hall/reback1.svg" id="1_pmtjf"]
-[ext_resource type="Script" uid="uid://c7ui8y0p6g4a7" path="res://shared/ui/reback.gd" id="1_tjaeu"]
+[ext_resource type="Script" uid="uid://b7nj04x564lbd" path="res://shared/ui/reback.gd" id="1_tjaeu"]
 
 [node name="Reback" type="Control" unique_id=424820046]
 layout_mode = 3

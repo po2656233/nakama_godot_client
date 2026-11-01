@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b6x8yd4hj6n8w"]
 
-[ext_resource type="Script" uid="uid://l0n5ge8q6pka" path="res://lobby/room/waiting_room.gd" id="1_2w3vq"]
+[ext_resource type="Script" uid="uid://dr04x06rmwyk2" path="res://lobby/room/waiting_room.gd" id="1_2w3vq"]
 [ext_resource type="PackedScene" uid="uid://ryqfmggkqpxe" path="res://shared/ui/countdown_timer.tscn" id="2_bgkmg"]
 [ext_resource type="PackedScene" uid="uid://b6j8y8j4q4q" path="res://shared/ui/loading/loading_screen.tscn" id="3_h1ti0"]
 

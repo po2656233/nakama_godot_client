@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b8j6y8r4g3m5n"]
 
-[ext_resource type="Script" uid="uid://6vtu56e82p7b" path="res://shared/ui/popup/message_popup.gd" id="1_bu242"]
+[ext_resource type="Script" uid="uid://cnu6fhm2avyd3" path="res://shared/ui/popup/message_popup.gd" id="1_bu242"]
 
 [node name="MessagePopup" type="Control" unique_id=995006572]
 layout_mode = 3

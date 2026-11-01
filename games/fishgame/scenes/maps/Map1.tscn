@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ck2nmfcxr0qbv"]
 
-[ext_resource type="Script" uid="uid://bv43840annxrc" path="res://games/fishgame/scripts/maps/Map.gd" id="1"]
+[ext_resource type="Script" uid="uid://d3hy7o7x7mx16" path="res://games/fishgame/scripts/maps/Map.gd" id="1"]
 [ext_resource type="TileSet" uid="uid://eael5sneujok" path="res://games/fishgame/assets/tilesets/tileset.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://d0y3mbk78o4s8" path="res://games/fishgame/scenes/pickups/Gun.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://t6s6oi440wyk" path="res://games/fishgame/scenes/objects/Seaweed.tscn" id="4"]

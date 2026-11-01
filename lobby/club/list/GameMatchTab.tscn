@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c6d2a4cgdqdew"]
 
-[ext_resource type="Script" uid="uid://qm2utfcndtmm" path="res://lobby/club/list/GameMatchTab.gd" id="1_22nfy"]
+[ext_resource type="Script" uid="uid://cdnob506p5rjh" path="res://lobby/club/list/GameMatchTab.gd" id="1_22nfy"]
 [ext_resource type="FontFile" uid="uid://d1ykbo1h8utc1" path="res://games/mahjong_matching/assets/font/fonts/Kaph-Regular.ttf" id="2_o8v82"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryjag"]

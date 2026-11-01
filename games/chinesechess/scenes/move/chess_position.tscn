@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b6ap652uaw1dh"]
 
-[ext_resource type="Script" uid="uid://6uukk21q1obx" path="res://games/chinesechess/scripts/move/chess_position.gd" id="1_70f5p"]
+[ext_resource type="Script" uid="uid://b2eg64bxgyp3a" path="res://games/chinesechess/scripts/move/chess_position.gd" id="1_70f5p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ef6oi"]
 radius = 27.0185

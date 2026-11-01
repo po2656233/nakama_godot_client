@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bax6ip8g5br3b"]
 
 [ext_resource type="Texture2D" uid="uid://owo7weoycemt" path="res://games/fishgame/assets/kenney-platform-deluxe/tiles/castle.png" id="1"]
-[ext_resource type="Script" uid="uid://c1gqnmdtrjhsb" path="res://games/fishgame/scripts/objects/TimedGenerator.gd" id="2"]
+[ext_resource type="Script" uid="uid://cgtrm3yfdsue" path="res://games/fishgame/scripts/objects/TimedGenerator.gd" id="2"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(15, 15)

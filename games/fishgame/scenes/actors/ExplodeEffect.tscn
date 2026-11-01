@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bkirpx8d7fv6y"]
 
 [ext_resource type="Texture2D" uid="uid://btorq3l8t3kev" path="res://games/fishgame/assets/kenney-platform-deluxe/request/rockSmall.png" id="1"]
-[ext_resource type="Script" uid="uid://c50u4gv8qtl0r" path="res://games/fishgame/scripts/actors/ExplodeEffect.gd" id="2"]
+[ext_resource type="Script" uid="uid://di8nwyja42c0n" path="res://games/fishgame/scripts/actors/ExplodeEffect.gd" id="2"]
 [ext_resource type="Gradient" uid="uid://wkr7j1tktkv3" path="res://games/fishgame/assets/themes/actors/ExplodeEffectGradient.tres" id="3"]
 [ext_resource type="AudioStream" uid="uid://cln7oaurwgtj0" path="res://games/fishgame/assets/sounds/explosions/explosion3.wav" id="4"]
-[ext_resource type="Script" uid="uid://cilljk2ne1fhu" path="res://games/fishgame/scripts/components/Sounds.gd" id="5"]
+[ext_resource type="Script" uid="uid://t56oyr1e0u5l" path="res://games/fishgame/scripts/components/Sounds.gd" id="5"]
 [ext_resource type="AudioStream" uid="uid://dylenbvypqw8m" path="res://games/fishgame/assets/sounds/explosions/explosion2.wav" id="6"]
 [ext_resource type="AudioStream" uid="uid://bnvioqxf6g4fe" path="res://games/fishgame/assets/sounds/explosions/explosion1.wav" id="7"]
 

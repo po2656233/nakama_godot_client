@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bhvpkk2ucrvq"]
 
-[ext_resource type="Script" uid="uid://rgerd650ufkr" path="res://games/fishgame/scripts/main/screens/ReadyScreen.gd" id="1"]
+[ext_resource type="Script" uid="uid://ujxdxqjej1t5" path="res://games/fishgame/scripts/main/screens/ReadyScreen.gd" id="1"]
 [ext_resource type="Theme" uid="uid://bcdknopwa1n4y" path="res://games/fishgame/assets/theme.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://16lxj5u64e6e" path="res://games/fishgame/scenes/main/screens/PeerStatus.tscn" id="3"]
 

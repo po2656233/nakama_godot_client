@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d11dvy0pmk323"]
 
 [ext_resource type="Theme" uid="uid://bcdknopwa1n4y" path="res://games/fishgame/assets/theme.tres" id="1"]
-[ext_resource type="Script" uid="uid://duflno8unty1g" path="res://games/fishgame/scripts/main/screens/MatchScreen.gd" id="2"]
+[ext_resource type="Script" uid="uid://cclntqwmu5ejd" path="res://games/fishgame/scripts/main/screens/MatchScreen.gd" id="2"]
 
 [node name="MatchScreen" type="Control" unique_id=1287886000]
 layout_mode = 3

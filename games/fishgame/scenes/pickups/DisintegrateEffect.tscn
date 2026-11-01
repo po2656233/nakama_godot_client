@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://beuy3j4dbpwtt"]
 
 [ext_resource type="Texture2D" uid="uid://btorq3l8t3kev" path="res://games/fishgame/assets/kenney-platform-deluxe/request/rockSmall.png" id="1"]
-[ext_resource type="Script" uid="uid://b75ctm2u868fw" path="res://games/fishgame/scripts/pickups/DisintegrateEffect.gd" id="2"]
+[ext_resource type="Script" uid="uid://dong6t5rmsv1o" path="res://games/fishgame/scripts/pickups/DisintegrateEffect.gd" id="2"]
 [ext_resource type="Gradient" uid="uid://bswed7wayuvd6" path="res://games/fishgame/assets/themes/pickups/DisintegrateEffectGradient.tres" id="3"]
 
 [node name="DisintegrateEffect" type="CPUParticles2D" unique_id=1660963990]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://riqfmggkqpf3"]
 
-[ext_resource type="Script" uid="uid://bj3ydbfthd14l" path="res://lobby/club/group_item.gd" id="1_xxxxx"]
+[ext_resource type="Script" uid="uid://b2vgv60nxtihv" path="res://lobby/club/group_item.gd" id="1_xxxxx"]
 [ext_resource type="Texture2D" uid="uid://b3ygkk7th61hl" path="res://assets/currency/email.svg" id="2_alo0b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqodf"]

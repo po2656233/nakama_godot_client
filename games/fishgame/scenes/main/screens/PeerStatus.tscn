@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://16lxj5u64e6e"]
 
-[ext_resource type="Script" uid="uid://blcy6mh8qt6m2" path="res://games/fishgame/scripts/main/screens/PeerStatus.gd" id="1"]
+[ext_resource type="Script" uid="uid://djpyg4o6qthrt" path="res://games/fishgame/scripts/main/screens/PeerStatus.gd" id="1"]
 [ext_resource type="Theme" uid="uid://bcdknopwa1n4y" path="res://games/fishgame/assets/theme.tres" id="2"]
 
 [node name="PeerStatus" type="HBoxContainer" unique_id=2067306911]
