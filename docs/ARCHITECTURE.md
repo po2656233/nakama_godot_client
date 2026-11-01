@@ -182,9 +182,10 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 | 资产 | 原生场景 | 是否已替换使用方 |
 | --- | --- | --- |
 | 倒计时 `daojishi` | `sprites/daojishi/daojishi_avatar.tscn` | ✅ `shared/ui/countdown_timer.tscn` 已改用 `NativeCharacterAvatar` |
-| 游戏卡片 7 套（dibeichang/jiangbei/puke/baoxiang1-4） | `sprites/<name>/<name>_avatar.tscn` | ⏳ 已生成，`lobby/gamelist/game_card.tscn` 待替换 |
+| 游戏卡片 7 套（dibeichang/jiangbei/puke/baoxiang1-4） | `sprites/<name>/<name>_avatar.tscn` | ✅ `lobby/gamelist/game_card.tscn` 已替换 |
+| shaibao / startgame | `sprites/<name>/<name>_avatar.tscn` | 备用资产，已转换 |
 
-等 `game_card` 替换完成并验证后，即可删除 `addons/gddragonbones`（约 278 MB）。
+`addons/gddragonbones`（约 278 MB）与全部 `*.dbfactory` / `*_dragon_bones_factory.tres` 已删除，项目不再包含 GDExtension。
 ## 5. 异步调用规范
 
 Godot 4.7 中，动态调用异步函数必须等待返回值本身：
@@ -272,5 +273,5 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 - 部分 `.tscn` 的 `ext_resource uid` 与本机 `.uid`/`.import` 不一致时，Godot 会回退到路径加载（仅警告）。
 - `.uid` / `.import` 被 `.gitignore` 忽略（机器本地缓存），因此场景里的 `uid://` 引用在不同机器上会回退到路径加载并打印 warning，属正常现象；如需彻底消除，应把这两类文件纳入版本管理。
 - 端到端联调需要真实 Nakama 服务端，建议在登录、聊天、房间、匹配四条链路各过一次冒烟。
-- 按 PROMPT_REFACTOR 的阶段计划：阶段 1（插件底座 + 上下文导航）已完成；DragonBones 原生平替（阶段 2）、
-  RTC 音视频（阶段 3）、剩余子游戏插件迁移（阶段 4）尚未开始。
+- 按 PROMPT_REFACTOR 的阶段计划：阶段 1（插件底座 + 上下文导航）与阶段 2（DragonBones 原生平替）已完成；
+  RTC 音视频（阶段 3）、子游戏深度迁移（阶段 4）进行中。

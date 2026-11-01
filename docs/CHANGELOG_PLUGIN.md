@@ -163,8 +163,9 @@ core/  shared/  lobby/  games/  app/  assets/  addons/  gdprotobuf/  docs/  tool
 - `shared/ui/countdown_timer.tscn` 由 `DragonBones` 节点改为 `NativeCharacterAvatar`（pilot 平替）；
 - 新增 `tools/test_avatar.gd`（22 项断言：结构/动画/门面 API/场景替换）。
 
-注意：`lobby/gamelist/game_card.tscn` 的 7 个 DragonBones 节点尚未替换，
-`addons/gddragonbones` 暂保留；替换 + 视觉验证后再删除该插件（约 278 MB）。
+收尾：`lobby/gamelist/game_card.tscn` 的 7 个 DragonBones 节点已替换为 `NativeCharacterAvatar`；
+`addons/gddragonbones`、全部 `*.dbfactory` 与 `*_dragon_bones_factory.tres` 已删除（约 -278 MB），项目不再包含任何 GDExtension。
+另外转换了 shaibao / startgame 两套备用资产。
 ## 验证记录
 
 各阶段门禁结果：

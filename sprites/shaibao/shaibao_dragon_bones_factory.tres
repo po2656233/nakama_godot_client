@@ -1,5 +1,0 @@
-[gd_resource type="DragonBonesFactory" format=3 uid="uid://cluod1y4fetc3"]
-
-[resource]
-dragon_bones_ske_file_list = PackedStringArray("res://sprites/shaibao/shaibao_ske.json")
-texture_atlas_json_file_list = PackedStringArray("res://sprites/shaibao/shaibao_tex.json")

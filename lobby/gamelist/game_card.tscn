@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://riqfmggkqpff"]
 
 [ext_resource type="Script" uid="uid://d0tg71u454mo8" path="res://lobby/gamelist/game_card.gd" id="1_xxxxx"]
-[ext_resource type="DragonBonesFactory" uid="uid://cicdoqjdsynxc" path="res://sprites/dibeichang/dibeichang_ske.dbfactory" id="2_45j2b"]
 [ext_resource type="Texture2D" uid="uid://djkmgrs6wsojl" path="res://assets/game/flagItem/3.png" id="2_wmhxu"]
-[ext_resource type="DragonBonesFactory" uid="uid://s3o2gr0826v4" path="res://sprites/puke/puke_ske.dbfactory" id="3_7okkc"]
 [ext_resource type="Script" uid="uid://v282l3wda1un" path="res://lobby/gamelist/dragon_bones.gd" id="4_2lxpo"]
-[ext_resource type="DragonBonesFactory" uid="uid://dgjv2vifuj6ro" path="res://sprites/jiangbei/jiangbei_ske.dbfactory" id="4_gloe0"]
+[ext_resource type="PackedScene" path="res://sprites/dibeichang/dibeichang_avatar.tscn" id="12_avt1"]
+[ext_resource type="PackedScene" path="res://sprites/puke/puke_avatar.tscn" id="13_avt2"]
+[ext_resource type="PackedScene" path="res://sprites/jiangbei/jiangbei_avatar.tscn" id="14_avt3"]
+[ext_resource type="PackedScene" path="res://sprites/baoxiang1/baoxiang1_avatar.tscn" id="15_avt4"]
+[ext_resource type="PackedScene" path="res://sprites/baoxiang2/baoxiang2_avatar.tscn" id="16_avt5"]
+[ext_resource type="PackedScene" path="res://sprites/baoxiang3/baoxiang3_avatar.tscn" id="17_avt6"]
+[ext_resource type="PackedScene" path="res://sprites/baoxiang4/baoxiang4_avatar.tscn" id="18_avt7"]
 [ext_resource type="Script" uid="uid://6apsvbh4ylww" path="res://lobby/gamelist/description.gd" id="6_6l74d"]
 [ext_resource type="Shader" uid="uid://ctrrf10oc3xrh" path="res://shared/styles/shaders/flow_light.gdshader" id="7_keqs5"]
-[ext_resource type="DragonBonesFactory" uid="uid://ba10jeacbbkbj" path="res://sprites/baoxiang1/lhdb_chujichang_ske.dbfactory" id="8_gcjtt"]
-[ext_resource type="DragonBonesFactory" uid="uid://dy3my0454rvqt" path="res://sprites/baoxiang2/lhdb_gaojichang_1_ske.dbfactory" id="9_ahfpy"]
-[ext_resource type="DragonBonesFactory" uid="uid://cv5b87wdv2s1h" path="res://sprites/baoxiang3/lhdb_zhizunchang_ske.dbfactory" id="10_0c0hg"]
-[ext_resource type="DragonBonesFactory" uid="uid://0ws1r06fpbsm" path="res://sprites/baoxiang4/lhdb_zhongjichang_ske.dbfactory" id="11_ekkxy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.133333, 0.101961, 0.286275, 0.203922)
@@ -233,140 +233,82 @@ size_flags_horizontal = 4
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_t1jci")
 
-[node name="DragonBonesDibeichang" type="DragonBones" parent="Front/Control/GameFront" unique_id=1863312827]
-factory = ExtResource("2_45j2b")
-instantiate_dragon_bones_data_name = "dibeichang"
-instantiate_armature_name = "armatureName"
-armature_settings = {
-&"clip_children": 0,
-&"current_animation": "animation",
-&"material": null,
-&"slots_inherit_material": false,
-"sub_armatures": {},
-&"use_parent_material": true,
-&"visibility_layerF": null
-}
+[node name="DragonBonesDibeichang" type="Node2D" parent="Front/Control/GameFront" unique_id=1863312827]
 visible = false
 material = SubResource("CanvasItemMaterial_ag7gp")
 position = Vector2(232, 1242)
 script = ExtResource("4_2lxpo")
+scaleX = 2.0
 scaleY = 1.7
+avatar_scene = ExtResource("12_avt1")
+autoplay_animation = &"animation"
+autoplay_loop = true
 
-[node name="DragonBonesPuke" type="DragonBones" parent="Front/Control/GameFront" unique_id=1675131519]
-factory = ExtResource("3_7okkc")
-instantiate_dragon_bones_data_name = "puke"
-instantiate_armature_name = "armatureName"
-armature_settings = {
-&"clip_children": 0,
-&"current_animation": "animation",
-&"material": null,
-&"slots_inherit_material": false,
-"sub_armatures": {},
-&"use_parent_material": true,
-&"visibility_layerF": null
-}
+[node name="DragonBonesPuke" type="Node2D" parent="Front/Control/GameFront" unique_id=1675131519]
 visible = false
 material = SubResource("CanvasItemMaterial_8cwjc")
 position = Vector2(208, 1337)
 script = ExtResource("4_2lxpo")
 scaleX = 2.2
 scaleY = 1.5
+avatar_scene = ExtResource("13_avt2")
+autoplay_animation = &"animation"
+autoplay_loop = true
 
-[node name="DragonBonesJiangbei" type="DragonBones" parent="Front/Control/GameFront" unique_id=725684551]
-factory = ExtResource("4_gloe0")
-instantiate_dragon_bones_data_name = "jiangbei"
-instantiate_armature_name = "armatureName"
-armature_settings = {
-&"clip_children": 0,
-&"current_animation": "animation",
-&"material": null,
-&"slots_inherit_material": false,
-"sub_armatures": {},
-&"use_parent_material": true,
-&"visibility_layerF": null
-}
+[node name="DragonBonesJiangbei" type="Node2D" parent="Front/Control/GameFront" unique_id=725684551]
 visible = false
 material = SubResource("CanvasItemMaterial_ctnco")
 position = Vector2(262, 1351)
 script = ExtResource("4_2lxpo")
 scaleX = 1.8
 scaleY = 1.5
+avatar_scene = ExtResource("14_avt3")
+autoplay_animation = &"animation"
+autoplay_loop = true
 
-[node name="DragonBonesBaoX1" type="DragonBones" parent="Front/Control/GameFront" unique_id=457863567]
-factory = ExtResource("8_gcjtt")
-instantiate_dragon_bones_data_name = "lhdb_chujichang"
-instantiate_armature_name = "armatureName"
-armature_settings = {
-&"clip_children": 0,
-&"current_animation": "animation",
-&"material": null,
-&"slots_inherit_material": false,
-"sub_armatures": {},
-&"use_parent_material": true,
-&"visibility_layerF": null
-}
+[node name="DragonBonesBaoX1" type="Node2D" parent="Front/Control/GameFront" unique_id=457863567]
 visible = false
 material = SubResource("CanvasItemMaterial_lsj51")
 position = Vector2(238, 1260)
 script = ExtResource("4_2lxpo")
+scaleX = 2.0
 scaleY = 1.7
+avatar_scene = ExtResource("15_avt4")
+autoplay_animation = &"animation"
+autoplay_loop = true
 
-[node name="DragonBonesBaoX2" type="DragonBones" parent="Front/Control/GameFront" unique_id=872209578]
-factory = ExtResource("9_ahfpy")
-instantiate_dragon_bones_data_name = "lhdb_gaojichang_1"
-instantiate_armature_name = "armatureName"
-armature_settings = {
-&"clip_children": 0,
-&"current_animation": "animation",
-&"material": null,
-&"slots_inherit_material": false,
-"sub_armatures": {},
-&"use_parent_material": true,
-&"visibility_layerF": null
-}
+[node name="DragonBonesBaoX2" type="Node2D" parent="Front/Control/GameFront" unique_id=872209578]
 visible = false
 material = SubResource("CanvasItemMaterial_o1mi4")
 position = Vector2(236, 1246)
 script = ExtResource("4_2lxpo")
+scaleX = 2.0
 scaleY = 1.7
+avatar_scene = ExtResource("16_avt5")
+autoplay_animation = &"animation"
+autoplay_loop = true
 
-[node name="DragonBonesBaoX3" type="DragonBones" parent="Front/Control/GameFront" unique_id=2101840716]
-factory = ExtResource("10_0c0hg")
-instantiate_dragon_bones_data_name = "lhdb_zhizunchang"
-instantiate_armature_name = "armatureName"
-armature_settings = {
-&"clip_children": 0,
-&"current_animation": "animation",
-&"material": null,
-&"slots_inherit_material": false,
-"sub_armatures": {},
-&"use_parent_material": true,
-&"visibility_layerF": null
-}
+[node name="DragonBonesBaoX3" type="Node2D" parent="Front/Control/GameFront" unique_id=2101840716]
 visible = false
 material = SubResource("CanvasItemMaterial_7pd0r")
 position = Vector2(233, 1294)
 script = ExtResource("4_2lxpo")
+scaleX = 2.0
 scaleY = 1.7
+avatar_scene = ExtResource("17_avt6")
+autoplay_animation = &"animation"
+autoplay_loop = true
 
-[node name="DragonBonesBaoX4" type="DragonBones" parent="Front/Control/GameFront" unique_id=1003793898]
-factory = ExtResource("11_ekkxy")
-instantiate_dragon_bones_data_name = "lhdb_zhongjichang"
-instantiate_armature_name = "armatureName"
-armature_settings = {
-&"clip_children": 0,
-&"current_animation": "animation",
-&"material": null,
-&"slots_inherit_material": false,
-"sub_armatures": {},
-&"use_parent_material": true,
-&"visibility_layerF": null
-}
+[node name="DragonBonesBaoX4" type="Node2D" parent="Front/Control/GameFront" unique_id=1003793898]
 visible = false
 material = SubResource("CanvasItemMaterial_hkqvs")
 position = Vector2(235, 1292)
 script = ExtResource("4_2lxpo")
+scaleX = 2.0
 scaleY = 1.7
+avatar_scene = ExtResource("18_avt7")
+autoplay_animation = &"animation"
+autoplay_loop = true
 
 [node name="Back" type="VBoxContainer" parent="." unique_id=258482405]
 visible = false

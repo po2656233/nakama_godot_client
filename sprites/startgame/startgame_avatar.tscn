@@ -1,0 +1,180 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://sprites/startgame/start_game_tex.png" id="1_wj5oy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62o2k"]
+atlas = ExtResource("1_wj5oy")
+region = Rect2(1, 686, 640, 165)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwtud"]
+atlas = ExtResource("1_wj5oy")
+region = Rect2(3789, 1, 93, 62)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ut1bw"]
+atlas = ExtResource("1_wj5oy")
+region = Rect2(2563, 1, 1224, 683)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfo1f"]
+atlas = ExtResource("1_wj5oy")
+region = Rect2(3884, 1, 1, 1)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anyaj"]
+atlas = ExtResource("1_wj5oy")
+region = Rect2(1, 1, 2560, 343)
+filter_clip = true
+
+[sub_resource type="Animation" id="Animation_77ogm"]
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/root/bone4:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-35.24, -1469.49), Vector2(-35.24, 43.99), Vector2(-35.24, 359.51)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/root/bone5:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6666667, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 1), Vector2(0, 1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/root/bone5/img_bg_d0:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.6666667, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/root/bone4/bone2/img_f_d0:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.6666667, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/root/bone4/bone3/img_f1_d0:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2.6666667, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/root/bone4/bone/img_fg_d0:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2.6666667, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xbfjh"]
+_data = {
+&"a": SubResource("Animation_77ogm")
+}
+
+[node name="AvatarRoot" type="Node2D" unique_id=1195124411]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=877294805]
+
+[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=1180280624]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="bone4" type="Bone2D" parent="Skeleton2D/root" unique_id=12668003]
+position = Vector2(-35.24, 359.51)
+rest = Transform2D(1, 0, 0, 1, -35.24, 359.51)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="bone" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=1227705913]
+position = Vector2(34.68, -135.91)
+rotation = -2.9173179
+rest = Transform2D(-0.9749557, -0.22239937, 0.22239937, -0.9749557, 34.68, -135.91)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="img_fg_d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone" unique_id=1597905403]
+texture = SubResource("AtlasTexture_62o2k")
+
+[node name="bone3" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=315214360]
+position = Vector2(34.78, -138.93)
+rotation = 1.5957545
+rest = Transform2D(-0.024955586, 0.99968857, -0.99968857, -0.024955586, 34.78, -138.93)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="img_f1_d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone3" unique_id=1884196649]
+position = Vector2(25.11, 5.72)
+rotation = -1.5421729
+texture = SubResource("AtlasTexture_xwtud")
+
+[node name="bone2" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=1218256472]
+position = Vector2(34.68, -135.91)
+rotation = -2.9173179
+rest = Transform2D(-0.9749557, -0.22239937, 0.22239937, -0.9749557, 34.68, -135.91)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="img_f_d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone2" unique_id=2065050629]
+position = Vector2(91.15, 273.48)
+rotation = 2.9173179
+texture = SubResource("AtlasTexture_ut1bw")
+
+[node name="mask_d0" type="Sprite2D" parent="Skeleton2D/root/bone4" unique_id=1236890875]
+texture = SubResource("AtlasTexture_dfo1f")
+
+[node name="bone5" type="Bone2D" parent="Skeleton2D/root" unique_id=437355029]
+position = Vector2(0, 494.34)
+rest = Transform2D(1, 0, 0, 1, 0, 494.34)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="img_bg_d0" type="Sprite2D" parent="Skeleton2D/root/bone5" unique_id=523573970]
+position = Vector2(0, -494.34)
+texture = SubResource("AtlasTexture_anyaj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1387894310]
+libraries/ = SubResource("AnimationLibrary_xbfjh")
