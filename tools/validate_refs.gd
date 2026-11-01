@@ -149,6 +149,13 @@ func _check_file(path: String) -> void:
 		var p := str(ref)
 		if p.is_empty() or p == "res://":
 			continue
+		# res:// 后面必须是合法路径起始字符，避免把注释里的 “res://，...” 当成引用
+		var tail := p.substr(6)
+		if tail.is_empty():
+			continue
+		var alnum := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_."
+		if not alnum.contains(tail.substr(0, 1)):
+			continue
 		if p.contains("%") or p.contains("{") or p.contains("$"):
 			continue
 		if p.contains("(") or p.contains(")") or p.contains("["):

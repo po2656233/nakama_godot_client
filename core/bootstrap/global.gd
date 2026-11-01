@@ -2,29 +2,29 @@ extends Node
 
 ## 模块：全局服务注册表（autoload: Global）
 ## 职责：
-##   1. 从 res://autoload/global/global_config.cfg 读取“服务名 -> 脚本路径”；
+##   1. 从 res://core/bootstrap/global_config.cfg 读取“服务名 -> 脚本路径”；
 ##   2. 首次访问 Global.Xxx 时懒加载并挂到本节点下；
 ##   3. 配置缺失时回退到内置 DEFAULT_SERVICES，保证仍能启动。
 ## 说明：服务清单只认项目内配置，不再读取 user:// 缓存，避免旧缓存覆盖新路径。
 
-const CONFIG_PATH := "res://autoload/global/global_config.cfg"
+const CONFIG_PATH := "res://core/bootstrap/global_config.cfg"
 
 const DEFAULT_SERVICES := {
 	# 网络
-	"Online": "res://autoload/nakama/Online.gd",
-	"OnlineLogin": "res://autoload/nakama/OnlineLogin.gd",
-	"OnlineChat": "res://autoload/nakama/OnlineChat.gd",
-	"OnlineGame": "res://autoload/nakama/OnlineGame.gd",
-	"OnlineMatch": "res://autoload/nakama/OnlineMatch.gd",
+	"Online": "res://core/network/Online.gd",
+	"OnlineLogin": "res://core/network/OnlineLogin.gd",
+	"OnlineChat": "res://core/network/OnlineChat.gd",
+	"OnlineGame": "res://core/network/OnlineGame.gd",
+	"OnlineMatch": "res://core/network/OnlineMatch.gd",
 	# 管理器
-	"SignalMgr": "res://autoload/managers/signal_manager.gd",
-	"SceneMgr": "res://autoload/managers/scene_manager.gd",
-	"SettingsMgr": "res://autoload/managers/settings_manager.gd",
-	"DataMgr": "res://autoload/managers/data_manager.gd",
-	"MailMgr": "res://autoload/managers/mail_manager.gd",
+	"SignalMgr": "res://core/services/signal_manager.gd",
+	"SceneMgr": "res://core/scene/scene_manager.gd",
+	"SettingsMgr": "res://core/services/settings_manager.gd",
+	"DataMgr": "res://core/services/data_manager.gd",
+	"MailMgr": "res://core/services/mail_manager.gd",
 	# 窗口
-	"WindowDrag": "res://autoload/window/drag.gd",
-	"WindowPopup": "res://autoload/window/popup.gd",
+	"WindowDrag": "res://core/window/drag.gd",
+	"WindowPopup": "res://core/window/popup.gd",
 	# 转场插件
 	"Transitions": "res://addons/transitions/Transitions.gd",
 	"FancyFade": "res://addons/transitions/FancyFade.gd",

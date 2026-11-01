@@ -281,7 +281,7 @@ powershell -File tools/refactor/apply_moves.ps1 -Map tools/refactor/maps/p1_shar
 | --- | --- | --- | --- |
 | P0 护栏 | ✅ 完成 | 基线 8 处历史悬空已登记 | 工具链：apply_moves / rewrite_refs / check_refs |
 | P1 shared/ | ✅ 完成 | 导入 0 错误；场景 108/108；脚本 174/174；引用 0 新增悬空 | 112 文件迁移；1common 消失；字体/主题/Shader 入 shared/styles |
-| P2 core/ | ⏳ 待开始 | — | — |
+| P2 core/ | ✅ 完成 | 导入 0 错误；场景 107/107；脚本 174/174；框架 34/34；基础层/异步测试通过；引用 0 新增悬空 | autoload/ 消失；Global/Util/Errors → core/bootstrap；SceneMgr → core/scene；Online* → core/network |
 | P3 lobby/ + app/ | ⏳ 待开始 | — | — |
 | P4 games/ | ⏳ 待开始 | — | — |
 | P5 契约与沙盒 | ⏳ 待开始 | — | — |

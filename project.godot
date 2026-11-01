@@ -23,9 +23,9 @@ config/icon="res://assets/bg/img_gg.png"
 [autoload]
 
 Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
-Global="*res://autoload/global/global.gd"
-Util="*res://autoload/global/util.gd"
-Errors="*res://autoload/global/errors.gd"
+Global="*res://core/bootstrap/global.gd"
+Util="*res://core/bootstrap/util.gd"
+Errors="*res://core/bootstrap/errors.gd"
 
 [display]
 

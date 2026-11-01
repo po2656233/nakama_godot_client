@@ -1,0 +1,13 @@
+{
+  "name": "p2_core",
+  "moves": [
+    { "from": "autoload/global", "to": "core/bootstrap" },
+    { "from": "autoload/managers", "to": "core/services", "exclude": ["scene_manager.gd", "scene_registry.gd", "scene_transition.gd", "scene_overlay.gd"] },
+    { "from": "autoload/managers/scene_manager.gd", "to": "core/scene/scene_manager.gd" },
+    { "from": "autoload/managers/scene_registry.gd", "to": "core/scene/scene_registry.gd" },
+    { "from": "autoload/managers/scene_transition.gd", "to": "core/scene/scene_transition.gd" },
+    { "from": "autoload/managers/scene_overlay.gd", "to": "core/scene/scene_overlay.gd" },
+    { "from": "autoload/nakama", "to": "core/network" },
+    { "from": "autoload/window", "to": "core/window" }
+  ]
+}

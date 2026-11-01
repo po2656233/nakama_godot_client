@@ -1,0 +1,182 @@
+﻿{
+    "name":  "p2_core",
+    "time":  "2026-11-01T14:37:47.3013296+08:00",
+    "entries":  [
+                    {
+                        "from":  "autoload/global",
+                        "to":  "core/bootstrap"
+                    },
+                    {
+                        "from":  "autoload/managers",
+                        "to":  "core/services"
+                    },
+                    {
+                        "from":  "autoload/nakama",
+                        "to":  "core/network"
+                    },
+                    {
+                        "from":  "autoload/window",
+                        "to":  "core/window"
+                    },
+                    {
+                        "from":  "autoload/global/errors.gd",
+                        "to":  "core/bootstrap/errors.gd"
+                    },
+                    {
+                        "from":  "autoload/global/errors.gd.uid",
+                        "to":  "core/bootstrap/errors.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/global/global.gd",
+                        "to":  "core/bootstrap/global.gd"
+                    },
+                    {
+                        "from":  "autoload/global/global.gd.uid",
+                        "to":  "core/bootstrap/global.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/global/global.tscn",
+                        "to":  "core/bootstrap/global.tscn"
+                    },
+                    {
+                        "from":  "autoload/global/global_config.cfg",
+                        "to":  "core/bootstrap/global_config.cfg"
+                    },
+                    {
+                        "from":  "autoload/global/util.gd",
+                        "to":  "core/bootstrap/util.gd"
+                    },
+                    {
+                        "from":  "autoload/global/util.gd.uid",
+                        "to":  "core/bootstrap/util.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/data_manager.gd",
+                        "to":  "core/services/data_manager.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/data_manager.gd.uid",
+                        "to":  "core/services/data_manager.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/mail_manager.gd",
+                        "to":  "core/services/mail_manager.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/mail_manager.gd.uid",
+                        "to":  "core/services/mail_manager.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/settings_manager.gd",
+                        "to":  "core/services/settings_manager.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/settings_manager.gd.uid",
+                        "to":  "core/services/settings_manager.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/signal_manager.gd",
+                        "to":  "core/services/signal_manager.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/signal_manager.gd.uid",
+                        "to":  "core/services/signal_manager.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_manager.gd",
+                        "to":  "core/scene/scene_manager.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_manager.gd.uid",
+                        "to":  "core/scene/scene_manager.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_registry.gd",
+                        "to":  "core/scene/scene_registry.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_registry.gd.uid",
+                        "to":  "core/scene/scene_registry.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_transition.gd",
+                        "to":  "core/scene/scene_transition.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_transition.gd.uid",
+                        "to":  "core/scene/scene_transition.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_overlay.gd",
+                        "to":  "core/scene/scene_overlay.gd"
+                    },
+                    {
+                        "from":  "autoload/managers/scene_overlay.gd.uid",
+                        "to":  "core/scene/scene_overlay.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/nakama/MessageQueue.gd",
+                        "to":  "core/network/MessageQueue.gd"
+                    },
+                    {
+                        "from":  "autoload/nakama/MessageQueue.gd.uid",
+                        "to":  "core/network/MessageQueue.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/nakama/Online.gd",
+                        "to":  "core/network/Online.gd"
+                    },
+                    {
+                        "from":  "autoload/nakama/Online.gd.uid",
+                        "to":  "core/network/Online.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineChat.gd",
+                        "to":  "core/network/OnlineChat.gd"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineChat.gd.uid",
+                        "to":  "core/network/OnlineChat.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineGame.gd",
+                        "to":  "core/network/OnlineGame.gd"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineGame.gd.uid",
+                        "to":  "core/network/OnlineGame.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineLogin.gd",
+                        "to":  "core/network/OnlineLogin.gd"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineLogin.gd.uid",
+                        "to":  "core/network/OnlineLogin.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineMatch.gd",
+                        "to":  "core/network/OnlineMatch.gd"
+                    },
+                    {
+                        "from":  "autoload/nakama/OnlineMatch.gd.uid",
+                        "to":  "core/network/OnlineMatch.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/window/drag.gd",
+                        "to":  "core/window/drag.gd"
+                    },
+                    {
+                        "from":  "autoload/window/drag.gd.uid",
+                        "to":  "core/window/drag.gd.uid"
+                    },
+                    {
+                        "from":  "autoload/window/popup.gd",
+                        "to":  "core/window/popup.gd"
+                    },
+                    {
+                        "from":  "autoload/window/popup.gd.uid",
+                        "to":  "core/window/popup.gd.uid"
+                    }
+                ]
+}

@@ -11,9 +11,9 @@ extends Node
 ##   - 不负责场景内 UI，不扫描整个 res:// 目录。
 ## 依赖：SceneRegistry / SceneTransition / SceneOverlay + Global.FancyFade。
 
-const SceneRegistry = preload("res://autoload/managers/scene_registry.gd")
-const SceneTransition = preload("res://autoload/managers/scene_transition.gd")
-const SceneOverlay = preload("res://autoload/managers/scene_overlay.gd")
+const SceneRegistry = preload("res://core/scene/scene_registry.gd")
+const SceneTransition = preload("res://core/scene/scene_transition.gd")
+const SceneOverlay = preload("res://core/scene/scene_overlay.gd")
 
 const HOME_NODE := "home"
 
