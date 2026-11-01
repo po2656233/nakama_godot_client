@@ -57,5 +57,5 @@ func send_game_state(op_code: int, payload: Variant) -> void:
 func is_online() -> bool:
 	return game_context != null and game_context.is_online()
 
-func get_game_option(name: String, default_value: Variant = null) -> Variant:
-	return game_context.get_option(name, default_value) if game_context != null else default_value
+func get_game_option(name1: String, default_value: Variant = null) -> Variant:
+	return game_context.get_option(name1, default_value) if game_context != null else default_value

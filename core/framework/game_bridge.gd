@@ -54,9 +54,9 @@ func match_id() -> String:
 # ---------------------------------------------------------------------
 
 ## 飘字提示（原 Global.WindowPopup.show_dynamic）。
-func toast(message: String, speed: float = 100.0) -> void:
+func toast(message1: String, speed: float = 100.0) -> void:
 	if Global.has_global("WindowPopup"):
-		Global.WindowPopup.show_dynamic(message, speed)
+		Global.WindowPopup.show_dynamic(message1, speed)
 
 ## 消息框（原 Global.WindowPopup.show_message）。
 func message(text: String, title: String = "提示", auto_close: bool = true) -> void:
