@@ -3,6 +3,8 @@
 > 本文件把 `.cursorrules` 的三条使命拆成**可执行、可验证、可回滚**的阶段任务。
 > 每个阶段都必须通过「门禁」才能进入下一阶段；门禁失败即回滚本阶段。
 >
+> 状态：**本计划已全部完成**（P0–P6）。一次性迁移脚本与迁移日志已清理，仓库只保留日常校验工具；efs_baseline.json 位于 	ools/ 根目录。
+
 > 当前基线：Godot 4.7.2，1644 个受版本管理文件（144 个 `.gd`、107 个 `.tscn`）。
 > 基线全量导入检查 `--editor --quit` 无脚本错误。
 > 工作分支：`refactor/plugin-arch`（`master` 保持原样，可随时回退）。
@@ -236,6 +238,8 @@ GameRegistry 发现 --> GameLauncher.start_game(key, options)
 ---
 
 ## 5. 工具与命令
+
+> 注：下表中 `tools/refactor/*` 是一次性迁移工具，重构完成后已删除（git 历史可找回）；`refs_baseline.json` 已移到 `tools/refs_baseline.json`。
 
 ```powershell
 # 1. 移动文件（按映射表，含 .uid/.import 伴随文件）

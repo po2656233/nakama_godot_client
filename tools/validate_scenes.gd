@@ -5,7 +5,7 @@ extends SceneTree
 ## 用法：godot --headless --path . --script res://tools/validate_scenes.gd
 ## 退出码：0 全部可加载；1 存在失败项。
 
-const SKIP_DIRS := [".git", ".godot", ".vscode", "addons", "gdprotobuf", "refactor"]
+const SKIP_DIRS := [".git", ".godot", ".vscode", "addons", "gdprotobuf"]
 
 var _paths: Array[String] = []
 var _failed: Array[String] = []

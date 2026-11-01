@@ -34,8 +34,8 @@
 
 - `scripts/1common/**`、`scenes/1common/**` → `shared/ui/**`（含 `controls/ loading/ popup/ gridanimation/`）；
 - `styles/ themes/ shaders/ assets/font/` → `shared/styles/{styles,themes,shaders,fonts}`；
-- 新增 `shared/styles/shaders/shaderlib/README.md` 占位，保持插件安装目录存在；
-- `project.godot` 的 `gui/theme/custom_font`、`shader_library` 路径同步。
+- 新增 `shared/styles/shaders/shaderlib/README.md` 占位（该编辑器插件后续已整体删除，占位目录同步移除）；
+- `project.godot` 的 `gui/theme/custom_font`、`shader_library` 路径同步（该编辑器插件后续已删除）。
 
 ## P2 `core/`
 
@@ -67,7 +67,7 @@ games/fishgame/{...}
 games/template/
 ```
 
-- `GameMeta` 资源类型 + 每个游戏一份 `game_meta.tres`（由 `tools/refactor/generate_game_meta.gd` 生成）；
+- `GameMeta` 资源类型 + 每个游戏一份 `game_meta.tres`（当时由迁移工具生成，工具已删除）；
 - `GameRegistry` 改为扫描 `res://games/*/game_meta.tres` 与 `user://games/*`，删除 `game_catalog.gd`；
 - `loading_screen.gd` 下载解压布局改为 `res://games/<key>/entry.tscn`；
 - 新增 `tools/validate_plugins.gd`（结构 + 实例化冒烟 + 沙盒 lint）。
@@ -95,19 +95,30 @@ core/  shared/  lobby/  games/  app/  assets/  addons/  gdprotobuf/  docs/  tool
 
 ## 迁移工具（保留在仓库，后续可复用）
 
+`tools/` 现在只保留日常适用的校验脚本（一次性迁移脚本已随重构完成删除，需要时可从 git 历史找回）：
+
 | 工具 | 作用 |
 | --- | --- |
-| `tools/refactor/apply_moves.ps1` | 按映射表移动文件（含 `.uid`/`.import`，支持 exclude/断点续跑/冲突预检） |
-| `tools/refactor/rewrite_refs.gd` | GDScript 重写 `res://` 引用（UTF-8 安全、最长前缀优先、支持 exclude） |
-| `tools/refactor/maps/*.json` | P1–P4 的迁移映射表 |
-| `tools/refactor/repair_import.gd` | 一次性修复被旧脚本污染的 `.import` |
-| `tools/refactor/generate_game_meta.gd` | 生成 `game_meta.tres` |
-| `tools/validate_refs.gd` | 悬空引用检查（基线比对） |
+| `tools/validate_refs.gd` | 悬空引用检查（对比 `tools/refs_baseline.json`） |
 | `tools/validate_scenes.gd` | 全量场景可加载性 |
 | `tools/validate_scripts.gd` | 全量业务脚本加载 |
 | `tools/validate_plugins.gd` | 插件契约 + 沙盒 |
+| `tools/validate_game_framework.gd` | 注册表/上下文/结算等框架断言 |
 | `tools/test_plugin_lifecycle.gd` | 启动/退出生命周期冒烟 |
+| `tools/test_foundation.gd`、`tools/test_async_call.gd` | 基础层与异步封装回归 |
+| `tools/web_server.py` 等 | Web 导出本地测试服务器（对应 Web 导出预设） |
 
+## P7 冗余清理（收尾）
+
+- **删除未使用插件**：`addons/agones`、`addons/godot-livekit`（GDExtension，216 MB，无任何引用）、
+  `addons/shader_library`（编辑器 Shader 浏览器，未启用），并同步移除 `project.godot` 的
+  `[shader_library]` 段、`.godot/extension_list.cfg` 缓存与 `shared/styles/shaders/shaderlib/` 占位目录；
+- 保留实际使用的 6 个插件：Nakama、protobuf、snopek-state-machine、transitions、virtual_joystick、gddragonbones；
+- **删除构建产物/死文档**：`android/.build_version`、`docs/archive/`（未接入旧原型）、`docs/REFACTOR_GUIDE.md`；
+- **tools/ 精简**：只保留 8 个日常校验/测试脚本、`refs_baseline.json` 与 Web 导出测试服务器；
+  一次性迁移工具（`tools/refactor/*`）与外部游戏适配脚本（`tools/外部游戏*.gd/py`）已删除（git 历史可找回）；
+- **清理机器本地残留**：删除 115 个失去宿主文件的 `.uid`/`.import`，移除 `scripts/`、`autoload/`、
+  `shaders/` 等 36 个残留空目录。
 ## 验证记录
 
 各阶段门禁结果：

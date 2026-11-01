@@ -5,7 +5,7 @@ extends SceneTree
 ##
 ## 扫描整个 res://，跳过第三方/生成代码（addons / gdprotobuf）与资源目录。
 
-const SKIP_DIRS := [".git", ".godot", ".vscode", "addons", "gdprotobuf", "assets", "docs", "certs", "android", "sprites"]
+const SKIP_DIRS := [".git", ".godot", ".vscode", "addons", "gdprotobuf", "assets", "docs", "certs", "sprites"]
 
 var _failed: Array[String] = []
 var _total := 0

@@ -9,8 +9,8 @@ extends SceneTree
 ## 退出码：0 没有“新增”悬空；1 存在新增悬空。
 ## 基线机制：refs_baseline.json 记录重构前就存在、暂不处理的历史悬空，只对新增悬空报警。
 
-const BASELINE_PATH := "res://tools/refactor/refs_baseline.json"
-const SKIP_DIRS := [".git", ".godot", ".vscode", "refactor"]
+const BASELINE_PATH := "res://tools/refs_baseline.json"
+const SKIP_DIRS := [".git", ".godot", ".vscode"]
 const TEXT_EXTS := [
 	"gd", "tscn", "tres", "res", "cfg", "godot", "import",
 	"gdshader", "shader", "json", "py", "bat", "sh", "txt", "csv", "yml", "yaml",
@@ -113,8 +113,7 @@ func _walk(dir_path: String) -> void:
 			continue
 		var full := dir_path.path_join(entry)
 		if dir.current_is_dir():
-			# tools/refactor 是开发工具本身，里面全是正则字面量，不参与引用检查
-			if not SKIP_DIRS.has(entry) and not full.begins_with("res://tools/refactor"):
+			if not SKIP_DIRS.has(entry):
 				_walk(full)
 		else:
 			_check_file(full)

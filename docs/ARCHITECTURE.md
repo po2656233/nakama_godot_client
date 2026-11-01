@@ -20,7 +20,7 @@ res://
 │   ├── ui/                      通用 UI（设置、排行榜、加载、弹窗、列表、返回按钮…）
 │   │   ├── controls/ loading/ popup/ gridanimation/
 │   ├── utils/                   无状态工具
-│   └── styles/                  主题、样式、字体、Shader（含 shaderlib 安装目录）
+│   └── styles/                  主题、样式、字体、Shader
 ├── lobby/                       大厅与社交（脚本与场景同目录）
 │   ├── home/ chat/ club/ room/ match/ gamelist/ email/ approval/ announcement/
 │   └── club/list/               俱乐部详情（与成员管理分目录）
@@ -219,8 +219,8 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 
 ## 8. 已知边界
 
-- `addons/`、`gdprotobuf/` 为第三方/生成代码，未重构；`shader_library` 的默认安装路径常量
-  指向 `res://shared/styles/shaders/shaderlib/`（随目录迁移改了一行）。
+- `addons/`、`gdprotobuf/` 为第三方/生成代码，未重构；仓库只保留实际使用的 6 个插件
+  （Nakama、protobuf、snopek-state-machine、transitions、virtual_joystick、gddragonbones）。
 - 子游戏内部玩法（fishgame / tetris / chinesechess / mahjong_matching）只保证入口与桥接兼容，
   内部玩法未逐行重写；fishgame 的多人同步仍以 Nakama match 状态为主，通过 `GameBridge` 转发。
 - 下载游戏目前仍解压到 `res://games/<key>/`，导出包中 `res://` 只读，正式发布前应迁移到
@@ -228,5 +228,5 @@ $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 - `refs_baseline.json` 里有 8 处历史悬空引用（`res://icons/*.png`、`res://scenes/main_game.tscn`、
   两张 currency svg、joystick `mark.bmp`），不属于本轮范围，后续清理。
 - 部分 `.tscn` 的 `ext_resource uid` 与本机 `.uid`/`.import` 不一致时，Godot 会回退到路径加载（仅警告）。
-- `docs/archive/` 存放未接入的旧原型，不属于构建。
+- `.uid` / `.import` 被 `.gitignore` 忽略（机器本地缓存），因此场景里的 `uid://` 引用在不同机器上会回退到路径加载并打印 warning，属正常现象；如需彻底消除，应把这两类文件纳入版本管理。
 - 端到端联调需要真实 Nakama 服务端，建议在登录、聊天、房间、匹配四条链路各过一次冒烟。
