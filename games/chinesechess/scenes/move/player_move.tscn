@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://btvhpsmpk8tg3"]
+
+[ext_resource type="Script" uid="uid://c2d6nfrvelpi2" path="res://games/chinesechess/scripts/move/player_move.gd" id="1_80evl"]
+[ext_resource type="Texture2D" uid="uid://cja1ctr56n2xu" path="res://games/chinesechess/assets/r_box.png" id="1_rcm2p"]
+[ext_resource type="Texture2D" uid="uid://ba85vwbdu8rdt" path="res://games/chinesechess/assets/b_box.png" id="3_igjsx"]
+
+[sub_resource type="Animation" id="Animation_cng8m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_thw30"]
+resource_name = "blink"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.4, 1.4), Vector2(1.8, 1.8), Vector2(1.4, 1.4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lrrep"]
+_data = {
+&"RESET": SubResource("Animation_cng8m"),
+&"blink": SubResource("Animation_thw30")
+}
+
+[node name="player_move" type="Sprite2D" unique_id=1650118242]
+texture = ExtResource("1_rcm2p")
+script = ExtResource("1_80evl")
+red = ExtResource("1_rcm2p")
+black = ExtResource("3_igjsx")
+
+[node name="movePlayer" type="AnimationPlayer" parent="." unique_id=517016205]
+libraries/ = SubResource("AnimationLibrary_lrrep")

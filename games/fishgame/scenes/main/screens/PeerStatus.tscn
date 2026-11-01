@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://16lxj5u64e6e"]
+
+[ext_resource type="Script" uid="uid://blcy6mh8qt6m2" path="res://games/fishgame/scripts/main/screens/PeerStatus.gd" id="1"]
+[ext_resource type="Theme" uid="uid://bcdknopwa1n4y" path="res://games/fishgame/assets/theme.tres" id="2"]
+
+[node name="PeerStatus" type="HBoxContainer" unique_id=2067306911]
+offset_right = 600.0
+offset_bottom = 48.0
+size_flags_vertical = 0
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1066665081]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "10"
+
+[node name="NameLabel" type="Label" parent="." unique_id=918534946]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "User"
+
+[node name="StatusLabel" type="Label" parent="." unique_id=463513579]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Connecting..."
+horizontal_alignment = 2

@@ -1,0 +1,29 @@
+{
+  "name": "p4a_games",
+  "moves": [
+    { "from": "scripts/game/core", "to": "core/framework" },
+    { "from": "scripts/game/template", "to": "games/template" },
+
+    { "from": "scripts/game/xiangqi", "to": "games/chinesechess/scripts" },
+    { "from": "scenes/game/xiangqi", "to": "games/chinesechess/scenes", "exclude": ["xiangqi.tscn"] },
+    { "from": "scenes/game/xiangqi/xiangqi.tscn", "to": "games/chinesechess/entry.tscn" },
+    { "from": "assets/game/xiangqi", "to": "games/chinesechess/assets" },
+
+    { "from": "scripts/game/tetris", "to": "games/tetris/scripts" },
+    { "from": "scenes/game/tetris", "to": "games/tetris/scenes", "exclude": ["tetris.tscn"] },
+    { "from": "scenes/game/tetris/tetris.tscn", "to": "games/tetris/entry.tscn" },
+    { "from": "assets/game/tetris", "to": "games/tetris/assets" },
+
+    { "from": "scripts/game/mahjong_matching", "to": "games/mahjong_matching/scripts" },
+    { "from": "scenes/game/mahjong_matching", "to": "games/mahjong_matching/scenes", "exclude": ["level/main_game.tscn"] },
+    { "from": "scenes/game/mahjong_matching/level/main_game.tscn", "to": "games/mahjong_matching/entry.tscn" },
+    { "from": "assets/game/mahjong_matching", "to": "games/mahjong_matching/assets" },
+    { "from": "themes/game/mahjong_matching", "to": "games/mahjong_matching/assets/themes" },
+
+    { "from": "scripts/game/fishgame", "to": "games/fishgame/scripts" },
+    { "from": "scenes/game/fishgame", "to": "games/fishgame/scenes", "exclude": ["Game.tscn"] },
+    { "from": "scenes/game/fishgame/Game.tscn", "to": "games/fishgame/entry.tscn" },
+    { "from": "assets/game/fishgame", "to": "games/fishgame/assets" },
+    { "from": "themes/game/fishgame", "to": "games/fishgame/assets/themes" }
+  ]
+}

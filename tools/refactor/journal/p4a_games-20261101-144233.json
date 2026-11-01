@@ -1,0 +1,2006 @@
+﻿{
+    "name":  "p4a_games",
+    "time":  "2026-11-01T14:42:33.1423130+08:00",
+    "entries":  [
+                    {
+                        "from":  "scripts/game/core",
+                        "to":  "core/framework"
+                    },
+                    {
+                        "from":  "scripts/game/template",
+                        "to":  "games/template"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi",
+                        "to":  "games/chinesechess/scripts"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi",
+                        "to":  "games/chinesechess/scenes"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi",
+                        "to":  "games/chinesechess/assets"
+                    },
+                    {
+                        "from":  "scripts/game/tetris",
+                        "to":  "games/tetris/scripts"
+                    },
+                    {
+                        "from":  "scenes/game/tetris",
+                        "to":  "games/tetris/scenes"
+                    },
+                    {
+                        "from":  "assets/game/tetris",
+                        "to":  "games/tetris/assets"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching",
+                        "to":  "games/mahjong_matching/scripts"
+                    },
+                    {
+                        "from":  "scenes/game/mahjong_matching",
+                        "to":  "games/mahjong_matching/scenes"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching",
+                        "to":  "games/mahjong_matching/assets"
+                    },
+                    {
+                        "from":  "themes/game/mahjong_matching",
+                        "to":  "games/mahjong_matching/assets/themes"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame",
+                        "to":  "games/fishgame/scripts"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame",
+                        "to":  "games/fishgame/scenes"
+                    },
+                    {
+                        "from":  "assets/game/fishgame",
+                        "to":  "games/fishgame/assets"
+                    },
+                    {
+                        "from":  "themes/game/fishgame",
+                        "to":  "games/fishgame/assets/themes"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_base_2d.gd",
+                        "to":  "core/framework/game_base_2d.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_base_2d.gd.uid",
+                        "to":  "core/framework/game_base_2d.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_base_control.gd",
+                        "to":  "core/framework/game_base_control.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_base_control.gd.uid",
+                        "to":  "core/framework/game_base_control.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_catalog.gd",
+                        "to":  "core/framework/game_catalog.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_catalog.gd.uid",
+                        "to":  "core/framework/game_catalog.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_context.gd",
+                        "to":  "core/framework/game_context.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_context.gd.uid",
+                        "to":  "core/framework/game_context.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_descriptor.gd",
+                        "to":  "core/framework/game_descriptor.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_descriptor.gd.uid",
+                        "to":  "core/framework/game_descriptor.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_launcher.gd",
+                        "to":  "core/framework/game_launcher.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_launcher.gd.uid",
+                        "to":  "core/framework/game_launcher.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_registry.gd",
+                        "to":  "core/framework/game_registry.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_registry.gd.uid",
+                        "to":  "core/framework/game_registry.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_result.gd",
+                        "to":  "core/framework/game_result.gd"
+                    },
+                    {
+                        "from":  "scripts/game/core/game_result.gd.uid",
+                        "to":  "core/framework/game_result.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/template/README.md",
+                        "to":  "games/template/README.md"
+                    },
+                    {
+                        "from":  "scripts/game/template/template_game.gd",
+                        "to":  "games/template/template_game.gd"
+                    },
+                    {
+                        "from":  "scripts/game/template/template_game.gd.uid",
+                        "to":  "games/template/template_game.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/xiangqi.gd",
+                        "to":  "games/chinesechess/scripts/xiangqi.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/xiangqi.gd.uid",
+                        "to":  "games/chinesechess/scripts/xiangqi.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess.gd",
+                        "to":  "games/chinesechess/scripts/item/chess.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_c.gd",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_c.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_c.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_c.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_j.gd",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_j.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_j.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_j.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_m.gd",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_m.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_m.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_m.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_p.gd",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_p.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_p.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_p.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_s.gd",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_s.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_s.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_s.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_x.gd",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_x.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_x.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_x.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_z.gd",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_z.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/item/chess/chess_z.gd.uid",
+                        "to":  "games/chinesechess/scripts/item/chess/chess_z.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/move/chess_position.gd",
+                        "to":  "games/chinesechess/scripts/move/chess_position.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/move/chess_position.gd.uid",
+                        "to":  "games/chinesechess/scripts/move/chess_position.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/move/player_move.gd",
+                        "to":  "games/chinesechess/scripts/move/player_move.gd"
+                    },
+                    {
+                        "from":  "scripts/game/xiangqi/move/player_move.gd.uid",
+                        "to":  "games/chinesechess/scripts/move/player_move.gd.uid"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/item/chess/chess_c.tscn",
+                        "to":  "games/chinesechess/scenes/item/chess/chess_c.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/item/chess/chess_j.tscn",
+                        "to":  "games/chinesechess/scenes/item/chess/chess_j.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/item/chess/chess_m.tscn",
+                        "to":  "games/chinesechess/scenes/item/chess/chess_m.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/item/chess/chess_p.tscn",
+                        "to":  "games/chinesechess/scenes/item/chess/chess_p.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/item/chess/chess_s.tscn",
+                        "to":  "games/chinesechess/scenes/item/chess/chess_s.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/item/chess/chess_x.tscn",
+                        "to":  "games/chinesechess/scenes/item/chess/chess_x.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/item/chess/chess_z.tscn",
+                        "to":  "games/chinesechess/scenes/item/chess/chess_z.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/move/chess_position.tscn",
+                        "to":  "games/chinesechess/scenes/move/chess_position.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/move/player_move.tscn",
+                        "to":  "games/chinesechess/scenes/move/player_move.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/xiangqi/xiangqi.tscn",
+                        "to":  "games/chinesechess/entry.tscn"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/bg.png",
+                        "to":  "games/chinesechess/assets/bg.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/bg.png.import",
+                        "to":  "games/chinesechess/assets/bg.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_box.png",
+                        "to":  "games/chinesechess/assets/b_box.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_box.png.import",
+                        "to":  "games/chinesechess/assets/b_box.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_c.png",
+                        "to":  "games/chinesechess/assets/b_c.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_c.png.import",
+                        "to":  "games/chinesechess/assets/b_c.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_j.png",
+                        "to":  "games/chinesechess/assets/b_j.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_j.png.import",
+                        "to":  "games/chinesechess/assets/b_j.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_m.png",
+                        "to":  "games/chinesechess/assets/b_m.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_m.png.import",
+                        "to":  "games/chinesechess/assets/b_m.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_p.png",
+                        "to":  "games/chinesechess/assets/b_p.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_p.png.import",
+                        "to":  "games/chinesechess/assets/b_p.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_s.png",
+                        "to":  "games/chinesechess/assets/b_s.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_s.png.import",
+                        "to":  "games/chinesechess/assets/b_s.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_x.png",
+                        "to":  "games/chinesechess/assets/b_x.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_x.png.import",
+                        "to":  "games/chinesechess/assets/b_x.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_z.png",
+                        "to":  "games/chinesechess/assets/b_z.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/b_z.png.import",
+                        "to":  "games/chinesechess/assets/b_z.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_box.png",
+                        "to":  "games/chinesechess/assets/r_box.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_box.png.import",
+                        "to":  "games/chinesechess/assets/r_box.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_c.png",
+                        "to":  "games/chinesechess/assets/r_c.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_c.png.import",
+                        "to":  "games/chinesechess/assets/r_c.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_j.png",
+                        "to":  "games/chinesechess/assets/r_j.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_j.png.import",
+                        "to":  "games/chinesechess/assets/r_j.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_m.png",
+                        "to":  "games/chinesechess/assets/r_m.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_m.png.import",
+                        "to":  "games/chinesechess/assets/r_m.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_p.png",
+                        "to":  "games/chinesechess/assets/r_p.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_p.png.import",
+                        "to":  "games/chinesechess/assets/r_p.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_s.png",
+                        "to":  "games/chinesechess/assets/r_s.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_s.png.import",
+                        "to":  "games/chinesechess/assets/r_s.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_x.png",
+                        "to":  "games/chinesechess/assets/r_x.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_x.png.import",
+                        "to":  "games/chinesechess/assets/r_x.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_z.png",
+                        "to":  "games/chinesechess/assets/r_z.png"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/r_z.png.import",
+                        "to":  "games/chinesechess/assets/r_z.png.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/font/SmileySans-Oblique.ttf",
+                        "to":  "games/chinesechess/assets/font/SmileySans-Oblique.ttf"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/font/SmileySans-Oblique.ttf.import",
+                        "to":  "games/chinesechess/assets/font/SmileySans-Oblique.ttf.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/call_to_kill.mp3",
+                        "to":  "games/chinesechess/assets/music/call_to_kill.mp3"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/call_to_kill.mp3.import",
+                        "to":  "games/chinesechess/assets/music/call_to_kill.mp3.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/pieces_del.mp3",
+                        "to":  "games/chinesechess/assets/music/pieces_del.mp3"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/pieces_del.mp3.import",
+                        "to":  "games/chinesechess/assets/music/pieces_del.mp3.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/pieces_down_no.mp3",
+                        "to":  "games/chinesechess/assets/music/pieces_down_no.mp3"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/pieces_down_no.mp3.import",
+                        "to":  "games/chinesechess/assets/music/pieces_down_no.mp3.import"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/pieces_down_yes.mp3",
+                        "to":  "games/chinesechess/assets/music/pieces_down_yes.mp3"
+                    },
+                    {
+                        "from":  "assets/game/xiangqi/music/pieces_down_yes.mp3.import",
+                        "to":  "games/chinesechess/assets/music/pieces_down_yes.mp3.import"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/board.gd",
+                        "to":  "games/tetris/scripts/board.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/board.gd.uid",
+                        "to":  "games/tetris/scripts/board.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/ghost_tetromino.gd",
+                        "to":  "games/tetris/scripts/ghost_tetromino.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/ghost_tetromino.gd.uid",
+                        "to":  "games/tetris/scripts/ghost_tetromino.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/line.gd",
+                        "to":  "games/tetris/scripts/line.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/line.gd.uid",
+                        "to":  "games/tetris/scripts/line.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/piece.gd",
+                        "to":  "games/tetris/scripts/piece.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/piece.gd.uid",
+                        "to":  "games/tetris/scripts/piece.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/piece_data.gd",
+                        "to":  "games/tetris/scripts/piece_data.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/piece_data.gd.uid",
+                        "to":  "games/tetris/scripts/piece_data.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/piece_spawner.gd",
+                        "to":  "games/tetris/scripts/piece_spawner.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/piece_spawner.gd.uid",
+                        "to":  "games/tetris/scripts/piece_spawner.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/shared.gd",
+                        "to":  "games/tetris/scripts/shared.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/shared.gd.uid",
+                        "to":  "games/tetris/scripts/shared.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/tetromino.gd",
+                        "to":  "games/tetris/scripts/tetromino.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/tetromino.gd.uid",
+                        "to":  "games/tetris/scripts/tetromino.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/ui.gd",
+                        "to":  "games/tetris/scripts/ui.gd"
+                    },
+                    {
+                        "from":  "scripts/game/tetris/ui.gd.uid",
+                        "to":  "games/tetris/scripts/ui.gd.uid"
+                    },
+                    {
+                        "from":  "scenes/game/tetris/ghost_tetromino.tscn",
+                        "to":  "games/tetris/scenes/ghost_tetromino.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/tetris/line.tscn",
+                        "to":  "games/tetris/scenes/line.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/tetris/piece.tscn",
+                        "to":  "games/tetris/scenes/piece.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/tetris/tetromino.tscn",
+                        "to":  "games/tetris/scenes/tetromino.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/tetris/ui.tscn",
+                        "to":  "games/tetris/scenes/ui.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/tetris/tetris.tscn",
+                        "to":  "games/tetris/entry.tscn"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Blue.png",
+                        "to":  "games/tetris/assets/Blue.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Blue.png.import",
+                        "to":  "games/tetris/assets/Blue.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Border.png",
+                        "to":  "games/tetris/assets/Border.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Border.png.import",
+                        "to":  "games/tetris/assets/Border.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Cyan.png",
+                        "to":  "games/tetris/assets/Cyan.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Cyan.png.import",
+                        "to":  "games/tetris/assets/Cyan.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/face.png",
+                        "to":  "games/tetris/assets/face.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/face.png.import",
+                        "to":  "games/tetris/assets/face.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Ghost.png",
+                        "to":  "games/tetris/assets/Ghost.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Ghost.png.import",
+                        "to":  "games/tetris/assets/Ghost.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Green.png",
+                        "to":  "games/tetris/assets/Green.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Green.png.import",
+                        "to":  "games/tetris/assets/Green.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Grid.png",
+                        "to":  "games/tetris/assets/Grid.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Grid.png.import",
+                        "to":  "games/tetris/assets/Grid.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Orange.png",
+                        "to":  "games/tetris/assets/Orange.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Orange.png.import",
+                        "to":  "games/tetris/assets/Orange.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Purple.png",
+                        "to":  "games/tetris/assets/Purple.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Purple.png.import",
+                        "to":  "games/tetris/assets/Purple.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Red.png",
+                        "to":  "games/tetris/assets/Red.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Red.png.import",
+                        "to":  "games/tetris/assets/Red.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Yellow.png",
+                        "to":  "games/tetris/assets/Yellow.png"
+                    },
+                    {
+                        "from":  "assets/game/tetris/Yellow.png.import",
+                        "to":  "games/tetris/assets/Yellow.png.import"
+                    },
+                    {
+                        "from":  "assets/game/tetris/resources/i_piece_data.tres",
+                        "to":  "games/tetris/assets/resources/i_piece_data.tres"
+                    },
+                    {
+                        "from":  "assets/game/tetris/resources/j_piece_data.tres",
+                        "to":  "games/tetris/assets/resources/j_piece_data.tres"
+                    },
+                    {
+                        "from":  "assets/game/tetris/resources/l_piece_data.tres",
+                        "to":  "games/tetris/assets/resources/l_piece_data.tres"
+                    },
+                    {
+                        "from":  "assets/game/tetris/resources/o_piece_data.tres",
+                        "to":  "games/tetris/assets/resources/o_piece_data.tres"
+                    },
+                    {
+                        "from":  "assets/game/tetris/resources/s_piece_data.tres",
+                        "to":  "games/tetris/assets/resources/s_piece_data.tres"
+                    },
+                    {
+                        "from":  "assets/game/tetris/resources/t_piece_data.tres",
+                        "to":  "games/tetris/assets/resources/t_piece_data.tres"
+                    },
+                    {
+                        "from":  "assets/game/tetris/resources/z_piece_data.tres",
+                        "to":  "games/tetris/assets/resources/z_piece_data.tres"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/Gameplay/main_game.gd",
+                        "to":  "games/mahjong_matching/scripts/Gameplay/main_game.gd"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/Gameplay/main_game.gd.uid",
+                        "to":  "games/mahjong_matching/scripts/Gameplay/main_game.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/prefabs/prefab_mahjong.gd",
+                        "to":  "games/mahjong_matching/scripts/prefabs/prefab_mahjong.gd"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/prefabs/prefab_mahjong.gd.uid",
+                        "to":  "games/mahjong_matching/scripts/prefabs/prefab_mahjong.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/prefabs/prefab_resultmahjong.gd",
+                        "to":  "games/mahjong_matching/scripts/prefabs/prefab_resultmahjong.gd"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/prefabs/prefab_resultmahjong.gd.uid",
+                        "to":  "games/mahjong_matching/scripts/prefabs/prefab_resultmahjong.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/shader/canvasItem.gd",
+                        "to":  "games/mahjong_matching/scripts/shader/canvasItem.gd"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/shader/canvasItem.gd.uid",
+                        "to":  "games/mahjong_matching/scripts/shader/canvasItem.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/UI/GameEnd.gd",
+                        "to":  "games/mahjong_matching/scripts/UI/GameEnd.gd"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/UI/GameEnd.gd.uid",
+                        "to":  "games/mahjong_matching/scripts/UI/GameEnd.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/UI/MainUI.gd",
+                        "to":  "games/mahjong_matching/scripts/UI/MainUI.gd"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/UI/MainUI.gd.uid",
+                        "to":  "games/mahjong_matching/scripts/UI/MainUI.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/UI/StartUI.gd",
+                        "to":  "games/mahjong_matching/scripts/UI/StartUI.gd"
+                    },
+                    {
+                        "from":  "scripts/game/mahjong_matching/UI/StartUI.gd.uid",
+                        "to":  "games/mahjong_matching/scripts/UI/StartUI.gd.uid"
+                    },
+                    {
+                        "from":  "scenes/game/mahjong_matching/prefabs/prefab_mahjong.tscn",
+                        "to":  "games/mahjong_matching/scenes/prefabs/prefab_mahjong.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/mahjong_matching/prefabs/prefab_mahjong3d.tscn",
+                        "to":  "games/mahjong_matching/scenes/prefabs/prefab_mahjong3d.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/mahjong_matching/prefabs/prefab_resultmahjong.tscn",
+                        "to":  "games/mahjong_matching/scenes/prefabs/prefab_resultmahjong.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/mahjong_matching/level/main_game.tscn",
+                        "to":  "games/mahjong_matching/entry.tscn"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf",
+                        "to":  "games/mahjong_matching/assets/font/fonts/Kaph-Regular.ttf"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/font/fonts/Kaph-Regular.ttf.import",
+                        "to":  "games/mahjong_matching/assets/font/fonts/Kaph-Regular.ttf.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/20240418.png",
+                        "to":  "games/mahjong_matching/assets/image/20240418.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/20240418.png.import",
+                        "to":  "games/mahjong_matching/assets/image/20240418.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/icon.svg",
+                        "to":  "games/mahjong_matching/assets/image/icon.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/icon.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/icon.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/01.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/01.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/01.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/01.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/02.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/02.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/02.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/02.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/03.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/03.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/03.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/03.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/04.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/04.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/04.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/04.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/05.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/05.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/05.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/05.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/06.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/06.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/06.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/06.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/07.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/07.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/07.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/07.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/08.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/08.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/08.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/08.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/09.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/09.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/09.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/09.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/10.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/10.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/10.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/10.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/11.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/11.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/11.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/11.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/12.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/12.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/12.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/12.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/13.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/13.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/13.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/13.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/14.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/14.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/14.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/14.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/15.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/15.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/15.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/15.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/16.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/16.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/16.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/16.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/17.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/17.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/17.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/17.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/18.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/18.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/18.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/18.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/19.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/19.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/19.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/19.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/20.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/20.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/20.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/20.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/21.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/21.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/21.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/21.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/22.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/22.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/22.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/22.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/23.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/23.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/23.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/23.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/24.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/24.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/24.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/24.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/25.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/25.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/25.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/25.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/26.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/26.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/26.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/26.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/27.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/27.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/27.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/27.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/28.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/28.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/28.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/28.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/29.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/29.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/29.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/29.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/30.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/30.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/30.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/30.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/31.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/31.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/31.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/31.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/32.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/32.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/32.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/32.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/33.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/33.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/33.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/33.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/34.svg",
+                        "to":  "games/mahjong_matching/assets/image/texture/34.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/texture/34.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/texture/34.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/back.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/back.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/back.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/back.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/backbutton.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/backbutton.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/backbutton.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/backbutton.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/background.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/background.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/background.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/background.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Banner_Premade_LevelComplete.svg",
+                        "to":  "games/mahjong_matching/assets/image/UI/Banner_Premade_LevelComplete.svg"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Banner_Premade_LevelComplete.svg.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/Banner_Premade_LevelComplete.svg.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/bluebutton_hover.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/bluebutton_hover.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/bluebutton_hover.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/bluebutton_hover.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/bluebutton_normal.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/bluebutton_normal.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/bluebutton_normal.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/bluebutton_normal.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/bluebutton_press.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/bluebutton_press.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/bluebutton_press.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/bluebutton_press.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/board.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/board.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/board.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/board.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Box_Flowers.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/Box_Flowers.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Box_Flowers.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/Box_Flowers.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button-normal.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/button-normal.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button-normal.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/button-normal.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button_hover.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/button_hover.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button_hover.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/button_hover.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button_normal.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/button_normal.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button_normal.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/button_normal.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button_press.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/button_press.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/button_press.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/button_press.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Icon_Small_Arrow.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/Icon_Small_Arrow.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Icon_Small_Arrow.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/Icon_Small_Arrow.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Icon_Small_WhiteOutline_Return.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/Icon_Small_WhiteOutline_Return.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/Icon_Small_WhiteOutline_Return.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/Icon_Small_WhiteOutline_Return.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/question.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/question.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/question.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/question.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/restart.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/restart.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/restart.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/restart.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/smallbutton_hover.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/smallbutton_hover.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/smallbutton_hover.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/smallbutton_hover.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/smallbutton_nomal.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/smallbutton_nomal.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/smallbutton_nomal.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/smallbutton_nomal.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/smallbutton_press.png",
+                        "to":  "games/mahjong_matching/assets/image/UI/smallbutton_press.png"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/image/UI/smallbutton_press.png.import",
+                        "to":  "games/mahjong_matching/assets/image/UI/smallbutton_press.png.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/bgm/gamemain.mp3",
+                        "to":  "games/mahjong_matching/assets/sound/bgm/gamemain.mp3"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/bgm/gamemain.mp3.import",
+                        "to":  "games/mahjong_matching/assets/sound/bgm/gamemain.mp3.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/bgm/start.mp3",
+                        "to":  "games/mahjong_matching/assets/sound/bgm/start.mp3"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/bgm/start.mp3.import",
+                        "to":  "games/mahjong_matching/assets/sound/bgm/start.mp3.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/click1.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/click1.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/click1.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/click1.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/merge.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/merge.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/merge.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/merge.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist1.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist1.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist1.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist1.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist2.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist2.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist2.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist2.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist3.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist3.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist3.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist3.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist4.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist4.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist4.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist4.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist5.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist5.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist5.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist5.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist6.wav",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist6.wav"
+                    },
+                    {
+                        "from":  "assets/game/mahjong_matching/sound/SE/Minimalist6.wav.import",
+                        "to":  "games/mahjong_matching/assets/sound/SE/Minimalist6.wav.import"
+                    },
+                    {
+                        "from":  "themes/game/mahjong_matching/button_blue.tres",
+                        "to":  "games/mahjong_matching/assets/themes/button_blue.tres"
+                    },
+                    {
+                        "from":  "themes/game/mahjong_matching/button_pink.tres",
+                        "to":  "games/mahjong_matching/assets/themes/button_pink.tres"
+                    },
+                    {
+                        "from":  "themes/game/mahjong_matching/start_ui.tres",
+                        "to":  "games/mahjong_matching/assets/themes/start_ui.tres"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/Camera.gd",
+                        "to":  "games/fishgame/scripts/Camera.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/Camera.gd.uid",
+                        "to":  "games/fishgame/scripts/Camera.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/Game.gd",
+                        "to":  "games/fishgame/scripts/Game.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/Game.gd.uid",
+                        "to":  "games/fishgame/scripts/Game.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/Main.gd",
+                        "to":  "games/fishgame/scripts/Main.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/Main.gd.uid",
+                        "to":  "games/fishgame/scripts/Main.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/ExplodeEffect.gd",
+                        "to":  "games/fishgame/scripts/actors/ExplodeEffect.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/ExplodeEffect.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/ExplodeEffect.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/Player.gd",
+                        "to":  "games/fishgame/scripts/actors/Player.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/Player.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/Player.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Dead.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Dead.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Dead.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Dead.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Duck.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Duck.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Duck.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Duck.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Fall.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Fall.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Fall.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Fall.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Hurt.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Hurt.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Hurt.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Hurt.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Idle.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Idle.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Idle.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Idle.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Jump.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Jump.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Jump.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Jump.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Move.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Move.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Move.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Move.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Slide.gd",
+                        "to":  "games/fishgame/scripts/actors/player-states/Slide.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/actors/player-states/Slide.gd.uid",
+                        "to":  "games/fishgame/scripts/actors/player-states/Slide.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/components/Hitbox.gd",
+                        "to":  "games/fishgame/scripts/components/Hitbox.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/components/Hitbox.gd.uid",
+                        "to":  "games/fishgame/scripts/components/Hitbox.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/components/InputBuffer.gd",
+                        "to":  "games/fishgame/scripts/components/InputBuffer.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/components/InputBuffer.gd.uid",
+                        "to":  "games/fishgame/scripts/components/InputBuffer.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/components/Sounds.gd",
+                        "to":  "games/fishgame/scripts/components/Sounds.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/components/Sounds.gd.uid",
+                        "to":  "games/fishgame/scripts/components/Sounds.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/Music.gd",
+                        "to":  "games/fishgame/scripts/main/Music.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/Music.gd.uid",
+                        "to":  "games/fishgame/scripts/main/Music.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/Screen.gd",
+                        "to":  "games/fishgame/scripts/main/Screen.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/Screen.gd.uid",
+                        "to":  "games/fishgame/scripts/main/Screen.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/UILayer.gd",
+                        "to":  "games/fishgame/scripts/main/UILayer.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/UILayer.gd.uid",
+                        "to":  "games/fishgame/scripts/main/UILayer.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/ConnectionScreen.gd",
+                        "to":  "games/fishgame/scripts/main/screens/ConnectionScreen.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/ConnectionScreen.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/ConnectionScreen.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/LeaderboardRecord.gd",
+                        "to":  "games/fishgame/scripts/main/screens/LeaderboardRecord.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/LeaderboardRecord.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/LeaderboardRecord.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/LeaderboardScreen.gd",
+                        "to":  "games/fishgame/scripts/main/screens/LeaderboardScreen.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/LeaderboardScreen.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/LeaderboardScreen.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/MatchScreen.gd",
+                        "to":  "games/fishgame/scripts/main/screens/MatchScreen.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/MatchScreen.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/MatchScreen.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/PeerStatus.gd",
+                        "to":  "games/fishgame/scripts/main/screens/PeerStatus.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/PeerStatus.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/PeerStatus.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/ReadyScreen.gd",
+                        "to":  "games/fishgame/scripts/main/screens/ReadyScreen.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/ReadyScreen.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/ReadyScreen.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/TitleScreen.gd",
+                        "to":  "games/fishgame/scripts/main/screens/TitleScreen.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/TitleScreen.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/TitleScreen.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/TransparentButton.gd",
+                        "to":  "games/fishgame/scripts/main/screens/TransparentButton.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/main/screens/TransparentButton.gd.uid",
+                        "to":  "games/fishgame/scripts/main/screens/TransparentButton.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/maps/Map.gd",
+                        "to":  "games/fishgame/scripts/maps/Map.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/maps/Map.gd.uid",
+                        "to":  "games/fishgame/scripts/maps/Map.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/objects/TimedGenerator.gd",
+                        "to":  "games/fishgame/scripts/objects/TimedGenerator.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/objects/TimedGenerator.gd.uid",
+                        "to":  "games/fishgame/scripts/objects/TimedGenerator.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/DisintegrateEffect.gd",
+                        "to":  "games/fishgame/scripts/pickups/DisintegrateEffect.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/DisintegrateEffect.gd.uid",
+                        "to":  "games/fishgame/scripts/pickups/DisintegrateEffect.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Gun.gd",
+                        "to":  "games/fishgame/scripts/pickups/Gun.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Gun.gd.uid",
+                        "to":  "games/fishgame/scripts/pickups/Gun.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Pickup.gd",
+                        "to":  "games/fishgame/scripts/pickups/Pickup.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Pickup.gd.uid",
+                        "to":  "games/fishgame/scripts/pickups/Pickup.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Projectile.gd",
+                        "to":  "games/fishgame/scripts/pickups/Projectile.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Projectile.gd.uid",
+                        "to":  "games/fishgame/scripts/pickups/Projectile.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/SparksEffect.gd",
+                        "to":  "games/fishgame/scripts/pickups/SparksEffect.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/SparksEffect.gd.uid",
+                        "to":  "games/fishgame/scripts/pickups/SparksEffect.gd.uid"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Sword.gd",
+                        "to":  "games/fishgame/scripts/pickups/Sword.gd"
+                    },
+                    {
+                        "from":  "scripts/game/fishgame/pickups/Sword.gd.uid",
+                        "to":  "games/fishgame/scripts/pickups/Sword.gd.uid"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/Main.tscn",
+                        "to":  "games/fishgame/scenes/Main.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/actors/ExplodeEffect.tscn",
+                        "to":  "games/fishgame/scenes/actors/ExplodeEffect.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/actors/Player.tscn",
+                        "to":  "games/fishgame/scenes/actors/Player.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/components/Hitbox.tscn",
+                        "to":  "games/fishgame/scenes/components/Hitbox.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/ConnectionScreen.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/ConnectionScreen.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/CreditsScreen.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/CreditsScreen.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/LeaderboardRecord.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/LeaderboardRecord.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/LeaderboardScreen.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/LeaderboardScreen.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/MatchScreen.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/MatchScreen.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/PeerStatus.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/PeerStatus.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/ReadyScreen.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/ReadyScreen.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/main/screens/TitleScreen.tscn",
+                        "to":  "games/fishgame/scenes/main/screens/TitleScreen.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/maps/Map1.tscn",
+                        "to":  "games/fishgame/scenes/maps/Map1.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/maps/Map2.tscn",
+                        "to":  "games/fishgame/scenes/maps/Map2.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/maps/ParallaxBackground.tscn",
+                        "to":  "games/fishgame/scenes/maps/ParallaxBackground.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/maps/StaticBackground.tscn",
+                        "to":  "games/fishgame/scenes/maps/StaticBackground.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/maps/TestMap.tscn",
+                        "to":  "games/fishgame/scenes/maps/TestMap.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/objects/Barnacles.tscn",
+                        "to":  "games/fishgame/scenes/objects/Barnacles.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/objects/Seaweed.tscn",
+                        "to":  "games/fishgame/scenes/objects/Seaweed.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/objects/TimedGenerator.tscn",
+                        "to":  "games/fishgame/scenes/objects/TimedGenerator.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/objects/TimedGeneratorFlat.tscn",
+                        "to":  "games/fishgame/scenes/objects/TimedGeneratorFlat.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/pickups/DisintegrateEffect.tscn",
+                        "to":  "games/fishgame/scenes/pickups/DisintegrateEffect.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/pickups/Gun.tscn",
+                        "to":  "games/fishgame/scenes/pickups/Gun.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/pickups/Pickup.tscn",
+                        "to":  "games/fishgame/scenes/pickups/Pickup.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/pickups/Projectile.tscn",
+                        "to":  "games/fishgame/scenes/pickups/Projectile.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/pickups/SparksEffect.tscn",
+                        "to":  "games/fishgame/scenes/pickups/SparksEffect.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/pickups/Sword.tscn",
+                        "to":  "games/fishgame/scenes/pickups/Sword.tscn"
+                    },
+                    {
+                        "from":  "scenes/game/fishgame/Game.tscn",
+                        "to":  "games/fishgame/entry.tscn"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/theme.tres",
+                        "to":  "games/fishgame/assets/theme.tres"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/01.png",
+                        "to":  "games/fishgame/assets/backgrounds/01.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/01.png.import",
+                        "to":  "games/fishgame/assets/backgrounds/01.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/02.png",
+                        "to":  "games/fishgame/assets/backgrounds/02.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/02.png.import",
+                        "to":  "games/fishgame/assets/backgrounds/02.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/03.png",
+                        "to":  "games/fishgame/assets/backgrounds/03.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/03.png.import",
+                        "to":  "games/fishgame/assets/backgrounds/03.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/04.png",
+                        "to":  "games/fishgame/assets/backgrounds/04.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/backgrounds/04.png.import",
+                        "to":  "games/fishgame/assets/backgrounds/04.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/fonts/monogram.tres",
+                        "to":  "games/fishgame/assets/fonts/monogram.tres"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/fonts/monogram.ttf",
+                        "to":  "games/fishgame/assets/fonts/monogram.ttf"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/fonts/monogram.ttf.import",
+                        "to":  "games/fishgame/assets/fonts/monogram.ttf.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/fonts/monogram_extended.ttf",
+                        "to":  "games/fishgame/assets/fonts/monogram_extended.ttf"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/fonts/monogram_extended.ttf.import",
+                        "to":  "games/fishgame/assets/fonts/monogram_extended.ttf.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/kenney-platform-deluxe/license.txt",
+                        "to":  "games/fishgame/assets/kenney-platform-deluxe/license.txt"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/kenney-platform-deluxe/request/rockSmall.png",
+                        "to":  "games/fishgame/assets/kenney-platform-deluxe/request/rockSmall.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/kenney-platform-deluxe/request/rockSmall.png.import",
+                        "to":  "games/fishgame/assets/kenney-platform-deluxe/request/rockSmall.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/kenney-platform-deluxe/tiles/castle.png",
+                        "to":  "games/fishgame/assets/kenney-platform-deluxe/tiles/castle.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/kenney-platform-deluxe/tiles/castle.png.import",
+                        "to":  "games/fishgame/assets/kenney-platform-deluxe/tiles/castle.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/BUILD UP.ogg",
+                        "to":  "games/fishgame/assets/music/BUILD UP.ogg"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/BUILD UP.ogg.import",
+                        "to":  "games/fishgame/assets/music/BUILD UP.ogg.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/DOMEFIGHTERS.ogg",
+                        "to":  "games/fishgame/assets/music/DOMEFIGHTERS.ogg"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/DOMEFIGHTERS.ogg.import",
+                        "to":  "games/fishgame/assets/music/DOMEFIGHTERS.ogg.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/FISHSTICKS.ogg",
+                        "to":  "games/fishgame/assets/music/FISHSTICKS.ogg"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/FISHSTICKS.ogg.import",
+                        "to":  "games/fishgame/assets/music/FISHSTICKS.ogg.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/THEME #1.ogg",
+                        "to":  "games/fishgame/assets/music/THEME #1.ogg"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/music/THEME #1.ogg.import",
+                        "to":  "games/fishgame/assets/music/THEME #1.ogg.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/empty.wav",
+                        "to":  "games/fishgame/assets/sounds/empty.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/empty.wav.import",
+                        "to":  "games/fishgame/assets/sounds/empty.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/hurt.wav",
+                        "to":  "games/fishgame/assets/sounds/hurt.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/hurt.wav.import",
+                        "to":  "games/fishgame/assets/sounds/hurt.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/jump.wav",
+                        "to":  "games/fishgame/assets/sounds/jump.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/jump.wav.import",
+                        "to":  "games/fishgame/assets/sounds/jump.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/pickup.wav",
+                        "to":  "games/fishgame/assets/sounds/pickup.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/pickup.wav.import",
+                        "to":  "games/fishgame/assets/sounds/pickup.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/shoot.ogg",
+                        "to":  "games/fishgame/assets/sounds/shoot.ogg"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/shoot.ogg.import",
+                        "to":  "games/fishgame/assets/sounds/shoot.ogg.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/sword.wav",
+                        "to":  "games/fishgame/assets/sounds/sword.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/sword.wav.import",
+                        "to":  "games/fishgame/assets/sounds/sword.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/throw.wav",
+                        "to":  "games/fishgame/assets/sounds/throw.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/throw.wav.import",
+                        "to":  "games/fishgame/assets/sounds/throw.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/blops/blop1.wav",
+                        "to":  "games/fishgame/assets/sounds/blops/blop1.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/blops/blop1.wav.import",
+                        "to":  "games/fishgame/assets/sounds/blops/blop1.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/blops/blop2.wav",
+                        "to":  "games/fishgame/assets/sounds/blops/blop2.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/blops/blop2.wav.import",
+                        "to":  "games/fishgame/assets/sounds/blops/blop2.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/blops/blop3.wav",
+                        "to":  "games/fishgame/assets/sounds/blops/blop3.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/blops/blop3.wav.import",
+                        "to":  "games/fishgame/assets/sounds/blops/blop3.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/explosions/explosion1.wav",
+                        "to":  "games/fishgame/assets/sounds/explosions/explosion1.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/explosions/explosion1.wav.import",
+                        "to":  "games/fishgame/assets/sounds/explosions/explosion1.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/explosions/explosion2.wav",
+                        "to":  "games/fishgame/assets/sounds/explosions/explosion2.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/explosions/explosion2.wav.import",
+                        "to":  "games/fishgame/assets/sounds/explosions/explosion2.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/explosions/explosion3.wav",
+                        "to":  "games/fishgame/assets/sounds/explosions/explosion3.wav"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sounds/explosions/explosion3.wav.import",
+                        "to":  "games/fishgame/assets/sounds/explosions/explosion3.wav.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/decorations1.png",
+                        "to":  "games/fishgame/assets/sprites/decorations1.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/decorations1.png.import",
+                        "to":  "games/fishgame/assets/sprites/decorations1.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/generator_flat.png",
+                        "to":  "games/fishgame/assets/sprites/generator_flat.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/generator_flat.png.import",
+                        "to":  "games/fishgame/assets/sprites/generator_flat.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/gun.png",
+                        "to":  "games/fishgame/assets/sprites/gun.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/gun.png.import",
+                        "to":  "games/fishgame/assets/sprites/gun.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/sword.png",
+                        "to":  "games/fishgame/assets/sprites/sword.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/sword.png.import",
+                        "to":  "games/fishgame/assets/sprites/sword.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_blue.png",
+                        "to":  "games/fishgame/assets/sprites/whale_blue.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_blue.png.import",
+                        "to":  "games/fishgame/assets/sprites/whale_blue.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_green.png",
+                        "to":  "games/fishgame/assets/sprites/whale_green.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_green.png.import",
+                        "to":  "games/fishgame/assets/sprites/whale_green.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_orange.png",
+                        "to":  "games/fishgame/assets/sprites/whale_orange.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_orange.png.import",
+                        "to":  "games/fishgame/assets/sprites/whale_orange.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_purple.png",
+                        "to":  "games/fishgame/assets/sprites/whale_purple.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/sprites/whale_purple.png.import",
+                        "to":  "games/fishgame/assets/sprites/whale_purple.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/tilesets/template.png",
+                        "to":  "games/fishgame/assets/tilesets/template.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/tilesets/template.png.import",
+                        "to":  "games/fishgame/assets/tilesets/template.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/tilesets/template.tres",
+                        "to":  "games/fishgame/assets/tilesets/template.tres"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/tilesets/tileset.tres",
+                        "to":  "games/fishgame/assets/tilesets/tileset.tres"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/tilesets/tileset1.png",
+                        "to":  "games/fishgame/assets/tilesets/tileset1.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/tilesets/tileset1.png.import",
+                        "to":  "games/fishgame/assets/tilesets/tileset1.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/ui/close.png",
+                        "to":  "games/fishgame/assets/ui/close.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/ui/close.png.import",
+                        "to":  "games/fishgame/assets/ui/close.png.import"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/ui/mute.png",
+                        "to":  "games/fishgame/assets/ui/mute.png"
+                    },
+                    {
+                        "from":  "assets/game/fishgame/ui/mute.png.import",
+                        "to":  "games/fishgame/assets/ui/mute.png.import"
+                    },
+                    {
+                        "from":  "themes/game/fishgame/default_env.tres",
+                        "to":  "games/fishgame/assets/themes/default_env.tres"
+                    },
+                    {
+                        "from":  "themes/game/fishgame/actors/ExplodeEffectGradient.tres",
+                        "to":  "games/fishgame/assets/themes/actors/ExplodeEffectGradient.tres"
+                    },
+                    {
+                        "from":  "themes/game/fishgame/pickups/DisintegrateEffectGradient.tres",
+                        "to":  "games/fishgame/assets/themes/pickups/DisintegrateEffectGradient.tres"
+                    },
+                    {
+                        "from":  "themes/game/fishgame/pickups/SparksEffectGradient.tres",
+                        "to":  "games/fishgame/assets/themes/pickups/SparksEffectGradient.tres"
+                    }
+                ]
+}

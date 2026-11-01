@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cdd4gjsje852r"]
+
+[ext_resource type="Script" uid="uid://dll7l3p26267k" path="res://games/chinesechess/scripts/item/chess/chess_m.gd" id="1_8y4pa"]
+[ext_resource type="Texture2D" uid="uid://cff5ff7jkkqvr" path="res://games/chinesechess/assets/r_m.png" id="1_adahr"]
+[ext_resource type="Texture2D" uid="uid://c1tdoqg8byj77" path="res://games/chinesechess/assets/b_m.png" id="3_2iq6e"]
+
+[node name="player_chess_m" type="Sprite2D" unique_id=672607956]
+texture = ExtResource("1_adahr")
+script = ExtResource("1_8y4pa")
+red = ExtResource("1_adahr")
+black = ExtResource("3_2iq6e")

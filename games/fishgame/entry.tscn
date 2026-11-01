@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ca6oqqdx0x6j7"]
+
+[ext_resource type="Script" uid="uid://05hnb6knx3m1" path="res://games/fishgame/scripts/Camera.gd" id="1"]
+[ext_resource type="Script" uid="uid://dbock6w8ai25f" path="res://games/fishgame/scripts/Game.gd" id="2"]
+
+[node name="Game" type="Node2D" unique_id=1186210685]
+texture_filter = 1
+script = ExtResource("2")
+
+[node name="Map" type="Node2D" parent="." unique_id=610737473]
+
+[node name="Players" type="Node2D" parent="." unique_id=504905244]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=491901471]
+position = Vector2(420, -350)
+limit_bottom = 0
+script = ExtResource("1")
+player_container_path = NodePath("../Players")
+zoom_offset = 0.5

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GameMeta" format=3]
+
+[ext_resource type="Script" path="res://core/framework/game_meta.gd" id="1_572ox"]
+
+[resource]
+script = ExtResource("1_572ox")
+key = "chinesechess"
+title = "中国象棋"
+entry_scene = "res://games/chinesechess/entry.tscn"
+max_players = 2
+online = true
+show_back_button = false
+order = 10
+aliases = PackedStringArray("xiangqi")
+tags = PackedStringArray("棋类", "对战")
+description = "双人实时对战的经典中国象棋。"

@@ -1,0 +1,9 @@
+[gd_resource type="TileSet" format=3 uid="uid://d48ubiyg7qqc"]
+
+[ext_resource type="Texture2D" uid="uid://b55a21cc5kbu0" path="res://games/fishgame/assets/tilesets/template.png" id="1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_22v68"]
+texture = ExtResource("1")
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_22v68")

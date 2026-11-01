@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GameMeta" format=3]
+
+[ext_resource type="Script" path="res://core/framework/game_meta.gd" id="1_3vn3j"]
+
+[resource]
+script = ExtResource("1_3vn3j")
+key = "fishgame"
+title = "捕鱼大作战"
+entry_scene = "res://games/fishgame/entry.tscn"
+max_players = 4
+online = true
+order = 40
+aliases = PackedStringArray("fish")
+tags = PackedStringArray("动作", "对战")
+description = "多人同屏射击捕鱼，联机对战。"

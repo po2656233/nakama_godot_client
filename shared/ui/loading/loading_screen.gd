@@ -16,7 +16,9 @@ const GAME_PACK := ".zip"
 const LOCAL_ROOT := "user://"
 const RES_ROOT := "res://"
 const RESOURCE_URL := "http://60.205.90.152:5567/"
-const GAME_SCENE_ROOT := "res://scenes/game/"
+## 下载游戏解压根目录：压缩包内应包含 games/<key>/entry.tscn 与 games/<key>/game_meta.tres。
+## 注意：当前仍写入 res://（导出包只读），正式发布前应改为 user:// + PCK，见 docs/PLUGIN_REFACTOR_PLAN.md。
+const GAME_SCENE_ROOT := "res://games/"
 
 enum LoadType {
 	PROGRESS,
@@ -189,7 +191,7 @@ func _extract_and_start() -> void:
 
 	var main_path := _pick_main_scene()
 	if main_path.is_empty():
-		main_path = GAME_SCENE_ROOT.path_join(game_key).path_join(game_key + ".tscn")
+		main_path = GAME_SCENE_ROOT.path_join(game_key).path_join("entry.tscn")
 
 	if not FileAccess.file_exists(main_path):
 		_fail("缺乏主场景资源,游戏启动失败... " + main_path)
@@ -223,14 +225,15 @@ func _extract_file(file_path: String, data: PackedByteArray) -> void:
 	if target.ends_with(".tscn"):
 		scene_files.append(target)
 
+## 优先入口场景 <key>/entry.tscn，其次 <key>/<key>.tscn（旧插件），最后第一个场景。
 func _pick_main_scene() -> String:
-	var fallback := ""
+	for path in scene_files:
+		if path.get_file() == "entry.tscn" and path.get_base_dir().get_file() == game_key:
+			return path
 	for path in scene_files:
 		if path.get_file().get_basename() == game_key:
 			return path
-		if fallback.is_empty():
-			fallback = path
-	return fallback
+	return scene_files[0] if scene_files.size() > 0 else ""
 
 func _fail(message: String) -> void:
 	_is_downloading = false

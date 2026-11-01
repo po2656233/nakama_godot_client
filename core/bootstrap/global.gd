@@ -30,9 +30,9 @@ const DEFAULT_SERVICES := {
 	"FancyFade": "res://addons/transitions/FancyFade.gd",
 	"FadeScene": "res://addons/transitions/FadeScene.gd",
 	# 子游戏框架
-	"GameRegistry": "res://scripts/game/core/game_registry.gd",
-	"GameLauncher": "res://scripts/game/core/game_launcher.gd",
-	"Shared": "res://scripts/game/tetris/shared.gd",
+	"GameRegistry": "res://core/framework/game_registry.gd",
+	"GameLauncher": "res://core/framework/game_launcher.gd",
+	"Shared": "res://games/tetris/scripts/shared.gd",
 }
 
 ## 服务名 -> 资源路径（未实例化）

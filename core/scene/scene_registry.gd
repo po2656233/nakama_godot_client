@@ -4,7 +4,7 @@ extends RefCounted
 ## 职责：只维护「场景名 -> 场景路径」映射，不加载场景、不转场、不访问网络。
 ## 说明：子游戏不在这里登记，统一由 GameRegistry 管理（SceneMgr 会做兜底查询）。
 
-## 应用级页面路由（子游戏见 scripts/game/core/game_catalog.gd）。
+## 应用级页面路由（子游戏见 games/<key>/game_meta.tres）。
 const DEFAULT_ROUTES := {
 	"loading": "res://shared/ui/loading/loading_screen.tscn",
 	"login": "res://app/login/login.tscn",

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameMeta" format=3]
+
+[ext_resource type="Script" path="res://core/framework/game_meta.gd" id="1_b8fpi"]
+
+[resource]
+script = ExtResource("1_b8fpi")
+key = "tetris"
+title = "俄罗斯方块"
+entry_scene = "res://games/tetris/entry.tscn"
+order = 20
+aliases = PackedStringArray("tetris_game")
+tags = PackedStringArray("休闲", "单机")
+description = "经典俄罗斯方块，支持消行与分数结算。"

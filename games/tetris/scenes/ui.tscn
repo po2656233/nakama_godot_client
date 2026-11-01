@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://ct2meksk8huhw"]
+
+[ext_resource type="Script" uid="uid://wyqleq211iv" path="res://games/tetris/scripts/ui.gd" id="1_j3a81"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrwnv"]
+bg_color = Color(0.0588235, 0.4, 0.372549, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2wogk"]
+font_color = Color(0.968627, 0.0313726, 0.415686, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_yo6jb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e6kpu"]
+font = SubResource("FontVariation_yo6jb")
+font_color = Color(0.701961, 0.701961, 0.0745098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tlr7"]
+bg_color = Color(0.588235, 0.388235, 0.847059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1v6nn"]
+bg_color = Color(0.729412, 0.192157, 0.262745, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40y36"]
+bg_color = Color(0.301961, 0.694118, 0.435294, 1)
+
+[node name="UI" type="CanvasLayer" unique_id=1747911235]
+script = ExtResource("1_j3a81")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1714401513]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1553202290]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yrwnv")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=2025664754]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1524253439]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1293004104]
+layout_mode = 2
+text = "	GAME OVER
+"
+label_settings = SubResource("LabelSettings_2wogk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1863622868]
+layout_mode = 2
+text = "SCORE
+"
+label_settings = SubResource("LabelSettings_e6kpu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=435973966]
+custom_minimum_size = Vector2(150, 50)
+clip_contents = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.47451, 0.819608, 0.254902, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_5tlr7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1v6nn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_40y36")
+text = "RESTART"
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

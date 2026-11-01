@@ -9,8 +9,8 @@ const EXPECTED_ALIASES := {
 	"mahjong": "mahjong_matching",
 	"fish": "fishgame",
 }
-const CONTEXT_SCRIPT := "res://scripts/game/core/game_context.gd"
-const RESULT_SCRIPT := "res://scripts/game/core/game_result.gd"
+const CONTEXT_SCRIPT := "res://core/framework/game_context.gd"
+const RESULT_SCRIPT := "res://core/framework/game_result.gd"
 
 var _failed := 0
 var _passed := 0
