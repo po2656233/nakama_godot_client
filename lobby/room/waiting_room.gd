@@ -54,6 +54,7 @@ func _ready():
 	countdown.timeout.connect(_on_countdown_timeout)
 	countdown.timeleft.connect(_on_countdown_timeleft)
 	Global.SignalMgr.LoadingSIG.connect(_on_loading_value)
+	_install_rtc_controls()
 	pass
 
 func Show():
@@ -253,3 +254,44 @@ func _on_cancel_button_pressed():
 # 	timer = get_tree().create_timer(4.0)
 # 	timer.timeout.connect(func(): add_player("玩家3"))
 # 	pass
+
+
+## 等待房间的 RTC 快捷入口：麦克风开关 + 本机摄像头预览。
+func _install_rtc_controls() -> void:
+	if not Global.has_global("RtcMedia"):
+		return
+	var vbox := get_node_or_null("CenterContainer/PanelContainer/MarginContainer/VBoxContainer") as VBoxContainer
+	if vbox == null or vbox.has_node("RtcBar"):
+		return
+	var bar := HBoxContainer.new()
+	bar.name = "RtcBar"
+	bar.alignment = BoxContainer.ALIGNMENT_CENTER
+	bar.add_theme_constant_override("separation", 10)
+	var mic := Button.new()
+	mic.text = "开麦"
+	mic.toggle_mode = true
+	mic.toggled.connect(func(on: bool):
+		if on:
+			Global.RtcMedia.start_audio_capture()
+			mic.text = "静音"
+		else:
+			Global.RtcMedia.stop_audio_capture()
+			mic.text = "开麦")
+	bar.add_child(mic)
+	var cam := Button.new()
+	cam.text = "开摄像头"
+	cam.toggle_mode = true
+	cam.toggled.connect(func(on: bool):
+		if on:
+			var texture: Texture2D = Global.RtcMedia.start_camera()
+			if texture == null:
+				cam.button_pressed = false
+				cam.text = "开摄像头"
+				return
+			cam.text = "关摄像头"
+		else:
+			Global.RtcMedia.stop_camera()
+			cam.text = "开摄像头")
+	bar.add_child(cam)
+	vbox.add_child(bar)
+	vbox.move_child(bar, max(0, cancleBtn.get_index()))

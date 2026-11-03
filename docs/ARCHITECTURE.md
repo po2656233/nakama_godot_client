@@ -244,6 +244,27 @@ Global.RtcMedia（本地媒体管道）        shared/ui/rtc/CallModal、RtcVide
 
 > 说明：Godot 桌面端没有内置 WebRTC peer connection，当前实现是
 > “Nakama 信令 + 应用层媒体帧转发”；生产环境建议服务端增加 SFU/转发节点。
+### 4.4 聊天与 RTC 的真实 UI 缝合（阶段 2）
+
+世界频道：
+
+- `OnlineChat.load_world_channel()` 优先加入服务器上的 **world 群组频道**（持久化、有历史），
+  群组不存在时回退到同名 **Room** 频道（在线可发言，历史不持久）；
+- `chat.gd` 发送前显式 `set_current_channel()`，收消息后 `ensure_scroll_to()` 自动滚到底部；
+- `chat_system.ensure_scroll_to()` 改为按 `ScrollContainer.size.y / v_scroll_bar.max_value` 计算，
+  等两帧布局后再滚，修复“发完消息看不到/滚不到底”。
+
+RTC 入口：
+
+- 聊天页输入栏新增 `[语音] [视频]` 按钮（`chat.gd._install_call_buttons`），
+  私聊取好友 `user.id`、俱乐部取 `owner_id`，调用 `RtcSignaling.start_call(uid, video)`；
+- `Global` 启动时懒加载 `RtcUi`（`core/rtc/rtc_ui_host.gd`，CanvasLayer）：
+  常驻 `CallModal` 监听 `call_invited/call_incoming`，来电自动弹出；
+- 通话接通后自动开启麦克风采集/回放，`RtcMedia.audio_frame -> RtcSignaling.send_audio`；
+  视频通话显示可最小化的悬浮窗，`RtcVideoGrid` 处理本机摄像头与对端 JPEG 帧；
+- 信令传输改用 **DirectMessage 频道**（`OnlineChat.send_rtc_signal`），
+  大厅/房间/对局内都可呼，不依赖对局 match；
+- 等待房间 `waiting_room.gd` 增加 `[开麦/静音]` 与 `[开摄像头]` 快捷按钮。
 ## 5. 异步调用规范
 
 Godot 4.7 中，动态调用异步函数必须等待返回值本身：

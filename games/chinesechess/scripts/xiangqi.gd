@@ -78,13 +78,18 @@ var pre_chess_black: chess_position
 var pre_chess_red: chess_position
 
 func _enter_tree():
-	GameHostBridge.current.connect_match_state(_on_received_match_state)
+	if GameHostBridge.current != null:
+		GameHostBridge.current.connect_match_state(_on_received_match_state)
 	pass
 
 func _ready() -> void:
 	add_position()
 	add_player_chess()
 	jump_to_best_piece_for_player_move()
+	_build_hud()
+	_hotseat = GameHostBridge.current == null or not GameHostBridge.current.is_online()
+	if _hotseat:
+		my_clolor = -1
 	pass
 	
 
@@ -115,13 +120,13 @@ func gameStart(data) -> void:
 	# 黑方先走，动画初始在黑方最优棋子上
 	var result = json_conv.get_data()
 	start_player = result.gameState.current_turn
-	var uid = GameHostBridge.current.get_my_id()
+	var uid = _my_id()
 	if uid == result.redPlayer:
 		my_clolor = 1
-		GameHostBridge.current.message("我方执 黑子, 开启您的征程吧","开局提示",false)
+		_message("我方执 黑子, 开启您的征程吧","开局提示",false)
 	else:
 		my_clolor = 0
-		GameHostBridge.current.message("我方执 红子, 请等待黑方先走","开局提示",false)
+		_message("我方执 红子, 请等待黑方先走","开局提示",false)
 		
 	print("象棋游戏开始 ", result," uid:",uid," my_clolor:",my_clolor)
 	pass
@@ -130,7 +135,7 @@ func gameSelect(data)->void:
 	var resp = proto.ChineseChessSelectResp.new()
 	resp.from_bytes(data)
 	print("象棋游戏 选中棋子 解析后 ", resp)
-	var uid = GameHostBridge.current.get_my_id()
+	var uid = _my_id()
 	print("象棋游戏 选中棋子 当前用户id ", uid, " 移动用户id ", resp.get_userID())
 	if uid == resp.get_userID():
 		return
@@ -147,7 +152,7 @@ func gameMove(data) -> void:
 	var resp = proto.ChineseChessMoveResp.new()
 	resp.from_bytes(data)
 	print("象棋游戏移动 解析后 ", resp)
-	var uid = GameHostBridge.current.get_my_id()
+	var uid = _my_id()
 	print("象棋游戏移动 当前用户id ", uid, " 移动用户id ", resp.get_userID())
 	if uid == resp.get_userID():
 		return
@@ -272,13 +277,13 @@ func reture_chess(chess: int):
 
 	
 func _on_move(chess: chess_position):
-	if start_player != my_clolor:
-		GameHostBridge.current.toast("等待对方操作")
+	if not _hotseat and start_player != my_clolor:
+		_toast("等待对方操作")
 		cuowu.play()
 		return	
 	# 检查游戏是否已结束（绝杀或困毙）
 	if game_ended:
-		GameHostBridge.current.toast("游戏已结束，请重新开始！")
+		_toast("游戏已结束，请重新开始！")
 		cuowu.play()
 		return
 	
@@ -305,28 +310,30 @@ func _on_move(chess: chess_position):
 					print("移动---1")
 					return
 				if is_only_blocker_and_leaving_x(V_chess, chess):
-					GameHostBridge.current.toast("该棋子不能横向离开将帅之间的纵线！")
+					_toast("该棋子不能横向离开将帅之间的纵线！")
 					cuowu.play()
 					return
 				if is_facing_kings(V_chess, chess):
-					GameHostBridge.current.toast("将帅不能面对面！")
+					_toast("将帅不能面对面！")
 					cuowu.play()
 					return
 				# 先检查移动是否合法
 				if V_chess.play.move(V_chess, chess, chess_position_array):
 					# 检查移动后是否会导致自己被将军
 					if will_cause_self_check(V_chess, chess):
-						GameHostBridge.current.toast("被将军!!")
+						_toast("被将军!!")
 						cuowu.play()
 						return
 					if chess.play and chess.play.has_method("game_over") and chess.play.game_over():
 						game_over()
+					_pending_capture_type = int(get_chess_type(chess.play))
+					_pending_capture_color = int(chess.play.chess_color)
 					chess.play.queue_free()
 					_move_end(chess)
 					chi.play()
 					if is_kings_facing():
 						_undo_last_move()
-						GameHostBridge.current.toast("将帅面对面了！")
+						_toast("将帅面对面了！")
 						cuowu.play()
 						return
 					check_xiangqi_status()
@@ -336,25 +343,25 @@ func _on_move(chess: chess_position):
 			if V_chess.play == null or not V_chess.play.has_method("move"):
 				return
 			if is_only_blocker_and_leaving_x(V_chess, chess):
-				GameHostBridge.current.toast("将帅不能见面！")
+				_toast("将帅不能见面！")
 				cuowu.play()
 				return
 			if is_facing_kings(V_chess, chess):
-				GameHostBridge.current.toast("将帅不能见面！")
+				_toast("将帅不能见面！")
 				cuowu.play()
 				return
 			# 先检查移动是否合法
 			if V_chess.play.move(V_chess, chess, chess_position_array):
 				# 检查移动后是否会导致自己被将军
 				if will_cause_self_check(V_chess, chess):
-					GameHostBridge.current.toast("被将军！")
+					_toast("被将军！")
 					cuowu.play()
 					return
 				_move_end(chess)
 				luozi.play()
 				if is_kings_facing():
 					_undo_last_move()
-					GameHostBridge.current.toast("将帅不能面对面！")
+					_toast("将帅不能面对面！")
 					cuowu.play()
 					return
 				check_xiangqi_status()
@@ -367,7 +374,7 @@ func _on_move(chess: chess_position):
 func otherMove(chess: chess_position):
 	# 检查游戏是否已结束（绝杀或困毙）
 	if game_ended:
-		GameHostBridge.current.toast("游戏已结束，请重新开始！")
+		_toast("游戏已结束，请重新开始！")
 		cuowu.play()
 		return
 	
@@ -393,28 +400,30 @@ func otherMove(chess: chess_position):
 					print("移动---1")
 					return
 				if is_only_blocker_and_leaving_x(V_chess, chess):
-					GameHostBridge.current.toast("该棋子不能横向离开将帅之间的纵线！")
+					_toast("该棋子不能横向离开将帅之间的纵线！")
 					cuowu.play()
 					return
 				if is_facing_kings(V_chess, chess):
-					GameHostBridge.current.toast("将帅不能面对面！")
+					_toast("将帅不能面对面！")
 					cuowu.play()
 					return
 				# 先检查移动是否合法
 				if V_chess.play.move(V_chess, chess, chess_position_array):
 					# 检查移动后是否会导致自己被将军
 					if will_cause_self_check(V_chess, chess):
-						GameHostBridge.current.toast("被将军!!")
+						_toast("被将军!!")
 						cuowu.play()
 						return
 					if chess.play and chess.play.has_method("game_over") and chess.play.game_over():
 						game_over()
+					_pending_capture_type = int(get_chess_type(chess.play))
+					_pending_capture_color = int(chess.play.chess_color)
 					chess.play.queue_free()
 					_move_end(chess)
 					chi.play()
 					if is_kings_facing():
 						_undo_last_move()
-						GameHostBridge.current.toast("将帅面对面了！")
+						_toast("将帅面对面了！")
 						cuowu.play()
 						return
 					check_xiangqi_status()
@@ -424,25 +433,25 @@ func otherMove(chess: chess_position):
 			if V_chess.play == null or not V_chess.play.has_method("move"):
 				return
 			if is_only_blocker_and_leaving_x(V_chess, chess):
-				GameHostBridge.current.toast("将帅不能见面！")
+				_toast("将帅不能见面！")
 				cuowu.play()
 				return
 			if is_facing_kings(V_chess, chess):
-				GameHostBridge.current.toast("将帅不能见面！")
+				_toast("将帅不能见面！")
 				cuowu.play()
 				return
 			# 先检查移动是否合法
 			if V_chess.play.move(V_chess, chess, chess_position_array):
 				# 检查移动后是否会导致自己被将军
 				if will_cause_self_check(V_chess, chess):
-					GameHostBridge.current.toast("被将军！")
+					_toast("被将军！")
 					cuowu.play()
 					return
 				_move_end(chess)
 				luozi.play()
 				if is_kings_facing():
 					_undo_last_move()
-					GameHostBridge.current.toast("将帅不能面对面！")
+					_toast("将帅不能面对面！")
 					cuowu.play()
 					return
 				check_xiangqi_status()
@@ -513,10 +522,13 @@ func _select_chess(chess:chess_position):
 	select_pos.set_col(select_position.y)
 	# 序列化为字节
 	var resp = select_req.to_bytes()
-	GameHostBridge.current.send_match_rpc(OpCode.OpXiangqiSelect, resp, null)
+	_send_op(OpCode.OpXiangqiSelect, {"from": [select_position.x, select_position.y]})
 	pass
 
 func _move_end(chess:chess_position) -> void:
+	_push_history_raw(V_chess.V_position, chess.V_position, int(V_chess.play.chess_color), _pending_capture_type, _pending_capture_color)
+	_pending_capture_type = 0
+	_pending_capture_color = -1
 	var to_position = chess.V_position
 	var from_position = V_chess.V_position
 		
@@ -563,11 +575,11 @@ func _move_end(chess:chess_position) -> void:
 		"to": to_position,
 	})
 	print("MOVE  ", strChess," chess_color:", chess.play.chess_color, " my_clolor:", my_clolor)
-	if chess.play.chess_color != my_clolor:
-		GameHostBridge.current.toast("请布阵我方棋子！")
+	if not _hotseat and chess.play.chess_color != my_clolor:
+		_toast("请布阵我方棋子！")
 		pass
 		
-	GameHostBridge.current.send_match_rpc(OpCode.OpXiangqiMove, resp, null)
+	_send_move(from_position, to_position)
 	change_player()
 	player_move._change_color()
 	is_waiting_for_opponent = false
@@ -626,10 +638,11 @@ func jump_to_best_piece_for_player_move():
 	# 没有己方棋子
 	player_move.visible = false
 	V_chess = null
-	GameHostBridge.current.toast("已决出胜负")
+	_toast("已决出胜负")
 
 func game_over() -> void:
 	over.visible = true
+	_send_op(OpCode.OpXiangqiGameEnd, {"winner": 1 - start_player, "reason": "将死"})
 	if start_player == 1:
 		label.text = "黑方获胜"
 	else:
@@ -642,21 +655,24 @@ func _on_button_button_down() -> void:
 
 
 func _on_reback_btn_pressed() -> void:
-	await exit_game()
+	if GameHostBridge.current != null:
+		GameHostBridge.current.request_exit_game()
+	else:
+		await exit_game()
 
 # 检查"将军""绝杀""困毙"状态
 func check_xiangqi_status():
 	if is_checkmate(1 - start_player):
 		game_ended = true # 设置游戏结束状态
-		GameHostBridge.current.toast("绝杀！游戏结束")
+		_toast("绝杀！游戏结束")
 		game_over()
 		return false
 	elif is_check(1 - start_player):
 		jiangjun_play.play()
-		GameHostBridge.current.toast("将军！", 300)
+		_toast("将军！", 300)
 	elif is_stalemate(1 - start_player):
 		game_ended = true # 设置游戏结束状态
-		GameHostBridge.current.toast("困毙！游戏结束")
+		_toast("困毙！游戏结束")
 		game_over()
 		return false
 	return true
@@ -899,3 +915,313 @@ func set_player_move_to_center_pawn(color: int):
 					player_move.position = pos.position
 					return
 	pass
+
+
+# =====================================================================
+# PROMPT_REFACTOR 阶段 3：GameBase2D 生命周期 / 网络 JSON / 结算闭环
+# =====================================================================
+
+var _started := false
+var _hotseat := false
+var _remote_applying := false
+var _hud_built := false
+var _move_history: Array[Dictionary] = []
+var _pending_capture_type := 0
+var _pending_capture_color := -1
+var _turn_time_left := 60.0
+var _timer_label: Label = null
+var _pending_dialog: ConfirmationDialog = null
+
+func on_game_init(p_room_info: Dictionary, p_bridge: GameHostBridge) -> void:
+	super.on_game_init(p_room_info, p_bridge)
+	if p_bridge != null:
+		p_bridge.connect_match_state(_on_received_match_state)
+	if p_bridge != null and p_bridge.is_online():
+		_hotseat = false
+		my_clolor = int(p_room_info.get("my_color", my_clolor))
+	else:
+		_hotseat = true
+		my_clolor = -1
+
+func on_game_start() -> void:
+	_started = true
+	_build_hud()
+	_turn_time_left = 60.0
+	_update_timer_label()
+
+func on_network_packet(op_code: int, payload: Variant) -> void:
+	_handle_network(op_code, payload)
+
+func on_game_destroy() -> void:
+	_move_history.clear()
+	game_ended = true
+	for sound in [luozi, chi, cuowu, jiangjun_play]:
+		if sound != null:
+			sound.stop()
+	super.on_game_destroy()
+
+func _handle_network(op_code: int, payload: Variant) -> void:
+	match op_code:
+		OpCode.OpXiangqiMove:
+			if payload is Dictionary:
+				var from = payload.get("from", [])
+				var to = payload.get("to", [])
+				if from is Array and to is Array and from.size() >= 2 and to.size() >= 2:
+					_apply_remote_move(Vector2i(int(from[0]), int(from[1])), Vector2i(int(to[0]), int(to[1])))
+			else:
+				gameMove(payload)
+		OpCode.OpXiangqiSelect:
+			if payload is Dictionary:
+				var pos = payload.get("from", [])
+				if pos is Array and pos.size() >= 2:
+					_sync_remote_select(Vector2i(int(pos[0]), int(pos[1])))
+		OpCode.OpXiangqiSurrender:
+			var color := int(payload.get("color", start_player)) if payload is Dictionary else start_player
+			_end_game(1 - color, "对方认输")
+		OpCode.OpXiangqiDraw:
+			_ask_draw()
+		OpCode.OpXiangqiDrawAccept:
+			_end_game(-1, "双方和棋")
+		OpCode.OpXiangqiDrawReject:
+			_toast("对方拒绝和棋")
+		OpCode.OpXiangqiUndo:
+			_ask_undo()
+		OpCode.OpXiangqiUndoAccept:
+			_undo_one()
+			_toast("对方同意悔棋")
+		OpCode.OpXiangqiUndoReject:
+			_toast("对方拒绝悔棋")
+		OpCode.OpXiangqiGameStart:
+			gameStart(payload if payload is String else JSON.stringify(payload))
+		_:
+			pass
+
+func _apply_remote_move(from_cell: Vector2i, to_cell: Vector2i) -> void:
+	if game_ended:
+		return
+	if from_cell.x < 0 or from_cell.x > 8 or from_cell.y < 0 or from_cell.y > 9:
+		return
+	if to_cell.x < 0 or to_cell.x > 8 or to_cell.y < 0 or to_cell.y > 9:
+		return
+	var from_pos := chess_position_array[from_cell.x][from_cell.y] as chess_position
+	var to_pos := chess_position_array[to_cell.x][to_cell.y] as chess_position
+	if from_pos.play == null:
+		return
+	if from_pos.play.chess_color != start_player:
+		return
+	if not from_pos.play.move(from_pos, to_pos, chess_position_array):
+		return
+	V_chess = from_pos
+	if to_pos.play != null:
+		_pending_capture_type = int(get_chess_type(to_pos.play))
+		_pending_capture_color = int(to_pos.play.chess_color)
+		to_pos.play.queue_free()
+	var moving_piece := from_pos.play
+	var from_global := from_pos.global_position
+	_remote_applying = true
+	_move_end(to_pos)
+	_remote_applying = false
+	chi.play() if to_pos.play != null else luozi.play()
+	if moving_piece != null and is_instance_valid(moving_piece):
+		moving_piece.position = from_pos.position
+		var tween := create_tween()
+		tween.tween_property(moving_piece, "position", to_pos.position, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+func _sync_remote_select(cell: Vector2i) -> void:
+	if cell.x < 0 or cell.x > 8 or cell.y < 0 or cell.y > 9:
+		return
+	var pos := chess_position_array[cell.x][cell.y] as chess_position
+	if pos.play != null:
+		player_move.visible = true
+		player_move.position = pos.position
+
+func _push_history_raw(from_cell: Vector2, to_cell: Vector2, color: int, captured_type: int, captured_color: int) -> void:
+	_move_history.append({
+		"from": from_cell,
+		"to": to_cell,
+		"color": color,
+		"captured_type": captured_type,
+		"captured_color": captured_color,
+	})
+
+func _undo_one() -> bool:
+	if _move_history.is_empty():
+		_toast("没有可悔的棋")
+		return false
+	var record: Dictionary = _move_history.pop_back()
+	var from_cell: Vector2 = record["from"]
+	var to_cell: Vector2 = record["to"]
+	var from_pos := chess_position_array[int(from_cell.x)][int(from_cell.y)] as chess_position
+	var to_pos := chess_position_array[int(to_cell.x)][int(to_cell.y)] as chess_position
+	var piece = to_pos.play
+	if piece == null:
+		return false
+	to_pos.play = null
+	from_pos.play = piece
+	piece.position = from_pos.position
+	var captured_type := int(record["captured_type"])
+	if captured_type != 0:
+		var captured = reture_chess(captured_type)
+		b_chessposition.add_child(captured)
+		captured.position = to_pos.position
+		captured.change(int(record["captured_color"]))
+		to_pos.play = captured
+	start_player = int(record["color"])
+	V_chess = null
+	game_ended = false
+	over.visible = false
+	player_move.visible = false
+	kick_turn_timer()
+	return true
+
+func _on_surrender_pressed() -> void:
+	if game_ended:
+		return
+	if _is_online():
+		_send_op(OpCode.OpXiangqiSurrender, {"color": my_clolor})
+	_end_game(1 - my_clolor if my_clolor >= 0 else 0, "认输")
+
+func _on_draw_pressed() -> void:
+	if game_ended:
+		return
+	if _is_online():
+		_send_op(OpCode.OpXiangqiDraw, {})
+		_toast("已向对方发送求和请求")
+	else:
+		_end_game(-1, "和棋")
+
+func _on_undo_pressed() -> void:
+	if game_ended:
+		return
+	if _is_online():
+		_send_op(OpCode.OpXiangqiUndo, {})
+		_toast("已向对方发送悔棋请求")
+	else:
+		_undo_one()
+
+func _ask_draw() -> void:
+	_show_confirm("对方请求和棋，是否同意？", func(accepted: bool):
+		if accepted:
+			if _is_online():
+				_send_op(OpCode.OpXiangqiDrawAccept, {})
+			_end_game(-1, "双方和棋")
+		elif _is_online():
+			_send_op(OpCode.OpXiangqiDrawReject, {}))
+
+func _ask_undo() -> void:
+	_show_confirm("对方请求悔棋，是否同意？", func(accepted: bool):
+		if accepted:
+			_undo_one()
+			if _is_online():
+				_send_op(OpCode.OpXiangqiUndoAccept, {})
+		elif _is_online():
+			_send_op(OpCode.OpXiangqiUndoReject, {}))
+
+func _show_confirm(text: String, callback: Callable) -> void:
+	if _pending_dialog != null and is_instance_valid(_pending_dialog):
+		_pending_dialog.queue_free()
+	_pending_dialog = ConfirmationDialog.new()
+	_pending_dialog.dialog_text = text
+	_pending_dialog.title = "对局确认"
+	add_child(_pending_dialog)
+	_pending_dialog.confirmed.connect(func():
+		_pending_dialog.queue_free()
+		callback.call(true))
+	_pending_dialog.canceled.connect(func():
+		_pending_dialog.queue_free()
+		callback.call(false))
+	_pending_dialog.popup_centered()
+
+func _end_game(winner: int, reason: String) -> void:
+	if game_ended:
+		return
+	game_ended = true
+	over.visible = true
+	if winner < 0:
+		label.text = "和棋（%s）" % reason
+	elif winner == 1:
+		label.text = "黑方获胜（%s）" % reason
+	else:
+		label.text = "红方获胜（%s）" % reason
+	if _is_online():
+		_send_op(OpCode.OpXiangqiGameEnd, {"winner": winner, "reason": reason})
+
+func _send_move(from_cell: Vector2, to_cell: Vector2) -> void:
+	if _remote_applying:
+		return
+	_send_op(OpCode.OpXiangqiMove, {
+		"from": [int(from_cell.x), int(from_cell.y)],
+		"to": [int(to_cell.x), int(to_cell.y)],
+	})
+
+func _send_op(op_code: int, payload: Dictionary) -> void:
+	if not _is_online():
+		return
+	if bridge != null:
+		bridge.send_match_data(op_code, payload)
+
+func _is_online() -> bool:
+	return bridge != null and bridge.is_online()
+
+func _my_id() -> String:
+	if bridge != null:
+		return bridge.get_my_id()
+	return ""
+
+func _toast(message1: String, speed: float = 100.0) -> void:
+	if bridge != null:
+		bridge.toast(message1, speed)
+	else:
+		print("[xiangqi] ", message1)
+
+func _message(text: String, title: String = "提示", auto_close: bool = true) -> void:
+	if bridge != null:
+		bridge.message(text, title, auto_close)
+	else:
+		print("[xiangqi] ", title, ": ", text)
+
+func _build_hud() -> void:
+	if _hud_built:
+		return
+	_hud_built = true
+	var bar := HBoxContainer.new()
+	bar.name = "ChessHud"
+	add_child(bar)
+	bar.position = Vector2(24, 24)
+	var surrender := Button.new()
+	surrender.text = "认输"
+	surrender.pressed.connect(_on_surrender_pressed)
+	bar.add_child(surrender)
+	var draw := Button.new()
+	draw.text = "求和"
+	draw.pressed.connect(_on_draw_pressed)
+	bar.add_child(draw)
+	var undo := Button.new()
+	undo.text = "悔棋"
+	undo.pressed.connect(_on_undo_pressed)
+	bar.add_child(undo)
+	_timer_label = Label.new()
+	_timer_label.name = "TurnTimer"
+	_timer_label.add_theme_font_size_override("font_size", 24)
+	add_child(_timer_label)
+	_timer_label.position = Vector2(24, 76)
+	_update_timer_label()
+
+func _process(delta: float) -> void:
+	if not _started or game_ended:
+		return
+	_turn_time_left -= delta
+	_update_timer_label()
+	if _turn_time_left <= 0.0:
+		kick_turn_timer()
+		change_player()
+		_toast("超时，换对方走棋")
+
+func kick_turn_timer() -> void:
+	_turn_time_left = 60.0
+	_update_timer_label()
+
+func _update_timer_label() -> void:
+	if _timer_label == null:
+		return
+	_timer_label.text = "倒计时 %02d 秒" % int(maxf(0.0, _turn_time_left))

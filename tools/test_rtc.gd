@@ -104,6 +104,29 @@ func _run() -> void:
 		_check(signaling.call_state == 0, "拒接后 -> IDLE")
 		_check(_rejected.size() == 2 and _rejected[0] == "peer-2", "call_rejected 信号触发")
 
+	# 2.5) 全局 RtcUi 缝合：来电弹窗 + 接听/挂断
+	_check(global.has_global("RtcUi"), "RtcUi 已注册")
+	var ui = global.RtcUi if global.has_global("RtcUi") else null
+	_check(ui != null, "RtcUi 实例可用")
+	if ui != null and protocol != null:
+		var modal = ui.get_node_or_null("CallModal")
+		_check(modal != null, "全局挂载 CallModal")
+		if modal != null:
+			_check(not modal.visible, "无来电时 CallModal 隐藏")
+			var kinds2: Dictionary = protocol.get_script_constant_map()["Kind"]
+			var invite2: String = protocol.encode(int(kinds2["CALL_INVITE"]), {"from": "peer-ui", "video": false})
+			signaling.handle_packet(protocol.op_code(int(kinds2["CALL_INVITE"])), invite2, "peer-ui")
+			await process_frame
+			_check(modal.visible, "收到来电后 CallModal 自动显示")
+			signaling.hang_up()
+			await process_frame
+			_check(not modal.visible, "挂断后 CallModal 隐藏")
+	# 2.6) 社交/RTC 传输 API（离线时安全失败）
+	_check(global.OnlineChat.has_method("send_rtc_signal"), "OnlineChat.send_rtc_signal 存在")
+	_check(global.OnlineChat.has_method("load_world_channel"), "OnlineChat.load_world_channel 存在")
+	var sent_offline: bool = await global.OnlineChat.send_rtc_signal("peer-x", 1, {})
+	_check(sent_offline == false, "离线发送 RTC 信令安全失败")
+
 	# 3) 媒体服务（无设备降级）
 	_check(global.has_global("RtcMedia"), "RtcMedia 已注册")
 	var media = global.RtcMedia

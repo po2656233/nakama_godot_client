@@ -227,6 +227,35 @@ RTC：
 
 限制：带 `weights` 的网格（shaibao 26、puke 3）尚不支持蒙皮变形，按矩形贴图近似。
 
+## P13 = 阶段 2：世界频道 + RTC 真实 UI 缝合
+
+世界频道：
+
+- `OnlineChat.load_world_channel()`：优先 world 群组频道，回退 Room；
+- 修复 `send_message` 错误恢复分支的 Dictionary 访问；
+- `chat_system.ensure_scroll_to()` 重写（真实内容高度/两帧布局），收消息自动滚到底部；
+- 频道消息统一经 `SignalMgr.RecvMessageSIG -> OnlineChat.chat_message_received` 转发。
+
+RTC：
+
+- 私聊/俱乐部聊天输入栏新增语音/视频按钮（`chat.gd._install_call_buttons`）；
+- `core/rtc/rtc_ui_host.gd` 作为 Global 常驻 CanvasLayer：CallModal、视频悬浮窗、
+  自动开关麦克风/摄像头、定时发送视频帧；
+- `RtcSignaling` 增加 `start_call` / `call_incoming` / 频道信令解析；
+  `OnlineChat.send_rtc_signal` 通过 DirectMessage 频道发送，脱离 match 也可用；
+- `waiting_room.gd` 增加麦克风/摄像头快捷开关；
+- `project.godot` 开启 `audio/driver/enable_input`；
+- `tools/test_rtc.gd` 扩到 43 项（含来电弹窗显示/挂断隐藏、离线信令安全失败）。
+
+## P14 = 阶段 3：中国象棋 GameBase2D 完整闭环
+
+- `games/chinesechess/scripts/xiangqi.gd` 实现 `on_game_init/on_game_start/on_network_packet/on_game_destroy`；
+- 网络走子改为 `bridge.send_match_data(OP_MOVE, {from:[x,y], to:[x,y]})`，
+  远端包通过 `on_network_packet` 应用并做 0.18s 缓动；
+- 新增 `认输/求和/悔棋` HUD 与确认弹窗、60 秒回合倒计时、结算层；
+- 悔棋历史（含被吃棋子重建）；退出统一 `bridge.request_exit_game()`；
+- 修复兵/卒过河横走规则（`chess_z.gd`）；
+- 新增 `tools/test_xiangqi.gd`（19 项：棋盘/合法走子/非法走子/远端走子/悔棋/认输/规则单测）。
 ## 验证记录
 
 各阶段门禁结果：

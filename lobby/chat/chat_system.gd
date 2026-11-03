@@ -429,47 +429,23 @@ func clear_messages_item():
 
 # 确保滚动到底部并保持消息在可见区域内
 func ensure_scroll_to():
-	if not messages_container:
+	if messages_container == null:
 		return
-	# await get_tree().create_timer(0.1).timeout
-	if messages_container.get_parent() is ScrollContainer:
-		var scroll = messages_container.get_parent() as ScrollContainer
-		
-		# 获取可见区域的大小和实际内容大小
-		var visible_height = messages_container.size.y # scroll.size.y
-		var content_height = scroll.size.y # messages_container.size.y
-		var scroll_bar = scroll.get_v_scroll_bar()
-		var current_scroll = scroll_bar.value
-		
-		# 设置ScrollContainer的clip_contents属性为true，确保超出部分被裁剪
-		scroll.clip_contents = true
-		messages_container.clip_contents = true
-		
-		# 如果内容超出可见区域，调整显示
-		if content_height > visible_height:
-			# 确保滚动位置不会导致内容超出底部
-			var max_scroll = scroll_bar.max_value
-			var min_scroll = max(0, max_scroll - visible_height)
-			
-			# 限制滚动范围
-			current_scroll = clamp(current_scroll, min_scroll, max_scroll)
-			scroll_bar.value = current_scroll
-			print("滑到底部1")
-			# 检查并清理超出可见区域的消息(未完善暂不采用)
-			# cleanup_overflow_messages(scroll)
-		#等待一帧以确保UI已更新
-		await get_tree().process_frame
-
-		# 直接滚动到最底部
-		if isToTop:
-			scroll.scroll_vertical = 0
-			# print("滑到顶部")
-		else:
-			scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value + content_height + visible_height
-			print("滑到底部2")
-	pass
-
-
+	var parent := messages_container.get_parent()
+	if not parent is ScrollContainer:
+		return
+	var scroll := parent as ScrollContainer
+	# 等一帧让 VBoxContainer 完成布局，再用真实内容高度滚到底。
+	await get_tree().process_frame
+	var bar := scroll.get_v_scroll_bar()
+	if isToTop:
+		scroll.scroll_vertical = 0
+	else:
+		scroll.scroll_vertical = int(bar.max_value - scroll.size.y)
+	# 部分平台 max_value 在下一帧才更新，再补一次。
+	await get_tree().process_frame
+	if not isToTop:
+		scroll.scroll_vertical = int(bar.max_value - scroll.size.y)
 ##########################################
 # # 发送文本消息
 # func _on_send_button_pressed():

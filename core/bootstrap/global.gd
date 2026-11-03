@@ -17,6 +17,9 @@ var _registry_loaded := false
 
 func _ready() -> void:
 	_ensure_registry()
+	# RTC 全局 UI 常驻，保证任何界面都能收到来电/视频。
+	if _paths.has("RtcUi"):
+		get_global("RtcUi")
 
 ## 检查服务是否注册（不会实例化）。
 func has_global(service_name: String) -> bool:

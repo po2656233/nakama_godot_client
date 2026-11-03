@@ -104,6 +104,7 @@ func _ready():
 	Global.SignalMgr.RecvFinishSIG.connect(_on_recv_finish) # 收到完成消息
 	Global.OnlineChat.changeChannelSIG.connect(_on_change_channel)
 	
+	_install_call_buttons()
 	_on_socket_connected()
 	# Global.Online.socket_connected.connect(_on_socket_connected)
 	Global.OnlineChat.chat_history_received.connect(_on_history_message)
@@ -235,12 +236,15 @@ func _on_recv_finish():
 func _on_received_message(msg):
 	if msg.message_id == "":
 		return
+	if _is_rtc_payload(msg):
+		return
 	print("收到消息_on_received_message:", msg)
 	if add_message_to_history(msg.channel_id, msg):
 		if msg.sender_id != uid:
 			Global.SignalMgr.RecvMessageSIG.emit(msg)
 		if current_channel_id == msg.channel_id:
 			message_to_show(msg)
+			await ensure_scroll_to()
 		refresh_current_channel_display(msg.channel_id)
 		# if not is_first:
 		# 	await get_tree().create_timer(0.1).timeout
@@ -449,6 +453,9 @@ func _load_more_history(forward: bool):
 # 获取世界渠道
 func get_world_channel():
 	var world = await Global.OnlineChat.load_world_channel()
+	if world == null:
+		await get_tree().create_timer(1.5).timeout
+		world = await Global.OnlineChat.load_world_channel()
 	if world:
 		Global.DataMgr.get_instance().set_world_channel_id(world.id)
 		#_on_change_channel(world.id)
@@ -711,3 +718,57 @@ func _on_tab_container_tab_selected(tab: int) -> void:
 		call_thread_safe("get_friends_list")
 	print("切换选项卡:", tab)
 	pass # Replace with function body.
+
+## 聊天顶栏的语音/视频入口：私聊取好友 uid，俱乐部取群主；世界频道不支持单点呼叫。
+func _install_call_buttons() -> void:
+	var bar := get_node_or_null("MarginContainer/Panel/input_area/HBoxContainer") as HBoxContainer
+	if bar == null or bar.has_node("RtcButtons"):
+		return
+	var box := HBoxContainer.new()
+	box.name = "RtcButtons"
+	box.add_theme_constant_override("separation", 6)
+	var voice := Button.new()
+	voice.text = "语音"
+	voice.tooltip_text = "向当前好友/俱乐部发起语音通话"
+	voice.pressed.connect(func(): _start_rtc_call(false))
+	box.add_child(voice)
+	var video := Button.new()
+	video.text = "视频"
+	video.tooltip_text = "向当前好友/俱乐部发起视频通话"
+	video.pressed.connect(func(): _start_rtc_call(true))
+	box.add_child(video)
+	bar.add_child(box)
+	bar.move_child(box, max(0, bar.get_child_count() - 2))
+
+func _call_target() -> String:
+	var kind := mainPanle.current_tab as MessageKind
+	if kind == MessageKind.CHAT:
+		var info = friendListItem.GetCurrentItemData()
+		if info and info.get("user"):
+			return str(info["user"].id)
+	elif kind == MessageKind.CLUB:
+		var club = clubListItem.GetCurrentItemData()
+		if club:
+			return str(club.get("owner_id", ""))
+	return ""
+
+func _start_rtc_call(video: bool) -> void:
+	if not Global.has_global("RtcSignaling"):
+		Global.WindowPopup.show_message("当前版本未启用 RTC")
+		return
+	var target := _call_target()
+	if target.is_empty():
+		Global.WindowPopup.show_message("请先选择好友或俱乐部")
+		return
+	Global.RtcSignaling.start_call(target, video)
+
+
+## RTC 信令走 DirectMessage 频道，不要渲染成普通聊天消息。
+func _is_rtc_payload(msg) -> bool:
+	if msg == null:
+		return false
+	var raw = msg.content
+	if not raw is String:
+		return false
+	var parsed: Variant = JSON.parse_string(raw)
+	return parsed is Dictionary and parsed.has("rtc")

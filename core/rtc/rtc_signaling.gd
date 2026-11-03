@@ -12,6 +12,7 @@ extends Node
 ##   - 为不直接依赖某些服务的具体实现，统一用 has_global + has_method 守卫。
 
 signal call_invited(peer_id: String, video: bool)
+signal call_incoming(peer_id: String, video: bool)
 signal call_accepted(peer_id: String)
 signal call_rejected(peer_id: String, reason: String)
 signal call_ended(peer_id: String, reason: String)
@@ -29,6 +30,8 @@ var is_video_call := false
 func _ready() -> void:
 	if Global.has_global("SignalMgr"):
 		Global.SignalMgr.MatchStateEventSIG.connect(_on_match_state_event)
+	if Global.has_global("SignalMgr"):
+		Global.SignalMgr.RecvMessageSIG.connect(_on_chat_message)
 
 # ---------------------------------------------------------------------
 # 对外 API
@@ -44,6 +47,9 @@ func invite(peer: String, video: bool = false) -> bool:
 	_set_state(RtcProtocol.CallState.OUTGOING)
 	return _send(RtcProtocol.Kind.CALL_INVITE, {"from": _my_id(), "video": video})
 
+## 兼容 PROMPT_REFACTOR 约定的入口名。
+func start_call(target_user_id: String, is_video: bool = false) -> bool:
+	return invite(target_user_id, is_video)
 ## 接听来电。
 func accept() -> bool:
 	if call_state != RtcProtocol.CallState.INCOMING and call_state != RtcProtocol.CallState.OUTGOING:
@@ -117,6 +123,31 @@ func handle_packet(op_value: int, data: String, from_peer: String = "") -> void:
 # 接收
 # ---------------------------------------------------------------------
 
+## 处理频道里的 RTC 信令（{"rtc": {to, from, k, p}}）。
+func _on_chat_message(message: Variant) -> void:
+	if message == null:
+		return
+	var raw: Variant = ""
+	if message is Dictionary:
+		raw = message.get("content", "")
+	elif message.get("content") != null:
+		raw = message.get("content")
+	if not raw is String or str(raw).is_empty():
+		return
+	var json := JSON.new()
+	if json.parse(str(raw)) != OK or not json.data is Dictionary:
+		return
+	var rtc: Variant = (json.data as Dictionary).get("rtc", null)
+	if not rtc is Dictionary:
+		return
+	var packet: Dictionary = rtc
+	if str(packet.get("to", "")) != _my_id():
+		return
+	var kind := int(packet.get("k", 0))
+	var payload: Variant = packet.get("p", {})
+	var sender := str(packet.get("from", ""))
+	_handle_kind(kind, payload if payload is Dictionary else {}, sender)
+
 func _on_match_state_event(event: Variant) -> void:
 	if event == null:
 		return
@@ -140,6 +171,7 @@ func _handle_kind(kind: int, payload: Dictionary, sender: String) -> void:
 			is_video_call = bool(payload.get("video", false))
 			_set_state(RtcProtocol.CallState.INCOMING)
 			call_invited.emit(peer_id, is_video_call)
+			call_incoming.emit(peer_id, is_video_call)
 		RtcProtocol.Kind.CALL_ACCEPT:
 			if call_state == RtcProtocol.CallState.OUTGOING:
 				_set_state(RtcProtocol.CallState.IN_CALL)
@@ -169,14 +201,19 @@ func _handle_kind(kind: int, payload: Dictionary, sender: String) -> void:
 # 发送
 # ---------------------------------------------------------------------
 
+## 大厅/房间没有对局时走 Nakama Open 频道（rtc_signal），有对局时同样可用。
 func _send(kind: int, payload: Dictionary) -> bool:
-	if not Global.has_global("OnlineGame") or not Global.has_global("Online"):
-		return false
-	if not bool(Global.Online.is_socket_connected):
+	if not Global.has_global("Online") or not bool(Global.Online.is_socket_connected):
 		push_warning("[RtcSignaling] socket 未连接，跳过信令发送: %d" % kind)
 		return false
-	Global.OnlineGame.sendToMatch(RtcProtocol.op_code(kind), RtcProtocol.encode(kind, payload))
-	return true
+	if Global.has_global("OnlineChat") and Global.OnlineChat.has_method("send_rtc_signal"):
+		# 协程后台发送；失败只打日志，不阻塞 UI。
+		Global.OnlineChat.send_rtc_signal(peer_id, kind, payload)
+		return true
+	if Global.has_global("OnlineGame"):
+		Global.OnlineGame.sendToMatch(RtcProtocol.op_code(kind), RtcProtocol.encode(kind, payload))
+		return true
+	return false
 
 func _my_id() -> String:
 	if Global.has_global("OnlineLogin"):

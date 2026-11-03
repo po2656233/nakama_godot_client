@@ -1,6 +1,6 @@
 extends Node
 
-signal chat_message_received(message: Dictionary)
+signal chat_message_received(message)
 signal chat_presence_changed(joins: Array, leaves: Array)
 signal chat_history_received(messages: Array)
 signal changeChannelSIG(id: String)
@@ -8,6 +8,7 @@ signal changeChannelSIG(id: String)
 var _current_channel: NakamaRTAPI.Channel
 var _cursor_list_channel = null
 var _world_channel = null
+var _rtc_channel = null
 
 var history_msg_count = {}
 # 聊天内容结构
@@ -24,6 +25,9 @@ var DEFAULT_MESSAGE = {
 }
 
 
+func _ready() -> void:
+	if Global.has_global("SignalMgr"):
+		Util.safe_connect(Global.SignalMgr, "RecvMessageSIG", self, "_on_signal_recv_message")
 # 设置当前聊天频道
 func set_current_channel(channel: NakamaRTAPI.Channel, isLoadhistory: bool = false):
 	if _current_channel == channel:
@@ -83,9 +87,9 @@ func send_message(content: Dictionary) -> Error:
 		if "Must join channel" in error_message:
 			# 先尝试加入频道 避免发消息时 无法获取渠道信息
 			var chType = NakamaSocket.ChannelType.DirectMessage
-			if int(content.kind) == 1:
+			if int(content.get("kind", 0)) == 1:
 				chType = NakamaSocket.ChannelType.Room
-			elif int(content.kind) == 2:
+			elif int(content.get("kind", 0)) == 2:
 				chType = NakamaSocket.ChannelType.Group
 			var join_try = await Global.Online.nakama_socket.join_chat_async(_current_channel.id, chType, true)
 			if join_try.is_exception():
@@ -245,6 +249,10 @@ func download_file(file_info: Dictionary) -> Dictionary:
 func _on_channel_message(message: NakamaAPI.ApiChannelMessage):
 	chat_message_received.emit(message)
 
+## 统一接一口：Online 收到 socket 频道消息后通过 SignalMgr.RecvMessageSIG 广播。
+func _on_signal_recv_message(message) -> void:
+	chat_message_received.emit(message)
+
 # 处理频道状态变化
 func _on_channel_presence(presence: NakamaRTAPI.ChannelPresenceEvent):
 	chat_presence_changed.emit(presence.joins, presence.leaves)
@@ -372,23 +380,49 @@ func get_world_channel():
 	return _world_channel
 	
 
+## 世界频道：优先加入服务器上的 world 群组频道（持久化、可看历史）；
+## 若服务器没有 world 群组，回退到同名 Room 频道（在线可发言，历史不持久）。
 func load_world_channel():
 	if _world_channel:
 		return _world_channel
-	
-	var ret = await add_channel_async("world", 1)
-	if not ret:
+	var group = await add_group_async("world")
+	if group != null:
+		var group_channel = await add_channel_async(str(group.id), 2)
+		if group_channel != null:
+			_world_channel = group_channel
+			print("加入世界群组频道: ", group_channel.id)
+			fetch_older_messages(_world_channel.id, "")
+			return _world_channel
+	var room = await add_channel_async("world", 1)
+	if room == null:
 		print("加入世界渠道失败")
 		Global.WindowPopup.show_dynamic("加入世界渠道失败")
 		return null
-	print("添加世界渠道频道: ", ret)
-	_world_channel = ret
-	# fetch_full_chat_history(_world_channel.id)
-	# get_chat_history_all(_world_channel.id)
+	_world_channel = room
+	print("加入世界 Room 频道: ", room.id)
 	fetch_older_messages(_world_channel.id, "")
-	return ret
+	return _world_channel
 
-# 加入聊天频道
+## 通过和目标用户的 DirectMessage 频道发送 RTC 信令。
+func send_rtc_signal(to_id: String, kind: int, payload: Dictionary) -> bool:
+	if not Global.Online.nakama_socket or not Global.Online.is_socket_connected:
+		return false
+	var channel = await add_channel_async(to_id, 0)
+	if channel == null:
+		return false
+	var content := {
+		"rtc": {
+			"to": to_id,
+			"from": Global.OnlineLogin.get_my_id(),
+			"k": kind,
+			"p": payload,
+		}
+	}
+	var result = await Global.Online.nakama_socket.write_chat_message_async(channel.id, content)
+	if result.is_exception():
+		print("发送 RTC 信令失败: ", result.get_exception().message)
+		return false
+	return true
 func add_channel_async(targetId: String, tab: int = 0):
 	var isSaveMsg = true
 	var isShowMe = true

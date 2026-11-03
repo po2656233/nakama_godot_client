@@ -35,6 +35,7 @@ const DEFAULT_SERVICES := {
 	# RTC 音视频
 	"RtcSignaling": "res://core/rtc/rtc_signaling.gd",
 	"RtcMedia": "res://core/rtc/rtc_media.gd",
+	"RtcUi": "res://core/rtc/rtc_ui_host.gd",
 }
 
 ## 读取配置表并合并内置兜底，返回“服务名 -> 路径”。
