@@ -1,959 +1,1147 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://sprites/baoxiang1/lhdb_chujichang_tex.png" id="1_oyfra"]
+[ext_resource type="Texture2D" path="res://sprites/baoxiang1/lhdb_chujichang_tex.png" id="1_yjf8h"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r0o4r"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_amhya"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(1, 1, 234, 267)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f8guy"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_web6q"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(469, 381, 66, 59)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_owegq"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fygq6"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(590, 104, 39, 43)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_027wi"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dd1m"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(744, 1, 39, 34)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0nuwy"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3pxn"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(543, 104, 45, 89)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_njy2t"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_n61c6"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(209, 354, 66, 104)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_idx74"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rjju"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(598, 462, 23, 20)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dt8ng"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_7m02f"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(209, 270, 144, 82)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uninw"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4d67"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(481, 330, 111, 33)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_imt05"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_sus66"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(1, 270, 206, 176)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sobso"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_egsfh"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j5mra"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvu64"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(642, 1, 100, 45)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eee1t"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kg61e"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2gitt"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_q84dd"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(549, 54, 100, 48)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_swsfo"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kbb1l"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kgdd8"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_iefx6"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(441, 109, 100, 50)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1ae4n"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pm46o"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h6di4"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj0uq"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(540, 1, 100, 51)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xkerx"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8njbn"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q2a2k"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7617"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(441, 166, 100, 52)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_71t8n"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_irlj3"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a30p1"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_iu5t3"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(339, 111, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ltjol"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0a0gd"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fk4mq"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_yq8ol"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(277, 409, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ri311"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3nit5"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yfj5v"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7x7e"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(237, 111, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xxxpk"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_spxa0"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mvfd6"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyhnp"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(339, 1, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bn1av"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bj6ld"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b7wve"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ald7h"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(237, 56, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wertl"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1sdek"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yyux6"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_03kj1"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(103, 448, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_w3f38"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v4dlo"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_stu2r"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_loyuj"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(237, 1, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jna2g"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gdub7"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tlvss"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_rv6q1"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(441, 1, 97, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sf440"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fr3eu"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p16yg"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_issqx"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(455, 275, 92, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_maf12"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jdkx8"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_few84"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0r4j"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(457, 220, 93, 52)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cc225"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ilfdu"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ox3nv"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_0taa0"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(504, 464, 92, 45)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nu5ex"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8nskf"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8mt66"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4nf2"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(379, 381, 88, 45)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n2b3g"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n2h4c"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_th52h"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo8qw"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(409, 464, 93, 45)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a5l0c"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ehutv"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j54qw"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbu12"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(355, 275, 98, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_32yw5"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i5f40"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jbiyw"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_3p2w4"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(339, 166, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t7xpc"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uvbie"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0fa2k"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8oiw"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(277, 354, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j1si3"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_p7p8a"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x23cc"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc1p5"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(237, 166, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xxiwc"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yuowj"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i2tlk"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_i50ft"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(339, 56, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pw7rp"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xgvxx"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5holw"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmris"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(1, 448, 100, 53)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fmuyy"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_acfsj"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ukw3w"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2y8u"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(355, 221, 100, 52)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_slol6"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n2qgn"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u0qrm"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8mmy"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(441, 56, 100, 51)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8bwam"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xnlt1"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mfoh7"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_by7w0"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(379, 330, 100, 49)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o71rk"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_g4ll0"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8mbk2"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkycm"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(237, 221, 100, 47)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_arurj"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fo82x"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_soq1d"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkpvt"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(205, 464, 100, 44)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yctm2"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cya4d"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_01oa5"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ciom5"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(307, 464, 100, 42)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n0ahg"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8r2sk"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sxmts"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_rp1t4"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(881, 1, 28, 21)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5a3t3"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q4xl3"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y3hkn"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_61fmu"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(851, 1, 28, 23)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gj81s"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eh4s8"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3hkwu"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_oucxr"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(819, 1, 30, 23)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_044od"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pwqpt"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3sxh1"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g3nn"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(785, 1, 32, 24)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_geroi"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_je1xq"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ehd6w"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fiboa"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(850, 37, 35, 24)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_si5p1"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8wyjx"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h0sv6"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_al6he"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(811, 37, 37, 24)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2s1u5"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eenmn"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l6jwb"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxn83"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(770, 37, 39, 29)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l0wrx"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4xg2i"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yl3pu"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_588me"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(693, 134, 42, 30)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7wjop"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_imdw1"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a21d6"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mta0"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(651, 48, 43, 31)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_473vo"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bh1tk"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7dld"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_diak2"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(676, 207, 44, 31)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_brh8k"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gscan"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6n0y2"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bmhy"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(649, 136, 42, 32)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q2b8j"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s2age"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c5vch"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_sadgq"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(679, 170, 42, 32)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ppv5l"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cxdm3"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6t7xk"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_yj0le"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(678, 101, 41, 31)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wegjb"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xy0r7"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5s3g5"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jx4nx"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(631, 104, 45, 30)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o0qmd"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2dg3r"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uiq5p"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbvph"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(626, 207, 48, 29)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_muwj3"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b7k2x"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y7tgs"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqr68"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(624, 177, 53, 28)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jm8ge"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_np8hh"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3j6pq"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_coaye"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(590, 149, 57, 26)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mnoi3"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y7w44"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5epab"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_vk3ve"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(619, 246, 60, 25)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2o6n8"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7sxt6"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lyn12"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ho4bk"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(552, 246, 65, 25)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6k6lb"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7q4s0"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bmgjp"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6an5"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(549, 300, 68, 25)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_82ijo"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7cy2b"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_disqu"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ap6m"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(552, 195, 70, 24)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4mtav"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_538te"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lhy3u"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bktf"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(549, 274, 71, 24)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t7vr7"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2g03i"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smeqc"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkstq"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(379, 428, 72, 24)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bclv0"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wloaq"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2erei"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgp4t"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(552, 221, 72, 23)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7pa14"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lkysd"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lqelx"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_wctln"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(453, 442, 72, 20)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lmo1a"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pyw8n"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_opxm1"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_euy5c"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(527, 442, 72, 18)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6843a"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_payxq"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_78816"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_yafrg"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(651, 81, 72, 18)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_oaug0"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tk248"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7ek45"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpmot"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(696, 48, 72, 18)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_oe346"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_avlfu"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gs51c"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_esdgu"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(721, 101, 72, 17)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8sbyx"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5mtmn"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1m1of"]
-atlas = ExtResource("1_oyfra")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5g86a"]
+atlas = ExtResource("1_yjf8h")
 region = Rect2(725, 68, 71, 17)
 filter_clip = true
 
-[sub_resource type="Animation" id="Animation_0w1j5"]
+[sub_resource type="Animation" id="Animation_1ajj1"]
 length = 4.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d0:visible")
-tracks/0/interp = 0
+tracks/0/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj14:rotation")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5, 0.5833333, 0.6666667, 0.75, 0.8333333, 0.9166667, 1, 1.0833334, 1.1666666, 1.25, 1.3333334, 1.4166666, 1.5, 1.5833334, 1.6666666, 1.75, 1.8333334, 1.9166666, 2, 2.0833333, 2.1666667, 2.25, 2.3333333, 2.4166667, 2.5, 2.5833333, 2.6666667, 2.75, 2.8333333, 2.9166667, 3, 3.0833333, 3.1666667, 3.25, 3.3333333, 3.4166667, 3.5, 3.5833333, 3.6666667, 3.75, 3.8333333, 3.9166667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [2.0430824486785237, 2.0403211335566698, 2.0339726851673747, 2.025609343334052, 2.016038114300796, 2.0057673592385057, 1.9951731607112793, 1.984578962184053, 1.9743082071217628, 1.964736978088507, 1.956373636255184, 1.9500251878658887, 1.947263872744035, 1.9500251878658887, 1.956373636255184, 1.964736978088507, 1.9743082071217628, 1.984578962184053, 1.9951731607112793, 2.0057673592385057, 2.016038114300796, 2.025609343334052, 2.0339726851673747, 2.0403211335566698, 2.0430824486785237, 2.0403211335566698, 2.0339726851673747, 2.025609343334052, 2.016038114300796, 2.0057673592385057, 1.9951731607112793, 1.984578962184053, 1.9743082071217628, 1.964736978088507, 1.956373636255184, 1.9500251878658887, 1.947263872744035, 1.9500251878658887, 1.956373636255184, 1.964736978088507, 1.9743082071217628, 1.984578962184053, 1.9951731607112793, 2.0057673592385057, 2.016038114300796, 2.025609343334052, 2.0339726851673747, 2.0403211335566698, 2.0430824486785237]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d1:visible")
-tracks/1/interp = 0
+tracks/1/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj14/cj13:rotation")
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.03888889, 0.07777778, 0.11666667, 0.15555556, 0.19444445, 0.23333333, 0.31666666, 0.4, 0.48333332, 0.56666666, 0.65, 0.73333335, 0.81666666, 0.9, 0.98333335, 1.0666667, 1.15, 1.2333333, 1.2972223, 1.3611112, 1.425, 1.4888889, 1.5527778, 1.6166667, 1.6805556, 1.7444445, 1.8083333, 1.8722222, 1.9361111, 2, 2.038889, 2.0777779, 2.1166666, 2.1555555, 2.1944444, 2.2333333, 2.3166666, 2.4, 2.4833333, 2.5666666, 2.65, 2.7333333, 2.8166666, 2.9, 2.9833333, 3.0666666, 3.15, 3.2333333, 3.2972221, 3.3611112, 3.425, 3.488889, 3.5527778, 3.6166666, 3.6805556, 3.7444444, 3.8083334, 3.8722222, 3.9361112, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.4934045705565741, -0.4912806184082552, -0.4870991519767031, -0.48223446334381037, -0.47736977471091757, -0.47318830827936553, -0.47106435613104664, -0.47382567125290037, -0.4801741196421957, -0.4885374614755184, -0.4981086905087744, -0.5083794455710646, -0.5189736440982909, -0.5295678426255174, -0.5398385976878076, -0.5494098267210635, -0.5577731685543863, -0.5641216169436816, -0.5668829320655353, -0.5647654208336584, -0.5598971207027051, -0.5534837019197746, -0.5461440162676785, -0.5382678999084359, -0.5301437513110547, -0.5220196027136734, -0.5141434863544309, -0.5068038007023348, -0.5003903819194042, -0.49552208178845103, -0.4934045705565741, -0.4912806184082552, -0.4870991519767031, -0.48223446334381037, -0.47736977471091757, -0.47318830827936553, -0.47106435613104664, -0.47382567125290037, -0.4801741196421957, -0.4885374614755184, -0.4981086905087744, -0.5083794455710646, -0.5189736440982909, -0.5295678426255174, -0.5398385976878076, -0.5494098267210635, -0.5577731685543863, -0.5641216169436816, -0.5668829320655353, -0.5647654208336584, -0.5598971207027051, -0.5534837019197746, -0.5461440162676785, -0.5382678999084359, -0.5301437513110547, -0.5220196027136734, -0.5141434863544309, -0.5068038007023348, -0.5003903819194042, -0.49552208178845103, -0.4934045705565741]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d2:visible")
-tracks/2/interp = 0
+tracks/2/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16:rotation")
+tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4, 0.48333332, 0.56666666, 0.65, 0.73333335, 0.81666666, 0.9, 0.98333335, 1.0666667, 1.15, 1.2333333, 1.3166667, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 1.75, 1.8, 1.85, 1.9, 1.95, 2, 2.04, 2.08, 2.12, 2.16, 2.2, 2.24, 2.28, 2.32, 2.36, 2.4, 2.4833333, 2.5666666, 2.65, 2.7333333, 2.8166666, 2.9, 2.9833333, 3.0666666, 3.15, 3.2333333, 3.3166666, 3.4, 3.45, 3.5, 3.55, 3.6, 3.65, 3.7, 3.75, 3.8, 3.85, 3.9, 3.95, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.3977605284125623, -0.39623275397782654, -0.39284428079111927, -0.38850066709917164, -0.38364519808557385, -0.37856190664062467, -0.3734786151956755, -0.3686231461820777, -0.36427953249013006, -0.3608910593034228, -0.359363284868687, -0.36212459999054075, -0.3684730483798361, -0.3768363902131588, -0.38640761924641476, -0.396678374308705, -0.4072725728359314, -0.4178667713631578, -0.428137526425448, -0.4377087554587039, -0.4460720972920267, -0.452420545681322, -0.45518186080317574, -0.45352708361721966, -0.44972264004694984, -0.4447107284564886, -0.43897496460960117, -0.4328199948181741, -0.42647119460786903, -0.42012239439756394, -0.4139674246061369, -0.40823166075924944, -0.4032197491687882, -0.3994153055985184, -0.3977605284125623, -0.39623275397782654, -0.39284428079111927, -0.38850066709917164, -0.38364519808557385, -0.37856190664062467, -0.3734786151956755, -0.3686231461820777, -0.36427953249013006, -0.3608910593034228, -0.359363284868687, -0.36212459999054075, -0.3684730483798361, -0.3768363902131588, -0.38640761924641476, -0.396678374308705, -0.4072725728359314, -0.4178667713631578, -0.428137526425448, -0.4377087554587039, -0.4460720972920267, -0.452420545681322, -0.45518186080317574, -0.45352708361721966, -0.44972264004694984, -0.4447107284564886, -0.43897496460960117, -0.4328199948181741, -0.42647119460786903, -0.42012239439756394, -0.4139674246061369, -0.40823166075924944, -0.4032197491687882, -0.3994153055985184, -0.3977605284125623]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d3:visible")
-tracks/3/interp = 0
+tracks/3/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16/cj15:rotation")
+tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05277778, 0.10555556, 0.15833333, 0.21111111, 0.2638889, 0.31666666, 0.36944443, 0.42222223, 0.475, 0.5277778, 0.58055556, 0.6333333, 0.71666664, 0.8, 0.8833333, 0.96666664, 1.05, 1.1333333, 1.2166667, 1.3, 1.3833333, 1.4666667, 1.55, 1.6333333, 1.674074, 1.7148148, 1.7555555, 1.7962962, 1.8370371, 1.8777778, 1.9185185, 1.9592593, 2, 2.0527778, 2.1055555, 2.1583333, 2.211111, 2.2638888, 2.3166666, 2.3694444, 2.4222221, 2.475, 2.5277777, 2.5805554, 2.6333334, 2.7166667, 2.8, 2.8833334, 2.9666667, 3.05, 3.1333334, 3.2166667, 3.3, 3.3833334, 3.4666667, 3.55, 3.6333334, 3.6740742, 3.714815, 3.7555556, 3.7962964, 3.837037, 3.8777778, 3.9185185, 3.9592593, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.38920843031138685, -0.38745808848551233, -0.38343393540814485, -0.3781325821148911, -0.3720655735473627, -0.365555149573452, -0.3588397013266855, -0.352124253079919, -0.3456138291060083, -0.33954682053847995, -0.33424546724522614, -0.33022131416785866, -0.32847097234198414, -0.33123228746383787, -0.3375807358531332, -0.3459440776864559, -0.3555153067197119, -0.3657860617820021, -0.3763802603092285, -0.3869744588364549, -0.3972452138987451, -0.40681644293200103, -0.4151797847653238, -0.4215282331546191, -0.42428954827647286, -0.4226121046841085, -0.41897354355067695, -0.4143880706627693, -0.4093419392637404, -0.4041560393241193, -0.39910990792509043, -0.39452443503718276, -0.39088587390375124, -0.38920843031138685, -0.38745808848551233, -0.38343393540814485, -0.3781325821148911, -0.3720655735473627, -0.365555149573452, -0.3588397013266855, -0.352124253079919, -0.3456138291060083, -0.33954682053847995, -0.33424546724522614, -0.33022131416785866, -0.32847097234198414, -0.33123228746383787, -0.3375807358531332, -0.3459440776864559, -0.3555153067197119, -0.3657860617820021, -0.3763802603092285, -0.3869744588364549, -0.3972452138987451, -0.40681644293200103, -0.4151797847653238, -0.4215282331546191, -0.42428954827647286, -0.4226121046841085, -0.41897354355067695, -0.4143880706627693, -0.4093419392637404, -0.4041560393241193, -0.39910990792509043, -0.39452443503718276, -0.39088587390375124, -0.38920843031138685]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d4:visible")
-tracks/4/interp = 0
+tracks/4/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16/cj15/cj18:rotation")
+tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06944445, 0.1388889, 0.20833333, 0.2777778, 0.3472222, 0.41666666, 0.4861111, 0.5555556, 0.625, 0.6944444, 0.7638889, 0.8333333, 0.9166667, 1, 1.0833334, 1.1666666, 1.25, 1.3333334, 1.4166666, 1.5, 1.5833334, 1.6666666, 1.75, 1.8333334, 1.875, 1.9166666, 1.9583334, 2, 2.0694444, 2.1388888, 2.2083333, 2.2777777, 2.3472223, 2.4166667, 2.4861112, 2.5555556, 2.625, 2.6944444, 2.7638888, 2.8333333, 2.9166667, 3, 3.0833333, 3.1666667, 3.25, 3.3333333, 3.4166667, 3.5, 3.5833333, 3.6666667, 3.75, 3.8333333, 3.875, 3.9166667, 3.9583333, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.24940754942448046, -0.2471039386306571, -0.24180778314377688, -0.23483071472909234, -0.2268459735683797, -0.21827765695903745, -0.2094395095538103, -0.20060136214858318, -0.1920330455392409, -0.1840483043785283, -0.17707123596384372, -0.17177508047696352, -0.16947146968314017, -0.1722327848049939, -0.1785812331942892, -0.18694457502761197, -0.1965158040608679, -0.20678655912315813, -0.2173807576503845, -0.22797495617761093, -0.23824571123990113, -0.24781694027315707, -0.2561802821064798, -0.26252873049577513, -0.26529004561762887, -0.2623937749685452, -0.25734879752105466, -0.2523038200735641, -0.24940754942448046, -0.2471039386306571, -0.24180778314377688, -0.23483071472909234, -0.2268459735683797, -0.21827765695903745, -0.2094395095538103, -0.20060136214858318, -0.1920330455392409, -0.1840483043785283, -0.17707123596384372, -0.17177508047696352, -0.16947146968314017, -0.1722327848049939, -0.1785812331942892, -0.18694457502761197, -0.1965158040608679, -0.20678655912315813, -0.2173807576503845, -0.22797495617761093, -0.23824571123990113, -0.24781694027315707, -0.2561802821064798, -0.26252873049577513, -0.26529004561762887, -0.2623937749685452, -0.25734879752105466, -0.2523038200735641, -0.24940754942448046]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d5:visible")
-tracks/5/interp = 0
+tracks/5/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj5:rotation")
+tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.08611111, 0.17222223, 0.25833333, 0.34444445, 0.43055555, 0.51666665, 0.6027778, 0.6888889, 0.775, 0.8611111, 0.94722223, 1.0333333, 1.1138889, 1.1944444, 1.275, 1.3555555, 1.4361111, 1.5166667, 1.5972222, 1.6777778, 1.7583333, 1.8388889, 1.9194444, 2, 2.086111, 2.1722221, 2.2583334, 2.3444445, 2.4305556, 2.5166667, 2.6027777, 2.6888888, 2.775, 2.8611112, 2.9472222, 3.0333333, 3.113889, 3.1944444, 3.275, 3.3555555, 3.4361112, 3.5166667, 3.5972223, 3.6777778, 3.7583334, 3.838889, 3.9194446, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [2.0914279919779695, 2.095149983216898, 2.1037070903354382, 2.114980082970518, 2.1278811931428483, 2.1417251981448424, 2.1560051743017596, 2.170285150458677, 2.184129155460671, 2.197030265633001, 2.208303258268081, 2.2168603653866215, 2.22058235662555, 2.2168603653866215, 2.208303258268081, 2.197030265633001, 2.184129155460671, 2.170285150458677, 2.1560051743017596, 2.1417251981448424, 2.1278811931428483, 2.114980082970518, 2.1037070903354382, 2.095149983216898, 2.0914279919779695, 2.095149983216898, 2.1037070903354382, 2.114980082970518, 2.1278811931428483, 2.1417251981448424, 2.1560051743017596, 2.170285150458677, 2.184129155460671, 2.197030265633001, 2.208303258268081, 2.2168603653866215, 2.22058235662555, 2.2168603653866215, 2.208303258268081, 2.197030265633001, 2.184129155460671, 2.170285150458677, 2.1560051743017596, 2.1417251981448424, 2.1278811931428483, 2.114980082970518, 2.1037070903354382, 2.095149983216898, 2.0914279919779695]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d6:visible")
-tracks/6/interp = 0
+tracks/6/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj5/cj4:rotation")
+tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.03888889, 0.07777778, 0.11666667, 0.15555556, 0.19444445, 0.23333333, 0.31944445, 0.40555555, 0.49166667, 0.5777778, 0.6638889, 0.75, 0.8361111, 0.9222222, 1.0083333, 1.0944444, 1.1805556, 1.2666667, 1.3277777, 1.3888888, 1.45, 1.5111111, 1.5722222, 1.6333333, 1.6944444, 1.7555555, 1.8166667, 1.8777778, 1.9388889, 2, 2.038889, 2.0777779, 2.1166666, 2.1555555, 2.1944444, 2.2333333, 2.3194444, 2.4055555, 2.4916666, 2.5777779, 2.663889, 2.75, 2.836111, 2.9222221, 3.0083334, 3.0944445, 3.1805556, 3.2666667, 3.3277779, 3.3888888, 3.45, 3.511111, 3.5722222, 3.6333334, 3.6944444, 3.7555556, 3.8166666, 3.8777778, 3.9388888, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.43703044780442896, -0.4400006621368437, -0.44584818159971723, -0.4526511446097782, -0.4594541076198392, -0.4653016270827127, -0.46827184141512745, -0.46454985017619893, -0.4559927430576588, -0.44471975042257894, -0.4318186402502485, -0.41797463524825446, -0.4036946590913373, -0.38941468293442005, -0.375570677932426, -0.36266956776009557, -0.3513965751250157, -0.3428394680064756, -0.33911747676754705, -0.34193914850408613, -0.348426360792601, -0.356972507911898, -0.3667529441371377, -0.37724819657783865, -0.388073962285988, -0.3988997279941374, -0.4093949804348383, -0.419175416660078, -0.42772156377937504, -0.4342087760678899, -0.43703044780442896, -0.4400006621368437, -0.44584818159971723, -0.4526511446097782, -0.4594541076198392, -0.4653016270827127, -0.46827184141512745, -0.46454985017619893, -0.4559927430576588, -0.44471975042257894, -0.4318186402502485, -0.41797463524825446, -0.4036946590913373, -0.38941468293442005, -0.375570677932426, -0.36266956776009557, -0.3513965751250157, -0.3428394680064756, -0.33911747676754705, -0.34193914850408613, -0.348426360792601, -0.356972507911898, -0.3667529441371377, -0.37724819657783865, -0.388073962285988, -0.3988997279941374, -0.4093949804348383, -0.419175416660078, -0.42772156377937504, -0.4342087760678899, -0.43703044780442896]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d7:visible")
-tracks/7/interp = 0
+tracks/7/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj5/cj4/cj12:rotation")
+tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125, 0.16666667, 0.20833333, 0.25, 0.29166666, 0.33333334, 0.375, 0.41666666, 0.45833334, 0.5, 0.5861111, 0.6722222, 0.7583333, 0.84444445, 0.9305556, 1.0166667, 1.1027777, 1.1888889, 1.275, 1.3611112, 1.4472222, 1.5333333, 1.5722222, 1.6111112, 1.65, 1.6888889, 1.7277777, 1.7666667, 1.8055556, 1.8444444, 1.8833333, 1.9222223, 1.9611111, 2, 2.0416667, 2.0833333, 2.125, 2.1666667, 2.2083333, 2.25, 2.2916667, 2.3333333, 2.375, 2.4166667, 2.4583333, 2.5, 2.586111, 2.6722221, 2.7583334, 2.8444445, 2.9305556, 3.0166667, 3.1027777, 3.1888888, 3.275, 3.3611112, 3.4472222, 3.5333333, 3.5722222, 3.6111112, 3.65, 3.6888888, 3.7277777, 3.7666667, 3.8055556, 3.8444445, 3.8833334, 3.9222221, 3.961111, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.4089306412943812, -0.41085702324642126, -0.4152859043631792, -0.42112043974052454, -0.42779763595133885, -0.43496284394561413, -0.4423536964700726, -0.44974454899453115, -0.4569097569888064, -0.46358695319962073, -0.4694214885769661, -0.473850369693724, -0.47577675164576405, -0.4720547604068355, -0.4634976532882954, -0.45222466065321554, -0.4393235504808851, -0.42547954547889105, -0.4111995693219739, -0.39691959316505665, -0.3830755881630626, -0.37017447799073216, -0.3589014853556523, -0.3503443782371122, -0.34662238699818365, -0.34841799628507214, -0.35254622228685434, -0.3579846795445888, -0.36420859350610496, -0.37088739051382374, -0.37777651414628244, -0.38466563777874113, -0.3913444347864599, -0.3975683487479761, -0.40300680600571054, -0.40713503200749274, -0.4089306412943812, -0.41085702324642126, -0.4152859043631792, -0.42112043974052454, -0.42779763595133885, -0.43496284394561413, -0.4423536964700726, -0.44974454899453115, -0.4569097569888064, -0.46358695319962073, -0.4694214885769661, -0.473850369693724, -0.47577675164576405, -0.4720547604068355, -0.4634976532882954, -0.45222466065321554, -0.4393235504808851, -0.42547954547889105, -0.4111995693219739, -0.39691959316505665, -0.3830755881630626, -0.37017447799073216, -0.3589014853556523, -0.3503443782371122, -0.34662238699818365, -0.34841799628507214, -0.35254622228685434, -0.3579846795445888, -0.36420859350610496, -0.37088739051382374, -0.37777651414628244, -0.38466563777874113, -0.3913444347864599, -0.3975683487479761, -0.40300680600571054, -0.40713503200749274, -0.4089306412943812]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d8:visible")
-tracks/8/interp = 0
+tracks/8/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj5/cj4/cj12/cj8:rotation")
+tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.88611114, 0.9722222, 1.0583333, 1.1444445, 1.2305555, 1.3166667, 1.4027778, 1.4888889, 1.575, 1.6611111, 1.7472222, 1.8333334, 1.875, 1.9166666, 1.9583334, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.886111, 2.9722223, 3.0583334, 3.1444445, 3.2305555, 3.3166666, 3.4027777, 3.488889, 3.575, 3.661111, 3.7472222, 3.8333333, 3.875, 3.9166667, 3.9583333, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.3553490495686238, -0.3584272369175755, -0.36550419577777354, -0.3748272653624612, -0.3854968321536318, -0.3969461984525782, -0.4087561246796503, -0.42056605090672233, -0.43201541720566883, -0.44268498399683937, -0.452008053581527, -0.45908501244172506, -0.46216319979067677, -0.45844120855174825, -0.4498841014332081, -0.43861110879812826, -0.42570999862579784, -0.41186599362380377, -0.3975860174668866, -0.38330604130996937, -0.3694620363079753, -0.3565609261356449, -0.345287933500565, -0.3367308263820249, -0.33300883514309637, -0.3370827103418075, -0.3441789423558601, -0.3512751743699127, -0.3553490495686238, -0.3584272369175755, -0.36550419577777354, -0.3748272653624612, -0.3854968321536318, -0.3969461984525782, -0.4087561246796503, -0.42056605090672233, -0.43201541720566883, -0.44268498399683937, -0.452008053581527, -0.45908501244172506, -0.46216319979067677, -0.45844120855174825, -0.4498841014332081, -0.43861110879812826, -0.42570999862579784, -0.41186599362380377, -0.3975860174668866, -0.38330604130996937, -0.3694620363079753, -0.3565609261356449, -0.345287933500565, -0.3367308263820249, -0.33300883514309637, -0.3370827103418075, -0.3441789423558601, -0.3512751743699127, -0.3553490495686238]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d9:visible")
-tracks/9/interp = 0
+tracks/9/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj2:rotation")
+tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5, 0.5833333, 0.6666667, 0.75, 0.8333333, 0.9166667, 1, 1.0833334, 1.1666666, 1.25, 1.3333334, 1.4166666, 1.5, 1.5833334, 1.6666666, 1.75, 1.8333334, 1.9166666, 2, 2.0833333, 2.1666667, 2.25, 2.3333333, 2.4166667, 2.5, 2.5833333, 2.6666667, 2.75, 2.8333333, 2.9166667, 3, 3.0833333, 3.1666667, 3.25, 3.3333333, 3.4166667, 3.5, 3.5833333, 3.6666667, 3.75, 3.8333333, 3.9166667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [1.144586905208739, 1.1393509688847867, 1.127313200627489, 1.1114548420692214, 1.0933061181646322, 1.0738309705875029, 1.0537425176424342, 1.0336540646973655, 1.014178917120236, 0.9960301932156469, 0.9801718346573791, 0.9681340664000815, 0.9628981300761293, 0.9681340664000815, 0.9801718346573791, 0.9960301932156469, 1.014178917120236, 1.0336540646973655, 1.0537425176424342, 1.0738309705875029, 1.0933061181646324, 1.1114548420692214, 1.127313200627489, 1.1393509688847867, 1.144586905208739, 1.1393509688847867, 1.127313200627489, 1.1114548420692214, 1.0933061181646322, 1.0738309705875029, 1.0537425176424342, 1.0336540646973655, 1.014178917120236, 0.9960301932156469, 0.9801718346573791, 0.9681340664000815, 0.9628981300761293, 0.9681340664000815, 0.9801718346573791, 0.9960301932156469, 1.014178917120236, 1.0336540646973655, 1.0537425176424342, 1.0738309705875029, 1.0933061181646324, 1.1114548420692214, 1.127313200627489, 1.1393509688847867, 1.144586905208739]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d10:visible")
-tracks/10/interp = 0
+tracks/10/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj2/cj19:rotation")
+tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.03888889, 0.07777778, 0.11666667, 0.15555556, 0.19444445, 0.23333333, 0.31666666, 0.4, 0.48333332, 0.56666666, 0.65, 0.73333335, 0.81666666, 0.9, 0.98333335, 1.0666667, 1.15, 1.2333333, 1.2972223, 1.3611112, 1.425, 1.4888889, 1.5527778, 1.6166667, 1.6805556, 1.7444445, 1.8083333, 1.8722222, 1.9361111, 2, 2.038889, 2.0777779, 2.1166666, 2.1555555, 2.1944444, 2.2333333, 2.3166666, 2.4, 2.4833333, 2.5666666, 2.65, 2.7333333, 2.8166666, 2.9, 2.9833333, 3.0666666, 3.15, 3.2333333, 3.2972221, 3.3611112, 3.425, 3.488889, 3.5527778, 3.6166666, 3.6805556, 3.7444444, 3.8083334, 3.8722222, 3.9361112, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.05777039651518247, -0.05373820610860831, -0.04579995342995871, -0.036564646103451365, -0.02732933877694401, -0.019391086098294416, -0.015358895691720255, -0.020594832015672436, -0.03263260027297007, -0.0484909588312378, -0.06663968273582696, -0.0861148303129565, -0.10620328325802511, -0.12629173620309378, -0.14576688378022326, -0.16391560768481242, -0.17977396624308015, -0.19181173450037778, -0.19704767082432997, -0.1930339559477557, -0.18380615664965433, -0.17164960513236552, -0.15773732686544703, -0.1428082512011345, -0.12740903366975623, -0.11200981613837795, -0.09708074047406542, -0.08316846220714695, -0.07101191068985813, -0.061784111391756796, -0.05777039651518247, -0.05373820610860831, -0.04579995342995871, -0.036564646103451365, -0.02732933877694401, -0.019391086098294416, -0.015358895691720255, -0.020594832015672436, -0.03263260027297007, -0.0484909588312378, -0.06663968273582696, -0.0861148303129565, -0.10620328325802511, -0.12629173620309378, -0.14576688378022326, -0.16391560768481242, -0.17977396624308015, -0.19181173450037778, -0.19704767082432997, -0.1930339559477557, -0.18380615664965433, -0.17164960513236552, -0.15773732686544703, -0.1428082512011345, -0.12740903366975623, -0.11200981613837795, -0.09708074047406542, -0.08316846220714695, -0.07101191068985813, -0.061784111391756796, -0.05777039651518247]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d11:visible")
-tracks/11/interp = 0
+tracks/11/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj2/cj19/cj17:rotation")
+tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778, 0.33333334, 0.3888889, 0.44444445, 0.5, 0.5555556, 0.6111111, 0.6666667, 0.75, 0.8333333, 0.9166667, 1, 1.0833334, 1.1666666, 1.25, 1.3333334, 1.4166666, 1.5, 1.5833334, 1.6666666, 1.7083334, 1.75, 1.7916666, 1.8333334, 1.875, 1.9166666, 1.9583334, 2, 2.0555556, 2.1111112, 2.1666667, 2.2222223, 2.2777777, 2.3333333, 2.3888888, 2.4444444, 2.5, 2.5555556, 2.6111112, 2.6666667, 2.75, 2.8333333, 2.9166667, 3, 3.0833333, 3.1666667, 3.25, 3.3333333, 3.4166667, 3.5, 3.5833333, 3.6666667, 3.7037036, 3.7407408, 3.7777777, 3.8148148, 3.851852, 3.8888888, 3.925926, 3.9629629, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.09878563497413842, -0.0952950107581703, -0.08726983191997188, -0.07669759288112672, -0.0645984436114006, -0.051615011893314265, -0.03822270992993518, -0.02483040796655607, -0.01184697624846974, 0.0002521730212563522, 0.010824412060101526, 0.018849590898299934, 0.022340215114268057, 0.017104278790315876, 0.005066510533018244, -0.01079184802524949, -0.028940571929838656, -0.04841571950696818, -0.0685041724520368, -0.08859262539710547, -0.10806777297423495, -0.1262164968788241, -0.14207485543709183, -0.15411262369438947, -0.15934856001834166, -0.15580081659858114, -0.14830453897183582, -0.13904828497325225, -0.12906709749624004, -0.11908591001922783, -0.10982965602064428, -0.10233337839389894, -0.09878563497413842, -0.0952950107581703, -0.08726983191997188, -0.07669759288112672, -0.0645984436114006, -0.051615011893314265, -0.03822270992993518, -0.02483040796655607, -0.01184697624846974, 0.0002521730212563522, 0.010824412060101526, 0.018849590898299934, 0.022340215114268057, 0.017104278790315876, 0.005066510533018244, -0.01079184802524949, -0.028940571929838656, -0.04841571950696818, -0.0685041724520368, -0.08859262539710547, -0.10806777297423495, -0.1262164968788241, -0.14207485543709183, -0.15411262369438947, -0.15934856001834166, -0.1564526748116231, -0.15017117872554975, -0.14225496433697277, -0.1335434837625299, -0.12459071122995016, -0.11587923065550731, -0.10796301626693033, -0.10168152018085701, -0.09878563497413842]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d12:visible")
-tracks/12/interp = 0
+tracks/12/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj6:rotation")
+tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5, 0.5833333, 0.6666667, 0.75, 0.8333333, 0.9166667, 1, 1.0833334, 1.1666666, 1.25, 1.3333334, 1.4166666, 1.5, 1.5833334, 1.6666666, 1.75, 1.8333334, 1.9166666, 2, 2.0833333, 2.1666667, 2.25, 2.3333333, 2.4166667, 2.5, 2.5833333, 2.6666667, 2.75, 2.8333333, 2.9166667, 3, 3.0833333, 3.1666667, 3.25, 3.3333333, 3.4166667, 3.5, 3.5833333, 3.6666667, 3.75, 3.8333333, 3.9166667, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [2.5867525047863955, 2.591354696656152, 2.601935443971644, 2.615874347027182, 2.6318263954159415, 2.6489443205197585, 2.666601318065136, 2.6842583156105135, 2.7013762407143305, 2.71732828910309, 2.731267192158628, 2.74184793947412, 2.7464501313438765, 2.74184793947412, 2.731267192158628, 2.71732828910309, 2.7013762407143305, 2.6842583156105135, 2.666601318065136, 2.6489443205197585, 2.6318263954159415, 2.615874347027182, 2.601935443971644, 2.591354696656152, 2.5867525047863955, 2.591354696656152, 2.601935443971644, 2.615874347027182, 2.6318263954159415, 2.6489443205197585, 2.666601318065136, 2.6842583156105135, 2.7013762407143305, 2.71732828910309, 2.731267192158628, 2.74184793947412, 2.7464501313438765, 2.74184793947412, 2.731267192158628, 2.71732828910309, 2.7013762407143305, 2.6842583156105135, 2.666601318065136, 2.6489443205197585, 2.6318263954159415, 2.615874347027182, 2.601935443971644, 2.591354696656152, 2.5867525047863955]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d13:visible")
-tracks/13/interp = 0
+tracks/13/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj6/cj20:rotation")
+tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.23333333, 1.2333333, 2, 2.2333333, 3.2333333, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.1680752083318536, -0.20542525432453224, -0.045727627767051096, -0.1680752083318536, -0.20542525432453224, -0.045727627767051096, -0.1680752083318536]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d14:visible")
-tracks/14/interp = 0
+tracks/14/path = NodePath("Skeleton2D/root/cj11/cj7/cj3/cj6/cj20/cj22:rotation")
+tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.6, 1.6, 2, 2.6, 3.6, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [-0.01850049013933796, -0.11431906607382665, 0.045378560483654504, -0.01850049013933796, -0.11431906607382665, 0.045378560483654504, -0.01850049013933796]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d15:visible")
+tracks/15/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d0:visible")
 tracks/15/interp = 0
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d16:visible")
+tracks/16/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d1:visible")
 tracks/16/interp = 0
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d17:visible")
+tracks/17/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d2:visible")
 tracks/17/interp = 0
 tracks/17/loop_wrap = true
 tracks/17/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+"values": [false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d18:visible")
+tracks/18/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d3:visible")
 tracks/18/interp = 0
 tracks/18/loop_wrap = true
 tracks/18/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+"values": [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/19/type = "value"
 tracks/19/imported = false
 tracks/19/enabled = true
-tracks/19/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d19:visible")
+tracks/19/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d4:visible")
 tracks/19/interp = 0
 tracks/19/loop_wrap = true
 tracks/19/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+"values": [false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d20:visible")
+tracks/20/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d5:visible")
 tracks/20/interp = 0
 tracks/20/loop_wrap = true
 tracks/20/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+"values": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d21:visible")
+tracks/21/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d6:visible")
 tracks/21/interp = 0
 tracks/21/loop_wrap = true
 tracks/21/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+"values": [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/22/type = "value"
 tracks/22/imported = false
 tracks/22/enabled = true
-tracks/22/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d22:visible")
+tracks/22/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d7:visible")
 tracks/22/interp = 0
 tracks/22/loop_wrap = true
 tracks/22/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+"values": [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/23/type = "value"
 tracks/23/imported = false
 tracks/23/enabled = true
-tracks/23/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d23:visible")
+tracks/23/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d8:visible")
 tracks/23/interp = 0
 tracks/23/loop_wrap = true
 tracks/23/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+"values": [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d24:visible")
+tracks/24/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d9:visible")
 tracks/24/interp = 0
 tracks/24/loop_wrap = true
 tracks/24/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+"values": [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d25:visible")
+tracks/25/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d10:visible")
 tracks/25/interp = 0
 tracks/25/loop_wrap = true
 tracks/25/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+"values": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/26/type = "value"
 tracks/26/imported = false
 tracks/26/enabled = true
-tracks/26/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d26:visible")
+tracks/26/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d11:visible")
 tracks/26/interp = 0
 tracks/26/loop_wrap = true
 tracks/26/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/27/type = "value"
 tracks/27/imported = false
 tracks/27/enabled = true
-tracks/27/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d27:visible")
+tracks/27/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d12:visible")
 tracks/27/interp = 0
 tracks/27/loop_wrap = true
 tracks/27/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/28/type = "value"
 tracks/28/imported = false
 tracks/28/enabled = true
-tracks/28/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d28:visible")
+tracks/28/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d13:visible")
 tracks/28/interp = 0
 tracks/28/loop_wrap = true
 tracks/28/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 }
 tracks/29/type = "value"
 tracks/29/imported = false
 tracks/29/enabled = true
-tracks/29/path = NodePath("Skeleton2D/root/cjsge_00000/cjsge_00000_d29:visible")
+tracks/29/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d14:visible")
 tracks/29/interp = 0
 tracks/29/loop_wrap = true
 tracks/29/keys = {
 "times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d15:visible")
+tracks/30/interp = 0
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d16:visible")
+tracks/31/interp = 0
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d17:visible")
+tracks/32/interp = 0
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d18:visible")
+tracks/33/interp = 0
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d19:visible")
+tracks/34/interp = 0
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d20:visible")
+tracks/35/interp = 0
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d21:visible")
+tracks/36/interp = 0
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d22:visible")
+tracks/37/interp = 0
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d23:visible")
+tracks/38/interp = 0
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d24:visible")
+tracks/39/interp = 0
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false]
+}
+tracks/40/type = "value"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d25:visible")
+tracks/40/interp = 0
+tracks/40/loop_wrap = true
+tracks/40/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false]
+}
+tracks/41/type = "value"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d26:visible")
+tracks/41/interp = 0
+tracks/41/loop_wrap = true
+tracks/41/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+}
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d27:visible")
+tracks/42/interp = 0
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d28:visible")
+tracks/43/interp = 0
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("Skeleton2D/root/cjsge_00000/slot_cjsge_00000/d29:visible")
+tracks/44/interp = 0
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.8666667, 1.9333333, 2, 2.0666666, 2.1333334, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.5333333, 2.6, 2.6666667, 2.7333333, 2.8, 2.8666666, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.2666667, 3.3333333, 3.4, 3.4666667, 3.5333333, 3.6, 3.6666667, 3.7333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
 "values": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_m1f3t"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qhwvh"]
 _data = {
-&"animation": SubResource("Animation_0w1j5")
+&"animation": SubResource("Animation_1ajj1")
 }
 
-[node name="AvatarRoot" type="Node2D" unique_id=1287172283]
+[node name="AvatarRoot" type="Node2D" unique_id=115429477]
 
-[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=1108549501]
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=539058797]
 
-[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=927313217]
+[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=2036193245]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj1" type="Bone2D" parent="Skeleton2D/root" unique_id=375845888]
+[node name="cj1" type="Bone2D" parent="Skeleton2D/root" unique_id=22577797]
 position = Vector2(-1.08, 76.99)
 rest = Transform2D(1, 0, 0, 1, -1.08, 76.99)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj1_d0" type="Sprite2D" parent="Skeleton2D/root/cj1" unique_id=765993294]
-position = Vector2(11.6, -102.28)
-texture = SubResource("AtlasTexture_r0o4r")
+[node name="slot_cj1" type="Node2D" parent="Skeleton2D/root/cj1" unique_id=2128564779]
+z_index = 9
+z_as_relative = false
 
-[node name="cj11" type="Bone2D" parent="Skeleton2D/root" unique_id=1519854667]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj1/slot_cj1" unique_id=534033380]
+position = Vector2(11.6, -102.28)
+texture = SubResource("AtlasTexture_amhya")
+
+[node name="cj11" type="Bone2D" parent="Skeleton2D/root" unique_id=1701098126]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj7" type="Bone2D" parent="Skeleton2D/root/cj11" unique_id=181762205]
+[node name="cj7" type="Bone2D" parent="Skeleton2D/root/cj11" unique_id=152475118]
 position = Vector2(-0.79, -71.46)
 rest = Transform2D(1, 0, 0, 1, -0.79, -71.46)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj8A" type="Bone2D" parent="Skeleton2D/root/cj11/cj7" unique_id=1724231128]
+[node name="cj8A" type="Bone2D" parent="Skeleton2D/root/cj11/cj7" unique_id=1682040013]
 position = Vector2(-6.46, -31.33)
 rest = Transform2D(1, 0, 0, 1, -6.46, -31.33)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj8A_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj8A" unique_id=359496526]
-position = Vector2(-1.7, -26.66)
-texture = SubResource("AtlasTexture_f8guy")
+[node name="slot_cj8A" type="Node2D" parent="Skeleton2D/root/cj11/cj7/cj8A" unique_id=1452940451]
+z_index = 11
+z_as_relative = false
 
-[node name="cj3" type="Bone2D" parent="Skeleton2D/root/cj11/cj7" unique_id=1423128808]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj8A/slot_cj8A" unique_id=1822807004]
+position = Vector2(-1.7, -26.66)
+texture = SubResource("AtlasTexture_web6q")
+
+[node name="cj3" type="Bone2D" parent="Skeleton2D/root/cj11/cj7" unique_id=577443886]
 position = Vector2(-37.17, -12.83)
 rest = Transform2D(1, 0, 0, 1, -37.17, -12.83)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj2" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=522237947]
+[node name="cj2" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=246748629]
 position = Vector2(3.54, 7.92)
 rotation = 1.0934488
 rest = Transform2D(0.45942485, 0.8882166, -0.8882166, 0.45942485, 3.54, 7.92)
@@ -961,7 +1149,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj19" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj2" unique_id=839980940]
+[node name="cj19" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj2" unique_id=1209037505]
 position = Vector2(11.61, -0.41)
 rotation = -0.06649704
 rest = Transform2D(0.99778986, -0.06644805, 0.06644805, 0.99778986, 11.61, -0.41)
@@ -969,7 +1157,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj17" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj2/cj19" unique_id=939408742]
+[node name="cj17" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj2/cj19" unique_id=1495676947]
 position = Vector2(13.49, -0.22)
 rotation = -0.028797932
 rest = Transform2D(0.9995854, -0.028793951, 0.028793951, 0.9995854, 13.49, -0.22)
@@ -977,10 +1165,14 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj2_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj2/cj19/cj17" unique_id=105282073]
-texture = SubResource("AtlasTexture_owegq")
+[node name="slot_cj2" type="Node2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj2/cj19/cj17" unique_id=43719495]
+z_index = 8
+z_as_relative = false
 
-[node name="cj6" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=200739878]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj2/cj19/cj17/slot_cj2" unique_id=758998853]
+texture = SubResource("AtlasTexture_fygq6")
+
+[node name="cj6" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=1360387235]
 position = Vector2(-6.68, 5.56)
 rotation = 2.703864
 rest = Transform2D(-0.90571684, 0.4238833, -0.4238833, -0.90571684, -6.68, 5.56)
@@ -988,7 +1180,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj20" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj6" unique_id=1438229835]
+[node name="cj20" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj6" unique_id=1685790057]
 position = Vector2(7.33, 0.18)
 rotation = -0.08831366
 rest = Transform2D(0.99610287, -0.08819891, 0.08819891, 0.99610287, 7.33, 0.18)
@@ -996,7 +1188,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj22" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj6/cj20" unique_id=1701306448]
+[node name="cj22" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj6/cj20" unique_id=378392320]
 position = Vector2(13.68, -0.14)
 rotation = 0.0027925267
 rest = Transform2D(0.9999961, 0.002792523, -0.002792523, 0.9999961, 13.68, -0.14)
@@ -1004,10 +1196,14 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj6_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj6/cj20/cj22" unique_id=504566628]
-texture = SubResource("AtlasTexture_027wi")
+[node name="slot_cj6" type="Node2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj6/cj20/cj22" unique_id=1149072638]
+z_index = 3
+z_as_relative = false
 
-[node name="cj5" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=623097950]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj6/cj20/cj22/slot_cj6" unique_id=798421923]
+texture = SubResource("AtlasTexture_6dd1m")
+
+[node name="cj5" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=1707607742]
 position = Vector2(-7.2, 8.63)
 rotation = 2.1910863
 rest = Transform2D(-0.5812711, 0.8137099, -0.8137099, -0.5812711, -7.2, 8.63)
@@ -1015,7 +1211,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj4" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5" unique_id=1366267403]
+[node name="cj4" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5" unique_id=380983600]
 position = Vector2(18.22, -0.31)
 rotation = -0.36861354
 rest = Transform2D(0.93282783, -0.36032245, 0.36032245, 0.93282783, 18.22, -0.31)
@@ -1023,7 +1219,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj12" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5/cj4" unique_id=29941657]
+[node name="cj12" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5/cj4" unique_id=646093347]
 position = Vector2(18.49, -0.18)
 rotation = -0.37611845
 rest = Transform2D(0.9300974, -0.36731303, 0.36731303, 0.9300974, 18.49, -0.18)
@@ -1031,7 +1227,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj8" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5/cj4/cj12" unique_id=824546620]
+[node name="cj8" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5/cj4/cj12" unique_id=977721844]
 position = Vector2(21.82, 0)
 rotation = -0.3625049
 rest = Transform2D(0.9350115, -0.35461745, 0.35461745, 0.9350115, 21.82, 0)
@@ -1039,10 +1235,14 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj4_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5/cj4/cj12/cj8" unique_id=179455402]
-texture = SubResource("AtlasTexture_0nuwy")
+[node name="slot_cj4" type="Node2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5/cj4/cj12/cj8" unique_id=58762451]
+z_index = 6
+z_as_relative = false
 
-[node name="cj14" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=1144602124]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj5/cj4/cj12/cj8/slot_cj4" unique_id=636432273]
+texture = SubResource("AtlasTexture_t3pxn")
+
+[node name="cj14" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=884240632]
 position = Vector2(0.43, 11.59)
 rotation = 2.0158553
 rest = Transform2D(-0.43051112, 0.90258527, -0.90258527, -0.43051112, 0.43, 11.59)
@@ -1050,7 +1250,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj13" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14" unique_id=782138422]
+[node name="cj13" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14" unique_id=1732069606]
 position = Vector2(17.49, 0.11)
 rotation = -0.4982915
 rest = Transform2D(0.8784004, -0.47792548, 0.47792548, 0.8784004, 17.49, 0.11)
@@ -1058,7 +1258,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj16" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13" unique_id=2132120676]
+[node name="cj16" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13" unique_id=109426361]
 position = Vector2(19.58, -2.16)
 rotation = -0.38659042
 rest = Transform2D(0.9262, -0.37703267, 0.37703267, 0.9262, 19.58, -2.16)
@@ -1066,7 +1266,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj15" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16" unique_id=2079652417]
+[node name="cj15" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16" unique_id=112405489]
 position = Vector2(21.32, 1.05)
 rotation = -0.3556981
 rest = Transform2D(0.9374036, -0.34824485, 0.34824485, 0.9374036, 21.32, 1.05)
@@ -1074,7 +1274,7 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj18" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16/cj15" unique_id=667586353]
+[node name="cj18" type="Bone2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16/cj15" unique_id=350746199]
 position = Vector2(18.32, -0.26)
 rotation = -0.1966986
 rest = Transform2D(0.9807171, -0.19543266, 0.19543266, 0.9807171, 18.32, -0.26)
@@ -1082,14 +1282,22 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj5_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16/cj15/cj18" unique_id=1469865743]
-texture = SubResource("AtlasTexture_njy2t")
+[node name="slot_cj5" type="Node2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16/cj15/cj18" unique_id=1840471802]
+z_index = 5
+z_as_relative = false
 
-[node name="cj3_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=1053204307]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/cj14/cj13/cj16/cj15/cj18/slot_cj5" unique_id=804340972]
+texture = SubResource("AtlasTexture_n61c6")
+
+[node name="slot_cj3" type="Node2D" parent="Skeleton2D/root/cj11/cj7/cj3" unique_id=1899467012]
+z_index = 7
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj3/slot_cj3" unique_id=1215997963]
 position = Vector2(-0.02, 5.5)
-texture = SubResource("AtlasTexture_idx74")
+texture = SubResource("AtlasTexture_5rjju")
 
-[node name="cj10" type="Bone2D" parent="Skeleton2D/root/cj11/cj7" unique_id=314545353]
+[node name="cj10" type="Bone2D" parent="Skeleton2D/root/cj11/cj7" unique_id=1545456200]
 position = Vector2(0.33, -3.34)
 rotation = -1.6296139
 rest = Transform2D(-0.058783643, -0.99827075, 0.99827075, -0.058783643, 0.33, -3.34)
@@ -1097,26 +1305,37 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj10_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj10" unique_id=426861828]
+[node name="slot_cj10" type="Node2D" parent="Skeleton2D/root/cj11/cj7/cj10" unique_id=1952492815]
+z_index = 1
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/cj10/slot_cj10" unique_id=333663015]
 position = Vector2(41.86, -13.59)
 rotation = 1.6296139
-texture = SubResource("AtlasTexture_dt8ng")
+texture = SubResource("AtlasTexture_7m02f")
 
-[node name="cj7_d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7" unique_id=1589840742]
+[node name="slot_cj7" type="Node2D" parent="Skeleton2D/root/cj11/cj7" unique_id=284440093]
+z_index = 2
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj11/cj7/slot_cj7" unique_id=136976286]
 position = Vector2(5.81, -9.83)
-texture = SubResource("AtlasTexture_uninw")
+texture = SubResource("AtlasTexture_i4d67")
 
-[node name="cj21" type="Bone2D" parent="Skeleton2D/root" unique_id=864180558]
+[node name="cj21" type="Bone2D" parent="Skeleton2D/root" unique_id=1653219817]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cj12_d0" type="Sprite2D" parent="Skeleton2D/root/cj21" unique_id=206768789]
-position = Vector2(0.52, -9.79)
-texture = SubResource("AtlasTexture_imt05")
+[node name="slot_cj12" type="Node2D" parent="Skeleton2D/root/cj21" unique_id=421149354]
+z_as_relative = false
 
-[node name="cjsge_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=2029723054]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cj21/slot_cj12" unique_id=1051290115]
+position = Vector2(0.52, -9.79)
+texture = SubResource("AtlasTexture_sus66")
+
+[node name="cjsge_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=528338382]
 position = Vector2(-1.04, 21.95)
 scale = Vector2(2, 2)
 rest = Transform2D(2, 0, 0, 2, -1.04, 21.95)
@@ -1124,156 +1343,161 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cjsge_00000_d0" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1361406758]
-material = SubResource("CanvasItemMaterial_sobso")
-texture = SubResource("AtlasTexture_j5mra")
+[node name="slot_cjsge_00000" type="Node2D" parent="Skeleton2D/root/cjsge_00000" unique_id=935588951]
+z_index = 4
+z_as_relative = false
 
-[node name="cjsge_00000_d1" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=2138853924]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1093242558]
 visible = false
-material = SubResource("CanvasItemMaterial_eee1t")
-texture = SubResource("AtlasTexture_2gitt")
+material = SubResource("CanvasItemMaterial_egsfh")
+texture = SubResource("AtlasTexture_wvu64")
 
-[node name="cjsge_00000_d2" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=851567654]
+[node name="d1" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=924368056]
 visible = false
-material = SubResource("CanvasItemMaterial_swsfo")
-texture = SubResource("AtlasTexture_kgdd8")
+material = SubResource("CanvasItemMaterial_kg61e")
+texture = SubResource("AtlasTexture_q84dd")
 
-[node name="cjsge_00000_d3" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=825954246]
+[node name="d2" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=362181859]
 visible = false
-material = SubResource("CanvasItemMaterial_1ae4n")
-texture = SubResource("AtlasTexture_h6di4")
+material = SubResource("CanvasItemMaterial_kbb1l")
+texture = SubResource("AtlasTexture_iefx6")
 
-[node name="cjsge_00000_d4" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1143565121]
+[node name="d3" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=478829653]
 visible = false
-material = SubResource("CanvasItemMaterial_xkerx")
-texture = SubResource("AtlasTexture_q2a2k")
+material = SubResource("CanvasItemMaterial_pm46o")
+texture = SubResource("AtlasTexture_bj0uq")
 
-[node name="cjsge_00000_d5" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=989705615]
+[node name="d4" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=373901793]
 visible = false
-material = SubResource("CanvasItemMaterial_71t8n")
-texture = SubResource("AtlasTexture_a30p1")
+material = SubResource("CanvasItemMaterial_8njbn")
+texture = SubResource("AtlasTexture_g7617")
 
-[node name="cjsge_00000_d6" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=2050871478]
+[node name="d5" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1208880605]
 visible = false
-material = SubResource("CanvasItemMaterial_ltjol")
-texture = SubResource("AtlasTexture_fk4mq")
+material = SubResource("CanvasItemMaterial_irlj3")
+texture = SubResource("AtlasTexture_iu5t3")
 
-[node name="cjsge_00000_d7" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=118672768]
+[node name="d6" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=890921428]
 visible = false
-material = SubResource("CanvasItemMaterial_ri311")
-texture = SubResource("AtlasTexture_yfj5v")
+material = SubResource("CanvasItemMaterial_0a0gd")
+texture = SubResource("AtlasTexture_yq8ol")
 
-[node name="cjsge_00000_d8" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=535996818]
+[node name="d7" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=862028735]
 visible = false
-material = SubResource("CanvasItemMaterial_xxxpk")
-texture = SubResource("AtlasTexture_mvfd6")
+material = SubResource("CanvasItemMaterial_3nit5")
+texture = SubResource("AtlasTexture_q7x7e")
 
-[node name="cjsge_00000_d9" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1546110462]
+[node name="d8" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1487615083]
 visible = false
-material = SubResource("CanvasItemMaterial_bn1av")
-texture = SubResource("AtlasTexture_b7wve")
+material = SubResource("CanvasItemMaterial_spxa0")
+texture = SubResource("AtlasTexture_fyhnp")
 
-[node name="cjsge_00000_d10" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1563795405]
+[node name="d9" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1292040515]
 visible = false
-material = SubResource("CanvasItemMaterial_wertl")
-texture = SubResource("AtlasTexture_yyux6")
+material = SubResource("CanvasItemMaterial_bj6ld")
+texture = SubResource("AtlasTexture_ald7h")
 
-[node name="cjsge_00000_d11" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=2019326176]
+[node name="d10" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=769971144]
 visible = false
-material = SubResource("CanvasItemMaterial_w3f38")
-texture = SubResource("AtlasTexture_stu2r")
+material = SubResource("CanvasItemMaterial_1sdek")
+texture = SubResource("AtlasTexture_03kj1")
 
-[node name="cjsge_00000_d12" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1670988353]
+[node name="d11" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=358350087]
 visible = false
-material = SubResource("CanvasItemMaterial_jna2g")
-texture = SubResource("AtlasTexture_tlvss")
+material = SubResource("CanvasItemMaterial_v4dlo")
+texture = SubResource("AtlasTexture_loyuj")
 
-[node name="cjsge_00000_d13" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=382625047]
+[node name="d12" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1932100131]
 visible = false
-material = SubResource("CanvasItemMaterial_sf440")
-texture = SubResource("AtlasTexture_p16yg")
+material = SubResource("CanvasItemMaterial_gdub7")
+texture = SubResource("AtlasTexture_rv6q1")
 
-[node name="cjsge_00000_d14" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1882292898]
+[node name="d13" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1687573701]
 visible = false
-material = SubResource("CanvasItemMaterial_maf12")
-texture = SubResource("AtlasTexture_few84")
+material = SubResource("CanvasItemMaterial_fr3eu")
+texture = SubResource("AtlasTexture_issqx")
 
-[node name="cjsge_00000_d15" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=122996892]
+[node name="d14" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=898230411]
 visible = false
-material = SubResource("CanvasItemMaterial_cc225")
-texture = SubResource("AtlasTexture_ox3nv")
+material = SubResource("CanvasItemMaterial_jdkx8")
+texture = SubResource("AtlasTexture_w0r4j")
 
-[node name="cjsge_00000_d16" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=183766639]
+[node name="d15" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1611159006]
 visible = false
-material = SubResource("CanvasItemMaterial_nu5ex")
-texture = SubResource("AtlasTexture_8mt66")
+material = SubResource("CanvasItemMaterial_ilfdu")
+texture = SubResource("AtlasTexture_0taa0")
 
-[node name="cjsge_00000_d17" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1665934410]
+[node name="d16" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=582039549]
 visible = false
-material = SubResource("CanvasItemMaterial_n2b3g")
-texture = SubResource("AtlasTexture_th52h")
+material = SubResource("CanvasItemMaterial_8nskf")
+texture = SubResource("AtlasTexture_s4nf2")
 
-[node name="cjsge_00000_d18" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=778338803]
+[node name="d17" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1917283781]
 visible = false
-material = SubResource("CanvasItemMaterial_a5l0c")
-texture = SubResource("AtlasTexture_j54qw")
+material = SubResource("CanvasItemMaterial_n2h4c")
+texture = SubResource("AtlasTexture_jo8qw")
 
-[node name="cjsge_00000_d19" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=2042244001]
+[node name="d18" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=852952432]
 visible = false
-material = SubResource("CanvasItemMaterial_32yw5")
-texture = SubResource("AtlasTexture_jbiyw")
+material = SubResource("CanvasItemMaterial_ehutv")
+texture = SubResource("AtlasTexture_lbu12")
 
-[node name="cjsge_00000_d20" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=943638490]
+[node name="d19" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=2028414668]
 visible = false
-material = SubResource("CanvasItemMaterial_t7xpc")
-texture = SubResource("AtlasTexture_0fa2k")
+material = SubResource("CanvasItemMaterial_i5f40")
+texture = SubResource("AtlasTexture_3p2w4")
 
-[node name="cjsge_00000_d21" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1815270965]
+[node name="d20" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=486706330]
 visible = false
-material = SubResource("CanvasItemMaterial_j1si3")
-texture = SubResource("AtlasTexture_x23cc")
+material = SubResource("CanvasItemMaterial_uvbie")
+texture = SubResource("AtlasTexture_m8oiw")
 
-[node name="cjsge_00000_d22" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=602187970]
+[node name="d21" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=578651247]
 visible = false
-material = SubResource("CanvasItemMaterial_xxiwc")
-texture = SubResource("AtlasTexture_i2tlk")
+material = SubResource("CanvasItemMaterial_p7p8a")
+texture = SubResource("AtlasTexture_rc1p5")
 
-[node name="cjsge_00000_d23" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=640575109]
+[node name="d22" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=832410521]
 visible = false
-material = SubResource("CanvasItemMaterial_pw7rp")
-texture = SubResource("AtlasTexture_5holw")
+material = SubResource("CanvasItemMaterial_yuowj")
+texture = SubResource("AtlasTexture_i50ft")
 
-[node name="cjsge_00000_d24" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=2053223852]
+[node name="d23" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1078649180]
 visible = false
-material = SubResource("CanvasItemMaterial_fmuyy")
-texture = SubResource("AtlasTexture_ukw3w")
+material = SubResource("CanvasItemMaterial_xgvxx")
+texture = SubResource("AtlasTexture_kmris")
 
-[node name="cjsge_00000_d25" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=967889831]
+[node name="d24" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1438768184]
 visible = false
-material = SubResource("CanvasItemMaterial_slol6")
-texture = SubResource("AtlasTexture_u0qrm")
+material = SubResource("CanvasItemMaterial_acfsj")
+texture = SubResource("AtlasTexture_l2y8u")
 
-[node name="cjsge_00000_d26" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=1481500669]
+[node name="d25" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1176935442]
 visible = false
-material = SubResource("CanvasItemMaterial_8bwam")
-texture = SubResource("AtlasTexture_mfoh7")
+material = SubResource("CanvasItemMaterial_n2qgn")
+texture = SubResource("AtlasTexture_c8mmy")
 
-[node name="cjsge_00000_d27" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=277543451]
+[node name="d26" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=808033137]
 visible = false
-material = SubResource("CanvasItemMaterial_o71rk")
-texture = SubResource("AtlasTexture_8mbk2")
+material = SubResource("CanvasItemMaterial_xnlt1")
+texture = SubResource("AtlasTexture_by7w0")
 
-[node name="cjsge_00000_d28" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=2068665119]
+[node name="d27" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1479079057]
 visible = false
-material = SubResource("CanvasItemMaterial_arurj")
-texture = SubResource("AtlasTexture_soq1d")
+material = SubResource("CanvasItemMaterial_g4ll0")
+texture = SubResource("AtlasTexture_fkycm")
 
-[node name="cjsge_00000_d29" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000" unique_id=115050862]
+[node name="d28" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=1919632471]
 visible = false
-material = SubResource("CanvasItemMaterial_yctm2")
-texture = SubResource("AtlasTexture_01oa5")
+material = SubResource("CanvasItemMaterial_fo82x")
+texture = SubResource("AtlasTexture_jkpvt")
 
-[node name="cjsg_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=670862543]
+[node name="d29" type="Sprite2D" parent="Skeleton2D/root/cjsge_00000/slot_cjsge_00000" unique_id=394820538]
+visible = false
+material = SubResource("CanvasItemMaterial_cya4d")
+texture = SubResource("AtlasTexture_ciom5")
+
+[node name="cjsg_00000" type="Bone2D" parent="Skeleton2D/root" unique_id=703764646]
 position = Vector2(-16.66, -124.1)
 scale = Vector2(2, 2)
 rest = Transform2D(2, 0, 0, 2, -16.66, -124.1)
@@ -1281,154 +1505,159 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="cjsg_00000_d0" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1931178341]
-material = SubResource("CanvasItemMaterial_n0ahg")
-texture = SubResource("AtlasTexture_sxmts")
+[node name="slot_cjsg_00000" type="Node2D" parent="Skeleton2D/root/cjsg_00000" unique_id=266071330]
+z_index = 10
+z_as_relative = false
 
-[node name="cjsg_00000_d1" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=353283001]
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=843421349]
 visible = false
-material = SubResource("CanvasItemMaterial_5a3t3")
-texture = SubResource("AtlasTexture_y3hkn")
+material = SubResource("CanvasItemMaterial_8r2sk")
+texture = SubResource("AtlasTexture_rp1t4")
 
-[node name="cjsg_00000_d2" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1599287427]
+[node name="d1" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=946210164]
 visible = false
-material = SubResource("CanvasItemMaterial_gj81s")
-texture = SubResource("AtlasTexture_3hkwu")
+material = SubResource("CanvasItemMaterial_q4xl3")
+texture = SubResource("AtlasTexture_61fmu")
 
-[node name="cjsg_00000_d3" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1379478885]
+[node name="d2" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1442597734]
 visible = false
-material = SubResource("CanvasItemMaterial_044od")
-texture = SubResource("AtlasTexture_3sxh1")
+material = SubResource("CanvasItemMaterial_eh4s8")
+texture = SubResource("AtlasTexture_oucxr")
 
-[node name="cjsg_00000_d4" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1873324538]
+[node name="d3" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1545113780]
 visible = false
-material = SubResource("CanvasItemMaterial_geroi")
-texture = SubResource("AtlasTexture_ehd6w")
+material = SubResource("CanvasItemMaterial_pwqpt")
+texture = SubResource("AtlasTexture_1g3nn")
 
-[node name="cjsg_00000_d5" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=986271120]
+[node name="d4" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1011269225]
 visible = false
-material = SubResource("CanvasItemMaterial_si5p1")
-texture = SubResource("AtlasTexture_h0sv6")
+material = SubResource("CanvasItemMaterial_je1xq")
+texture = SubResource("AtlasTexture_fiboa")
 
-[node name="cjsg_00000_d6" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1865536144]
+[node name="d5" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=894358986]
 visible = false
-material = SubResource("CanvasItemMaterial_2s1u5")
-texture = SubResource("AtlasTexture_l6jwb")
+material = SubResource("CanvasItemMaterial_8wyjx")
+texture = SubResource("AtlasTexture_al6he")
 
-[node name="cjsg_00000_d7" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=609212940]
+[node name="d6" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=987313136]
 visible = false
-material = SubResource("CanvasItemMaterial_l0wrx")
-texture = SubResource("AtlasTexture_yl3pu")
+material = SubResource("CanvasItemMaterial_eenmn")
+texture = SubResource("AtlasTexture_oxn83")
 
-[node name="cjsg_00000_d8" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=25848387]
+[node name="d7" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=588622319]
 visible = false
-material = SubResource("CanvasItemMaterial_7wjop")
-texture = SubResource("AtlasTexture_a21d6")
+material = SubResource("CanvasItemMaterial_4xg2i")
+texture = SubResource("AtlasTexture_588me")
 
-[node name="cjsg_00000_d9" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=282370742]
+[node name="d8" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=940545259]
 visible = false
-material = SubResource("CanvasItemMaterial_473vo")
-texture = SubResource("AtlasTexture_h7dld")
+material = SubResource("CanvasItemMaterial_imdw1")
+texture = SubResource("AtlasTexture_6mta0")
 
-[node name="cjsg_00000_d10" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=19754013]
+[node name="d9" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=2119323430]
 visible = false
-material = SubResource("CanvasItemMaterial_brh8k")
-texture = SubResource("AtlasTexture_6n0y2")
+material = SubResource("CanvasItemMaterial_bh1tk")
+texture = SubResource("AtlasTexture_diak2")
 
-[node name="cjsg_00000_d11" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1604551042]
+[node name="d10" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1473908876]
 visible = false
-material = SubResource("CanvasItemMaterial_q2b8j")
-texture = SubResource("AtlasTexture_c5vch")
+material = SubResource("CanvasItemMaterial_gscan")
+texture = SubResource("AtlasTexture_7bmhy")
 
-[node name="cjsg_00000_d12" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=2074035851]
+[node name="d11" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1690793479]
 visible = false
-material = SubResource("CanvasItemMaterial_ppv5l")
-texture = SubResource("AtlasTexture_6t7xk")
+material = SubResource("CanvasItemMaterial_s2age")
+texture = SubResource("AtlasTexture_sadgq")
 
-[node name="cjsg_00000_d13" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1886282989]
+[node name="d12" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1418429316]
 visible = false
-material = SubResource("CanvasItemMaterial_wegjb")
-texture = SubResource("AtlasTexture_5s3g5")
+material = SubResource("CanvasItemMaterial_cxdm3")
+texture = SubResource("AtlasTexture_yj0le")
 
-[node name="cjsg_00000_d14" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=2109380006]
+[node name="d13" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1237307739]
 visible = false
-material = SubResource("CanvasItemMaterial_o0qmd")
-texture = SubResource("AtlasTexture_uiq5p")
+material = SubResource("CanvasItemMaterial_xy0r7")
+texture = SubResource("AtlasTexture_jx4nx")
 
-[node name="cjsg_00000_d15" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=169991014]
+[node name="d14" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1570220675]
 visible = false
-material = SubResource("CanvasItemMaterial_muwj3")
-texture = SubResource("AtlasTexture_y7tgs")
+material = SubResource("CanvasItemMaterial_2dg3r")
+texture = SubResource("AtlasTexture_lbvph")
 
-[node name="cjsg_00000_d16" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=221031080]
+[node name="d15" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=2139230747]
 visible = false
-material = SubResource("CanvasItemMaterial_jm8ge")
-texture = SubResource("AtlasTexture_3j6pq")
+material = SubResource("CanvasItemMaterial_b7k2x")
+texture = SubResource("AtlasTexture_yqr68")
 
-[node name="cjsg_00000_d17" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=524185466]
+[node name="d16" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1077528009]
 visible = false
-material = SubResource("CanvasItemMaterial_mnoi3")
-texture = SubResource("AtlasTexture_5epab")
+material = SubResource("CanvasItemMaterial_np8hh")
+texture = SubResource("AtlasTexture_coaye")
 
-[node name="cjsg_00000_d18" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1508969077]
+[node name="d17" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=604709475]
 visible = false
-material = SubResource("CanvasItemMaterial_2o6n8")
-texture = SubResource("AtlasTexture_lyn12")
+material = SubResource("CanvasItemMaterial_y7w44")
+texture = SubResource("AtlasTexture_vk3ve")
 
-[node name="cjsg_00000_d19" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1571739036]
+[node name="d18" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1597333922]
 visible = false
-material = SubResource("CanvasItemMaterial_6k6lb")
-texture = SubResource("AtlasTexture_bmgjp")
+material = SubResource("CanvasItemMaterial_7sxt6")
+texture = SubResource("AtlasTexture_ho4bk")
 
-[node name="cjsg_00000_d20" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=2066504076]
+[node name="d19" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1894315068]
 visible = false
-material = SubResource("CanvasItemMaterial_82ijo")
-texture = SubResource("AtlasTexture_disqu")
+material = SubResource("CanvasItemMaterial_7q4s0")
+texture = SubResource("AtlasTexture_n6an5")
 
-[node name="cjsg_00000_d21" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=426704559]
+[node name="d20" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=133261916]
 visible = false
-material = SubResource("CanvasItemMaterial_4mtav")
-texture = SubResource("AtlasTexture_lhy3u")
+material = SubResource("CanvasItemMaterial_7cy2b")
+texture = SubResource("AtlasTexture_5ap6m")
 
-[node name="cjsg_00000_d22" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1842435925]
+[node name="d21" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1367429475]
 visible = false
-material = SubResource("CanvasItemMaterial_t7vr7")
-texture = SubResource("AtlasTexture_smeqc")
+material = SubResource("CanvasItemMaterial_538te")
+texture = SubResource("AtlasTexture_7bktf")
 
-[node name="cjsg_00000_d23" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1874411081]
+[node name="d22" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=710853666]
 visible = false
-material = SubResource("CanvasItemMaterial_bclv0")
-texture = SubResource("AtlasTexture_2erei")
+material = SubResource("CanvasItemMaterial_2g03i")
+texture = SubResource("AtlasTexture_kkstq")
 
-[node name="cjsg_00000_d24" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1608406551]
+[node name="d23" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=212551265]
 visible = false
-material = SubResource("CanvasItemMaterial_7pa14")
-texture = SubResource("AtlasTexture_lqelx")
+material = SubResource("CanvasItemMaterial_wloaq")
+texture = SubResource("AtlasTexture_pgp4t")
 
-[node name="cjsg_00000_d25" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=586142028]
+[node name="d24" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1265266664]
 visible = false
-material = SubResource("CanvasItemMaterial_lmo1a")
-texture = SubResource("AtlasTexture_opxm1")
+material = SubResource("CanvasItemMaterial_lkysd")
+texture = SubResource("AtlasTexture_wctln")
 
-[node name="cjsg_00000_d26" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=113252122]
+[node name="d25" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1947846904]
 visible = false
-material = SubResource("CanvasItemMaterial_6843a")
-texture = SubResource("AtlasTexture_78816")
+material = SubResource("CanvasItemMaterial_pyw8n")
+texture = SubResource("AtlasTexture_euy5c")
 
-[node name="cjsg_00000_d27" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1280495822]
+[node name="d26" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1197852681]
 visible = false
-material = SubResource("CanvasItemMaterial_oaug0")
-texture = SubResource("AtlasTexture_7ek45")
+material = SubResource("CanvasItemMaterial_payxq")
+texture = SubResource("AtlasTexture_yafrg")
 
-[node name="cjsg_00000_d28" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=593797440]
+[node name="d27" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1065275844]
 visible = false
-material = SubResource("CanvasItemMaterial_oe346")
-texture = SubResource("AtlasTexture_gs51c")
+material = SubResource("CanvasItemMaterial_tk248")
+texture = SubResource("AtlasTexture_wpmot")
 
-[node name="cjsg_00000_d29" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000" unique_id=1529475559]
+[node name="d28" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=1711040992]
 visible = false
-material = SubResource("CanvasItemMaterial_8sbyx")
-texture = SubResource("AtlasTexture_1m1of")
+material = SubResource("CanvasItemMaterial_avlfu")
+texture = SubResource("AtlasTexture_esdgu")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=317169602]
-libraries/ = SubResource("AnimationLibrary_m1f3t")
+[node name="d29" type="Sprite2D" parent="Skeleton2D/root/cjsg_00000/slot_cjsg_00000" unique_id=357973818]
+visible = false
+material = SubResource("CanvasItemMaterial_5mtmn")
+texture = SubResource("AtlasTexture_5g86a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1001446744]
+libraries/ = SubResource("AnimationLibrary_qhwvh")

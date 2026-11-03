@@ -197,6 +197,36 @@ RTC：
 - `tools/test_phase4.gd`：24 项断言——
   从游戏列表进入 → 退出回 `gamelist`；从房间列表进入 → 退出回 `roomlist`；
   `on_game_start`/`on_game_destroy` 被调用、`room_info` 注入、场景实例被释放。
+## P12 = 2026-11 阶段 1：骨骼转换器修复（真机显示错乱）
+
+根因（逐项验证，非猜测）：
+
+1. 图集裁剪 `frameX/frameY/frameWidth/frameHeight` 被忽略 → 贴图相对骨骼整体偏移；
+2. slot 变换与 display 变换混在同一层，且绘制顺序按骨骼树递归而非 DragonBones slot 顺序
+   （puke 有 35 处逆序），造成前后遮挡错乱；
+3. 动画帧被当成绝对值：实测 jiangbei 奖杯骨骼 base 旋转 -111.8°，帧值 -1.52，
+   绝对值会把奖杯转 110°；用原 `addons/gddragonbones` 参考渲染确认帧值是
+   **相对 base pose 的增量**（位移相加、旋转相加、缩放相乘）；
+4. `curve` 贝塞尔与 `tweenEasing` 被一律当线性，动作失真；
+5. `rotate` 字段（DragonBones 实际字段名）未被读取，早期版本直接漏掉旋转动画。
+
+修改：
+
+- 重写 `tools/dragonbones_converter.gd`（v2）：裁剪补偿 + pivot、slot 子层、
+  绝对 `z_index`、增量骨骼语义、曲线/缓动烘焙、step 段、图集改名容错；
+- 重新生成 10 套 `*_avatar.tscn`；`addons/gddragonbones` 与 `*.dbfactory` 再次移除；
+- 新增 `tools/test_avatar_geometry.gd`（4634 项矩阵/offset/z_index/可见性断言）；
+- 新增 `tools/preview_avatar.gd`（真实渲染截图，支持 seek/delay）；
+- `tools/test_avatar.gd` 更新为新的 daojishi 场景名。
+
+验证：
+
+- `test_avatar` 22/22；`test_avatar_geometry` 4634/4634；
+- 与原 gddragonbones 参考渲染逐帧比对 jiangbei：修复后姿态一致（修复前丝带飞散、奖杯翻转）；
+- 场景 121/121、脚本 196/196、引用 0 新增悬空、插件 4/0/0。
+
+限制：带 `weights` 的网格（shaibao 26、puke 3）尚不支持蒙皮变形，按矩形贴图近似。
+
 ## 验证记录
 
 各阶段门禁结果：

@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://sprites/startgame/start_game_tex.png" id="1_wj5oy"]
+[ext_resource type="Texture2D" path="res://sprites/startgame/startgame_tex.png" id="1_wj5oy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_62o2k"]
 atlas = ExtResource("1_wj5oy")
@@ -33,74 +33,122 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Skeleton2D/root/bone4:position")
+tracks/0/path = NodePath("Skeleton2D/root/bone4/bone:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.6666667),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.66566664, 0.6666667, 0.75, 0.8333333, 0.9166667, 1, 1.0833334, 1.1666666, 1.25, 1.3333334, 1.4166666, 1.5, 1.5833334, 1.6666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-35.24, -1469.49), Vector2(-35.24, 43.99), Vector2(-35.24, 359.51)]
+"values": [-1.563291433581852, -1.563291433581852, -1.563291433581852, -1.524275911905678, -1.4345766147184948, -1.3164082311099619, -1.1811732154251413, -1.0360543683974814, -0.8863654831958511, -0.7366765979942203, -0.5915577509665608, -0.4563227352817405, -0.3381543516732073, -0.24845505448602423, -0.20943953280985017]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Skeleton2D/root/bone5:scale")
+tracks/1/path = NodePath("Skeleton2D/root/bone4/bone2:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6666667, 1.1666666),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.66566664, 0.6666667, 0.75, 0.8333333, 0.9166667, 1, 1.0833334, 1.1666666, 1.25, 1.3333334, 1.4166666, 1.5, 1.5833334, 1.6666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 1), Vector2(0, 1), Vector2(1, 1)]
+"values": [-1.5650367628338462, -1.5650367628338462, -1.5650367628338462, -1.6040070170490062, -1.6936022413117746, -1.811633520955827, -1.9467116312466595, -2.0916621052405113, -2.2411773150564493, -2.390692524872388, -2.5356429988662392, -2.670721109157072, -2.7887523888011243, -2.8783476130638928, -2.9173179]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Skeleton2D/root/bone5/img_bg_d0:modulate")
+tracks/2/path = NodePath("Skeleton2D/root/bone4/bone3:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 2.6666667, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.66566664, 0.6666667, 1, 1.3333334, 1.6666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [2.723062668066934, 2.723062668066934, 2.723062668066934, 2.4363050719642656, 1.9107864341887728, 1.575508684880662]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Skeleton2D/root/bone4/bone2/img_f_d0:modulate")
+tracks/3/path = NodePath("Skeleton2D/root/bone4:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 2.6666667, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334, 0.17777778, 0.22222222, 0.26666668, 0.31111112, 0.35555556, 0.4, 0.44444445, 0.4888889, 0.53333336, 0.5777778, 0.62222224, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Vector2(-35.24, -1109.98), Vector2(-35.24, -1081.1678), Vector2(-35.24, -937.14404), Vector2(-35.24, -39.776978), Vector2(-35.24, 403.5), Vector2(-35.24, 393.53162), Vector2(-35.24, 385.69473), Vector2(-35.24, 379.4445), Vector2(-35.24, 374.42844), Vector2(-35.24, 370.40408), Vector2(-35.24, 367.19684), Vector2(-35.24, 364.67633), Vector2(-35.24, 362.7425), Vector2(-35.24, 361.31656), Vector2(-35.24, 360.3354), Vector2(-35.24, 359.7474), Vector2(-35.24, 359.51)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Skeleton2D/root/bone4/bone3/img_f1_d0:modulate")
+tracks/4/path = NodePath("Skeleton2D/root/bone5:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6666667, 0.7083333, 0.75, 0.7916667, 0.8333333, 0.875, 0.9166667, 0.9583333, 1, 1.0416666, 1.0833334, 1.125, 1.1666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 1), Vector2(0, 1), Vector2(0.003632907, 1), Vector2(0.016762793, 1), Vector2(0.045237567, 1), Vector2(0.10408783, 1), Vector2(0.27270132, 1), Vector2(0.77770364, 1), Vector2(0.88775337, 1), Vector2(0.9411392, 1), Vector2(0.9714917, 1), Vector2(0.9887775, 1), Vector2(0.9974684, 1), Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/root/bone5:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.020943951023931952]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Skeleton2D/root/bone5/slot_img_bg/d0:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 2.6666667, 2.7037036, 2.7407408, 2.7777777, 2.8148148, 2.851852, 2.8888888, 2.925926, 2.9629629, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.9932483), Color(1, 1, 1, 0.96655416), Color(1, 1, 1, 0.8959122), Color(1, 1, 1, 0.47708896), Color(1, 1, 1, 0.13916226), Color(1, 1, 1, 0.05886081), Color(1, 1, 1, 0.021577518), Color(1, 1, 1, 0.004649658), Color(1, 1, 1, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Skeleton2D/root/bone4/bone2/slot_img_f/d0:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 2.6666667, 2.7037036, 2.7407408, 2.7777777, 2.8148148, 2.851852, 2.8888888, 2.925926, 2.9629629, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.9932483), Color(1, 1, 1, 0.96655416), Color(1, 1, 1, 0.8959122), Color(1, 1, 1, 0.47708896), Color(1, 1, 1, 0.13916226), Color(1, 1, 1, 0.05886081), Color(1, 1, 1, 0.021577518), Color(1, 1, 1, 0.004649658), Color(1, 1, 1, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Skeleton2D/root/bone4/bone3/slot_img_f1/d0:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(0, 2.6666667, 3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton2D/root/bone4/bone/img_fg_d0:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 2.6666667, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Skeleton2D/root/bone4/bone/slot_img_fg/d0:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 2.6666667, 2.7037036, 2.7407408, 2.7777777, 2.8148148, 2.851852, 2.8888888, 2.925926, 2.9629629, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.9932483), Color(1, 1, 1, 0.96655416), Color(1, 1, 1, 0.8959122), Color(1, 1, 1, 0.47708896), Color(1, 1, 1, 0.13916226), Color(1, 1, 1, 0.05886081), Color(1, 1, 1, 0.021577518), Color(1, 1, 1, 0.004649658), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xbfjh"]
@@ -108,24 +156,24 @@ _data = {
 &"a": SubResource("Animation_77ogm")
 }
 
-[node name="AvatarRoot" type="Node2D" unique_id=1195124411]
+[node name="AvatarRoot" type="Node2D" unique_id=807676798]
 
-[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=877294805]
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=270691334]
 
-[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=1180280624]
+[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=1101576974]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="bone4" type="Bone2D" parent="Skeleton2D/root" unique_id=12668003]
+[node name="bone4" type="Bone2D" parent="Skeleton2D/root" unique_id=1670121402]
 position = Vector2(-35.24, 359.51)
 rest = Transform2D(1, 0, 0, 1, -35.24, 359.51)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="bone" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=1227705913]
+[node name="bone" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=1044669790]
 position = Vector2(34.68, -135.91)
 rotation = -2.9173179
 rest = Transform2D(-0.9749557, -0.22239937, 0.22239937, -0.9749557, 34.68, -135.91)
@@ -133,10 +181,14 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="img_fg_d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone" unique_id=1597905403]
+[node name="slot_img_fg" type="Node2D" parent="Skeleton2D/root/bone4/bone" unique_id=705903895]
+z_index = 4
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone/slot_img_fg" unique_id=1307297486]
 texture = SubResource("AtlasTexture_62o2k")
 
-[node name="bone3" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=315214360]
+[node name="bone3" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=1224581604]
 position = Vector2(34.78, -138.93)
 rotation = 1.5957545
 rest = Transform2D(-0.024955586, 0.99968857, -0.99968857, -0.024955586, 34.78, -138.93)
@@ -144,12 +196,17 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="img_f1_d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone3" unique_id=1884196649]
+[node name="slot_img_f1" type="Node2D" parent="Skeleton2D/root/bone4/bone3" unique_id=1118901471]
+z_index = 3
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone3/slot_img_f1" unique_id=1062507828]
 position = Vector2(25.11, 5.72)
 rotation = -1.5421729
 texture = SubResource("AtlasTexture_xwtud")
+offset = Vector2(4.5, 1.5)
 
-[node name="bone2" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=1218256472]
+[node name="bone2" type="Bone2D" parent="Skeleton2D/root/bone4" unique_id=787355889]
 position = Vector2(34.68, -135.91)
 rotation = -2.9173179
 rest = Transform2D(-0.9749557, -0.22239937, 0.22239937, -0.9749557, 34.68, -135.91)
@@ -157,24 +214,35 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="img_f_d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone2" unique_id=2065050629]
+[node name="slot_img_f" type="Node2D" parent="Skeleton2D/root/bone4/bone2" unique_id=415813816]
+z_index = 2
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone4/bone2/slot_img_f" unique_id=250504341]
 position = Vector2(91.15, 273.48)
 rotation = 2.9173179
 texture = SubResource("AtlasTexture_ut1bw")
 
-[node name="mask_d0" type="Sprite2D" parent="Skeleton2D/root/bone4" unique_id=1236890875]
+[node name="slot_mask" type="Node2D" parent="Skeleton2D/root/bone4" unique_id=313158046]
+z_index = 1
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone4/slot_mask" unique_id=1654023637]
 texture = SubResource("AtlasTexture_dfo1f")
 
-[node name="bone5" type="Bone2D" parent="Skeleton2D/root" unique_id=437355029]
+[node name="bone5" type="Bone2D" parent="Skeleton2D/root" unique_id=229840192]
 position = Vector2(0, 494.34)
 rest = Transform2D(1, 0, 0, 1, 0, 494.34)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="img_bg_d0" type="Sprite2D" parent="Skeleton2D/root/bone5" unique_id=523573970]
+[node name="slot_img_bg" type="Node2D" parent="Skeleton2D/root/bone5" unique_id=1701646780]
+z_as_relative = false
+
+[node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone5/slot_img_bg" unique_id=1770690979]
 position = Vector2(0, -494.34)
 texture = SubResource("AtlasTexture_anyaj")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1387894310]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=344142318]
 libraries/ = SubResource("AnimationLibrary_xbfjh")

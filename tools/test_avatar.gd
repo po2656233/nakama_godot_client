@@ -10,7 +10,7 @@ extends SceneTree
 ## 用法：godot --headless --path . --script res://tools/test_avatar.gd
 ## 退出码：0 通过；1 失败。
 
-const AVATAR_SCENE := "res://sprites/daojishi/daojishi_avatar.tscn"
+const AVATAR_SCENE := "res://sprites/daojishi/daojishitongyong_avatar.tscn"
 const COUNTDOWN_SCENE := "res://shared/ui/countdown_timer.tscn"
 
 var _passed := 0

@@ -169,31 +169,58 @@ GameLauncher.start_game(key, options)
 
 ### 4.2 原生骨骼动画（DragonBones 平替，阶段 2）
 
-`addons/gddragonbones` 是 GDExtension，目标是替换为 Godot 原生 `Skeleton2D + Bone2D + AnimationPlayer`：
+`addons/gddragonbones` 是 GDExtension，已替换为 Godot 原生 `Skeleton2D + Bone2D + AnimationPlayer`。
 
-- `tools/dragonbones_converter.gd`：解析 DragonBones 的 `_ske.json` / `_tex.json` + 图集 png，
-  生成原生 `.tscn`（骨骼层级、插槽 Sprite、blendMode=add、display/alpha/scale/translate 动画轨道）。
+结构：`AvatarRoot -> Skeleton2D -> Bone2D... -> slot_<name>(Node2D) -> d<idx>(Sprite2D)`。
+
+转换器 `tools/dragonbones_converter.gd` 的关键算法（v2，2026-11 修复）：
+
+| 问题 | 处理 |
+| --- | --- |
+| 图集裁剪偏移 | `Sprite2D.offset = regionSize/2 - frameXY - pivot * frameSize`，支持 `pivot` |
+| 插槽变换 | 独立 `slot_<name>` 层承载 slot transform，display 变换相对 slot |
+| 绘制顺序 | 每个 slot 设 `z_as_relative=false`、`z_index=slot 序号`，不再按骨骼树递归顺序绘制 |
+| 骨骼动画语义 | 帧值是相对 base pose 的增量：位移相加、旋转相加（度）、缩放相乘（对照原 gddragonbones 渲染验证） |
+| 缓动 | `curve` 三次贝塞尔 / `tweenEasing` 烘焙为中间关键帧；无缓动段按 DragonBones 语义做 step |
+| 插槽显隐/透明度 | `displayFrame.value` 缺省 0、`colorFrame.aM` 缺省 100（绝对语义） |
+| 图集改名容错 | `imagePath` 与 png 不一致时回退同目录 `*_tex.png` |
 
 ```powershell
 $g = 'C:\Users\po265\Desktop\Godot_v4.7.2-stable_win64.exe'
 & $g --headless --path . --script res://tools/dragonbones_converter.gd -- `
-    --ske=res://sprites/daojishi/daojishitongyong_ske.json `
-    --tex=res://sprites/daojishi/daojishitongyong_tex.json `
-    --out=res://sprites/daojishi/daojishi_avatar.tscn
+    --ske=res://sprites/jiangbei/jiangbei_ske.json `
+    --tex=res://sprites/jiangbei/jiangbei_tex.json `
+    --out=res://sprites/jiangbei/jiangbei_avatar.tscn
+```
+
+验证工具（不是“节点存在”式假测试）：
+
+- `tools/test_avatar_geometry.gd`：对 10 套资产独立重算骨骼/插槽/display 矩阵、裁剪 offset、
+  z_index，并采样动画检查“每插槽最多 1 个可见 Sprite”，共 4600+ 项断言；
+- `tools/preview_avatar.gd`：真实渲染截图（`--scene/--out/--time/--anim/--scale/--delay`），
+  用于人工比对姿态与图层：
+
+```powershell
+& $g --path . --rendering-driver opengl3 --windowed --resolution 900x900 `
+    --script res://tools/preview_avatar.gd -- `
+    --scene=res://sprites/jiangbei/jiangbei_avatar.tscn --out=res://preview.png --time=2.0
 ```
 
 - `shared/avatar/native_character_avatar.gd`：统一门面（`play_animation/stop_animation/
-  set_skin/has_animation`），由 `avatar_scene` 指向生成的原生场景，自动查找 `AnimationPlayer`。
+  set_skin/has_animation`），由 `avatar_scene` 指向生成的原生场景。
 
 当前状态：
 
 | 资产 | 原生场景 | 是否已替换使用方 |
 | --- | --- | --- |
-| 倒计时 `daojishi` | `sprites/daojishi/daojishi_avatar.tscn` | ✅ `shared/ui/countdown_timer.tscn` 已改用 `NativeCharacterAvatar` |
+| 倒计时 `daojishi` | `sprites/daojishi/daojishitongyong_avatar.tscn` | ✅ `shared/ui/countdown_timer.tscn` 已改用 `NativeCharacterAvatar` |
 | 游戏卡片 7 套（dibeichang/jiangbei/puke/baoxiang1-4） | `sprites/<name>/<name>_avatar.tscn` | ✅ `lobby/gamelist/game_card.tscn` 已替换 |
 | shaibao / startgame | `sprites/<name>/<name>_avatar.tscn` | 备用资产，已转换 |
 
 `addons/gddragonbones`（约 278 MB）与全部 `*.dbfactory` / `*_dragon_bones_factory.tres` 已删除，项目不再包含 GDExtension。
+
+限制：带 `weights` 的网格（shaibao 26 处、puke 3 处）无法用 Sprite2D 表现蒙皮变形，
+当前按贴图矩形近似；jiangbei 的 7 处无权重网格也按矩形近似。姿态/图层已正确，网格形变待后续支持。
 ### 4.3 实时语音/视频（RTC，阶段 3）
 
 ```text
