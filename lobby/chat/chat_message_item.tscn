@@ -55,12 +55,10 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [node name="ChatMessageItem" type="MarginContainer" unique_id=1555322040]
-custom_minimum_size = Vector2(0, 62)
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 62.0
-grow_horizontal = 2
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 1
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 script = ExtResource("1_u4k5p")
@@ -108,7 +106,7 @@ theme_override_constants/separation = 8
 
 [node name="Text" type="RichTextLabel" parent="Content/MessagePanel/MessageContent" unique_id=748079207]
 custom_minimum_size = Vector2(0, 25)
-clip_contents = false
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2

@@ -20,6 +20,10 @@ boot_splash/bg_color=Color(0.141176, 0.694118, 0.996078, 1)
 boot_splash/image="res://assets/login/chenguang.png"
 config/icon="res://assets/bg/img_gg.png"
 
+[audio]
+
+driver/enable_input=true
+
 [autoload]
 
 Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
@@ -127,6 +131,3 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 rendering/quality/driver/name="opengl3"
-
-[audio]
-driver/enable_input=true

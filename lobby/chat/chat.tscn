@@ -305,7 +305,8 @@ factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk" unique_id=1997191506]
-clip_contents = false
+clip_contents = true
+horizontal_scroll_mode = 0
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -317,6 +318,7 @@ grow_vertical = 2
 follow_focus = true
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/world/Panel_talk/ScrollContainer" unique_id=2093790064]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -371,7 +373,8 @@ factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk" unique_id=1257934270]
-clip_contents = false
+clip_contents = true
+horizontal_scroll_mode = 0
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -385,6 +388,7 @@ follow_focus = true
 
 [node name="talkhistory" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/club/HSplitContainerClub/HSplitContainer/Panel_talk/ScrollContainer" unique_id=147207539]
 custom_minimum_size = Vector2(20, 20)
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -468,7 +472,8 @@ factor = 1.7
 custom_color = Color(0.521569, 0.862745, 0.937255, 0.678431)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/TabContainer/friends/HSplitContainerFriends/HSplitContainer/Panel_talk" unique_id=762167367]
-clip_contents = false
+clip_contents = true
+horizontal_scroll_mode = 0
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -348,7 +348,8 @@ func add_message_to_history(channel_id: String, msg: NakamaAPI.ApiChannelMessage
 		print("玩家:%s 收到消息 %s 已经存在于渠道 %s" % [uid, message_id, channel_id])
 		var content = JSON.parse_string(msg.content)
 		if content:
-			modify_message(channel_id, message_id, content.content)
+			var msg_content = "" if content.has("rtc") else content.content
+			modify_message(channel_id, message_id, msg_content)
 		else:
 			delete_message(channel_id, message_id)
 		refresh_current_channel_display(channel_id, false)

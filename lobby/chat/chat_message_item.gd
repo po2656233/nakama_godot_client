@@ -196,6 +196,8 @@ func set_message(chanId: String, msgId: String, content: Dictionary, nickname: S
 	# 根据内容类型设置显示
 	if not content:
 		return
+	if content.has("rtc"):
+		return
 	var cType = content.type as ContentType
 	match cType:
 		ContentType.TEXT, ContentType.LONG_TEXT:

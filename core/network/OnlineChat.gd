@@ -454,8 +454,8 @@ func add_group_async(group_name: String):
 		if ret.is_exception():
 			push_error("Error add_group_async: ", ret.get_exception().message)
 			return null
-		print("添加俱乐部: ", ret)
-		return ret
+		print("添加俱乐部结果: ", ret)
+		return group
 	return null
 
 
