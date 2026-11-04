@@ -1,40 +1,40 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://sprites/daojishi/daojishitongyong_tex.png" id="1_sqfyp"]
+[ext_resource type="Texture2D" path="res://sprites/daojishi/daojishitongyong_tex.png" id="1_nlm4m"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a1mcp"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lpj6l"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ornl6"]
-atlas = ExtResource("1_sqfyp")
+[sub_resource type="AtlasTexture" id="AtlasTexture_g123d"]
+atlas = ExtResource("1_nlm4m")
 region = Rect2(1, 1, 118, 111)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2fuld"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_thwi6"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ryfxm"]
-atlas = ExtResource("1_sqfyp")
+[sub_resource type="AtlasTexture" id="AtlasTexture_il0xd"]
+atlas = ExtResource("1_nlm4m")
 region = Rect2(1, 1, 118, 111)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_r2y7j"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iv2vh"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_25bay"]
-atlas = ExtResource("1_sqfyp")
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4hx8"]
+atlas = ExtResource("1_nlm4m")
 region = Rect2(121, 1, 127, 21)
 filter_clip = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_akw26"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xwolb"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b3a7w"]
-atlas = ExtResource("1_sqfyp")
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6swb"]
+atlas = ExtResource("1_nlm4m")
 region = Rect2(121, 1, 127, 21)
 filter_clip = true
 
-[sub_resource type="Animation" id="Animation_ovnwv"]
+[sub_resource type="Animation" id="Animation_5ogi0"]
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -43,10 +43,10 @@ tracks/0/path = NodePath("Skeleton2D/root/zzz/0124_00:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.17333333, 0.21333334, 0.25333333, 0.29333332, 0.33333334, 0.37333333, 0.41333333, 0.45333335, 0.49333334, 0.53333336),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.13333334, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(0.55, 0.55), Vector2(1.1987662, 1.1987662), Vector2(1.4016635, 1.4016635), Vector2(1.5303986, 1.5303986), Vector2(1.6203096, 1.6203096), Vector2(1.6850631, 1.6850631), Vector2(1.7316358, 1.7316358), Vector2(1.7641351, 1.7641351), Vector2(1.7852001, 1.7852001), Vector2(1.796649, 1.796649), Vector2(1.8, 1.8)]
+"values": [Vector2(1, 1), Vector2(0.55, 0.55), Vector2(1.8, 1.8)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -55,10 +55,10 @@ tracks/1/path = NodePath("Skeleton2D/root/zzz/xian:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.03809524, 0.07619048, 0.114285715, 0.15238096, 0.1904762, 0.22857143, 0.26666668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(170, -1.23), Vector2(123.50174, -1.23), Vector2(96.80222, -1.23), Vector2(75.70792, -1.23), Vector2(57.312904, -1.23), Vector2(40.157196, -1.23), Vector2(22.80008, -1.23), Vector2(0, -1.23)]
+"values": [Vector2(170, -1.23), Vector2(-170, -1.23)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -67,10 +67,10 @@ tracks/2/path = NodePath("Skeleton2D/root/zzz/xian:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.03809524, 0.07619048, 0.114285715, 0.15238096, 0.1904762, 0.22857143, 0.26666668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(0.72648084, 1), Vector2(0.56942487, 1), Vector2(0.4453407, 1), Vector2(0.33713472, 1), Vector2(0.23621881, 1), Vector2(0.13411808, 1), Vector2(0, 1)]
+"values": [Vector2(1, 1), Vector2(0, 1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -79,10 +79,10 @@ tracks/3/path = NodePath("Skeleton2D/root/zzz/xian2:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.03809524, 0.07619048, 0.114285715, 0.15238096, 0.1904762, 0.22857143, 0.26666668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-170, -1.23), Vector2(-123.50174, -1.23), Vector2(-96.80222, -1.23), Vector2(-75.70792, -1.23), Vector2(-57.312904, -1.23), Vector2(-40.157196, -1.23), Vector2(-22.80008, -1.23), Vector2(0, -1.23)]
+"values": [Vector2(-170, -1.23), Vector2(170, -1.23)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -91,10 +91,10 @@ tracks/4/path = NodePath("Skeleton2D/root/zzz/xian2:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.03809524, 0.07619048, 0.114285715, 0.15238096, 0.1904762, 0.22857143, 0.26666668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-1, 1), Vector2(-0.72648084, 1), Vector2(-0.56942487, 1), Vector2(-0.4453407, 1), Vector2(-0.33713472, 1), Vector2(-0.23621881, 1), Vector2(-0.13411808, 1), Vector2(0, 1)]
+"values": [Vector2(-1, 1), Vector2(0, 1)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -103,15 +103,15 @@ tracks/5/path = NodePath("Skeleton2D/root/zzz/0124_0:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.18333334, 0.23333333, 0.28333333, 0.33333334, 0.38333333, 0.43333334, 0.48333332, 0.53333336, 0.5833333, 0.6333333, 0.68333334, 0.73333335),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.13333334, 0.73333335),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1.28, 1.28), Vector2(1.7753131, 1.7753131), Vector2(1.9354274, 1.9354274), Vector2(2.039917, 2.039917), Vector2(2.1153672, 2.1153672), Vector2(2.1720695, 2.1720695), Vector2(2.215292, 2.215292), Vector2(2.2481496, 2.2481496), Vector2(2.2726574, 2.2726574), Vector2(2.2901986, 2.2901986), Vector2(2.3017683, 2.3017683), Vector2(2.3081255, 2.3081255), Vector2(2.31, 2.31)]
+"values": [Vector2(1, 1), Vector2(1.28, 1.28), Vector2(2.31, 2.31)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton2D/root/zzz/0124_00/slot_0124_00/d0:visible")
+tracks/6/path = NodePath("Skeleton2D/root/zzz/0124_00/0124_00_d0:visible")
 tracks/6/interp = 0
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -123,7 +123,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Skeleton2D/root/zzz/0124_00/slot_0124_00/d0:modulate")
+tracks/7/path = NodePath("Skeleton2D/root/zzz/0124_00/0124_00_d0:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -135,7 +135,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Skeleton2D/root/zzz/0124_0/slot_0124_0/d0:visible")
+tracks/8/path = NodePath("Skeleton2D/root/zzz/0124_0/0124_0_d0:visible")
 tracks/8/interp = 0
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -147,7 +147,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Skeleton2D/root/zzz/0124_0/slot_0124_0/d0:modulate")
+tracks/9/path = NodePath("Skeleton2D/root/zzz/0124_0/0124_0_d0:modulate")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -159,7 +159,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Skeleton2D/root/zzz/xian/slot_xian/d0:visible")
+tracks/10/path = NodePath("Skeleton2D/root/zzz/xian/xian_d0:visible")
 tracks/10/interp = 0
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -171,19 +171,19 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Skeleton2D/root/zzz/xian/slot_xian/d0:modulate")
+tracks/11/path = NodePath("Skeleton2D/root/zzz/xian/xian_d0:modulate")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.73233336, 0.73333335, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.73333335, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Skeleton2D/root/zzz/xian2/slot_xian2/d0:visible")
+tracks/12/path = NodePath("Skeleton2D/root/zzz/xian2/xian2_d0:visible")
 tracks/12/interp = 0
 tracks/12/loop_wrap = true
 tracks/12/keys = {
@@ -195,87 +195,75 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Skeleton2D/root/zzz/xian2/slot_xian2/d0:modulate")
+tracks/13/path = NodePath("Skeleton2D/root/zzz/xian2/xian2_d0:modulate")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.73233336, 0.73333335, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.73333335, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ja5t2"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3715f"]
 _data = {
-&"animation": SubResource("Animation_ovnwv")
+&"animation": SubResource("Animation_5ogi0")
 }
 
-[node name="AvatarRoot" type="Node2D" unique_id=177606720]
+[node name="AvatarRoot" type="Node2D" unique_id=1670068407]
 
-[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=2077289684]
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=1260825221]
 
-[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=165882911]
+[node name="root" type="Bone2D" parent="Skeleton2D" unique_id=113629030]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="zzz" type="Bone2D" parent="Skeleton2D/root" unique_id=1175867881]
+[node name="zzz" type="Bone2D" parent="Skeleton2D/root" unique_id=755170457]
 scale = Vector2(1.157, 1.157)
 rest = Transform2D(1.157, 0, 0, 1.157, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="0124_00" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=70768369]
+[node name="0124_00" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=1187457549]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="slot_0124_00" type="Node2D" parent="Skeleton2D/root/zzz/0124_00" unique_id=1242077772]
-z_as_relative = false
-
-[node name="d0" type="Sprite2D" parent="Skeleton2D/root/zzz/0124_00/slot_0124_00" unique_id=2133710065]
-material = SubResource("CanvasItemMaterial_a1mcp")
+[node name="0124_00_d0" type="Sprite2D" parent="Skeleton2D/root/zzz/0124_00" unique_id=1993563105]
+material = SubResource("CanvasItemMaterial_lpj6l")
 position = Vector2(-0.43, -3.38)
-texture = SubResource("AtlasTexture_ornl6")
+texture = SubResource("AtlasTexture_g123d")
 
-[node name="0124_0" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=1830711084]
+[node name="0124_0" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=858325832]
 rotation = -0.44488442
 rest = Transform2D(0.9026604, -0.43035355, 0.43035355, 0.9026604, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="slot_0124_0" type="Node2D" parent="Skeleton2D/root/zzz/0124_0" unique_id=1879848416]
-z_index = 1
-z_as_relative = false
-
-[node name="d0" type="Sprite2D" parent="Skeleton2D/root/zzz/0124_0/slot_0124_0" unique_id=224949617]
-material = SubResource("CanvasItemMaterial_2fuld")
+[node name="0124_0_d0" type="Sprite2D" parent="Skeleton2D/root/zzz/0124_0" unique_id=382613987]
+material = SubResource("CanvasItemMaterial_thwi6")
 position = Vector2(-0.43, -3.38)
-texture = SubResource("AtlasTexture_ryfxm")
+texture = SubResource("AtlasTexture_il0xd")
 
-[node name="xian" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=18966428]
+[node name="xian" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=1450253628]
 position = Vector2(170, -1.23)
 rest = Transform2D(1, 0, 0, 1, 170, -1.23)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="slot_xian" type="Node2D" parent="Skeleton2D/root/zzz/xian" unique_id=57324957]
-z_index = 2
-z_as_relative = false
-
-[node name="d0" type="Sprite2D" parent="Skeleton2D/root/zzz/xian/slot_xian" unique_id=290681525]
-material = SubResource("CanvasItemMaterial_r2y7j")
+[node name="xian_d0" type="Sprite2D" parent="Skeleton2D/root/zzz/xian" unique_id=225931173]
+material = SubResource("CanvasItemMaterial_iv2vh")
 position = Vector2(99, 0.52)
 scale = Vector2(2, 2)
-texture = SubResource("AtlasTexture_25bay")
-offset = Vector2(0.5, 0)
+texture = SubResource("AtlasTexture_t4hx8")
 
-[node name="xian2" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=1389126613]
+[node name="xian2" type="Bone2D" parent="Skeleton2D/root/zzz" unique_id=898894676]
 position = Vector2(-170, -1.23)
 scale = Vector2(-1, 1)
 rest = Transform2D(-1, 0, 0, 1, -170, -1.23)
@@ -283,16 +271,11 @@ auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
-[node name="slot_xian2" type="Node2D" parent="Skeleton2D/root/zzz/xian2" unique_id=84149705]
-z_index = 3
-z_as_relative = false
-
-[node name="d0" type="Sprite2D" parent="Skeleton2D/root/zzz/xian2/slot_xian2" unique_id=340112576]
-material = SubResource("CanvasItemMaterial_akw26")
+[node name="xian2_d0" type="Sprite2D" parent="Skeleton2D/root/zzz/xian2" unique_id=668073721]
+material = SubResource("CanvasItemMaterial_xwolb")
 position = Vector2(99, 0.52)
 scale = Vector2(2, 2)
-texture = SubResource("AtlasTexture_b3a7w")
-offset = Vector2(0.5, 0)
+texture = SubResource("AtlasTexture_i6swb")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=937758411]
-libraries/ = SubResource("AnimationLibrary_ja5t2")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=22440359]
+libraries/ = SubResource("AnimationLibrary_3715f")
