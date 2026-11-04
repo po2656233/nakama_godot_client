@@ -47,13 +47,16 @@ func set_game_list(games: Array) -> void:
 		Global.WindowPopup.show_message("没有找到任何游戏,请检查网络连接或稍后再试。", "提示", false)
 		return
 
+	var new_items: Array = []
+
 	for item in games:
 		if item.id in already_ids or int(item.max_player) < 2:
-			# 单机游戏不参与匹配
+			# 重复或单机游戏，跳过
 			continue
 
 		already_ids.append(item.id)
-		games_data.append({
+
+		var data := {
 			"id": item.id,
 			"kid": item.kid,
 			"name": item.en_name,
@@ -64,9 +67,12 @@ func set_game_list(games: Array) -> void:
 			"max_player": int(item.max_player),
 			"lessscore": item.lessscore,
 			"state": int(item.state),
-		})
+		}
+		games_data.append(data)
+		new_items.append(data)
 
-	for item in games_data:
+	# 只给本次新增的数据创建卡片
+	for item in new_items:
 		_add_game_card(item)
 
 func _build_description(item) -> String:

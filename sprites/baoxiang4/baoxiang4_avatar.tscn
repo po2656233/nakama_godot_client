@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bkdu6gxqx363c"]
 
-[ext_resource type="Texture2D" path="res://sprites/baoxiang4/lhdb_zhongjichang_tex.png" id="1_5lupb"]
+[ext_resource type="Texture2D" uid="uid://dyal5i124qnc0" path="res://sprites/baoxiang4/lhdb_zhongjichang_tex.png" id="1_5lupb"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1be64"]
 blend_mode = 1
@@ -595,7 +595,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.33333334, 1.3333334, 2, 2.3333333, 3.3333333, 4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.0012217308812174955, -0.026179938375093477, 0.05602506939383944, 0.0012217308812174955, -0.026179938375093477, 0.05602506939383944, 0.0012217308812174955]
+"values": [0.00122173088121749, -0.02617993837509347, 0.05602506939383944, 0.00122173088121749, -0.02617993837509347, 0.05602506939383944, 0.00122173088121749]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -607,7 +607,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.6666667, 1.6666666, 2, 2.6666667, 3.6666667, 4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.08552113509903721, -0.019373152945821995, 0.13805554558406652, 0.08552113509903721, -0.019373152945821995, 0.13805554558406652, 0.08552113509903721]
+"values": [0.08552113509903721, -0.01937315294582199, 0.13805554558406652, 0.08552113509903721, -0.01937315294582199, 0.13805554558406652, 0.08552113509903721]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -643,7 +643,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.33333334, 1.3333334, 2, 2.3333333, 3.3333333, 4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.05270894456504985, 0.09459684661291376, -0.031066859530677962, 0.05270894456504985, 0.09459684661291376, -0.031066859530677962, 0.05270894456504985]
+"values": [0.05270894456504985, 0.09459684661291376, -0.03106685953067796, 0.05270894456504985, 0.09459684661291376, -0.03106685953067796, 0.05270894456504985]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -655,7 +655,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.6666667, 1.6666666, 2, 2.6666667, 3.6666667, 4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [-0.05009095067910185, 0.048171086208178907, -0.09913470266014252, -0.05009095067910185, 0.048171086208178907, -0.09913470266014252, -0.05009095067910185]
+"values": [-0.05009095067910185, 0.0481710862081789, -0.09913470266014252, -0.05009095067910185, 0.0481710862081789, -0.09913470266014252, -0.05009095067910185]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -691,7 +691,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0, 0.76666665, 1.7666667, 1.8055556, 1.8444444, 1.8833333, 1.9222223, 1.9611111, 2, 2.7666667, 3.7666667, 3.8055556, 3.8444445, 3.8833334, 3.9222221, 3.961111, 4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.06440264806561713, -0.1909390215011533, 0.1422443327045642, 0.13484368693776555, 0.12027388984032637, 0.10332349038509067, 0.08637309092985496, 0.0718032938324158, 0.06440264806561713, -0.1909390215011533, 0.1422443327045642, 0.13484368693776555, 0.12027388984032637, 0.10332349038509067, 0.08637309092985496, 0.0718032938324158, 0.06440264806561713]
+"values": [0.06440264806561713, -0.1909390215011533, 0.1422443327045642, 0.13484368693776555, 0.12027388984032636, 0.10332349038509069, 0.08637309092985496, 0.0718032938324158, 0.06440264806561713, -0.1909390215011533, 0.1422443327045642, 0.13484368693776555, 0.12027388984032636, 0.10332349038509069, 0.08637309092985496, 0.0718032938324158, 0.06440264806561713]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -2184,71 +2184,85 @@ z_as_relative = false
 
 [node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=919274407]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_1be64")
 texture = SubResource("AtlasTexture_33ao2")
 
 [node name="d1" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1771933522]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_ub6ek")
 texture = SubResource("AtlasTexture_fwxsj")
 
 [node name="d2" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1610364110]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_txtpe")
 texture = SubResource("AtlasTexture_0a7cv")
 
 [node name="d3" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=2104641947]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_x42kx")
 texture = SubResource("AtlasTexture_5qscc")
 
 [node name="d4" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1066287988]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_o2tap")
 texture = SubResource("AtlasTexture_tjd6x")
 
 [node name="d5" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=264969931]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_hvm5a")
 texture = SubResource("AtlasTexture_qrdur")
 
 [node name="d6" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1929086283]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_vsbde")
 texture = SubResource("AtlasTexture_2xsru")
 
 [node name="d7" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1676589230]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_2fdu5")
 texture = SubResource("AtlasTexture_qosnr")
 
 [node name="d8" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=639602251]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_bpcng")
 texture = SubResource("AtlasTexture_73ylr")
 
 [node name="d9" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=638849219]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_6gr5y")
 texture = SubResource("AtlasTexture_1fghj")
 
 [node name="d10" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1958660443]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_eejtx")
 texture = SubResource("AtlasTexture_ya0kc")
 
 [node name="d11" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1683132993]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_tfpst")
 texture = SubResource("AtlasTexture_sqg4t")
 
 [node name="d12" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=17478984]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_cavxa")
 texture = SubResource("AtlasTexture_gid3s")
 
 [node name="d13" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs2/hzsg_00001/slot_hzsg_00001" unique_id=1006712211]
 visible = false
+modulate = Color(1, 1, 1, 0.61)
 material = SubResource("CanvasItemMaterial_avr48")
 texture = SubResource("AtlasTexture_v5nn7")
 
@@ -2281,76 +2295,91 @@ z_as_relative = false
 
 [node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=618208403]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_13aa1")
 texture = SubResource("AtlasTexture_5x3wf")
 
 [node name="d1" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=2010013082]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_tftft")
 texture = SubResource("AtlasTexture_tqbqc")
 
 [node name="d2" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=853601423]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_vis1m")
 texture = SubResource("AtlasTexture_2jpe4")
 
 [node name="d3" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=483402485]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_i0paj")
 texture = SubResource("AtlasTexture_3dv4t")
 
 [node name="d4" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=1419319729]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_5tu6o")
 texture = SubResource("AtlasTexture_8x25o")
 
 [node name="d5" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=12284937]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_acoth")
 texture = SubResource("AtlasTexture_6xivs")
 
 [node name="d6" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=1506790767]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_51kaa")
 texture = SubResource("AtlasTexture_kver5")
 
 [node name="d7" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=501690360]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_06gj6")
 texture = SubResource("AtlasTexture_iyn0c")
 
 [node name="d8" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=793114034]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_c3acu")
 texture = SubResource("AtlasTexture_k6xgh")
 
 [node name="d9" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=410316880]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_uljqg")
 texture = SubResource("AtlasTexture_b7ojo")
 
 [node name="d10" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=471677027]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_kx3fv")
 texture = SubResource("AtlasTexture_5mtow")
 
 [node name="d11" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=447103229]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_qrdb0")
 texture = SubResource("AtlasTexture_lx7xo")
 
 [node name="d12" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=848989443]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_jxdf8")
 texture = SubResource("AtlasTexture_ufj21")
 
 [node name="d13" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=679035743]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_1hi3h")
 texture = SubResource("AtlasTexture_6stge")
 
 [node name="d14" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_bs3/llzsg_00000/slot_llzsg_00000" unique_id=1320706314]
 visible = false
+modulate = Color(1, 1, 1, 0.27999997)
 material = SubResource("CanvasItemMaterial_lbhue")
 texture = SubResource("AtlasTexture_kryjg")
 
@@ -2383,76 +2412,91 @@ z_as_relative = false
 
 [node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=303253747]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_g6sgc")
 texture = SubResource("AtlasTexture_spdgo")
 
 [node name="d1" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=96089640]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_60wb2")
 texture = SubResource("AtlasTexture_tbsu2")
 
 [node name="d2" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1718583463]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_ivbae")
 texture = SubResource("AtlasTexture_3ei8u")
 
 [node name="d3" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1155908035]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_ri5vo")
 texture = SubResource("AtlasTexture_sk7de")
 
 [node name="d4" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=911586797]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_vyowa")
 texture = SubResource("AtlasTexture_vlrtm")
 
 [node name="d5" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1926519564]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_1727f")
 texture = SubResource("AtlasTexture_7bm1i")
 
 [node name="d6" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1596540732]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_8p4mr")
 texture = SubResource("AtlasTexture_vm38h")
 
 [node name="d7" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1088603125]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_e7rnn")
 texture = SubResource("AtlasTexture_uykil")
 
 [node name="d8" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=689653265]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_lobe4")
 texture = SubResource("AtlasTexture_1mgnv")
 
 [node name="d9" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1031174734]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_govfa")
 texture = SubResource("AtlasTexture_qpr5x")
 
 [node name="d10" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1734176958]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_iy0fe")
 texture = SubResource("AtlasTexture_yax01")
 
 [node name="d11" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1796809821]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_sdepe")
 texture = SubResource("AtlasTexture_3xm2r")
 
 [node name="d12" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1356977934]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_7dqvj")
 texture = SubResource("AtlasTexture_nr2gn")
 
 [node name="d13" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=1442240090]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_vq5qy")
 texture = SubResource("AtlasTexture_h5l40")
 
 [node name="d14" type="Sprite2D" parent="Skeleton2D/root/bone2/bone/zhungjichang_T1/ttggsg_00000/slot_ttggsg_00000" unique_id=2125611474]
 visible = false
+modulate = Color(1, 1, 1, 0.77)
 material = SubResource("CanvasItemMaterial_e1uyh")
 texture = SubResource("AtlasTexture_8ifmn")
 
@@ -2495,7 +2539,7 @@ position = Vector2(2.39, -25.25)
 texture = SubResource("AtlasTexture_vvc82")
 
 [node name="zhungjichang_bs5" type="Bone2D" parent="Skeleton2D/root/bone2" unique_id=1840053729]
-position = Vector2(-84.2, 14.7)
+position = Vector2(-84.2, 12.49)
 rest = Transform2D(1, 0, 0, 1, -84.2, 14.7)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2514,7 +2558,6 @@ z_index = 11
 z_as_relative = false
 
 [node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone2/zhungjichang_bs5/lbs_00002/slot_lbs_00002" unique_id=1010704882]
-visible = false
 material = SubResource("CanvasItemMaterial_d1dnp")
 texture = SubResource("AtlasTexture_n3b4c")
 
@@ -2607,6 +2650,7 @@ bone_angle = 0.0
 [node name="zhungjichang_bb3" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb" unique_id=1779994230]
 position = Vector2(24.16, -0.29)
 rotation = -0.078016214
+scale = Vector2(0.99999994, 0.99999994)
 rest = Transform2D(0.99695826, -0.0779371, 0.0779371, 0.99695826, 24.16, -0.29)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2614,7 +2658,8 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb2" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb3" unique_id=1332946067]
 position = Vector2(39.89, -0.87)
-rotation = 0.007853982
+rotation = 0.0012217308
+scale = Vector2(0.99999994, 0.99999994)
 rest = Transform2D(0.9999692, 0.007853901, -0.007853901, 0.9999692, 39.89, -0.87)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2622,7 +2667,8 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb5" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb3/zhungjichang_bb2" unique_id=130482273]
 position = Vector2(32.54, -0.52)
-rotation = 0.050440017
+rotation = 0.08552113
+scale = Vector2(0.99999994, 0.99999994)
 rest = Transform2D(0.99872816, 0.05041863, -0.05041863, 0.99872816, 32.54, -0.52)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2630,7 +2676,7 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb4" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb3/zhungjichang_bb2/zhungjichang_bb5" unique_id=1127543941]
 position = Vector2(31.3, -0.64)
-rotation = -0.06091199
+rotation = 0.026703537
 rest = Transform2D(0.99814546, -0.06087433, 0.06087433, 0.99814546, 31.3, -0.64)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2638,7 +2684,7 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb11" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb" unique_id=1724047631]
 position = Vector2(-37.86, -2.45)
-rotation = 3.130597
+rotation = 3.1396728
 rest = Transform2D(-0.99993956, 0.010995317, -0.010995317, -0.99993956, -37.86, -2.45)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2646,7 +2692,7 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb10" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb11" unique_id=1572443059]
 position = Vector2(46.72, 1.04)
-rotation = 0.043284167
+rotation = 0.052708946
 rest = Transform2D(0.9990634, 0.04327065, -0.04327065, 0.9990634, 46.72, 1.04)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2654,7 +2700,7 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb13" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb11/zhungjichang_bb10" unique_id=1708168109]
 position = Vector2(32.92, -0.53)
-rotation = -0.032288592
+rotation = -0.05009095
 rest = Transform2D(0.99947876, -0.032282982, 0.032282982, 0.99947876, 32.92, -0.53)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2662,6 +2708,7 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb12" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb11/zhungjichang_bb10/zhungjichang_bb13" unique_id=633588904]
 position = Vector2(28.14, 1.06)
+rotation = -0.06684611
 rest = Transform2D(1, 0, 0, 1, 28.14, 1.06)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2671,11 +2718,13 @@ bone_angle = 0.0
 z_as_relative = false
 
 [node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb11/zhungjichang_bb10/zhungjichang_bb13/zhungjichang_bb12/slot_zhungjichang_bb" unique_id=1453321635]
+position = Vector2(-141.29866, -22.480864)
 texture = SubResource("AtlasTexture_pqbic")
 
 [node name="zhungjichang_bb7" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb" unique_id=35433364]
 position = Vector2(2.22, 13.13)
-rotation = 1.3716543
+rotation = 1.3501867
+scale = Vector2(0.99999994, 0.99999994)
 rest = Transform2D(0.19782841, 0.98023665, -0.98023665, 0.19782841, 2.22, 13.13)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2683,7 +2732,8 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb6" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb7" unique_id=1654124440]
 position = Vector2(35.26, -1.53)
-rotation = -0.033161256
+rotation = -0.03752458
+scale = Vector2(0.99999994, 0.99999994)
 rest = Transform2D(0.9994502, -0.03315518, 0.03315518, 0.9994502, 35.26, -1.53)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2691,7 +2741,7 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb9" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb7/zhungjichang_bb6" unique_id=668181862]
 position = Vector2(28.35, -0.52)
-rotation = 0.02321288
+rotation = 0.07644542
 rest = Transform2D(0.9997306, 0.023210796, -0.023210796, 0.9997306, 28.35, -0.52)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2699,7 +2749,7 @@ bone_angle = 0.0
 
 [node name="zhungjichang_bb8" type="Bone2D" parent="Skeleton2D/root/bone2/zhungjichang_bb/zhungjichang_bb7/zhungjichang_bb6/zhungjichang_bb9" unique_id=382955369]
 position = Vector2(23.73, -0.43)
-rotation = -0.044331364
+rotation = 0.06440265
 rest = Transform2D(0.99901754, -0.044316847, 0.044316847, 0.99901754, 23.73, -0.43)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2731,6 +2781,7 @@ texture = SubResource("AtlasTexture_qarbk")
 
 [node name="xxx" type="Bone2D" parent="Skeleton2D/root/bone2/lizi" unique_id=646927237]
 position = Vector2(42.82, -117.09)
+scale = Vector2(1e-05, 1e-05)
 rest = Transform2D(1, 0, 0, 1, 42.82, -117.09)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -2741,7 +2792,6 @@ z_index = 12
 z_as_relative = false
 
 [node name="d0" type="Sprite2D" parent="Skeleton2D/root/bone2/lizi/xxx/slot_xxx" unique_id=875506560]
-visible = false
 material = SubResource("CanvasItemMaterial_e5d0r")
 texture = SubResource("AtlasTexture_kck4v")
 

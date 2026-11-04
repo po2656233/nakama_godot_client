@@ -165,7 +165,8 @@ func load_texture_async(url: String, width: int = 25, height: int = 25):
 					error = image.load_svg_from_buffer(result[3])
 				"image/tga":
 					error = image.load_tga_from_buffer(result[3])
-	if error != OK:
+	
+	if error != OK or image.is_empty():
 		print("加载图片失败: ", url)
 		request.queue_free()
 		return null
